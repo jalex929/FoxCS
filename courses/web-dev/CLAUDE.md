@@ -16,7 +16,9 @@ Per `../../CLAUDE.md`'s Courses table: HTML/CSS/JavaScript, usability/human-cent
 
 ## Status
 
-**Not started.** No `course-plan.md`, no `content/`. Next real work item: digest `Web_Development_Course_Map_Certification_Aligned.md` into a `course-plan.md` matching `../python/course-plan.md`'s format.
+**`course-plan.md` built 2026-08-17** — full Unit 01-21 checklist, translated from `Web_Development_Course_Map_Certification_Aligned.md`'s module tree, certification-objective-mapped, pacing constraint applied. No `content/` yet — nothing authored past the checklist stage. See `course-plan.md` for the real plan and its own Open Items section for what's still unresolved (the Web I/II acceleration-diagnostic mechanism, no confirmed post-AP-testing enrichment activity the way Game I has MakeCode Arcade, whether Units 21.20/21.21 become the same cross-course journal thread Game I has).
+
+**Scope resolved 2026-08-17**: this course folder's `course-plan.md` is the **Web-Dev-pathway curriculum** specifically (HTML/CSS/JS) — any Level 2 student who chooses that pathway follows it, regardless of whether they're enrolled in Web II or Game II. A Web II student who chooses Unity instead follows `../game-programming-2/course-plan.md`.
 
 ## Certification Framing
 
