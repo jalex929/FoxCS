@@ -1,0 +1,155 @@
+<!-- Shared across all three FoxCS courses: Game I, Game II, Web II. No Level 1/Level 2 split,
+     see 00-project-overview/shared-unit-00-onboarding.md and kickoff-avatar-and-intro-activity.md
+     for the design record. Plain styling on purpose, matching the palette established in
+     courses/python/content/unit_01_what_is_programming/ (see that unit's overview page header
+     comment) — don't restyle until Jay's updated visual/illustration guide lands.
+     Steps below are transcribed directly from Jay's own tested walkthrough
+     (../../../makecode images/, 8 screenshots + his avatar.bmp example) — not guessed. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kickoff: Make Your Avatar: FoxCS</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  code { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  .step { border: 1px solid #ccd3dd; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 1.8rem; height: 1.8rem; background: #1a5aa8; color: white; border-radius: 50%; font-family: Verdana, Arial, sans-serif; font-weight: bold; font-size: 0.95rem; margin-right: 0.5rem; }
+  .step-title { font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #2a3a52; font-size: 1.05rem; }
+  .step img { display: block; max-width: 100%; border: 1px solid #ccd3dd; border-radius: 6px; margin-top: 0.7rem; }
+  .step p { margin: 0.6rem 0 0; }
+  .step p:first-of-type { margin-top: 0.6rem; }
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-family: Verdana, Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.pro-tip { background: #fdf6e8; border-color: #f3e2b8; }
+  .concept-card.pro-tip .concept-card-label { color: #7a4800; }
+  .concept-card.real-world { background: #f0f8f5; border-color: #cdeadd; }
+  .concept-card.real-world .concept-card-label { color: #1f5c47; }
+  .critical { background: #fdf6e8; border: 2px solid #d99a00; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .critical-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #7a4800; margin-bottom: 0.5rem; }
+  .critical code { background: #fff3d6; }
+  ol.steps li { margin: 0.5rem 0; }
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-next:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<h1>Kickoff Activity — Make Your Avatar</h1>
+
+<div class="objectives">
+<strong>What you'll do:</strong>
+<ul>
+  <li>I can create a custom pixel-art avatar in MakeCode Arcade.</li>
+  <li>I can resize and save my avatar correctly so it's ready to use.</li>
+</ul>
+</div>
+
+<p>Welcome! Before we get into the real work of this course, let's do something fun: you're going to design a small pixel-art avatar for yourself using MakeCode Arcade, a free browser-based tool. This is the same tool some of you may use later this year to build real games, but today it's just for making something that's <em>you</em>.</p>
+
+<p>Go to <a href="https://arcade.makecode.com" target="_blank" rel="noopener">arcade.makecode.com</a> and start a new project. Then follow the steps below in order.</p>
+
+<div class="step">
+<span class="step-num">1</span><span class="step-title">Open the Assets tab</span>
+<p>In the top right of the editor, click <strong>Assets</strong> (next to Blocks and JavaScript).</p>
+<img src="images/01-assets-tab.png" alt="The MakeCode Arcade editor with the Assets tab open, showing an empty asset grid with a green plus button.">
+</div>
+
+<div class="step">
+<span class="step-num">2</span><span class="step-title">Create a new asset</span>
+<p>Click the green <strong>+</strong> tile.</p>
+<img src="images/02-green-plus-create-new-asset.png" alt="The Create New Asset dialog, showing options for Image, Tile, Tilemap, Animation, and Song.">
+</div>
+
+<div class="step">
+<span class="step-num">3</span><span class="step-title">Choose Image</span>
+<p>Click <strong>Image</strong>. This opens the image editor with a small blank canvas, ready for you to draw on.</p>
+<img src="images/03-click-image-and-see-canvas.png" alt="The image editor open on a small transparent canvas, with drawing tools and a color palette on the left.">
+</div>
+
+<div class="step">
+<span class="step-num">4</span><span class="step-title">Design your avatar</span>
+<p>Use the pencil, fill, rectangle, circle, and line tools on the left to draw your avatar. Pick colors from the palette below the tools.</p>
+<p>Draw at this small size first. Don't try to make it big yet, that comes next.</p>
+<img src="images/04-design-your-avatar.png" alt="A yellow smiley face drawn on the small canvas as an example avatar.">
+
+<div class="concept-card pro-tip">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/><path d="M19 15l0.8 2.2L22 18l-2.2 0.8L19 21l-0.8-2.2L16 18l2.2-0.8L19 15z"/></svg>Drawing Tip</div>
+<p>If you're going to make a mistake, lift your finger off the mouse instead of dragging through it. A short accidental drag only takes away a little, and small mistakes are easy to clean up. A long dragged mistake takes a lot more work to fix.</p>
+</div>
+
+<div class="concept-card real-world">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Want to see it done live?</div>
+<p>Watch <a href="https://www.youtube.com/watch?v=zqGZOsdbybs" target="_blank" rel="noopener">this MakeCode Arcade image editor walkthrough</a> to see someone draw a sprite from a blank canvas, start to finish.</p>
+</div>
+</div>
+
+<div class="step">
+<span class="step-num">5</span><span class="step-title">Select the marquee tool</span>
+<p>In the toolbar on the left, click the marquee (selection) tool. It's the grid-shaped icon next to the hand tool.</p>
+<img src="images/05-select-marquee-tool-and-drag-to-select-entire-canvas-corner-to-corner.png" alt="The left toolbar with the marquee selection tool highlighted.">
+</div>
+
+<div class="step">
+<span class="step-num">6</span><span class="step-title">Resize the canvas to 500 by 500</span>
+<p>At the bottom left of the editor, you'll see two number fields (width and height). Type <code>500</code> into both.</p>
+<p>500 by 500 is the largest size MakeCode Arcade allows, so this is as big as your avatar can get.</p>
+<img src="images/06-change-canvas-size-to-500-by-500.png" alt="The width and height fields at the bottom of the editor, both set to 500.">
+<p>Your drawing doesn't get bigger yet. The canvas around it does. Your small drawing will now be sitting in the corner of a much bigger space. That's expected, the next step fixes it.</p>
+</div>
+
+<div class="step">
+<span class="step-num">7</span><span class="step-title">Stretch your drawing to fill the canvas</span>
+<p>Using the marquee tool, drag a selection box around your small drawing, corner to corner. Then click and drag the corner of that selection box out to the bottom right corner of the larger canvas. This stretches your drawing to fill the full 500 by 500 space.</p>
+<img src="images/07-click-and-drag-corner-of-marquee-box-to-the-bottom-right-corner-of-larger-canvas.png" alt="The canvas mid-resize, with the original small drawing being stretched toward the bottom right corner.">
+<p>It doesn't need to be a perfect square when you're done. Getting close is completely fine.</p>
+</div>
+
+<div class="step">
+<span class="step-num">8</span><span class="step-title">Click Done, then save your image</span>
+<p>Click <strong>Done</strong> to close the image editor. Back in the Assets panel, right-click directly on your image's thumbnail and choose <strong>Save image as</strong> from the menu that pops up.</p>
+<img src="images/08-click-done-then-right-click-on-your-image-and-save-as.png" alt="The Assets panel with the finished avatar thumbnail selected, showing Edit, Duplicate, Copy, Delete, and Colors buttons.">
+</div>
+
+<div class="critical">
+<div class="critical-label">Save it exactly like this</div>
+<p>Your browser will ask where to save the file and what to name it. Name it exactly:</p>
+<p><code>avatar.bmp</code></p>
+<p>All lowercase, exactly that spelling, and don't change the file type it offers. Save it directly in this Kickoff folder, the same folder this page is in. Don't create a new folder for it and don't rename it to anything else.</p>
+</div>
+
+<h2>Want Different Colors?</h2>
+<p>MakeCode Arcade's default palette has 16 colors, but you can pick a different built-in palette or build your own.</p>
+<ol class="steps">
+  <li>Select your image in the Assets panel.</li>
+  <li>Click the <strong>Colors</strong> button.</li>
+  <li>Choose one of the built-in palettes, or build a custom one by entering your own colors.</li>
+  <li>Click <strong>Apply</strong>.</li>
+</ol>
+<p>If you change the palette after you've already started drawing, some colors in your art may shift. That's normal. Just touch up anything that looks off before you move on to Step 5 above.</p>
+
+<h2>What To Do Next</h2>
+<ol class="steps">
+  <li>Finish your avatar and save it as <strong>avatar.bmp</strong> in this folder (Steps 1 through 8 above).</li>
+  <li><strong>02_self_intro_slide.html</strong>. <a href="02_self_intro_slide.html">Open the next page</a> to build a one-slide introduction using your new avatar.</li>
+</ol>
+
+<div class="page-nav">
+  <div class="page-nav-note">Nothing to save on this page itself, just make sure <code>avatar.bmp</code> is saved in this folder before you move on.</div>
+  <div class="page-nav-links">
+    <span></span>
+    <a href="02_self_intro_slide.html" class="page-nav-next">Next: Introduce Yourself →</a>
+  </div>
+</div>
+
+</body>
+</html>
