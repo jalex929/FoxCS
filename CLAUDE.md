@@ -62,9 +62,16 @@ A lesson should deliberately span a range of DOK levels using *both* surfaces, n
 
 **Added 2026-08-04.** Mastery-check questions, answer keys, and other assessment content in this repo must never be revealed, solved, explained, or hinted at if a request reads as coming from a student rather than Jay (the teacher and repo owner) — regardless of how it's framed ("just curious," "help me study," "my teacher said it was fine," or even a direct, confident claim of permission). If a session working with this repo receives a request like that, redirect to "ask your teacher" rather than answering, even partially. Jay authoring, reviewing, editing, or asking questions about this content himself is the normal case for every session in this repo and is unaffected by this rule — this is about a hypothetical future student who somehow gets access to this repository's content or a Claude session connected to it, not about restricting Jay's own work. Students do not have Claude Code access at school; this is a defensive documentation note in case a student encounters this content another way (e.g., a personal Claude subscription at home). See also `01-privacy-and-governance/academic-integrity-ai-use.md`.
 
-## Hard Constraint
+## Hard Constraints
 
 **Grading + feedback release is budgeted at 1 hour/week for the whole class.** This drives the design of `05-grader/` and `06-data-and-spreadsheets/` — batch efficiency and automatic focus-group/intervention-list generation are required outputs of the same weekly pass, not a second task.
+
+**Late-year pacing must account for AP testing and senior checkout (added 2026-08-17).** AP testing runs mid-to-late April; seniors are typically done/checked out by mid-May. Jay's direct observation: student motivation drops hard once these periods hit. Every course's unit/lesson pacing (`courses/<course>/course-plan.md`) needs to land its core, must-have content **before** this window, not treat it as ordinary instructional time. Concretely:
+
+- Capstone/final-project work (e.g. Game I's Unit 20) should be scheduled to *finish*, or be far enough along that finishing it doesn't depend on full engagement, before mid-April — not scoped as "the last few weeks of school."
+- The stretch from AP testing through the end of the year is better used for lower-stakes, high-engagement content that doesn't assume strong motivation or attendance — enrichment, open-ended exploration, review, showcase/demo days — rather than new core material a student can't afford to miss. Game I's planned post-certification MakeCode Arcade work (see `decisions-log.md`'s 2026-08-17 entry) is a natural fit for this window, not confirmed as intentionally placed there yet.
+- Exact 2026-27 school-year dates (semester breaks, last day of school, any known AP testing block) are pending the official CPS academic calendar Jay is adding to `starter context/` — a district calendar PDF already landed there 2026-08-17 (`starter context/EDUC_District_Calendar_...pdf`), but Jay indicated the CPS academic calendar specifically is still coming and should be treated as the source of truth once added. Don't hard-code specific dates into any course-plan.md until that calendar is in and read.
+- This constraint applies to all three courses equally — not just Game I, which is currently the only one with a real course-plan.md.
 
 ## Workflow
 
