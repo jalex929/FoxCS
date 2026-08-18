@@ -13,8 +13,8 @@ See `decisions-log.md` for how this structure evolved and why. See `open-questio
 | Course | Folder | Status |
 |---|---|---|
 | FoxCS: Python ("Game Programming I") | `courses/python/` | Active — MVP folder-model build |
-| FoxCS: Game Programming II ("Game II") | `courses/game-programming-2/` (not yet created) | Planned — student-chosen lane: JavaScript/HTML5 app dev, and/or Unity (students may focus on Unity only if they prefer — historically JS-first with Unity as time-permitting, that priority is reversing). Needs curated existing third-party Unity content for platform familiarization, not just original authoring. |
-| FoxCS: Web Dev ("Web II") | `courses/web-dev/` (not yet created) | Planned — HTML/CSS/JavaScript, usability/human-centered-design focus, PHP (or similar) backend for data storage; can also be aimed at software/HTML5 app dev |
+| FoxCS: Game Programming II ("Game II") | `courses/game-programming-2/` | Skeleton only (2026-08-17) — `CLAUDE.md` + starter-context source material linked, no `course-plan.md`/`content/` yet. Student-chosen lane: JavaScript/HTML5 app dev, and/or Unity (students may focus on Unity only if they prefer — historically JS-first with Unity as time-permitting, that priority is reversing). Needs curated existing third-party Unity content for platform familiarization, not just original authoring. |
+| FoxCS: Web Dev ("Web II") | `courses/web-dev/` | Skeleton only (2026-08-17) — `CLAUDE.md` + starter-context source material linked, no `course-plan.md`/`content/` yet. HTML/CSS/JavaScript, usability/human-centered-design focus; a PHP (or similar) backend is longer-range scope only — not to be surfaced to students until confirmed, see `courses/web-dev/CLAUDE.md`. |
 
 Whether "Unity" remains its own separate course/folder or is fully absorbed as a Game II lane isn't settled — see `open-questions.md`. Each course folder gets its own `CLAUDE.md`, `course-plan.md`, and `content/`. See `courses/python/CLAUDE.md` for the active course.
 

@@ -4,6 +4,32 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-17 — GitHub repo created, shared Unit 0 architecture decided, Game II/Web II starter content added
+
+**Context:** Jay is resuming work on Game II and Web II (previously just placeholders in `courses/`), wants a single onboarding unit that reads the same across all three courses, and wants the whole `FoxCS/` repo pushed to GitHub so work can continue from any machine.
+
+**Decided/built:**
+
+- **GitHub repo created**: `jalex929/FoxCS`, **private** (contains mastery-check answer keys and other assessment content that must never be public-visible, per `CLAUDE.md`'s "Protecting Assessment Content" section). `git init` + full initial commit + push, including the large licensed reference PDFs and support files (~460MB total) — pushed as a private repo for Jay's own multi-device access, not redistribution. `origin` set to `https://github.com/jalex929/FoxCS.git`, default branch `main`.
+- **New `starter context/` folder added by Jay**: LearnKey/Certiport-aligned student workbooks and support files for JavaScript (INF-302) and HTML5 Application Development, Unity certification exam objectives (Programmer, Digital Artist — no Unity workbook exists), and two pre-drafted course maps (`Web_Development_Course_Map_Certification_Aligned.md`, `Unity_Game_Development_Course_Map_Certification_Aligned_Complete.md`). These are the source material for Game II's and Web II's `course-plan.md`, the same role `Python_v2_Student_Workbook.pdf` plays for Game I. Not yet digested into either course's own `course-plan.md` — see each new course's `CLAUDE.md`.
+- **Shared Unit 0 architecture decided** — full design in `00-project-overview/shared-unit-00-onboarding.md`. Summary: one shared onboarding unit, authored once, delivered as **two editions**, not three separate per-course units:
+  - **Level 1** (Game I only): Python pathway only, matches Game I's existing single-pathway model.
+  - **Level 2** (Game II **and** Web II, treated as one shared cohort for Unit 0 only): both Web Dev and Unity pathways shown to every Level 2 student, regardless of which of the two courses she's actually enrolled in. This is what lets a student enrolled in both Game II and Web II choose to go deep on one pathway or split across both, rather than being locked to "her course's" pathway.
+  - Pathway scope kept deliberately narrow for now: Web Dev = HTML/CSS/JavaScript only, **no PHP or backend/app-dev mention in onboarding** (may come later in Web II's real course-plan if it actually happens — don't promise it to students early). Unity = game dev in Unity/C#, no JS-vs-Unity nuance explained at the onboarding level.
+  - Relevance marked via **inline labeled callout boxes** on one linear page (not a branching picker) — "Python Pathway"/"Web Dev Pathway"/"Unity Pathway" labels, reusing the existing component-library visual language.
+  - Physically lives in a new shared location (`shared/unit_00_onboarding/`, not yet created), not duplicated into each course's `content/` tree.
+- **Certification framing for the year, captured for future course-plan work (not yet built into any course-plan.md):** one certification is the mandatory floor per pathway; a second is encouraged where the pathway supports it (matches the Web course map's existing "required HTML5 App Dev + strongly encouraged JavaScript" framing). Game I is the exception — one certification (IT Specialist Python), then the course moves on to **MakeCode Arcade** for 2D projects rather than pursuing a second cert. Which Unity certification (Programmer vs. Digital Artist) is the mandatory one for Game II isn't decided yet — see `open-questions.md`.
+- **New course folder skeletons created**: `courses/game-programming-2/` and `courses/web-dev/`, each with a `CLAUDE.md` stub following the same pattern as `courses/python/CLAUDE.md`. Neither has a `course-plan.md` or any `content/` yet — digesting the starter-context course maps into a real unit/lesson checklist (matching `courses/python/course-plan.md`'s format) is the next real work item for each.
+
+**Not done yet, flagged so it isn't lost:**
+
+- The actual shared Unit 0 instructional HTML — outline only, see the design doc's own Open Items.
+- `courses/python/course-plan.md`'s existing Unit 00 section still describes its own standalone Python-only Unit 00 — not yet rewritten to point at the shared unit instead.
+- `course-plan.md` for Game II and Web II, built from the new starter-context material.
+- Reconciling the starter-context Web course map's own "Web Development I / Web Development II" framing (one continuous course with an acceleration path) against `CLAUDE.md`'s existing Courses table, which currently treats "Web Dev"/"Web II" as a single FoxCS course with no "Web I" — not a contradiction necessarily, but worth a deliberate read-through before course-plan.md gets written.
+
+---
+
 ## 2026-08-11 — Table of contents + Back/TOC/Next nav, vocab quiz check-then-grade redesign, feedback form idiom/recall fixes, two authoring bugs fixed
 
 **Context:** Continued direct review of Lesson 01.4's real content (`lesson_01_04_printing_output/`). Several separate but related fixes in one stretch: navigation structure, one page's grading model, another page's question design, and two content-quality bugs caught by inspection.
