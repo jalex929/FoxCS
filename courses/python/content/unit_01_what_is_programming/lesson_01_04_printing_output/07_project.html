@@ -1,0 +1,161 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     Colors corrected 2026-08-06 per design-system.md. Tiered XP checklist added
+     2026-08-06 per Jay: a Required tier (must-complete) plus Tier 1/Tier 2 bonus
+     items worth escalating XP, extending lesson-schema.md's existing xp: block. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1.4.7a Project Instructions: Status Message Board: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  code, pre { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  pre { padding: 0.8rem 1rem; overflow-x: auto; }
+  .tier { border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1rem 0; }
+  .tier-required { background: #f4f6f9; border-left: 4px solid #1a5aa8; }
+  .tier-1 { background: #f9e1ad; border-left: 4px solid #9a5a00; }
+  .tier-2 { background: #d7ecd7; border-left: 4px solid #2f7a2f; }
+  .tier-title { font-family: Verdana, Arial, sans-serif; font-weight: bold; margin-bottom: 0.5rem; }
+  /* Real checkboxes, not bullet points — added 2026-08-11 per Jay: any
+     checklist anywhere should ALWAYS be actually checkable. This page has
+     no save mechanism of its own (the project is written and saved in
+     08_project.py), so checking a box here is a personal tracking aid
+     within the browser session, not submitted data — still worth doing
+     properly rather than a plain bulleted list pretending to be a checklist. */
+  .tier ul { list-style: none; margin: 0; padding: 0; }
+  .tier li { margin: 0.4rem 0; display: flex; align-items: flex-start; gap: 0.5rem; }
+  .tier li input[type="checkbox"] { margin-top: 0.3rem; flex-shrink: 0; width: 1.05rem; height: 1.05rem; }
+  /* Concept card — same family as 01_instruction.html's, see that file for
+     the full system (mistake/game/real-world/pro-tip/debug variants). */
+  /* Restyled 2026-08-12 per Jay, same fix as 01_instruction.html: cards, not
+     feedback boxes — full rounded border, no colored left accent bar, flat
+     and static (no hover/shadow/cursor change). */
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-family: Verdana, Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.game { background: #f4f2fb; border-color: #ded7f5; }
+  .concept-card.game .concept-card-label { color: #4a3aa7; }
+  .handoff { background: #f9e1ad; border: 1px solid #9a5a00; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .handoff p:first-child { margin-top: 0; }
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
+  /* Sample output + staged hints — added 2026-08-11 per Jay, three levels
+     (not two): students always want an example. Sample OUTPUT only, never
+     sample code — that would hand them the answer instead of the shape of
+     it. Hints escalate per content-authoring-standards.md's "Hints escalate,
+     they don't reveal": Level 1 is a conceptual nudge, Level 2 is a more
+     directional nudge (a concrete first step, still no code), Level 3 is the
+     commented shell (structural scaffold, no actual print() content). Each
+     level is nested inside the previous one's own reveal, so there's no way
+     to skip ahead to the shell without passing through the two lighter
+     nudges first. */
+  .reveal-btn { font-family: Verdana, Arial, sans-serif; background: none; border: 1px solid #ccd3dd; color: #2a3a52; padding: 0.4rem 0.9rem; border-radius: 5px; cursor: pointer; margin-top: 0.7rem; font-size: 0.88rem; }
+  .reveal-btn:hover { background: #eef1f5; }
+  .hint-panel { display: none; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px dashed #c9d3e0; }
+  .hint-panel.visible { display: block; }
+  .hint-panel pre { margin-top: 0.6rem; }
+</style>
+</head>
+<body>
+
+<h1>1.4.7a — Project Instructions: Status Message Board</h1>
+
+<p>A short applied task before the mastery check. This one applies the usability idea from the instructional page's Game Connection section: specific, readable output is better than vague output, even when both are valid Python.</p>
+
+<h2>The Task</h2>
+<p>Write a short program that acts like a game's status board: a few <code>print()</code> statements showing things like health, score, and level. Then add one more piece of output that reports a problem (out of moves, low health, item not available) using a clear, specific message, not a bare code or number.</p>
+
+<h2>What This Could Look Like</h2>
+<p>Here's the <em>output</em> a finished status board might display when you run it, just to show the shape of what you're building. This isn't code to copy, and yours doesn't have to look anything like this one, different status information and a different problem are both fine.</p>
+<pre>Health: 85/100
+Score: 1,240
+Level: 3
+Not enough gold. You need 20 more to buy that.</pre>
+
+<div>
+  <button class="reveal-btn" onclick="toggleHint('hint1')">Stuck? Get a hint</button>
+  <div class="hint-panel" id="hint1">
+    <p><strong>Hint 1:</strong> Think of it as separate, independent pieces of information: health, score, level, and one specific problem message. Each one is its own <code>print()</code> statement, the exact same pattern from this lesson's drills, just with wording you choose.</p>
+    <button class="reveal-btn" onclick="toggleHint('hint2')">Still stuck? Get another hint</button>
+    <div class="hint-panel" id="hint2">
+      <p><strong>Hint 2:</strong> Start with just one line. Write a single <code>print()</code> statement for the player's health, something like a number out of 100, run it, and check it displays what you expect. Once that one line works, repeat the exact same pattern for score, then level, before adding the problem message last.</p>
+      <button class="reveal-btn" onclick="toggleHint('hint3')">Still stuck? Show a starting shell</button>
+      <div class="hint-panel" id="hint3">
+        <p><strong>Hint 3:</strong> A shape to fill in, not a solution — the actual <code>print()</code> statements and the wording are yours to write.</p>
+        <pre># Print the player's health
+
+# Print the player's score
+
+# Print the player's level
+
+# Print one specific, readable problem message
+</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>Checklist</h2>
+
+<div class="tier tier-required">
+<div class="tier-title">Required</div>
+<ul>
+  <li><input type="checkbox" id="req1"><label for="req1">At least 3 <code>print()</code> statements showing normal status information.</label></li>
+  <li><input type="checkbox" id="req2"><label for="req2">At least 1 <code>print()</code> statement reporting a problem, written as a clear sentence a player would actually understand, not a code like <code>print("ERR_02")</code>.</label></li>
+  <li><input type="checkbox" id="req3"><label for="req3">No syntax errors. Run it and fix anything Python flags.</label></li>
+</ul>
+</div>
+
+<div class="tier tier-1">
+<div class="tier-title">Tier 1 Bonus (+10 XP)</div>
+<ul>
+  <li><input type="checkbox" id="t1a"><label for="t1a">Add at least 2 more status lines beyond the required 3, covering different kinds of information (not just more of the same thing).</label></li>
+  <li><input type="checkbox" id="t1b"><label for="t1b">Add a comment above at least one line explaining why that specific message was worded the way it was.</label></li>
+</ul>
+</div>
+
+<div class="tier tier-2">
+<div class="tier-title">Tier 2 Bonus (+20 XP, on top of Tier 1)</div>
+<ul>
+  <li><input type="checkbox" id="t2a"><label for="t2a">Write a short comment (2-3 sentences) at the top of your file explaining, in your own words, how your problem message follows the "specific and readable" usability idea from this lesson.</label></li>
+  <li><input type="checkbox" id="t2b"><label for="t2b">Include at least one status line and one problem message that could believably belong to the same real game (a consistent theme, not two unrelated examples stitched together).</label></li>
+</ul>
+</div>
+
+<div class="concept-card game">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><line x1="12" y1="10" x2="12" y2="17"/><path d="M7 17h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>Game Connection</div>
+<p>Good games tell the player exactly what's wrong in words a player understands, not a bare code or number. <code>"Not enough gold. You need 20 more."</code> tells the player what happened and what to do about it. <code>"Error 402"</code> tells them nothing without looking it up. Here, you're the one deciding what specific, readable message to write, not just reading an example of one.</p>
+</div>
+
+<div class="handoff">
+<p><strong>Handoff to VS Code:</strong> Open <code>08_project.py</code> in this same folder and write your status board directly in it.</p>
+<p class="save-reminder">Don't forget to save your file (Ctrl+S) before you're done.</p>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-note">Checkboxes above are just for you — the real save happens in 08_project.py.</div>
+  <div class="page-nav-links">
+    <a href="05_practice.html" class="page-nav-prev">← Back: Practice</a>
+    <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
+    <a href="09_mastery_check.html" class="page-nav-next">Next: Mastery Check →</a>
+  </div>
+</div>
+
+<script>
+function toggleHint(id) {
+  document.getElementById(id).classList.toggle('visible');
+}
+</script>
+
+</body>
+</html>

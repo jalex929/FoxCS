@@ -1,0 +1,33 @@
+/* FoxCS theme file — Dark. Added 2026-08-08 as part of the 4-theme system
+   (see ../theme-system.md). Values copied as-is from foxcs-base.css's
+   existing [data-theme="dark"] block (real computed WCAG contrast ratios
+   documented there and in design-system.md) — expressed here as a plain
+   :root block instead, since this file is meant to be linked on its own
+   rather than gated behind an attribute selector. See foxcs-theme-light.css
+   for why two theme mechanisms currently coexist. */
+
+:root {
+  --bg: #1e2430;
+  --text: #e6e9ef;
+  --heading: #8fbdf0;
+  --muted-text: #9aa5b8;
+  --primary: #3d7fc4;
+  --primary-hover: #5b9bd8;
+  --primary-text-on: #ffffff;
+  --amber: #c98a2e;
+  --amber-hover: #e0a84a;
+  --amber-text: #e0a84a;
+  --box-bg: #262d3d;
+  --box-bg-2: #232a3a;
+  --border: #333d52;
+  --border-strong: #3d475e;
+  --accent-dashed: #4a6d94;
+  --term-color: #a9c6ea;
+  --feedback-correct-bg: #1f3d28;
+  --feedback-correct-text: #9fe3ab;
+  --feedback-incorrect-bg: #3d331f;
+  --feedback-incorrect-text: #e3c89f;
+  --placed-bg: #333d52;
+  --placed-text: #cbd3e0;
+  --code-bg: #262d3d;
+}

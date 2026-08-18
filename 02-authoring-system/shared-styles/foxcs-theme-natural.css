@@ -1,0 +1,83 @@
+/* FoxCS theme file — Natural / Organic. Updated 2026-08-10 for a real
+   contrast pass — replaces the 2026-08-08 version, which technically passed
+   AA everywhere but had two real problems Jay flagged after reviewing the
+   live specimen: (1) the page background still read a little tan rather than
+   a true pale cream, and (2) every feedback box (success/warning/error/info)
+   used pale pastel tints that were barely distinguishable from the page
+   background — box-vs-page contrast measured only ~1.2:1, so the box didn't
+   register as a distinct colored surface even though the TEXT inside it
+   passed AA/AAA against its own tiny tint. Every number below was computed
+   with the real WCAG relative-luminance formula, not eyeballed — see the
+   inline ratios. Font tokens added the same day per Jay's follow-up: body
+   text doesn't have to be Atkinson Hyperlegible in every theme, as long as
+   the replacement is a genuinely legible text face — Lora here (a
+   contemporary text serif built for screen reading, not a display/script
+   face), matching the "warm, thoughtful, slightly handcrafted" brief without
+   sacrificing long-passage legibility.
+
+   Contrast figures below are computed against THIS file's own --bg, not the
+   guide's original. Per the guide's explicit rule: "#8EA893 should not be
+   used for normal text, essential icons, or control boundaries" — still kept
+   out of every functional token here, decorative-only. */
+
+:root {
+  --font-heading: "Nunito Sans", "Atkinson Hyperlegible", sans-serif;
+  --font-body: "Lora", "Atkinson Hyperlegible", "Source Sans 3", system-ui, serif;
+
+  --bg: #FCFAF1;               /* lightened again 2026-08-10 — paler cream/off-white per Jay's review, up from #F9F5E7. Only increases every text contrast ratio below (lighter bg = more headroom against dark text). */
+  --text: #0F312E;             /* ~13.4:1 — AAA */
+  --heading: #1F4A47;          /* darkened from the previous #2A5C59 so headings clear AAA-normal (7:1) too, not just AAA-large */
+  --muted-text: #3F5852;       /* darkened from #506E67 — was AA-only (5.1:1), now ~7.4:1, AAA */
+  --primary: #1F4A47;          /* ~9.4:1 — AAA. Same darkening as --heading, since both were sitting at AAA-large-only before */
+  --primary-hover: #143330;
+  --primary-text-on: #FFFFFF;  /* ~9.9:1 on --primary — AAA */
+  --amber: #664C15;            /* secondary action fill — darkened 2026-08-10 alongside the feedback colors below, same "rich chip, white text" treatment. ~8:1 with white text — AAA */
+  --amber-hover: #4E3A10;
+  --amber-text: #664C15;
+  --box-bg: #F1E8CC;           /* surface-alt — secondary sections */
+  --box-bg-2: #FFFEF9;         /* surface — cards, reading containers */
+  --border: #D8CFB0;
+  --border-strong: #6A8377;    /* ~3.9:1 against --bg — clears the 3:1 non-text-UI minimum with real headroom (was 3.1:1 before) */
+  --accent-dashed: #6A8377;    /* reuses border-strong — a dashed drop-zone border is a meaningful control boundary, not decoration */
+  --term-color: #1F4A47;
+
+  /* Feedback — redesigned 2026-08-10 as rich, saturated chips (white text)
+     instead of pale tints, specifically to fix the box-vs-page problem
+     described above. Every pair now clears AAA for text AND reads as a
+     genuinely distinct colored surface against the page:
+       success: #245638 bg, ~8.5:1 text, ~8.2:1 vs page
+       warning: #6B5100 bg, ~7.5:1 text, ~7.2:1 vs page (golden, updated 2026-08-11 — the original #734900 read too close to error's brown/rust)
+       error:   #73391A bg, ~9.0:1 text, ~8.6:1 vs page (warm rust, still never red — house Tone Note)
+       accent:  #664C15 bg, ~8.1:1 text, ~7.7:1 vs page
+       info:    #204468 bg, ~10.1:1 text, ~9.6:1 vs page
+     Each hue is now genuinely distinct from the others (previously
+     accent/warning/error were literally the same color, #6f3a17 on #E8D3AE —
+     not just low-contrast, indistinguishable from each other). */
+  --feedback-correct-bg: #245638;
+  --feedback-correct-text: #FFFFFF;
+  --feedback-incorrect-bg: #73391A;
+  --feedback-incorrect-text: #FFFFFF;
+  --placed-bg: #D8CFB0;
+  --placed-text: #3F5852;
+  --code-bg: #FFFEF9;
+
+  --color-success: #FFFFFF;
+  --color-success-bg: #245638;
+  --color-warning: #FFFFFF;
+  --color-warning-bg: #6B5100;
+  --color-error: #FFFFFF;
+  --color-error-bg: #73391A;
+  --color-info: #FFFFFF;
+  --color-info-bg: #204468;
+  --color-accent: #FFFFFF;
+  --color-accent-bg: #664C15;
+
+  /* Decorative tokens per the guide's Section 30 — the guide suggests 0.035;
+     bumped to 0.08 then 0.1 (2026-08-10) per Jay's request for more visible
+     presence after seeing it live, still well short of interfering with
+     text. See theme-typography-specimen.html for the working implementation
+     (SVG fractal noise, warm yellow-gold tint, no photo/tile). */
+  --decoration-texture-opacity: 0.1;
+  --decoration-grid-opacity: 0;
+  --decoration-glow: none;
+}

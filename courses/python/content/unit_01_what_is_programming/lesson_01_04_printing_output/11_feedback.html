@@ -1,0 +1,252 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     New 2026-08-06 — per-lesson quick feedback, per 02-authoring-system/
+     feedback-collection.md's question bank (updated here to drop the stale
+     "how helpful was Moodle" item and add a vocab-confusion question, which
+     replaces the flashcard self-assessment idea Jay tried and then dropped in
+     favor of getting this same signal here, in the student's own words, without
+     adding a save mechanism to flashcards). Uses the same save-in-place
+     mechanism as before — click through the form, click Save, done. No
+     copy-paste, no separate form tool, no second place for this data to live.
+
+     REVISED 2026-08-11 per Jay, three fixes:
+     1. The vocab-confusion question used to ask students to recall which
+     terms were "fuzzy" purely from memory. "Fuzzy" is an idiom that isn't
+     reliably clear to ELL students, and asking students to name terms from
+     memory is exactly the kind of recall-dependency this lesson's other
+     pages were already fixed to avoid. Now the 5 terms are listed directly
+     as a real checkbox list, each with a short plain-language reminder, so
+     nobody fails this question just because they couldn't remember the word
+     itself. Same reasoning applies lesson-wide: avoid idioms, hyperbole, and
+     figures of speech in student-facing text where a more literal phrasing
+     works just as well ("stuck" -> "difficult to understand", etc).
+     2. Added a specific-comment follow-up under the clarity and difficulty
+     scale questions (what was unclear / what was most difficult), instead of
+     only capturing a 1-5 number for those.
+     3. The old combined "name one specific helpful thing, or one specific
+     confusing thing" question is split into two separate questions — one on
+     what felt most rewarding/helpful, one on getting help when something was
+     difficult — instead of asking students to pick just one framing. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1.4.9 Feedback: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
+  .q-block { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .q-prompt { font-weight: bold; margin-bottom: 0.7rem; }
+  .scale-row { display: flex; gap: 0.5rem; align-items: center; }
+  .scale-label { font-size: 0.8rem; color: #555; }
+  button.scale-btn { width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 2px solid #ccd3dd; background: white; cursor: pointer; font-family: Verdana, Arial, sans-serif; font-weight: bold; }
+  button.scale-btn.selected { border-color: #1a5aa8; background: #1a5aa8; color: white; }
+  textarea.answer-space { width: 100%; min-height: 4em; font-family: Georgia, serif; font-size: 1rem; padding: 0.5rem; box-sizing: border-box; border: 1px solid #ccd3dd; border-radius: 4px; }
+  .followup { margin-top: 0.8rem; }
+  .followup-label { font-size: 0.88rem; color: #444; margin-bottom: 0.4rem; }
+  /* Term checklist — added 2026-08-11 per Jay: don't ask students to recall
+     the vocab list from memory to answer this question. The terms (with a
+     short reminder of each) are listed directly, same reasoning as the
+     "don't make students recall a past section" fix elsewhere in this
+     lesson. Real checkboxes, not styled divs, same rule as every checklist. */
+  .term-check-row { display: flex; align-items: flex-start; gap: 0.6rem; margin: 0.5rem 0; }
+  .term-check-row input[type="checkbox"] { margin-top: 0.25rem; flex-shrink: 0; width: 1.05rem; height: 1.05rem; }
+  .term-check-row label code { font-family: Consolas, monospace; background: #eef1f5; padding: 0.1rem 0.3rem; border-radius: 3px; }
+  .save-row { text-align: center; margin-top: 1.5rem; }
+  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #9a5a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+  button.save-btn:hover { background: #7a4800; }
+  .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+  /* Back/TOC/Next footer — added 2026-08-11 per Jay, same pattern as every
+     other numbered page in this lesson. Next here leaves the lesson folder
+     entirely, for the next lesson. */
+  .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
+</style>
+</head>
+<body>
+
+<h1>1.4.9 — Feedback</h1>
+<div class="intro">2-3 minutes. This is about the lesson, not about grading you. Your honest answers help decide what changes for next time.</div>
+
+<div class="q-block">
+  <div class="q-prompt">1. How clear was it what you were being asked to do in this lesson?</div>
+  <div class="scale-row" data-question="q1">
+    <span class="scale-label">Confusing</span>
+    <button class="scale-btn" data-value="1">1</button>
+    <button class="scale-btn" data-value="2">2</button>
+    <button class="scale-btn" data-value="3">3</button>
+    <button class="scale-btn" data-value="4">4</button>
+    <button class="scale-btn" data-value="5">5</button>
+    <span class="scale-label">Totally clear</span>
+  </div>
+  <div class="followup">
+    <div class="followup-label">If any part was unclear, describe what it was. (Leave blank if nothing was unclear.)</div>
+    <textarea class="answer-space" id="q1-followup"></textarea>
+  </div>
+</div>
+
+<div class="q-block">
+  <div class="q-prompt">2. How difficult was this lesson for you?</div>
+  <div class="scale-row" data-question="q2">
+    <span class="scale-label">Too easy</span>
+    <button class="scale-btn" data-value="1">1</button>
+    <button class="scale-btn" data-value="2">2</button>
+    <button class="scale-btn" data-value="3">3</button>
+    <button class="scale-btn" data-value="4">4</button>
+    <button class="scale-btn" data-value="5">5</button>
+    <span class="scale-label">Too difficult</span>
+  </div>
+  <div class="followup">
+    <div class="followup-label">What part of this lesson was the most difficult for you? (Leave blank if nothing felt difficult.)</div>
+    <textarea class="answer-space" id="q2-followup"></textarea>
+  </div>
+</div>
+
+<div class="q-block">
+  <div class="q-prompt">3. How interesting did this lesson feel to you?</div>
+  <div class="scale-row" data-question="q3">
+    <span class="scale-label">Not interesting</span>
+    <button class="scale-btn" data-value="1">1</button>
+    <button class="scale-btn" data-value="2">2</button>
+    <button class="scale-btn" data-value="3">3</button>
+    <button class="scale-btn" data-value="4">4</button>
+    <button class="scale-btn" data-value="5">5</button>
+    <span class="scale-label">Very interesting</span>
+  </div>
+</div>
+
+<div class="q-block">
+  <div class="q-prompt">4. This lesson taught 5 words. Check any that you still find hard to explain in your own words.</div>
+  <div class="term-check-row"><input type="checkbox" id="term-function"><label for="term-function"><code>function</code> — a reusable block of code, like <code>print()</code></label></div>
+  <div class="term-check-row"><input type="checkbox" id="term-string"><label for="term-string"><code>string</code> — text wrapped in quote marks</label></div>
+  <div class="term-check-row"><input type="checkbox" id="term-output"><label for="term-output"><code>output</code> — what your program displays on the screen</label></div>
+  <div class="term-check-row"><input type="checkbox" id="term-argument"><label for="term-argument"><code>argument</code> — the value written inside the parentheses</label></div>
+  <div class="term-check-row"><input type="checkbox" id="term-syntaxerror"><label for="term-syntaxerror"><code>SyntaxError</code> — an error from breaking one of Python's grammar rules</label></div>
+  <div class="term-check-row"><input type="checkbox" id="term-none"><label for="term-none">None — I can explain all 5 words</label></div>
+</div>
+
+<div class="q-block">
+  <div class="q-prompt">5. What part of this lesson felt the most rewarding, or helped you learn the most? Give a specific example.</div>
+  <textarea class="answer-space" id="q5"></textarea>
+</div>
+
+<div class="q-block">
+  <div class="q-prompt">6. If something in this lesson was difficult to understand on your own, were you able to get help? What helped, or what would have made it easier to get help?</div>
+  <textarea class="answer-space" id="q6"></textarea>
+</div>
+
+<div class="save-row">
+  <button class="save-btn" onclick="saveWork()">Save My Feedback</button>
+  <div class="save-status" id="saveStatus"></div>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-note">Save above before you leave — this is the last step in this lesson.</div>
+  <div class="page-nav-links">
+    <a href="09_mastery_check.html" class="page-nav-prev">← Back: Mastery Check</a>
+    <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
+    <a href="../lesson_01_05_comments_and_documentation/01_instruction.html" class="page-nav-next">Next: Lesson 01.5 →</a>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.scale-row').forEach(row => {
+  row.querySelectorAll('.scale-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      row.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+});
+
+// "None of these" is mutually exclusive with the individual term checkboxes.
+const termIds = ['term-function', 'term-string', 'term-output', 'term-argument', 'term-syntaxerror'];
+const noneBox = document.getElementById('term-none');
+noneBox.addEventListener('change', () => {
+  if (noneBox.checked) termIds.forEach(id => { document.getElementById(id).checked = false; });
+});
+termIds.forEach(id => {
+  document.getElementById(id).addEventListener('change', (e) => {
+    if (e.target.checked) noneBox.checked = false;
+  });
+});
+
+// Save-in-place — same mechanism used elsewhere in this lesson. Selected scale
+// values are marked with the 'selected' class, which is preserved when the DOM
+// is re-serialized, so reopening a saved file shows the same selections.
+let savedFileHandle = null;
+
+// Fixed 2026-08-11 — this was missing the _completed suffix logic that
+// 04_vocab_quiz.html/05_practice.html/09_mastery_check.html all have, even
+// though 00_table_of_contents.html's progress scan already assumed this
+// file would produce 11_feedback_completed.html. Caught while building the
+// sample-submission fixture in 05-grader/sample-submissions/.
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  const original = decodeURIComponent(parts[parts.length - 1]) || '11_feedback.html';
+  if (original.includes('_completed')) return original;
+  return original.replace(/\.html$/, '_completed.html');
+}
+
+// Fixed 2026-08-11 — a real bug: outerHTML serialization doesn't capture a
+// <textarea>'s typed value or a checkbox's checked state (both are IDL
+// properties decoupled from their content/attribute representation). Without
+// this, a student's written answers and term checkboxes would silently come
+// back blank/unchecked when the saved file is reopened. Same bug class fixed
+// in 04_vocab_quiz.html and 05_practice.html.
+function syncFormStateToDom() {
+  document.querySelectorAll('textarea').forEach(t => { t.textContent = t.value; });
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.toggleAttribute('checked', cb.checked); });
+}
+
+async function saveWork() {
+  syncFormStateToDom();
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+  const statusEl = document.getElementById('saveStatus');
+
+  if (savedFileHandle) {
+    try {
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved. Thanks for the feedback!';
+      return;
+    } catch (err) {
+      savedFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      savedFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved. Thanks for the feedback!';
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+</script>
+
+</body>
+</html>

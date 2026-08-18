@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformations</title>
+    <style>
+        html, body {
+            background-color: #999;
+        }
+        @keyframes identifier {
+            0% { box-shadow: 0px 0px 0px 0px gray; border: 5px solid black; }
+            25% { box-shadow: 0px 20px 30px 30px gray; border: 5px solid yellow; }
+            50% { box-shadow: 0px 0px 0px 0px gray; border: 5px solid black; }
+            75% { box-shadow: 0px -20px 30px 30px gray; border: 5px solid red; }
+            100% { box-shadow: 0px 0px 0px 0px gray; border: 5px solid black; }
+        }
+
+        img {
+            margin: 25px;
+            box-shadow: 0px 0px 0px 0px gray; 
+            border: 5px solid black;
+            /* add a line of code to link the keyframe to this image */
+            /* set the animation duration to 3 seconds */
+            /* set the animation to loop infinitely */
+        }
+    </style>
+</head>
+
+<body>
+    <h2>keyframes</h2>
+    <img src="images/tennis.jpg" alt="" height="200" id="img1" />
+
+</body>
+
+</html>

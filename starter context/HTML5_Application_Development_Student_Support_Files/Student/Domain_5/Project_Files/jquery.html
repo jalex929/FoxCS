@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // document.getElementById('heading').innerHTML = 'Hello, World!';
+            // add code
+
+            $('.box').mouseenter(function() {
+                $(this).css("background-color", "red");
+            })
+            $('.box').mouseleave(function() {
+                // add code
+            })
+
+
+            })
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            background-color: lightgrey;
+            margin: 0 auto;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;;
+            height: 100vh;
+            width: 100vw;
+            align-items: center;
+            justify-content: center;
+        }
+        .box {
+            height: 200px;
+            width: 200px;
+            border: 1px solid black;
+        }
+        .colorDiv {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="heading"></h2>
+        <h2>Second Heading</h2>
+        <div class="box"></div>
+    </div>
+</body>
+</html>

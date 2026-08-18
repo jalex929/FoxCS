@@ -1,0 +1,88 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>01.5 Comments and Documentation: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 0.8rem 1.2rem; }
+  code, pre { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  pre { padding: 0.8rem 1rem; overflow-x: auto; }
+  .vocab dt { font-weight: bold; color: #1a3a5c; }
+  .vocab dd { margin-bottom: 0.6rem; }
+  .game-tie-in { background: #c5c0e3; border-left: 4px solid #4a3aa7; padding: 0.8rem 1.2rem; margin: 1.2rem 0; }
+  .handoff { background: #f9e1ad; border: 1px solid #eda100; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+</style>
+</head>
+<body>
+
+<h1>01.5: Comments and Documentation</h1>
+
+<div class="objectives">
+<strong>Learning objectives:</strong>
+<ul>
+  <li>I can predict which lines of a program run, when some lines are comments.</li>
+  <li>I can write a comment that explains why a line of code exists, not just what it does.</li>
+</ul>
+<strong>Language objective:</strong>
+<ul>
+  <li>I can explain the difference between code and a comment using the terms <strong>comment</strong> and <strong>documentation</strong>.</li>
+</ul>
+</div>
+
+<h2>Leaving Notes for Humans, Not for Python</h2>
+<p>A <strong>comment</strong> is a line (or part of a line) that Python completely ignores when it runs your program. In Python, anything after a <code>#</code> on a line is a comment:</p>
+<pre># This program greets the player
+print("Hello!")
+# End of program</pre>
+<p>Run this, and you'll see only <code>Hello!</code>. Both comment lines produce no output at all, because Python skips them entirely. They're not for the computer. They're for <em>you</em>, and for anyone else who reads your code later.</p>
+
+<h2>Why Bother, If Python Ignores Them Anyway?</h2>
+<p>Because code gets hard to remember. Code that makes perfect sense while you're writing it can look like a mystery a week later. Or to a classmate seeing it for the first time. A comment that explains *why* a piece of code exists (not just *what* it does, which the code already shows) saves real time and confusion later.</p>
+
+<p>A weak comment just repeats the code: <code># print the score</code> above <code>print(score)</code> adds nothing you couldn't already read. A strong comment adds something the code doesn't already say: <code># show the score after every round, per the game design doc</code> tells you <em>why</em> this line exists.</p>
+
+<div class="game-tie-in">
+<strong>Game connection:</strong> Professional game studios have whole teams of programmers working on the same codebase at once. A comment like <code># TODO: rebalance this enemy's health before playtesting</code> or <code># this check exists because level 3 had a bug where the timer went negative</code> is exactly how one programmer leaves useful context for the next person who opens the file. Sometimes that "next person" is the same programmer, six months later, who has genuinely forgotten why they wrote something a certain way.
+</div>
+
+<h2>Comments Can Also "Turn Off" a Line Temporarily</h2>
+<p>Putting a <code>#</code> in front of a line of actual code stops that line from running, without deleting it. This is called <strong>commenting out</strong> a line, and it's a normal part of testing and debugging:</p>
+<pre># Display the welcome message
+print("Welcome")
+# Display the instructions
+# print("Press start")
+print("Ready to go")</pre>
+<p>This displays only <code>Welcome</code> and <code>Ready to go</code>. The commented-out <code>print("Press start")</code> never runs, even though it's valid Python code sitting right there in the file.</p>
+
+<h2>Key Terms</h2>
+<dl class="vocab">
+  <dt>comment</dt>
+  <dd>A line (or part of a line) starting with <code>#</code> that Python ignores when running the program.</dd>
+  <dt>documentation</dt>
+  <dd>Written explanation of what code does and why. Comments are the simplest form of it.</dd>
+  <dt>commenting out</dt>
+  <dd>Disabling a line of real code temporarily by putting a <code>#</code> in front of it, without deleting it.</dd>
+</dl>
+
+<h2>What To Do Next</h2>
+<p>Everything for this lesson is in this same folder, numbered in the order you should do it:</p>
+<ol>
+  <li><strong>02_example_01.py:</strong> open it in VS Code and run it.</li>
+  <li><strong>03_flashcards.html (optional warm-up):</strong> <a href="03_flashcards.html">Open the flashcards</a>.</li>
+  <li><strong>04_practice.html:</strong> <a href="04_practice.html">Open the practice page</a>. Save it when you're done. (Yes, reading the comments carefully matters more in this practice page than most. That's on purpose.)</li>
+  <li><strong>05_project.html:</strong> <a href="05_project.html">Open the project</a>, a short applied task before the mastery check.</li>
+  <li><strong>06_mastery_check.html (do this last):</strong> <a href="06_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
+</ol>
+
+<div class="handoff">
+<strong>Handoff to VS Code:</strong> Open <code>02_example_01.py</code> and run it first.
+<p class="save-reminder">Don't forget to save your file (Ctrl+S) before you're done.</p>
+</div>
+
+</body>
+</html>

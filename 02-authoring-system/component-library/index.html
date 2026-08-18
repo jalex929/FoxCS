@@ -1,0 +1,1023 @@
+<!-- FoxCS Component Library — added 2026-08-06.
+     This is a REFERENCE TOOL, not lesson content. Every demo below uses
+     deliberately generic, non-curriculum content (fruits, sandwiches, simple
+     sentences) specifically so it's never mistaken for real authored material —
+     see decisions-log.md's 2026-08-06 "Component library" entry for why (a fake
+     placeholder video embedded directly in real lesson content produced a real
+     YouTube Error 153, which is what prompted separating "proven mechanic" from
+     "deployed content" this explicitly). Open this file directly in a browser to
+     see and test every interactive pattern FoxCS has built or is proposing.
+     Colors per 02-authoring-system/design-system.md. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FoxCS Component Library</title>
+<link rel="stylesheet" href="../shared-styles/foxcs-base.css">
+<link rel="stylesheet" href="../shared-styles/foxcs-ide-dark.css">
+<style>
+  /* Library-page-only chrome — not shared, since only this page needs it. */
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 820px; margin: 2rem auto; padding: 0 1.5rem; }
+  .page-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.6rem; }
+  .component { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem 1.5rem; margin: 1rem 0 2rem; }
+  .status { display: inline-block; font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: bold; padding: 0.25rem 0.6rem; border-radius: 4px; margin-bottom: 0.7rem; }
+  .status-live { background: var(--feedback-correct-bg); color: var(--feedback-correct-text); }
+  .status-new { background: #f9e1ad; color: #7a3a00; }
+  .status-pattern { background: var(--code-bg); color: var(--muted-text); }
+  .desc { font-size: 0.95rem; color: var(--muted-text); margin-bottom: 1rem; }
+  .desc code { background: var(--code-bg); padding: 0.1rem 0.3rem; border-radius: 3px; font-family: Consolas, monospace; }
+  .where { font-size: 0.85rem; color: var(--muted-text); margin-top: 0.8rem; font-style: italic; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1 style="border-bottom:none; margin-bottom:0;">FoxCS Component Library</h1>
+  <button id="theme-toggle-btn" class="theme-toggle-btn">🌙 Dark mode</button>
+</div>
+<div class="intro">
+Working demos of every interactive pattern available for lesson authoring. <strong>This page is a reference tool, not lesson content</strong> — every example below uses deliberately generic, non-curriculum content (fruits, sandwiches, simple sentences) so it's never mistaken for real authored material. Click through each one to test it. See <code>../mvp-unit-folder-structure.md</code> for where each pattern is actually deployed in real lessons. Styles now come from <code>../shared-styles/foxcs-base.css</code> (light/dark theme toggle above) rather than being repeated here — this page is the first real proof that extraction works.
+</div>
+
+<h2>1. Flip Card</h2>
+<div class="component">
+  <span class="status status-live">Live in 01.4</span>
+  <div class="desc">Click to flip between a term and its definition. Used for flashcards — pure throwaway practice, no save.</div>
+  <div class="card-scene">
+    <div class="card" id="fc-card" onclick="fcFlip()">
+      <div class="card-inner">
+        <div class="card-face card-front"><span id="fc-term"></span></div>
+        <div class="card-face card-back"><span id="fc-def"></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="where">Reference: <code>courses/python/content/.../lesson_01_04_printing_output/03_flashcards.html</code></div>
+</div>
+
+<h2>2. Block Builder (single line)</h2>
+<div class="component">
+  <span class="status status-live">Live in 01.4</span>
+  <div class="desc">Click blocks in order to assemble one correct line. Shuffled bank order each load.</div>
+  <div class="drill-prompt" style="font-weight:bold; margin-bottom:0.6rem;">Build the sentence: The cat sat down</div>
+  <div class="block-answer" id="bb-answer"></div>
+  <div class="block-bank" id="bb-bank"></div>
+  <button class="check-btn" onclick="bbCheck()">Check</button>
+  <button class="reset-btn" onclick="bbReset()">Reset</button>
+  <div class="feedback" id="bb-feedback"></div>
+  <div class="where">Reference: <code>.../lesson_01_04_printing_output/05_practice.html</code> Drills 1 &amp; 5</div>
+</div>
+
+<h2>3. Multi-Line Block Builder (indentation-aware)</h2>
+<div class="component">
+  <span class="status status-live">Live in 01.4 (bonus/preview only)</span>
+  <div class="desc">Same mechanic as above, extended to multiple line-rows, each with its own token bank. The second row is visually indented to show structural nesting. <strong>Rule (2026-08-07):</strong> a block-builder target must always be either real, valid syntax in the language being taught, or clearly labeled pseudocode — never an ambiguous mix of the two. This demo is labeled and uses real, valid Python. <strong>Layout changed 2026-08-10 per Jay:</strong> both target lines now show together first, empty, so a student sees the full shape of what they're building (including the indentation relationship) before touching any blocks — the banks moved below both lines instead of interleaving one line's bank between it and the next line's target.</div>
+  <div class="code-lang-badge">Python</div>
+  <div class="code-line-row">
+    <div class="code-line-label">Line 1</div>
+    <div class="block-answer" id="mlbb-a-answer"></div>
+  </div>
+  <div class="code-line-row indented">
+    <div class="code-line-label">Line 2 (indented)</div>
+    <div class="block-answer" id="mlbb-b-answer"></div>
+  </div>
+  <div class="code-line-label" style="margin-top:0.9rem;">Pieces for Line 1</div>
+  <div class="block-bank" id="mlbb-a-bank"></div>
+  <div class="code-line-label">Pieces for Line 2</div>
+  <div class="block-bank" id="mlbb-b-bank"></div>
+  <button class="check-btn" onclick="mlbbCheck()">Check Both Lines</button>
+  <button class="reset-btn" onclick="mlbbReset()">Reset</button>
+  <div class="feedback" id="mlbb-feedback"></div>
+  <div class="where">Reference: <code>.../lesson_01_04_printing_output/05_practice.html</code> Drill 7 ("Sneak Peek at Unit 05")</div>
+</div>
+
+<h2>4. Dropdown Fill-in-the-Blank</h2>
+<div class="component">
+  <span class="status status-live">Live in 01.4</span>
+  <div class="desc">Pick the correct option from a constrained set.</div>
+  <p>The sun rises in the <select class="sel" id="dd-select"><option value="">choose...</option><option value="a">east</option><option value="b">west</option><option value="c">north</option></select>.</p>
+  <button class="check-btn" onclick="ddCheck()">Check</button>
+  <div class="feedback" id="dd-feedback"></div>
+  <div class="where">Reference: <code>.../lesson_01_04_printing_output/05_practice.html</code> Drill 2</div>
+</div>
+
+<h2>5. Typed Fill-in-the-Blank</h2>
+<div class="component">
+  <span class="status status-live">Live in 01.4</span>
+  <div class="desc">Free recall, no options given. <strong>Feedback pattern:</strong> since a typed free-recall answer can't be diagnosed (there's no way to know if a wrong answer was a spelling slip, a different word entirely, or a real misunderstanding), incorrect feedback falls back to a general, always-true reminder rather than guessing at a cause — see the "general reminder" rule in <code>../mvp-unit-folder-structure.md</code>.</div>
+  <p>The opposite of "hot" is ______.</p>
+  <input type="text" class="txt" id="ty-input" placeholder="Type your answer">
+  <button class="check-btn" onclick="tyCheck()">Check</button>
+  <div class="feedback" id="ty-feedback"></div>
+  <div class="where">Reference: <code>.../lesson_01_04_printing_output/05_practice.html</code> Drills 3 &amp; 4</div>
+</div>
+
+<h2>6. Combined Blank (dropdown + typed, same passage)</h2>
+<div class="component">
+  <span class="status status-live">Live in 01.4</span>
+  <div class="desc">One sentence, two different blank types, checked together.</div>
+  <p>A week has <select class="sel" id="cb-select"><option value="">choose...</option><option value="a">7</option><option value="b">5</option><option value="c">10</option></select> days, and the day after Monday is <input type="text" class="txt" id="cb-input" placeholder="type" style="width:8rem;">.</p>
+  <button class="check-btn" onclick="cbCheck()">Check</button>
+  <div class="feedback" id="cb-feedback"></div>
+  <div class="where">Reference: <code>.../lesson_01_04_printing_output/05_practice.html</code> Drill 6</div>
+</div>
+
+<h2>7. Drag-to-Match</h2>
+<div class="component">
+  <span class="status status-live">Live in 01.4 (as the vocab quiz)</span>
+  <div class="desc">Drag each term onto its definition. Both sides shuffle independently. Once a term is correctly matched, a small labeled badge shows which term landed on that definition — added 2026-08-07 so it's always obvious what was dropped where, since the term chip itself disappears from the bank once placed. In the real vocab-quiz version, Save is disabled until every term is matched, and saving appends a <code>_completed</code> filename suffix — not wired up in this generic demo, just the matching mechanic itself.</div>
+  <div class="quiz-layout">
+    <div class="term-bank" id="match-bank"></div>
+    <div class="definitions" id="match-defs"></div>
+  </div>
+  <div class="feedback" id="match-feedback" style="display:block; background:#eef1f5; color:#445;">0 of 3 matched</div>
+  <div class="where">Reference: <code>.../lesson_01_04_printing_output/04_vocab_quiz.html</code></div>
+</div>
+
+<h2>8. Categorization (drag into labeled bins)</h2>
+<div class="component">
+  <span class="status status-new">New — demoed here first, not yet deployed in a real lesson</span>
+  <div class="desc">Drag each item into the bin it belongs in. Identified as a good fit for Unit 01.2 (sorting events into Input / Process / Output) and 01.6 (sorting broken code into SyntaxError / NameError) — this demo uses generic content to prove the mechanic before it's built into real lesson content.</div>
+  <div class="cat-item" id="cat-item-apple" draggable="true" data-answer="fruit">Apple</div>
+  <div class="cat-item" id="cat-item-carrot" draggable="true" data-answer="veg">Carrot</div>
+  <div class="cat-item" id="cat-item-banana" draggable="true" data-answer="fruit">Banana</div>
+  <div class="cat-item" id="cat-item-broccoli" draggable="true" data-answer="veg">Broccoli</div>
+  <div class="cat-bins">
+    <div class="cat-bin" id="cat-bin-fruit" data-accepts="fruit">
+      <div class="cat-bin-label">Fruit</div>
+    </div>
+    <div class="cat-bin" id="cat-bin-veg" data-accepts="veg">
+      <div class="cat-bin-label">Vegetable</div>
+    </div>
+  </div>
+  <div class="feedback" id="cat-feedback" style="display:block; background:#eef1f5; color:#445; margin-top:0.8rem;">0 of 4 sorted</div>
+  <div class="where">Not yet deployed — proposed for 01.2 and 01.6, see mvp-unit-folder-structure.md's "Interactive Drill Types" table.</div>
+</div>
+<!-- Feedback added 2026-08-07: a wrong drop now shows a text reminder alongside the
+     existing red-outline flash (which alone gave no explanation), and sorting the
+     last item replaces the counter with a "why" explanation instead of staying silent. -->
+
+<h2>9. Sequencing (reorder scrambled items)</h2>
+<div class="component">
+  <span class="status status-new">New — demoed here first, not yet deployed in a real lesson</span>
+  <div class="desc">Drag items into the correct order, or use the ▲▼ buttons as a backup — added 2026-08-07 since native drag-and-drop isn't always reliable on touch/Chromebook trackpads. Identified as a strong fit for Unit 01.3 (reordering scrambled <code>print()</code> lines to produce a target output) — this demo uses a generic sandwich-making sequence to prove the mechanic first.</div>
+  <div class="seq-list" id="seq-list"></div>
+  <button class="check-btn" onclick="seqCheck()" style="margin-top:0.8rem;">Check Order</button>
+  <button class="reset-btn" onclick="seqReset()">Shuffle Again</button>
+  <div class="feedback" id="seq-feedback"></div>
+  <div class="where">Not yet deployed — proposed for 01.3, see mvp-unit-folder-structure.md's "Interactive Drill Types" table.</div>
+</div>
+
+<h2>10. Video Embed</h2>
+<div class="component">
+  <span class="status status-live">Live — first real video, added 2026-08-07</span>
+  <div class="desc">
+    An earlier attempt embedded a placeholder video ID directly into real lesson content and produced a real YouTube <strong>Error 153</strong> ("invalid video player configuration") — confirming that was fabricated content, not a working example. Jay provided a real video (<code>youtube.com/watch?v=NlAFWaa9UQo</code>) to test against; the iframe below uses that real ID on the <code>youtube-nocookie.com</code> domain (FoxCS's default privacy-reduced embed domain), dropping the <code>si=</code> share-tracking parameter YouTube's own "Share → Embed" button adds, since that's per-click attribution, not something to hardcode into course files. <strong>Check that this actually plays without Error 153</strong> — that's the real test. Not yet deployed into any real lesson; where it belongs hasn't been decided.
+  </div>
+  <div class="video-wrap">
+    <iframe src="https://www.youtube-nocookie.com/embed/NlAFWaa9UQo"
+            title="Sample embedded video"
+            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="position:absolute; inset:0; width:100%; height:100%; border:0;"></iframe>
+  </div>
+  <pre>&lt;div class="video-wrap"&gt;
+  &lt;iframe src="https://www.youtube-nocookie.com/embed/{{REAL_VIDEO_ID}}"
+          title="{{Descriptive title}}"
+          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;</pre>
+  <div class="where">Uses <code>youtube-nocookie.com</code> (YouTube's privacy-reduced embed domain) by default. Native player controls are visible unless explicitly suppressed, which this pattern never does. Not yet deployed in any real lesson — confirm with Jay where this specific video belongs, if anywhere, before moving it out of the library.</div>
+</div>
+
+<h2>11. Save-in-Place (toy demo)</h2>
+<div class="component">
+  <span class="status status-live">Live in feedback forms, vocab quiz, and flashcards' earlier (since-removed) rating feature</span>
+  <div class="desc">Click Save, pick a file location once (or your browser downloads a copy, if it doesn't support this), and every save after that is silent. This is the real mechanism, wired to this text box.</div>
+  <div class="toy-box">
+    <textarea id="sip-text" rows="3" style="width:100%; font-family:Georgia,serif; padding:0.5rem; box-sizing:border-box;" placeholder="Type anything, then click Save."></textarea>
+    <button class="demo-btn" onclick="sipSave()" style="margin-top:0.6rem;">Save This Demo</button>
+    <div class="feedback" id="sip-feedback" style="display:block; background:#eef1f5; color:#445;"></div>
+  </div>
+  <div class="where">Reference: any file using <code>showSaveFilePicker</code> — see <code>.../lesson_01_04_printing_output/11_feedback.html</code></div>
+</div>
+
+<h2>12. Password Gate + Automatic Hidden Timing</h2>
+<div class="component">
+  <span class="status status-live">Live on every mastery check (timestamp mechanism redesigned 2026-08-07)</span>
+  <div class="desc">Not real security — a client-side pacing control. Try password <code>DEMO01</code>. <strong>Redesigned 2026-08-07:</strong> students used to copy a visible timestamp into their answer file by hand — Jay flagged that as a mistake in the original design. Now the unlock time writes automatically into a hidden field the moment the page unlocks; clicking "Mark Complete &amp; Save" writes a second hidden completion time and saves the whole page in place. Both timestamps travel inside the submitted HTML file's own source for the grader to read — nothing for the student to transcribe or get wrong, and nothing visible cluttering the page. The hidden fields use a standard visually-hidden-but-DOM-present technique (clipped to 1px, <code>aria-hidden</code>) rather than literal white-on-white text, since color-matched text can still get selected, printed, or read by some accessibility tools — same goal, more reliable. Still not tamper-proof (a determined student could edit dev tools before saving) but far harder to get wrong by accident than hand-copying a time.</div>
+  <div class="toy-box" id="pw-lock">
+    <input type="text" id="pw-input" placeholder="Password" maxlength="6" style="text-transform:uppercase;">
+    <button class="demo-btn" onclick="pwCheck()">Unlock</button>
+    <div class="feedback" id="pw-feedback" style="display:none;"></div>
+  </div>
+  <div class="toy-box" id="pw-unlocked" style="display:none;">
+    Unlocked. Read through, then click below when you're done — no timestamp to copy anywhere.
+    <div style="margin-top:0.8rem;">
+      <button class="demo-btn" onclick="pwComplete()">Mark Complete &amp; Save</button>
+      <div class="save-status" id="pw-save-status" style="font-size:0.85rem; color:#2f7a2f; margin-top:0.5rem; min-height:1.1em;"></div>
+    </div>
+  </div>
+  <span id="pw-unlock-time" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;" aria-hidden="true"></span>
+  <span id="pw-complete-time" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;" aria-hidden="true"></span>
+  <div class="where">Reference: <code>.../lesson_01_04_printing_output/09_mastery_check.html</code>. Try it: unlock, click Mark Complete &amp; Save, save the file, then open it and view source — both timestamps are in there.</div>
+</div>
+
+<h2>13. Glossary Term (hover or click for a definition card)</h2>
+<div class="component">
+  <span class="status status-new">New — demoed here first, not yet deployed in a real lesson</span>
+  <div class="desc">Underlined terms show a small definition card on hover. Clicking pins the card open — click the term again, click anywhere else, or press Escape to close it — which matters on touch devices where hover isn't reliable. Keyboard-accessible: Tab to the term, Enter or Space to toggle. The card clamps to stay inside the visible page (added 2026-08-07) — it won't run off the right edge, and flips above the term if there isn't room below. Proposed for Game of the Week pages (game-design vocabulary like <em>mechanics</em>, <em>aesthetics</em>) and for the first appearance of any major vocabulary term on an instructional page.</div>
+  <p>Before you start, make sure your <span class="glossary-term" data-term="mise en place" tabindex="0" role="button" aria-haspopup="true">mise en place</span> is ready, then <span class="glossary-term" data-term="julienne" tabindex="0" role="button" aria-haspopup="true">julienne</span> the vegetables.</p>
+  <div class="where">Not yet deployed — proposed for Game of the Week and first-use vocabulary on instructional pages.</div>
+</div>
+
+<div class="glossary-card" id="glossary-card" role="tooltip">
+  <span class="glossary-card-term"></span>
+  <span class="glossary-card-def"></span>
+</div>
+
+<h2>14. Code Execution Stepper (simulated IDE)</h2>
+<div class="component">
+  <span class="status status-new">New — demoed here first, not yet deployed in a real lesson</span>
+  <div class="desc">A simulated IDE view for walking through how code executes top to bottom — highlighting the current line, tracking variable state, and building up output one step at a time. <strong>Important: nothing here actually runs.</strong> Every step below is hand-authored in advance, same honesty as everywhere else in this library — this is closer to a comic strip of a program's execution than a real interpreter, which is exactly why the general "simulated IDE that matches typed code against accepted responses" idea got turned down (see <code>decisions-log.md</code>'s 2026-08-08 entry) while this got built instead. The dropdown lets a student pick a value and see one of a few <em>pre-written</em> outcomes that match it — a curated branch, not a live recalculation. Play/Pause auto-advances at the chosen speed; the ◀ ▶ buttons step one at a time. The separate demo below shows the other piece — an "edit" animation, typed at randomized human-ish speed rather than a robotic fixed interval, for showing a debugging fix in progress.</div>
+
+  <div class="ide-demo">
+    <div class="ide-toolbar">
+      <span class="ide-filename">fruit_loop.py</span>
+      <span class="ide-controls">Try a different list:
+        <select id="ide-select" class="sel">
+          <option value="3">3 fruits (default)</option>
+          <option value="1">1 fruit</option>
+          <option value="0">empty list</option>
+        </select>
+      </span>
+    </div>
+    <div class="ide-body">
+      <div class="ide-code" id="ide-code"></div>
+      <div class="ide-side">
+        <div>
+          <div class="ide-panel-label">Variables</div>
+          <div class="ide-vars" id="ide-vars"></div>
+        </div>
+        <div>
+          <div class="ide-panel-label">Output</div>
+          <div class="ide-output" id="ide-output"></div>
+        </div>
+      </div>
+    </div>
+    <div class="ide-note" id="ide-note"></div>
+    <div class="ide-transport">
+      <button class="ide-btn" id="ide-back" onclick="ideStep(-1)">◀ Step</button>
+      <button class="ide-btn" id="ide-play" onclick="idePlayToggle()">▶ Play</button>
+      <button class="ide-btn" id="ide-fwd" onclick="ideStep(1)">Step ▶</button>
+      <span class="ide-speed-label">Speed: <span id="ide-speed-value">1x</span>
+        <input type="range" id="ide-speed" min="0.25" max="2" step="0.25" value="1">
+      </span>
+      <span class="ide-step-count" id="ide-step-count"></span>
+    </div>
+  </div>
+
+  <div class="ide-edit-demo">
+    <div class="ide-panel-label" style="color:#9aa5b8;">Bonus: watching a fix get typed</div>
+    <div class="ide-code" id="ide-edit-code" style="padding:0.3rem 0;"></div>
+    <button class="ide-btn" onclick="ideEditPlay()">▶ Watch the Fix</button>
+  </div>
+
+  <div class="where">Not yet deployed — proposed for any lesson introducing a new control-flow concept (loops, conditionals, functions) where seeing execution order visually would help.</div>
+</div>
+
+<h2>15. Theme System (4-theme link, reconciled at Save)</h2>
+<div class="component">
+  <span class="status status-new">New — demoed on a separate reference page, not yet deployed in a real lesson</span>
+  <div class="desc">
+    Four student-selectable color themes: Light (default), Dark, and two new ones — <strong>Natural</strong> (cream/parchment background, deep green as the high-contrast color) and <strong>Synthwave/Cyber</strong> (deep blue/purple with neon accents, in the spirit of <em>Cyberpunk 2077</em> and <em>Stray</em>). The persistent choice is a real <code>&lt;link id="foxcs-theme-link"&gt;</code> a student can hand-edit (survives across devices, unlike <code>localStorage</code>); a top-of-page selector previews instantly; Save reconciles the two by rewriting the link's <code>href</code> to match whatever's currently active. Full design and the still-open Classroom-folder-structure risk: <code>../theme-system.md</code>.
+  </div>
+  <div class="video-wrap" style="padding-top:70%;">
+    <iframe src="theme-and-telemetry-demo.html" title="Theme and telemetry demo" style="position:absolute; inset:0; width:100%; height:100%; border:0;"></iframe>
+  </div>
+  <div class="where">Live demo above (also embeds component #16). Natural/Synthwave now use the real palette + typography from <code>logos/waypoint_theme_typography_style_guide_full.md</code> — see <code>../theme-typography-specimen.html</code> for the full 4-theme typography/color specimen, and <code>../shared-styles/foxcs-theme-natural.css</code> / <code>-synth.css</code> for the token-level reasoning. Not yet deployed in any real lesson.</div>
+</div>
+
+<h2>16. Telemetry Event Log (hidden per-page interaction tracking)</h2>
+<div class="component">
+  <span class="status status-new">New — demoed together with #15 above, not yet deployed in a real lesson</span>
+  <div class="desc">
+    One hidden JSON blob per page (<code>&lt;script type="application/json" id="foxcs-telemetry"&gt;</code>), generalizing the mastery-check's hidden-timestamp trick (#12 above) into a full append-only event log: theme changes, code-stepper play/pause/step/speed changes, hints revealed, every drill attempt (skill, lane, correct/incorrect, attempt number), and full Core/Reinforce/Extend lane transitions with a reason — not just the endpoint. It's what makes "did this student start at 1x speed and slow down, or never touch it" and "did Reinforce actually recover the skill" answerable from the saved file itself. Full schema, event types, the first-cut "stuck" heuristic, and the ingestion pipeline (rides the not-yet-built codename-swap script into <code>06-data-and-spreadsheets/telemetry/</code>): <code>../telemetry-and-analytics.md</code>.
+  </div>
+  <div class="desc">Use the demo above: click through the theme selector and the Core/Reinforce/Extend arithmetic drill, then toggle "Show / hide" on its telemetry panel to watch <code>events</code> accumulate live. Real lesson pages never show this panel — it's a hidden field, surfaced here only so the mechanism can be reviewed.</div>
+  <div class="where">Reusable mechanism: <code>../shared-styles/foxcs-telemetry.js</code> (exposes <code>FoxCSTelemetry.log()</code> / <code>.recordSave()</code>). Not yet wired into any other component in this library (the stepper's own speed/play/step controls, drag-to-match, categorization, sequencing, etc. don't call it yet) — that's the natural next step once this mechanism itself is confirmed.</div>
+</div>
+
+<h2>17. Code Hotspot (hover annotations + ordered step-through)</h2>
+<div class="component">
+  <span class="status status-new">New — demoed here first, not yet deployed in a real lesson</span>
+  <div class="desc">
+    Two ways to explore <em>why</em> specific keywords are there in a block of code — not what it executes (that's component #14), but why each piece of syntax was chosen. <strong>Hover or click</strong> any underlined keyword below for a definition card, same interaction pattern as the Glossary Term component (#13) — hover shows/hides automatically, click pins it open (matters on touch devices), Escape or click-elsewhere closes it, fully keyboard-accessible (Tab, Enter/Space). <strong>Or use the ◀ ▶ transport</strong> below the code to step through the same keywords in a fixed order, slideshow-style — each step highlights one keyword in the code and the explanation panel's content changes to match, rather than anything executing. The two mechanisms share the same state: clicking a keyword directly also moves the step position to match it. Demo content is C#'s <code>public</code>/<code>private</code>/<code>void</code> in a small Unity-style class — exactly the kind of thing worth a hover explanation the first time a Game II/Unity student sees it, per Jay's original request.
+  </div>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span class="ide-filename">PlayerController.cs</span></div>
+    <div class="ide-code" id="hotspot-code">
+      <div class="ide-code-line"><span class="ide-line-num">1</span><span><span class="tok-kw hotspot" data-hotspot="public-class" tabindex="0" role="button" aria-haspopup="true">public</span> <span class="tok-kw">class</span> PlayerController</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">2</span><span>{</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">3</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-kw hotspot" data-hotspot="private-health" tabindex="0" role="button" aria-haspopup="true">private</span> <span class="tok-kw">int</span> health = <span class="tok-num">100</span>;</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">4</span><span>&nbsp;</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">5</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-kw hotspot" data-hotspot="void-start" tabindex="0" role="button" aria-haspopup="true">void</span> Start()</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">6</span><span>&nbsp;&nbsp;&nbsp;&nbsp;{</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">7</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;health = <span class="tok-num">100</span>;</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">8</span><span>&nbsp;&nbsp;&nbsp;&nbsp;}</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">9</span><span>&nbsp;</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">10</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tok-kw hotspot" data-hotspot="public-method" tabindex="0" role="button" aria-haspopup="true">public</span> <span class="tok-kw hotspot" data-hotspot="void-takedamage" tabindex="0" role="button" aria-haspopup="true">void</span> TakeDamage(<span class="tok-kw">int</span> amount)</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">11</span><span>&nbsp;&nbsp;&nbsp;&nbsp;{</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">12</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;health -= amount;</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">13</span><span>&nbsp;&nbsp;&nbsp;&nbsp;}</span></div>
+      <div class="ide-code-line"><span class="ide-line-num">14</span><span>}</span></div>
+    </div>
+    <div class="ide-note" id="hotspot-note">Hover or click an underlined keyword above, or press Step to walk through them in order.</div>
+    <div class="ide-transport">
+      <button class="ide-btn" id="hotspot-back" onclick="hotspotStep(-1)">◀ Step</button>
+      <button class="ide-btn" id="hotspot-fwd" onclick="hotspotStep(1)">Step ▶</button>
+      <span class="ide-step-count" id="hotspot-step-count">Not stepping yet</span>
+    </div>
+  </div>
+  <div class="hotspot-card" id="hotspot-card" role="tooltip">
+    <span class="hotspot-card-term"></span>
+    <span class="hotspot-card-def"></span>
+  </div>
+  <div class="where">Not yet deployed — proposed for the first real appearance of any new-to-students keyword/syntax pattern, most obviously C#/Unity's access modifiers and return types once Game II exists, but the mechanism is language-agnostic (any code block, any set of hand-picked hotspot tokens).</div>
+</div>
+
+<script src="../shared-styles/foxcs-theme-toggle.js"></script>
+<script>
+// ---- shared shuffle ----
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ---- 1. Flip card ----
+let fcFlippedState = false;
+document.getElementById('fc-term').textContent = 'Apple';
+document.getElementById('fc-def').textContent = 'A round fruit, usually red or green, that grows on trees.';
+function fcFlip() {
+  fcFlippedState = !fcFlippedState;
+  document.getElementById('fc-card').classList.toggle('flipped', fcFlippedState);
+}
+
+// ---- 2. Block builder ----
+const bbTarget = ['The', 'cat', 'sat', 'down'];
+let bbPlaced = [];
+function bbRender() {
+  const bank = document.getElementById('bb-bank');
+  const answer = document.getElementById('bb-answer');
+  bank.innerHTML = ''; answer.innerHTML = '';
+  bbTarget.forEach((word, i) => {
+    if (!bbPlaced.includes(i)) {
+      const btn = document.createElement('button');
+      btn.className = 'blk'; btn.textContent = word;
+      btn.onclick = () => { bbPlaced.push(i); bbRender(); };
+      bank.appendChild(btn);
+    }
+  });
+  bbPlaced.forEach(i => {
+    const btn = document.createElement('button');
+    btn.className = 'blk placed'; btn.textContent = bbTarget[i];
+    btn.onclick = () => { bbPlaced.splice(bbPlaced.indexOf(i), 1); bbRender(); };
+    answer.appendChild(btn);
+  });
+}
+function bbInit() {
+  bbPlaced = [];
+  const order = shuffle(bbTarget.map((_, i) => i));
+  const bank = document.getElementById('bb-bank');
+  bank.innerHTML = '';
+  order.forEach(i => {
+    const btn = document.createElement('button');
+    btn.className = 'blk'; btn.textContent = bbTarget[i];
+    btn.onclick = () => { bbPlaced.push(i); bbRender(); };
+    bank.appendChild(btn);
+  });
+  document.getElementById('bb-answer').innerHTML = '';
+}
+function bbCheck() {
+  const fb = document.getElementById('bb-feedback');
+  const built = bbPlaced.map(i => bbTarget[i]).join(' ');
+  const ok = built === bbTarget.join(' ');
+  fb.className = 'feedback ' + (ok ? 'correct' : 'incorrect');
+  fb.textContent = ok
+    ? 'Right! "The cat sat down" — every block landed in the same order as the target line, which is exactly what Check compares against.'
+    : 'Not quite — the order isn\'t right yet. Try comparing your line block-by-block against the target line above.';
+}
+function bbReset() { bbInit(); document.getElementById('bb-feedback').className = 'feedback'; }
+bbInit();
+
+// ---- 3. Multi-line block builder ----
+const mlbbA = ['if', 'temperature < 32', ':'];
+const mlbbB = ['print(', '"Wear a coat"', ')'];
+let mlbbAPlaced = [], mlbbBPlaced = [];
+function mlbbRender(prefix, target, placed) {
+  const bank = document.getElementById(prefix + '-bank');
+  const answer = document.getElementById(prefix + '-answer');
+  bank.innerHTML = ''; answer.innerHTML = '';
+  target.forEach((w, i) => {
+    if (!placed.includes(i)) {
+      const btn = document.createElement('button');
+      btn.className = 'blk'; btn.textContent = w;
+      btn.onclick = () => { placed.push(i); mlbbRender(prefix, target, placed); };
+      bank.appendChild(btn);
+    }
+  });
+  placed.forEach(i => {
+    const btn = document.createElement('button');
+    btn.className = 'blk placed'; btn.textContent = target[i];
+    btn.onclick = () => { placed.splice(placed.indexOf(i), 1); mlbbRender(prefix, target, placed); };
+    answer.appendChild(btn);
+  });
+}
+function mlbbInitOne(prefix, target, placedArr) {
+  const order = shuffle(target.map((_, i) => i));
+  const bank = document.getElementById(prefix + '-bank');
+  bank.innerHTML = '';
+  order.forEach(i => {
+    const btn = document.createElement('button');
+    btn.className = 'blk'; btn.textContent = target[i];
+    btn.onclick = () => { placedArr.push(i); mlbbRender(prefix, target, placedArr); };
+    bank.appendChild(btn);
+  });
+  document.getElementById(prefix + '-answer').innerHTML = '';
+}
+function mlbbInit() {
+  mlbbAPlaced = []; mlbbBPlaced = [];
+  mlbbInitOne('mlbb-a', mlbbA, mlbbAPlaced);
+  mlbbInitOne('mlbb-b', mlbbB, mlbbBPlaced);
+}
+function mlbbCheck() {
+  const fb = document.getElementById('mlbb-feedback');
+  const aOk = mlbbAPlaced.map(i => mlbbA[i]).join(' ') === mlbbA.join(' ');
+  const bOk = mlbbBPlaced.map(i => mlbbB[i]).join(' ') === mlbbB.join(' ');
+  fb.className = 'feedback ' + (aOk && bOk ? 'correct' : 'incorrect');
+  fb.textContent = (aOk && bOk)
+    ? 'Right! The colon after the condition opens the if block, and the indented print() line is what runs when temperature < 32 is true — that indentation is what tells Python the line belongs to the if statement.'
+    : 'Not quite on one or both lines yet. Remember: the condition line ends in a colon, and only indented lines below it are treated as part of the if block.';
+}
+function mlbbReset() { mlbbInit(); document.getElementById('mlbb-feedback').className = 'feedback'; }
+mlbbInit();
+
+// ---- 4. Dropdown ----
+function ddCheck() {
+  const val = document.getElementById('dd-select').value;
+  const fb = document.getElementById('dd-feedback');
+  fb.className = 'feedback ' + (val === 'a' ? 'correct' : 'incorrect');
+  fb.textContent = val === 'a'
+    ? 'Right! East is correct — that\'s the direction Earth rotates toward, so the sun appears to rise there.'
+    : (val ? 'Not quite. Think about which direction the Earth spins, or reread this section if you want a refresher.' : 'Pick an option first.');
+}
+
+// ---- 5. Typed ----
+function tyCheck() {
+  const val = document.getElementById('ty-input').value.trim().toLowerCase();
+  const fb = document.getElementById('ty-feedback');
+  const ok = val === 'cold';
+  fb.className = 'feedback ' + (ok ? 'correct' : 'incorrect');
+  fb.textContent = ok
+    ? 'Right! "Cold" is the direct opposite of "hot."'
+    : 'Not quite. Be sure to check your spelling, and it\'s okay to look back at the material if you need a refresher.';
+}
+
+// ---- 6. Combined ----
+function cbCheck() {
+  const selectOk = document.getElementById('cb-select').value === 'a';
+  const typedOk = document.getElementById('cb-input').value.trim().toLowerCase() === 'tuesday';
+  const fb = document.getElementById('cb-feedback');
+  fb.className = 'feedback ' + (selectOk && typedOk ? 'correct' : 'incorrect');
+  fb.textContent = (selectOk && typedOk)
+    ? 'Right on both! A week has 7 days, and Tuesday is the day right after Monday.'
+    : 'Not quite yet on one or both blanks. Double-check your spelling on the typed answer, and reread the sentence carefully for the dropdown.';
+}
+
+// ---- 7. Matching ----
+const matchTerms = [
+  {id: 'Apple', def: 'A round fruit, usually red or green.'},
+  {id: 'Carrot', def: 'An orange root vegetable.'},
+  {id: 'Bread', def: 'A baked food made from flour and water.'}
+];
+let matchCount = 0;
+function matchBuild() {
+  const bankOrder = shuffle(matchTerms.map(t => t.id));
+  const defOrder = shuffle(matchTerms.map(t => t.id));
+  const bank = document.getElementById('match-bank');
+  bank.innerHTML = '';
+  bankOrder.forEach(id => {
+    const chip = document.createElement('div');
+    chip.className = 'term-chip'; chip.id = 'mchip-' + id; chip.textContent = id;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', id));
+    bank.appendChild(chip);
+  });
+  const defs = document.getElementById('match-defs');
+  defs.innerHTML = '';
+  defOrder.forEach(id => {
+    const term = matchTerms.find(t => t.id === id);
+    const slot = document.createElement('div');
+    slot.className = 'def-slot'; slot.id = 'mslot-' + id;
+    const badge = document.createElement('span');
+    badge.className = 'matched-term-badge'; badge.id = 'mbadge-' + id;
+    const defText = document.createElement('span');
+    defText.textContent = term.def;
+    slot.appendChild(badge); slot.appendChild(defText);
+    slot.addEventListener('dragover', e => e.preventDefault());
+    slot.addEventListener('drop', e => {
+      e.preventDefault();
+      const dropped = e.dataTransfer.getData('text/plain');
+      matchAttempt(dropped, id, slot);
+    });
+    defs.appendChild(slot);
+  });
+}
+function matchAttempt(dropped, answer, slot) {
+  const chip = document.getElementById('mchip-' + dropped);
+  if (!chip || chip.classList.contains('placed')) return;
+  if (dropped === answer) {
+    slot.classList.add('correct');
+    document.getElementById('mbadge-' + answer).textContent = dropped;
+    chip.classList.add('placed');
+    matchCount++;
+    const fb = document.getElementById('match-feedback');
+    fb.textContent = matchCount === matchTerms.length
+      ? 'All matched! Each badge shows the term you dropped onto that definition.'
+      : matchCount + ' of ' + matchTerms.length + ' matched';
+  } else {
+    slot.classList.add('shake');
+    setTimeout(() => slot.classList.remove('shake'), 350);
+  }
+}
+matchBuild();
+
+// ---- 8. Categorization ----
+let catSortedCount = 0;
+document.querySelectorAll('.cat-item').forEach(item => {
+  item.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', item.id));
+});
+document.querySelectorAll('.cat-bin').forEach(bin => {
+  bin.addEventListener('dragover', e => e.preventDefault());
+  bin.addEventListener('drop', e => {
+    e.preventDefault();
+    const itemId = e.dataTransfer.getData('text/plain');
+    const item = document.getElementById(itemId);
+    if (!item || item.classList.contains('placed-correct')) return;
+    if (item.dataset.answer === bin.dataset.accepts) {
+      item.classList.add('placed-correct');
+      bin.appendChild(item);
+      catSortedCount++;
+      const fb = document.getElementById('cat-feedback');
+      if (catSortedCount === 4) {
+        fb.className = 'feedback correct';
+        fb.textContent = 'All sorted! Apples and bananas are fruits because they grow from the flowered part of the plant and hold the seeds; carrots and broccoli are vegetables because they\'re the root or stem/flower part instead.';
+      } else {
+        fb.className = 'feedback';
+        fb.style.display = 'block';
+        fb.style.background = '#eef1f5';
+        fb.style.color = '#445';
+        fb.textContent = catSortedCount + ' of 4 sorted';
+      }
+    } else {
+      item.style.outline = '3px solid #b02a2a';
+      setTimeout(() => { item.style.outline = ''; }, 400);
+      const fb = document.getElementById('cat-feedback');
+      fb.className = 'feedback incorrect';
+      fb.textContent = 'Not quite — that item doesn\'t belong in this bin. Check the bin label and try again.';
+    }
+  });
+});
+
+// ---- 9. Sequencing ----
+const seqCorrectOrder = ['Get out two slices of bread', 'Spread the filling', 'Put the slices together', 'Cut it in half'];
+let seqCurrentOrder = [];
+function seqMove(text, dir) {
+  const idx = seqCurrentOrder.indexOf(text);
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= seqCurrentOrder.length) return;
+  [seqCurrentOrder[idx], seqCurrentOrder[newIdx]] = [seqCurrentOrder[newIdx], seqCurrentOrder[idx]];
+  seqRender();
+}
+function seqRender() {
+  const list = document.getElementById('seq-list');
+  list.innerHTML = '';
+  seqCurrentOrder.forEach((text, idx) => {
+    const row = document.createElement('div');
+    row.className = 'seq-item';
+    row.draggable = true;
+    row.dataset.text = text;
+
+    const label = document.createElement('span');
+    label.innerHTML = '<span class="seq-handle">☰</span> ' + text;
+    row.appendChild(label);
+
+    const btnWrap = document.createElement('span');
+    btnWrap.className = 'seq-btn-wrap';
+    const upBtn = document.createElement('button');
+    upBtn.type = 'button'; upBtn.className = 'seq-move-btn'; upBtn.textContent = '▲';
+    upBtn.setAttribute('aria-label', 'Move up'); upBtn.disabled = idx === 0;
+    upBtn.onclick = () => seqMove(text, -1);
+    const downBtn = document.createElement('button');
+    downBtn.type = 'button'; downBtn.className = 'seq-move-btn'; downBtn.textContent = '▼';
+    downBtn.setAttribute('aria-label', 'Move down'); downBtn.disabled = idx === seqCurrentOrder.length - 1;
+    downBtn.onclick = () => seqMove(text, 1);
+    btnWrap.appendChild(upBtn); btnWrap.appendChild(downBtn);
+    row.appendChild(btnWrap);
+
+    row.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', text); row.style.opacity = '0.4'; });
+    row.addEventListener('dragend', () => { row.style.opacity = '1'; });
+    row.addEventListener('dragover', e => e.preventDefault());
+    row.addEventListener('drop', e => {
+      e.preventDefault();
+      const draggedText = e.dataTransfer.getData('text/plain');
+      const fromIdx = seqCurrentOrder.indexOf(draggedText);
+      const toIdx = seqCurrentOrder.indexOf(text);
+      seqCurrentOrder.splice(fromIdx, 1);
+      seqCurrentOrder.splice(toIdx, 0, draggedText);
+      seqRender();
+    });
+    list.appendChild(row);
+  });
+}
+function seqReset() {
+  seqCurrentOrder = shuffle(seqCorrectOrder);
+  seqRender();
+  document.getElementById('seq-feedback').className = 'feedback';
+}
+function seqCheck() {
+  const fb = document.getElementById('seq-feedback');
+  const ok = seqCurrentOrder.join('|') === seqCorrectOrder.join('|');
+  fb.className = 'feedback ' + (ok ? 'correct' : 'incorrect');
+  fb.textContent = ok
+    ? 'Right order! Bread first, then filling, then close it up, then cut — each step depends on the one before it being done already.'
+    : 'Not quite yet — drag items or use the ▲▼ buttons to reorder, then check again. Think about which step has to happen before the next one can start.';
+}
+seqReset();
+
+// ---- 11. Save-in-place toy ----
+let sipHandle = null;
+async function sipSave() {
+  const content = document.getElementById('sip-text').value;
+  const fb = document.getElementById('sip-feedback');
+  if (sipHandle) {
+    try {
+      const w = await sipHandle.createWritable();
+      await w.write(content);
+      await w.close();
+      fb.textContent = 'Saved (silently, same file as before).';
+      return;
+    } catch (e) { sipHandle = null; }
+  }
+  if ('showSaveFilePicker' in window) {
+    try {
+      sipHandle = await window.showSaveFilePicker({
+        suggestedName: 'component_library_save_demo.txt',
+        types: [{ description: 'Text file', accept: {'text/plain': ['.txt']} }]
+      });
+      const w = await sipHandle.createWritable();
+      await w.write(content);
+      await w.close();
+      fb.textContent = 'Saved. Try editing and clicking Save again — no dialog next time.';
+      return;
+    } catch (e) { if (e.name === 'AbortError') return; }
+  }
+  const blob = new Blob([content], {type: 'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'component_library_save_demo.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  fb.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+
+// ---- 12. Password gate + hidden timing ----
+let pwFileHandle = null;
+function pwCheck() {
+  const val = document.getElementById('pw-input').value.trim().toUpperCase();
+  const fb = document.getElementById('pw-feedback');
+  if (val === 'DEMO01') {
+    document.getElementById('pw-lock').style.display = 'none';
+    document.getElementById('pw-unlocked').style.display = 'block';
+    document.getElementById('pw-unlock-time').textContent = 'unlocked_at:' + new Date().toISOString();
+  } else {
+    fb.style.display = 'block';
+    fb.className = 'feedback incorrect';
+    fb.textContent = 'Try DEMO01.';
+  }
+}
+async function pwComplete() {
+  document.getElementById('pw-complete-time').textContent = 'completed_at:' + new Date().toISOString();
+  const statusEl = document.getElementById('pw-save-status');
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+  if (pwFileHandle) {
+    try {
+      const w = await pwFileHandle.createWritable();
+      await w.write(htmlContent); await w.close();
+      statusEl.textContent = 'Saved.';
+      return;
+    } catch (e) { pwFileHandle = null; }
+  }
+  if ('showSaveFilePicker' in window) {
+    try {
+      pwFileHandle = await window.showSaveFilePicker({
+        suggestedName: 'component_library_pw_demo.html',
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const w = await pwFileHandle.createWritable();
+      await w.write(htmlContent); await w.close();
+      statusEl.textContent = 'Saved — open the saved file and view its source to see both hidden timestamps.';
+      return;
+    } catch (e) { if (e.name === 'AbortError') return; }
+  }
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'component_library_pw_demo.html';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy.';
+}
+
+// ---- 13. Glossary term hover/click card ----
+const glossaryDefs = {
+  'julienne': 'To cut food into long, thin, matchstick-sized strips.',
+  'mise en place': 'Having every ingredient prepped and in place before you start cooking.'
+};
+let glossaryPinnedTerm = null;
+
+function glossaryShow(el, term) {
+  const card = document.getElementById('glossary-card');
+  card.querySelector('.glossary-card-term').textContent = term;
+  card.querySelector('.glossary-card-def').textContent = glossaryDefs[term.toLowerCase()] || '';
+  card.classList.add('visible');
+  const rect = el.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  let left = rect.left + window.scrollX;
+  const maxLeft = window.scrollX + document.documentElement.clientWidth - cardRect.width - 8;
+  if (left > maxLeft) left = Math.max(window.scrollX + 8, maxLeft);
+  let top = rect.bottom + window.scrollY + 6;
+  const viewportBottom = window.scrollY + window.innerHeight;
+  if (top + cardRect.height > viewportBottom) {
+    top = rect.top + window.scrollY - cardRect.height - 6;
+  }
+  card.style.left = left + 'px';
+  card.style.top = top + 'px';
+}
+function glossaryHide() {
+  document.getElementById('glossary-card').classList.remove('visible');
+}
+document.querySelectorAll('.glossary-term').forEach(el => {
+  const term = el.dataset.term;
+  el.addEventListener('mouseenter', () => { if (!glossaryPinnedTerm) glossaryShow(el, term); });
+  el.addEventListener('mouseleave', () => { if (!glossaryPinnedTerm) glossaryHide(); });
+  el.addEventListener('click', () => {
+    if (glossaryPinnedTerm === term) {
+      glossaryPinnedTerm = null;
+      glossaryHide();
+    } else {
+      glossaryPinnedTerm = term;
+      glossaryShow(el, term);
+    }
+  });
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      el.click();
+    } else if (e.key === 'Escape' && glossaryPinnedTerm === term) {
+      glossaryPinnedTerm = null;
+      glossaryHide();
+    }
+  });
+});
+document.addEventListener('click', e => {
+  if (glossaryPinnedTerm && !e.target.closest('.glossary-term') && !e.target.closest('.glossary-card')) {
+    glossaryPinnedTerm = null;
+    glossaryHide();
+  }
+});
+
+// ---- 14. Code execution stepper ----
+function escapeHtml(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+const PY_KEYWORDS = ['if', 'elif', 'else', 'for', 'while', 'def', 'return', 'print', 'in', 'True', 'False', 'None', 'import', 'and', 'or', 'not', 'break', 'continue'];
+function highlightPython(line) {
+  let out = escapeHtml(line);
+  out = out.replace(/"([^"]*)"/g, '<span class="tok-str">"$1"</span>');
+  out = out.replace(/(#.*)$/, '<span class="tok-comment">$1</span>');
+  out = out.replace(/\b(\d+)\b/g, '<span class="tok-num">$1</span>');
+  PY_KEYWORDS.forEach(kw => {
+    out = out.replace(new RegExp('\\b' + kw + '\\b', 'g'), '<span class="tok-kw">' + kw + '</span>');
+  });
+  return out;
+}
+
+// Each trace is fully hand-authored — this is the "curated branch" the desc
+// text refers to, not live recalculation of arbitrary input.
+const ideTraces = {
+  '3': {
+    code: ['fruits = ["apple", "banana", "cherry"]', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
+    steps: [
+      { line: 0, vars: {fruits: '["apple", "banana", "cherry"]'}, output: [], note: 'Line 1 runs: fruits is created with 3 items.' },
+      { line: 1, vars: {fruits: '[...]', fruit: '"apple"'}, output: [], note: 'Line 2: the loop starts. fruit becomes "apple", the first item.' },
+      { line: 2, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'Line 3 runs and prints the message.' },
+      { line: 1, vars: {fruits: '[...]', fruit: '"banana"'}, output: ['I like apple'], note: 'Back to the top of the loop. fruit is now "banana".' },
+      { line: 2, vars: {fruits: '[...]', fruit: '"banana"'}, output: ['I like apple', 'I like banana'], note: 'Line 3 runs again.' },
+      { line: 1, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana'], note: 'Back to the top again. fruit is now "cherry".' },
+      { line: 2, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry'], note: 'Line 3 runs a third time.' },
+      { line: -1, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry'], note: 'No items left in fruits — the loop ends.' },
+      { line: 3, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry', 'Loop finished!'], note: 'The loop is completely done, so the program moves down to line 4 and keeps going — it doesn\'t stop just because the loop did.' }
+    ]
+  },
+  '1': {
+    code: ['fruits = ["apple"]', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
+    steps: [
+      { line: 0, vars: {fruits: '["apple"]'}, output: [], note: 'Line 1 runs: fruits has just 1 item this time.' },
+      { line: 1, vars: {fruits: '[...]', fruit: '"apple"'}, output: [], note: 'The loop starts. fruit becomes "apple".' },
+      { line: 2, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'Line 3 runs and prints the message.' },
+      { line: -1, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'No items left — the loop only ran once, because the list only had 1 item.' },
+      { line: 3, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple', 'Loop finished!'], note: 'The loop only ran once, but the program still continues on to line 4 afterward.' }
+    ]
+  },
+  '0': {
+    code: ['fruits = []', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
+    steps: [
+      { line: 0, vars: {fruits: '[]'}, output: [], note: 'Line 1 runs: fruits is empty.' },
+      { line: -1, vars: {fruits: '[]'}, output: [], note: 'The loop checks fruits and finds nothing to loop over — line 3 never runs at all. Worth remembering when debugging: an empty list means zero iterations, not an error.' },
+      { line: 3, vars: {fruits: '[]'}, output: ['Loop finished!'], note: 'This is the key idea: even though the loop body never ran once, the program doesn\'t stop — it skips straight down to line 4 and keeps going.' }
+    ]
+  }
+};
+let ideCurrentKey = '3';
+let ideStepIndex = 0;
+let idePlaying = false;
+let idePlayTimer = null;
+
+function ideRenderAll() {
+  const trace = ideTraces[ideCurrentKey];
+  const step = trace.steps[ideStepIndex];
+
+  document.getElementById('ide-code').innerHTML = trace.code.map((line, i) => {
+    const active = i === step.line ? ' active' : '';
+    return '<div class="ide-code-line' + active + '"><span class="ide-line-num">' + (i + 1) + '</span><span>' + highlightPython(line) + '</span></div>';
+  }).join('');
+
+  const entries = Object.entries(step.vars);
+  document.getElementById('ide-vars').innerHTML = entries.length
+    ? entries.map(([k, v]) => '<div class="ide-var-row"><span>' + k + '</span><span>' + v + '</span></div>').join('')
+    : '<div class="ide-var-row" style="opacity:0.6;">(none yet)</div>';
+
+  document.getElementById('ide-output').innerHTML = step.output.length
+    ? step.output.map(l => '<div class="ide-output-line">' + escapeHtml(l) + '</div>').join('')
+    : '<div class="ide-output-line" style="opacity:0.6;">(nothing printed yet)</div>';
+
+  document.getElementById('ide-note').textContent = step.note;
+  document.getElementById('ide-step-count').textContent = 'Step ' + (ideStepIndex + 1) + ' of ' + trace.steps.length;
+  document.getElementById('ide-back').disabled = ideStepIndex === 0;
+  document.getElementById('ide-fwd').disabled = ideStepIndex === trace.steps.length - 1;
+}
+const IDE_BASE_INTERVAL = 700; // ms at 1x
+function ideCurrentInterval() {
+  const mult = parseFloat(document.getElementById('ide-speed').value);
+  return IDE_BASE_INTERVAL / mult;
+}
+function ideStopPlaying() {
+  idePlaying = false;
+  clearInterval(idePlayTimer);
+  document.getElementById('ide-play').textContent = '▶ Play';
+}
+function ideStep(dir) {
+  const trace = ideTraces[ideCurrentKey];
+  const newIdx = ideStepIndex + dir;
+  if (newIdx < 0 || newIdx >= trace.steps.length) { ideStopPlaying(); return; }
+  ideStepIndex = newIdx;
+  ideRenderAll();
+}
+function ideAdvancePlay() {
+  const trace = ideTraces[ideCurrentKey];
+  if (ideStepIndex >= trace.steps.length - 1) { ideStopPlaying(); return; }
+  ideStepIndex++;
+  ideRenderAll();
+}
+function idePlayToggle() {
+  if (idePlaying) { ideStopPlaying(); return; }
+  idePlaying = true;
+  document.getElementById('ide-play').textContent = '⏸ Pause';
+  idePlayTimer = setInterval(ideAdvancePlay, ideCurrentInterval());
+}
+document.getElementById('ide-select').addEventListener('change', e => {
+  ideCurrentKey = e.target.value;
+  ideStepIndex = 0;
+  ideStopPlaying();
+  ideRenderAll();
+});
+document.getElementById('ide-speed').addEventListener('input', e => {
+  document.getElementById('ide-speed-value').textContent = parseFloat(e.target.value) + 'x';
+  if (idePlaying) {
+    clearInterval(idePlayTimer);
+    idePlayTimer = setInterval(ideAdvancePlay, ideCurrentInterval());
+  }
+});
+ideRenderAll();
+
+// ---- 14b. Edit/typing animation demo (randomized per-character speed) ----
+const ideEditFixed = 'print("I like " + fruit)';
+document.getElementById('ide-edit-code').innerHTML =
+  '<div class="ide-code-line"><span class="ide-line-num">3</span><span id="ide-edit-line">' + highlightPython('print("I like " + fruit') + '</span></div>';
+function ideEditPlay() {
+  const el = document.getElementById('ide-edit-line');
+  let i = 0;
+  function typeNext() {
+    el.innerHTML = highlightPython(ideEditFixed.slice(0, i)) + '<span class="ide-caret"></span>';
+    if (i < ideEditFixed.length) {
+      i++;
+      setTimeout(typeNext, 35 + Math.random() * 90);
+    }
+  }
+  typeNext();
+}
+
+// ---- 17. Code Hotspot (hover/click + ordered step-through, shared state) ----
+const hotspotDefs = {
+  'public-class': { term: 'public (on the class)', def: 'Makes PlayerController accessible from any other script in the project. Unity needs a MonoBehaviour class to be public so it can be attached to a GameObject in the Editor.' },
+  'private-health': { term: 'private (on health)', def: "Keeps this variable accessible only inside PlayerController. Other scripts can't read or change health directly — they'd need a public method (like TakeDamage below) to do that safely." },
+  'void-start': { term: 'void (on Start)', def: "Means this function doesn't hand back a value — it just runs and finishes. Start() is a Unity lifecycle method that always returns void." },
+  'public-method': { term: 'public (on TakeDamage)', def: 'Lets other scripts — a weapon, an enemy, a trap — actually call TakeDamage() on this object from the outside. Without public, only code inside this same class could call it.' },
+  'void-takedamage': { term: 'void (on TakeDamage)', def: "Same meaning as before: TakeDamage() changes health but doesn't need to hand anything back, so it returns void." }
+};
+const hotspotOrder = ['public-class', 'private-health', 'void-start', 'public-method', 'void-takedamage'];
+let hotspotPinned = null;
+let hotspotStepIndex = -1;
+
+function hotspotShowCard(el, id) {
+  const card = document.getElementById('hotspot-card');
+  const info = hotspotDefs[id];
+  card.querySelector('.hotspot-card-term').textContent = info.term;
+  card.querySelector('.hotspot-card-def').textContent = info.def;
+  card.classList.add('visible');
+  const rect = el.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  let left = rect.left + window.scrollX;
+  const maxLeft = window.scrollX + document.documentElement.clientWidth - cardRect.width - 8;
+  if (left > maxLeft) left = Math.max(window.scrollX + 8, maxLeft);
+  let top = rect.bottom + window.scrollY + 6;
+  const viewportBottom = window.scrollY + window.innerHeight;
+  if (top + cardRect.height > viewportBottom) top = rect.top + window.scrollY - cardRect.height - 6;
+  card.style.left = left + 'px';
+  card.style.top = top + 'px';
+}
+function hotspotHideCard() {
+  document.getElementById('hotspot-card').classList.remove('visible');
+}
+function hotspotSetActive(id) {
+  document.querySelectorAll('#hotspot-code .hotspot').forEach(el => {
+    el.classList.toggle('hotspot-active', el.dataset.hotspot === id);
+  });
+}
+function hotspotUpdateNoteFor(id) {
+  const info = hotspotDefs[id];
+  const idx = hotspotOrder.indexOf(id);
+  document.getElementById('hotspot-note').innerHTML = '<strong>' + info.term + '</strong> — ' + info.def;
+  document.getElementById('hotspot-step-count').textContent = 'Step ' + (idx + 1) + ' of ' + hotspotOrder.length;
+}
+document.querySelectorAll('#hotspot-code .hotspot').forEach(el => {
+  const id = el.dataset.hotspot;
+  el.addEventListener('mouseenter', () => { if (!hotspotPinned) hotspotShowCard(el, id); });
+  el.addEventListener('mouseleave', () => { if (!hotspotPinned) hotspotHideCard(); });
+  el.addEventListener('click', () => {
+    hotspotStepIndex = hotspotOrder.indexOf(id);
+    hotspotSetActive(id);
+    hotspotUpdateNoteFor(id);
+    if (hotspotPinned === id) {
+      hotspotPinned = null;
+      hotspotHideCard();
+    } else {
+      hotspotPinned = id;
+      hotspotShowCard(el, id);
+    }
+  });
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+    else if (e.key === 'Escape' && hotspotPinned === id) { hotspotPinned = null; hotspotHideCard(); }
+  });
+});
+document.addEventListener('click', e => {
+  if (hotspotPinned && !e.target.closest('.hotspot') && !e.target.closest('.hotspot-card')) {
+    hotspotPinned = null;
+    hotspotHideCard();
+  }
+});
+function hotspotStep(dir) {
+  const newIdx = Math.min(Math.max(hotspotStepIndex + dir, 0), hotspotOrder.length - 1);
+  hotspotStepIndex = newIdx;
+  const id = hotspotOrder[newIdx];
+  hotspotSetActive(id);
+  hotspotUpdateNoteFor(id);
+  document.getElementById('hotspot-back').disabled = newIdx === 0;
+  document.getElementById('hotspot-fwd').disabled = newIdx === hotspotOrder.length - 1;
+}
+document.getElementById('hotspot-back').disabled = true;
+</script>
+
+</body>
+</html>

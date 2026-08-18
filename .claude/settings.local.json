@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import pdfplumber\")",
+      "Bash(python3 -c \"import PyPDF2\")",
+      "Bash(python3 -c \"import fitz\")",
+      "Bash(xargs -I{} sh -c 'echo \"{}\"')",
+      "Bash(awk '-F\\\\t' 'NR==1{print NF\" columns\"; for\\(i=1;i<=NF;i++\\) print i\": \"$i}' 'C:/Users/Jay Fox/Downloads/Adaptive Learning Curriculum System - 03_LESSONS.tsv')",
+      "Bash(awk -F'\\\\t' 'NR==1{print NF}' questions/lesson_01_04_printing_output.tsv)",
+      "Bash(python3 -)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 -c \"s = 'a\\\\\\\\\\\\\\\\nb'; print\\(len\\(s\\)\\); print\\([ord\\(c\\) for c in s]\\)\")",
+      "Read(//c/Users/Jay Fox/**)",
+      "Bash(python3 \"C:\\\\Users\\\\Jay Fox\\\\.claude\\\\jobs\\\\ba186a59\\\\tmp\\\\fix_newline.py\")",
+      "Bash(python3 *)",
+      "Bash(sed -i 's|href=\"06_mastery_check.html\" style=\"display:inline-block;margin-top:0.8rem;\">Continue to Mastery Check|href=\"05_project.html\" style=\"display:inline-block;margin-top:0.8rem;\">Continue to Project|' lesson_01_03_writing_your_first_program/04_practice.html lesson_01_04_printing_output/04_practice.html lesson_01_05_comments_and_documentation/04_practice.html)",
+      "Bash(sed -i 's|href=\"05_mastery_check.html\" style=\"display:inline-block;margin-top:0.8rem;\">Continue to Mastery Check|href=\"04_project.html\" style=\"display:inline-block;margin-top:0.8rem;\">Continue to Project|' lesson_01_06_common_syntax_mistakes/03_practice.html)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(mv 05_project.html 06_project.html)",
+      "Bash(mv 05_project.py 07_project.py)",
+      "Bash(mv 06_mastery_check.html 08_mastery_check.html)",
+      "Bash(mv 10_feedback.html 11_feedback.html)",
+      "Bash(mv 09_mastery_check.py 10_mastery_check.py)",
+      "Bash(mv 08_mastery_check.html 09_mastery_check.html)",
+      "Bash(mv 07_project.py 08_project.py)",
+      "Bash(mv 06_project.html 07_project.html)",
+      "Bash(powershell -Command \"Get-ChildItem -Recurse 'C:\\\\Users\\\\Jay Fox\\\\FoxCS\\\\Sample Content' | Select-Object FullName\")",
+      "Bash(powershell -Command \"Get-ChildItem 'C:\\\\Users\\\\Jay Fox\\\\FoxCS\\\\Sample Content\\\\previous lesson content' | Format-List Name\")",
+      "PowerShell($files = [System.IO.Directory]::GetFiles\\('C:\\\\Users\\\\Jay Fox\\\\FoxCS\\\\Sample Content\\\\previous lesson content'\\); foreach \\($f in $files\\) { $name = [System.IO.Path]::GetFileName\\($f\\); $bytes = [System.Text.Encoding]::UTF8.GetBytes\\($name\\); Write-Output \"$name --- $\\([BitConverter]::ToString\\($bytes\\)\\)\" })"
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Reader Example 1</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            background-color: #BBB;
+            margin: 0 auto;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var inputFile = document.getElementById('file1');
+            inputFile.addEventListener('change', (e) => {
+                var reader = new FileReader(); // start new reader
+                reader.readAsText(inputFile.files[0]); // open the first file in the file list
+                reader.onload = function () {
+                    console.log(reader.result); // console log results of the first file
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container" style>
+        <h2>Loading and Saving Files</h2>
+        <input type="file" id="file1" accept=".txt" multiple="false">
+    </div>
+</body>
+
+</html>

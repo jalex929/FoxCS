@@ -1,0 +1,234 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     Interactive practice engine, added 2026-08-04. Replaces the old separate
+     reinforce/core/extend files. See 02-authoring-system/mvp-unit-folder-structure.md
+     for the shared design: starts at Core, routes to Reinforce/Extend based on the
+     answer, builds up the page as you go, saves as one file when done. The routing
+     logic lives in QUESTIONS below but is never narrated to the student. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>01.1 Practice: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; }
+  .q-block { background: #fff; border: 1px solid #dde3ea; border-radius: 6px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .q-block.answered { background: #f9fafb; }
+  .prompt { font-weight: bold; margin-bottom: 0.7rem; }
+  .options label { display: block; margin: 0.4rem 0; cursor: pointer; }
+  textarea { width: 100%; min-height: 5em; font-family: Georgia, serif; font-size: 1rem; padding: 0.5rem; box-sizing: border-box; }
+  button { font-family: Verdana, Arial, sans-serif; background: #2a78d6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; margin-top: 0.6rem; margin-right: 0.5rem; }
+  button:hover { background: #1a5aa8; }
+  button:disabled { background: #aab; cursor: default; }
+  button.secondary { background: #6a6a6a; }
+  .feedback { margin-top: 0.7rem; padding: 0.6rem 0.9rem; border-radius: 4px; }
+  .feedback.correct { background: #d7ecd7; color: #1a4a1a; }
+  .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; }
+  .feedback.info { background: #eef1f5; color: #2a3a52; }
+  .model-answer { background: #eef1f5; padding: 0.7rem 0.9rem; border-radius: 4px; margin-top: 0.6rem; font-style: italic; }
+  #complete-box { background: #f9e1ad; border: 1px solid #eda100; padding: 1.2rem 1.4rem; border-radius: 6px; margin-top: 1.5rem; display: none; }
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+</style>
+</head>
+<body>
+
+<h1>01.1 Practice: What Programs Do</h1>
+<div class="intro">
+  Work through the questions as they appear. Each one builds on the last. Answer directly on this page. When a question asks you to write something longer, jot it in the box provided; you don't need a separate file for this lesson since there's no code yet.
+</div>
+
+<div id="log"></div>
+
+<div id="complete-box">
+  <strong>Practice complete.</strong> Nice work. When you're ready, save this page so you have a record of what you did.
+  <p class="save-reminder">Click "Save My Work" below, then continue to the Mastery Check.</p>
+  <button onclick="saveWork()">Save My Work</button>
+  <br><a class="next-link" href="04_mastery_check.html" style="display:inline-block;margin-top:0.8rem;">Continue to Mastery Check →</a>
+</div>
+
+<script>
+const QUESTIONS = {
+  core_1: {
+    type: 'multi',
+    prompt: 'Which of the following are examples of computer programs? Select all that apply.',
+    options: [
+      {key: 'a', text: 'A calculator app'},
+      {key: 'b', text: 'A printed book'},
+      {key: 'c', text: 'A video game'},
+      {key: 'd', text: 'A weather forecasting app'}
+    ],
+    correct: ['a', 'c', 'd'],
+    feedbackCorrect: 'Exactly. Apps, games, and weather forecasters are all programs. Sets of instructions running on a computer.',
+    feedbackIncorrect: 'A program is software that runs on a computer and follows instructions. A printed book is not a program. It doesn\'t run or execute anything.',
+    onCorrect: 'extend_1',
+    onIncorrect: 'reinforce_1'
+  },
+  reinforce_1: {
+    type: 'single',
+    prompt: 'What does it mean to write a program?',
+    options: [
+      {key: 'a', text: 'Give a computer a set of step-by-step instructions'},
+      {key: 'b', text: 'Design the screen layout of a computer'},
+      {key: 'c', text: 'Upgrade the computer\'s hardware'},
+      {key: 'd', text: 'Connect to the internet'}
+    ],
+    correct: ['a'],
+    feedbackCorrect: 'Exactly. A program is a set of instructions a computer follows, one step at a time.',
+    feedbackIncorrect: 'Think about what a recipe does for a cook. It breaks a task into exact steps. A program does the same thing for a computer.',
+    onCorrect: 'reinforce_2',
+    onIncorrect: 'reinforce_2'
+  },
+  reinforce_2: {
+    type: 'single',
+    prompt: 'When a computer runs a program, it ___.',
+    options: [
+      {key: 'a', text: 'follows the instructions in the code'},
+      {key: 'b', text: 'thinks for itself'},
+      {key: 'c', text: 'randomly picks actions'},
+      {key: 'd', text: 'asks the programmer what to do'}
+    ],
+    correct: ['a'],
+    feedbackCorrect: 'Right. Computers do exactly what the code says. No more, no less.',
+    feedbackIncorrect: 'Computers are very literal. They only do what you tell them to do. Nothing more, nothing less.',
+    onCorrect: 'done',
+    onIncorrect: 'done'
+  },
+  extend_1: {
+    type: 'written',
+    prompt: 'Pick a video game you play. Describe one specific instruction you\'re confident exists somewhere in that game\'s code, and explain how you know it must exist. What happens in the game that would be impossible without it?',
+    modelAnswer: 'Example shape of a strong answer: "In [game], when the player\'s health reaches 0, the screen shows \'Game Over.\' That can\'t happen by accident. Somewhere, there\'s an instruction that checks the health value and, when it hits 0, tells the game to display that screen instead of continuing."',
+    onDone: 'done'
+  }
+};
+
+let logEl = document.getElementById('log');
+
+function renderQuestion(id) {
+  if (id === 'done') { document.getElementById('complete-box').style.display = 'block'; return; }
+  const q = QUESTIONS[id];
+  const block = document.createElement('div');
+  block.className = 'q-block';
+  block.id = 'block-' + id;
+
+  let inner = '<p class="prompt">' + q.prompt + '</p>';
+
+  if (q.type === 'single') {
+    inner += '<div class="options">' + q.options.map(o =>
+      '<label><input type="radio" name="opt-' + id + '" value="' + o.key + '"> ' + o.text + '</label>'
+    ).join('') + '</div>';
+    inner += '<button onclick="checkChoice(\'' + id + '\')">Check Answer</button>';
+  } else if (q.type === 'multi') {
+    inner += '<div class="options">' + q.options.map(o =>
+      '<label><input type="checkbox" name="opt-' + id + '" value="' + o.key + '"> ' + o.text + '</label>'
+    ).join('') + '</div>';
+    inner += '<button onclick="checkChoice(\'' + id + '\')">Check Answer</button>';
+  } else if (q.type === 'written') {
+    inner += '<textarea id="text-' + id + '" placeholder="Write your answer here..."></textarea>';
+    inner += '<div><button onclick="revealModel(\'' + id + '\')" class="secondary">Show a Model Answer</button>';
+    inner += '<button onclick="finishWritten(\'' + id + '\')">I\'m Done. Continue</button></div>';
+  }
+
+  inner += '<div class="feedback" id="feedback-' + id + '" style="display:none"></div>';
+  block.innerHTML = inner;
+  logEl.appendChild(block);
+  block.scrollIntoView({behavior: 'smooth', block: 'end'});
+}
+
+function lockBlock(id) {
+  const block = document.getElementById('block-' + id);
+  block.classList.add('answered');
+  block.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+}
+
+function checkChoice(id) {
+  const q = QUESTIONS[id];
+  const selected = Array.from(document.querySelectorAll('input[name="opt-' + id + '"]:checked')).map(el => el.value);
+  if (selected.length === 0) { alert('Pick an answer first.'); return; }
+  const isCorrect = selected.length === q.correct.length && selected.every(v => q.correct.includes(v));
+  const fb = document.getElementById('feedback-' + id);
+  fb.style.display = 'block';
+  fb.className = 'feedback ' + (isCorrect ? 'correct': 'incorrect');
+  fb.textContent = isCorrect ? q.feedbackCorrect: q.feedbackIncorrect;
+  lockBlock(id);
+  renderQuestion(isCorrect ? q.onCorrect: q.onIncorrect);
+}
+
+function revealModel(id) {
+  const q = QUESTIONS[id];
+  const fb = document.getElementById('feedback-' + id);
+  fb.style.display = 'block';
+  fb.className = 'feedback info';
+  fb.innerHTML = '<div class="model-answer">' + q.modelAnswer + '</div>';
+}
+
+function finishWritten(id) {
+  const q = QUESTIONS[id];
+  lockBlock(id);
+  renderQuestion(q.onDone);
+}
+
+// Save-in-place, added 2026-08-04 per Jay: the goal is overwriting this same file
+// where it already lives, not downloading a new copy to the Downloads folder.
+// Uses the File System Access API (showSaveFilePicker) where available — Chrome/Edge,
+// including ChromeOS, which covers most school Chromebooks. First save asks the
+// Learner to pick the file once (suggest re-selecting this same file, to overwrite
+// it); the browser's picker remembers the handle after that, so every save after the
+// first is silent, no dialog. NOT yet tested on real school devices over file:// —
+// see 05-grader/README.md's Testing Needs. Falls back to a classic download for
+// browsers without the API (Firefox, Safari), where in-place overwrite isn't possible.
+let savedFileHandle = null;
+
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  return decodeURIComponent(parts[parts.length - 1]) || 'lesson_01_01_practice.html';
+}
+
+async function saveWork() {
+  const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+  if (savedFileHandle) {
+    try {
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      return;
+    } catch (err) {
+      savedFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      savedFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+// Only start fresh at Core if this is a brand-new page load. Reopening a file that
+// was already saved mid-progress has the earlier answered questions baked into the
+// HTML already — re-running renderQuestion('core_1') here would duplicate them.
+if (logEl.children.length === 0) {
+  renderQuestion('core_1');
+}
+</script>
+
+</body>
+</html>

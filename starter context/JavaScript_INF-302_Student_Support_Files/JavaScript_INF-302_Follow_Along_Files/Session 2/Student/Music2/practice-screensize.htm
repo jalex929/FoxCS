@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Calculating Practice Hours</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+</head>
+<body onload="alert('This screen is ' + screen.width +' pixels wide and ' + screen.height + ' pixels high')";>
+    <section id="main">
+        <section id="main_content">
+            <h1>Guitar Lessons</h1>
+            <p>We have a comprehensive 20-hour series on learning to play the guitar.</p>
+            <p>
+                Enter the number of hours per week you can dedicate to learning:
+                <input type="number" id="practiceHours" name="Practice Hours:"
+                       onchange="getPracticeHours();" />
+            </p>
+            <p id="practiceWeeks">&nbsp;</p>
+
+            <script language="JavaScript">
+                function getPracticeHours() {
+                    document.getElementByID('practiceWeeks').innerHTML =
+                    'It will take you ' + 20 / parseInt(document.getElementById('practiceHours').value) +
+                    ' weeks to finish this program';
+                 }
+
+            </script>
+        </section>
+    </section>
+</body>
+</html>

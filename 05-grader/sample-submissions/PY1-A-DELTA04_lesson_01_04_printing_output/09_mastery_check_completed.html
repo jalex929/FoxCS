@@ -1,0 +1,205 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     Redesigned 2026-08-06 per Jay: mastery check answers move to a plain .py file
+     (10_mastery_check.py), edited and saved in VS Code like every other coding
+     task — matches how mastery checks "will often be things that people need to
+     code." This page is now just the password-gated prompt sheet: plain, readable
+     text once unlocked (no obfuscation — see decisions-log.md's 2026-08-06 entry
+     for why that complexity was dropped along with the old save-in-place answer
+     mechanism). Multi-variant (separate password per version) still applies if
+     this lesson gets one — see mvp-unit-folder-structure.md. Colors corrected
+     per design-system.md.
+
+     Timestamp mechanism REDESIGNED 2026-08-07 per Jay — the original version had
+     students copy a visible timestamp into their .py answer file by hand, which
+     Jay flagged as a mistake. Now: unlock time writes automatically into a hidden
+     field the moment the page unlocks; "Mark Complete & Save" writes a second
+     hidden completion time and saves this whole page in place (reusing the same
+     showSaveFilePicker mechanism as the feedback form and vocab quiz). Both
+     timestamps travel inside this file's own HTML source for the grader to read —
+     nothing for the student to transcribe. The hidden fields use a standard
+     visually-hidden-but-DOM-present technique (clipped to 1px, aria-hidden) rather
+     than literal white-on-white text, since color-matched text can still be
+     selected, printed, or picked up by some accessibility tools. Still not
+     tamper-proof — a student determined to fake it could edit dev tools before
+     saving — but far more reliable than hand-copying a time, and nothing visible
+     cluttering the page. See component-library/index.html's #12 for the prototype
+     this was built from, and teacher-materials/.../lesson_01_04_mastery_check_KEY.md
+     for the corrected note about what this convention now is.
+
+     Save filename now gets a _completed suffix (2026-08-11), same convention
+     as 04_vocab_quiz.html and 05_practice.html — lets 00_table_of_contents.html's
+     folder scan detect that this file was marked complete. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1.4.8a Mastery Check: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .q { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 1rem 1.2rem; margin: 1.2rem 0; }
+  pre { background: #eef1f5; padding: 0.6rem 0.9rem; border-radius: 3px; font-family: Consolas, monospace; overflow-x: auto; }
+  #lock { background: #f4f6f9; border: 2px solid #1a5aa8; border-radius: 8px; padding: 1.5rem; text-align: center; }
+  #lock input { font-size: 1.1rem; padding: 0.4rem 0.6rem; margin-right: 0.5rem; text-transform: uppercase; }
+  #lock button, .next-link { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; }
+  #lock button:hover { background: #12467f; }
+  #pwError { color: #b02a2a; display: none; margin-top: 0.6rem; }
+  #mcContent { display: none; }
+  .save-reminder { font-weight: bold; color: #7a3a00; margin-top: 1.5rem; }
+  .next-box { background: #f9e1ad; border: 1px solid #9a5a00; padding: 1rem 1.2rem; border-radius: 6px; margin-top: 1.5rem; }
+  .next-box p { margin: 0; }
+  .next-link { margin-top: 0.5rem; }
+  .complete-box { background: #f4f6f9; border: 2px solid #1a5aa8; border-radius: 8px; padding: 1rem 1.2rem; margin-top: 1.5rem; text-align: center; }
+  .complete-box button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.6rem 1.3rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
+  .complete-box button:hover { background: #12467f; }
+  .complete-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+  /* Back/TOC/Next footer — added 2026-08-11 per Jay, same pattern as every
+     other numbered page in this lesson. This page previously had no page-nav
+     footer at all, just the static "Up next" text in .next-box above. */
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
+</style>
+</head>
+<!-- SAMPLE SUBMISSION FIXTURE — see 05-grader/sample-submissions/README.md. -->
+<body>
+
+<h1>1.4.8a — Mastery Check: Printing Output</h1>
+
+<div id="lock" style="display:none">
+  <p>Ask your teacher for this mastery check's password.</p>
+  <input type="text" id="pwInput" placeholder="Password" maxlength="6">
+  <button onclick="checkPassword()">Unlock</button>
+  <p id="pwError">That's not the right password. Check with your teacher and try again.</p>
+</div>
+
+<div id="mcContent" style="display:block">
+
+<p>Answer all four questions in <code>10_mastery_check.py</code>. This page has the questions; your answers go in that file. Nothing to copy from this page — when you're done, come back here and click "Mark Complete &amp; Save" below.</p>
+
+<div class="q">
+<strong>1.</strong> Predict exactly what this displays:
+<pre>print("Welcome back!")
+print("You have 3 lives remaining.")</pre>
+</div>
+
+<div class="q">
+<strong>2.</strong> This line is broken. Rewrite it correctly, and name the specific mistake.
+<pre>print("Inventory Full)</pre>
+</div>
+
+<div class="q">
+<strong>3.</strong> This line is broken. Rewrite it correctly, and name the specific mistake.
+<pre>print "Quest Complete"</pre>
+</div>
+
+<div class="q">
+<strong>4.</strong> Write a single <code>print()</code> statement that could appear in a real game telling the player they don't have enough coins to buy something. Then explain, in a sentence or two, what makes your message good feedback rather than just technically-valid output.
+</div>
+
+<p class="save-reminder">Save <code>10_mastery_check.py</code> once you've answered all four.</p>
+
+<div class="complete-box">
+  Done answering? Click below — it's how this page records that you finished, no copying required.
+  <div><button onclick="markComplete()">Mark Complete &amp; Save</button></div>
+  <div class="complete-status" id="completeStatus">Saved.</div>
+</div>
+
+<div class="next-box">
+  <p><strong>Up next:</strong> <code>10_mastery_check.py</code> to write your answers, then <code>11_feedback.html</code> to close out the lesson.</p>
+</div>
+</div>
+
+<!-- Outside #mcContent on purpose — Back/TOC should work even before the
+     page is unlocked, not just once the password is entered. -->
+<div class="page-nav">
+  <div class="page-nav-note">Click "Mark Complete &amp; Save" above once <code>10_mastery_check.py</code> is done, before you leave this page.</div>
+  <div class="page-nav-links">
+    <a href="07_project.html" class="page-nav-prev">← Back: Project</a>
+    <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
+    <a href="10_mastery_check.py" class="page-nav-next">Next: 10_mastery_check.py →</a>
+  </div>
+</div>
+
+<span id="unlockTime" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;" aria-hidden="true">unlocked_at:2026-08-11T15:10:03Z</span>
+<span id="completeTime" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;" aria-hidden="true">completed_at:2026-08-11T15:24:41Z</span>
+
+<script>
+const PASSWORD = "K7QXP2"; // CHANGE ME before distributing — 6-character alphanumeric.
+let mcFileHandle = null;
+
+function checkPassword() {
+  const val = document.getElementById('pwInput').value.trim().toUpperCase();
+  if (val === PASSWORD) {
+    document.getElementById('lock').style.display = 'none';
+    document.getElementById('mcContent').style.display = 'block';
+    document.getElementById('unlockTime').textContent = 'unlocked_at:' + new Date().toISOString();
+  } else {
+    document.getElementById('pwError').style.display = 'block';
+  }
+}
+
+document.getElementById('pwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
+
+async function markComplete() {
+  document.getElementById('completeTime').textContent = 'completed_at:' + new Date().toISOString();
+  const statusEl = document.getElementById('completeStatus');
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+
+  if (mcFileHandle) {
+    try {
+      const writable = await mcFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved.';
+      return;
+    } catch (err) {
+      mcFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      mcFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const writable = await mcFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved.';
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+
+// _completed suffix added 2026-08-11, same convention as 04_vocab_quiz.html
+// and 05_practice.html — lets 00_table_of_contents.html's folder scan detect
+// that this mastery check was marked complete.
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  const original = decodeURIComponent(parts[parts.length - 1]) || '09_mastery_check.html';
+  if (original.includes('_completed')) return original;
+  return original.replace(/\.html$/, '_completed.html');
+}
+</script>
+
+</body>
+</html>

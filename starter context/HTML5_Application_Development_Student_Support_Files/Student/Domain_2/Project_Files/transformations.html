@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformations</title>
+    <style>
+        html, body {
+            background-color: #999;
+        }
+        img {
+            margin: 25px;
+            transition: 1.5s;
+        }
+
+        #img1:hover { 
+            /* add code */
+        }
+        #img2:hover { 
+            /* add code */
+            transform-origin: left;
+        }
+        #img3:hover { 
+            transform: skew(20deg, 20deg);
+        }
+        #img4:hover { 
+            /* add code */
+        }
+        #img5:hover { 
+            transform: rotateX(180deg);
+        }
+        #img6:hover { 
+            /* add code */
+        }
+    </style>
+</head>
+<body>
+    <h1>2D Transformations</h1>
+    <h2>Original</h2>
+    <img src="images/tennis.jpg" alt="" height="200" />
+    <h2>Translate</h2>
+    <h4>transform: translate(200px, 0px);</h4>
+    <img src="images/tennis.jpg" alt="" height="200" id="img1" />
+    <h2>Scale</h2>
+    <h4>transform: scale(2);</h4>
+    <img src="images/tennis.jpg" alt="" height="200" id="img2" />
+    <h2>Skew</h2>
+    <h4>transform: skew(20deg, 20deg);</h4>
+    <img src="images/tennis.jpg" alt="" height="200" id="img3" />
+    <h2>Rotate</h2>
+    <h4>transform: rotate(-45deg);</h4>
+    <img src="images/tennis.jpg" alt="" height="200" id="img4" />
+
+    <h1>3D Transformations</h1>
+    <h2>rotateX()</h2>
+    <h4>transform: rotateX(180deg);</h4>
+    <img src="images/tennis.jpg" alt="" height="200" id="img5" />
+    <h4>transform: rotateY(180deg);</h4>
+    <img src="images/tennis.jpg" alt="" height="200" id="img6" />
+
+</body>
+</html>

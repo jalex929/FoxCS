@@ -1,0 +1,252 @@
+<!-- FoxCS Theme + Telemetry Demo — added 2026-08-08.
+     A real, working proof of two designs that only exist as docs so far:
+     ../theme-system.md and ../telemetry-and-analytics.md. Linked from the main
+     component library (index.html, components #15 and #16) as an iframe, same
+     "prove the mechanic on generic content before it touches real lessons"
+     rule as everything else in the library. Uses a tiny, throwaway Core/
+     Reinforce/Extend drill (simple arithmetic) purely to generate real
+     lane_transition and drill_attempt events to look at — not real curriculum
+     content, same as the fruit/sandwich examples elsewhere in the library.
+
+     Natural and Synthwave now use the real palette from
+     logos/waypoint_theme_typography_style_guide_full.md (updated 2026-08-08,
+     replacing the earlier placeholder draft) — see ../shared-styles/foxcs-theme-natural.css
+     and foxcs-theme-synth.css for the full reasoning behind each value. Light
+     and Dark reuse the already-approved values from foxcs-base.css. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FoxCS Theme + Telemetry Demo</title>
+<link rel="stylesheet" href="../shared-styles/foxcs-base.css">
+<link rel="stylesheet" id="foxcs-theme-link" href="../shared-styles/foxcs-theme-light.css">
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 1.5rem auto; padding: 0 1.2rem; }
+  h1 { font-size: 1.4rem; }
+  .theme-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; background: var(--box-bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 1.2rem; }
+  .theme-bar label { font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; color: var(--muted-text); }
+  .theme-bar select { font-family: Verdana, Arial, sans-serif; padding: 0.3rem 0.5rem; border-radius: 4px; border: 1px solid var(--border-strong); background: var(--bg); color: var(--text); }
+  .link-editor { display: flex; align-items: center; gap: 0.5rem; flex: 1 1 260px; }
+  .link-editor input { flex: 1; font-family: Consolas, monospace; font-size: 0.8rem; padding: 0.3rem 0.5rem; border: 1px solid var(--border-strong); border-radius: 4px; background: var(--bg); color: var(--text); }
+  .placeholder-note { font-size: 0.78rem; color: var(--muted-text); margin: -0.5rem 0 1.2rem; }
+  .component { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1.3rem; margin-bottom: 1.2rem; }
+  .drill-q { font-weight: bold; margin-bottom: 0.5rem; }
+  .lane-badge { display: inline-block; font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; font-weight: bold; padding: 0.2rem 0.55rem; border-radius: 4px; margin-bottom: 0.6rem; background: var(--code-bg); color: var(--muted-text); }
+  .lane-badge.core { background: var(--box-bg-2); color: var(--term-color); }
+  .lane-badge.reinforce { background: var(--feedback-incorrect-bg); color: var(--feedback-incorrect-text); }
+  .lane-badge.extend { background: var(--feedback-correct-bg); color: var(--feedback-correct-text); }
+  .stuck-flag { margin-top: 0.6rem; font-size: 0.85rem; background: var(--feedback-incorrect-bg); color: var(--feedback-incorrect-text); padding: 0.5rem 0.7rem; border-radius: 5px; }
+  .telemetry-toggle-row { display: flex; justify-content: space-between; align-items: center; margin: 1.4rem 0 0.5rem; }
+  .telemetry-panel { display: none; background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 0.8rem; }
+  .telemetry-panel.visible { display: block; }
+  .telemetry-panel pre { margin: 0; font-size: 0.72rem; max-height: 320px; overflow-y: auto; background: none; padding: 0; }
+  .demo-note { font-size: 0.8rem; color: var(--muted-text); font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>Theme + Telemetry Demo</h1>
+<p class="demo-note">This page is a reference tool, not lesson content. It exists to prove two mechanisms work: (1) swapping the linked theme file, reconciled at Save, and (2) a hidden interaction log accumulating as you use the page. Real lesson pages would never show the panel at the bottom — it's exposed here on purpose so it can be reviewed.</p>
+
+<div class="theme-bar">
+  <label for="theme-select">Theme:</label>
+  <select id="theme-select">
+    <option value="light">Light (default)</option>
+    <option value="dark">Dark</option>
+    <option value="natural">Natural</option>
+    <option value="synth">Synthwave / Cyber</option>
+  </select>
+  <div class="link-editor">
+    <label for="link-input" style="white-space:nowrap;">Or edit the link directly:</label>
+    <input type="text" id="link-input" spellcheck="false">
+  </div>
+</div>
+<p class="placeholder-note">Natural and Synthwave now use the real palette from <code>logos/waypoint_theme_typography_style_guide_full.md</code> (see <code>shared-styles/foxcs-theme-natural.css</code> / <code>-synth.css</code> for the full reasoning). Colors are close to the current logo exploration but not final, since the logos themselves aren't final. Light and Dark reuse the already-approved palette from <code>design-system.md</code>.</p>
+
+<div class="component">
+  <div class="desc" style="font-size:0.9rem; color:var(--muted-text); margin-bottom:0.8rem;">Try both selection methods above, then click a lane-badge question below to generate some real events, then open the panel at the bottom to watch the hidden telemetry blob update live.</div>
+  <div id="drill-area"></div>
+</div>
+
+<div class="component">
+  <button class="save-btn" onclick="demoSave()">Save This Demo Page</button>
+  <span class="save-status" id="save-status"></span>
+  <div class="demo-note" style="margin-top:0.5rem;">Saving rewrites <code>#foxcs-theme-link</code>'s <code>href</code> to match whatever's currently selected, records a <code>saves</code> entry with that theme, and writes the whole page out — open the saved file and view source to see the theme link and the full telemetry JSON baked in.</div>
+</div>
+
+<div class="telemetry-toggle-row">
+  <strong style="font-family:Verdana,Arial,sans-serif; font-size:0.95rem;">Hidden telemetry data</strong>
+  <button class="reset-btn" onclick="toggleTelemetryPanel()">Show / hide</button>
+</div>
+<div class="telemetry-panel" id="telemetry-panel">
+  <pre id="telemetry-json"></pre>
+</div>
+
+<script src="../shared-styles/foxcs-telemetry.js"></script>
+<script>
+FoxCSTelemetry.init('component-library/theme-and-telemetry-demo');
+
+// ---- Theme link swap (dropdown + direct edit, reconciled) ----
+const THEME_FILES = {
+  light: '../shared-styles/foxcs-theme-light.css',
+  dark: '../shared-styles/foxcs-theme-dark.css',
+  natural: '../shared-styles/foxcs-theme-natural.css',
+  synth: '../shared-styles/foxcs-theme-synth.css'
+};
+const themeLink = document.getElementById('foxcs-theme-link');
+const themeSelect = document.getElementById('theme-select');
+const linkInput = document.getElementById('link-input');
+let currentThemeKey = 'light';
+
+function keyFromHref(href) {
+  const found = Object.entries(THEME_FILES).find(([, path]) => href.endsWith(path.split('/').pop()));
+  return found ? found[0] : null;
+}
+
+function applyTheme(key, method) {
+  if (!THEME_FILES[key]) return;
+  const from = currentThemeKey;
+  currentThemeKey = key;
+  themeLink.href = THEME_FILES[key];
+  themeSelect.value = key;
+  linkInput.value = THEME_FILES[key];
+  if (from !== key) {
+    FoxCSTelemetry.log('theme_change', { from: from, to: key, method: method });
+  }
+}
+
+themeSelect.addEventListener('change', e => applyTheme(e.target.value, 'dropdown'));
+linkInput.addEventListener('change', e => {
+  const key = keyFromHref(e.target.value.trim());
+  if (key) {
+    applyTheme(key, 'link_edit');
+  } else {
+    e.target.value = THEME_FILES[currentThemeKey];
+  }
+});
+applyTheme('light', 'init');
+
+// ---- Tiny Core/Reinforce/Extend drill (arithmetic, generic — same "prove the
+// mechanic on throwaway content" rule as every other library component).
+// Sized only to demonstrate lane_transition + drill_attempt + the "stuck"
+// heuristic from telemetry-and-analytics.md — not a template for real drills. ----
+const SKILL_ID = 'demo_arithmetic';
+let lane = 'core';
+let reinforceMisses = 0;
+
+const QUESTIONS = {
+  core: { id: 'core_01', text: 'What is 6 + 7?', answer: '13' },
+  core2: { id: 'core_02', text: 'One more, back in Core: what is 9 + 5?', answer: '14' },
+  reinforce: { id: 'reinforce_01', text: 'Reinforce: what is 2 + 3?', answer: '5' },
+  reinforce2: { id: 'reinforce_02', text: 'Another Reinforce item: what is 4 + 4?', answer: '8' },
+  extend: { id: 'extend_01', text: 'Extend: what is 15 x 12?', answer: '180' }
+};
+
+function renderDrill(qKey, laneClass) {
+  const q = QUESTIONS[qKey];
+  const area = document.getElementById('drill-area');
+  area.innerHTML =
+    '<span class="lane-badge ' + laneClass + '">' + laneClass + '</span>' +
+    '<div class="drill-q">' + q.text + '</div>' +
+    '<input type="text" class="txt" id="drill-input" style="width:6rem;">' +
+    ' <button class="check-btn" onclick="drillCheck(\'' + qKey + '\', \'' + laneClass + '\')">Check</button>' +
+    '<div class="feedback" id="drill-feedback"></div>';
+}
+
+function drillCheck(qKey, laneClass) {
+  const q = QUESTIONS[qKey];
+  const val = document.getElementById('drill-input').value.trim();
+  const correct = val === q.answer;
+  const fb = document.getElementById('drill-feedback');
+
+  FoxCSTelemetry.log('drill_attempt', {
+    skill_id: SKILL_ID, item_id: q.id, lane: laneClass, correct: correct,
+    attempt_number: laneClass === 'reinforce' ? reinforceMisses + 1 : 1
+  });
+
+  if (laneClass === 'core' && qKey === 'core') {
+    if (correct) {
+      fb.className = 'feedback correct'; fb.textContent = 'Right! Moving to Extend.';
+      FoxCSTelemetry.log('lane_transition', { skill_id: SKILL_ID, from: 'core', to: 'extend', reason: 'correct_advance' });
+      setTimeout(() => renderDrill('extend', 'extend'), 900);
+    } else {
+      fb.className = 'feedback incorrect'; fb.textContent = 'Not quite — moving to a Reinforce item.';
+      FoxCSTelemetry.log('lane_transition', { skill_id: SKILL_ID, from: 'core', to: 'reinforce', reason: 'incorrect' });
+      reinforceMisses = 0;
+      setTimeout(() => renderDrill('reinforce', 'reinforce'), 900);
+    }
+  } else if (laneClass === 'reinforce') {
+    if (correct) {
+      fb.className = 'feedback correct'; fb.textContent = 'Recovered! Back to Core.';
+      FoxCSTelemetry.log('lane_transition', { skill_id: SKILL_ID, from: 'reinforce', to: 'core', reason: 'correct_recovered' });
+      reinforceMisses = 0;
+      setTimeout(() => renderDrill('core2', 'core'), 900);
+    } else {
+      reinforceMisses++;
+      fb.className = 'feedback incorrect'; fb.textContent = 'Still not quite — another Reinforce item (sticky lane, per the ladder rule).';
+      if (reinforceMisses >= 2) {
+        fb.innerHTML += '<div class="stuck-flag">This is exactly the pattern telemetry-and-analytics.md flags as "stuck": 2+ consecutive incorrect Reinforce attempts on the same skill with no recovery yet.</div>';
+      }
+      setTimeout(() => renderDrill('reinforce2', 'reinforce'), 1400);
+    }
+  } else if (laneClass === 'extend') {
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    fb.textContent = correct ? 'Right! Strong here — demo drill complete.' : 'Not quite, but Extend is a sticky lane too — this demo just ends here rather than looping forever.';
+  } else if (qKey === 'core2') {
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    fb.textContent = correct ? 'Right — recovery confirmed with a second Core item. Demo complete.' : 'Not this time — in the real ladder this would route back to Reinforce again.';
+  }
+}
+renderDrill('core', 'core');
+
+// ---- Telemetry panel toggle ----
+function toggleTelemetryPanel() {
+  const panel = document.getElementById('telemetry-panel');
+  panel.classList.toggle('visible');
+  if (panel.classList.contains('visible')) refreshTelemetryView();
+}
+function refreshTelemetryView() {
+  document.getElementById('telemetry-json').textContent = JSON.stringify(FoxCSTelemetry.getState(), null, 2);
+}
+// Keep the visible panel live without requiring a manual refresh click.
+setInterval(() => {
+  if (document.getElementById('telemetry-panel').classList.contains('visible')) refreshTelemetryView();
+}, 500);
+
+// ---- Save-in-place, reconciling the theme link before serializing ----
+let demoFileHandle = null;
+async function demoSave() {
+  FoxCSTelemetry.recordSave(currentThemeKey);
+  const statusEl = document.getElementById('save-status');
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+  if (demoFileHandle) {
+    try {
+      const w = await demoFileHandle.createWritable();
+      await w.write(htmlContent); await w.close();
+      statusEl.textContent = 'Saved.';
+      return;
+    } catch (e) { demoFileHandle = null; }
+  }
+  if ('showSaveFilePicker' in window) {
+    try {
+      demoFileHandle = await window.showSaveFilePicker({
+        suggestedName: 'theme_telemetry_demo_save.html',
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const w = await demoFileHandle.createWritable();
+      await w.write(htmlContent); await w.close();
+      statusEl.textContent = 'Saved — open the file and view source for the theme link + full telemetry JSON.';
+      return;
+    } catch (e) { if (e.name === 'AbortError') return; }
+  }
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'theme_telemetry_demo_save.html';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy.';
+}
+</script>
+
+</body>
+</html>

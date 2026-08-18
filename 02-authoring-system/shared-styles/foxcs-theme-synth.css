@@ -1,0 +1,78 @@
+/* FoxCS theme file — Synthwave / Cyber. Updated 2026-08-10 for a real
+   contrast pass — replaces the 2026-08-08 version. That version's feedback
+   colors technically passed AA/AAA for text-on-box, but every box was still
+   a *dark* tint sitting on the dark page (e.g. success #155C3F on bg
+   #1D1E54) — box-vs-page contrast measured only ~1.4-2.1:1, so a feedback
+   box barely registered as its own surface even though the text inside it
+   was readable. Fixed by flipping to bright, saturated chips with dark text
+   (mirroring how the Badge/Border-Strong pink already worked well) — every
+   pair below was computed with the real WCAG formula, not eyeballed.
+
+   Also "expanded" per Jay's request for more range: Accent is now a genuine
+   fifth hue (violet) rather than reusing Error's magenta, so the palette
+   reads as cyan / magenta-pink / violet / amber / green / blue-violet rather
+   than just cyan-and-magenta. Font token added: Sora for body text (a
+   geometric, tech-flavored sans built for UI/body legibility — unlike
+   JetBrains Mono, which the guide explicitly rules out for long passages,
+   Section 7). JetBrains Mono stays the heading + code font, unchanged.
+
+   Border Strong stays the brand magenta #D52AE3 (2026-08-08 fix, kept) —
+   still legitimate under the guide's Critical Synthwave Contrast Rule: ~3.86:1
+   clears the 3:1 non-text-UI minimum even though it fails for text. */
+
+:root {
+  --font-heading: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --font-body: "Sora", "Atkinson Hyperlegible", system-ui, sans-serif;
+
+  --bg: #1D1E54;
+  --text: #F8F7FF;              /* ~14.5:1 — AAA */
+  --heading: #F8F7FF;           /* guide: headings default to near-white, cyan reserved for accented portions only */
+  --muted-text: #C8CAF6;        /* ~9.7:1 — AAA */
+  --primary: #16E2F5;           /* ~9.7:1 — AAA */
+  --primary-hover: #4DEAF7;
+  --primary-text-on: #1D1E54;   /* dark text on the bright cyan fill */
+  --amber: #7A1F94;             /* secondary-action fill — darkened magenta so FoxCS's hardcoded white button text (foxcs-base.css .save-btn) stays AA-safe */
+  --amber-hover: #932AB0;
+  --amber-text: #E656F3;        /* accessibility-adjusted magenta, ~5.1:1 — for magenta-colored TEXT, not fills */
+  --box-bg: #272765;
+  --box-bg-2: #303075;
+  --border: #636BC4;            /* ~3.2:1 */
+  --border-strong: #D52AE3;     /* brand magenta, ~3.86:1 — non-text UI only, see header note */
+  --accent-dashed: #B79CFF;     /* violet, updated 2026-08-10 — Jay wants the violet accent used more; a drag-drop drop-zone border is real interactive surface, not just a badge. ~5.1-5.9:1 against box-bg/box-bg-2, comfortably clears the 3:1 non-text minimum. */
+  --term-color: #16E2F5;
+
+  /* Feedback — redesigned 2026-08-10 as bright chips with dark text (flipped
+     from dark-tint-with-light-text), specifically to fix the box-vs-page
+     problem described above. Every pair now clears AAA for text AND reads as
+     a genuinely distinct surface against the dark page:
+       success: #3DDC97 bg, ~8.7:1 text, ~8.7:1 vs page
+       warning: #FFC15E bg, ~9.0:1 text, ~9.6:1 vs page
+       error:   #EE5FDD bg, ~7.1:1 text, ~5.4:1 vs page
+       accent:  #B79CFF bg, ~8.2:1 text, ~6.7:1 vs page (new: a genuine 5th hue, violet, not a magenta reuse)
+       info:    #7E97FA bg, ~7.4:1 text, ~5.6:1 vs page */
+  --feedback-correct-bg: #3DDC97;
+  --feedback-correct-text: #0C2A1E;
+  --feedback-incorrect-bg: #EE5FDD;
+  --feedback-incorrect-text: #0D0110;
+  --placed-bg: #4A3B7A;         /* violet, updated 2026-08-10 (was box-bg-2's plain blue-violet) — gives "already placed" pieces their own violet identity distinct from the active-cyan blocks still in the bank. ~7.1:1 with --placed-text. */
+  --placed-text: #E4D9FF;
+  --code-bg: #11123B;
+
+  --color-success: #0C2A1E;
+  --color-success-bg: #3DDC97;
+  --color-warning: #402200;
+  --color-warning-bg: #FFC15E;
+  --color-error: #0D0110;
+  --color-error-bg: #EE5FDD;
+  --color-info: #030614;
+  --color-info-bg: #7E97FA;
+  --color-accent: #160A33;
+  --color-accent-bg: #B79CFF;
+
+  /* Decorative tokens per the guide's Section 30 — 0.08 is the guide's own
+     suggested grid opacity. See theme-typography-specimen.html for the
+     working implementation (a plain CSS line grid, no scanlines/flicker). */
+  --decoration-texture-opacity: 0;
+  --decoration-grid-opacity: 0.08;
+  --decoration-glow: 0 0 18px rgba(22, 226, 245, 0.18);
+}

@@ -1,0 +1,697 @@
+<!-- SAMPLE SUBMISSION FIXTURE — see 05-grader/sample-submissions/README.md. -->
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     Redesigned 2026-08-06 per Jay: Duolingo-style drills (click-to-build blocks,
+     dropdown fill-in-blank, typed fill-in-blank), auto-checked. Extended later
+     the same day with a combined dropdown+typed blank (Drill 6) and a bonus
+     indentation-aware two-line block builder (Drill 7, a Unit 05 sneak peek).
+     Drill 8 (compound-error diagnosis) and the self-check reminder above
+     Drill 1 (moved from 01_instruction.html's old passive checklist) added
+     2026-08-10.
+
+     REVERSED 2026-08-11 per Jay: this page used to be explicitly throwaway
+     ("nothing is saved here, no filesystem writes at all"). It's not anymore.
+     Jay wants practice results saved and submitted — this is what tells him
+     what a student actually practiced, where they struggled, and what their
+     path through the material looked like. Added: a hidden per-page event
+     log (same mechanism as 02-authoring-system/shared-styles/foxcs-telemetry.js,
+     hand-copied inline rather than linked — real lesson content still doesn't
+     link shared-styles/, see that folder's README.md on the open Classroom
+     folder-structure question) recording every Check click, and a Save button
+     using the same showSaveFilePicker pattern as 04_vocab_quiz.html. Save is
+     NOT gated on getting everything right — a student may finish having
+     attempted a different number of drills, or gotten some wrong, and that's
+     real information, not something to hide by blocking the save.
+
+     Code-display panels restyled toward a simulated-IDE look (dark panel,
+     monospace) per Jay's "the practice will be some simulated IDE content"
+     note — a lighter-weight version of component-library #14's IDE surface,
+     not the full transport-controlled stepper (these are simple fill-in/
+     build drills, not code execution walkthroughs).
+
+     Drill 7's two-line block builder changed from two separate per-line
+     banks to ONE combined bank (2026-08-11 per Jay) — a student now has to
+     work out which line a piece belongs to, not just its order within an
+     already-sorted subset. Click a bank piece, then click Line 1 or Line 2
+     to place it there (click a placed piece to send it back).
+
+     NOT done in this pass, flagged rather than guessed at: true adaptive
+     branching (skipping/adding drills based on performance) would reverse
+     the 2026-08-06 decision to drop the old stateful Reinforce/Core/Extend
+     router in favor of a flat list — that's a bigger architectural call
+     than this pass covers, so the flat list stays and the *event log*
+     captures the trajectory instead (attempts, correctness, order) without
+     the page itself dynamically rerouting. Also not done: a full DOK
+     rigor rewrite of every drill (Jay flagged the current dropdown/typed-
+     blank approach as an acceptable baseline "worst case," not a final
+     state) and self-hosted Waypoint fonts (this page still uses system
+     fonts/Consolas, not Atkinson Hyperlegible/JetBrains Mono, to avoid
+     adding a large embedded-font payload to real lesson content in this
+     pass).
+
+     FIXED 2026-08-11 per Jay: Drill 7's prompt and Drills 3/4/6's incorrect-
+     answer feedback used to point back at "the Key Terms section" or "that
+     section on the instructional page" without restating what's there —
+     same "don't require recall of a past section" fix applied elsewhere in
+     this lesson (07_project.html's Game Connection card). Drill 7's prompt
+     now states the if/indented-line pattern inline; Drills 3, 4, and 6's
+     feedback now gives a self-contained clue instead of a pointer, since
+     the drills' own prompts already contain the full definition anyway.
+     Drills 3/4's hints were then toned down again the same day — an earlier
+     pass gave away the answer's first letters and exact length, too strong
+     a hint for a recall drill.
+
+     FIXED 2026-08-11 (separate bug, same day): Drill 7's bank rendered in
+     d7Pieces' own definition order, which happened to already be the exact
+     order both target lines needed — the drill was solvable without reading
+     it, just clicking top to bottom. Bank now renders in a shuffled order
+     (d7BankOrder), same fix pattern as Drills 1/5's initBlockDrill().
+
+     RENAMED 2026-08-11 per Jay: this page is "Practice," not "Practice
+     Drills" or "Guided Practice." "Guided practice" is reserved for the
+     embedded quick-checks inside 01_instruction.html (ungraded, right next
+     to the teaching); this standalone page is the independent practice step
+     that comes after — see adaptive-practice-model.md. -->
+
+<!-- Design note, added 2026-08-11, not yet built: this page is slated to be
+     rebuilt from its current 8-drill flat list into the small adaptive
+     skill-node model in adaptive-practice-model.md (spiral review items,
+     Game Connection/UX items, mixed auto-/teacher-checked assessment). This
+     file still reflects the pre-redesign flat-list structure. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1.4.5 Practice: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
+  .reminder { background: #f9e1ad; border: 1px solid #9a5a00; border-radius: 6px; padding: 0.9rem 1.2rem; margin-bottom: 1.2rem; font-size: 0.92rem; }
+  .reminder-title { font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #7a3a00; margin-bottom: 0.4rem; }
+  .reminder ul { margin: 0.3rem 0 0; padding-left: 1.3rem; }
+  .reminder li { margin: 0.2rem 0; }
+  .drill { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 1.2rem 1.4rem; margin: 1.2rem 0; }
+  .drill-type { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .drill-prompt { font-weight: bold; margin-bottom: 0.9rem; }
+
+  /* Block builder — simulated-IDE dark panel for the bank/answer areas */
+  .block-bank { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem; min-height: 2.4rem; padding: 0.6rem; background: #1e2430; border-radius: 6px; }
+  .block-answer { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem; min-height: 2.4rem; padding: 0.6rem; background: #262d3d; border: 2px dashed #5b9bd8; border-radius: 6px; cursor: pointer; }
+  .code-block { font-family: Consolas, monospace; background: #3d7fc4; color: white; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer; border: none; font-size: 0.95rem; }
+  .code-block:hover { background: #5b9bd8; }
+  .code-block.placed { background: #33415c; color: #cbd3e0; cursor: pointer; }
+  .code-block.selected { outline: 2px solid #f9e1ad; outline-offset: 1px; }
+
+  /* Dropdown / typed — same dark simulated-IDE panel */
+  .drill-code-line { font-family: Consolas, monospace; background: #1e2430; color: #e6e9ef; padding: 0.7rem 1rem; border-radius: 6px; margin-bottom: 0.9rem; font-size: 1rem; }
+  select.drill-select, input.drill-input { font-family: Consolas, monospace; font-size: 1rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+
+  button.check-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
+  button.check-btn:hover { background: #12467f; }
+  button.reset-btn { font-family: Verdana, Arial, sans-serif; background: none; color: #445; border: 1px solid #ccd3dd; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-left: 0.5rem; }
+
+  .feedback { margin-top: 0.8rem; padding: 0.6rem 0.9rem; border-radius: 5px; display: none; font-size: 0.95rem; }
+  .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+
+  /* Combined blank (dropdown + typed in one sentence) */
+  .blank-passage { font-family: Georgia, serif; font-size: 1.02rem; line-height: 1.8; margin-bottom: 0.9rem; }
+
+  /* Sneak-peek multi-line indentation block builder */
+  .sneak-peek { border: 2px dashed #4a3aa7; }
+  .sneak-peek .drill-type { color: #4a3aa7; }
+  .code-line-row { margin-bottom: 1rem; }
+  .code-line-label { font-size: 0.8rem; color: #555; margin-bottom: 0.3rem; }
+  .code-line-row.indented { padding-left: 2.2rem; border-left: 3px solid #c5c0e3; }
+
+  .page-nav { margin-top: 1.2rem; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
+
+  .save-row { text-align: center; margin: 2rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid #dde3ea; }
+  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+  button.save-btn:hover { background: #5c2c00; }
+  .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+</style>
+<script type="application/json" id="foxcs-telemetry" aria-hidden="true">
+{
+  "page_id": "lesson_01_04_printing_output/05_practice",
+  "opened_at": "2026-08-11T14:30:05Z",
+  "saves": [
+    { "at": "2026-08-11T14:47:12Z" }
+  ],
+  "events": [
+    { "type": "drill_attempt", "at": "2026-08-11T14:31:40Z", "drill_id": "drill1", "correct": true, "attempt_number": 1 },
+    { "type": "drill_attempt", "at": "2026-08-11T14:32:55Z", "drill_id": "drill2", "correct": true, "attempt_number": 1, "selected": "a" },
+    { "type": "drill_attempt", "at": "2026-08-11T14:34:02Z", "drill_id": "drill3", "correct": false, "attempt_number": 1 },
+    { "type": "drill_attempt", "at": "2026-08-11T14:34:41Z", "drill_id": "drill3", "correct": true, "attempt_number": 2 },
+    { "type": "drill_attempt", "at": "2026-08-11T14:35:20Z", "drill_id": "drill4", "correct": true, "attempt_number": 1 },
+    { "type": "drill_attempt", "at": "2026-08-11T14:36:10Z", "drill_id": "drill5", "correct": true, "attempt_number": 1 },
+    { "type": "drill_attempt", "at": "2026-08-11T14:38:05Z", "drill_id": "drill6", "correct": false, "attempt_number": 1, "selectOk": true, "typedOk": false },
+    { "type": "drill_attempt", "at": "2026-08-11T14:38:52Z", "drill_id": "drill6", "correct": true, "attempt_number": 2, "selectOk": true, "typedOk": true },
+    { "type": "drill_attempt", "at": "2026-08-11T14:41:30Z", "drill_id": "drill7", "correct": false, "attempt_number": 1, "lineA": true, "lineB": false },
+    { "type": "drill_attempt", "at": "2026-08-11T14:44:15Z", "drill_id": "drill8", "correct": false, "attempt_number": 1, "selected": "b" },
+    { "type": "drill_attempt", "at": "2026-08-11T14:45:30Z", "drill_id": "drill8", "correct": true, "attempt_number": 2, "selected": "c" }
+  ]
+}
+</script>
+</head>
+<body data-page-id="lesson_01_04_printing_output/05_practice">
+
+<h1>1.4.5 — Practice</h1>
+<div class="intro">Quick practice with immediate feedback, building up to the real hands-on writing in <code>06_application.py</code> next. This is typically <strong>8-15 questions</strong>. <strong>This page is saved and submitted</strong> — your exact path through it (which questions, how many tries, where you needed support) is what this records, so it's fine if your path looks different from a classmate's. This isn't a race to finish fast.</div>
+
+<div class="reminder">
+  <div class="reminder-title">Quick self-check before you click Check</div>
+  <ul>
+    <li>The word <code>print</code> is all lowercase</li>
+    <li>Parentheses are present: <code>()</code></li>
+    <li>The string is surrounded by matching quotes</li>
+    <li>The string is inside the parentheses</li>
+    <li>No extra characters outside the quotes</li>
+  </ul>
+</div>
+
+<!-- Drill 1: Block builder -->
+<div class="drill" id="drill1">
+  <div class="drill-type">Build the Code</div>
+  <div class="drill-prompt">Click the blocks in order to build a print() statement that displays exactly: Ready to play!</div>
+  <div class="block-answer" id="d1-answer"><button class="code-block placed">print</button><button class="code-block placed">(</button><button class="code-block placed">"Ready to play!"</button><button class="code-block placed">)</button></div>
+  <div class="block-bank" id="d1-bank"></div>
+  <button class="check-btn" onclick="checkDrill1()">Check</button>
+  <button class="reset-btn" onclick="resetDrill1()">Reset</button>
+  <div class="feedback correct" id="d1-feedback">Right! print("Ready to play!") displays exactly that text.</div>
+</div>
+
+<!-- Drill 2: Dropdown fill-in-the-blank -->
+<div class="drill" id="drill2">
+  <div class="drill-type">Choose the Correct Fix</div>
+  <div class="drill-prompt">Pick the option that makes this line valid Python, displaying: Level up!</div>
+  <div class="drill-code-line">print(<select class="drill-select" id="d2-select">
+    <option value="">Choose...</option>
+    <option value="a" selected>"Level up!"</option>
+    <option value="b">'Level up!</option>
+    <option value="c">Level up!</option>
+    <option value="d">"Level up!'</option>
+  </select>)</div>
+  <button class="check-btn" onclick="checkDrill2()">Check</button>
+  <div class="feedback correct" id="d2-feedback">Right! Matching double quotes around the full text.</div>
+</div>
+
+<!-- Drill 3: Typed fill-in-the-blank -->
+<div class="drill" id="drill3">
+  <div class="drill-type">Fill in the Blank</div>
+  <div class="drill-prompt">The value passed into a function, like <code>"Hello"</code> in <code>print("Hello")</code>, is called the ______.</div>
+  <input type="text" class="drill-input" id="d3-input" placeholder="Type your answer" value="argument">
+  <button class="check-btn" onclick="checkDrill3()">Check</button>
+  <div class="feedback correct" id="d3-feedback">Right! "Hello" is the argument passed into print().</div>
+</div>
+
+<!-- Drill 4: Typed fill-in-the-blank -->
+<div class="drill" id="drill4">
+  <div class="drill-type">Fill in the Blank</div>
+  <div class="drill-prompt">Text wrapped in quote marks, like <code>"Hello"</code>, is called a ______.</div>
+  <input type="text" class="drill-input" id="d4-input" placeholder="Type your answer" value="string">
+  <button class="check-btn" onclick="checkDrill4()">Check</button>
+  <div class="feedback correct" id="d4-feedback">Right! Any text wrapped in quotes is a string.</div>
+</div>
+
+<!-- Drill 5: Block builder, second pattern -->
+<div class="drill" id="drill5">
+  <div class="drill-type">Build the Code</div>
+  <div class="drill-prompt">Click the blocks in order to build a print() statement that displays exactly: Game Over</div>
+  <div class="block-answer" id="d5-answer"><button class="code-block placed">print</button><button class="code-block placed">(</button><button class="code-block placed">"Game Over"</button><button class="code-block placed">)</button></div>
+  <div class="block-bank" id="d5-bank"></div>
+  <button class="check-btn" onclick="checkDrill5()">Check</button>
+  <button class="reset-btn" onclick="resetDrill5()">Reset</button>
+  <div class="feedback correct" id="d5-feedback">Right! print("Game Over") displays exactly that text.</div>
+</div>
+
+<!-- Drill 6: Combined dropdown + typed blank in one passage -->
+<div class="drill" id="drill6">
+  <div class="drill-type">Fill in Both Blanks</div>
+  <div class="drill-prompt">One blank has choices. The other, you type yourself.</div>
+  <div class="blank-passage">
+    A <code>print()</code> statement needs three parts: the word <code>print</code> (always
+    <select class="drill-select" id="d6-select">
+      <option value="">choose...</option>
+      <option value="a" selected>lowercase</option>
+      <option value="b">UPPERCASE</option>
+      <option value="c">Capitalized</option>
+    </select>), parentheses, and text wrapped in
+    <input type="text" class="drill-input" id="d6-input" placeholder="type your answer" style="width: 10rem;" value="quotes">.
+  </div>
+  <button class="check-btn" onclick="checkDrill6()">Check</button>
+  <div class="feedback correct" id="d6-feedback">Right on both! print is always lowercase, and text goes inside quotes.</div>
+</div>
+
+<!-- Drill 7: Bonus sneak peek — indentation-aware block builder, previewing Unit 05.
+     Combined single bank as of 2026-08-11 — see header comment. -->
+<div class="drill sneak-peek" id="drill7">
+  <div class="drill-type">Bonus — Apply the Unit 05 Sneak Peek</div>
+  <div class="drill-prompt">This is the pattern from the instructional page's "Sneak Peek: What's Coming in Unit 05" section: an <code>if</code> line that names a condition and ends in a colon, followed by an indented line that only runs when that condition is true. Build both lines below. All the pieces for <strong>both</strong> lines are mixed together in one bank — click a piece, then click Line 1 or Line 2 to place it there.</div>
+
+  <div class="code-line-row">
+    <div class="code-line-label">Line 1</div>
+    <div class="block-answer" id="d7a-answer"><button class="code-block placed">if</button><button class="code-block placed">health &lt;= 0</button><button class="code-block placed">:</button></div>
+  </div>
+
+  <div class="code-line-row indented">
+    <div class="code-line-label">Line 2 (indented — this line runs only if line 1 is true)</div>
+    <div class="block-answer" id="d7b-answer"><button class="code-block placed">print</button><button class="code-block placed">(</button><button class="code-block placed">)</button><button class="code-block placed">"Game Over"</button></div>
+  </div>
+
+  <div class="code-line-label" style="margin-top:0.9rem;">All pieces (for both lines)</div>
+  <div class="block-bank" id="d7-bank"></div>
+
+  <button class="check-btn" onclick="checkDrill7()">Check Both Lines</button>
+  <button class="reset-btn" onclick="resetDrill7()">Reset</button>
+  <div class="feedback incorrect" id="d7-feedback">Not quite yet. Line 2 isn't right yet either — it's the same print() pattern from earlier in this lesson.</div>
+</div>
+
+<!-- Drill 8: diagnose a compound error (missing quote AND missing paren at once) —
+     added 2026-08-10 per Jay: the instructional page's Two Mistakes section
+     deliberately isolates one error per example so each is easy to see. This
+     drill is the deliberate follow-up — a line with both problems at once, so
+     students practice not stopping at the first thing they spot. -->
+<div class="drill" id="drill8">
+  <div class="drill-type">Diagnose the Bug</div>
+  <div class="drill-prompt">Which best describes what's wrong with this line?</div>
+  <div class="drill-code-line">print("Not enough gold</div>
+  <select class="drill-select" id="d8-select">
+    <option value="">Choose...</option>
+    <option value="a">Missing the closing quote only</option>
+    <option value="b">Missing the closing parenthesis only</option>
+    <option value="c" selected>Missing both the closing quote and the closing parenthesis</option>
+    <option value="d">Nothing is wrong with this line</option>
+  </select>
+  <button class="check-btn" onclick="checkDrill8()">Check</button>
+  <div class="feedback correct" id="d8-feedback">Right! Two things are missing here: the string never closes (no closing "), and because of that Python never even reaches a closing ) — it would have landed inside the still-open string. Both need fixing.</div>
+</div>
+
+<div class="save-row">
+  <button class="save-btn" onclick="saveWork()">Save My Practice</button>
+  <div class="save-status" id="saveStatus">Saved as 05_practice_completed.html.</div>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-note">Save above before you leave this page.</div>
+  <div class="page-nav-links">
+    <a href="04_vocab_quiz.html" class="page-nav-prev">← Back: Vocab Quiz</a>
+    <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
+    <a href="06_application.py" class="page-nav-next">Next: 06_application.py →</a>
+  </div>
+</div>
+
+<script>
+// ---- Telemetry: hidden per-page event log — see 02-authoring-system/
+// telemetry-and-analytics.md for the full schema this is a hand-copied,
+// page-local instance of (not linked to shared-styles/, same reasoning as
+// the CSS above). Records what actually happened: every Check click, with
+// which drill, was it right, and how many times this drill's been attempted
+// this session — enough to reconstruct a student's real path afterward. ----
+let telemetry = { page_id: 'lesson_01_04_printing_output/05_practice', opened_at: new Date().toISOString(), saves: [], events: [] };
+const drillAttemptCounts = {};
+let hasUnsavedWork = false;
+function logDrillAttempt(drillId, correct, extra) {
+  drillAttemptCounts[drillId] = (drillAttemptCounts[drillId] || 0) + 1;
+  telemetry.events.push(Object.assign({
+    type: 'drill_attempt', at: new Date().toISOString(),
+    drill_id: drillId, correct: correct, attempt_number: drillAttemptCounts[drillId]
+  }, extra || {}));
+  hasUnsavedWork = true;
+}
+
+// Warn before closing/navigating away with unsaved attempts — added
+// 2026-08-11 per Jay. Native browser dialog, can't be custom-worded (browsers
+// override the message text for security reasons), but it does the job: it
+// only fires if something's been attempted since the last save.
+window.addEventListener('beforeunload', (e) => {
+  if (hasUnsavedWork) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+function writeTelemetryToDom() {
+  let el = document.getElementById('foxcs-telemetry');
+  if (!el) {
+    el = document.createElement('script');
+    el.type = 'application/json';
+    el.id = 'foxcs-telemetry';
+    el.setAttribute('aria-hidden', 'true');
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(telemetry, null, 2);
+}
+writeTelemetryToDom();
+
+// ---- Drill 1: block builder ----
+const d1Target = ['print', '(', '"Ready to play!"', ')'];
+let d1Placed = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// bankOrder is fixed once (at initBlockDrill) and threaded through every
+// re-render — fixed 2026-08-11 per Jay: this used to rebuild the bank by
+// iterating target's own definition order on every render, so remaining
+// pieces snapped back into unshuffled order the moment one was placed.
+// Now a taken piece is just removed from bankOrder's filtered view and
+// everything after it shifts left, exactly as it should.
+function renderBlockDrill(bankId, answerId, target, placed, bankOrder) {
+  const bank = document.getElementById(bankId);
+  const answer = document.getElementById(answerId);
+  bank.innerHTML = '';
+  answer.innerHTML = '';
+  bankOrder.forEach(i => {
+    if (!placed.includes(i)) {
+      const btn = document.createElement('button');
+      btn.className = 'code-block';
+      btn.textContent = target[i];
+      btn.onclick = () => { placed.push(i); renderBlockDrill(bankId, answerId, target, placed, bankOrder); };
+      bank.appendChild(btn);
+    }
+  });
+  placed.forEach(i => {
+    const btn = document.createElement('button');
+    btn.className = 'code-block placed';
+    btn.textContent = target[i];
+    btn.onclick = () => { placed.splice(placed.indexOf(i), 1); renderBlockDrill(bankId, answerId, target, placed, bankOrder); };
+    answer.appendChild(btn);
+  });
+}
+
+function initBlockDrill(bankId, answerId, target, placedRef) {
+  const shuffledOrder = shuffle(target.map((_, i) => i));
+  const bank = document.getElementById(bankId);
+  bank.innerHTML = '';
+  document.getElementById(answerId).innerHTML = '';
+  shuffledOrder.forEach(i => {
+    const btn = document.createElement('button');
+    btn.className = 'code-block';
+    btn.textContent = target[i];
+    btn.onclick = () => { placedRef.push(i); renderBlockDrill(bankId, answerId, target, placedRef, shuffledOrder); };
+    bank.appendChild(btn);
+  });
+}
+
+initBlockDrill('d1-bank', 'd1-answer', d1Target, d1Placed);
+
+function checkDrill1() {
+  const fb = document.getElementById('d1-feedback');
+  const built = d1Placed.map(i => d1Target[i]).join('');
+  const correct = built === d1Target.join('');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  fb.textContent = correct
+    ? 'Right! print("Ready to play!") displays exactly that text.'
+    : 'Not quite. Check the order: print, then (, then the quoted text, then ).';
+  logDrillAttempt('drill1', correct);
+  writeTelemetryToDom();
+}
+
+function resetDrill1() {
+  d1Placed = [];
+  initBlockDrill('d1-bank', 'd1-answer', d1Target, d1Placed);
+  document.getElementById('d1-feedback').className = 'feedback';
+}
+
+// ---- Drill 2: dropdown ----
+function checkDrill2() {
+  const val = document.getElementById('d2-select').value;
+  const fb = document.getElementById('d2-feedback');
+  const correct = val === 'a';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  if (val === 'a') {
+    fb.textContent = 'Right! Matching double quotes around the full text.';
+  } else if (val === 'b') {
+    fb.textContent = 'Close. That quote never gets closed, missing the final ". That raises a SyntaxError.';
+  } else if (val === 'c') {
+    fb.textContent = 'No quotes at all means Python reads "Level" and "up" as undefined names, not text.';
+  } else if (val === 'd') {
+    fb.textContent = 'The opening and closing quote marks don\'t match (" vs \').';
+  } else {
+    fb.textContent = 'Pick an option first.';
+    return;
+  }
+  logDrillAttempt('drill2', correct, { selected: val });
+  writeTelemetryToDom();
+}
+
+// ---- Drill 3 & 4: typed ----
+function checkTyped(inputId, feedbackId, acceptable, correctMsg, incorrectMsg, drillId) {
+  const val = document.getElementById(inputId).value.trim().toLowerCase();
+  const fb = document.getElementById(feedbackId);
+  const isCorrect = acceptable.includes(val);
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+  fb.textContent = isCorrect ? correctMsg : incorrectMsg;
+  logDrillAttempt(drillId, isCorrect);
+  writeTelemetryToDom();
+}
+
+function checkDrill3() {
+  checkTyped('d3-input', 'd3-feedback', ['argument'],
+    'Right! "Hello" is the argument passed into print().',
+    'Not quite — this is one of the 5 terms from this lesson\'s vocab quiz. Think about what you\'d call the thing you hand a function to work with.', 'drill3');
+}
+
+function checkDrill4() {
+  checkTyped('d4-input', 'd4-feedback', ['string'],
+    'Right! Any text wrapped in quotes is a string.',
+    'Not quite — this is one of the 5 terms from this lesson\'s vocab quiz. Think about what category of value quoted text belongs to.', 'drill4');
+}
+
+// ---- Drill 5: block builder ----
+const d5Target = ['print', '(', '"Game Over"', ')'];
+let d5Placed = [];
+
+initBlockDrill('d5-bank', 'd5-answer', d5Target, d5Placed);
+
+function checkDrill5() {
+  const fb = document.getElementById('d5-feedback');
+  const built = d5Placed.map(i => d5Target[i]).join('');
+  const correct = built === d5Target.join('');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  fb.textContent = correct
+    ? 'Right! print("Game Over") displays exactly that text.'
+    : 'Not quite. Check the order: print, then (, then the quoted text, then ).';
+  logDrillAttempt('drill5', correct);
+  writeTelemetryToDom();
+}
+
+function resetDrill5() {
+  d5Placed = [];
+  initBlockDrill('d5-bank', 'd5-answer', d5Target, d5Placed);
+  document.getElementById('d5-feedback').className = 'feedback';
+}
+
+// ---- Drill 6: combined dropdown + typed blank ----
+function checkDrill6() {
+  const selectVal = document.getElementById('d6-select').value;
+  const typedVal = document.getElementById('d6-input').value.trim().toLowerCase();
+  const fb = document.getElementById('d6-feedback');
+  const selectOk = selectVal === 'a';
+  const typedOk = ['quotes', 'quote marks', 'a quote mark'].includes(typedVal);
+  const correct = selectOk && typedOk;
+
+  if (correct) {
+    fb.className = 'feedback correct';
+    fb.textContent = 'Right on both! print is always lowercase, and text goes inside quotes.';
+  } else {
+    fb.className = 'feedback incorrect';
+    let msg = [];
+    if (!selectOk) msg.push('the first blank: the word print is never capitalized and never written in all caps — it\'s always lowercase');
+    if (!typedOk) msg.push('the second blank: think about what wraps around text to make it a string');
+    fb.textContent = 'Not quite yet on ' + msg.join(' and ') + '.';
+  }
+  logDrillAttempt('drill6', correct, { selectOk: selectOk, typedOk: typedOk });
+  writeTelemetryToDom();
+}
+
+// ---- Drill 7: sneak peek, two-line indentation-aware block builder,
+// combined single bank (2026-08-11) — click a piece, then click a line to
+// place it there. Click a placed piece to send it back to the bank. ----
+const d7Pieces = [
+  { id: 0, text: 'if', line: 'a' }, { id: 1, text: 'health <= 0', line: 'a' }, { id: 2, text: ':', line: 'a' },
+  { id: 3, text: 'print', line: 'b' }, { id: 4, text: '(', line: 'b' }, { id: 5, text: '"Game Over"', line: 'b' }, { id: 6, text: ')', line: 'b' }
+];
+const d7aTargetOrder = [0, 1, 2];
+const d7bTargetOrder = [3, 4, 5, 6];
+let d7Placed = { a: [], b: [] };
+let d7Selected = null;
+// Bank display order — shuffled once so the bank doesn't just read top-to-
+// bottom as the answer (bug fixed 2026-08-11 per Jay: the bank used to
+// render in d7Pieces' own definition order, which happened to already be
+// the correct order for both lines). Shuffled once at load, not reshuffled
+// on every render, so pieces don't jump around as the student places them.
+const d7BankOrder = shuffle(d7Pieces.map(p => p.id));
+
+function d7Render() {
+  const bank = document.getElementById('d7-bank');
+  bank.innerHTML = '';
+  d7BankOrder.forEach(id => {
+    const p = d7Pieces.find(x => x.id === id);
+    if (d7Placed.a.includes(p.id) || d7Placed.b.includes(p.id)) return;
+    const btn = document.createElement('button');
+    btn.className = 'code-block' + (d7Selected === p.id ? ' selected' : '');
+    btn.textContent = p.text;
+    btn.onclick = () => { d7Selected = (d7Selected === p.id) ? null : p.id; d7Render(); };
+    bank.appendChild(btn);
+  });
+  ['a', 'b'].forEach(line => {
+    const answer = document.getElementById('d7' + line + '-answer');
+    answer.innerHTML = '';
+    d7Placed[line].forEach(id => {
+      const p = d7Pieces.find(x => x.id === id);
+      const btn = document.createElement('button');
+      btn.className = 'code-block placed';
+      btn.textContent = p.text;
+      btn.onclick = (e) => { e.stopPropagation(); d7Placed[line] = d7Placed[line].filter(x => x !== id); d7Render(); };
+      answer.appendChild(btn);
+    });
+  });
+}
+function d7PlaceInLine(line) {
+  if (d7Selected === null) return;
+  d7Placed[line].push(d7Selected);
+  d7Selected = null;
+  d7Render();
+}
+document.getElementById('d7a-answer').addEventListener('click', () => d7PlaceInLine('a'));
+document.getElementById('d7b-answer').addEventListener('click', () => d7PlaceInLine('b'));
+d7Render();
+
+function checkDrill7() {
+  const fb = document.getElementById('d7-feedback');
+  const aCorrect = JSON.stringify(d7Placed.a) === JSON.stringify(d7aTargetOrder);
+  const bCorrect = JSON.stringify(d7Placed.b) === JSON.stringify(d7bTargetOrder);
+  const correct = aCorrect && bCorrect;
+
+  if (correct) {
+    fb.className = 'feedback correct';
+    fb.textContent = 'Both lines correct! This says: "if health is 0 or less, display Game Over." The indented line only runs when the if line is true — you\'ll learn exactly how that works in Unit 05.';
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.textContent = 'Not quite yet. ' + (!aCorrect ? 'Line 1 isn\'t right yet — check both which pieces are there and their order. ' : '') + (!bCorrect ? 'Line 2 isn\'t right yet either — it\'s the same print() pattern from earlier in this lesson.' : '');
+  }
+  logDrillAttempt('drill7', correct, { lineA: aCorrect, lineB: bCorrect });
+  writeTelemetryToDom();
+}
+
+function resetDrill7() {
+  d7Placed = { a: [], b: [] };
+  d7Selected = null;
+  d7Render();
+  document.getElementById('d7-feedback').className = 'feedback';
+}
+
+// ---- Drill 8: compound-error diagnosis ----
+function checkDrill8() {
+  const val = document.getElementById('d8-select').value;
+  const fb = document.getElementById('d8-feedback');
+  const correct = val === 'c';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  if (val === 'c') {
+    fb.textContent = 'Right! Two things are missing here: the string never closes (no closing "), and because of that Python never even reaches a closing ) — it would have landed inside the still-open string. Both need fixing.';
+  } else if (val === 'a') {
+    fb.textContent = 'You caught one of the two problems — the quote really is unclosed. Look again: is there a closing ) anywhere on this line?';
+  } else if (val === 'b') {
+    fb.textContent = 'You caught one of the two problems — the parenthesis really is missing. Look again: does the quote ever close either?';
+  } else if (val === 'd') {
+    fb.textContent = 'Try reading this line character by character. Does the string ever close? Does the function call ever close?';
+  } else {
+    fb.textContent = 'Pick an option first.';
+    return;
+  }
+  logDrillAttempt('drill8', correct, { selected: val });
+  writeTelemetryToDom();
+}
+
+// ---- Save-in-place — same pattern as 04_vocab_quiz.html, not gated on
+// getting everything right. Records a save timestamp so time-on-page is
+// reconstructable. Filename gets a _completed suffix on save (added
+// 2026-08-11), same convention as 04_vocab_quiz.html — here "completed"
+// means "saved/submitted," not "all correct," since this page is
+// intentionally not gated on correctness. This is what lets
+// 00_table_of_contents.html's folder scan detect that this page was
+// turned in at all. ----
+let savedFileHandle = null;
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  const original = decodeURIComponent(parts[parts.length - 1]) || '05_practice.html';
+  if (original.includes('_completed')) return original;
+  return original.replace(/\.html$/, '_completed.html');
+}
+// Fixed 2026-08-11 — a real bug: outerHTML serialization doesn't capture a
+// <select>'s chosen option or an <input>'s typed value. Both are IDL
+// properties decoupled from their attribute representation, so a student's
+// actual dropdown pick or typed answer would silently revert to whatever
+// the page loaded with (usually blank) once the saved file is reopened —
+// Jay reviewing a saved submission would see empty/default answers even
+// though the student answered correctly. Same bug class fixed in
+// 04_vocab_quiz.html (textarea) and 11_feedback.html (textarea, checkbox).
+function syncFormStateToDom() {
+  document.querySelectorAll('select').forEach(sel => {
+    Array.from(sel.options).forEach(opt => opt.toggleAttribute('selected', opt.value === sel.value));
+  });
+  document.querySelectorAll('input[type="text"]').forEach(inp => { inp.setAttribute('value', inp.value); });
+}
+
+async function saveWork() {
+  syncFormStateToDom();
+  telemetry.saves.push({ at: new Date().toISOString() });
+  writeTelemetryToDom();
+  hasUnsavedWork = false;
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+  const statusEl = document.getElementById('saveStatus');
+
+  if (savedFileHandle) {
+    try {
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved as ' + savedFileHandle.name + '.';
+      return;
+    } catch (err) {
+      savedFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      savedFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: { 'text/html': ['.html'] } }]
+      });
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved as ' + savedFileHandle.name + '.';
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  const blob = new Blob([htmlContent], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+</script>
+
+</body>
+</html>

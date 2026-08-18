@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.2.5</title>
+    <style>
+        @font-face {
+            font-family: 'league_spartanbold';
+            src: url('leaguespartan-bold-webfont.woff2') format('woff2'),
+                url('leaguespartan-bold-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+        html,body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+        div.container {
+            background-image: linear-gradient(red, white, blue);
+            opacity: .7;
+
+            /* set viewport */
+            width: 100vw;
+            height: 100%;
+            border: 1px solid black;
+            min-height: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            overflow-y: hidden;
+
+            /* center text */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        div.child {
+            font-size: 72px;
+            font-family: "league_spartanbold";
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="child">
+            This is text within a div.
+        </div>    
+    </div>
+</body>
+</html>

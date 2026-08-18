@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="central city sports, sports complex, sports leagues, recreational center">
+    <meta name="author" content="authorName"> 
+    <title>Our Blog - Central City Recreational Complex</title> 
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: auto 0;
+            background-image: radial-gradient(circle, rgba(209,207,181,1) 56%, rgba(190,166,135,1) 92%);
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            border: 5px solid black;
+            display: grid;
+            grid-template-columns: 1fr 4fr 1fr;
+            grid-template-rows: 2fr 10fr 1fr;
+            /* grid-template-areas: add code */
+                                 /* add code */
+                                 /* add code */
+        }
+        .container > div {
+            display: grid;
+            align-items: center;
+            justify-content: center;
+        }
+        .item {
+            border: 1px solid black;
+        }
+        #item1 {
+            grid-area: header;
+        }
+        #item2 {
+            grid-area: sidebarL;
+        }
+        #item3 {
+            grid-area: main;
+        }
+        #item4 {
+            grid-area: sidebarR;
+        }
+        #item5 {
+            grid-area: footer;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item" id="item1">Header - This page is under construction</div>
+        <div class="item" id="item2">Sidebar - Left</div>
+        <div class="item" id="item3">Main</div>
+        <div class="item" id="item4">Sidebar - Right</div>
+        <div class="item" id="item5">Footer</div>
+    </div>
+</body>
+</html>

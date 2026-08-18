@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubbling Example</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            background-color: lightgrey;
+            margin: 0 auto;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            align-items: center;
+            justify-content: center;
+        }
+        .yellowBox {
+            position:absolute;
+            height: 50px;
+            width: 50px;
+            background-color: yellow;
+            top: 25px;
+            right: 25px;
+        }
+        .redBox {
+            position:absolute;
+            height: 100px;
+            width: 100px;
+            background-color: red;
+            top: 50px;
+            right: 50px
+        }
+        .greenBox {
+            position:absolute;
+            height: 200px;
+            width: 200px;
+            background-color: green;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            // in this example the event bubbles from the 'lowest' level element up to the window element
+            // addEventListener's third paramenter is known as UseCapture. When set to false, it 'bubbles' through the elements on a page
+            var large = document.getElementById('greenBox');
+            var med = document.getElementById('redBox');
+            var small = document.getElementById('yellowBox');
+
+            large.addEventListener('click', function () { console.log('green div clicked'); }, false);
+            med.addEventListener('click', function () { console.log('red div clicked'); }, false);
+            small.addEventListener('click', function () { console.log('yellow div clicked'); }, false);
+            // document.body.addEventListener('click', function() { console.log('body clicked'); }, false);
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="greenBox" id="greenBox">
+            <div class="redBox" id="redBox">
+                <div class="yellowBox" id="yellowBox">
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

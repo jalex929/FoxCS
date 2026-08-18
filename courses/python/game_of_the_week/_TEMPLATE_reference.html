@@ -1,0 +1,215 @@
+<!-- TEMPLATE / REFERENCE FILE — not a real Game of the Week week.
+     Uses Rock-Paper-Scissors as generic demo content because Jay's real
+     game list hasn't been provided yet (component-library-first rule —
+     see 02-authoring-system/mvp-unit-folder-structure.md). Copy this
+     file's structure per real week once the list lands; don't ship this
+     content as-is.
+
+     Design notes baked into this specific draft:
+     - Early-year weeks need MORE explanatory scaffolding than later
+       weeks — students don't have game-design vocabulary yet, so "notice
+       the mechanic" has to be modeled first, not assumed. This mirrors
+       the journal thread's own gradual-release shape (50-75 words at
+       Unit 00 growing to a full paper by Unit 20) — same principle,
+       applied to this thread. Later-week templates should fade the
+       worked-explanation section down and open the reflection prompts
+       up as the year goes on.
+     - Reflection is guided (sentence starters) rather than a cold open
+       blank for the same reason — students need support producing the
+       thinking, not just receiving the concept.
+     - Reflection questions (2026-08-07 revision) are drawn from a varied
+       pool — most-interesting-thing / apply-this-elsewhere / describe-a-
+       different-use / name-another-game-that-uses-this — filled in per
+       week's concept(s), not a fixed static set reused verbatim. Should
+       get more open/less scaffolded as the year goes on. Never forward-
+       looking ("what will you notice next week") — students don't know
+       next week's game.
+     - Vocabulary (both the week's concept terms and general MDA terms
+       like "mechanic"/"aesthetic") uses the hover/click glossary-term
+       component — see 02-authoring-system/component-library/index.html's
+       #13. Same pattern is proposed for first-use vocabulary on
+       instructional pages generally, not just here.
+     - Distribution: Jay posts this via a Classroom assignment (scheduled
+       ahead of time, not same-week manual posting), student downloads it
+       into a persistent "Game of the Week" folder they make once and
+       reuse all year. Reflection lives in this same page and saves in
+       place — same mechanism as lesson_01_04's feedback form, reused
+       here rather than reinvented. No second hosting location. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Game of the Week — Reference Template (Rock-Paper-Scissors)</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  h2 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; margin-top: 2rem; }
+  .template-flag { background: #f6c5c4; color: #1a1a1a; padding: 0.6rem 1rem; border-radius: 6px; font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; margin-bottom: 1.5rem; }
+  .howto { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.9rem 1.3rem; margin: 1rem 0; }
+  .explain { background: #c5c0e3; padding: 1rem 1.3rem; border-radius: 8px; margin: 1rem 0; }
+  .explain h3 { margin-top: 0; font-family: Verdana, Arial, sans-serif; color: #1a1a1a; font-size: 1.05rem; }
+  .vocab-term { font-weight: bold; color: #1a3a5c; }
+  .reflect-block { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .reflect-prompt { font-weight: bold; margin-bottom: 0.5rem; }
+  .starter { color: #555; font-size: 0.9rem; font-style: italic; margin-bottom: 0.4rem; }
+  textarea.answer-space { width: 100%; min-height: 3.5em; font-family: Georgia, serif; font-size: 1rem; padding: 0.5rem; box-sizing: border-box; border: 1px solid #ccd3dd; border-radius: 4px; }
+  .save-row { text-align: center; margin-top: 1.8rem; }
+  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #9a5a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+  button.save-btn:hover { background: #7a4800; }
+  .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+
+  /* Glossary term hover/click card — see component-library #13 */
+  .glossary-term { text-decoration: underline dotted #1a5aa8; text-decoration-thickness: 2px; text-underline-offset: 3px; color: #1a3a5c; font-weight: bold; cursor: help; }
+  .glossary-term:focus-visible { outline: 2px solid #1a5aa8; outline-offset: 2px; border-radius: 2px; }
+  .glossary-card { position: absolute; max-width: 260px; background: #1a5aa8; color: white; font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; padding: 0.6rem 0.8rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.25); z-index: 50; display: none; line-height: 1.4; }
+  .glossary-card.visible { display: block; }
+  .glossary-card .glossary-card-term { display: block; font-weight: bold; margin-bottom: 0.25rem; }
+</style>
+</head>
+<body>
+
+<div class="template-flag">TEMPLATE — Rock-Paper-Scissors is generic placeholder content, not a real assigned week.</div>
+
+<h1>Game of the Week: Rock-Paper-Scissors</h1>
+
+<h2>How to Play</h2>
+<div class="howto">
+  You already know how to play this one. That's exactly why we're starting here — it's a lot easier to notice how a game <em>works</em> when you're not busy learning the rules for the first time.
+</div>
+
+<h2>What This Game Is Actually Doing</h2>
+<div class="explain">
+  <h3>Why not knowing what's coming is the whole point</h3>
+  <p>If you always knew what your opponent was about to throw, you'd never lose — but it would stop being a game. That's <span class="glossary-term" data-term="hidden information" tabindex="0" role="button" aria-haspopup="true">hidden information</span> at work, one of the most common <span class="glossary-term" data-term="mechanic" tabindex="0" role="button" aria-haspopup="true">mechanics</span> in game design. The tension you feel not knowing? That's the <span class="glossary-term" data-term="aesthetic" tabindex="0" role="button" aria-haspopup="true">aesthetic</span> it creates.</p>
+  <p>One more mechanic in play: rock beats scissors, scissors beats paper, paper beats rock — no single best choice. Designers call that <span class="glossary-term" data-term="balance" tabindex="0" role="button" aria-haspopup="true">balance</span>. Take it away and the game falls apart fast.</p>
+</div>
+
+<h2>Reflect</h2>
+
+<div class="reflect-block">
+  <div class="reflect-prompt">1. What's the most interesting thing you learned about game design this week?</div>
+  <textarea class="answer-space" id="q1"></textarea>
+</div>
+
+<div class="reflect-block">
+  <div class="reflect-prompt">2. How else might hidden information be a good thing for someone to use in a game they're designing?</div>
+  <div class="starter">Starter: "One way a designer could use hidden information is ___, because ___."</div>
+  <textarea class="answer-space" id="q2"></textarea>
+</div>
+
+<div class="reflect-block">
+  <div class="reflect-prompt">3. Can you think of another game — video game, board game, sport, anything — that also uses balance the way Rock-Paper-Scissors does? What's the connection?</div>
+  <div class="starter">Starter: "___ also uses balance because ___."</div>
+  <textarea class="answer-space" id="q3"></textarea>
+</div>
+
+<div class="save-row">
+  <button class="save-btn" onclick="saveWork()">Save My Reflection</button>
+  <div class="save-status" id="saveStatus"></div>
+</div>
+
+<div class="glossary-card" id="glossary-card" role="tooltip">
+  <span class="glossary-card-term"></span>
+  <span class="glossary-card-def"></span>
+</div>
+
+<script>
+// ---- Glossary term hover/click card — see component-library #13 ----
+const glossaryDefs = {
+  'hidden information': 'Information the players don\'t have access to. Not knowing keeps a game unpredictable and exciting.',
+  'mechanic': 'A rule or system a designer builds into a game on purpose — the actual moving parts, like turns, dice, or hidden information.',
+  'aesthetic': 'The feeling or experience a game creates for the player — tension, joy, curiosity — usually produced by its mechanics.',
+  'balance': 'Designing choices so no single option is secretly the best. Every choice has a real trade-off.'
+};
+let glossaryPinnedTerm = null;
+function glossaryShow(el, term) {
+  const card = document.getElementById('glossary-card');
+  card.querySelector('.glossary-card-term').textContent = term;
+  card.querySelector('.glossary-card-def').textContent = glossaryDefs[term.toLowerCase()] || '';
+  card.classList.add('visible');
+  const rect = el.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  let left = rect.left + window.scrollX;
+  const maxLeft = window.scrollX + document.documentElement.clientWidth - cardRect.width - 8;
+  if (left > maxLeft) left = Math.max(window.scrollX + 8, maxLeft);
+  let top = rect.bottom + window.scrollY + 6;
+  const viewportBottom = window.scrollY + window.innerHeight;
+  if (top + cardRect.height > viewportBottom) {
+    top = rect.top + window.scrollY - cardRect.height - 6;
+  }
+  card.style.left = left + 'px';
+  card.style.top = top + 'px';
+}
+function glossaryHide() { document.getElementById('glossary-card').classList.remove('visible'); }
+document.querySelectorAll('.glossary-term').forEach(el => {
+  const term = el.dataset.term;
+  el.addEventListener('mouseenter', () => { if (!glossaryPinnedTerm) glossaryShow(el, term); });
+  el.addEventListener('mouseleave', () => { if (!glossaryPinnedTerm) glossaryHide(); });
+  el.addEventListener('click', () => {
+    if (glossaryPinnedTerm === term) { glossaryPinnedTerm = null; glossaryHide(); }
+    else { glossaryPinnedTerm = term; glossaryShow(el, term); }
+  });
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+    else if (e.key === 'Escape' && glossaryPinnedTerm === term) { glossaryPinnedTerm = null; glossaryHide(); }
+  });
+});
+document.addEventListener('click', e => {
+  if (glossaryPinnedTerm && !e.target.closest('.glossary-term') && !e.target.closest('.glossary-card')) {
+    glossaryPinnedTerm = null;
+    glossaryHide();
+  }
+});
+
+let savedFileHandle = null;
+
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  return decodeURIComponent(parts[parts.length - 1]) || 'game_of_the_week.html';
+}
+
+async function saveWork() {
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+  const statusEl = document.getElementById('saveStatus');
+
+  if (savedFileHandle) {
+    try {
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved.';
+      return;
+    } catch (err) {
+      savedFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      savedFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved.';
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+</script>
+
+</body>
+</html>

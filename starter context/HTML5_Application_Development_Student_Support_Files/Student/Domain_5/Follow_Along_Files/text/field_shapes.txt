@@ -1,0 +1,35 @@
+//draw canvas
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+
+    // draw goal boxes
+    ctx.strokeStyle = '#F5F5F5';
+    ctx.lineWidth = 5;
+    ctx.strokeRect(0, 100, 100, 200);
+    ctx.strokeRect(700, 100, 100, 200);
+    ctx.strokeRect(0, 150, 50, 100);
+    ctx.strokeRect(750, 150, 50, 100);
+
+    // draw center circles
+    ctx.beginPath();
+    ctx.arc(400, 200, 50, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(400, 200, 10, 0, 2 * Math.PI);
+    ctx.fillStyle = "#F5F5F5";
+    ctx.fill();
+    ctx.stroke();
+
+    // draw center line
+    ctx.beginPath();
+    ctx.moveTo(400, 0);
+    ctx.lineTo(400, 400);
+    ctx.stroke();
+
+    // draw text
+    ctx.font = "24px Tahoma";
+    ctx.fillStyle = "#F5F5F5";
+    ctx.fillText("Hello World! Stadium", 500, 360);
+    ctx.translate(-420, -310);
+    ctx.fillText("Hello World! Stadium", 510, 360);

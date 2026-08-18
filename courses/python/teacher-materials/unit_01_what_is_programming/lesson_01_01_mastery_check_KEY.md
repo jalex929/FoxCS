@@ -1,0 +1,15 @@
+# 01.1 Mastery Check: Teacher Key
+
+**Never include this file in the folder distributed to students.** See `../../../../../02-authoring-system/mvp-unit-folder-structure.md`.
+
+**Multi-variant, added 2026-08-04.** There are 3 versions (A/B/C), each behind its own password, with different scenario nouns (video game/calculator vs. phone app/robot vs. website/smart speaker; vending machine vs. ATM vs. parking gate) but the identical underlying objectives and DOK level. This key applies to all three versions equally, just substitute the scenario. The saved file records which version was unlocked and when (a small "Version X. Unlocked [timestamp]." line at the bottom). Cross-check that against when this student's section actually took the mastery check. A mismatch (e.g. Version B unlocked on a day you only gave out Version A's password) is worth a conversation, not proof by itself.
+
+**Content is obfuscated in the source, added 2026-08-04.** Each variant's question text is base64-encoded in the page's JS and only decoded after a correct password, so the un-unlocked page doesn't expose all three variants' questions in plain view-source. This is a speed bump, not encryption. Don't rely on it as a real access barrier, and don't paste the encoded strings anywhere a student could ask an AI tool to decode them for the same reason `../../../../../CLAUDE.md`'s "Protecting Assessment Content" section exists.
+
+**1. (DOK 2. Interpretation)** Looking for a genuinely new example (not video game/calculator, per the prompt) with the instruction-following idea stated correctly. E.g. a washing machine, a traffic light, a GPS. Full credit requires the student to identify that it's a program *because* it follows exact steps, not just because it's "a machine" or "electronic."
+
+**2. (DOK 2. Application to a new scenario)** Any specific, plausible instruction counts. E.g. "if the amount inserted is less than the price, don't release the item" or "if the button for slot B4 is pressed, dispense from slot B4." Full credit requires an instruction stated with an actual condition/action, not just "it checks the money" with no specifics.
+
+**3. (DOK 3. Justify/argue a position)** Expected position: disagree, with reasoning that computers don't "figure things out". They follow the exact instructions a programmer wrote, including when those instructions produce a wrong or unexpected result. Full credit requires correct use of "instruction" as the mechanism, not just asserting disagreement. Partial credit for a correct instinct without connecting it back to "instruction" specifically. That's the vocabulary check this item is doing double duty on.
+
+**Common misconception to watch for (`CODE-01`):** students describing a computer as "deciding" or "understanding" rather than "following instructions that were written by a person." This is the single biggest misconception this whole lesson exists to head off. If it shows up in Q3 especially, that's a flag the core idea didn't land, not just a minor wording issue.

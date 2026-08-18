@@ -1,0 +1,137 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     Password gate: NOT real security, a client-side pacing control. See lesson_01_01's
+     mastery check for the full note. Change PASSWORD before distributing. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>01.3 Mastery Check: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
+  .q { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 1rem 1.2rem; margin: 1.2rem 0; }
+  pre { background: #eef1f5; padding: 0.6rem 0.9rem; border-radius: 3px; font-family: Consolas, monospace; overflow-x: auto; }
+  textarea.answer-space { width: 100%; min-height: 4em; margin-top: 0.6rem; padding: 0.5rem; font-family: Georgia, serif; font-size: 1rem; box-sizing: border-box; }
+  #lock { background: #f4f6f9; border: 2px solid #2a78d6; border-radius: 8px; padding: 1.5rem; text-align: center; }
+  #lock input { font-size: 1.1rem; padding: 0.4rem 0.6rem; margin-right: 0.5rem; }
+  #lock button, .save-btn, .next-link { font-family: Verdana, Arial, sans-serif; background: #2a78d6; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 4px; cursor: pointer; }
+  #lock button:hover, .save-btn:hover { background: #1a5aa8; }
+  #pwError { color: #b02a2a; display: none; margin-top: 0.6rem; }
+  #mcContent { display: none; }
+  .save-reminder { font-weight: bold; color: #7a3a00; margin-top: 1.5rem; }
+  .next-box { background: #f9e1ad; border: 1px solid #eda100; padding: 1rem 1.2rem; border-radius: 6px; margin-top: 1.5rem; }
+  .next-link { display: inline-block; margin-top: 0.5rem; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<h1>01.3 Mastery Check: Writing Your First Program</h1>
+
+<div id="lock">
+  <p>Ask your teacher for this mastery check's password.</p>
+  <input type="password" id="pwInput" placeholder="Password">
+  <button onclick="checkPassword()">Unlock</button>
+  <p id="pwError">That's not the right password. Check with your teacher and try again.</p>
+</div>
+
+<div id="mcContent">
+<p>Answer all three questions below.</p>
+
+<div class="q">
+<strong>1.</strong> Predict exactly what this program displays, in order:
+<pre>print("Setting up...")
+print("Score: 0")
+print("Lives: 3")
+print("Go!")</pre>
+<textarea class="answer-space" id="a1"></textarea>
+</div>
+
+<div class="q">
+<strong>2.</strong> Write three <code>print()</code> statements, in the correct order, that would produce this exact output:
+<pre>Loading save file...
+Welcome back, Player!
+Continue where you left off? (y/n)</pre>
+Then explain: if you swapped the order of the first two statements, would the program still run without crashing? Would the output still make sense to a player?
+<textarea class="answer-space" id="a2"></textarea>
+</div>
+
+<div class="q">
+<strong>3.</strong> A friend says, "Computers are fast. It doesn't really matter what order you write your print() statements in, Python will figure out the sensible order to show them." Do you agree or disagree? Explain your reasoning.
+<textarea class="answer-space" id="a3"></textarea>
+</div>
+
+<button class="save-btn" onclick="saveWork()">Save My Work</button>
+<p class="save-reminder">Save this page once you've answered all three, then submit it with the rest of your lesson work.</p>
+
+<div class="next-box">
+  <strong>Up next:</strong> Lesson 01.4. Printing Output.
+  <br><a class="next-link" href="../../lesson_01_04_printing_output/01_instruction.html">Continue to 01.4 →</a>
+</div>
+</div>
+
+<script>
+const PASSWORD = "unit01-lesson03"; // CHANGE ME before distributing.
+
+function checkPassword() {
+  const val = document.getElementById('pwInput').value;
+  if (val === PASSWORD) {
+    document.getElementById('lock').style.display = 'none';
+    document.getElementById('mcContent').style.display = 'block';
+  } else {
+    document.getElementById('pwError').style.display = 'block';
+  }
+}
+
+// Save-in-place — see lesson_01_01_practice.html for the full design note.
+let savedFileHandle = null;
+
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  return decodeURIComponent(parts[parts.length - 1]) || 'lesson_01_03_mastery_check.html';
+}
+
+async function saveWork() {
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+
+  if (savedFileHandle) {
+    try {
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      return;
+    } catch (err) {
+      savedFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      savedFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+document.getElementById('pwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
+</script>
+
+</body>
+</html>

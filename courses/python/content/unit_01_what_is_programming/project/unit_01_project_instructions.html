@@ -1,0 +1,62 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unit 01 Project: Interactive Greeting: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
+  code, pre { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  pre { padding: 0.8rem 1rem; overflow-x: auto; }
+  .scope-note { background: #bbd4f2; border-left: 4px solid #2a78d6; padding: 0.8rem 1.2rem; margin: 1rem 0; }
+  .game-tie-in { background: #c5c0e3; border-left: 4px solid #4a3aa7; padding: 0.8rem 1.2rem; margin: 1.2rem 0; }
+  .requirements li { margin: 0.4rem 0; }
+  .handoff { background: #f9e1ad; border: 1px solid #eda100; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+</style>
+</head>
+<body>
+
+<h1>Unit 01 Project: Interactive Greeting</h1>
+
+<div class="scope-note">
+<strong>A heads-up before you start:</strong> real, live interactivity, where your program actually reads what a player types, doesn't get taught until Unit 03. This project is a <em>preview</em>: you'll write out, entirely in <code>print()</code> statements, what an interactive greeting exchange would look like, as if the player had already told you their name and one thing about themselves. You're not faking anything or doing it "wrong" by not using real input. You literally don't have the tool for that yet, and that's fine. You'll build the real version once you learn <code>input()</code>.
+</div>
+
+<h2>The Scenario</h2>
+<p>Imagine a simple program that greets whoever is using it by name, asks how they're feeling, and responds differently depending on what they'd say. You're going to write the <em>script</em> for that exchange. Every line either side would say. Using only what you've learned in Unit 01: <code>print()</code>, comments, and running your code in the right order.</p>
+
+<h2>Requirements</h2>
+<ul class="requirements">
+  <li>At least 6 <code>print()</code> statements, in an order that reads like a real back-and-forth greeting exchange.</li>
+  <li>At least one comment that explains what a section of the program is doing and why. Not just restating the line below it (see 01.5 if you need a refresher on weak vs. strong comments).</li>
+  <li>No syntax errors. Run your file and fix anything Python flags before you submit (see 01.6).</li>
+  <li>The greeting should feel <em>personalized</em>, not generic. Invent a specific name and a specific detail for the player in your script, the same way a real game greets a specific player rather than printing "Hello, player" to everyone.</li>
+</ul>
+
+<div class="game-tie-in">
+<strong>Game connection:</strong> Every game with a character-creation or save-file screen does some version of this. Greeting a specific player by name, welcoming them back, referencing something about their save. Right now you're writing that experience by hand, one line at a time, exactly in the order it should appear. Once you have real input (Unit 03) and variables (Unit 02) in your toolkit, you'll be able to make the "name" and "detail" actually come from whoever's playing, instead of writing them in yourself. But the print-statement skill of shaping *what the player reads* doesn't go away once that happens. It's the same skill either way.
+</div>
+
+<h2>Example Shape (Don't Copy. Write Your Own)</h2>
+<pre># Greet the player by name
+print("Welcome, Jordan!")
+# Acknowledge something specific about them, not a generic greeting
+print("I heard you just beat your high score in the last game you played.")
+print("How are you feeling today?")
+# This line stands in for where real input would eventually go
+print("(imagine the player answers: pretty good!)")
+print("Glad to hear it. Let's get started.")</pre>
+
+<h2>Submitting</h2>
+<p>No renaming needed. Just save your work in <code>unit_01_project.py</code>, in this same folder, and submit the whole Unit 01 folder as instructed. Your teacher's own script takes care of matching your submission to you after you turn it in.</p>
+
+<div class="handoff">
+<strong>Handoff to VS Code:</strong> Open <code>unit_01_project.py</code> in this same folder (<code>project/</code>) and build your greeting exchange directly in it, below the comment already there.
+<p class="save-reminder">Don't forget to save your file (Ctrl+S) before you're done.</p>
+</div>
+
+</body>
+</html>

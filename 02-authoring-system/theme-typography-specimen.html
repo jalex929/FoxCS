@@ -1,0 +1,431 @@
+<!-- FoxCS / Waypoint Theme + Typography Specimen — added 2026-08-08,
+     contrast-revised 2026-08-10. Implements
+     logos/waypoint_theme_typography_style_guide_full.md's 4-theme spec
+     (Standard Light, Standard Dark, Natural, Synthwave) as a real,
+     toggleable page — not just a written doc. Light/Dark reuse FoxCS's
+     already-approved, previously-built palette (per Jay's instruction to
+     keep those as they are); Natural/Synthwave use a revised version of the
+     guide's palette — see shared-styles/foxcs-theme-natural.css and
+     foxcs-theme-synth.css for the full reasoning and real computed WCAG
+     ratios behind every value (2026-08-10 pass: paler Natural background,
+     every feedback box rebuilt as a high-contrast chip after the originals
+     measured only ~1.2-2:1 against their own page background, real 5th hue
+     added to Synthwave's accent instead of reusing its error magenta).
+
+     Fonts are self-hosted (shared-styles/foxcs-fonts.css + shared-styles/fonts/),
+     not linked to Google's CDN — same "no external dependency" rule already
+     applied everywhere else lesson content ships. All six families are
+     free/open-source (SIL OFL) and downloadable from fonts.google.com. Body
+     text is no longer Atkinson Hyperlegible in every theme (2026-08-10, per
+     Jay) — Natural uses Lora, Synthwave uses Sora, both genuinely legible
+     text faces (no script/handwritten/decorative faces), chosen for theme
+     character without raising cognitive load over a long reading passage.
+     Light/Dark keep Atkinson Hyperlegible, matching their "familiar,
+     low-distraction" brief. -->
+<!DOCTYPE html>
+<html lang="en" data-theme="standard-light">
+<head>
+<meta charset="UTF-8">
+<title>Waypoint Theme + Typography Specimen</title>
+<link rel="stylesheet" href="shared-styles/foxcs-fonts.css">
+<style>
+/* =========================================================
+   SEMANTIC THEME TOKENS
+   Per waypoint_theme_typography_style_guide_full.md Section 3's recommended
+   architecture. Standard Light/Dark values are FoxCS's existing approved
+   palette (see shared-styles/foxcs-theme-{light,dark}.css) re-expressed
+   under the guide's semantic names; Natural/Synthwave mirror
+   shared-styles/foxcs-theme-{natural,synth}.css exactly.
+   ========================================================= */
+[data-theme="standard-light"] {
+  --font-heading: "Atkinson Hyperlegible", "Source Sans 3", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Source Sans 3", system-ui, sans-serif;
+  --color-bg: #F7F8FA; --color-surface: #FFFFFF; --color-surface-alt: #F4F6F9;
+  --color-text: #18202A; --color-text-muted: #56616F;
+  --color-primary: #3157D5; --color-primary-hover: #2446B8; --color-on-primary: #FFFFFF;
+  --color-border: #C9D0D9; --color-border-strong: #7B8794; --color-focus: #3157D5;
+  --color-accent: #7a3a00; --color-accent-bg: #f9e1ad;
+  /* Semantic feedback redesigned twice in one week. 2026-08-10: Warning and
+     Error were nearly identical pale-amber tints, so both got rebuilt as
+     saturated "chip" fills (dark bg, white text) to fix that AND to pop more
+     against the page. 2026-08-11, Jay's actual preference for THIS theme
+     specifically: back to pale tint + dark text (the lighter color is the
+     background, the darker color is the text) — Light's whole identity is
+     airy/restrained, and the dark chips read as visually inconsistent with
+     that. All four are now built as one cohesive family: same pale-tint
+     lightness, same "AAA-ish dark text" logic, just four different hues —
+     Warning and Error stay genuinely distinct hues (gold vs wine), they're
+     just pale-tint now instead of bold-chip. Dark mode's existing chip
+     treatment is unaffected — Jay confirmed dark mode is fine as-is. */
+  --color-success: #1A4A1A; --color-success-bg: #DCEEDC;
+  --color-warning: #6B5100; --color-warning-bg: #FCEAB0;
+  --color-error: #6B2E3A; --color-error-bg: #F0D8DE;
+  --color-info: #12467F; --color-info-bg: #DCE8F5;
+}
+[data-theme="standard-dark"] {
+  --font-heading: "Atkinson Hyperlegible", "Source Sans 3", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Source Sans 3", system-ui, sans-serif;
+  --color-bg: #111318; --color-surface: #1A1D24; --color-surface-alt: #222630;
+  --color-text: #F5F7FA; --color-text-muted: #B7C0CC;
+  --color-primary: #8DA2FF; --color-primary-hover: #A6B5FF; --color-on-primary: #111318;
+  --color-border: #4A5360; --color-border-strong: #6F7A89; --color-focus: #A6B5FF;
+  --color-accent: #FFF1D9; --color-accent-bg: #6B4413;
+  /* Semantic feedback backgrounds brightened 2026-08-08 per Jay's review — the
+     original dark-on-dark tints (e.g. #1f3d28) barely registered as distinct
+     colored surfaces against this near-black page background. These are the
+     specimen's own additions (not part of the previously-approved dark theme's
+     actual correct/incorrect component colors, which are untouched). */
+  --color-success: #E9FFF5; --color-success-bg: #1E5C37;
+  /* Warning/Error re-hued 2026-08-10, same reasoning as Standard Light above —
+     #FFF1D9 on #6B4413 (warning) vs #FFE9D6 on #6B3A1F (error) were both the
+     same dark amber-brown, too close to tell apart. Warning stays gold-brown;
+     Error moves to a distinct wine/rose family, still not alarm-red. */
+  --color-warning: #FFECA8; --color-warning-bg: #6B4E00;
+  --color-error: #FBDCE6; --color-error-bg: #732B44;
+  --color-info: #E6F1FF; --color-info-bg: #1F3F66;
+}
+[data-theme="natural"] {
+  --font-heading: "Nunito Sans", "Atkinson Hyperlegible", sans-serif;
+  --font-body: "Lora", "Atkinson Hyperlegible", "Source Sans 3", system-ui, serif;
+  /* 2026-08-10 contrast pass — background lightened again (#F9F5E7 → #FCFAF1),
+     text/heading/primary darkened to clear AAA-normal (7:1), not just
+     AAA-large. Real numbers: text ~13.4:1, muted-text ~7.4:1, primary/heading
+     ~9.4:1, primary-text-on ~9.9:1, border-strong ~3.9:1 (non-text minimum
+     is 3:1). Full reasoning: shared-styles/foxcs-theme-natural.css. */
+  --color-bg: #FCFAF1; --color-surface: #FFFEF9; --color-surface-alt: #F1E8CC;
+  --color-text: #0F312E; --color-text-muted: #3F5852;
+  --color-primary: #1F4A47; --color-primary-hover: #143330; --color-on-primary: #FFFFFF;
+  --color-border: #D8CFB0; --color-border-strong: #6A8377; --color-focus: #1F4A47;
+  /* Feedback rebuilt as rich chips (white text) instead of pale tints — the
+     originals (all four literally #6f3a17 on #E8D3AE) measured only ~1.2-1.3:1
+     against the page background, indistinguishable from each other and from
+     the page. Now genuinely distinct hues, each ~7.7-9.6:1 vs page. */
+  --color-accent: #FFFFFF; --color-accent-bg: #664C15;
+  --color-success: #FFFFFF; --color-success-bg: #245638;
+  --color-warning: #FFFFFF; --color-warning-bg: #6B5100;
+  --color-error: #FFFFFF; --color-error-bg: #73391A;
+  --color-info: #FFFFFF; --color-info-bg: #204468;
+  --decorative-accent: #8EA893; /* the guide's leaf green — decorative only, never text/border, see note in the palette section below */
+  /* Decorative tokens per the guide's Section 30 — the guide suggests 0.035,
+     but Jay asked for more presence after seeing it live; 0.08 is roughly
+     double, past what would happen unintentionally but still well short of
+     interfering with text (a fractal-noise SVG stands in for a speckled/
+     parchment paper grain, Section 10 — "low-opacity decorative layer,"
+     "never interfere with text," "avoid strong repeating patterns," which
+     feTurbulence satisfies since it has no repeat period, unlike a tiled photo). */
+  --decoration-texture-opacity: 0.1;
+  --decoration-grid-opacity: 0;
+  --decoration-glow: none;
+}
+[data-theme="synthwave"] {
+  --font-heading: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --font-body: "Sora", "Atkinson Hyperlegible", system-ui, sans-serif;
+  --color-bg: #1D1E54; --color-surface: #272765; --color-surface-alt: #303075;
+  --color-text: #F8F7FF; --color-text-muted: #C8CAF6;
+  --color-primary: #16E2F5; --color-primary-hover: #4DEAF7; --color-on-primary: #1D1E54;
+  --color-border: #636BC4;
+  /* Border Strong updated 2026-08-08 per Jay's review ("not seeing a ton of
+     pink") — swapped from the guide's own periwinkle #858AF0 to the brand
+     magenta. Legitimate per the guide's own contrast table: ~3.86:1 against
+     synth-bg clears the 3:1 minimum for non-text UI (borders qualify), even
+     though it fails for text — so this stays within the Critical Synthwave
+     Contrast Rule while giving the theme real, visible pink. */
+  --color-border-strong: #D52AE3; --color-focus: #16E2F5;
+  /* Feedback rebuilt 2026-08-10 as bright chips with dark text (flipped from
+     dark-tint-with-light-text) — the originals measured only ~1.4-2.1:1
+     against the page background. Now ~5.4-9.6:1. Accent is a genuine 5th hue
+     (violet, #B79CFF) rather than reusing Error's magenta, so it reads as its
+     own category instead of a second "alarm" color — this is also the
+     "expand the palette a bit more" change Jay asked for. */
+  --color-accent: #160A33; --color-accent-bg: #B79CFF;
+  --color-success: #0C2A1E; --color-success-bg: #3DDC97;
+  --color-warning: #402200; --color-warning-bg: #FFC15E;
+  --color-error: #0D0110; --color-error-bg: #EE5FDD;
+  --color-info: #030614; --color-info-bg: #7E97FA;
+  --decorative-accent: #D52AE3; /* brand magenta — decorative/illustration only, fails AA for text (~3.86:1), never used as a functional token, see Critical Synthwave Contrast Rule */
+  /* Decorative tokens per the guide's Section 30 — 0.08 is the guide's own
+     suggested grid opacity. A plain orthogonal line grid stands in for the
+     "grid or signal motifs" / "interface panels" language in Sections 13/21 —
+     kept quiet and geometric on purpose, per Section 21's own warning against
+     scanlines, flicker, or "looking like a nightclub poster." */
+  --decoration-texture-opacity: 0;
+  --decoration-grid-opacity: 0.08;
+  --decoration-glow: 0 0 18px rgba(22, 226, 245, 0.18);
+}
+[data-theme="standard-light"], [data-theme="standard-dark"] {
+  --decoration-texture-opacity: 0; --decoration-grid-opacity: 0; --decoration-glow: none;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--color-bg); color: var(--color-text);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.65;
+  transition: background 0.2s, color 0.2s;
+  position: relative;
+}
+/* Background texture/grid layer — a decorative sheet behind all content,
+   never touching text contrast (per the guide's Section 10/30 rules). One
+   element handles both Natural's paper grain and Synthwave's grid: whichever
+   theme is active supplies the image + opacity, the other's tokens zero it out.
+   position:absolute (not fixed) 2026-08-10 per Jay's review — the pattern
+   should scroll with the page like part of the paper/panel it's texturing,
+   not stay pinned to the viewport while content moves past it. inset:0 on an
+   absolutely-positioned pseudo-element of body covers body's full scrollable
+   height (body is position:relative), not just the visible viewport. */
+body::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  opacity: var(--decoration-texture-opacity, 0);
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22180%22%20height%3D%22180%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.85%22%20numOctaves%3D%222%22%20seed%3D%227%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%200.80%20%200%200%200%200%200.68%20%200%200%200%200%200.22%20%200%200%200%201%200%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url%28%23n%29%22%2F%3E%3C%2Fsvg%3E");
+  background-size: 180px 180px;
+}
+body::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  opacity: var(--decoration-grid-opacity, 0);
+  background-image:
+    repeating-linear-gradient(0deg, var(--color-primary) 0px, var(--color-primary) 1px, transparent 1px, transparent 48px),
+    repeating-linear-gradient(90deg, var(--color-primary) 0px, var(--color-primary) 1px, transparent 1px, transparent 48px);
+}
+.page { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+h1, h2, h3 { font-family: var(--font-heading); color: var(--color-text); line-height: 1.25; }
+h1 { font-size: 2rem; font-weight: 800; margin: 0 0 0.3rem; }
+h2 { font-size: 1.35rem; font-weight: 700; margin: 2.2rem 0 0.8rem; padding-top: 1.4rem; border-top: 1px solid var(--color-border); }
+h3 { font-size: 1.05rem; font-weight: 700; margin: 1.2rem 0 0.5rem; }
+p { margin: 0 0 1rem; max-width: 70ch; }
+/* color: var(--color-text) set explicitly 2026-08-10 — without it, an inline
+   <code> nested inside a colored feedback box (e.g. the Error box's near-black
+   text on Synthwave) inherited that box's text color instead of a color
+   chosen against code's own background (--color-surface-alt), which read as
+   near-invisible dark-on-dark. Explicit color always pairs with --color-surface-alt
+   correctly regardless of what colored context the code tag sits inside. */
+code, pre { font-family: var(--font-code); background: var(--color-surface-alt); color: var(--color-text); border-radius: 4px; }
+code { padding: 0.1rem 0.4rem; font-size: 0.92em; }
+pre { padding: 1rem 1.1rem; overflow-x: auto; font-size: 0.88rem; line-height: 1.55; border: 1px solid var(--color-border); }
+.subtitle { color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: 1.4rem; }
+
+/* Theme switcher */
+.switcher { display: flex; flex-wrap: wrap; gap: 0.6rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 0.9rem; margin-bottom: 1.6rem; }
+.theme-btn { display: flex; align-items: center; gap: 0.5rem; font-family: "Atkinson Hyperlegible", sans-serif; font-size: 0.88rem; font-weight: 700; background: var(--color-surface-alt); color: var(--color-text); border: 2px solid var(--color-border); border-radius: 8px; padding: 0.5rem 0.8rem; cursor: pointer; }
+.theme-btn.active { border-color: var(--color-primary); box-shadow: 0 0 0 2px var(--color-primary) inset; }
+.theme-btn .swatch { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.15); }
+
+/* Swatch grid */
+.swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.7rem; margin: 0.8rem 0 1.4rem; }
+.swatch-card { border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; background: var(--color-surface); }
+.swatch-fill { height: 52px; }
+.swatch-label { padding: 0.5rem 0.6rem; font-size: 0.78rem; }
+.swatch-label strong { display: block; font-size: 0.82rem; }
+.swatch-label code { display: block; margin-top: 0.15rem; padding: 0; background: none; font-size: 0.76rem; color: var(--color-text-muted); }
+.swatch-note { display: block; margin-top: 0.25rem; font-size: 0.72rem; color: var(--color-text-muted); }
+
+/* Buttons */
+.btn-row { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; margin: 0.6rem 0 1.2rem; }
+.btn { font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; border: none; border-radius: 6px; padding: 0.6rem 1.2rem; cursor: pointer; font-size: 0.95rem; }
+.btn-primary { background: var(--color-primary); color: var(--color-on-primary); }
+.btn-secondary { background: transparent; color: var(--color-text); border: 2px solid var(--color-border-strong); }
+.btn-disabled { background: var(--color-surface-alt); color: var(--color-text-muted); opacity: 0.6; cursor: not-allowed; }
+.btn-focus-demo:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+
+/* Borders / card */
+.demo-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 1rem 1.2rem; margin: 0.6rem 0; }
+.demo-card.strong { border: 2px solid var(--color-border-strong); }
+
+/* Semantic feedback */
+.feedback-row { display: grid; gap: 0.6rem; margin: 0.6rem 0 1.2rem; }
+.feedback { border-radius: 6px; padding: 0.65rem 0.9rem; font-size: 0.92rem; display: flex; gap: 0.6rem; align-items: flex-start; }
+.feedback .icon { font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 800; flex-shrink: 0; }
+.feedback.success { background: var(--color-success-bg); color: var(--color-success); }
+.feedback.warning { background: var(--color-warning-bg); color: var(--color-warning); }
+.feedback.error { background: var(--color-error-bg); color: var(--color-error); }
+.feedback.info { background: var(--color-info-bg); color: var(--color-info); }
+
+.badge-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin: 0.6rem 0 1.2rem; }
+.badge { font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; font-size: 0.78rem; background: var(--color-accent-bg); color: var(--color-accent); border-radius: 999px; padding: 0.3rem 0.8rem; }
+
+.texture-swatch-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin: 0.6rem 0 1rem; }
+.texture-swatch { position: relative; flex: 1 1 220px; height: 130px; border-radius: 8px; border: 1px solid var(--color-border); background: var(--color-bg); overflow: hidden; }
+.texture-swatch::before { content: ""; position: absolute; inset: 0; background-image: var(--tex-image, none); background-size: var(--tex-size, auto); opacity: var(--tex-opacity, 1); }
+.texture-swatch-label { position: absolute; left: 0.6rem; bottom: 0.5rem; font-family: "Atkinson Hyperlegible", sans-serif; font-size: 0.76rem; font-weight: 700; background: var(--color-surface); color: var(--color-text); padding: 0.15rem 0.5rem; border-radius: 4px; }
+
+.house-note { font-size: 0.85rem; background: var(--color-surface-alt); border-left: 4px solid var(--color-primary); padding: 0.7rem 1rem; margin: 0.8rem 0; }
+.footer-note { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--color-border); font-size: 0.82rem; color: var(--color-text-muted); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Waypoint Theme + Typography Specimen</h1>
+  <p class="subtitle">A real, working preview of the 4 themes in <code>logos/waypoint_theme_typography_style_guide_full.md</code>. This is a reference/documentation tool, not lesson content.</p>
+
+  <div class="switcher" id="switcher">
+    <button class="theme-btn" data-theme-id="standard-light"><span class="swatch" style="background:#F7F8FA;"></span>Light</button>
+    <button class="theme-btn" data-theme-id="standard-dark"><span class="swatch" style="background:#111318;"></span>Dark</button>
+    <button class="theme-btn" data-theme-id="natural"><span class="swatch" style="background:#FAF5E0; border-color:#2A5C59;"></span>Natural</button>
+    <button class="theme-btn" data-theme-id="synthwave"><span class="swatch" style="background:#1D1E54;"></span>Synthwave / Cyber</button>
+  </div>
+
+  <h2>Typography</h2>
+  <p>Heading font changes per theme (Atkinson Hyperlegible for Light/Dark, Nunito Sans for Natural, JetBrains Mono for Synthwave). <strong>Updated 2026-08-10:</strong> body text no longer has to be Atkinson Hyperlegible in every theme either — Light/Dark keep it (their whole brief is familiar and low-distraction), but Natural now reads in <strong>Lora</strong> and Synthwave in <strong>Sora</strong>, both real text faces built for reading at length, not display/script faces. The guide's original Section 4 principle still holds: personality comes from a considered choice of legible faces, never from making body text harder to read.</p>
+  <h3>This is an H3 section heading</h3>
+  <p>Waypoint students may spend long stretches reading directions, feedback, and vocabulary — this paragraph is set at the guide's preferred instructional size (17–18px) and line height (1.55–1.7), and this sentence is kept inside the 60–75 character line-length range the guide recommends for comfortable reading.</p>
+  <pre><code>def greet(name):
+    print("Hello, " + name + "!")
+
+greet("Waypoint")</code></pre>
+  <p style="font-size:0.85rem; color:var(--color-text-muted);">Code always uses <strong>JetBrains Mono</strong> — in Synthwave it's also the heading font, so size/surface/spacing carry the distinction between "this is a heading" and "this is code," not typeface alone (guide Section 21).</p>
+
+  <h2>Color Palette</h2>
+  <div class="swatch-grid" id="swatch-grid"></div>
+  <div class="house-note" id="palette-note"></div>
+
+  <h2>Background Texture</h2>
+  <p style="font-size:0.9rem;">Live on this page right now, behind everything you're reading — Natural gets a fine parchment/paper grain, Synthwave gets a quiet line grid, Light/Dark get neither. Both are generated (SVG fractal noise for the grain, a repeating CSS gradient for the grid), not a tiled photo, so there's no visible repeat seam and nothing to interfere with text. Real production opacity is <strong id="texture-opacity-label"></strong> — the swatch below is boosted so the pattern is actually inspectable; the live page background above is the true, subtle version.</p>
+  <div class="texture-swatch-row">
+    <div class="texture-swatch" id="texture-swatch-boosted">
+      <span class="texture-swatch-label">Boosted for visibility</span>
+    </div>
+    <div class="texture-swatch" id="texture-swatch-real">
+      <span class="texture-swatch-label">True production opacity</span>
+    </div>
+  </div>
+  <p id="texture-empty-note" style="font-size:0.85rem; color:var(--color-text-muted); display:none;">Light and Dark are intentionally texture-free — see <code>waypoint_theme_typography_style_guide_full.md</code>'s Standard Light/Dark sections: no paper texture, no neon effects, no theme-specific decorative motifs.</p>
+
+  <h2>Buttons &amp; Interaction</h2>
+  <div class="btn-row">
+    <button class="btn btn-primary">Primary action</button>
+    <button class="btn btn-secondary">Secondary action</button>
+    <button class="btn btn-disabled" disabled>Disabled</button>
+    <button class="btn btn-primary btn-focus-demo">Tab to me, then press Tab again</button>
+  </div>
+  <h3>Badges</h3>
+  <p style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:0.5rem;">A small filled accent used for short labels. Natural/Standard use a warm secondary tone; Synthwave's badge is violet (2026-08-10) rather than a second magenta, so it reads as its own category next to the pink Border Strong above and the magenta Error state below, not a repeat of either.</p>
+  <div class="badge-row">
+    <span class="badge">New</span>
+    <span class="badge">In Progress</span>
+    <span class="badge">Selected</span>
+  </div>
+
+  <h2>Borders &amp; Surfaces</h2>
+  <div class="demo-card">Regular surface + border — cards, panels, reading containers.</div>
+  <div class="demo-card strong">Strong border — used where the boundary itself carries meaning (a selected state, a required control), not just visual separation. Meets the guide's 3:1 non-text contrast minimum in every theme.</div>
+
+  <h2>Semantic Feedback</h2>
+  <div class="feedback-row">
+    <div class="feedback success"><span class="icon">✓</span><span>Success — the concept clicked. Green stays green across every theme; it's the one semantic color the guide treats as safe to keep intuitive.</span></div>
+    <div class="feedback warning"><span class="icon">!</span><span>Warning — worth a second look, not necessarily wrong.</span></div>
+    <div class="feedback error"><span class="icon">×</span><span>Error / incorrect — never red in FoxCS. Red is reserved specifically for academic-integrity flags (see <code>design-system.md</code>'s Tone Note); general incorrect-answer feedback always uses a warm, non-alarming tone instead.</span></div>
+    <div class="feedback info"><span class="icon">i</span><span>Info — neutral, supporting detail.</span></div>
+  </div>
+
+  <div class="footer-note">
+    Light/Dark reuse FoxCS's already-approved palette (<code>shared-styles/foxcs-theme-light.css</code> / <code>-dark.css</code>). Natural/Synthwave implement <code>logos/waypoint_theme_typography_style_guide_full.md</code>'s own analyzed palette (<code>shared-styles/foxcs-theme-natural.css</code> / <code>-synth.css</code>) — colors are close to the current logo exploration but not final, since the logos themselves aren't final yet. Fonts are self-hosted from <code>shared-styles/fonts/</code>, all free/open-source and downloadable from <a href="https://fonts.google.com" style="color:inherit;">fonts.google.com</a>. Full design notes: <code>theme-system.md</code>.
+  </div>
+
+</div>
+
+<script>
+const PALETTE_TOKENS = [
+  ['--color-bg', 'Background', 'Primary page background'],
+  ['--color-surface', 'Surface', 'Cards, reading containers'],
+  ['--color-surface-alt', 'Surface Alt', 'Secondary sections, code background'],
+  ['--color-text', 'Text', 'Primary text'],
+  ['--color-text-muted', 'Text Muted', 'Secondary text'],
+  ['--color-primary', 'Primary', 'Buttons, links, active controls'],
+  ['--color-primary-hover', 'Primary Hover', 'Hover / pressed state'],
+  ['--color-on-primary', 'On Primary', 'Text/icon color placed on top of Primary'],
+  ['--color-accent', 'Accent (text)', 'Badges, selected states, short highlighted labels'],
+  ['--color-accent-bg', 'Accent (fill)', 'Badge/highlight background'],
+  ['--color-border', 'Border', 'Low-emphasis dividers'],
+  ['--color-border-strong', 'Border Strong', 'Meaningful control boundaries (3:1 min)'],
+  ['--color-focus', 'Focus', 'Keyboard focus ring']
+];
+
+const THEME_NOTES = {
+  'standard-light': 'Familiar, low-distraction. Core palette (background/text/primary/border) reuses FoxCS\'s existing approved light theme exactly. Semantic feedback is pale-tint + dark text as of 2026-08-11 (reverted from a brief dark-chip experiment) — Warning and Error are genuinely distinct hues, both built as one cohesive pale-tint family with the rest.',
+  'standard-dark': 'A neutral dark interface, not a dimmed Synthwave. Core palette (background/text/primary/border) reuses FoxCS\'s existing approved dark theme exactly — only the semantic feedback backgrounds below are specimen-only additions, brightened 2026-08-08 so they read as distinct colored surfaces rather than blending into the near-black page.',
+  'natural': 'Per the guide: #8EA893 (shown below, outlined) is a decorative leaf-green accent only — the guide\'s own contrast table puts it at ~2.35:1 against the cream background, so it never appears as a functional token (text, border, or fill) here. Background lightened twice now (2026-08-08, then again 2026-08-10) from the guide\'s original #FAF5E0. Body text is Lora, not Atkinson Hyperlegible, as of 2026-08-10 — a text serif built for reading, not a display face.',
+  'synthwave': 'Per the guide\'s Critical Synthwave Contrast Rule: the brand magenta #D52AE3 is ~3.86:1 — too low for text, but that clears the 3:1 minimum for non-text UI, so it\'s used directly as Border Strong for real, visible pink presence without touching any text color. Feedback boxes were rebuilt 2026-08-10 as bright chips (dark text) after the original dark tints measured only ~1.4-2.1:1 against the page — now ~5.4-9.6:1, and Accent got its own violet hue instead of reusing Error\'s magenta. Body text is Sora, not Atkinson Hyperlegible, as of 2026-08-10 — a geometric UI sans, not the heading/code monospace.'
+};
+
+function renderSwatches(themeId) {
+  const styles = getComputedStyle(document.documentElement);
+  const grid = document.getElementById('swatch-grid');
+  grid.innerHTML = '';
+  PALETTE_TOKENS.forEach(([varName, label, use]) => {
+    const val = styles.getPropertyValue(varName).trim();
+    const card = document.createElement('div');
+    card.className = 'swatch-card';
+    card.innerHTML =
+      '<div class="swatch-fill" style="background:' + val + '; border-bottom:1px solid var(--color-border);"></div>' +
+      '<div class="swatch-label"><strong>' + label + '</strong><code>' + val + '</code><span class="swatch-note">' + use + '</span></div>';
+    grid.appendChild(card);
+  });
+  const decorative = styles.getPropertyValue('--decorative-accent').trim();
+  if (decorative) {
+    const card = document.createElement('div');
+    card.className = 'swatch-card';
+    card.style.outline = '2px dashed var(--color-text-muted)';
+    card.innerHTML =
+      '<div class="swatch-fill" style="background:' + decorative + '; border-bottom:1px solid var(--color-border);"></div>' +
+      '<div class="swatch-label"><strong>Decorative Accent (brand only)</strong><code>' + decorative + '</code><span class="swatch-note">Never used as a functional/text token — see note below.</span></div>';
+    grid.appendChild(card);
+  }
+  document.getElementById('palette-note').textContent = THEME_NOTES[themeId] || '';
+}
+
+function setTheme(themeId) {
+  document.documentElement.setAttribute('data-theme', themeId);
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.themeId === themeId);
+  });
+  renderSwatches(themeId);
+  renderTexturePreview();
+  localStorage.setItem('waypoint-specimen-theme', themeId);
+}
+
+const NATURAL_TEXTURE_URL = 'url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22180%22%20height%3D%22180%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.85%22%20numOctaves%3D%222%22%20seed%3D%227%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%200.10%20%200%200%200%200%200.07%20%200%200%200%200%200.03%20%200%200%200%200.9%200%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url%28%23n%29%22%2F%3E%3C%2Fsvg%3E")';
+function gridImage(color) {
+  return 'repeating-linear-gradient(0deg, ' + color + ' 0px, ' + color + ' 1px, transparent 1px, transparent 48px), repeating-linear-gradient(90deg, ' + color + ' 0px, ' + color + ' 1px, transparent 1px, transparent 48px)';
+}
+function renderTexturePreview() {
+  const styles = getComputedStyle(document.documentElement);
+  const texOpacity = parseFloat(styles.getPropertyValue('--decoration-texture-opacity')) || 0;
+  const gridOpacity = parseFloat(styles.getPropertyValue('--decoration-grid-opacity')) || 0;
+  const primary = styles.getPropertyValue('--color-primary').trim();
+  const boosted = document.getElementById('texture-swatch-boosted');
+  const real = document.getElementById('texture-swatch-real');
+  const row = document.querySelector('.texture-swatch-row');
+  const emptyNote = document.getElementById('texture-empty-note');
+  const opacityLabel = document.getElementById('texture-opacity-label');
+
+  if (texOpacity > 0) {
+    row.style.display = ''; emptyNote.style.display = 'none';
+    boosted.style.setProperty('--tex-image', NATURAL_TEXTURE_URL);
+    boosted.style.setProperty('--tex-size', '180px 180px');
+    boosted.style.setProperty('--tex-opacity', '1');
+    real.style.setProperty('--tex-image', NATURAL_TEXTURE_URL);
+    real.style.setProperty('--tex-size', '180px 180px');
+    real.style.setProperty('--tex-opacity', String(texOpacity));
+    opacityLabel.textContent = (texOpacity * 100).toFixed(1) + '%';
+  } else if (gridOpacity > 0) {
+    row.style.display = ''; emptyNote.style.display = 'none';
+    boosted.style.setProperty('--tex-image', gridImage(primary));
+    boosted.style.removeProperty('--tex-size');
+    boosted.style.setProperty('--tex-opacity', '1');
+    real.style.setProperty('--tex-image', gridImage(primary));
+    real.style.removeProperty('--tex-size');
+    real.style.setProperty('--tex-opacity', String(gridOpacity));
+    opacityLabel.textContent = (gridOpacity * 100).toFixed(1) + '%';
+  } else {
+    row.style.display = 'none'; emptyNote.style.display = 'block';
+  }
+}
+
+document.getElementById('switcher').addEventListener('click', e => {
+  const btn = e.target.closest('.theme-btn');
+  if (btn) setTheme(btn.dataset.themeId);
+});
+
+setTheme(localStorage.getItem('waypoint-specimen-theme') || 'standard-light');
+</script>
+</body>
+</html>

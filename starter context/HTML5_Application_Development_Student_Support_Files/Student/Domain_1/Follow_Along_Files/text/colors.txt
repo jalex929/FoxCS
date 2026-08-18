@@ -1,0 +1,5 @@
+main green: rgba(44,105,69,255)
+dark green accent: rgba(17,36,24,255)
+orange accent: rgba(207,94,6,255)
+menu brown: rgba(221,219,194,255)
+menu item brown: rgba(233,231,206,255)

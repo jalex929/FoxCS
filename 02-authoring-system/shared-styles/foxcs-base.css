@@ -1,0 +1,184 @@
+/* FoxCS shared base styles — added 2026-08-08, converted to theme variables
+   2026-08-08 same day per Jay's request for a light/dark toggle.
+
+   Single source of truth for the light-page palette, typography, buttons,
+   feedback states, form controls, and every reusable interactive component's
+   styling. Extracted from component-library/index.html, which is the first
+   real consumer of this file (see that file's own <link> tags and its
+   light/dark toggle button).
+
+   NOT yet linked from real distributed lesson content (anything that goes out
+   via Google Classroom) — see this folder's README.md for why. Real lesson
+   pages currently keep their own embedded <style> block and should be kept in
+   sync with this file by hand until that open question resolves.
+
+   THEME VARIABLES: every color is a CSS custom property, light values on
+   :root, dark overrides on [data-theme="dark"] (set by
+   foxcs-theme-toggle.js). Never hardcode a hex value in a component rule
+   below — add/reuse a variable instead, so the toggle keeps working.
+
+   Contrast: deliberately avoided pure #000/#fff at either extreme per Jay's
+   2026-08-08 note (stark black-on-white or white-on-black reads harsh, not
+   what we want) — light mode uses near-black text on an off-white page, dark
+   mode uses off-white text on a dark navy page, same restraint as the
+   already-corrected light palette in design-system.md. The default
+   text-on-background pair in each theme was computed against the real WCAG
+   relative-luminance formula (light: #1a1a1a on #fbfbf9 ≈ 17.9:1; dark:
+   #e6e9ef on #1e2430 ≈ 12.8:1) along with the dark-mode heading/amber accents
+   (#8fbdf0 ≈ 7.9:1, #e0a84a ≈ 7.3:1) and one feedback pair (dark "correct"
+   ≈ 8.0:1) as spot checks. The remaining dark-mode box/feedback pairs were
+   reasoned by strong analogy to those computed values (large luminance
+   separation, same pattern as the verified ones) rather than individually
+   computed — flag here in design-system.md's Dark Mode section if any of
+   those need a real number logged later, same honesty standard as the
+   dark IDE-surface note. */
+
+:root {
+  --bg: #fbfbf9;
+  --text: #1a1a1a;
+  --heading: #2a3a52;
+  --muted-text: #555555;
+  --primary: #1a5aa8;
+  --primary-hover: #12467f;
+  --primary-text-on: #ffffff;
+  --amber: #9a5a00;
+  --amber-hover: #7a4800;
+  --amber-text: #7a3a00;
+  --box-bg: #f4f6f9;
+  --box-bg-2: #eef4fb;
+  --border: #dde3ea;
+  --border-strong: #ccd3dd;
+  --accent-dashed: #9ab6d8;
+  --term-color: #1a3a5c;
+  --feedback-correct-bg: #d7ecd7;
+  --feedback-correct-text: #1a4a1a;
+  --feedback-incorrect-bg: #f4e3d0;
+  --feedback-incorrect-text: #6a4a1a;
+  --placed-bg: #ccd3dd;
+  --placed-text: #445555;
+  --code-bg: #eef1f5;
+}
+
+[data-theme="dark"] {
+  --bg: #1e2430;
+  --text: #e6e9ef;
+  --heading: #8fbdf0;
+  --muted-text: #9aa5b8;
+  --primary: #3d7fc4;
+  --primary-hover: #5b9bd8;
+  --primary-text-on: #ffffff;
+  --amber: #c98a2e;
+  --amber-hover: #e0a84a;
+  --amber-text: #e0a84a;
+  --box-bg: #262d3d;
+  --box-bg-2: #232a3a;
+  --border: #333d52;
+  --border-strong: #3d475e;
+  --accent-dashed: #4a6d94;
+  --term-color: #a9c6ea;
+  --feedback-correct-bg: #1f3d28;
+  --feedback-correct-text: #9fe3ab;
+  --feedback-incorrect-bg: #3d331f;
+  --feedback-incorrect-text: #e3c89f;
+  --placed-bg: #333d52;
+  --placed-text: #cbd3e0;
+  --code-bg: #262d3d;
+}
+
+/* ---- Typography ---- */
+body { font-family: Georgia, 'Times New Roman', serif; line-height: 1.6; color: var(--text); background: var(--bg); }
+h1 { font-family: Verdana, Arial, sans-serif; color: var(--heading); border-bottom: 3px solid var(--primary); padding-bottom: 0.4rem; }
+h2 { font-family: Verdana, Arial, sans-serif; color: var(--heading); margin-top: 2.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+code, pre { background: var(--code-bg); color: var(--text); padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+pre { padding: 0.8rem 1rem; overflow-x: auto; font-size: 0.85rem; }
+
+/* ---- Buttons — fills stay the same in both themes (already AA-verified
+   against white text independent of page background); only the hover shade
+   shifts slightly brighter in dark mode for visible feedback. ---- */
+button.check-btn, button.demo-btn { font-family: Verdana, Arial, sans-serif; background: var(--primary); color: var(--primary-text-on); border: none; padding: 0.5rem 1.1rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
+button.check-btn:hover, button.demo-btn:hover { background: var(--primary-hover); }
+button.reset-btn { font-family: Verdana, Arial, sans-serif; background: none; color: var(--muted-text); border: 1px solid var(--border-strong); padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-left: 0.5rem; }
+button.save-btn { font-family: Verdana, Arial, sans-serif; background: var(--amber); color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+button.save-btn:hover { background: var(--amber-hover); }
+.save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+
+/* ---- Feedback states — pale peach for incorrect, not red; red is reserved
+   for academic-integrity warnings specifically. See design-system.md's Tone Note. ---- */
+.feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
+.feedback.correct { background: var(--feedback-correct-bg); color: var(--feedback-correct-text); display: block; }
+.feedback.incorrect { background: var(--feedback-incorrect-bg); color: var(--feedback-incorrect-text); display: block; }
+
+/* ---- Form controls ---- */
+select.sel, input.txt { font-family: Consolas, monospace; font-size: 1rem; padding: 0.3rem 0.5rem; border: 2px solid var(--border-strong); border-radius: 4px; background: var(--bg); color: var(--text); }
+
+/* ---- Callout / info box ---- */
+.intro { background: var(--box-bg); border-left: 4px solid var(--primary); padding: 0.9rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
+
+/* ---- Theme toggle button — see foxcs-theme-toggle.js ---- */
+.theme-toggle-btn { font-family: Verdana, Arial, sans-serif; background: var(--box-bg); color: var(--text); border: 1px solid var(--border-strong); padding: 0.4rem 0.9rem; border-radius: 20px; cursor: pointer; font-size: 0.85rem; }
+.theme-toggle-btn:hover { border-color: var(--primary); }
+
+/* ---- Flip card (component-library #1) ---- */
+.card-scene { perspective: 1400px; max-width: 320px; }
+.card { position: relative; width: 100%; min-height: 140px; cursor: pointer; }
+.card-inner { position: relative; width: 100%; height: 100%; min-height: 140px; transition: transform 0.5s cubic-bezier(0.4,0.2,0.2,1); transform-style: preserve-3d; }
+.card.flipped .card-inner { transform: rotateY(180deg); }
+.card-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 12px; padding: 1.2rem; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; }
+.card-front { background: var(--box-bg); border: 3px solid var(--primary); font-weight: bold; font-size: 1.3rem; color: var(--term-color); }
+.card-back { background: var(--primary); color: white; transform: rotateY(180deg); font-family: Georgia, serif; }
+
+/* ---- Block builder, single + multi-line (component-library #2, #3) ---- */
+.block-bank, .block-answer { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.7rem; min-height: 2.4rem; padding: 0.6rem; border-radius: 6px; }
+.block-bank { background: var(--box-bg); }
+.block-answer { background: var(--box-bg-2); border: 2px dashed var(--accent-dashed); }
+.blk { font-family: Consolas, monospace; background: var(--primary); color: white; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer; border: none; font-size: 0.95rem; }
+.blk:hover { background: var(--primary-hover); }
+.blk.placed { background: var(--placed-bg); color: var(--placed-text); }
+.code-line-row { margin-bottom: 0.9rem; }
+.code-line-label { font-size: 0.8rem; color: var(--muted-text); margin-bottom: 0.3rem; }
+.code-line-row.indented { padding-left: 2.2rem; border-left: 3px solid var(--accent-dashed); }
+.code-lang-badge { display: inline-block; font-family: Consolas, monospace; font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; font-weight: bold; background: var(--code-bg); color: var(--muted-text); padding: 0.2rem 0.55rem; border-radius: 4px; margin-bottom: 0.7rem; }
+
+/* ---- Drag-to-match (component-library #7) ---- */
+.quiz-layout { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.term-bank { flex: 0 0 150px; display: flex; flex-direction: column; gap: 0.5rem; }
+.definitions { flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 0.6rem; }
+.term-chip { font-family: Consolas, monospace; background: var(--primary); color: white; padding: 0.5rem 0.7rem; border-radius: 6px; cursor: grab; text-align: center; user-select: none; }
+.term-chip.placed { display: none; }
+.def-slot { background: var(--box-bg); border: 2px dashed var(--accent-dashed); border-radius: 8px; padding: 0.7rem 0.9rem; font-size: 0.9rem; min-height: 2.2rem; display: flex; align-items: center; cursor: pointer; color: var(--text); }
+.def-slot.correct { background: var(--feedback-correct-bg); border: 2px solid #2f7a2f; }
+.def-slot.shake { animation: shake 0.35s; }
+.matched-term-badge { display: none; font-family: Consolas, monospace; background: var(--primary); color: white; padding: 0.15rem 0.55rem; border-radius: 4px; margin-right: 0.7rem; font-size: 0.8rem; flex-shrink: 0; }
+.def-slot.correct .matched-term-badge { display: inline-block; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+/* ---- Categorization (component-library #8) ---- */
+.cat-bins { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.8rem; }
+.cat-bin { flex: 1; min-width: 180px; background: var(--box-bg); border: 2px dashed var(--accent-dashed); border-radius: 8px; padding: 0.8rem; min-height: 5rem; }
+.cat-bin-label { font-family: Verdana, Arial, sans-serif; font-weight: bold; font-size: 0.85rem; color: var(--term-color); margin-bottom: 0.5rem; text-align: center; }
+.cat-item { font-family: Consolas, monospace; background: var(--primary); color: white; padding: 0.4rem 0.7rem; border-radius: 5px; cursor: grab; margin: 0.3rem; display: inline-block; }
+.cat-item.placed-correct { background: #2f7a2f; cursor: default; }
+
+/* ---- Sequencing (component-library #9) ---- */
+.seq-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.8rem; }
+.seq-item { background: var(--box-bg); border: 2px solid var(--accent-dashed); border-radius: 6px; padding: 0.6rem 0.9rem; cursor: grab; display: flex; align-items: center; gap: 0.6rem; color: var(--text); }
+.seq-item.correct-pos { background: var(--feedback-correct-bg); border-color: #2f7a2f; }
+.seq-handle { font-family: Verdana, Arial, sans-serif; color: var(--muted-text); font-size: 0.85rem; }
+.seq-btn-wrap { margin-left: auto; display: flex; gap: 0.3rem; }
+.seq-move-btn { font-family: Verdana, Arial, sans-serif; background: var(--bg); border: 1px solid var(--accent-dashed); color: var(--term-color); border-radius: 4px; padding: 0.2rem 0.55rem; cursor: pointer; font-size: 0.85rem; }
+.seq-move-btn:hover:not(:disabled) { background: var(--box-bg-2); }
+.seq-move-btn:disabled { opacity: 0.35; cursor: default; }
+
+/* ---- Video embed (component-library #10) ---- */
+.video-wrap { position: relative; width: 100%; padding-top: 56.25%; margin: 0.8rem 0; border-radius: 8px; overflow: hidden; background: #2a3a52; }
+.video-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: white; font-family: Verdana, Arial, sans-serif; text-align: center; padding: 1rem; }
+
+/* ---- Save-in-place / password-gate toy box (component-library #11, #12) ---- */
+.toy-box { background: var(--box-bg); border-radius: 6px; padding: 1rem; color: var(--text); }
+
+/* ---- Glossary term hover/click card (component-library #13) ---- */
+.glossary-term { text-decoration: underline dotted var(--primary); text-decoration-thickness: 2px; text-underline-offset: 3px; color: var(--term-color); font-weight: bold; cursor: help; }
+.glossary-term:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 2px; }
+.glossary-card { position: absolute; max-width: 260px; background: var(--primary); color: white; font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; padding: 0.6rem 0.8rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35); z-index: 50; display: none; line-height: 1.4; }
+.glossary-card.visible { display: block; }
+.glossary-card .glossary-card-term { display: block; font-weight: bold; margin-bottom: 0.25rem; }

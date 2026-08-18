@@ -1,0 +1,93 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>01.6 Common Syntax Mistakes: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 0.8rem 1.2rem; }
+  code, pre { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  pre { padding: 0.8rem 1rem; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+  th, td { border: 1px solid #ccd; padding: 0.5rem 0.7rem; text-align: left; }
+  th { background: #f4f6f9; }
+  .vocab dt { font-weight: bold; color: #1a3a5c; }
+  .vocab dd { margin-bottom: 0.6rem; }
+  .game-tie-in { background: #c5c0e3; border-left: 4px solid #4a3aa7; padding: 0.8rem 1.2rem; margin: 1.2rem 0; }
+  .handoff { background: #f9e1ad; border: 1px solid #eda100; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+</style>
+</head>
+<body>
+
+<h1>01.6: Common Syntax Mistakes</h1>
+
+<div class="objectives">
+<strong>Learning objectives:</strong>
+<ul>
+  <li>I can identify and fix common early Python mistakes.</li>
+  <li>I can explain the difference between a <code>SyntaxError</code> and a <code>NameError</code>.</li>
+</ul>
+<strong>Language objective:</strong>
+<ul>
+  <li>I can explain what went wrong in broken code using the terms <strong>SyntaxError</strong>, <strong>NameError</strong>, and <strong>syntax</strong>.</li>
+</ul>
+</div>
+
+<h2>This Lesson Is a Review, on Purpose</h2>
+<p>You've already met most of these mistakes in Lessons 01.3-01.5, one at a time. This lesson is where you get fast at recognizing all of them at once, in code you didn't write yourself. Which is closer to what real debugging actually feels like.</p>
+
+<h2>The Big Four, Side by Side</h2>
+<table>
+<tr><th>Mistake</th><th>Broken example</th><th>What Python says</th><th>Fix</th></tr>
+<tr><td>Missing closing quote</td><td><code>print("Hello)</code></td><td><code>SyntaxError: EOL while scanning string literal</code></td><td>Add the missing closing quote.</td></tr>
+<tr><td>Missing parentheses</td><td><code>print "Hello"</code></td><td><code>SyntaxError: Missing parentheses in call to 'print'</code></td><td>Wrap the argument in <code>()</code>.</td></tr>
+<tr><td>Wrong capitalization</td><td><code>Print("Hi")</code></td><td><code>NameError: name 'Print' is not defined</code></td><td><code>print</code> must be all lowercase. Python is case-sensitive.</td></tr>
+<tr><td>Missing quotes entirely</td><td><code>print(Hello)</code></td><td><code>NameError: name 'Hello' is not defined</code></td><td>Wrap the text in quotes so Python treats it as a string, not a variable name.</td></tr>
+</table>
+
+<p>Notice two of these say <code>NameError</code>, not <code>SyntaxError</code>. That's worth understanding, not just memorizing. <code>Print</code> with a capital letter, or <code>Hello</code> with no quotes, both look to Python like the <em>name of a variable</em> that doesn't exist yet, not like a mistyped keyword or a piece of text. Python isn't confused about grammar in these two cases. It's looking for something by that exact name and not finding it.</p>
+
+<h2>How to Actually Debug One of These</h2>
+<ol>
+  <li>Read the error message's <em>last line</em> first. It names the actual problem.</li>
+  <li>Find the line number Python points to.</li>
+  <li>Compare that line, character by character, against the rules: lowercase <code>print</code>, matching parentheses, matching quotes.</li>
+  <li>Fix one thing, run again. If a new error appears, that's progress, not failure. You fixed the first problem and uncovered the next one.</li>
+</ol>
+
+<div class="game-tie-in">
+<strong>Game connection:</strong> This is your first real taste of what Unit 13 will call "playtesting your own code" and what real game studios call QA (quality assurance). The deliberate, systematic process of finding what's broken before it reaches a player. Right now the "player" is just Python's error message, and the "bug" is a missing character. The habit you're building here (read the message, find the line, check it against the rule, fix one thing at a time) is the exact same habit a professional QA process runs at a much larger scale.
+</div>
+
+<h2>Key Terms</h2>
+<dl class="vocab">
+  <dt>SyntaxError</dt>
+  <dd>An error Python raises when code breaks its grammar rules.</dd>
+  <dt>EOL</dt>
+  <dd>"End Of Line". Appears in error messages when Python reaches the end of a line unexpectedly, often from a missing closing quote.</dd>
+  <dt>syntax</dt>
+  <dd>The grammar rules for writing valid code.</dd>
+  <dt>parenthesis</dt>
+  <dd>The <code>(</code> or <code>)</code> symbol used to call a function in Python.</dd>
+</dl>
+
+<h2>What To Do Next</h2>
+<p>Everything for this lesson is in this same folder, numbered in the order you should do it:</p>
+<ol>
+  <li><strong>02_flashcards.html (optional warm-up):</strong> <a href="02_flashcards.html">Open the flashcards</a>.</li>
+  <li><strong>03_practice.html:</strong> <a href="03_practice.html">Open the practice page</a>. Save it when you're done.</li>
+  <li><strong>04_project.html:</strong> <a href="04_project.html">Open the project</a>, a short applied task before the mastery check.</li>
+  <li><strong>05_mastery_check.html (do this last):</strong> <a href="05_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
+</ol>
+
+<div class="handoff">
+<strong>No separate VS Code file needed this lesson.</strong> Every question in the practice page is a broken line to fix, right there on the page.
+<p class="save-reminder">Don't forget to save your file (Ctrl+S) before you're done.</p>
+</div>
+
+</body>
+</html>

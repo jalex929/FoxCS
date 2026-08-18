@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="central city sports, sports complex, sports leagues, recreational center">
+    <meta name="author" content="authorName"> 
+    <title>Contact Us - Central City Recreational Complex</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/regex.js"></script>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav nav">
+            <a href="#" class="icon">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul class="link-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="schedule.html">Schedule</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+        </nav>
+        <h2 class="page-title page-title-large">Central City Recreational Complex</h2>
+        <h4 class="page-title page-subtitle">Contact Us</h4>
+    </header>
+    <div class="container">
+        <div class="contact-form">
+            <form action="thankyou.html">
+                    <fieldset>
+                    <legend>We value your feedback!</legend>
+                        <label for="fname">First Name:</label><br>
+                        <input type="text" id="fname" title="First Name"> <br>
+
+                        <label for="lname">Last Name:</label><br>
+                        <input type="text" id="lname" title="Last Name"><br>
+
+                        <label for="email">Email Address:<span id="required">*required</span></label><br>
+                        <input type="text" id="email" name="email" title="Email" placeholder="name@email.com"><br>
+
+                        <label for="phone">Phone Number:</label><br>
+                        <input type="text" id="phone" title="Phone Number" placeholder="xxx-xxxx"><br>
+
+                        <label for="comments">Comments and Concerns:<span id="limit">(limit 255 characters)</span></label><br>
+                        <textarea name="comments" id="comments" cols="50" rows="8" title="Comments" maxlength="255"></textarea><br>
+
+                        <input type="submit" class="form-button" value="Submit Form">
+                    </fieldset>
+            </form>
+        </div>
+    </div>
+    <footer class="main-footer">
+        <div class="container main-footer-container">
+            <h2 class="page-title page-title-footer">Central City Recreational Complex</h2>
+            <ul class="footer-nav nav">
+                <li>
+                    <a href="#" target="_blank">
+                        <img src="images/YouTube Logo.png" alt="youtube logo">
+                    </a>
+                </li>
+                <li>
+                    <a href="#" target="_blank">
+                        <img src="images/Facebook Logo.png" alt="facebook logo">
+                    </a>
+                </li>
+                <li>
+                    <a href="#" target="_blank">
+                        <img src="images/instagram logo.png" alt="instagram logo" height="70px" width="90px">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>

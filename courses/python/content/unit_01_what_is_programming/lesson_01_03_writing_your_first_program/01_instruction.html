@@ -1,0 +1,90 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>01.3 Writing Your First Program: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 0.8rem 1.2rem; }
+  code, pre { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  pre { padding: 0.8rem 1rem; overflow-x: auto; }
+  .vocab dt { font-weight: bold; color: #1a3a5c; }
+  .vocab dd { margin-bottom: 0.6rem; }
+  .game-tie-in { background: #c5c0e3; border-left: 4px solid #4a3aa7; padding: 0.8rem 1.2rem; margin: 1.2rem 0; }
+  .handoff { background: #f9e1ad; border: 1px solid #eda100; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+</style>
+</head>
+<body>
+
+<h1>01.3: Writing Your First Program</h1>
+
+<div class="objectives">
+<strong>Learning objectives:</strong>
+<ul>
+  <li>I can write and run a Python file in VS Code.</li>
+  <li>I can predict what a short program will display, based on the order of its statements.</li>
+</ul>
+<strong>Language objective:</strong>
+<ul>
+  <li>I can explain why Python's output follows a specific order using the terms <strong>sequential</strong> and <strong>execute</strong>.</li>
+</ul>
+</div>
+
+<h2>Your First Real Program</h2>
+<p>Everything up to now has been ideas. This lesson, you write an actual program and run it. Open <code>2_examples/example_01.py</code> in VS Code, and you'll see something like this:</p>
+
+<pre>print("Hello, Python!")
+print("This is my first program.")</pre>
+
+<p>Run it (VS Code's Run button, or whatever your teacher showed you in Unit 00). You should see both lines of text appear, in the same order they're written. That's not a coincidence. It's the single most important rule about how Python runs your code.</p>
+
+<h2>Python Runs Top to Bottom, One Line at a Time</h2>
+<p>Python reads your file starting at the very first line and works its way down, running one instruction, then the next, then the next. It never skips ahead, never runs two lines at the exact same moment, and never runs them out of order. If a program has five lines, the fifth line's effect is always the last thing that happens, because Python didn't get to it until it finished the first four.</p>
+
+<p>This is called running <strong>sequentially</strong>. In a fixed sequence, one step at a time. It's the same idea from 01.1's recipe comparison: a recipe's steps happen in the order they're written, not in whatever order looks convenient in the moment.</p>
+
+<h2>Predicting Output Before You Run It</h2>
+<p>Reading code and predicting what it will display <em>before</em> you run it, then checking whether you were right, is a genuinely useful skill you'll use all year. Try it here:</p>
+
+<pre>print("Line 1")
+print("Line 2")</pre>
+
+<p>Before you scroll on: what will this display, and in what order? (It displays <code>Line 1</code> then <code>Line 2</code>, each on its own line, because Python ran the first <code>print()</code> completely before starting the second one.)</p>
+
+<div class="game-tie-in">
+<strong>Game connection:</strong> "Runs top to bottom, one instruction at a time" is true of game code too. Before a game can respond to your input at all, it typically runs setup code first: loading the level, placing objects in their starting positions, initializing the score to zero. That setup code runs in order, once, before anything else happens, using the same sequential rule you just used to predict <code>Line 1</code> then <code>Line 2</code>. (What happens after setup, the part that repeats over and over while you play, is the "game loop" you'll meet properly in Unit 06.)
+</div>
+
+<h2>Key Terms</h2>
+<dl class="vocab">
+  <dt>execute</dt>
+  <dd>To run a line of code. To carry out its instruction.</dd>
+  <dt>sequential</dt>
+  <dd>In a specific order, one step at a time.</dd>
+  <dt>output</dt>
+  <dd>Text or data that appears on the screen when code runs.</dd>
+  <dt>statement</dt>
+  <dd>A single instruction in a Python program.</dd>
+</dl>
+
+<h2>What To Do Next</h2>
+<p>Everything for this lesson is in this same folder, numbered in the order you should do it:</p>
+<ol>
+  <li><strong>02_example_01.py:</strong> open it in VS Code and run it.</li>
+  <li><strong>03_flashcards.html (optional warm-up):</strong> <a href="03_flashcards.html">Open the flashcards</a>.</li>
+  <li><strong>04_practice.html:</strong> <a href="04_practice.html">Open the practice page</a>. Save it when you're done.</li>
+  <li><strong>05_project.html:</strong> <a href="05_project.html">Open the project</a>, a short applied task before the mastery check.</li>
+  <li><strong>06_mastery_check.html (do this last):</strong> <a href="06_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
+</ol>
+
+<div class="handoff">
+<strong>Handoff to VS Code:</strong> Open <code>2_examples/example_01.py</code> and run it before you start the practice page.
+<p class="save-reminder">Don't forget to save your practice page and mastery check when you're done.</p>
+</div>
+
+</body>
+</html>

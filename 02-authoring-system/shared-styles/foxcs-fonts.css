@@ -1,0 +1,109 @@
+/* FoxCS self-hosted fonts — added 2026-08-08, per
+   logos/waypoint_theme_typography_style_guide_full.md's typography spec.
+   Lora and Sora added 2026-08-10 per Jay's follow-up direction: body text
+   doesn't have to be Atkinson Hyperlegible in every theme, as long as
+   whatever replaces it is a genuinely legible text face (no script/
+   handwritten faces, nothing decorative enough to raise cognitive load over
+   a long reading passage) — see theme-system.md's Typography section for
+   which theme uses which body font now.
+
+   All six families are free, open-source (SIL Open Font License), and
+   published on fonts.google.com:
+     - Atkinson Hyperlegible  https://fonts.google.com/specimen/Atkinson+Hyperlegible
+     - Nunito Sans            https://fonts.google.com/specimen/Nunito+Sans
+     - JetBrains Mono         https://fonts.google.com/specimen/JetBrains+Mono
+     - Source Sans 3          https://fonts.google.com/specimen/Source+Sans+3
+     - Lora                   https://fonts.google.com/specimen/Lora
+     - Sora                   https://fonts.google.com/specimen/Sora
+
+   SELF-HOSTED, not linked to fonts.googleapis.com — real lesson content
+   already avoids external <link> dependencies (see this folder's README.md
+   and ../theme-system.md's Classroom-folder-structure risk); a font request
+   to Google at render time would be the same kind of external dependency.
+   Files live in ./fonts/, latin subset only (no need for Cyrillic/Greek/
+   Vietnamese glyphs in FoxCS content).
+
+   Nunito Sans, JetBrains Mono, and Source Sans 3 are variable fonts — Google
+   serves one file per family covering a weight range, so each is declared
+   here as a single @font-face with a font-weight RANGE rather than one file
+   per weight (this is the correct way to declare a variable font; the
+   browser interpolates the exact requested weight from the range). Atkinson
+   Hyperlegible ships only as static Regular/Bold, so it gets two rules. */
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/atkinson-hyperlegible-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/atkinson-hyperlegible-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url('fonts/nunito-sans-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('fonts/jetbrains-mono-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('fonts/source-sans-3-variable.woff2') format('woff2');
+}
+
+@font-face {
+  /* Natural's body font — a contemporary text serif with calligraphic roots,
+     built for screen/print reading (not a display or decorative face). Warm
+     without being script/handwritten, matching Natural's "thoughtful,
+     slightly handcrafted" brief (Section 8) while staying legible at length. */
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/lora-variable.woff2') format('woff2');
+}
+
+@font-face {
+  /* Synthwave's body font — geometric sans with a technological character,
+     but designed for UI/body legibility (unlike JetBrains Mono, which the
+     guide explicitly rules out for long-form copy — Section 7). */
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/sora-variable.woff2') format('woff2');
+}
+
+/* Shared font-stack variables — every theme references these, not literal
+   family names, so a future font swap only touches this one file. */
+:root {
+  --font-body:
+    "Atkinson Hyperlegible",
+    "Source Sans 3",
+    system-ui,
+    sans-serif;
+  --font-code:
+    "JetBrains Mono",
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Data Example</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            background-color: #BBB;
+            margin: 0 auto;
+        }
+
+        .container {
+            height: 75vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            const request = new XMLHttpRequest();
+            let button = document.getElementById('button');
+            let xmlObj;
+
+            request.addEventListener('readystatechange', function () {
+                if (request.readyState === 4 && request.status === 200) {
+                    console.log(this);
+                    xmlObj = this.responseXML;
+                }
+            })
+
+            button.addEventListener('click', function() {
+                let books = xmlObj.getElementsByTagName('author');
+
+                for (let i = 0; i < books.length; i++) {
+                    let author = books[i].firstChild.nodeValue;
+                    let li = document.createElement('li');
+                    li.textContent = author;
+                    document.getElementById('output').append(li);
+                }
+            })
+
+            request.open('GET', 'xml/example.xml');
+            request.send();
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container" style>
+        <h2>Working with XML Data 2</h2>
+        <button id="button">Click Here to Load Content</button>
+        <ul id="output"></ul>
+    </div>
+</body>
+
+</html>

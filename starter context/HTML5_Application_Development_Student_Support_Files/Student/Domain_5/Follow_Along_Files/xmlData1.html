@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML Data Example 1</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    
+        html,
+        body {
+            background-color: #BBB;
+            margin: 0 auto;
+        }
+    
+        .container {
+            height: 75vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <script>
+        let xmlObj;
+        window.onload = function() {
+            const request = new XMLHttpRequest();
+            
+            request.addEventListener('readystatechange', function() {
+                if (request.readyState === 4 && request.status === 200) {
+                    xmlObj = this.responseXML;
+                    console.log(xmlObj);
+                    
+                }
+            })
+
+            request.open('GET', 'xml/example.xml');
+            request.send();
+        }
+    </script>
+</head>
+<body>
+        <div class="container" style>
+            <h2>Working with XML Data</h2>
+            <button id="button">Click Here to Load Content</button>
+            <p id="output"></p>
+        </div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     Interactive practice engine. See lesson_01_01_practice.html for the design note. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>01.2 Practice: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; }
+  .q-block { background: #fff; border: 1px solid #dde3ea; border-radius: 6px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .q-block.answered { background: #f9fafb; }
+  .prompt { font-weight: bold; margin-bottom: 0.7rem; }
+  .options label { display: block; margin: 0.4rem 0; cursor: pointer; }
+  textarea { width: 100%; min-height: 5em; font-family: Georgia, serif; font-size: 1rem; padding: 0.5rem; box-sizing: border-box; }
+  button { font-family: Verdana, Arial, sans-serif; background: #2a78d6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; margin-top: 0.6rem; margin-right: 0.5rem; }
+  button:hover { background: #1a5aa8; }
+  button:disabled { background: #aab; cursor: default; }
+  button.secondary { background: #6a6a6a; }
+  .feedback { margin-top: 0.7rem; padding: 0.6rem 0.9rem; border-radius: 4px; }
+  .feedback.correct { background: #d7ecd7; color: #1a4a1a; }
+  .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; }
+  .feedback.info { background: #eef1f5; color: #2a3a52; }
+  .model-answer { background: #eef1f5; padding: 0.7rem 0.9rem; border-radius: 4px; margin-top: 0.6rem; font-style: italic; }
+  #complete-box { background: #f9e1ad; border: 1px solid #eda100; padding: 1.2rem 1.4rem; border-radius: 6px; margin-top: 1.5rem; display: none; }
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+</style>
+</head>
+<body>
+
+<h1>01.2 Practice: Input-Process-Output</h1>
+<div class="intro">Work through the questions as they appear. Each one builds on the last.</div>
+
+<div id="log"></div>
+
+<div id="complete-box">
+  <strong>Practice complete.</strong> Nice work.
+  <p class="save-reminder">Click "Save My Work" below, then continue to the Mastery Check.</p>
+  <button onclick="saveWork()">Save My Work</button>
+  <br><a class="next-link" href="04_mastery_check.html" style="display:inline-block;margin-top:0.8rem;">Continue to Mastery Check →</a>
+</div>
+
+<script>
+const QUESTIONS = {
+  core_1: {
+    type: 'single',
+    prompt: 'A grocery checkout register looks up a scanned barcode\'s price in its database. Is this Input, Process, or Output?',
+    options: [{key: 'a', text: 'Input'}, {key: 'b', text: 'Process'}, {key: 'c', text: 'Output'}],
+    correct: ['b'],
+    feedbackCorrect: 'Right. The lookup is the actual "work" stage. That\'s Process.',
+    feedbackIncorrect: 'The lookup is where the actual decision/calculation happens. That\'s the Process stage, not Input or Output.',
+    onCorrect: 'extend_1',
+    onIncorrect: 'reinforce_1'
+  },
+  reinforce_1: {
+    type: 'single',
+    prompt: 'A Learner types their name into a sign-in kiosk. Is this Input, Process, or Output?',
+    options: [{key: 'a', text: 'Input'}, {key: 'b', text: 'Process'}, {key: 'c', text: 'Output'}],
+    correct: ['a'],
+    feedbackCorrect: 'Right. Data coming in from outside the program is Input.',
+    feedbackIncorrect: 'The name is data coming into the program from outside. That\'s Input.',
+    onCorrect: 'reinforce_2',
+    onIncorrect: 'reinforce_2'
+  },
+  reinforce_2: {
+    type: 'single',
+    prompt: 'The kiosk displays "Welcome, [name]!" on the screen. Is this Input, Process, or Output?',
+    options: [{key: 'a', text: 'Input'}, {key: 'b', text: 'Process'}, {key: 'c', text: 'Output'}],
+    correct: ['c'],
+    feedbackCorrect: 'Right. Anything the program delivers back is Output.',
+    feedbackIncorrect: 'Whatever the program displays back is the Output stage.',
+    onCorrect: 'done',
+    onIncorrect: 'done'
+  },
+  extend_1: {
+    type: 'written',
+    prompt: 'Pick a real system you interact with that wasn\'t used as an example here (not the checkout register, not the kiosk). Break it into Input, Process, and Output. Then: is there any part where it\'s genuinely hard to tell Process from Output? Explain the ambiguity, or explain why you\'re confident there isn\'t one.',
+    modelAnswer: 'Any real, specific system with a genuine I/P/O breakdown works. Strong answers name the actual data at each stage and engage seriously with the ambiguity question rather than just saying "no, it\'s all clear."',
+    onDone: 'done'
+  }
+};
+
+let logEl = document.getElementById('log');
+
+function renderQuestion(id) {
+  if (id === 'done') { document.getElementById('complete-box').style.display = 'block'; return; }
+  const q = QUESTIONS[id];
+  const block = document.createElement('div');
+  block.className = 'q-block';
+  block.id = 'block-' + id;
+  let inner = '<p class="prompt">' + q.prompt + '</p>';
+  if (q.type === 'single') {
+    inner += '<div class="options">' + q.options.map(o =>
+      '<label><input type="radio" name="opt-' + id + '" value="' + o.key + '"> ' + o.text + '</label>'
+    ).join('') + '</div>';
+    inner += '<button onclick="checkChoice(\'' + id + '\')">Check Answer</button>';
+  } else if (q.type === 'written') {
+    inner += '<textarea id="text-' + id + '" placeholder="Write your answer here..."></textarea>';
+    inner += '<div><button onclick="revealModel(\'' + id + '\')" class="secondary">Show a Model Answer</button>';
+    inner += '<button onclick="finishWritten(\'' + id + '\')">I\'m Done. Continue</button></div>';
+  }
+  inner += '<div class="feedback" id="feedback-' + id + '" style="display:none"></div>';
+  block.innerHTML = inner;
+  logEl.appendChild(block);
+  block.scrollIntoView({behavior: 'smooth', block: 'end'});
+}
+
+function lockBlock(id) {
+  const block = document.getElementById('block-' + id);
+  block.classList.add('answered');
+  block.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+}
+
+function checkChoice(id) {
+  const q = QUESTIONS[id];
+  const selected = Array.from(document.querySelectorAll('input[name="opt-' + id + '"]:checked')).map(el => el.value);
+  if (selected.length === 0) { alert('Pick an answer first.'); return; }
+  const isCorrect = selected.length === q.correct.length && selected.every(v => q.correct.includes(v));
+  const fb = document.getElementById('feedback-' + id);
+  fb.style.display = 'block';
+  fb.className = 'feedback ' + (isCorrect ? 'correct': 'incorrect');
+  fb.textContent = isCorrect ? q.feedbackCorrect: q.feedbackIncorrect;
+  lockBlock(id);
+  renderQuestion(isCorrect ? q.onCorrect: q.onIncorrect);
+}
+
+function revealModel(id) {
+  const q = QUESTIONS[id];
+  const fb = document.getElementById('feedback-' + id);
+  fb.style.display = 'block';
+  fb.className = 'feedback info';
+  fb.innerHTML = '<div class="model-answer">' + q.modelAnswer + '</div>';
+}
+
+function finishWritten(id) {
+  const q = QUESTIONS[id];
+  lockBlock(id);
+  renderQuestion(q.onDone);
+}
+
+// Save-in-place, added 2026-08-04 per Jay: the goal is overwriting this same file
+// where it already lives, not downloading a new copy to the Downloads folder.
+// Uses the File System Access API (showSaveFilePicker) where available. Chrome/Edge,
+// including ChromeOS, which covers most school Chromebooks. First save asks the
+// Learner to pick the file once (suggest re-selecting this same file, to overwrite
+// it); the browser's picker remembers the handle after that, so every save after the
+// first is silent, no dialog. NOT yet tested on real school devices over file:// —
+// see 05-grader/README.md's Testing Needs. Falls back to a classic download for
+// browsers without the API (Firefox, Safari), where in-place overwrite isn't possible.
+let savedFileHandle = null;
+
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  return decodeURIComponent(parts[parts.length - 1]) || 'lesson_01_02_practice.html';
+}
+
+async function saveWork() {
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+
+  if (savedFileHandle) {
+    try {
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      return;
+    } catch (err) {
+      savedFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      savedFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+// Only start fresh at Core if this is a brand-new page load. Reopening a file that
+// was already saved mid-progress has the earlier answered questions baked into the
+// HTML already — re-running renderQuestion('core_1') here would duplicate them.
+if (logEl.children.length === 0) {
+  renderQuestion('core_1');
+}
+</script>
+
+</body>
+</html>

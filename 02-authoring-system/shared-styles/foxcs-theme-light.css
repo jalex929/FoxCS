@@ -1,0 +1,37 @@
+/* FoxCS theme file — Light (default). Added 2026-08-08 as part of the
+   4-theme system (see ../theme-system.md).
+
+   Values copied as-is from foxcs-base.css's existing :root block — this file
+   doesn't change the shipped light palette, it just makes it independently
+   linkable. foxcs-base.css keeps its own built-in :root values too (for the
+   component library's existing data-theme-attribute dark toggle, unrelated
+   to this file); when both are linked, whichever CSS custom-property block
+   comes later in the cascade wins, so link this file AFTER foxcs-base.css if
+   a page wants the swappable-link mechanism instead of the attribute toggle.
+   See theme-system.md for why there are two coexisting mechanisms right now. */
+
+:root {
+  --bg: #fbfbf9;
+  --text: #1a1a1a;
+  --heading: #2a3a52;
+  --muted-text: #555555;
+  --primary: #1a5aa8;
+  --primary-hover: #12467f;
+  --primary-text-on: #ffffff;
+  --amber: #9a5a00;
+  --amber-hover: #7a4800;
+  --amber-text: #7a3a00;
+  --box-bg: #f4f6f9;
+  --box-bg-2: #eef4fb;
+  --border: #dde3ea;
+  --border-strong: #ccd3dd;
+  --accent-dashed: #9ab6d8;
+  --term-color: #1a3a5c;
+  --feedback-correct-bg: #d7ecd7;
+  --feedback-correct-text: #1a4a1a;
+  --feedback-incorrect-bg: #f4e3d0;
+  --feedback-incorrect-text: #6a4a1a;
+  --placed-bg: #ccd3dd;
+  --placed-text: #445555;
+  --code-bg: #eef1f5;
+}

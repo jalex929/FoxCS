@@ -1,0 +1,161 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     Password gate: NOT real security. This is a client-side JS check. It's a
+     pacing/access control Jay uses to control when students can start the mastery
+     check, not a way to prevent a determined student from bypassing it.
+
+     Content obfuscation, added 2026-08-04 per Jay: question text for all variants is
+     base64-encoded below and only decoded + injected into the page after a correct
+     password, so viewing this page's source before unlocking shows encoded text, not
+     readable questions. Same honesty as the password itself: this is a speed bump
+     against casual "view source" reading, not encryption. A student who pastes the
+     encoded string into a browser console and runs atob() on it can still read it.
+     That's an accepted limitation, not an oversight — it stops the realistic, casual
+     threat without pretending to be a vault.
+
+     Multi-variant, added 2026-08-04 per Jay: 3 passwords, each unlocking a slightly
+     different version of the same questions (different scenarios, same objectives
+     and DOK level). Lets Jay release different versions on different days and cross-
+     check, if a saved file's variant/timestamp doesn't match when that student's
+     section actually took it, that's a signal worth a conversation, not proof by
+     itself. The unlock time is recorded from the browser's clock at unlock time.
+
+     CHANGE the PASSWORDS map before distributing, and again to re-lock for a new
+     attempt/section. Passwords are 6-character alphanumeric, matching the format of
+     the real certification exam codes students will see later. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>01.1 Mastery Check: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
+  .q { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 1rem 1.2rem; margin: 1.2rem 0; }
+  textarea.answer-space { width: 100%; min-height: 4em; margin-top: 0.6rem; padding: 0.5rem; font-family: Georgia, serif; font-size: 1rem; box-sizing: border-box; }
+  #lock { background: #f4f6f9; border: 2px solid #2a78d6; border-radius: 8px; padding: 1.5rem; text-align: center; }
+  #lock input { font-size: 1.1rem; padding: 0.4rem 0.6rem; margin-right: 0.5rem; text-transform: uppercase; }
+  #lock button, .save-btn, .next-link { font-family: Verdana, Arial, sans-serif; background: #2a78d6; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 4px; cursor: pointer; }
+  #lock button:hover, .save-btn:hover { background: #1a5aa8; }
+  #pwError { color: #b02a2a; display: none; margin-top: 0.6rem; }
+  #mcContent { display: none; }
+  .save-reminder { font-weight: bold; color: #7a3a00; margin-top: 1.5rem; }
+  .next-box { background: #f9e1ad; border: 1px solid #eda100; padding: 1rem 1.2rem; border-radius: 6px; margin-top: 1.5rem; }
+  .next-link { display: inline-block; margin-top: 0.5rem; text-decoration: none; }
+  .session-info { font-size: 0.8rem; color: #888; margin-top: 2rem; border-top: 1px solid #ddd; padding-top: 0.6rem; }
+</style>
+</head>
+<body>
+
+<h1>01.1 Mastery Check: What Programs Do</h1>
+
+<div id="lock">
+  <p>Ask your teacher for this mastery check's password.</p>
+  <input type="text" id="pwInput" placeholder="Password" maxlength="6">
+  <button onclick="checkPassword()">Unlock</button>
+  <p id="pwError">That's not the right password. Check with your teacher and try again.</p>
+</div>
+
+<div id="mcContent">
+<p>Answer all three questions below, checked for genuine understanding, not just an answer being present.</p>
+
+<div id="questionsContainer"></div>
+
+<button class="save-btn" onclick="saveWork()">Save My Work</button>
+<p class="save-reminder">Save this page once you've answered all three, then submit it with the rest of your lesson work.</p>
+
+<div class="next-box">
+  <strong>Up next:</strong> Lesson 01.2. Input-Process-Output.
+  <br><a class="next-link" href="../../lesson_01_02_input_process_output/01_instruction.html">Continue to 01.2 →</a>
+</div>
+
+<div class="session-info" id="sessionInfo"></div>
+</div>
+
+<script>
+// CHANGE these before distributing — pick 3 new random 6-character codes each time
+// you re-lock this for a new attempt or section.
+const PASSWORDS = {
+  "7QXK2M": "A",
+  "R4TZP9": "B",
+  "B8NWL3": "C"
+};
+
+// Base64-encoded question content, one entry per variant — see header comment.
+const VARIANT_CONTENT = {
+  "A": "PGRpdiBjbGFzcz0icSI+CjxzdHJvbmc+MS48L3N0cm9uZz4gRXhwbGFpbiwgaW4geW91ciBvd24gd29yZHMsIHdoYXQgYSBwcm9ncmFtIGlzLiBVc2luZyBhbiBleGFtcGxlIHRoYXQgaXMgPGVtPm5vdDwvZW0+IGEgdmlkZW8gZ2FtZSBhbmQgPGVtPm5vdDwvZW0+IGEgY2FsY3VsYXRvciBhcHAuCjx0ZXh0YXJlYSBjbGFzcz0iYW5zd2VyLXNwYWNlIiBpZD0iYTEiPjwvdGV4dGFyZWE+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJxIj4KPHN0cm9uZz4yLjwvc3Ryb25nPiBBIHZlbmRpbmcgbWFjaGluZSB0YWtlcyB5b3VyIG1vbmV5LCBjaGVja3Mgd2hldGhlciB5b3UgaW5zZXJ0ZWQgZW5vdWdoLCBhbmQgdGhlbiBlaXRoZXIgZ2l2ZXMgeW91IHRoZSBpdGVtIG9yIHNob3dzIGFuIGVycm9yLiBEZXNjcmliZSBhdCBsZWFzdCBvbmUgc3BlY2lmaWMgaW5zdHJ1Y3Rpb24geW91IHRoaW5rIG11c3QgZXhpc3Qgc29tZXdoZXJlIGluc2lkZSBhIHZlbmRpbmcgbWFjaGluZSdzIHByb2dyYW0gZm9yIHRoaXMgdG8gd29yay4KPHRleHRhcmVhIGNsYXNzPSJhbnN3ZXItc3BhY2UiIGlkPSJhMiI+PC90ZXh0YXJlYT4KPC9kaXY+CjxkaXYgY2xhc3M9InEiPgo8c3Ryb25nPjMuPC9zdHJvbmc+IEEgZnJpZW5kIHRlbGxzIHlvdSwgIkNvbXB1dGVycyBhcmUgc21hcnQuIFRoZXkgZmlndXJlIHRoaW5ncyBvdXQgb24gdGhlaXIgb3duLiIgQmFzZWQgb24gd2hhdCB5b3UgbGVhcm5lZCBpbiB0aGlzIGxlc3NvbiwgZG8geW91IGFncmVlIG9yIGRpc2FncmVlPyBFeHBsYWluIHlvdXIgYW5zd2VyIHVzaW5nIHRoZSB3b3JkIDxlbT5pbnN0cnVjdGlvbjwvZW0+Lgo8dGV4dGFyZWEgY2xhc3M9ImFuc3dlci1zcGFjZSIgaWQ9ImEzIj48L3RleHRhcmVhPgo8L2Rpdj4=",
+  "B": "PGRpdiBjbGFzcz0icSI+CjxzdHJvbmc+MS48L3N0cm9uZz4gRXhwbGFpbiwgaW4geW91ciBvd24gd29yZHMsIHdoYXQgYSBwcm9ncmFtIGlzLiBVc2luZyBhbiBleGFtcGxlIHRoYXQgaXMgPGVtPm5vdDwvZW0+IGEgcGhvbmUgYXBwIGFuZCA8ZW0+bm90PC9lbT4gYSByb2JvdC4KPHRleHRhcmVhIGNsYXNzPSJhbnN3ZXItc3BhY2UiIGlkPSJhMSI+PC90ZXh0YXJlYT4KPC9kaXY+CjxkaXYgY2xhc3M9InEiPgo8c3Ryb25nPjIuPC9zdHJvbmc+IEFuIEFUTSB0YWtlcyB5b3VyIGNhcmQsIGNoZWNrcyB5b3VyIFBJTiwgYW5kIHRoZW4gZWl0aGVyIGRpc3BlbnNlcyBjYXNoIG9yIHNob3dzIGFuIGVycm9yLiBEZXNjcmliZSBhdCBsZWFzdCBvbmUgc3BlY2lmaWMgaW5zdHJ1Y3Rpb24geW91IHRoaW5rIG11c3QgZXhpc3Qgc29tZXdoZXJlIGluc2lkZSBhbiBBVE0ncyBwcm9ncmFtIGZvciB0aGlzIHRvIHdvcmsuCjx0ZXh0YXJlYSBjbGFzcz0iYW5zd2VyLXNwYWNlIiBpZD0iYTIiPjwvdGV4dGFyZWE+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJxIj4KPHN0cm9uZz4zLjwvc3Ryb25nPiBBIGZyaWVuZCB0ZWxscyB5b3UsICJDb21wdXRlcnMgYXJlIGJhc2ljYWxseSBsaWtlIGxpdHRsZSBicmFpbnMuIFRoZXkgdGhpbmsgZm9yIHRoZW1zZWx2ZXMuIiBCYXNlZCBvbiB3aGF0IHlvdSBsZWFybmVkIGluIHRoaXMgbGVzc29uLCBkbyB5b3UgYWdyZWUgb3IgZGlzYWdyZWU/IEV4cGxhaW4geW91ciBhbnN3ZXIgdXNpbmcgdGhlIHdvcmQgPGVtPmluc3RydWN0aW9uPC9lbT4uCjx0ZXh0YXJlYSBjbGFzcz0iYW5zd2VyLXNwYWNlIiBpZD0iYTMiPjwvdGV4dGFyZWE+CjwvZGl2Pg==",
+  "C": "PGRpdiBjbGFzcz0icSI+CjxzdHJvbmc+MS48L3N0cm9uZz4gRXhwbGFpbiwgaW4geW91ciBvd24gd29yZHMsIHdoYXQgYSBwcm9ncmFtIGlzLiBVc2luZyBhbiBleGFtcGxlIHRoYXQgaXMgPGVtPm5vdDwvZW0+IGEgd2Vic2l0ZSBhbmQgPGVtPm5vdDwvZW0+IGEgc21hcnQgc3BlYWtlci4KPHRleHRhcmVhIGNsYXNzPSJhbnN3ZXItc3BhY2UiIGlkPSJhMSI+PC90ZXh0YXJlYT4KPC9kaXY+CjxkaXYgY2xhc3M9InEiPgo8c3Ryb25nPjIuPC9zdHJvbmc+IEFuIGF1dG9tYXRpYyBwYXJraW5nIGdhdGUgc2NhbnMgeW91ciB0aWNrZXQsIGNoZWNrcyB3aGV0aGVyIGl0J3MgYmVlbiBwYWlkLCBhbmQgdGhlbiBlaXRoZXIgcmFpc2VzIHRoZSBnYXRlIG9yIHNob3dzIGFuIGVycm9yLiBEZXNjcmliZSBhdCBsZWFzdCBvbmUgc3BlY2lmaWMgaW5zdHJ1Y3Rpb24geW91IHRoaW5rIG11c3QgZXhpc3Qgc29tZXdoZXJlIGluc2lkZSB0aGUgZ2F0ZSdzIHByb2dyYW0gZm9yIHRoaXMgdG8gd29yay4KPHRleHRhcmVhIGNsYXNzPSJhbnN3ZXItc3BhY2UiIGlkPSJhMiI+PC90ZXh0YXJlYT4KPC9kaXY+CjxkaXYgY2xhc3M9InEiPgo8c3Ryb25nPjMuPC9zdHJvbmc+IEEgZnJpZW5kIHRlbGxzIHlvdSwgIkNvbXB1dGVycyBjYW4gZ3Vlc3Mgd2hhdCB5b3UgbWVhbnQgdG8gZG8sIGV2ZW4gaWYgeW91IHR5cGUgc29tZXRoaW5nIHdyb25nLiIgQmFzZWQgb24gd2hhdCB5b3UgbGVhcm5lZCBpbiB0aGlzIGxlc3NvbiwgZG8geW91IGFncmVlIG9yIGRpc2FncmVlPyBFeHBsYWluIHlvdXIgYW5zd2VyIHVzaW5nIHRoZSB3b3JkIDxlbT5pbnN0cnVjdGlvbjwvZW0+Lgo8dGV4dGFyZWEgY2xhc3M9ImFuc3dlci1zcGFjZSIgaWQ9ImEzIj48L3RleHRhcmVhPgo8L2Rpdj4="
+};
+
+let unlockedVariant = null;
+let unlockedAt = null;
+
+function checkPassword() {
+  const val = document.getElementById('pwInput').value.trim().toUpperCase();
+  const variant = PASSWORDS[val];
+  if (variant) {
+    unlockedVariant = variant;
+    unlockedAt = new Date();
+    document.getElementById('questionsContainer').innerHTML = atob(VARIANT_CONTENT[variant]);
+    document.getElementById('lock').style.display = 'none';
+    document.getElementById('mcContent').style.display = 'block';
+    document.getElementById('sessionInfo').textContent =
+      'Version ' + variant + '. Unlocked ' + unlockedAt.toLocaleString() + '.';
+  } else {
+    document.getElementById('pwError').style.display = 'block';
+  }
+}
+
+// Save-in-place — see lesson_01_01_practice.html for the full design note.
+let savedFileHandle = null;
+
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  return decodeURIComponent(parts[parts.length - 1]) || 'lesson_01_01_mastery_check.html';
+}
+
+async function saveWork() {
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+
+  if (savedFileHandle) {
+    try {
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      return;
+    } catch (err) {
+      savedFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      savedFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+document.getElementById('pwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
+</script>
+
+</body>
+</html>

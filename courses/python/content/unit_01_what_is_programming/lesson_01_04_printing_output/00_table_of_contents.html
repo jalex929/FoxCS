@@ -1,0 +1,286 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     New 2026-08-11 per Jay: a real table of contents as the lesson's actual
+     entry point, replacing a pure linear "Next: →" chain as the only way to
+     move around. Every numbered file is listed here with what it is and a
+     direct link, so a student (or Jay, reviewing) can jump to any step
+     without walking the whole chain, and can see the shape of the whole
+     lesson before starting.
+
+     "Check My Progress" uses the File System Access API's showDirectoryPicker()
+     (same underlying API family as the showSaveFilePicker() used for save-in-
+     place elsewhere in this lesson) to let a student point at their own copy
+     of this lesson folder and see which files have already been saved with a
+     _completed suffix — 04_vocab_quiz.html, 05_practice.html,
+     09_mastery_check.html, and 11_feedback.html all adopt that convention.
+     This is read-only: it only checks for the presence of specific filenames,
+     never opens or modifies anything.
+
+     Honest limitation, not silently glossed over: 02_example_01.py,
+     06_application.py, 08_project.py, and 10_mastery_check.py are saved
+     directly in VS Code (Ctrl+S) with a fixed filename — per
+     01-privacy-and-governance/codename-policy.md and
+     02-authoring-system/mvp-unit-folder-structure.md's "No Self-Naming" rule,
+     students never rename or create their own files, so there's no renaming
+     mechanism available to mark those files done the way the HTML pages can
+     rename themselves on save. Those rows are shown as not auto-trackable
+     rather than faked with a heuristic (e.g., file size/edit time) that could
+     be wrong.
+
+     FIXED 2026-08-11 per Jay: file links weren't visually distinct as
+     clickable (color + bold only, underline was hover-only). Now underlined
+     by default. Also renamed "Practice Drills" to "Practice" in row 5's
+     description — see 05_practice.html's own header comment for the full
+     naming note — and replaced the vague "however many you attempted" with
+     a concrete expected range, since that phrasing could read as "any
+     number is fine, including very few."
+
+     ADDED 2026-08-11 per Jay: a precise "1.4.N" part-numbering scheme (Unit.
+     Lesson.Part), so any part of a lesson can be referenced unambiguously —
+     e.g. "1.4.5" always means this lesson's Practice page, in conversation
+     or in review notes, without needing the filename. This is a citation
+     label layered on top of the existing 00-11 filename convention, not a
+     replacement for it — files keep their existing names, hrefs are
+     untouched. Paired HTML+PY steps that are really one conceptual step
+     (project instructions+code, mastery check prompts+answers) share one
+     part number with an a/b suffix (1.4.7a/1.4.7b, 1.4.8a/1.4.8b) rather
+     than each getting its own integer — same pattern `.toc-num`'s badges
+     now show. Every resource also gets its type labeled directly on the
+     page (the new `.toc-type` chip here, and each page's own H1/header
+     comment) — not just a number, per Jay: "the resource itself should be
+     labeled on the page." See mvp-unit-folder-structure.md's Folder Tree
+     for the full N.N.N legend. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1.4 Table of Contents: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 780px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  h2 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; font-size: 1.05rem; margin-top: 2rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
+
+  .progress-panel { background: #f4f6f9; border: 1px solid #ccd3dd; border-radius: 8px; padding: 1.1rem 1.3rem; margin-bottom: 1.6rem; }
+  .progress-panel p { margin: 0 0 0.8rem; font-size: 0.92rem; }
+  button.check-progress-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: bold; }
+  button.check-progress-btn:hover { background: #12467f; }
+  .progress-status { font-size: 0.88rem; color: #2f7a2f; margin-top: 0.7rem; min-height: 1.2em; }
+  .progress-status.error { color: #b02a2a; }
+
+  .toc-list { display: flex; flex-direction: column; gap: 0.7rem; }
+  .toc-row { display: flex; align-items: center; gap: 0.9rem; background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 0.8rem 1rem; }
+  /* Widened from a fixed-circle badge to a min-width pill 2026-08-11 per Jay's
+     new "1.4.N" part-numbering scheme — paired steps (project, mastery check)
+     share one part number with an a/b suffix ("7a"/"7b"), which doesn't fit a
+     single-digit circle. */
+  .toc-num { font-family: Verdana, Arial, sans-serif; font-weight: bold; color: white; background: #1a5aa8; min-width: 1.8rem; height: 1.8rem; padding: 0 0.35rem; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
+  .toc-body { flex: 1; min-width: 0; }
+  .toc-filename { font-family: Consolas, monospace; font-size: 0.95rem; display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+  .toc-filename a { color: #1a5aa8; text-decoration: underline; font-weight: bold; }
+  .toc-filename a:hover { color: #12467f; }
+  /* Resource-type label, added 2026-08-11 per Jay: the resource itself
+     (Instruction/Practice/Vocab Quiz/etc.) should be labeled on the page,
+     not just identifiable by filename or part number. */
+  .toc-type { font-family: Verdana, Arial, sans-serif; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; color: #445; background: #eef1f5; padding: 0.15rem 0.5rem; border-radius: 4px; }
+  .toc-desc { font-size: 0.88rem; color: #444; margin-top: 0.15rem; }
+
+  .status-badge { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; font-weight: bold; letter-spacing: 0.03em; padding: 0.28rem 0.6rem; border-radius: 12px; flex-shrink: 0; white-space: nowrap; }
+  .status-badge.pending { background: #eef1f5; color: #556; border: 1px solid #ccd3dd; }
+  .status-badge.done { background: #d7ecd7; color: #1a4a1a; border: 1px solid #2f7a2f; }
+  .status-badge.untracked { background: #f4f6f9; color: #888; border: 1px dashed #ccd3dd; }
+
+  .toc-row.toc-done { border-color: #9fd0a0; background: #f6fbf6; }
+
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+</style>
+</head>
+<body>
+
+<h1>1.4 Printing Output — Table of Contents</h1>
+<div class="intro">Every file in this lesson, in order. Click any filename to open it directly — you don't have to go through them one at a time. If you're picking up where you left off, use "Check My Progress" below first to see what you've already turned in.</div>
+
+<div class="progress-panel">
+  <p><strong>Check My Progress</strong> looks in your lesson folder for files you've already saved and marks them done below. It only checks filenames — it doesn't open or change anything.</p>
+  <button class="check-progress-btn" onclick="checkProgress()">Check My Progress</button>
+  <div class="progress-status" id="progressStatus"></div>
+</div>
+
+<h2>Lesson Files</h2>
+<div class="toc-list">
+
+  <div class="toc-row" id="row-01">
+    <div class="toc-num">1.4.1</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Instruction</span> <a href="01_instruction.html">01_instruction.html</a></div>
+      <div class="toc-desc">The lesson itself — reading, guided practice, and quick-checks built in. Start here.</div>
+    </div>
+  </div>
+
+  <div class="toc-row" id="row-02">
+    <div class="toc-num">1.4.2</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Example</span> <a href="02_example_01.py">02_example_01.py</a></div>
+      <div class="toc-desc">A short example file to read in VS Code. Nothing to save here.</div>
+    </div>
+    <div class="status-badge untracked">View only</div>
+  </div>
+
+  <div class="toc-row" id="row-03">
+    <div class="toc-num">1.4.3</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Flashcards</span> <a href="03_flashcards.html">03_flashcards.html</a></div>
+      <div class="toc-desc">Click-to-flip term/definition flashcards. Study tool only — nothing saved here.</div>
+    </div>
+    <div class="status-badge untracked">Not saved</div>
+  </div>
+
+  <div class="toc-row" id="row-04">
+    <div class="toc-num">1.4.4</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Vocab Quiz</span> <a href="04_vocab_quiz.html">04_vocab_quiz.html</a></div>
+      <div class="toc-desc">Match all 5 terms, check your answers, write a short reflection, then save.</div>
+    </div>
+    <div class="status-badge pending">Not yet</div>
+  </div>
+
+  <div class="toc-row" id="row-05">
+    <div class="toc-num">1.4.5</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Practice</span> <a href="05_practice.html">05_practice.html</a></div>
+      <div class="toc-desc">Practice with immediate feedback — typically 8-15 questions, plus a couple your teacher checks by hand. Save when you're done.</div>
+    </div>
+    <div class="status-badge pending">Not yet</div>
+  </div>
+
+  <div class="toc-row" id="row-06">
+    <div class="toc-num">1.4.6</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Application</span> 06_application.py</div>
+      <div class="toc-desc">Write real print() statements in VS Code. Save with Ctrl+S when done.</div>
+    </div>
+    <div class="status-badge untracked">Can't auto-check</div>
+  </div>
+
+  <div class="toc-row" id="row-07">
+    <div class="toc-num">1.4.7a</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Project Instructions</span> <a href="07_project.html">07_project.html</a></div>
+      <div class="toc-desc">Project instructions and checklist for the status message board task.</div>
+    </div>
+    <div class="status-badge untracked">Not saved</div>
+  </div>
+
+  <div class="toc-row" id="row-08">
+    <div class="toc-num">1.4.7b</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Project</span> 08_project.py</div>
+      <div class="toc-desc">Write your project in VS Code. Save with Ctrl+S when done.</div>
+    </div>
+    <div class="status-badge untracked">Can't auto-check</div>
+  </div>
+
+  <div class="toc-row" id="row-09">
+    <div class="toc-num">1.4.8a</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Mastery Check</span> <a href="09_mastery_check.html">09_mastery_check.html</a></div>
+      <div class="toc-desc">Password-gated mastery check questions. Click "Mark Complete &amp; Save" once you've answered them in 10_mastery_check.py.</div>
+    </div>
+    <div class="status-badge pending">Not yet</div>
+  </div>
+
+  <div class="toc-row" id="row-10">
+    <div class="toc-num">1.4.8b</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Mastery Check</span> 10_mastery_check.py</div>
+      <div class="toc-desc">Your mastery check answers, written in VS Code. Save with Ctrl+S when done.</div>
+    </div>
+    <div class="status-badge untracked">Can't auto-check</div>
+  </div>
+
+  <div class="toc-row" id="row-11">
+    <div class="toc-num">1.4.9</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Feedback</span> <a href="11_feedback.html">11_feedback.html</a></div>
+      <div class="toc-desc">Quick feedback about this lesson. 2-3 minutes.</div>
+    </div>
+    <div class="status-badge pending">Not yet</div>
+  </div>
+
+</div>
+
+<p style="margin-top: 1.6rem; font-size: 0.88rem; color: #555;"><span class="save-reminder">Remember:</span> each page you save is its own step — save it there before moving to the next one, not all at the end.</p>
+
+<script>
+// Known filenames that indicate a step was saved/completed, keyed by the
+// row they belong to. Only HTML pages with a save-in-place mechanism that
+// adds the _completed suffix are checkable — see header comment for why the
+// plain .py files can't be included here.
+const COMPLETED_TARGETS = {
+  'row-04': '04_vocab_quiz_completed.html',
+  'row-05': '05_practice_completed.html',
+  'row-09': '09_mastery_check_completed.html',
+  'row-11': '11_feedback_completed.html'
+};
+
+async function checkProgress() {
+  const statusEl = document.getElementById('progressStatus');
+  statusEl.className = 'progress-status';
+
+  if (!('showDirectoryPicker' in window)) {
+    statusEl.className = 'progress-status error';
+    statusEl.textContent = 'Your browser doesn\'t support checking a folder automatically. Try Chrome or Edge, or just open each file directly.';
+    return;
+  }
+
+  let dirHandle;
+  try {
+    dirHandle = await window.showDirectoryPicker();
+  } catch (err) {
+    if (err.name === 'AbortError') return;
+    statusEl.className = 'progress-status error';
+    statusEl.textContent = 'Could not open that folder.';
+    return;
+  }
+
+  // Sanity check — make sure this looks like the right lesson folder before
+  // reporting anything, so a wrong folder doesn't just show everything as
+  // "not yet" and look like lost work.
+  try {
+    await dirHandle.getFileHandle('01_instruction.html');
+  } catch (err) {
+    statusEl.className = 'progress-status error';
+    statusEl.textContent = 'That doesn\'t look like this lesson\'s folder — pick the folder that has 01_instruction.html in it.';
+    return;
+  }
+
+  let doneCount = 0;
+  const total = Object.keys(COMPLETED_TARGETS).length;
+
+  for (const [rowId, fname] of Object.entries(COMPLETED_TARGETS)) {
+    const row = document.getElementById(rowId);
+    const badge = row.querySelector('.status-badge');
+    let found = false;
+    try {
+      await dirHandle.getFileHandle(fname);
+      found = true;
+    } catch (err) {
+      found = false;
+    }
+    if (found) {
+      doneCount++;
+      row.classList.add('toc-done');
+      badge.className = 'status-badge done';
+      badge.textContent = 'Done';
+    } else {
+      row.classList.remove('toc-done');
+      badge.className = 'status-badge pending';
+      badge.textContent = 'Not yet';
+    }
+  }
+
+  statusEl.textContent = 'Checked ' + dirHandle.name + ' — ' + doneCount + ' of ' + total + ' auto-trackable files done. (06, 08, and 10 are VS Code files and can\'t be checked this way — open them to see your own work.)';
+}
+</script>
+
+</body>
+</html>

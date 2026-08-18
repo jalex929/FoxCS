@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Text File Example</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    
+        html,
+        body {
+            background-color: #BBB;
+            margin: 0 auto;
+        }
+    
+        .container {
+            height: 75vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            document.getElementById('button').addEventListener('click', function() {
+                let fileContents = document.getElementById('txtBox').value;
+                let fileName = document.getElementById('fileName').value;
+                let link = document.createElement('a');
+                link.download = fileName;
+
+                let fileObj = new File([fileContents], { type: "text/plain;charset=utf-8" });
+                link.href = window.URL.createObjectURL(fileObj);
+                console.log(link.href);
+                link.click();
+            })
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Create Text File Example</h2>
+        <label for="">File Name (no extension):</label>
+        <input type="text" id="fileName">
+        <label for="">File Contents:</label>
+        <textarea name="txtBox" id="txtBox" cols="30" rows="10" ></textarea>
+        <button id="button">Click Here to Create and Save a Text file</button>
+    </div>
+</body>
+</html>

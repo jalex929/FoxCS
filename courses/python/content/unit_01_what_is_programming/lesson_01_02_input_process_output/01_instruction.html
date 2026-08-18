@@ -1,0 +1,87 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>01.2 Input-Process-Output: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 0.8rem 1.2rem; }
+  .vocab dt { font-weight: bold; color: #1a3a5c; }
+  .vocab dd { margin-bottom: 0.6rem; }
+  .ipo-diagram { display: flex; gap: 0; text-align: center; font-family: Verdana, Arial, sans-serif; margin: 1.5rem 0; }
+  .ipo-diagram div { flex: 1; padding: 1rem 0.5rem; font-weight: bold; }
+  .ipo-diagram .input { background: #bbd4f2; color: #1a3a5c; }
+  .ipo-diagram .process { background: #f9e1ad; color: #7a3a00; }
+  .ipo-diagram .output { background: #add7ad; color: #1a4a1a; }
+  .ipo-diagram .arrow { flex: 0 0 2rem; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #555; }
+  .game-tie-in { background: #c5c0e3; border-left: 4px solid #4a3aa7; padding: 0.8rem 1.2rem; margin: 1.2rem 0; }
+  .handoff { background: #f9e1ad; border: 1px solid #eda100; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+</style>
+</head>
+<body>
+
+<h1>01.2: Input-Process-Output</h1>
+
+<div class="objectives">
+<strong>Learning objectives:</strong>
+<ul>
+  <li>I can describe the Input-Process-Output (IPO) model.</li>
+  <li>I can identify the input, process, and output stages in a real, familiar system.</li>
+</ul>
+<strong>Language objective:</strong>
+<ul>
+  <li>I can explain how a system works using the terms <strong>input</strong>, <strong>process</strong>, and <strong>output</strong>.</li>
+</ul>
+</div>
+
+<h2>Every Interactive Program Follows the Same Pattern</h2>
+<p>Almost everything a program does can be broken into three stages:</p>
+
+<div class="ipo-diagram">
+  <div class="input">INPUT<br><small>receives data from outside</small></div>
+  <div class="arrow">→</div>
+  <div class="process">PROCESS<br><small>transforms or evaluates it</small></div>
+  <div class="arrow">→</div>
+  <div class="output">OUTPUT<br><small>delivers the result</small></div>
+</div>
+
+<p><strong>Input</strong> is anything the program receives from outside itself. Something a person types, a button press, a sensor reading. <strong>Process</strong> is the work the program does with that input. Calculating, comparing, deciding. <strong>Output</strong> is what the program delivers back. Text on a screen, a sound, a printed receipt.</p>
+
+<p>Here's a concrete example: a quiz app shows you a question (this already happened before your turn), you type an answer (<strong>input</strong>), the app checks your answer against the correct one (<strong>process</strong>), and it shows "Correct!" or "Try again." (<strong>output</strong>). Notice that the "work" (the actual checking) is the process stage. The question and the message are input and output. They're not the thinking part.</p>
+
+<div class="game-tie-in">
+<strong>Game connection:</strong> This is the exact pattern behind every interactive game, not just quiz apps. You press a button (<strong>input</strong>) → the game figures out what that means given the current situation, like whether you're allowed to jump right now (<strong>process</strong>) → the game updates the screen to show your character jumping (<strong>output</strong>). A game that never took input would just be a video playing on a loop. A game that never processed anything would just repeat the same output no matter what you did. It's the combination of all three, running over and over, that makes something feel interactive. (You'll see exactly how "running over and over" works when we get to loops in Unit 06. For now, just the three stages.)
+</div>
+
+<h2>Key Terms</h2>
+<dl class="vocab">
+  <dt>input</dt>
+  <dd>Data a program receives from outside itself.</dd>
+  <dt>process</dt>
+  <dd>The work a program does with input. Calculating, comparing, deciding.</dd>
+  <dt>output</dt>
+  <dd>What a program delivers back as a result. Text, sound, an image, anything the outside world can perceive.</dd>
+  <dt>system</dt>
+  <dd>Any program or machine considered as a whole, made of input/process/output working together.</dd>
+</dl>
+
+<h2>What To Do Next</h2>
+<p>Everything for this lesson is in this same folder, numbered in the order you should do it:</p>
+<ol>
+  <li><strong>02_flashcards.html (optional warm-up):</strong> <a href="02_flashcards.html">Open the flashcards</a>.</li>
+  <li><strong>03_practice.html:</strong> <a href="03_practice.html">Open the practice page</a>. It's interactive and builds up a record of your work as you go. Save it when you're done.</li>
+  <li><strong>04_mastery_check.html:</strong> <a href="04_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
+  <li><strong>05_journal.txt (do this last):</strong> Open <code>05_journal.txt</code> in VS Code. The prompt, rubric, and rules are already written at the top of the file. Read them, then write your answer below the line and save. This is the one journal entry for all of Unit 01, and it's about the Input-Process-Output idea from this lesson.</li>
+</ol>
+
+<div class="handoff">
+<strong>No VS Code needed this lesson</strong>. Still no code to write yet.
+<p class="save-reminder">Don't forget to save your practice page and mastery check when you're done.</p>
+</div>
+
+</body>
+</html>

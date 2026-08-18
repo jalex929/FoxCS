@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Example 1</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            background-color: #BBB;
+            margin: 0 auto;
+        }
+        .container {
+            height: 75vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            console.log('<<< window loaded >>>');
+            // creates new request object
+            const request = new XMLHttpRequest();
+            let content = '';
+            
+            // add event listener to request object
+            request.addEventListener('readystatechange', function () {
+                if (request.readyState === 4 && request.status === 200) {
+                    console.log("request ready", request.readyState, request.status);
+                    console.log(this);
+                    content = request.responseText;
+                } else {
+                    console.log("request not ready", request.readyState, request.status);
+                }
+            });
+
+            // add event listener to button
+            document.getElementById('button').addEventListener('click', function() {
+                document.getElementById('output').innerHTML += content;
+            })
+
+            // create request
+            request.open('GET', 'text/example.txt');
+            
+            // send request
+            request.send();
+            console.log('<<< end of script >>>');
+        }
+        
+    </script>
+</head>
+<body>
+    <div class="container" style>
+        <h2>Here is an example of AJAX</h2>
+        <h2>(Asynchronous JavaScript and XML)</h2>
+        <button id="button">Click Here to Load Content</button>
+        <p id="output"></p>
+    </div>
+</body>
+</html>

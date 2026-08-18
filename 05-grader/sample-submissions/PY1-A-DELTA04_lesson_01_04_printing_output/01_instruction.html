@@ -1,0 +1,285 @@
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     Colors corrected 2026-08-06 per 02-authoring-system/design-system.md — see that
+     file before changing any color here. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1.4.1 Printing Output: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  code, pre { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  pre { padding: 0.8rem 1rem; overflow-x: auto; }
+  .term-list { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0; }
+  .term-card { background: #eef4fb; border: 1px solid #c8d6e8; border-radius: 6px; padding: 0.7rem 1rem; }
+  .term-name { font-weight: bold; color: #1a3a5c; margin-bottom: 0.25rem; }
+  .term-example { margin-top: 0.4rem; font-size: 0.92rem; color: #445; }
+  .term-example strong { color: #1a5aa8; }
+  .term-analogy { margin-top: 0.4rem; font-size: 0.92rem; color: #445; font-style: italic; }
+  .term-analogy strong { color: #4a3aa7; font-style: normal; }
+  /* Concept cards — added/formalized 2026-08-11 per Jay, replacing the
+     one-off .mistake/.game-tie-in styles with a single reusable family.
+     Standing rule: a card is for content with a real, recurring PURPOSE
+     (a common mistake, a tie to game design, a real-world parallel, a pro
+     tip, a debugging tip) — not a decorative wrapper for an ordinary aside.
+     Content that's just supplementary explanation (like "Why parentheses?"
+     below) stays plain article prose, no card. This also fixes a real
+     design-system.md Tone Note violation the old .mistake red styling had:
+     red is reserved for academic-integrity warnings, not common-mistakes
+     content — every variant below uses a neutral or on-brand color, never
+     red/alarm. Only 2 of the 5 defined variants are used in this specific
+     lesson (mistake, game) — real-world/pro-tip/debug exist ready for
+     lessons where that content type actually appears. */
+  .concept-card { border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-family: Verdana, Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card-title { font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.mistake { background: #f4f6f9; border-left: 4px solid #7b93b3; }
+  .concept-card.mistake .concept-card-label { color: #4a5f7d; }
+  .concept-card.game { background: #f4f2fb; border-left: 4px solid #4a3aa7; }
+  .concept-card.game .concept-card-label { color: #4a3aa7; }
+  .concept-card.real-world { background: #f0f8f5; border-left: 4px solid #2f7a5f; }
+  .concept-card.real-world .concept-card-label { color: #1f5c47; }
+  .concept-card.pro-tip { background: #fdf6e8; border-left: 4px solid #9a5a00; }
+  .concept-card.pro-tip .concept-card-label { color: #7a4800; }
+  .concept-card.debug { background: #eef4fb; border-left: 4px solid #1a5aa8; }
+  .concept-card.debug .concept-card-label { color: #12467f; }
+
+  .reveal-btn { font-family: Verdana, Arial, sans-serif; background: none; border: 1px solid #7b93b3; color: #2a3a52; padding: 0.4rem 0.9rem; border-radius: 5px; cursor: pointer; margin-top: 0.9rem; font-size: 0.88rem; }
+  .reveal-btn:hover { background: #e4ebf3; }
+  .predict-note { font-size: 0.85rem; color: #555; font-style: italic; margin-top: 0.7rem; }
+  .fixed-version { display: none; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px dashed #c9d3e0; }
+  .fixed-version.visible { display: block; }
+  .fixed-version pre { margin-bottom: 0.4rem; }
+  .diff-added { color: #a33; font-weight: bold; background: #fbdede; border-radius: 3px; padding: 0 0.15rem; }
+  .fixed-note { font-size: 0.85rem; color: #555; }
+  .article-lead { font-weight: bold; }
+  /* Guided practice, embedded in the instructional flow — added 2026-08-11
+     per Jay: this page should work as interactive guided notes, not pure
+     reading, with a quick formative check right after new content before
+     moving on. Distinct from 05_practice.html's independent practice
+     (which comes after this whole page) and 06_application.py (which comes
+     after that) — guided here, independent there, applied last. Plain
+     styling on purpose, matching the "box needs a purpose" rule — this is a
+     real distinct purpose (a formative check), so it gets its own light
+     treatment, not the heavy .concept-card family. */
+  .quick-check { border: 1px solid #ccd3dd; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
+  .quick-check-label { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .quick-check-prompt { margin-bottom: 0.7rem; }
+  .quick-check select { font-family: Consolas, monospace; font-size: 0.95rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .quick-check button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 0.5rem; }
+  .quick-check button:hover { background: #12467f; }
+  .quick-check .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
+  .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+  .handoff { background: #f9e1ad; border: 1px solid #9a5a00; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .handoff p:first-child { margin-top: 0; }
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+  ol.steps li { margin: 0.5rem 0; }
+  /* Footer page nav — added 2026-08-11 per Jay: every numbered page should
+     end with a simple way to move to the next one, plus a reminder of
+     whether there's anything to save first. Deliberately plain — one line,
+     no box — so it doesn't compete with .handoff above it. */
+  /* Back/TOC/Next footer — revised 2026-08-11 per Jay: anticipate all three
+     places a student might need to go next (back to the page before, back
+     to the table of contents, or forward), not just a single "Next" link. */
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
+</style>
+</head>
+<body>
+
+<h1>1.4.1 — Instruction: Printing Output</h1>
+
+<div class="objectives">
+<strong>Learning objectives:</strong>
+<ul>
+  <li>I can write a correct <code>print()</code> statement and predict what it will display.</li>
+  <li>I can identify and fix a missing quote or missing parenthesis error.</li>
+</ul>
+<strong>Language objective:</strong>
+<ul>
+  <li>I can describe the parts of a <code>print()</code> statement using the terms <strong>function</strong>, <strong>string</strong>, and <strong>argument</strong>.</li>
+</ul>
+</div>
+
+<h2>What Does <code>print()</code> Do?</h2>
+<p><code>print()</code> is a built-in Python <strong>function</strong> that displays output to the screen.</p>
+<p>When Python runs <code>print("Hello")</code>, it takes the text inside the quotes and writes it out where you can see it. That text is called a <strong>string</strong>: any sequence of characters wrapped in quotes.</p>
+
+<p><code>print()</code> is your program's only way of talking to whoever is running it. Without it (or something like it), a program could do all kinds of correct work internally and whoever's watching the screen would never know. No output means no way to tell what happened.</p>
+
+<h2>Anatomy of a print() Statement</h2>
+<p>Every <code>print()</code> statement has three required parts:</p>
+<ol>
+  <li>The word <code>print</code>. Always lowercase</li>
+  <li>Parentheses <code>()</code>. These tell Python you're calling the function</li>
+  <li>A string inside quotes. The text you want to display</li>
+</ol>
+<pre>print("Hello, World!")</pre>
+<p>If any part is missing or misspelled, Python won't run the line at all. It'll raise a <code>SyntaxError</code> before your program even starts. More on both common ways this happens below.</p>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which of these three required parts is missing from <code>print "Hello"</code>?</div>
+  <select id="qc1-select">
+    <option value="">Choose...</option>
+    <option value="a">The word print</option>
+    <option value="b">Parentheses</option>
+    <option value="c">A string in quotes</option>
+  </select>
+  <button onclick="checkQc1()">Check</button>
+  <div class="feedback" id="qc1-feedback"></div>
+</div>
+
+<p><span class="article-lead">Why parentheses?</span> If you ever see old Python code online written as <code>print "Hello"</code> with no parentheses, that's Python 2, an older version. In Python 3 (what this course uses), <code>print</code> is a function, and every function call needs parentheses.</p>
+<p>If you copy code from an old tutorial and it uses <code>print</code> without parentheses, that's why it won't run here.</p>
+
+<h2>Reading a print() Statement Line by Line</h2>
+<pre>print("Learning Python is fun!")</pre>
+<p>Python sees <code>print</code> and knows to call the print function → sees <code>(</code> and starts reading what's being passed in → sees <code>"Learning Python is fun!"</code>, a string in quotes → sees <code>)</code> and knows the input is complete → displays: <code>Learning Python is fun!</code></p>
+
+<h2>Two Mistakes Everyone Makes at First</h2>
+
+<div class="concept-card mistake">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="16.5" r="0.75" fill="currentColor" stroke="none"/></svg>Common Mistake</div>
+<div class="concept-card-title">Forgetting to close the quote</div>
+<pre>print("Hello, Python!)</pre>
+<p>Python will show something like <code>SyntaxError: EOL while scanning string literal</code>. <strong>EOL</strong> means "End Of Line". Python reached the end of the line while still looking for the closing quote — notice the <code>)</code> is right there, but it doesn't help, because it landed inside the never-closed string instead of ending the function call.</p>
+<p class="predict-note">Before you click reveal: what one character would fix this line? Picture it in place, then check yourself.</p>
+<button class="reveal-btn" onclick="toggleFix('fix1')">Click to see the fixed version</button>
+<div class="fixed-version" id="fix1">
+<pre>print("Hello, Python!<span class="diff-added">"</span>)</pre>
+<p class="fixed-note">In red: the one character that was missing. Everything else on the line is unchanged.</p>
+</div>
+</div>
+
+<div class="concept-card mistake">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="16.5" r="0.75" fill="currentColor" stroke="none"/></svg>Common Mistake</div>
+<div class="concept-card-title">Missing parentheses</div>
+<pre>print "Hello"</pre>
+<p>Python 3 will show <code>SyntaxError: Missing parentheses in call to 'print'</code>.</p>
+<p class="predict-note">Before you click reveal: what two characters would fix this line, and where would they go? Picture it, then check yourself.</p>
+<button class="reveal-btn" onclick="toggleFix('fix2')">Click to see the fixed version</button>
+<div class="fixed-version" id="fix2">
+<pre>print<span class="diff-added">(</span>"Hello"<span class="diff-added">)</span></pre>
+<p class="fixed-note">In red: the two characters that were missing. Everything else on the line is unchanged.</p>
+</div>
+</div>
+
+<p>Neither of these means you did something wrong as a learner. They mean Python found a genuine grammar rule it needs followed exactly. Reading the error message is how you find out which rule.</p>
+
+<div class="concept-card game">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><line x1="12" y1="10" x2="12" y2="17"/><path d="M7 17h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>Game Connection</div>
+<div class="concept-card-title">This is your first real usability idea, not just a syntax rule</div>
+<p><code>print()</code> is your program's simplest form of feedback to whoever is using it, the same role a game's UI plays when it tells a player "Enemy defeated!" or "Not enough gold."</p>
+<p>A program that prints <code>1</code> when something fails and <code>0</code> when it succeeds is technically giving output, but it's terrible output. Nobody looking at the screen can tell what happened without memorizing a code.</p>
+<p>Specific, readable output is better than vague output. For example: if a player tries to buy something they can't afford, a message like <code>"Not enough gold. You need 20 more."</code> tells them exactly what happened and what to do next. A message like <code>"Error 402"</code> or nothing at all tells them nothing — they'd have to already know what that code means, or guess.</p>
+<p>You'll come back to this idea properly once you've learned enough Python to actually handle errors gracefully (Unit 14). For now, just notice that the words you choose inside <code>print()</code> already matter.</p>
+</div>
+
+<h2>Sneak Peek: What's Coming in Unit 05</h2>
+<p>You haven't learned <code>if</code> statements yet, that's Unit 05, but here's a short preview since this lesson's practice includes one. An <code>if</code> statement lets a program make a decision: if some condition is true, run the indented line(s) below it; if it's not true, skip them.</p>
+<pre>if health &lt;= 0:
+    print("Game Over")</pre>
+<p>The colon <code>:</code> ends the <code>if</code> line. The indented <code>print(...)</code> line only runs when <code>health &lt;= 0</code> is true, that's how Python knows it belongs to the <code>if</code> instead of being just the next unrelated line. You'll practice building exactly this pattern in this lesson's practice — all the teaching for it is right here, so if the item is confusing, this is what to re-read.</p>
+
+<h2>Key Terms</h2>
+<div class="term-list">
+  <div class="term-card">
+    <div class="term-name">function</div>
+    <div class="term-def">A named, reusable block of code that performs a specific task. <code>print()</code> is a built-in function.</div>
+    <div class="term-example"><strong>Example:</strong> You'll start writing your own functions in Unit 08. For now, you're just using ones Python already provides, like <code>print()</code>.</div>
+    <div class="term-analogy"><strong>Think of it like:</strong> a vending machine. You press one button and it always performs the same task, without you needing to know how the machine works inside.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">string</div>
+    <div class="term-def">Text data surrounded by quote marks. <code>'Hello'</code> or <code>"World"</code>.</div>
+    <div class="term-example"><strong>Note:</strong> The quotes matter. <code>print(Hello)</code> with no quotes tries to run <code>Hello</code> as code instead of displaying the word.</div>
+    <div class="term-analogy"><strong>Think of it like:</strong> air quotes in a conversation. They tell Python "take this literally as text, don't try to interpret it as an instruction."</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">output</div>
+    <div class="term-def">Text or data that your program displays to the screen.</div>
+    <div class="term-example"><strong>Example:</strong> Every line that appears in the terminal after you run your program is output.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">argument</div>
+    <div class="term-def">The value you pass into a function. In <code>print("Hello")</code>, <code>"Hello"</code> is the argument.</div>
+    <div class="term-example"><strong>Example:</strong> In <code>print("Game Over")</code>, <code>"Game Over"</code> is the argument, the specific text this particular call to <code>print()</code> should display.</div>
+    <div class="term-analogy"><strong>Think of it like:</strong> texting a friend "meet me at 3pm." "Meet me" is the general instruction (the function); "3pm" is the specific detail you're handing over along with it (the argument).</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">SyntaxError</div>
+    <div class="term-def">An error Python raises when your code breaks a grammar rule. Like a missing quote or parenthesis.</div>
+    <div class="term-example"><strong>Example:</strong> <code>print("Hi!</code> (no closing quote) or <code>print "Hi!"</code> (no parentheses) both raise a SyntaxError before your program even starts.</div>
+    <div class="term-analogy"><strong>Think of it like:</strong> a sentence missing its closing quotation mark in English. The reader (or here, Python) can't tell where the quoted part is supposed to end.</div>
+  </div>
+</div>
+
+<h2>What To Do Next</h2>
+<p>Everything for this lesson is numbered in the order you should do it:</p>
+<ol class="steps">
+  <li><strong>02_example_01.py</strong>. Open it in VS Code and run it, so you've seen real output before predicting it.</li>
+  <li><strong>03_flashcards.html</strong> (optional warm-up). <a href="03_flashcards.html">Open the flashcards</a>. A few cards have a "Show Example" button once flipped, since this is where real syntax starts.</li>
+  <li><strong>04_vocab_quiz.html</strong>. <a href="04_vocab_quiz.html">Open the vocab quiz</a>. Match each term to its definition, get all five right to earn XP. Studying the flashcards first will make this fast.</li>
+  <li><strong>05_practice.html</strong>. <a href="05_practice.html">Open Practice</a>. Typically 8-15 questions with immediate feedback — save this one too, it records your own path through the material.</li>
+  <li><strong>06_application.py</strong>. Open it in VS Code and write real print() statements of your own — this is where you apply what the drills built.</li>
+  <li><strong>07_project.html</strong>. <a href="07_project.html">Open the project</a>, a short applied task with bonus-XP tiers, before the mastery check.</li>
+  <li><strong>08_project.py</strong>. Where you'll actually write the project.</li>
+  <li><strong>09_mastery_check.html</strong>. <a href="09_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
+  <li><strong>10_mastery_check.py</strong>. Where you'll write your mastery check answers, once unlocked.</li>
+  <li><strong>11_feedback.html</strong> (do this last). <a href="11_feedback.html">Quick feedback about this lesson</a>, 2-3 minutes.</li>
+</ol>
+
+<div class="handoff">
+<p><strong>Handoff to VS Code:</strong> Open <code>02_example_01.py</code> and run it before you start Practice.</p>
+<p class="save-reminder">Remember to save every file you work in (Ctrl+S in VS Code; the on-page Save button for the vocab quiz, Practice, and the feedback form).</p>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-note">Nothing to save on this page — it's reading only.</div>
+  <div class="page-nav-links">
+    <a href="00_table_of_contents.html" class="page-nav-prev">← Table of Contents</a>
+    <a href="03_flashcards.html" class="page-nav-next">Next: Flashcards →</a>
+  </div>
+</div>
+
+<script>
+// "Click to see the fixed version" reveal — added 2026-08-10. Purely a
+// read/reveal toggle, nothing saved or graded, so no telemetry hook needed
+// (unlike the interactive drills in 05_practice.html).
+function toggleFix(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('visible');
+}
+
+// Guided-practice quick check, added 2026-08-11 — same "nothing saved,
+// nothing graded" status as the reveal above. This is formative, meant to
+// catch a misread of the Anatomy section before moving on, not evidence.
+function checkQc1() {
+  const val = document.getElementById('qc1-select').value;
+  const fb = document.getElementById('qc1-feedback');
+  fb.className = 'feedback ' + (val === 'b' ? 'correct' : 'incorrect');
+  if (val === 'b') {
+    fb.textContent = 'Right! print "Hello" has the word print and a quoted string, but no parentheses — that\'s exactly Mistake 2 below.';
+  } else if (val === 'a' || val === 'c') {
+    fb.textContent = 'Look again — that part is actually there. Check each of the three required parts against the line one at a time.';
+  } else {
+    fb.textContent = 'Pick an option first.';
+  }
+}
+</script>
+
+</body>
+</html>

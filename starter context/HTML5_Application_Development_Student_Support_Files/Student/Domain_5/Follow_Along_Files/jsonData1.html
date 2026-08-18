@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Data Example 1</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    
+        html,
+        body {
+            background-color: #BBB;
+            margin: 0 auto;
+        }
+    
+        .container {
+            height: 75vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <script>
+        let player = `{
+                "name": "Bob",
+                "sport": "baseball",
+                "age": 12,
+                "isNew": false
+            }`;
+        
+        console.log(player);
+        let parsed = JSON.parse(player);
+        console.log(parsed);
+        console.log(parsed.name);
+
+        
+
+
+        // XMLHttpRequest to get example.json
+        // window.onload = function() {
+        //     const request = new XMLHttpRequest();
+
+        //     request.open('GET', 'json/example.json');
+        //     request.onload = function () {
+        //         console.log(request.responseText);
+        //         console.log(JSON.parse(request.responseText));
+        //     }
+        //     request.send();
+        // }
+
+        
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
