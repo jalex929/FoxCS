@@ -369,7 +369,7 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 21: Capstone — Product Design and Development
 *Cert tie-in: Application lifecycle (Reinforced — Units 17, 20, 21); Responsive design (Reinforced — Units 05, 20, 21). Full-year synthesis unit — this is where the required HTML5 Application Development exam is recommended to land (per the source map, after "the major application-development sequence" this unit represents the end of).*
-*Design/reflection tie-in: 21.20 (Presentation and Design Rationale) and 21.21 (Reflection) are this course's own capstone reflective-writing moments — its version of "explain your decisions," matching the Communication and Design Rationale thread. Whether this becomes the same cross-course journal thread Game I already has, or its own separate thing, isn't decided — see Open Items.*
+*Design/reflection tie-in: 21.20 (Presentation and Design Rationale) and 21.21 (Reflection) are this course's own capstone reflective-writing moments — its version of "explain your decisions," matching the Communication and Design Rationale thread. Resolved 2026-08-18: this is the capstone entry of this course's own Design Thinking journal thread — see the "UX, Design Thinking, and Journal Threads" section below.*
 *Pacing target: per the constraint above, aim to have this unit at final-presentation stage before mid-April.*
 - [ ] 21.1 Identifying a User or Community
 - [ ] 21.2 Exploring a Problem Space
@@ -446,11 +446,47 @@ Nothing exists yet to adapt from the way `adaptive-python` feeds Game I — this
 
 (Original table also cited Unit 00 for "Application lifecycle" — dropped here since Unit 00 is now the shared cross-course onboarding unit, not this course's content.)
 
+## UX, Design Thinking, and Journal Threads (added 2026-08-18)
+
+Per Jay: this course needs the same kind of year-long, iteratively-building reflective throughline Game I has (`../python/course-plan.md`'s "Game Design, UX, and Journal Threads" section), not a separate invention. **Not a straight copy of Python's MDA framing** — MDA is a game-design framework and this isn't a game-design course. Instead this thread is built the same way the Game II thread was (`../game-programming-2/course-plan.md`'s new "Game Design and Journal Threads" section): one well-established external framework as the structural lens, grounded in vocabulary this course's own source map already defines rather than inventing new terms.
+
+**The lens: Design Thinking** (Empathize → Define → Ideate → Prototype → Test — the widely-used Stanford d.school model), playing the same structural role MDA plays for the Game courses. Grounded directly in this course's own already-designed vocabulary (`../../starter context/Web_Development_Course_Map_Certification_Aligned.md`, lines 517-660ish):
+
+| Design Thinking stage | Grounded in this course's own vocabulary |
+|---|---|
+| **Empathize** | The **User Research** section's own framing: "What problems or needs should we understand?" |
+| **Define** | The **User Experience and Product Thinking** section's central question: "Can another person understand and successfully use what I built?" |
+| **Ideate / Prototype** | The **UI and Interaction Design** section's pattern vocabulary (navigation, forms, modals, states, and the rest) |
+| **Test** | The **Testing and Observation** section, plus the **Usability Testing** framing: "Can people successfully use the solution we designed?" |
+
+**A second, parallel question threads alongside Design Thinking**, from the **Computational Thinking** section: "How can I break this problem or interface into smaller parts I understand?" Every journal prompt below can draw on either lens (the design question or the technical-decomposition question) depending on what that unit is actually about, the same way Game II's prompts draw on both MDA and Thread 3/4's richer vocabulary.
+
+**Revisit schedule (5 touchpoints, same rhythm as Python's and Game II's):**
+
+| Unit | Why it's a touchpoint |
+|---|---|
+| 06: User Experience, User Research, and Interface Design | Full Design Thinking introduction (~29% through) — this unit already covers Empathize through Ideate directly. |
+| 11: Events and Interaction | Ideate/Prototype made concrete (~52% through) — students are now building the interactions they've been designing for. |
+| 15: Forms and User Input | Empathize made literal (~71% through) — a form is the most direct place a site listens to a real person. |
+| 17: Debugging, Testing, and Quality | The Test stage, explicitly (~81% through). |
+| 21: Capstone | Full-year synthesis, explicit callback to the Unit 06 entry, mirrors Python's and Game II's capstone journals closing the loop back to their first real framework lesson. |
+
+**Word-count progression (floors, not caps, same principle as Python's and Game II's):**
+
+| Stage | Units | Word range | What's expected |
+|---|---|---|---|
+| 1. Warm-Up | 01-05 | 50-100 | Naming what makes a site/app easy or hard to use, before the Design Thinking vocabulary exists yet |
+| 2. Describing How It Works | 06-10 | 100-200 | Using real Design Thinking stage names and this course's own vocabulary for the first time |
+| 3. Analyzing and Justifying | 11-15 | 200-350 | Structured reasoning tied to something the student actually built or tested |
+| 4. Designing and Synthesizing | 16-21 | 350-700 | Full design-document-style writing, explicit callbacks, capstone closes the year |
+
+**Not yet written:** the actual per-unit annotation lines (all 21 units) — this section is the framework and schedule, not yet applied line-by-line the way Python's course-plan has it on every unit. Next step once this framework is confirmed. Once written, **21.20/21.21 (Presentation and Design Rationale, Reflection) become this thread's capstone entry** — resolves the open question below about whether those lessons are this course's own thing or the shared thread; they're now the same thread, not separate.
+
 ## Open Items This Plan Doesn't Resolve
 
 - **The Web I/II acceleration diagnostic isn't built.** The "Mixed-Experience Model" section above proposes treating it as an internal pacing lane rather than a separate course — this is a proposed resolution, not confirmed by Jay yet.
 - **No post-AP-testing project activity identified for this course**, unlike Game I's MakeCode Arcade (which is real skills-application project work for that window, not filler — corrected 2026-08-18). Worth a deliberate decision once Unit 21's real pacing is scoped against the actual CPS calendar.
-- **Whether Units 21.20/21.21's reflection work becomes the same cross-course journal thread Game I already has**, or stays this course's own separate thing — not decided. `../../open-questions.md` already flags "whether Game II/Web II eventually get their own version of this thread" as open; this plan doesn't resolve it, just notes where it would attach if extended here.
+- ~~Whether Units 21.20/21.21's reflection work becomes the same cross-course journal thread Game I already has~~ — **resolved 2026-08-18**: this course now has its own Design Thinking-anchored thread (see the new section above), structurally parallel to Game I's and Game II's but not a literal copy. 21.20/21.21 are that thread's capstone entry. Per-unit annotation lines not yet written.
 - **A JS/HTML5-equivalent to Python's `GMETRIX-` naming convention** for workbook-derived content isn't defined yet.
 - **None of "What Still Needs to Be Created" (source map lines 1132-1394) is built**: module/lesson-level documentation, the UI Pattern Library, User Research Toolkit, Usability Testing Toolkit, Project Bank, Practice/Question Bank, Mastery Checks, Scaffolding System, Critique/Feedback structures, Accessibility Checklist, Technical Best-Practices Guide, Capstone System, or the Certification Alignment/Readiness tracking system. This course-plan is the unit/lesson checklist only — everything downstream of it (per Python's own authoring workflow, `../../02-authoring-system/authoring-workflow.md`) is still ahead.
 - **Exact certification exam timing against real calendar dates** is blocked on the CPS academic calendar, same as the pacing constraint generally.

@@ -511,9 +511,36 @@ AP testing runs mid-to-late April; seniors are typically checked out by mid-May;
 
 ---
 
+## Game Design and Journal Threads (added 2026-08-18)
+
+Per Jay: this course needs the same kind of year-long, iteratively-building reflective throughline Game I has (`../python/course-plan.md`'s "Game Design, UX, and Journal Threads" section), not a separate invention. **Not a straight copy of Python's MDA-only framing, though** — the source map's own **Thread 3: Game Design** and **Thread 4: Player Experience, UI, and Usability** (`../../starter context/Unity_Game_Development_Course_Map_Certification_Aligned_Complete.md`, lines 822-967) already define a richer, course-native vocabulary than MDA alone: Goal, Rules, Constraints, Mechanics, Core Mechanic, Gameplay Loop, Feedback, Game State (Thread 3's foundational concepts); a long list of Player Experience concepts (challenge, flow, pacing, tension, reward, game feel, and more); Systems Concepts (cause and effect, emergence, resource flow, and more); and Thread 4's central question, **"How does the player know?"** Reusing this instead of re-importing Python's simpler 3-term framing wholesale keeps the journal thread native to what this course already teaches, while still bridging to Game I's MDA for continuity (a dual-enrolled or transferring student should recognize the connection, not see two unrelated systems).
+
+**The bridge:** MDA stays the connecting lens across both Game courses (Mechanics ≈ Thread 3's Mechanics/Core Mechanic/Gameplay Loop; Dynamics ≈ Thread 3's Systems Concepts, emergent play from rules interacting; Aesthetics ≈ Thread 4's Player Experience concepts and the "How does the player know?" question). Every journal prompt below asks students to name the Mechanic, Dynamic, and Aesthetic **using this course's own richer vocabulary**, not just the bare three MDA words.
+
+**Revisit schedule (5 touchpoints, same rhythm as Python's 5-touchpoint schedule across its 21 units, scaled to this course's 29):**
+
+| Unit | Why it's a touchpoint |
+|---|---|
+| 02: How Games Work | Full MDA + Thread 3/4 vocabulary introduction — deepened from the shared Unit 0's light Game Design/Unity-tagged callout, which only names MDA, doesn't teach it fully. |
+| 09: Building a 2D Platformer | First real playable game milestone (~31% through the course) — students can now point at Mechanics they actually built. |
+| 14: Designing for the Player | Deepest MDA revisit of the year (~48% through) — the unit title is nearly synonymous with the framework itself. |
+| 20: Enemies and Game AI | Systems producing emergent Dynamics (~69% through) — AI behavior is where "Mechanics → Dynamics" becomes most visible. |
+| 29: Capstone | Full-year synthesis, explicit callback to the Unit 02 entry, mirrors Python's Unit 20 capstone journal closing the loop back to Unit 00. |
+
+**Word-count progression (floors, not caps, same principle as Python's):**
+
+| Stage | Units | Word range | What's expected |
+|---|---|---|---|
+| 1. Warm-Up | 01-04 (Phase 1) | 50-100 | Naming Mechanics/Dynamics/Aesthetics in games students already play, little to no Unity skill required yet |
+| 2. Describing How It Works | 05-14 (Phase 2, first half) | 100-200 | Connecting a Unity concept just learned to a Thread 3/4 vocabulary term |
+| 3. Analyzing and Justifying | 15-20 (Phase 2 close, Phase 3) | 200-350 | Structured reasoning, first real playtesting-informed reflection (Unit 15 pairs naturally here) |
+| 4. Designing and Synthesizing | 21-29 (Phase 4-5) | 350-700 | Full design-document-style writing, explicit callbacks, capstone closes the year |
+
+**Not yet written:** the actual per-unit *Game/UX tie-in* and *Journal* annotation lines (all 29 units) — this section is the framework and schedule, not yet applied line-by-line the way Python's course-plan has it on every unit. Next step once this framework is confirmed.
+
 ## Open Items This Course-Plan Doesn't Resolve
 
-- **No Game/UX-tie-in or Journal-thread section, unlike `../python/course-plan.md`.** That thread was explicitly scoped to Python only (`../../open-questions.md`: "Whether Game II/Web II eventually get their own version of this thread... don't assume it carries over without being asked"). Not invented here — flag as still open. If Jay wants one, note that Thread 3 (Game Design) and Thread 4 (Player Experience/UI) in the source map already provide strong MDA-adjacent vocabulary this course could reuse for a journal thread, without needing to import Python's MDA framing wholesale.
+- ~~No Game/UX-tie-in or Journal-thread section~~ — **resolved 2026-08-18**, see the new section above. Framework decided; per-unit annotation lines not yet written.
 - **Game of the Week, the AI-Assisted Development workflow (Ask → Understand → Build → Test → Explain), and the Career Spotlight library are real, extensively-designed parts of the source map** (its own Threads 7-10 and the Game of the Week Concept Map) but are **not reproduced in this file** — they're cross-cutting structures that span every unit rather than living in one, and copying ~900 lines of source material here would make this file unusable as a checklist. Read the source map directly (`../../starter context/Unity_Game_Development_Course_Map_Certification_Aligned_Complete.md`, "Threads Throughout the Course" and "Game of the Week Integration" sections) before authoring any unit's real lesson content — those threads are meant to recur inside the units above, not sit beside them.
 - **Unity Learn licensing** for curated third-party content (especially 3D, Units 21-24) — not checked, see `../../open-questions.md`.
 - **The "What Still Needs to Be Created" list in the source map** (23 numbered items: module/lesson documentation templates, the four-week MakeCode sequence, a MakeCode-to-Unity transfer guide, concept/pattern libraries, playtesting/research toolkits, mastery-check definitions, etc.) is real scoping work the source map itself flags as undone — none of it is built, this course-plan is strictly the unit/lesson skeleton layer.
