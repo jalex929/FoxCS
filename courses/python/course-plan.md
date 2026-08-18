@@ -19,17 +19,10 @@ This file is the master checklist. Check off lessons as their `content/` markdow
 ---
 
 ## Unit 00: Course Onboarding
-*GMetrix tie-in: Domain 1, Lesson 1 (Objective 1.1, general. No item number, this is pre-content setup). Python Introduction (no project file), Installing Python (project file: "Domain 1 Student folder," i.e. the install steps themselves). Good fit for 00.3 Using the Code Editor.*
-*Game/UX tie-in: This is where the course introduces itself as a game-design class, not just a Python class. Introduce the **MDA framework** (Mechanics/Dynamics/Aesthetics. See trailing section) here, using only games students already play. No code needed yet. Frame 00.4 Debugging Is Learning as a first taste of playtesting: bugs are part of design, not failure.*
-*Journal (50-75 words): Pick a game you enjoy. Name one Mechanic (a rule), one Dynamic (something that happens because of that rule), and one Aesthetic (a feeling the game gives you). You'll revisit this answer later in the year.*
-- [ ] 00.1 Welcome to Waypoint Learning
-- [ ] 00.2 How Learning Works
-- [ ] 00.3 Using the Code Editor
-- [ ] 00.4 Debugging Is Learning
-- [ ] 00.5 Introduction to Computational Thinking
-- [ ] 00.6 How Programmers Solve Problems
-- [ ] 00.7 Getting Unstuck
-- (no unit project. Onboarding only; the journal entry above stands in as this unit's only reflective artifact)
+
+**Revised 2026-08-17 — no longer authored standalone here.** Game I does not have its own Unit 00 anymore. It shares one onboarding unit with Game II and Web II — see `../../00-project-overview/shared-unit-00-onboarding.md`. Game I students see that doc's **Level 1** edition: Python pathway only, MDA framework kept as core content (not a tagged callout, since Game I is single-pathway), same lesson spine (Welcome, How Learning Works, Using Your Tools, Troubleshooting Is Learning, Computational Thinking, How Problem-Solving Works, Getting Unstuck). GMetrix's Domain 1/Lesson 1 tie-in (Python Introduction, Installing Python) and the original 50-75 word MDA journal prompt both carry over into that shared doc's Level 1 edition — not duplicated here. **Physically not yet built** — the shared doc is an outline only as of 2026-08-17, same status this section was already in.
+
+Unit 01 below is Game I's real first authored unit.
 
 ## Unit 01: What Is Programming?
 *GMetrix tie-in: none. The workbook has no conceptual "what is a program" content beyond installation, which is already placed under Unit 00.*
@@ -298,6 +291,12 @@ Keep these as two clearly separate activities (Domain 1 operators, then Domain 2
 - [ ] 20.4 Testing and Debugging
 - [ ] 20.5 Reflection and Revision
 - [ ] 20 Final Project
+
+**Pacing target, added 2026-08-17 per `../../CLAUDE.md`'s Hard Constraints:** Unit 20 should be finished, including the IT Specialist – Python certification exam itself, **before mid-April** — AP testing runs mid-to-late April and seniors are typically checked out by mid-May, and Jay's direct observation is that motivation drops hard once those periods hit. Units 01-20 need to fit the calendar window before that, not treat the last several weeks of school as ordinary instructional time. Exact week-by-week pacing against real dates is blocked on the official CPS academic calendar (see `../../open-questions.md`) — this is a target to design toward, not a scheduled date yet.
+
+## Post-Capstone: MakeCode Arcade (2D Projects)
+
+**Added 2026-08-17, not yet scoped into units/lessons.** Per Jay: Game I students are expected to earn one certification (IT Specialist – Python) and are not expected to pursue a second the way Game II/Web II students are (see `../../decisions-log.md`'s 2026-08-17 entry on certification framing). After Unit 20's capstone and certification exam, the course moves into **MakeCode Arcade** for 2D game projects — a natural fit for the AP-testing-through-end-of-year stretch flagged in the pacing constraint above, since it's lower-stakes, high-engagement, block-code-adjacent work that doesn't assume strong attendance or motivation, and doesn't require new core Python content a student can't afford to miss. **Not confirmed as deliberately timed there** — flagged as plausible, not decided (see `../../open-questions.md`). No units/lessons drafted for this stretch yet; scope, length, and whether it's graded or purely enrichment are all open.
 
 ---
 
