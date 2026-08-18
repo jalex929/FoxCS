@@ -1,0 +1,113 @@
+<!-- Fully shared across all three FoxCS courses and both Unit 0 editions, verbatim. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>0.5 Introduction to Computational Thinking: FoxCS</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  code { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  .term-list { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0; }
+  .term-card { background: #eef4fb; border: 1px solid #c8d6e8; border-radius: 6px; padding: 0.7rem 1rem; }
+  .term-name { font-weight: bold; color: #1a3a5c; margin-bottom: 0.25rem; }
+  .term-example { margin-top: 0.4rem; font-size: 0.92rem; color: #445; }
+  .term-example strong { color: #1a5aa8; }
+  .quick-check { border: 1px solid #ccd3dd; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
+  .quick-check-label { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .quick-check-prompt { margin-bottom: 0.7rem; }
+  .quick-check select { font-family: Consolas, monospace; font-size: 0.95rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .quick-check button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 0.5rem; }
+  .quick-check button:hover { background: #12467f; }
+  .quick-check .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
+  .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<h1>0.5 — Introduction to Computational Thinking</h1>
+
+<div class="objectives">
+<strong>What you'll take away:</strong>
+<ul>
+  <li>I can name and describe the four core parts of computational thinking.</li>
+  <li>I can spot at least one of them happening in a problem I already know how to solve.</li>
+</ul>
+</div>
+
+<p>Computational thinking isn't the same thing as coding. It's the thinking that happens before and during coding (or building a web page, or designing a game system). It's how you break a big, messy problem into something you can actually solve, one piece at a time. You already do a version of this in everyday life. This class just gives it names and makes it deliberate.</p>
+
+<h2>The Four Parts</h2>
+<div class="term-list">
+  <div class="term-card">
+    <div class="term-name">Decomposition</div>
+    <div class="term-def">Breaking a big problem into smaller, more manageable pieces.</div>
+    <div class="term-example"><strong>Example:</strong> "Build a website" is huge. "Build the header, then the navigation, then the main content" is a set of problems you can actually start on.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">Pattern recognition</div>
+    <div class="term-def">Noticing similarities between a new problem and something you've seen before.</div>
+    <div class="term-example"><strong>Example:</strong> Once you've fixed one "my button doesn't respond to clicks" bug, you'll recognize the shape of that problem the next time it shows up somewhere else.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">Abstraction</div>
+    <div class="term-def">Focusing on the details that actually matter for the problem you're solving, and ignoring the ones that don't.</div>
+    <div class="term-example"><strong>Example:</strong> When you use a function someone else wrote, you don't need to know exactly how it works inside, just what it needs from you and what it gives back.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">Algorithmic thinking</div>
+    <div class="term-def">Describing a solution as a clear, ordered series of steps.</div>
+    <div class="term-example"><strong>Example:</strong> A recipe is an algorithm. So is a set of directions to a friend's house. So is the logic behind almost anything you'll build this year.</div>
+  </div>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">You're planning a birthday party and you write a list: decorations, food, music, invitations, then handle each one separately. Which part of computational thinking is this closest to?</div>
+  <select id="qc1-select">
+    <option value="">Choose...</option>
+    <option value="a">Decomposition</option>
+    <option value="b">Pattern recognition</option>
+    <option value="c">Abstraction</option>
+  </select>
+  <button onclick="checkQc1()">Check</button>
+  <div class="feedback" id="qc1-feedback"></div>
+</div>
+
+<h2>Why This Matters Before You've Written Any Code</h2>
+<p>Every project you build this year, whether it's a Python program, a web page, or a Unity game, is really a large problem made out of many small ones. Students who struggle the most usually aren't struggling with syntax, they're trying to solve the whole big problem at once instead of breaking it down first.</p>
+<p>When you get stuck later this year, one of the first useful questions to ask yourself is: what's the smallest piece of this I could try to solve first? That question is decomposition, and it's often the fastest way out of feeling stuck.</p>
+
+<div class="page-nav">
+  <div class="page-nav-note">Nothing to save on this page, it's reading only.</div>
+  <div class="page-nav-links">
+    <a href="../lesson_00_04_troubleshooting_is_learning/01_instruction.html" class="page-nav-prev">← Back: Troubleshooting Is Learning</a>
+    <a href="../lesson_00_06_problem_solving/01_instruction.html" class="page-nav-next">Next: How Problem-Solving Works →</a>
+  </div>
+</div>
+
+<script>
+function checkQc1() {
+  const val = document.getElementById('qc1-select').value;
+  const fb = document.getElementById('qc1-feedback');
+  fb.className = 'feedback ' + (val === 'a' ? 'correct' : 'incorrect');
+  if (val === 'a') {
+    fb.textContent = 'Right! Splitting one big task (throw a party) into smaller separate tasks is exactly decomposition.';
+  } else if (val === 'b' || val === 'c') {
+    fb.textContent = 'Not quite, look again at what\'s actually happening: one big task is being split into smaller ones.';
+  } else {
+    fb.textContent = 'Pick an option first.';
+  }
+}
+</script>
+
+</body>
+</html>

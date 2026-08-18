@@ -1,0 +1,93 @@
+<!-- Fully shared across all three FoxCS courses and both Unit 0 editions, verbatim.
+     Generalized from Game I's original "Debugging Is Learning" so it works whether the
+     "bug" is a Python traceback, a broken CSS layout, or a Unity scene that won't run. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>0.4 Troubleshooting Is Learning: FoxCS</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  code { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-family: Verdana, Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.real-world { background: #f0f8f5; border-color: #cdeadd; }
+  .concept-card.real-world .concept-card-label { color: #1f5c47; }
+  .step { border: 1px solid #ccd3dd; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 1.8rem; height: 1.8rem; background: #1a5aa8; color: white; border-radius: 50%; font-family: Verdana, Arial, sans-serif; font-weight: bold; font-size: 0.95rem; margin-right: 0.5rem; }
+  .step-title { font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #2a3a52; font-size: 1.05rem; }
+  .step p { margin: 0.6rem 0 0; }
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<h1>0.4 — Troubleshooting Is Learning</h1>
+
+<div class="objectives">
+<strong>What you'll take away:</strong>
+<ul>
+  <li>I can explain why something not working is a normal, expected part of building things, not a sign I did something wrong.</li>
+  <li>I can use a simple troubleshooting process instead of guessing randomly or giving up.</li>
+</ul>
+</div>
+
+<p>At some point this year, something you build is going to break. Your code will throw an error. A layout will look wrong in the browser. A Unity scene won't run the way you expected. This isn't a maybe, it's a certainty, and it's true for every single person in this class, including the adults who do this professionally.</p>
+
+<div class="concept-card real-world">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="16.5" r="0.75" fill="currentColor" stroke="none"/></svg>Reframe: This Is Part of the Job</div>
+<p>Professional software developers, web developers, and game developers spend a large part of their actual working time fixing things that don't work yet. It's not a side effect of the job, it's a core part of it. Getting comfortable with something being broken, and calmly working out why, is one of the most valuable skills this whole class is building.</p>
+</div>
+
+<h2>A Simple Process, Not a Guessing Game</h2>
+<p>When something breaks, it's tempting to change random things until it works. That sometimes works by accident, but it teaches you nothing and often creates new problems. Try this instead.</p>
+
+<div class="step">
+<span class="step-num">1</span><span class="step-title">Notice exactly what happened</span>
+<p>What did you expect to happen? What actually happened instead? Read any error message carefully, word for word, instead of skimming past it. The message is usually telling you something specific and true, not just "it's broken."</p>
+</div>
+
+<div class="step">
+<span class="step-num">2</span><span class="step-title">Find what changed</span>
+<p>If it worked a minute ago and doesn't now, what did you just change? That's usually where the problem is. If it never worked, look at the most recent piece you added or edited.</p>
+</div>
+
+<div class="step">
+<span class="step-num">3</span><span class="step-title">Make one change at a time</span>
+<p>Fix one thing, then check whether the problem is gone before fixing anything else. If you change five things at once and it works, you won't know which change actually mattered, and you won't have learned anything you can use next time.</p>
+</div>
+
+<div class="step">
+<span class="step-num">4</span><span class="step-title">Ask for help the right way</span>
+<p>If you're stuck after trying the steps above, that's exactly when to ask for help, not a sign you should have figured it out alone. The next lesson (Getting Unstuck) covers exactly how to do this well.</p>
+</div>
+
+<h2>What This Looks Like in Each Pathway</h2>
+<p>The specific symptom looks different depending on what you're building, but the process above works the same way for all of them:</p>
+<ul>
+  <li>In <strong>Python</strong>, a bug usually shows up as an error message called a traceback, or output that isn't what you expected.</li>
+  <li>In <strong>web development</strong>, a bug might be a page that looks wrong in the browser, a button that doesn't do anything, or a JavaScript error in the browser's console.</li>
+  <li>In <strong>Unity</strong>, a bug might be a game object that doesn't move, a script that throws an error in the console, or a scene that doesn't behave the way you designed it.</li>
+</ul>
+<p>Different symptoms, same underlying skill.</p>
+
+<div class="page-nav">
+  <div class="page-nav-note">Nothing to save on this page, it's reading only.</div>
+  <div class="page-nav-links">
+    <a href="../lesson_00_03_using_your_tools/01_instruction.html" class="page-nav-prev">← Back: Using Your Tools</a>
+    <a href="../lesson_00_05_computational_thinking/01_instruction.html" class="page-nav-next">Next: Computational Thinking →</a>
+  </div>
+</div>
+
+</body>
+</html>

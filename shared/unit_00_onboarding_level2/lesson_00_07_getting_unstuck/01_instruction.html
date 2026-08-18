@@ -1,0 +1,104 @@
+<!-- Fully shared across all three FoxCS courses and both Unit 0 editions, verbatim.
+     Sets up 00.8 Academic Integrity's boundary from the resourcefulness side. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>0.7 Getting Unstuck: FoxCS</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  code { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  .ladder { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0; }
+  .ladder-step { background: #eef4fb; border: 1px solid #c8d6e8; border-radius: 6px; padding: 0.7rem 1rem; }
+  .ladder-step-name { font-weight: bold; color: #1a3a5c; margin-bottom: 0.25rem; }
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-family: Verdana, Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.pro-tip { background: #fdf6e8; border-color: #f3e2b8; }
+  .concept-card.pro-tip .concept-card-label { color: #7a4800; }
+  .example-pair { display: flex; flex-direction: column; gap: 0.8rem; margin: 1rem 0; }
+  .example-bad, .example-good { border-radius: 8px; padding: 0.8rem 1.1rem; border: 1px solid; }
+  .example-bad { background: #f6f0ef; border-color: #e3cfc9; }
+  .example-good { background: #f0f8f5; border-color: #cdeadd; }
+  .example-label { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.4rem; }
+  .example-bad .example-label { color: #7a4a3a; }
+  .example-good .example-label { color: #1f5c47; }
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<h1>0.7 — Getting Unstuck</h1>
+
+<div class="objectives">
+<strong>What you'll take away:</strong>
+<ul>
+  <li>I can list several ways to get unstuck before asking for help.</li>
+  <li>I can ask for help in a way that actually builds my own understanding, instead of skipping past it.</li>
+</ul>
+</div>
+
+<p>Everyone gets stuck this year. That's not a problem to avoid, it's a normal part of learning something new, exactly like the last few lessons already covered. This lesson is about what to actually do about it.</p>
+
+<h2>Try These Before You Ask Anyone</h2>
+<div class="ladder">
+  <div class="ladder-step">
+    <div class="ladder-step-name">Re-read what you wrote</div>
+    <div>Slowly, out loud if it helps. A surprising number of problems are visible the second time you actually look closely, instead of skimming.</div>
+  </div>
+  <div class="ladder-step">
+    <div class="ladder-step-name">Re-read the error or symptom</div>
+    <div>What is it actually telling you? Not what you assume it means, what it literally says.</div>
+  </div>
+  <div class="ladder-step">
+    <div class="ladder-step-name">Check the instructions or documentation again</div>
+    <div>It's easy to misremember a detail. Going back to the source is faster than guessing.</div>
+  </div>
+  <div class="ladder-step">
+    <div class="ladder-step-name">Try isolating the problem</div>
+    <div>Comment out or remove pieces until you find the smallest version that still breaks. That tells you exactly where to look.</div>
+  </div>
+</div>
+
+<p>If you've genuinely tried these and you're still stuck, that's exactly when to ask for help. Asking isn't a last resort you should feel bad about, it's the right next step once you've done your own thinking first.</p>
+
+<h2>How to Ask for Help Well</h2>
+<p>The way you ask for help changes how much you actually learn from it.</p>
+
+<div class="example-pair">
+  <div class="example-bad">
+    <div class="example-label">Less helpful</div>
+    <div>"It's not working." (No detail. Whoever's helping you has to start from zero.)</div>
+  </div>
+  <div class="example-good">
+    <div class="example-label">More helpful</div>
+    <div>"I expected X to happen, but Y happened instead. Here's what I tried already. Here's the exact error message I'm seeing."</div>
+  </div>
+</div>
+
+<p>The second version does two things: it respects the other person's time, and it forces you to actually think through the problem yourself first, which often helps you notice the answer before you even finish asking the question.</p>
+
+<div class="concept-card pro-tip">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/><path d="M19 15l0.8 2.2L22 18l-2.2 0.8L19 21l-0.8-2.2L16 18l2.2-0.8L19 15z"/></svg>Who to Ask</div>
+<p>Your teacher is always a good option. A classmate can be too, and helping each other is genuinely encouraged in this class. There's an important line here though, about what "helping" actually means when it comes to someone else's code or work. The next lesson covers that boundary directly, since it matters enough to get its own real space rather than a quick mention here.</p>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-note">Nothing to save on this page, it's reading only.</div>
+  <div class="page-nav-links">
+    <a href="../lesson_00_06_problem_solving/01_instruction.html" class="page-nav-prev">← Back: How Problem-Solving Works</a>
+    <a href="../lesson_00_08_academic_integrity/01_instruction.html" class="page-nav-next">Next: Academic Integrity →</a>
+  </div>
+</div>
+
+</body>
+</html>

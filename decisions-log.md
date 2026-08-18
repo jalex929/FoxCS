@@ -18,6 +18,22 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-18 — Shared Unit 0 built (both editions), plus a pathway-comparison lesson
+
+**Context:** Jay asked to build real Unit 0 HTML for all three courses, and to fill in the per-unit journal-thread lines for Game II and Web II first (both done via parallel forks earlier the same day — see the "throughline frameworks" entry above). Also asked, mid-build, for Lesson 0.9 to include a real comparison of the two Level 2 pathways.
+
+**Decided/built:**
+
+- **Two-folder decision confirmed and built**: `shared/unit_00_onboarding_level1/` (Game I) and `shared/unit_00_onboarding_level2/` (Game II + Web II), matching the two-real-editions plan from earlier the same day (not one shared file with labeled boxes — Game I must never see Web/Unity content, full stop).
+- **All lessons built and verified in-browser** (local HTTP server + Chrome screenshots, not just written blind): 0.1 Welcome (edition-specific — L1 gets the full MDA framework intro, L2 gets pathway-choice framing without naming pathways in depth yet), 0.2 How Learning Works, 0.3 Using Your Tools (edition-specific — L1 is Python/VS Code only, L2 sets up both Web Dev and Game Design/Unity tooling since the pathway isn't chosen yet), 0.4 Troubleshooting Is Learning, 0.5 Computational Thinking, 0.6 How Problem-Solving Works, 0.7 Getting Unstuck, 0.8 Academic Integrity (the full expanded policy from `01-privacy-and-governance/academic-integrity-ai-use.md`, translated into real student-facing copy), and 0.9 Choosing Your Pathway (L2 only).
+- **0.9 now includes a real "How They're Alike / How They're Different" comparison**, per Jay's request, so a student can make an informed, comfortable choice: alike on being project-based, leading to a cert, centering a real user/player, using the same Reinforce/Core/Extend and troubleshooting processes, and eventually offering open-ended project choice; different on entry diagnostics (Web Dev has one, Game Design/Unity doesn't, since Unity is new territory for nearly everyone), pacing shape (steady climb vs. a big 2D-to-3D shift), and total unit count (21 vs. 29). Grounded in the real course-plans, not invented.
+- **The kickoff avatar + self-intro activity, built earlier the same day, duplicated into both editions** (`kickoff/`) rather than left in its placeholder location.
+- Both editions' content matches `content-voice-and-tone.md` (Learner-facing tone, no em dashes, calm/supportive framing) and the established plain-styling visual pattern from Python's Unit 01.
+
+**Not done yet:** flashcards/vocab-quiz/practice/mastery-check/feedback pages for Unit 0 (deliberately skipped — Unit 0 has no code to drill yet, instruction-only pages fit what it actually is); linking each course's `course-plan.md` to the real built path; any real classroom distribution.
+
+---
+
 ## 2026-08-18 — Corrected post-AP-testing pacing framing; designed cross-course MakeCode avatar kickoff activity
 
 **Context:** Jay corrected a mischaracterization from the 2026-08-17 pacing constraint, then gave a new cross-course activity to design.

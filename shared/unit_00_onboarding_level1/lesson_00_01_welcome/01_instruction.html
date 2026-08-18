@@ -1,0 +1,106 @@
+<!-- Level 1 edition only (Game I). See 00-project-overview/shared-unit-00-onboarding.md.
+     Includes the full MDA framework intro, kept as core content for Game I per that design doc. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>0.1 Welcome: FoxCS: Game Programming I</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  code { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-family: Verdana, Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.game { background: #f4f2fb; border-color: #ded7f5; }
+  .concept-card.game .concept-card-label { color: #4a3aa7; }
+  .term-list { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0; }
+  .term-card { background: #eef4fb; border: 1px solid #c8d6e8; border-radius: 6px; padding: 0.7rem 1rem; }
+  .term-name { font-weight: bold; color: #1a3a5c; margin-bottom: 0.25rem; }
+  .term-example { margin-top: 0.4rem; font-size: 0.92rem; color: #445; }
+  .term-example strong { color: #1a5aa8; }
+  .pathway-box { background: #eef4fb; border: 1px solid #1a5aa8; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .pathway-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.5rem; }
+  .journal-box { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .journal-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #7a4800; margin-bottom: 0.5rem; }
+  ol.steps li { margin: 0.5rem 0; }
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<h1>0.1 — Welcome to Game Programming I</h1>
+
+<div class="objectives">
+<strong>What you'll take away:</strong>
+<ul>
+  <li>I know what this course is and what I'll be building this year.</li>
+  <li>I can name the three parts of the MDA framework and use it to talk about a game I already know.</li>
+</ul>
+</div>
+
+<div class="pathway-box">
+<div class="pathway-label">Your Path This Year</div>
+<p>Welcome to Game Programming I. Everyone in this course learns <strong>Python</strong> this year, the whole way through. There's no pathway choice to make here, this is your path, and it's a genuinely deep one: by the end of the year, you'll be able to build real, working programs and games from scratch, and you'll be prepared for an industry certification exam.</p>
+</div>
+
+<p>This isn't just a Python-syntax class. It's a game design class that happens to use Python as the tool for actually building things. Every unit this year connects the code you're learning to a real idea about how games work and how they're designed to feel a certain way to play.</p>
+
+<h2>The MDA Framework</h2>
+<p>Here's a lens you'll use all year, starting today, well before you've written any real code. It's called <strong>MDA</strong>, and it comes from real game design theory (Hunicke, LeBlanc, and Zubek). It breaks a game down into three connected parts.</p>
+
+<div class="term-list">
+  <div class="term-card">
+    <div class="term-name">Mechanics</div>
+    <div class="term-def">The actual rules and systems of the game. What's literally coded or built.</div>
+    <div class="term-example"><strong>Example:</strong> "The player loses 10 health when hit by an enemy" is a Mechanic.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">Dynamics</div>
+    <div class="term-def">What actually happens when the Mechanics run and a player interacts with them over time.</div>
+    <div class="term-example"><strong>Example:</strong> Because of that health-loss Mechanic, players start playing cautiously near enemies. That cautious behavior is a Dynamic.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">Aesthetics</div>
+    <div class="term-def">The emotional experience the player actually has as a result.</div>
+    <div class="term-example"><strong>Example:</strong> That cautious behavior might create tension, or a sense of real risk. That feeling is an Aesthetic.</div>
+  </div>
+</div>
+
+<div class="concept-card game">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><line x1="12" y1="10" x2="12" y2="17"/><path d="M7 17h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>Why Learn This Before Any Code</div>
+<p>You don't need to know how to program yet to start noticing Mechanics, Dynamics, and Aesthetics in games you already play. In fact, that's the point of starting here. By the time you're writing real code later this year, you'll already have language for talking about why a design choice matters, not just how to type it.</p>
+</div>
+
+<h2>What's Coming This Year</h2>
+<p>You'll build real programs starting with simple output and working all the way up to a full capstone game project of your own design. Along the way, you'll work toward the <strong>IT Specialist – Python</strong> certification, a real industry credential. Once that's done, later in the year you'll also get to build 2D games in a tool called MakeCode Arcade, putting everything you've learned to the test in a new way.</p>
+
+<div class="journal-box">
+<div class="journal-label">Journal (50-75 words)</div>
+<p>Pick a game you enjoy. Name one Mechanic (a rule), one Dynamic (something that happens because of that rule), and one Aesthetic (a feeling the game gives you). You'll revisit this answer later in the year, so save what you write.</p>
+</div>
+
+<h2>What To Do Next</h2>
+<ol class="steps">
+  <li>Write your journal entry above.</li>
+  <li><strong>0.2 How Learning Works</strong>. <a href="../lesson_00_02_how_learning_works/01_instruction.html">Continue to the next lesson</a>.</li>
+</ol>
+
+<div class="page-nav">
+  <div class="page-nav-note">Save your journal entry before moving on.</div>
+  <div class="page-nav-links">
+    <a href="../unit_00_overview.html" class="page-nav-prev">← Unit 0 Overview</a>
+    <a href="../lesson_00_02_how_learning_works/01_instruction.html" class="page-nav-next">Next: How Learning Works →</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Shared Unit 0: Cross-Course Onboarding
 
-**New 2026-08-17.** Design doc for a single onboarding unit delivered, in substance, to all three FoxCS courses (Game I / Python, Game II, Web II) — not three separately authored Unit 0s. See `../decisions-log.md`'s 2026-08-17 entry for how this was decided. Status: **outline only, no instructional content authored yet.**
+**New 2026-08-17. Built 2026-08-18.** Design doc for a single onboarding unit delivered, in substance, to all three FoxCS courses (Game I / Python, Game II, Web II) — not three separately authored Unit 0s. See `../decisions-log.md`'s 2026-08-17 and 2026-08-18 entries for how this was decided and built. **Status: real HTML built and verified in-browser** at `../shared/unit_00_onboarding_level1/` (Game I) and `../shared/unit_00_onboarding_level2/` (Game II + Web II) — all 8-9 lessons per edition, the kickoff activity, and both overview pages. Not yet distributed to any real class; no `content/`-tree integration with the three courses' own `course-plan.md` files beyond the existing text pointers.
 
 ## Why This Exists
 
@@ -58,11 +58,24 @@ No unit project for Unit 0 in either edition, consistent with Python's existing 
 
 **Single shared source, not per-course copies.** Lives outside any one course's `content/` tree so both editions can be built from one authored source without drift. Proposed location, following the existing `courses/<course>/content/unit_XX_slug/` naming pattern one level up:
 
+**Revised 2026-08-18 — two real physical editions, not one file with a toggle.** Jay's instruction is precise: Game I sees Python only, never a Web Dev or Game Design/Unity reference; Level 2 (Game II + Web II) sees both those pathways, never Python. A single shared file showing all three pathways in labeled boxes (the original plan below) would let a Game I student scroll past Web/Unity content even if labeled "not for you" — too loose for what Jay actually asked. Since this repo has no live templating (everything is hand-authored static HTML per the MVP's own scrappy-but-real-quality philosophy), the safe way to guarantee that separation is **two real folders**, not one:
+
 ```
 FoxCS/
   shared/
-    unit_00_onboarding/
-      unit_00_overview.html              Two entry points or a toggle: Level 1 / Level 2
+    unit_00_onboarding_level1/                 Distributed to Game I only
+      unit_00_overview.html
+      lesson_00_01_welcome/
+      lesson_00_02_how_learning_works/          identical content to Level 2's copy
+      lesson_00_03_using_your_tools/
+      lesson_00_04_troubleshooting_is_learning/ identical content to Level 2's copy
+      lesson_00_05_computational_thinking/      identical content to Level 2's copy
+      lesson_00_06_problem_solving/             identical content to Level 2's copy
+      lesson_00_07_getting_unstuck/             identical content to Level 2's copy
+      lesson_00_08_academic_integrity/          identical content to Level 2's copy
+      kickoff/                                  identical content to Level 2's copy (built 2026-08-18)
+    unit_00_onboarding_level2/                  Distributed to Game II and Web II
+      unit_00_overview.html
       lesson_00_01_welcome/
       lesson_00_02_how_learning_works/
       lesson_00_03_using_your_tools/
@@ -71,10 +84,13 @@ FoxCS/
       lesson_00_06_problem_solving/
       lesson_00_07_getting_unstuck/
       lesson_00_08_academic_integrity/
-      lesson_00_09_choosing_your_pathway/     L2 only
+      lesson_00_09_choosing_your_pathway/       L2 only
+      kickoff/
 ```
 
-Each course's own `course-plan.md` should link to this shared unit rather than re-listing it, once it's built. **Not yet created — this is the proposed location, nothing physically built here yet.**
+The 6 fully-shared lessons (00.2, 00.4, 00.5, 00.6, 00.7, 00.8) and the kickoff activity are **authored once and copied into both editions verbatim** — if one ever needs a real edit, edit both copies together, don't let them drift. Only 00.1 (Welcome) and 00.3 (Using Your Tools) have genuinely different content per edition; 00.9 (Choosing Your Pathway) exists only in the Level 2 copy. `kickoff/`, built 2026-08-18 under a placeholder `shared/unit_00_onboarding/` path (created before this two-folder revision), needs to move into both real edition folders once they exist — not yet done.
+
+Each course's own `course-plan.md` should link to the correct edition rather than re-listing it, once both are built.
 
 ## Certification Framing Touches Unit 0 Lightly
 
@@ -82,8 +98,10 @@ Per Jay's broader 2026-08-17 scope note (full detail belongs in each course's ow
 
 ## Open Items This Doc Doesn't Resolve
 
-- Not yet applied: rewriting `courses/python/course-plan.md`'s existing Unit 00 section to point at this shared unit instead of describing its own copy.
-- `courses/game-programming-2/` and `courses/web-dev/` don't exist yet — see `../decisions-log.md`'s 2026-08-17 entry for the skeleton just created, and each new course's own `CLAUDE.md`/`course-plan.md` for what's still unbuilt there.
-- Whether the Level 2 "one shared pathway pool regardless of course enrollment" model extends past Unit 0 into actual scheduling/grading for a dual-enrolled student — not decided, flagged above.
-- The actual instructional HTML for every lesson above — none written yet. Follow `../02-authoring-system/authoring-workflow.md`'s 8-phase process per lesson, same as Python's Unit 01.
-- Whether 00.8's pathway-choice framing should borrow anything from the Web course map's "Adaptive Project Pathways" (Guided Build / Design Challenge / Build Your Own) or "Starter/Skilled/Legendary/Mythic" project-depth tiers (`../starter context/Web_Development_Course_Map_Certification_Aligned.md` lines 1057-1101) — those are project-structure concepts, not obviously onboarding content, but worth a deliberate yes/no rather than silently ignoring them.
+- ~~Not yet applied: rewriting `courses/python/course-plan.md`'s existing Unit 00 section to point at this shared unit~~ — done 2026-08-17.
+- ~~`courses/game-programming-2/` and `courses/web-dev/` don't exist yet~~ — both now have real `course-plan.md`s (29 and 21 units) with full per-unit journal threads, built 2026-08-17/18.
+- Whether the Level 2 "one shared pathway pool regardless of course enrollment" model extends past Unit 0 into actual scheduling/grading for a dual-enrolled student — still not decided.
+- ~~The actual instructional HTML for every lesson above~~ — **built 2026-08-18**, both editions, verified in-browser. See `../shared/unit_00_onboarding_level1/` and `../shared/unit_00_onboarding_level2/`. No `03_flashcards.html`/`04_vocab_quiz.html`/`05_practice.html`/mastery-check/feedback pages built for Unit 0 — each lesson is instruction-only, which fits Unit 0's actual content (no code being learned yet, nothing to drill), unlike Units 1+.
+- Whether 00.9's pathway-choice framing should borrow anything from the Web course map's "Adaptive Project Pathways" (Guided Build / Design Challenge / Build Your Own) or "Starter/Skilled/Legendary/Mythic" project-depth tiers — **partially addressed 2026-08-18**: the built 00.9 lesson now includes a real "How They're Alike / How They're Different" comparison (per Jay's request) covering project openness, pacing structure, and unit count, but doesn't name the Guided Build/Design Challenge/Build Your Own tiers specifically. Worth a deliberate yes/no on naming those explicitly, still not decided.
+- **Not yet done**: linking each course's `course-plan.md` to the real built Unit 0 path (`shared/unit_00_onboarding_level1/` or `_level2/`) instead of just the design doc — the text pointers exist but don't give a clickable path yet.
+- **Not yet done**: distributing either edition to a real Google Classroom, or building the codename-swap/no-answer-keys export step this would need before real distribution (see `../02-authoring-system/mvp-unit-folder-structure.md`'s Distribution section — Unit 0 has no answer keys to worry about, but the general export step still isn't built).

@@ -1,0 +1,87 @@
+<!-- Fully shared across all three FoxCS courses and both Unit 0 editions, verbatim.
+     Generalized from Game I's original "How Programmers Solve Problems" so it doesn't
+     imply Web Dev's HTML/CSS work is somehow not "real" problem solving. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>0.6 How Problem-Solving Works: FoxCS</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  code { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  .step { border: 1px solid #ccd3dd; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 1.8rem; height: 1.8rem; background: #1a5aa8; color: white; border-radius: 50%; font-family: Verdana, Arial, sans-serif; font-weight: bold; font-size: 0.95rem; margin-right: 0.5rem; }
+  .step-title { font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #2a3a52; font-size: 1.05rem; }
+  .step p { margin: 0.6rem 0 0; }
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-family: Verdana, Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.pro-tip { background: #fdf6e8; border-color: #f3e2b8; }
+  .concept-card.pro-tip .concept-card-label { color: #7a4800; }
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<h1>0.6 — How Problem-Solving Works</h1>
+
+<div class="objectives">
+<strong>What you'll take away:</strong>
+<ul>
+  <li>I can describe a repeatable process for solving a problem I don't already know how to solve.</li>
+</ul>
+</div>
+
+<p>The last lesson introduced computational thinking, the mental habits behind breaking problems apart. This lesson is about what to actually do, step by step, when you're facing a problem you don't yet know how to solve. This applies just as much to figuring out a CSS layout or a Unity scene as it does to writing a Python function.</p>
+
+<div class="step">
+<span class="step-num">1</span><span class="step-title">Understand the problem</span>
+<p>Before doing anything, be able to say, in your own words, what you're actually trying to accomplish. What should the end result look like or do? If you can't describe that clearly, that's the real first problem to solve.</p>
+</div>
+
+<div class="step">
+<span class="step-num">2</span><span class="step-title">Plan before you build</span>
+<p>Sketch out your approach, even roughly, before diving in. This could be a few written steps, a quick drawing, or just talking through it out loud. A little planning up front saves a lot of backtracking later.</p>
+</div>
+
+<div class="step">
+<span class="step-num">3</span><span class="step-title">Try the smallest useful version first</span>
+<p>Don't try to build the whole thing at once. Build the smallest piece that lets you check whether your basic idea works, then build outward from there.</p>
+</div>
+
+<div class="step">
+<span class="step-num">4</span><span class="step-title">Check your work against what you expected</span>
+<p>Compare what actually happened to what you planned in Step 1. If they match, great, move on. If they don't, that's not failure, that's information. Go back to troubleshooting (the previous lesson) to figure out why.</p>
+</div>
+
+<div class="step">
+<span class="step-num">5</span><span class="step-title">Revise</span>
+<p>Adjust your approach based on what you learned, and try again. Most real solutions go through more than one version before they're right.</p>
+</div>
+
+<div class="concept-card pro-tip">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/><path d="M19 15l0.8 2.2L22 18l-2.2 0.8L19 21l-0.8-2.2L16 18l2.2-0.8L19 15z"/></svg>This Isn't Just for Code</div>
+<p>This same five-step process works for debugging a Python program, figuring out why a webpage doesn't look right on a phone screen, or working out why a character in Unity keeps falling through the floor. The tools are different, the process is the same.</p>
+</div>
+
+<p>You'll come back to this process constantly this year, not just when you're stuck, but as a normal way to approach any new problem before you even hit a snag.</p>
+
+<div class="page-nav">
+  <div class="page-nav-note">Nothing to save on this page, it's reading only.</div>
+  <div class="page-nav-links">
+    <a href="../lesson_00_05_computational_thinking/01_instruction.html" class="page-nav-prev">← Back: Computational Thinking</a>
+    <a href="../lesson_00_07_getting_unstuck/01_instruction.html" class="page-nav-next">Next: Getting Unstuck →</a>
+  </div>
+</div>
+
+</body>
+</html>
