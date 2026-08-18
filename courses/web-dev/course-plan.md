@@ -42,6 +42,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 ## Unit 01: HTML and Page Structure
 *Cert tie-in: foundational — not explicitly cited in the Certification Objective Mapping table on its own, but the underlying markup skill every later HTML5 App Dev objective area (Layouts, Forms, Graphics) depends on.*
 *Mixed-Experience checkpoint: the acceleration diagnostic (see above) is anchored here — a student who tests out of 01/02's foundations moves into Unit 03 (CSS) at a faster pace, without skipping the non-technical threads (UX, accessibility, computational thinking) woven through every unit.*
+*Design/reflection tie-in: Organizing content clearly (01.9) is the earliest form of designing for someone else, before the Design Thinking vocabulary exists yet.*
+*Journal (50-75 words): Pick a website or app. Describe its structure in plain terms: what's the main content, what's navigation, what's extra. Why does that organization make sense (or not)?*
 - [ ] 01.1 What HTML Does
 - [ ] 01.2 Elements, Tags, and Content
 - [ ] 01.3 Document Structure
@@ -56,6 +58,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 02: Semantic HTML and Accessibility
 *Cert tie-in: foundational — underlies HTML5 App Dev's Layouts and Application Lifecycle objective areas; accessibility itself isn't a named certification objective area but is a course-wide non-negotiable thread (see Threads section below).*
+*Design/reflection tie-in: choosing header, nav, main, and footer instead of generic divs is the first real design choice this course teaches: it's what makes a page usable with a screen reader, not just visually organized.*
+*Journal (50-100 words): Imagine using a website with your eyes closed, listening to a screen reader. What would you need to hear labeled clearly to find your way around? Pick a real site and guess at two things it probably gets right or wrong for this.*
 - [ ] 02.1 Structure vs. Appearance
 - [ ] 02.2 Why Semantics Matter
 - [ ] 02.3 header, nav, main, and footer
@@ -69,6 +73,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 03: CSS Foundations
 *Cert tie-in: CSS effects and filters (Taught — Units 03, 18).*
+*Design/reflection tie-in: visual hierarchy and consistency (03.8, 03.9) are this course's first real design vocabulary, even before the UX unit gives them formal names.*
+*Journal (50-100 words): Pick a site where the visual style helps you tell what's important at a glance. What makes your eye go there first? Would the page still make sense if everything looked the same size and color?*
 - [ ] 03.1 What CSS Does
 - [ ] 03.2 Selectors
 - [ ] 03.3 Properties and Values
@@ -86,6 +92,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 04: Layout and the Box Model
 *Cert tie-in: Content flow, positioning, overflow (Reinforced — Unit 04); Flexbox (Reinforced — Units 04, 05); CSS Grid (Reinforced — Units 04, 05).*
+*Design/reflection tie-in: decomposing an interface (04.11) is the computational-thinking question in action: breaking a layout into smaller parts you can actually build.*
+*Journal (75-100 words): Pick an interface with a clear layout. Break it into three or four boxes (header, sidebar, content, whatever fits) and describe how they're arranged relative to each other.*
 - [ ] 04.1 The Box Model
 - [ ] 04.2 Margin, Padding, and Border
 - [ ] 04.3 Width, Height, and Sizing
@@ -101,6 +109,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 05: Responsive and Adaptive Design
 *Cert tie-in: Responsive design (Reinforced — Units 05, 20, 21); Flexbox (Reinforced — Units 04, 05); CSS Grid (Reinforced — Units 04, 05).*
+*Design/reflection tie-in: mobile-first thinking and content prioritization (05.7, 05.8) are the first real design decision this course asks students to make on purpose: what matters most when there isn't room for everything.*
+*Journal (75-100 words): Compare a site's phone version to its computer version. What got cut, hidden, or rearranged on the smaller screen? Do you agree with what they kept as most important?*
 - [ ] 05.1 Designing for Different Screens
 - [ ] 05.2 Relative Units
 - [ ] 05.3 Responsive Images: picture and Backgrounds
@@ -116,6 +126,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 06: User Experience, User Research, and Interface Design
 *Cert tie-in: none directly named in the Certification Objective Mapping table — this is the course's primary UX/HCD module rather than a certification-objective target itself. It's what makes the certifications "a floor, not the ceiling" real: the course's North Star (understanding a user, designing for them, testing with them) lives here.*
+*Design/reflection tie-in: this is the full Design Thinking introduction, the deepest framework moment before the capstone. Empathize (06.2-06.6), Define (06.7-06.8), Ideate (06.9-06.15), Prototype (06.16), and Test (06.17-06.20) are all taught directly, in that order, across this one unit.*
+*Journal (125-175 words): Pick a real website or app and choose one feature on it. Walk through the five Design Thinking stages for that feature: who is it for (Empathize), what problem does it solve for them (Define), what's one different way it could have been built (Ideate), roughly how you'd sketch that alternative (Prototype), and how you'd find out if your alternative actually worked better (Test). You'll come back to this exact feature later in the year, so pick something you can describe clearly.*
 - [ ] 06.1 Who Are We Designing For?
 - [ ] 06.2 User Goals, Needs, and Pain Points
 - [ ] 06.3 Assumptions vs. Evidence
@@ -140,6 +152,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 07: JavaScript and Programming Thinking
 *Cert tie-in: heaviest single unit for JS-credential objectives. Debugging/runtime errors/breakpoints (Reinforced — Units 07, 09, 17, 20); JS operators and best practices (Reinforced — Unit 07); Exception handling (Taught — Units 07, 17); BOM basics (Taught — Unit 07); JS primitive data types and conversion (Reinforced — Unit 07); Math functions (Taught — Unit 07/project practice).*
+*Design/reflection tie-in: JavaScript is where "how does it work" stops being a metaphor. The Computational Thinking question, breaking a problem into smaller parts you understand, becomes literal code for the first time.*
+*Journal (125-150 words): Think of something a website does that surprised you was possible (a live search suggestion, a countdown, a game). Guess at the logic behind it, broken into a few smaller steps, the way you'd explain it to someone who's never coded.*
 - [ ] 07.1 Why Websites Need JavaScript
 - [ ] 07.2 HTML, CSS, and JavaScript Working Together
 - [ ] 07.3 Internal vs. External Scripts
@@ -160,6 +174,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 08: Decisions and Logic
 *Cert tie-in: Decisions and logical operators (Reinforced — Unit 08).*
+*Design/reflection tie-in: modeling user decisions (08.8) is if/else logic and the Design Thinking Define stage sharing the same DNA: deciding exactly what should happen and when.*
+*Journal (100-150 words): Pick a decision a website makes for you (are you logged in or not, is your input valid or not, is an item in stock or not). Write that decision as an if/else statement in plain English, then explain what happens on each branch.*
 - [ ] 08.1 Making Decisions with Code
 - [ ] 08.2 Comparison Operators
 - [ ] 08.3 Boolean Logic
@@ -174,6 +190,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 09: Functions and Reusable Behavior
 *Cert tie-in: Functions, parameters, returns, scope (Reinforced — Unit 09); Debugging/runtime errors/breakpoints (Reinforced — Units 07, 09, 17, 20).*
+*Design/reflection tie-in: reusable interface behavior (09.10) is a function and a consistency principle at the same time. The same button doing the same thing everywhere is good code and good design for the same reason.*
+*Journal (125-175 words): Name a UI behavior a site repeats in many places (a "like" button, an "add to cart" button, a dropdown). Describe it like a function: what information does it need, and what happens when it runs? Why is it useful that it behaves the same way everywhere it appears?*
 - [ ] 09.1 Why Functions Matter
 - [ ] 09.2 Defining Functions
 - [ ] 09.3 Calling Functions
@@ -189,6 +207,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 10: The DOM
 *Cert tie-in: DOM tree and manipulation (Reinforced — Unit 10).*
+*Design/reflection tie-in: DOM manipulation is the technical mechanism behind "Feedback and System Status," the Unit 06 vocabulary term for a page visibly responding to you.*
+*Journal (150-200 words): Find an interaction where a page visibly changed right after you did something (a button turned a different color, text appeared, an item got added to a list). Describe what you saw change, then guess at the DOM change underneath it: what element, what property, what new value.*
 - [ ] 10.1 HTML Becomes the DOM
 - [ ] 10.2 Understanding the Document Tree
 - [ ] 10.3 Selecting Elements by ID, Class, and Tag
@@ -205,6 +225,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 11: Events and Interaction
 *Cert tie-in: Event listeners/handlers and bubbling (Reinforced — Unit 11); DOM/form/keyboard/mouse events (Reinforced — Unit 11).*
+*Design/reflection tie-in: Ideate and Prototype made concrete. Making interactions discoverable (11.12) is the technical name for affordances and signifiers from Unit 06's vocabulary, and keyboard-accessible interactions (11.13) extend that same idea to people who can't use a mouse.*
+*Journal (200-250 words): Go back to the feature you analyzed in your Unit 06 journal entry. Now that you understand events, describe the actual event or events that would make your Ideate/Prototype idea real (a click, a hover, a keypress). Does your Unit 06 idea for how you'd test it still make sense now that you know more? What would you change about it, if anything?*
 - [ ] 11.1 Event-Driven Programming
 - [ ] 11.2 Click Events
 - [ ] 11.3 Event Listeners
@@ -222,6 +244,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 12: Arrays and Collections
 *Cert tie-in: Arrays and array operations (Reinforced — Unit 12).*
+*Design/reflection tie-in: rendering arrays to the page (12.11) is the real mechanism behind almost every list-based interface pattern from Unit 06's vocabulary: feeds, galleries, menus, search results.*
+*Journal (200-250 words): Pick a list-based feature you use often (a feed, a playlist, a shopping cart). Describe what adding and removing an item should feel like from the user's side, not the code's side. What would feel broken or confusing if it worked differently?*
 - [ ] 12.1 Why Collections Matter
 - [ ] 12.2 Creating Arrays
 - [ ] 12.3 Accessing Items
@@ -238,6 +262,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 13: Objects and Modeling Data
 *Cert tie-in: JavaScript classes (Taught — Unit 13/targeted certification extension); Objects and Date (Reinforced — Unit 13).*
+*Design/reflection tie-in: modeling real-world information as an object (13.8) is the Define stage in code form, deciding exactly what a piece of content needs to represent for the person using it.*
+*Journal (225-275 words): Pick something an app tracks about you or your content (a profile, a product listing, a saved item). Sketch what properties an object for it would need. For each property, explain why it actually matters to the person using the app, not just that the data exists.*
 - [ ] 13.1 What Objects Represent
 - [ ] 13.2 Properties and Values
 - [ ] 13.3 Accessing Object Data
@@ -253,6 +279,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 14: Loops and Repeated Behavior
 *Cert tie-in: Loops and loop control (Reinforced — Unit 14).*
+*Design/reflection tie-in: recognizing repeated patterns (14.7) is a coding skill and a consistency skill at once. The same visual component built from a loop is what makes a page feel predictable instead of assembled by hand, piece by piece.*
+*Journal (250-300 words): Find three repeated elements on a site built from the same pattern (product cards, comment blocks, list items). Explain what stays the same about each one and what changes. Why does that consistency matter to someone scanning the page quickly?*
 - [ ] 14.1 Why Loops Matter
 - [ ] 14.2 for Loops
 - [ ] 14.3 while and do-while Loops
@@ -266,6 +294,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 15: Forms and User Input
 *Cert tie-in: last core JS-credential-heavy unit before the JavaScript exam becomes attemptable. HTML forms and specialized form elements (Reinforced — Unit 15); HTML/form validation (Reinforced — Unit 15); Form input and JS validation (Reinforced — Unit 15); Form submission and GET/POST (Taught — Unit 15). Per the source map's Recommended Certification Timing, a student who's completed Units 07-15 (JS, DOM, events, arrays, objects, loops, forms) is a candidate for a JavaScript-credential readiness check.*
+*Design/reflection tie-in: Empathize made completely literal. A form is the single most direct place a site listens to a real person, and preventing/writing helpful error messages (15.11, 15.12) is Empathize and Define happening in real time as someone types.*
+*Journal (300-350 words): Find a form somewhere (a signup, a search, a checkout) and evaluate it through the Empathize lens: does it ask only for what it actually needs? Is it obvious when something's wrong, and does it say why? Go back to your Unit 11 journal entry. Now that you understand form input and validation, would you change anything about the event-driven interaction you described there? Explain what, and why.*
 - [ ] 15.1 How Web Forms Work
 - [ ] 15.2 Input Types and Form Structure
 - [ ] 15.3 fieldset, legend, datalist, meter, and output
@@ -285,6 +315,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 16: State and Persistence
 *Cert tie-in: Local/session/application state (Reinforced — Units 16, 20).*
+*Design/reflection tie-in: empty, default, and returning-user states (16.9) are a real empathy question in disguise: does this app respect what I already did here, or does it treat me like a stranger every time?*
+*Journal (350-400 words): Describe an app that remembered something about you between visits (a cart, a login, your preferences) or one that should have and didn't. What state does it need to be tracking to make that happen? How did that (or its absence) actually affect how you felt using it?*
 - [ ] 16.1 What Is State?
 - [ ] 16.2 Tracking Changing Information
 - [ ] 16.3 Interface State
@@ -298,6 +330,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 17: Debugging, Testing, and Quality
 *Cert tie-in: Application lifecycle (Reinforced — Units 17, 20, 21); Debugging/runtime errors/breakpoints (Reinforced — Units 07, 09, 17, 20); Exception handling (Taught — Units 07, 17).*
+*Design/reflection tie-in: the Test stage, explicit and named. "Observe, Don't Rescue" (17.13) and distinguishing usability from functionality problems (17.12) are the real discipline behind testing with a real person, not just checking your own code.*
+*Journal (375-425 words): Imagine watching someone else use the form you evaluated in your Unit 15 journal entry, without helping them or telling them what to do. What would you watch for? List at least two things that would tell you it's a usability problem versus a plain bug. Would your Unit 15 evaluation hold up if you actually ran this test? What might surprise you?*
 - [ ] 17.1 Debugging HTML
 - [ ] 17.2 Debugging CSS
 - [ ] 17.3 Debugging JavaScript
@@ -316,6 +350,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 18: Graphics, Animation, and Rich Web Experiences
 *Cert tie-in: Canvas (Taught — Unit 18); SVG (Taught — Unit 18); CSS effects and filters (Taught — Units 03, 18); CSS transforms/transitions/keyframes (Taught — Unit 18).*
+*Design/reflection tie-in: reduced-motion accessibility (18.10) extends Test and Accessibility together. Not everyone experiences motion and animation the same way, and a design that only considers the majority case isn't actually done.*
+*Journal (400-450 words): Pick a site that uses animation or motion deliberately. What is it communicating (feedback, delight, direction, urgency)? Now consider someone who's sensitive to motion. What would need to change so the same information still comes through without relying on the animation itself?*
 - [ ] 18.1 CSS Transitions and Keyframe Animation
 - [ ] 18.2 2D Transforms: translate, scale, rotate, and skew
 - [ ] 18.3 3D Transform and Perspective Basics
@@ -330,6 +366,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 19: Working with External Data
 *Cert tie-in: Data access, JSON, XML overview (Taught — Unit 19); JavaScript/browser APIs (Taught — Unit 19).*
+*Design/reflection tie-in: loading, error, and empty states (19.13-19.16) are Define and Test at application scale. Designing for data you don't control is designing for a real, unpredictable user experience, not just handling an edge case in code.*
+*Journal (425-475 words): Pick an app that loads outside data (weather, scores, search results, a feed). Describe what it should show in all three states: while it's loading, if the request fails, and if there's genuinely nothing to show. For each state, describe not just what appears on screen but what the person using it should understand and feel in that moment.*
 - [ ] 19.1 Static vs. Dynamic Data
 - [ ] 19.2 JSON and Complex Objects
 - [ ] 19.3 Sending, Receiving, and Parsing Data
@@ -350,6 +388,8 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 
 ## Unit 20: Building and Sharing Complete Web Applications
 *Cert tie-in: Application lifecycle (Reinforced — Units 17, 20, 21); Debugging/runtime errors/breakpoints (Reinforced — Units 07, 09, 17, 20); Responsive design (Reinforced — Units 05, 20, 21); Local/session/application state (Reinforced — Units 16, 20). This is where the HTML5 Application Development credential's full application-lifecycle objective area comes together — the source map's Recommended Certification Timing places the required exam after this unit.*
+*Design/reflection tie-in: the whole Design Thinking cycle running at real application scale in one unit. Mapping the user flow (20.3), designing feedback and error states (20.9), and the usability/accessibility/polish pass (20.13) are Empathize through Test happening across a real project instead of an example.*
+*Journal (450-550 words): Pick one feature of the application you're building. Walk it through all five Design Thinking stages the way you did back in Unit 06, Empathize, Define, Ideate, Prototype, Test, but this time as a real decision about real code you're actually writing, not a hypothetical example. What's different about doing this for real?*
 - [ ] 20.1 From Feature to Application
 - [ ] 20.2 Identifying the User and Goal
 - [ ] 20.3 Mapping the User Flow
@@ -371,6 +411,7 @@ Per `../../CLAUDE.md`'s Courses table and `CLAUDE.md`'s scope note: a PHP-or-sim
 *Cert tie-in: Application lifecycle (Reinforced — Units 17, 20, 21); Responsive design (Reinforced — Units 05, 20, 21). Full-year synthesis unit — this is where the required HTML5 Application Development exam is recommended to land (per the source map, after "the major application-development sequence" this unit represents the end of).*
 *Design/reflection tie-in: 21.20 (Presentation and Design Rationale) and 21.21 (Reflection) are this course's own capstone reflective-writing moments — its version of "explain your decisions," matching the Communication and Design Rationale thread. Resolved 2026-08-18: this is the capstone entry of this course's own Design Thinking journal thread — see the "UX, Design Thinking, and Journal Threads" section below.*
 *Pacing target: per the constraint above, aim to have this unit at final-presentation stage before mid-April.*
+*Journal (500-700 words, ~2 pages): Write a design document for your capstone product, covering all five Design Thinking stages you've been building this year. Empathize: who is this for, and what did you learn about them from your research? Define: what specific problem or need are you solving? Ideate and Prototype: what did you actually build, and why that solution over others you considered? Test: what did you learn from observing real people use it, and what did you change because of it? Close by looking back at your very first Unit 06 journal entry, the feature you analyzed before you'd built anything real. How has your thinking about designing for someone else grown since then?*
 - [ ] 21.1 Identifying a User or Community
 - [ ] 21.2 Exploring a Problem Space
 - [ ] 21.3 Planning Lightweight User Research
@@ -490,3 +531,4 @@ Per Jay: this course needs the same kind of year-long, iteratively-building refl
 - **A JS/HTML5-equivalent to Python's `GMETRIX-` naming convention** for workbook-derived content isn't defined yet.
 - **None of "What Still Needs to Be Created" (source map lines 1132-1394) is built**: module/lesson-level documentation, the UI Pattern Library, User Research Toolkit, Usability Testing Toolkit, Project Bank, Practice/Question Bank, Mastery Checks, Scaffolding System, Critique/Feedback structures, Accessibility Checklist, Technical Best-Practices Guide, Capstone System, or the Certification Alignment/Readiness tracking system. This course-plan is the unit/lesson checklist only — everything downstream of it (per Python's own authoring workflow, `../../02-authoring-system/authoring-workflow.md`) is still ahead.
 - **Exact certification exam timing against real calendar dates** is blocked on the CPS academic calendar, same as the pacing constraint generally.
+- **Per-unit journal lines added 2026-08-18** (all 21 units, per the framework above). One real design tension worth flagging: Units 01-05 come before the Design Thinking vocabulary is formally taught in Unit 06, so those five journals deliberately avoid naming the framework terms and instead ask students to notice design decisions in plain language. This works, but means the "same word, growing meaning" callback pattern (a student re-reading "Empathize" and connecting it to five different units) only really starts at Unit 06, not Unit 01 the way Game I's MDA thread starts naming Mechanics/Dynamics/Aesthetics from Unit 00. Not a problem, just an asymmetry worth knowing about if the three courses' threads are ever compared side by side.
