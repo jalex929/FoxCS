@@ -40,6 +40,8 @@ MakeCode Arcade is used as a lower-complexity on-ramp — game-design and progra
 ## Unit 01: Welcome to Game Development
 *Source: Module 00 (trimmed — see Unit 00 note above for the 4 dropped, shared-Unit-0-duplicate lessons).*
 *Cert tie-in: none — foundational/orientation content, not certification-mapped, matching the source map's own framing (career/team content isn't part of either credential).*
+*Game/UX tie-in: This unit doesn't teach Mechanics yet, but it sets up the idea that games are made by people in different roles (design, art, programming) working toward a shared player experience.*
+*Journal (50-75 words): Think about a game you've played recently. Name one thing about it that feels like a design decision, one thing that feels like an art decision, and one thing that feels like a programming decision. You don't need to be right, just take a guess based on what you learned about game development roles this unit.*
 - [ ] 01.1 Welcome to Game Development
 - [ ] 01.2 What Game Developers Do
 - [ ] 01.3 Games Are Interactive Systems
@@ -50,6 +52,8 @@ MakeCode Arcade is used as a lower-complexity on-ramp — game-design and progra
 ## Unit 02: How Games Work
 *Source: Module 01.*
 *Cert tie-in: none — game-design foundations (goals, rules, gameplay loop, pacing), pre-code. Feeds every later certification area conceptually but isn't itself Programmer/Artist-mapped.*
+*Game/UX tie-in: This is where Mechanics, Dynamics, and Aesthetics (MDA) get introduced properly, the same framework from Game I, but grounded in this course's own vocabulary: a game's Goals, Rules, and Limits are its Mechanics; what actually happens once those Rules interact (the Gameplay Loop, how games respond to players) are its Dynamics; and how playing it feels (Thread 4's "how does the player know?" question, and Player Experience ideas like pacing and flow) are its Aesthetics.*
+*Journal (50-100 words): Pick a game you know well. Name one Mechanic (a Goal, a Rule, or a Limit), describe the Dynamic that Mechanic produces once you actually play (something that happens because of it), and name the Aesthetic, the feeling it gives you. This is your first real MDA entry this year. You'll come back to it later.*
 - [ ] 02.1 What Makes Something a Game
 - [ ] 02.2 Goals, Rules, and Limits
 - [ ] 02.3 What the Player Can Do
@@ -64,6 +68,8 @@ MakeCode Arcade is used as a lower-complexity on-ramp — game-design and progra
 ## Unit 03: Making Games with MakeCode Arcade
 *Source: Module 02.*
 *Cert tie-in: none directly (MakeCode isn't Unity), but this unit is where variables, input/events, decisions, collisions, randomness, loops, and functions are first introduced — the exact concepts Programmer Areas 1-2 later re-certify inside Unity/C#. Treat as pre-certification scaffolding, not itself cert-mapped.*
+*Game/UX tie-in: Variables and game state in MakeCode are the literal Game State concept from this course's own vocabulary. Score, lives, and rules are Mechanics you're now building yourself instead of just naming in someone else's game.*
+*Journal (50-100 words): Look at the MakeCode microgame you built. Name one variable you used (like score or lives) and explain what Game State it's tracking. Then describe one Rule your game enforces using that variable.*
 - [ ] 03.1 Meet MakeCode Arcade
 - [ ] 03.2 Sprites and Game Objects
 - [ ] 03.3 Player Input and Events
@@ -80,6 +86,8 @@ MakeCode Arcade is used as a lower-complexity on-ramp — game-design and progra
 ## Unit 04: Design, Test, and Improve a Microgame
 *Source: Module 03.*
 *Cert tie-in: none — this is the course's first playtesting cycle (Observe, Don't Rescue protocol), a Thread 6 (Player Research/Playtesting) skill, not a Programmer/Artist objective.*
+*Game/UX tie-in: "Observe, Don't Rescue" is a direct, practical version of Thread 4's "how does the player know?" question. If a player gets stuck, that's information about your game's Feedback, not evidence the player did something wrong.*
+*Journal (75-100 words): Describe one moment from playtesting your microgame where a player got stuck or confused. Using this unit's Observe, Don't Rescue idea, explain what you noticed instead of jumping in to help, and what that told you about your game's Feedback.*
 - [ ] 04.1 From One Mechanic to a Game
 - [ ] 04.2 Building a Clear Gameplay Loop
 - [ ] 04.3 Making Games Fair and Fun
@@ -102,6 +110,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 05: Getting Started with Unity 2D
 *Source: Module 04.*
 *Cert tie-in: **Programmer Area 1** (Debugging/Problem-Solving/API) and **Area 4** (Interface & State Machines — Unity IDE windows, scripting IDE configuration) both cite this as a primary module. **Artist Area 1** (Asset Management — Asset Store import, spritesheet slicing/9-slicing) and **Area 2** (Scene Content Design — Transform tools) also primary here. This is the single densest cert-mapped unit for onboarding into Unity itself.*
+*Game/UX tie-in: Moving from MakeCode to Unity doesn't change the Mechanics you already understand. A Sprite Renderer is just a more powerful way to show the same kind of GameObject you were already building.*
+*Journal (100-150 words): Compare one thing you built in MakeCode to how you'd build the same thing in Unity so far (a sprite, a scene, a GameObject). What stayed the same conceptually, and what's genuinely new about the tool?*
 - [ ] 05.1 Why We Are Changing Tools
 - [ ] 05.2 Navigating the Unity Editor
 - [ ] 05.3 Scenes, GameObjects, and Components
@@ -121,6 +131,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 06: Programming in Unity with C#
 *Source: Module 05.*
 *Cert tie-in: **Programmer Area 1, 2, and 3 all cite this as a primary module** — the densest single unit in the whole cert map. Debug logs, null-object debugging, variables/modifiers, arrays/Lists/Dictionaries, function declarations, logic/flow control, data-type errors, public/private problems, naming conventions, and accurate comments are all Certification Ready targets rooted here.*
+*Game/UX tie-in: Reading error messages and using Debug.Log is a technical version of "how does the player know?", except here you're the one who needs the game to tell you what's happening.*
+*Journal (100-200 words): Describe a bug you ran into while scripting this unit (a null reference, a naming mistake, anything real). Walk through how you used Debug.Log or an error message to figure out what was wrong, and connect it to this unit's idea that debugging is normal, not a sign you did something wrong.*
 - [ ] 06.1 How Scripts Control GameObjects
 - [ ] 06.2 Reading a Unity Script
 - [ ] 06.3 Variables and Data
@@ -142,6 +154,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 07: 2D Physics and Collisions
 *Source: Module 06.*
 *Cert tie-in: none directly cited in the Objective Mapping tables, but Rigidbody2D/Collider2D here are the direct precursor to the certified Rigidbody/Collider concepts revisited in Unit 23 (3D). Foundational, not itself cert-mapped.*
+*Game/UX tie-in: Rigidbody2D and Collider2D are Mechanics you can't see directly, the invisible Rules that decide what cause and effect (a Systems Concept) looks like when two GameObjects touch.*
+*Journal (100-200 words): Pick one physics behavior you set up this unit (gravity, a collision, a trigger). Explain the cause and the effect in plain language, then describe what would feel wrong to a player if that effect didn't happen the way they expected.*
 - [ ] 07.1 How Physics Changes Gameplay
 - [ ] 07.2 Rigidbody2D
 - [ ] 07.3 Collider2D
@@ -155,6 +169,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 08: Player Movement and Controls
 *Source: Module 07.*
 *Cert tie-in: **Programmer Area 2** (Creating Code — keyboard input, touch-input concepts/listeners) primary module.*
+*Game/UX tie-in: Tuning speed and jump height is Aesthetics work disguised as numbers. The same Mechanic (jumping) can feel completely different depending on small changes, which is exactly what game feel means.*
+*Journal (100-200 words): Describe how you tuned your player's movement or jump this unit. What did you change, and how did the feeling of controlling the character change as a result? Connect this to the idea that a Mechanic's numbers shape its Aesthetic.*
 - [ ] 08.1 Turning Player Input into Action
 - [ ] 08.2 Keyboard, Touch, and Input Listeners
 - [ ] 08.3 Moving Left and Right
@@ -169,6 +185,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 09: Building a 2D Platformer
 *Source: Module 08.*
 *Cert tie-in: **Programmer Area 2** (functions controlling state, logic/flow control) primary module.*
+*Game/UX tie-in: This is your first real playable game since Unit 02's MDA introduction. Tilemaps, collectibles, hazards, and win/loss conditions are all Mechanics you're now combining into one Gameplay Loop and Game State system.*
+*Journal (150-200 words): Look back at your Unit 02 journal entry. Using your platformer so far, name a Mechanic you built (a rule about collectibles, hazards, or winning/losing), the Dynamic that emerges from it during real play, and the Aesthetic it's meant to produce. Has your thinking about MDA changed since Unit 02, now that you're building instead of just naming?*
 - [ ] 09.1 From Movement to a Playable Game
 - [ ] 09.2 Tilemaps and Level Building
 - [ ] 09.3 Platforms and Environment Collision
@@ -184,6 +202,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 10: Cameras and Player View
 *Source: Module 09.*
 *Cert tie-in: **Artist Area 3** (Lighting, Cameras, Materials — camera setup/properties) primary module.*
+*Game/UX tie-in: The camera is pure Aesthetics work. It doesn't change any Rule, but it completely changes what information the player has and how the game feels to play.*
+*Journal (100-200 words): Describe one camera decision you made this unit (following the player, setting limits, revealing or hiding information). Explain how that decision changes what the player knows at any given moment, connecting back to Thread 4's "how does the player know?" question.*
 - [ ] 10.1 How the Camera Changes the Experience
 - [ ] 10.2 Making the Camera Follow the Player
 - [ ] 10.3 Setting Camera Limits
@@ -195,6 +215,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 11: Game UI and Player Information
 *Source: Module 10.*
 *Cert tie-in: **Programmer Area 2** (responding to UI value changes with code, event functions) primary module.*
+*Game/UX tie-in: UI is where "how does the player know?" gets answered directly. Score, health, and status displays are Feedback made visible.*
+*Journal (100-200 words): Pick one piece of UI you built (health, score, or a status display). Explain what information it gives the player, why that information matters for the Gameplay Loop, and what would go wrong if it were missing.*
 - [ ] 11.1 What Information Does the Player Need
 - [ ] 11.2 Canvas and UI Elements
 - [ ] 11.3 Readable Text and Game UI
@@ -211,6 +233,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 12: Making Games Feel Responsive
 *Source: Module 11.*
 *Cert tie-in: none directly cited — "game feel" (feedback, animation/sound/particles as feedback) is a Thread 4 (Player Experience/UI) skill, not separately cert-mapped, though it reinforces UI/event-function skills from Units 06 and 11.*
+*Game/UX tie-in: This unit names something you've been doing since Unit 08 without a word for it. Animation, sound, and particles are all Feedback, the Aesthetic layer wrapped around a Mechanic.*
+*Journal (100-200 words): Compare your platformer before and after adding a feedback pass (animation, sound, or particles). Pick one specific change and explain what Aesthetic it's meant to create, and whether it worked when you tested it.*
 - [ ] 12.1 What Is Game Feel
 - [ ] 12.2 Immediate Feedback
 - [ ] 12.3 Animation as Feedback
@@ -225,6 +249,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 13: Level Design and Player Guidance
 *Source: Module 12.*
 *Cert tie-in: **Programmer Area 2** (arrays/Lists/Dictionaries, function declarations — 12-19 range) and **Artist Area 2** (greyboxing) both primary modules.*
+*Game/UX tie-in: Building a level is Constraint design, deciding what a player can and can't do in space, using landmarks and pacing (action and rest) to teach Rules without ever writing them down as text.*
+*Journal (100-200 words): Describe one thing your level teaches a player without explicitly telling them (through landmarks, layout, or a safe first challenge). Explain how you know it worked, or how you'd find out.*
 - [ ] 13.1 Levels Are Designed Experiences
 - [ ] 13.2 Teaching Without Explaining Everything
 - [ ] 13.3 Introduce, Practice, Challenge
@@ -240,6 +266,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 14: Designing for the Player
 *Source: Module 13.*
 *Cert tie-in: none directly cited — this is the course's UX/accessibility deep-dive (affordance, discoverability, cognitive load, player agency), a Thread 4/5 skill set, not itself Programmer/Artist-mapped.*
+*Game/UX tie-in: This is the deepest MDA revisit of the year so far. Affordance, discoverability, cognitive load, and player agency (Thread 4/5 ideas) are all just detailed answers to "how does the player know, and how much should they have to think about at once?"*
+*Journal (150-200 words): Look back at your Unit 09 journal entry. Pick one accessibility or usability idea from this unit (discoverability, cognitive load, meaningful choice) and apply it to your platformer. What's one specific change you'd make, and what Aesthetic problem is it solving? Has your understanding of "how does the player know" grown since Unit 09?*
 - [ ] 14.1 Designing for Someone Else
 - [ ] 14.2 Understanding What Players Need
 - [ ] 14.3 Showing Players What They Can Do
@@ -255,6 +283,8 @@ Students transfer familiar MakeCode concepts into Unity. A 2D platformer is the 
 ## Unit 15: Playtesting and Player Feedback
 *Source: Module 14.*
 *Cert tie-in: none — second full playtesting cycle (Thread 6), now against the growing platformer anchor project rather than a microgame.*
+*Game/UX tie-in: This is your second full playtesting cycle, now against a real, growing game instead of a microgame. "What players say vs. what they do" is the practical difference between a player's stated Aesthetic and their actual Dynamic.*
+*Journal (200-250 words): Describe a moment from this unit's playtest where what a player said didn't match what they actually did. What did you learn from watching instead of just asking? What's one thing you plan to change based on evidence, not assumption?*
 - [ ] 15.1 Don't Assume — Test It
 - [ ] 15.2 Deciding What You Want to Learn
 - [ ] 15.3 Talking to and Watching Players
@@ -276,6 +306,8 @@ Beyond the basic platformer — reusable systems (prefabs, spawning), animation/
 ## Unit 16: Prefabs and Reusable Game Parts
 *Source: Module 15.*
 *Cert tie-in: **Programmer Area 2** (12-19 range) and **Artist Area 1** (Prefabs specifically) both primary modules.*
+*Game/UX tie-in: Prefabs are Mechanics made reusable. Separating data from behavior means one underlying Rule can produce many different game objects without you rewriting the Rule each time.*
+*Journal (200-250 words): Describe one system you rebuilt as a Prefab this unit. Explain the difference between the data (what makes each instance different) and the behavior (what stays the same for all of them), and why that separation matters as a game gets bigger.*
 - [ ] 16.1 Why Reuse Matters
 - [ ] 16.2 Creating Prefabs
 - [ ] 16.3 Prefab Instances
@@ -289,6 +321,8 @@ Beyond the basic platformer — reusable systems (prefabs, spawning), animation/
 ## Unit 17: Animation, Sound, and Effects
 *Source: Module 16.*
 *Cert tie-in: **Programmer Area 2, 3, and 4** all cite this (functions controlling state, event functions, public/private problems, animation events, functional state machines, Animator Controller scripting). **Artist Area 1** (keyframes/Curve Editor tangents) also primary. Second-densest cert-mapped unit after Unit 06.*
+*Game/UX tie-in: A functional animation state machine is Game State made visible. The player should always be able to tell what state a character or an enemy is in just by looking, which is Feedback at its most literal.*
+*Journal (200-300 words): Pick one Animator state machine you built (a character or enemy). Walk through its states and transitions, and explain how a player can tell which state something is in just by watching, without any UI text. Where does this succeed, and where might a player still be confused?*
 - [ ] 17.1 Animation Clips
 - [ ] 17.2 The Animator
 - [ ] 17.3 Animation States and Transitions
@@ -305,6 +339,8 @@ Beyond the basic platformer — reusable systems (prefabs, spawning), animation/
 ## Unit 18: Scenes, Progress, and Game State
 *Source: Module 17.*
 *Cert tie-in: **Programmer Area 1** (debugging/API — explicitly named a primary module for Area 1) and **Area 2** (12-19 range) both apply.*
+*Game/UX tie-in: This unit is Game State at the whole-game level, what has to be remembered between scenes (progress, settings, whether a level is complete) instead of just within one moment of play.*
+*Journal (200-300 words): Describe what Game State your game needs to remember between scenes (progress, a setting, a completed level). What would break for the player if that information were lost, and how does keeping it change what the player expects from your game?*
 - [ ] 18.1 Using Scenes to Organize a Game
 - [ ] 18.2 Start Menus and Gameplay Scenes
 - [ ] 18.3 Loading and Changing Scenes
@@ -318,6 +354,8 @@ Beyond the basic platformer — reusable systems (prefabs, spawning), animation/
 ## Unit 19: Interactions, Dialogue, and Game Worlds
 *Source: Module 18.*
 *Cert tie-in: **Programmer Area 2** (event functions) primary module.*
+*Game/UX tie-in: Interaction prompts are Feedback that answers "can I do something here?" before the player even tries, and hidden information (a Systems Concept) is what makes exploring a world worth doing.*
+*Journal (200-300 words): Describe one interaction you designed (a prompt, a piece of dialogue, an item). Explain what information it gives the player, what information it deliberately withholds, and why withholding it makes the world more interesting rather than more confusing.*
 - [ ] 19.1 Designing Clear Interactions
 - [ ] 19.2 Interaction Prompts
 - [ ] 19.3 NPCs and Dialogue
@@ -331,6 +369,8 @@ Beyond the basic platformer — reusable systems (prefabs, spawning), animation/
 ## Unit 20: Enemies and Game AI
 *Source: Module 19.*
 *Cert tie-in: **Programmer Area 2** (functions controlling state, logic/flow control, functional state machines — 12-19 range) primary module.*
+*Game/UX tie-in: This is where "Mechanics produce Dynamics" becomes the most visible all year. An enemy's Rules (patrol, chase, detection range) are simple, but combined with a player's choices, they create Dynamics nobody explicitly programmed, emergence, a Systems Concept, in action.*
+*Journal (250-300 words): Look back at your Unit 14 journal entry. Describe one enemy behavior you built this unit (patrol, chase, detection). What are the simple Rules behind it, and what more complex Dynamic emerges when a player actually plays against it? Has your understanding of how simple Mechanics create complex results changed since Unit 14?*
 - [ ] 20.1 What Does Game AI Mean
 - [ ] 20.2 Enemies Following Rules
 - [ ] 20.3 Changing Enemy Behavior
@@ -350,6 +390,8 @@ Explicitly framed as transfer, not restart: Sprite→Mesh, Rigidbody2D→Rigidbo
 ## Unit 21: Moving from 2D to 3D
 *Source: Module 20.*
 *Cert tie-in: **Artist Area 1** (vertices/faces/edges) and **Area 2** (Transform tools) both primary modules.*
+*Game/UX tie-in: This unit is explicitly framed as transfer, not starting over. The Mechanics you already understand (movement, collision, cameras) don't change, only the space they operate in does.*
+*Journal (350-450 words): Pick one Mechanic you're rebuilding in 3D (movement, a collision, a camera). Explain what stays conceptually the same from its 2D version and what genuinely new thinking 3D space requires. Why does treating this as transfer, not a restart, make it easier?*
 - [ ] 21.1 Adding the Third Dimension
 - [ ] 21.2 X, Y, and Z
 - [ ] 21.3 Sprites to 3D Objects
@@ -364,6 +406,8 @@ Explicitly framed as transfer, not restart: Sprite→Mesh, Rigidbody2D→Rigidbo
 ## Unit 22: Building 3D Worlds
 *Source: Module 21.*
 *Cert tie-in: **Artist Area 1, 2, and 3 all cite this as a primary module** — the single densest Artist unit in the whole course (FBX/OBJ+texture import, Asset Store, vertices/faces/edges, Transform tools, greyboxing, Terrain/landscape materials, material properties, lighting/shadows, rendering-pipeline choice).*
+*Game/UX tie-in: Greyboxing and terrain work are Constraint design in three dimensions, deciding what space a player can move through, and landmarks/wayfinding in 3D are Thread 4's "how does the player know where to go" question made spatial.*
+*Journal (350-450 words): Describe one 3D space you built this unit (a greybox layout, a terrain, a room). How did you help a player understand where they could go and where they couldn't, without relying only on walls? What landmarks or lighting choices are doing that work?*
 - [ ] 22.1 Primitives, Meshes, Vertices, Faces, and Edges
 - [ ] 22.2 Importing 3D Assets: FBX, OBJ, and Textures
 - [ ] 22.3 Greyboxing with Primitives and Low-Poly Meshes
@@ -381,6 +425,8 @@ Explicitly framed as transfer, not restart: Sprite→Mesh, Rigidbody2D→Rigidbo
 ## Unit 23: 3D Movement, Physics, and Cameras
 *Source: Module 22.*
 *Cert tie-in: **Programmer Area 2** (22-24 range) and **Artist Area 3** (camera setup/properties) both primary modules.*
+*Game/UX tie-in: Third-person, first-person, and isometric cameras aren't just visual choices. Each one changes what Dynamics are even possible (what a player can see, judge distance to, or react to in time), and camera control/player comfort is Aesthetics with real physical stakes.*
+*Journal (350-500 words): Compare two camera types you tried this unit (first-person, third-person, or isometric). How did the choice change what the player could see or judge, and what Dynamics became easier or harder as a result? Which would you choose for your capstone game, and why?*
 - [ ] 23.1 Moving a Player in 3D
 - [ ] 23.2 Character Movement vs. Physics Movement
 - [ ] 23.3 3D Collisions and Triggers
@@ -395,6 +441,8 @@ Explicitly framed as transfer, not restart: Sprite→Mesh, Rigidbody2D→Rigidbo
 ## Unit 24: Raycasting and 3D Interactions
 *Source: Module 23.*
 *Cert tie-in: **Programmer Area 2** (22-24 range) primary module.*
+*Game/UX tie-in: A raycast is a Mechanic for answering "what is the player looking at right now," and clear interaction prompts (pickups, switches, doors) are Feedback that turns an invisible ray into something a player can actually understand.*
+*Journal (350-500 words): Describe one interaction system you built with raycasting (a pickup, switch, or door). How does the player know what they're able to interact with before they try? What would make that Feedback clearer or more confusing?*
 - [ ] 24.1 What Is a Raycast
 - [ ] 24.2 Detecting Objects
 - [ ] 24.3 Interaction Range
@@ -413,6 +461,8 @@ Connected systems, careers/professional practice, planning a realistic original 
 ## Unit 25: Building More Complex Game Systems
 *Source: Module 24.*
 *Cert tie-in: **Programmer Area 2** (22-24 range, class recognition/ECS awareness — "targeted certification review") primary module. Resource economies, progression/unlocks, and connected/balanced systems.*
+*Game/UX tie-in: Resource economies, progression, and connected systems are where Systems Concepts (resource flow, optimization, balance) stop being individual ideas and start interacting, which is exactly how real games develop Dynamics nobody fully predicts in advance.*
+*Journal (400-550 words): Describe one system you built this unit that connects to at least one other system (resources affecting progression, difficulty affecting reward, or similar). What Dynamic emerges from that connection that wouldn't exist if the systems were separate? How did you playtest whether it felt balanced?*
 - [ ] 25.1 Resources and Game Economies
 - [ ] 25.2 Risk and Reward
 - [ ] 25.3 Progression and Unlocks
@@ -427,6 +477,8 @@ Connected systems, careers/professional practice, planning a realistic original 
 ## Unit 26: Careers in Game Development
 *Source: Module 25.*
 *Cert tie-in: none — Thread 8 (Careers/Professional Practice) content. Per the source map, career exploration should really happen throughout the course (career spotlights tied to whatever topic is live that week), not only concentrated here; this unit is the explicit reflection/synthesis point.*
+*Game/UX tie-in: This unit steps back from building to ask who actually builds. Every role you've been practicing all year (design, programming, art, playtesting, communicating decisions) maps to a real job, and MDA itself connects most directly to design and player-experience roles.*
+*Journal (350-500 words): Which of the roles covered this unit (design, programming, art, QA, production, or another) felt closest to the work you've most enjoyed this year? Connect that to a specific Mechanic, Dynamic, or Aesthetic decision you made in an earlier unit that you're proud of.*
 - [ ] 26.1 How Games Get Made
 - [ ] 26.2 Game Design
 - [ ] 26.3 Gameplay Programming
@@ -444,6 +496,8 @@ Connected systems, careers/professional practice, planning a realistic original 
 ## Unit 27: Testing, Debugging, and Improving Games
 *Source: Module 26.*
 *Cert tie-in: **Programmer Area 1** (debug logs, null-object debugging — explicitly named a primary module) and **Area 3** (data-type errors, public/private problems, naming conventions, accurate comments) both primary. Distinguishes bug vs. usability problem vs. design problem vs. preference (Thread 6).*
+*Game/UX tie-in: This unit names the difference this course has been building toward all year: a bug (something broken), a usability problem (something confusing), a design problem (something that doesn't feel good even when it works correctly), and a preference (something that's just not to your taste). Confusing these is exactly what makes "how does the player know" hard to answer well.*
+*Journal (400-550 words): Think back across this year's playtesting units (04, 15). Describe a real example from your own project of each: something that was a bug, something that was a usability problem, and something that was really a design problem, not a bug at all. Why does telling these apart matter for what you actually fix?*
 - [ ] 27.1 Bugs vs. Design Problems
 - [ ] 27.2 Reproducing a Bug
 - [ ] 27.3 Finding What Caused the Problem
@@ -460,6 +514,8 @@ Connected systems, careers/professional practice, planning a realistic original 
 ## Unit 28: Planning Your Own Game
 *Source: Module 27.*
 *Cert tie-in: **Artist Area 2** (greyboxing) primary module. Otherwise pre-production/planning (Thread 3 Game Design + Thread 7 Communication), not itself heavily cert-mapped — the real cert payoff of this planning work lands in Unit 29's capstone build.*
+*Game/UX tie-in: Planning starts with player experience, not features. "Who is the game for" and "what should it feel like" come before any Mechanic gets written down, MDA worked backward: starting from the Aesthetic you want and designing Mechanics to produce it.*
+*Journal (450-600 words): Write your capstone's starting design pitch: who is the game for, what should playing it feel like (the Aesthetic you're aiming for), and what Core Mechanic and Gameplay Loop you think will produce that feeling. What's your biggest open question going into Unit 29?*
 - [ ] 28.1 Start with the Player Experience
 - [ ] 28.2 Who Is the Game For
 - [ ] 28.3 Learning from Players
@@ -476,6 +532,8 @@ Connected systems, careers/professional practice, planning a realistic original 
 ## Unit 29: Capstone — Build Your Own Game
 *Source: Module 28.*
 *Cert tie-in: **Programmer Area 1** (explicitly named a primary module for debugging/API) and **Artist Area 2, 3** (greyboxing/scene design, lighting/cameras/materials, both explicitly named primary modules for capstone). This is the course's cert-readiness synthesis point.*
+*Game/UX tie-in: Full-year synthesis. The postmortem (29.21) is this course's version of a design document, covering Mechanics, Dynamics, Aesthetics, and at least one usability decision, for a game the student actually designed, built, tested, and shipped.*
+*Journal (500-700 words, ~2 pages): Write a short postmortem for your capstone game. Include: (1) your game's core Mechanics (the actual Rules and systems you built), (2) what Dynamics emerged when real players played it, (3) the Aesthetic or emotional experience you were aiming for and whether you achieved it, and (4) at least one accessibility or usability decision you made to keep the game clear and fair for someone playing it for the first time. Close by looking back at your very first Unit 02 journal entry. How has your thinking about games, Unity, and design grown across the year?*
 - [ ] 29.1 Game Idea and Target Player
 - [ ] 29.2 Research and Inspiration
 - [ ] 29.3 Goals and Success Criteria
@@ -536,11 +594,11 @@ Per Jay: this course needs the same kind of year-long, iteratively-building refl
 | 3. Analyzing and Justifying | 15-20 (Phase 2 close, Phase 3) | 200-350 | Structured reasoning, first real playtesting-informed reflection (Unit 15 pairs naturally here) |
 | 4. Designing and Synthesizing | 21-29 (Phase 4-5) | 350-700 | Full design-document-style writing, explicit callbacks, capstone closes the year |
 
-**Not yet written:** the actual per-unit *Game/UX tie-in* and *Journal* annotation lines (all 29 units) — this section is the framework and schedule, not yet applied line-by-line the way Python's course-plan has it on every unit. Next step once this framework is confirmed.
+**Per-unit annotation lines: written 2026-08-18.** Every one of the 29 units above now has its own *Game/UX tie-in* and *Journal* line, following this schedule and vocabulary exactly. All 29 units mapped cleanly onto the Thread 3/4 vocabulary; no genuine bad-fit cases came up while writing them.
 
 ## Open Items This Course-Plan Doesn't Resolve
 
-- ~~No Game/UX-tie-in or Journal-thread section~~ — **resolved 2026-08-18**, see the new section above. Framework decided; per-unit annotation lines not yet written.
+- ~~No Game/UX-tie-in or Journal-thread section~~ — **resolved 2026-08-18**, framework and all 29 per-unit annotation lines both done, see the section above.
 - **Game of the Week, the AI-Assisted Development workflow (Ask → Understand → Build → Test → Explain), and the Career Spotlight library are real, extensively-designed parts of the source map** (its own Threads 7-10 and the Game of the Week Concept Map) but are **not reproduced in this file** — they're cross-cutting structures that span every unit rather than living in one, and copying ~900 lines of source material here would make this file unusable as a checklist. Read the source map directly (`../../starter context/Unity_Game_Development_Course_Map_Certification_Aligned_Complete.md`, "Threads Throughout the Course" and "Game of the Week Integration" sections) before authoring any unit's real lesson content — those threads are meant to recur inside the units above, not sit beside them.
 - **Unity Learn licensing** for curated third-party content (especially 3D, Units 21-24) — not checked, see `../../open-questions.md`.
 - **The "What Still Needs to Be Created" list in the source map** (23 numbered items: module/lesson documentation templates, the four-week MakeCode sequence, a MakeCode-to-Unity transfer guide, concept/pattern libraries, playtesting/research toolkits, mastery-check definitions, etc.) is real scoping work the source map itself flags as undone — none of it is built, this course-plan is strictly the unit/lesson skeleton layer.
