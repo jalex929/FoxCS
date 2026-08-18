@@ -4,6 +4,24 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-18 — Corrected post-AP-testing pacing framing; designed cross-course MakeCode avatar kickoff activity
+
+**Context:** Jay corrected a mischaracterization from the 2026-08-17 pacing constraint, then gave a new cross-course activity to design.
+
+**Corrected:**
+
+- **The AP-testing/senior-checkout window is not a call for "low-stakes" or filler content.** Per Jay: students should be working on real projects during this stretch. The 2026-08-17 pacing constraint (`CLAUDE.md`'s Hard Constraints) and every doc that echoed its "lower-stakes, high-engagement" phrasing (`open-questions.md`, `courses/python/course-plan.md`, `courses/game-programming-2/course-plan.md` and `CLAUDE.md`, `courses/web-dev/course-plan.md` and `CLAUDE.md`) are corrected: the reason project-based work fits this window is **delivery independence** (it doesn't require fresh full-class direct instruction or full attendance to progress), not reduced rigor.
+- **Game I's post-capstone MakeCode Arcade work is not a wind-down or busywork activity.** Per Jay directly: it's meant as a real, rigorous test of applying a full year of game-design/programming skills in a faster prototyping environment. `courses/python/course-plan.md`'s "Post-Capstone: MakeCode Arcade" section is corrected accordingly.
+
+**Designed (new, not built):**
+
+- **A universal kickoff activity, all three courses, no Level 1/Level 2 split** — see `00-project-overview/kickoff-avatar-and-intro-activity.md`. Every student creates a personal avatar in **MakeCode Arcade** early in the year (introduced specifically for this, unrelated to Game I's/Game II's later real uses of the same tool), exports it as a fixed `avatar.png` at exactly 500×500px into a predictable folder location, then builds one **Google Slides** self-intro slide (grade, hobbies, favorite game — any kind, not just video games — what they're looking forward to) using that avatar.
+- **This is a surprise**: Jay intends to get the avatars printed. Not to be disclosed in student-facing instructions — flagged as an authoring caution in the design doc.
+- **Not yet verified**: MakeCode Arcade's actual image-export/scaling mechanics (its native canvas is small pixel art; whether it can export directly at 500×500 or needs a separate upscale step is untested) — explicitly flagged not to be written into real student instructions until someone actually walks the export path, consistent with this repo's existing "prove a mechanic before deploying" principle (`02-authoring-system/mvp-unit-folder-structure.md`'s Component Library section).
+- Cross-linked from `00-project-overview/shared-unit-00-onboarding.md` as a pre-spine activity.
+
+---
+
 ## 2026-08-18 — Unity certification framing confirmed, with a supportive-but-honest time-use warning
 
 **Context:** Jay confirmed the Unity cert recommendation from 2026-08-17 (Programmer required, Artist encouraged) and gave specific guidance on how the Artist credential should be framed to students.

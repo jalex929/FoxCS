@@ -25,6 +25,10 @@ Not a single flat document and not three separate ones — **two editions** of t
 - **Game Design/Unity pathway** = game development in Unity (C#). No separate JS/HTML5-app-dev-vs-Unity split needs to be explained in Unit 0 — that nuance (Game II historically JS-first, now reversing toward Unity-first, "Unity-only" being a valid student choice) belongs in Game II's own course-plan.md, not the shared onboarding unit. Unit 0 just needs to name the two pathways ("Web Dev" and "Game Design/Unity") and let students know they'll choose.
 - **Don't enumerate every tool/language a pathway might eventually touch.** Follows from the point above — Unit 0 introduces pathways at the level a 9th-13th grader needs to make an informed first choice, not a full tech-stack breakdown.
 
+## Kickoff Activity (precedes the spine, both editions, no L1/L2 split)
+
+**Added 2026-08-18** — see `kickoff-avatar-and-intro-activity.md` for the full design. Before (or alongside) 00.1 Welcome, every student in all three courses does the same two-part activity: create a personal avatar in MakeCode Arcade (exported as a fixed `avatar.png` at exactly 500×500px, into a predictable folder location — "seamless" collection is the whole point, per Jay), then build one Google Slides self-intro (grade, hobbies, favorite game, what they're looking forward to) using that avatar. Unlike the rest of Unit 0, this has **no Level 1/Level 2 distinction at all** — identical for every student regardless of pathway or course. **This is a surprise Jay intends to print the avatars from — never state that purpose in student-facing copy**, see the linked doc's authoring caution.
+
 ## Shared Spine (applies to both editions)
 
 Base skeleton reuses Game I's existing Unit 00 checklist (`../courses/python/course-plan.md` lines 21-32) as a starting point — it was already close to pathway-agnostic. Revised here for two editions instead of one Python-only unit. **This supersedes that section of `course-plan.md`'s Unit 00 once this outline is confirmed — not yet applied there, see Open Items.**
