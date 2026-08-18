@@ -6,7 +6,7 @@ Course name: **FoxCS: Game Programming II**. Second of the FoxCS course line, al
 
 Per `../../CLAUDE.md`'s Courses table: student-chosen lane — JavaScript/HTML5 app dev and/or Unity, with a student free to focus on Unity only if they prefer (historically JS-first with Unity as time-permitting; that priority is reversing toward Unity-first). Structured/sequential (Game I) vs. choice-driven/independent-exploration (Game II, Web II) is a real pedagogical split, not just naming — see `../../open-questions.md`.
 
-**Shared Unit 0**: Game II does not author its own onboarding unit. It shares one with Web II — see `../../00-project-overview/shared-unit-00-onboarding.md`. Game II students see the **Level 2** edition (both Web Dev and Unity pathways shown, no Python). Units 1+ are course-specific and live here as normal.
+**Shared Unit 0**: Game II does not author its own onboarding unit. It shares one with Web II — see `../../00-project-overview/shared-unit-00-onboarding.md`. Game II students see the **Level 2** edition (both Web Dev and Unity pathways shown, no Python). **A Game II student is not defaulted into Unity** — she may choose Unity or Web Dev, same open choice a Web II student has. Units 1+ are course-specific and live here as normal; how a Web-Dev-choosing Game II student's Units 1+ actually get delivered isn't resolved yet — see Open Questions below and the shared-unit-00 doc's Open Items.
 
 ## Source Material
 
