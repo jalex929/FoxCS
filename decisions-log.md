@@ -4,6 +4,20 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-18 — Unity certification framing confirmed, with a supportive-but-honest time-use warning
+
+**Context:** Jay confirmed the Unity cert recommendation from 2026-08-17 (Programmer required, Artist encouraged) and gave specific guidance on how the Artist credential should be framed to students.
+
+**Decided:**
+
+- **Unity Certified User Programmer** — required/mandatory credential for Game Design/Unity pathway students. Unchanged from the 2026-08-17 recommendation, now confirmed rather than pending.
+- **Unity Certified User Artist** — **achievable, not guaranteed.** Every student is expected to engage with Artist-track content throughout the year; a student who keeps herself moving and uses class time well has a real opportunity to finish both credentials. Completion is explicitly contingent on effective time use, not promised regardless of effort.
+- **Tone, per Jay directly:** supportive, not a threat. Paired with an honest warning that every year some students don't complete available content — not from lack of ability, but from misusing class time (playing unrelated games, doing work for other classes during work time). Students should hear both halves: real encouragement to go for the second credential, and a clear-eyed statement that the content won't wait if class time gets misused.
+- Recorded in `courses/game-programming-2/course-plan.md`'s and `CLAUDE.md`'s Certification Framing sections. **Not yet written as actual student-facing lesson content** — this is the internal decision and intended tone, still needs a real home (likely Unit 01's orientation content, not the pathway-agnostic shared Unit 0).
+- **Flagged, not yet applied:** Web Dev's JavaScript-encouraged credential likely deserves the same "achievable with good time use, not guaranteed" framing. Not extended there yet.
+
+---
+
 ## 2026-08-17 — GitHub repo created, shared Unit 0 architecture decided, Game II/Web II starter content added
 
 **Context:** Jay is resuming work on Game II and Web II (previously just placeholders in `courses/`), wants a single onboarding unit that reads the same across all three courses, and wants the whole `FoxCS/` repo pushed to GitHub so work can continue from any machine.

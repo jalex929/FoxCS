@@ -21,13 +21,13 @@ Course name: **FoxCS: Game Programming II**. Second of the FoxCS course line, al
 
 ## Certification Framing
 
-**Resolved 2026-08-17, recommendation not yet confirmed by Jay**: adopt the source course map's own built-in recommendation — **Unity Certified User Programmer is the required/mandatory credential**, **Unity Certified User Artist is the encouraged progress credential**, not required for every student. Reasoning (from the source map, matches the course's own "Game Programming" framing): C# programming, debugging, API interpretation, and Unity workflow are the central technical outcomes; Artist skills (assets, sprites, materials, lighting, Terrain) are valuable breadth every student touches but aren't the primary target. See `course-plan.md`'s "Certification Framing" section for full reasoning and the objective-mapping detail.
+**Confirmed by Jay, 2026-08-18**: **Unity Certified User Programmer is the required/mandatory credential**. **Unity Certified User Artist is achievable, not guaranteed** — every student is expected to engage with Artist-track content throughout the year, and a student who uses class time well has a real opportunity to finish it alongside Programmer. Per Jay: this should be framed supportively but honestly — every year some students don't complete available content not from lack of ability but from misusing class time (unrelated games, other classes' work during work time). See `course-plan.md`'s "Certification Framing" section for the full framing and where it still needs to land as actual student-facing content.
 
 ## Open Questions
 
 Course-specific — see `../../open-questions.md` for the full platform-wide list, several of which name this course directly (sequential-vs-choice model, curated third-party Unity content licensing).
 
-- **Confirm or override the Unity-cert recommendation above** — it's adopted from the source map's own reasoning, not yet a decision Jay has explicitly made.
+- **Where the Programmer/Artist expectations-and-time-use framing actually gets written as student-facing content** — decided and toned (2026-08-18), not yet placed in a real lesson.
 - Unity Learn licensing for curated third-party content, especially 3D — not checked.
 - Whether this course gets its own Game/UX-tie-in and journal thread the way Python has one — not decided, see `course-plan.md`'s Open Items.
 - Whether Phase 4-5 (3D transfer through capstone, course-plan.md Units 21-29) needs to be compressed to land before the AP-testing/senior-checkout pacing window, or whether the capstone's later stages are treated as intentionally low-stakes work that continues through it — not decided, see `course-plan.md`'s Pacing section.
