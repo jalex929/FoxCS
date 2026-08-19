@@ -46,6 +46,10 @@ From `adaptive-python`'s mastery philosophy. Directly applicable:
 
 This directly informs the proficiency scale in `objectives-and-skills-proficiency.md`. A scale that reads as ranking or deficit ("Insufficient," "Not Evident") cuts against this philosophy even if the underlying data model needs that granularity internally.
 
+## Never Name Reinforce/Core/Extend to Students (added 2026-08-18)
+
+The Reinforce/Core/Extend practice-routing system (`objectives-and-skills-proficiency.md`) is internal only. Never name it, diagram it, or explain its mechanism in student-facing lesson content — even a visible per-item label is discouraged, not just the full explanation. See that file's "Reinforce/Core/Extend Is Not Shown to Students" section for the full rule and why (risk of a student reading a Reinforce item as "I'm at a lesser level," which cuts directly against the Mastery/Progression Language rules below).
+
 ## Punctuation and Sentence Style (added 2026-08-04)
 
 **No em dashes.** Jay avoids them in his own writing and wants FoxCS content to follow the same rule, in every student-facing file (instructional pages, flashcards, practice, mastery checks, journal prompts) and in `course-plan.md` prose. Use a period, comma, colon, or parentheses instead. If a sentence only works with an em dash, it usually means the sentence should be split into two.

@@ -1,6 +1,8 @@
 <!-- Fully shared across all three FoxCS courses and both Unit 0 editions, verbatim.
-     Generalized from Game I's original "Debugging Is Learning" so it works whether the
-     "bug" is a Python traceback, a broken CSS layout, or a Unity scene that won't run. -->
+     Generalized from Game I's original "Debugging Is Learning" so it works no matter what
+     a student is building. Kept technology-agnostic on purpose (no naming Python, Unity,
+     JavaScript, etc.) since Level 1 must never see a Unity/web reference and Level 2 must
+     never see a Python reference — see decisions-log.md's 2026-08-18 entry. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +45,7 @@
 </ul>
 </div>
 
-<p>At some point this year, something you build is going to break. Your code will throw an error. A layout will look wrong in the browser. A Unity scene won't run the way you expected. This isn't a maybe, it's a certainty, and it's true for every single person in this class, including the adults who do this professionally.</p>
+<p>At some point this year, something you build is going to break. Your code will show an error message. Something will not work the way you expected. This isn't a maybe, it's a certainty, and it's true for every single person in this class, including the adults who do this professionally.</p>
 
 <svg class="micro-diagram" viewBox="0 0 700 280" role="img" aria-label="A magnifying glass focused on one marked spot on a line, representing finding exactly where a problem is located." style="max-width: 420px;">
   <line x1="150" y1="130" x2="410" y2="130" stroke="#7b8491" stroke-width="5" stroke-linecap="round"/>
@@ -77,15 +79,15 @@
 
 <div class="step">
 <span class="step-num">4</span><span class="step-title">Ask for help the right way</span>
-<p>If you're stuck after trying the steps above, that's exactly when to ask for help, not a sign you should have figured it out alone. The next lesson (Getting Unstuck) covers exactly how to do this well.</p>
+<p>If you're stuck after trying the steps above, that's exactly when to ask for help, not a sign you should have figured it out alone. A future lesson (Getting Unstuck) covers exactly how to do this well.</p>
 </div>
 
-<h2>What This Looks Like in Each Pathway</h2>
-<p>The specific symptom looks different depending on what you're building, but the process above works the same way for all of them:</p>
+<h2>What This Can Look Like</h2>
+<p>The specific symptom looks different depending on what you're building, but the process above works the same way no matter what:</p>
 <ul>
-  <li>In <strong>Python</strong>, a bug usually shows up as an error message called a traceback, or output that isn't what you expected.</li>
-  <li>In <strong>web development</strong>, a bug might be a page that looks wrong in the browser, a button that doesn't do anything, or a JavaScript error in the browser's console.</li>
-  <li>In <strong>Unity</strong>, a bug might be a game object that doesn't move, a script that throws an error in the console, or a scene that doesn't behave the way you designed it.</li>
+  <li>An error message that stops your code from running at all.</li>
+  <li>Something on the screen that doesn't look the way you expected.</li>
+  <li>In a game engine, something that doesn't move or behave the way you designed it.</li>
 </ul>
 <p>Different symptoms, same underlying skill.</p>
 

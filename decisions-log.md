@@ -18,6 +18,38 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-18 — Large accuracy/clarity/policy pass across Unit 0
+
+**Context:** Jay reviewed the built Unit 0 content directly and flagged a real cluster of issues: a genuine policy reversal on Reinforce/Core/Extend transparency, a Level 1/Level 2 content-leakage bug, several factual inaccuracies, ELL-accessibility idioms, and missing detail. All fixed and verified in-browser.
+
+**Reinforce/Core/Extend is no longer taught to students, policy change:**
+
+- **New rule, documented in `02-authoring-system/objectives-and-skills-proficiency.md` and `content-voice-and-tone.md`**: the R/C/E practice-routing system is internal only. Never name it, diagram it, or explain its mechanism to students — even a visible per-item label is discouraged. Per Jay: naming the tier risks a student reading themselves as "at a lesser level," which cuts against the whole growth-mindset framing this repo is built around.
+- **Lesson 0.2 rewritten, both editions**: the explicit "Reinforce, Core, and Extend" section (with its named ladder cards and staircase diagram) is replaced with lighter, mechanism-free language about practice adjusting to what a student needs — same growth-mindset message, no exposed system.
+
+**Level 1/Level 2 content leakage fixed — a real bug, not just polish:**
+
+- Several of the "fully shared" lessons (0.2, 0.4, 0.5, 0.6, 0.8) named Unity, Python, JavaScript, or HTML/CSS specifically in their examples, which is fine for edition-specific lessons (0.1, 0.3, 0.9) but breaks the Level 1-never-sees-Unity / Level 2-never-sees-Python rule for lessons meant to be byte-identical across both editions. Fixed by genericizing every example in the shared lessons (e.g. "a game engine" instead of "Unity," "your code" instead of "a Python program") — per Jay's own guidance on how to phrase this.
+
+**Factual accuracy fixes:**
+
+- **Software is pre-installed, not something students install.** Lesson 0.3 (both editions) rewritten from "install Python/VS Code/Unity" instructions to "confirm it's already installed and working" — Jay installs everything beforehand.
+- **Cross-lesson references corrected**: 0.4 said "the next lesson (Getting Unstuck)" when Getting Unstuck is actually Lesson 0.7, not immediately next — changed to "a future lesson." 0.6 said "the previous lesson" for Troubleshooting (0.4) when 0.5 actually sits between them — changed to name the lesson number directly instead of claiming adjacency. General rule going forward: never say "next/previous lesson" unless it's actually the literal next/previous one; name the lesson number when it isn't adjacent.
+- **Keyboard shortcuts now bolded** (e.g. `**Ctrl+S**`) so they stand out from surrounding prose.
+
+**ELL-accessibility language pass:** removed figures of speech that don't translate well for English Language Learners — "it clicks" (0.2, both instances), "hit a snag" (0.6) — replaced with plain, literal phrasing ("you understand it," "before you even run into a problem").
+
+**Content additions:**
+
+- **Peer help reframed as a good first option** (0.7), not a fallback behind the teacher — explicitly tied to "knowing how to ask well," per Jay.
+- **Abstraction Micro Diagram (0.5) refined a second time**: now shows a few faded details *inside* the box (some complexity exists but isn't the focus) alongside the ones already outside it (details left out entirely) — Jay wanted both, not just outside.
+- **0.8 Academic Integrity**: added a bold lead sentence ("To start the year, we will not be using AI in our work") and the specific consequence detail that an Aspen-logged incident leads to a conversation with a member of the school's Disciplinary Team.
+- **Kickoff avatar instructions corrected**: students type `avatar` as the filename; MakeCode's own save dialog appends `.bmp` automatically, producing `avatar.bmp` — the earlier instruction had them typing the full `avatar.bmp` including the extension, which isn't how the save dialog actually works.
+
+**Not yet done, explicitly deferred to its own phase, not squeezed into this pass:** a short check-for-understanding quiz (3-5 questions) between lessons, a vocab quiz plus a harder scenario-matching exercise wherever terms are introduced, and an unsaved-changes save-prompt on the page-nav links for any page with real student input. These need real interactive-component design, not a quick text edit — see the next work session.
+
+---
+
 ## 2026-08-18 — Six more Micro Diagrams added across Unit 0, both editions
 
 **Context:** Jay asked to keep going through the rest of Unit 0's terms using best judgment, push everything, and be able to walk away.

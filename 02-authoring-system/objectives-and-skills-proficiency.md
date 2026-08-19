@@ -63,6 +63,16 @@ Per-skill feedback tips, generated from current proficiency level, teacher-revie
 
 These tips are exactly the kind of thing the weekly grading pass should generate automatically (see `../05-grader/README.md`) — not something authored by hand per student.
 
+## Reinforce/Core/Extend Is Not Shown to Students (added 2026-08-18)
+
+**Per Jay: this whole system is an internal routing mechanism, not student-facing content.** Students should not be told the names "Reinforce," "Core," or "Extend," should not see a diagram or explanation of the three-tier structure, and per Jay's own second-guessing in the same conversation, even a visible per-item label ("this is a Reinforce question") is something to lean away from, not just soften. The concern is real and specific: naming the tier makes it easy for a student to read themselves as "at a lesser level" when they land on Reinforce content, which undermines the exact growth-mindset framing the rest of this repo is built around (`content-voice-and-tone.md`'s Mastery/Progression Language section).
+
+**What this changes, concretely:**
+- Lesson content (like Unit 0's "How Learning Works") should talk about practice adjusting to what a student needs, in plain language, without naming the three-tier system or showing a diagram of it.
+- The routing logic below still runs — a student still gets a Reinforce, Core, or Extend item depending on how they're doing — the student just never sees that label or mechanism named.
+- If a future build genuinely needs *some* visible signal (e.g., "here's an easier version" / "want to try something harder?"), keep it in plain, non-hierarchical language — never the literal tier names, never a visual that implies ranking.
+- This is a general content rule, not scoped to one lesson — check it before writing any future unit's "how this class works" content.
+
 ## Reinforce / Core / Extend Ladder (routing logic)
 
 This is the concrete algorithm behind the "Keep Practicing" / "Strong Here" tips above, and behind Moodle's "light adaptive support" in the Two-Surface model (`../CLAUDE.md`). It's deliberately shallow — three lanes, one move per attempt, no deeper branching tree:

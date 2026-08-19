@@ -479,7 +479,7 @@ The first version of the illustration system should standardize six primary fami
 
 **Explicitly excluded, every time:** no title, no definition text, no code panel, no output/result panel, no key-takeaway footer, no template-type label in the corner. Any of these turns a Micro Diagram back into a small version of a Concept Breakdown, which defeats the point.
 
-**Labels:** 0-2 short labels directly on the diagram, ideally single words (a variable name, "in," "out"). Full explanations belong in the surrounding lesson prose, never packed into the image. Keeping baked-in text minimal also sidesteps the AI-text-accuracy risk flagged in Section 7.3.
+**Labels — clarity comes first, added 2026-08-18:** 0-2 short labels directly on the diagram, ideally single words (a variable name, "in," "out"). **This is a range to use, not a target to minimize toward zero.** Per Jay: if the visual can't actually be interpreted without a label, add the label — don't leave a diagram ambiguous for the sake of looking minimal. The real bar is "does someone who hasn't read the surrounding text yet know what this shows," not "how few words can I get away with." A diagram of unlabeled boxes only works when the surrounding term-card title and definition are doing the interpreting for it (e.g. a term list where each card already names the concept); a diagram meant to stand more on its own, or one with a structure less obvious than "one thing splits into several," usually needs its 1-2 labels to actually land. Full paragraph-length explanations still belong in the surrounding lesson prose, never packed into the image — this is about a word or two of orientation, not a caption. Keeping baked-in text minimal also sidesteps the AI-text-accuracy risk flagged in Section 7.3, but that risk doesn't override actual clarity.
 
 **Size:** a real illustration, not an icon. The full image file is roughly 700-760px wide so it spans a standard lesson content column (matching the `max-width: 760px` already used across FoxCS lesson pages) — but that width includes real padding around the metaphor itself, not just the shape stretched edge to edge. The visual metaphor should sit inside that canvas with generous margin on all sides, the same "generous white space" rule as the rest of this guide, so the composition breathes rather than filling the frame. Moderate height, landscape or square. Never a multi-panel layout.
 
@@ -986,7 +986,7 @@ Micro Diagrams are simple by design: one visual metaphor, 0-2 short labels, no t
 - A **structural label** (a name attached to something, e.g. a variable name): `fill="#17365f"` (navy-standard), `font-weight="bold"`, `font-size` roughly 34-36.
 - A **value sitting inside a container**: `fill="#138a3d"` (green-strong), `font-weight="bold"`, `font-size` roughly 40-44 — slightly larger than the label, since it's the "payload" and should read as the most important thing inside its own box.
 - `text-anchor="middle"`, and hand-compute the `y` position against the actual box coordinates (box `y` + box `height / 2` + roughly 12-14 for baseline correction) — don't eyeball it, calculate it from the real rect coordinates so it's genuinely centered.
-- **Stay at 0-2 labels total, full stop.** If a diagram seems to need a third word to make sense on its own, it has outgrown the Micro Diagram tier — either simplify the metaphor further, or it should be a real Concept Breakdown instead.
+- **Use as many of the 0-2 labels as the diagram actually needs — don't default to zero for the sake of minimalism.** Check by asking: would this make sense to someone who scrolled past the surrounding text? If not, add the label. A diagram that relies entirely on an adjacent term-card's title to be interpretable (fine when that's genuinely the case) is different from one that's just ambiguous. If a diagram seems to need a *third* word to make sense on its own, it has outgrown the Micro Diagram tier — either simplify the metaphor further, or it should be a real Concept Breakdown instead.
 
 ### 21.6 Wrapper and embedding pattern
 
@@ -1007,7 +1007,8 @@ Micro Diagrams are simple by design: one visual metaphor, 0-2 short labels, no t
 ### 21.7 QA checklist before calling one done
 
 - Uses only the guide's real hex tokens (Section 5.1) — never an eyeballed or approximate color.
-- Zero baked-in explanatory sentences; 0-2 short labels, maximum.
+- Zero baked-in explanatory sentences; 0-2 short labels, used if the diagram actually needs them to be clear on its own.
+- Would this diagram make sense to someone who hasn't read the surrounding paragraph yet? If not, it's missing a label it should have.
 - No title, no takeaway, no corner label anywhere in the SVG.
 - Real padding around every shape — nothing touches the frame edge.
 - A real, specific `aria-label` — not a placeholder, not just the concept name.

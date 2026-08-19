@@ -33,6 +33,7 @@
   .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
   .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
   .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .micro-diagram { display: block; width: 100%; max-width: 620px; height: auto; margin: 1.4rem auto; }
 </style>
 </head>
 <body>
@@ -56,6 +57,36 @@
 
 <h2>The MDA Framework</h2>
 <p>Here's a lens you'll use all year, starting today, well before you've written any real code. It's called <strong>MDA</strong>, and it comes from real game design theory (Hunicke, LeBlanc, and Zubek). It breaks a game down into three connected parts.</p>
+
+<svg class="micro-diagram" viewBox="0 0 700 260" role="img" aria-label="Three connected icons in a row, labeled Mechanics, Dynamics, and Aesthetics: a gear, a circular arrow, and a pulse line, showing how a rule leads to behavior which leads to a feeling.">
+  <g>
+    <rect x="114" y="74" width="12" height="20" rx="3" fill="#3d73c7"/>
+    <rect x="114" y="74" width="12" height="20" rx="3" fill="#3d73c7" transform="rotate(60 120 120)"/>
+    <rect x="114" y="74" width="12" height="20" rx="3" fill="#3d73c7" transform="rotate(120 120 120)"/>
+    <rect x="114" y="74" width="12" height="20" rx="3" fill="#3d73c7" transform="rotate(180 120 120)"/>
+    <rect x="114" y="74" width="12" height="20" rx="3" fill="#3d73c7" transform="rotate(240 120 120)"/>
+    <rect x="114" y="74" width="12" height="20" rx="3" fill="#3d73c7" transform="rotate(300 120 120)"/>
+  </g>
+  <circle cx="120" cy="120" r="38" fill="#dce8f8" stroke="#3d73c7" stroke-width="3"/>
+  <circle cx="120" cy="120" r="12" fill="#ffffff" stroke="#3d73c7" stroke-width="2"/>
+
+  <line x1="168" y1="120" x2="300" y2="120" stroke="#1457d9" stroke-width="3"/>
+  <polygon points="308,120 294,112 294,128" fill="#1457d9"/>
+
+  <circle cx="350" cy="120" r="38" fill="#dce8f8" stroke="#3d73c7" stroke-width="3"/>
+  <path d="M 363,97.5 A 26,26 0 1 1 337,97.5" fill="none" stroke="#1457d9" stroke-width="4.5" stroke-linecap="round"/>
+  <polygon points="345.7,92.5 340,102.7 334,92.3" fill="#1457d9"/>
+
+  <line x1="398" y1="120" x2="530" y2="120" stroke="#1457d9" stroke-width="3"/>
+  <polygon points="538,120 524,112 524,128" fill="#1457d9"/>
+
+  <circle cx="580" cy="120" r="38" fill="#e8e0f2" stroke="#8061b1" stroke-width="3"/>
+  <path d="M 550,120 L 568,120 L 575,98 L 585,142 L 592,120 L 610,120" fill="none" stroke="#6530b8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="120" y="200" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-weight="bold" font-size="21" fill="#17365f">Mechanics</text>
+  <text x="350" y="200" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-weight="bold" font-size="21" fill="#17365f">Dynamics</text>
+  <text x="580" y="200" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-weight="bold" font-size="21" fill="#17365f">Aesthetics</text>
+</svg>
 
 <div class="term-list">
   <div class="term-card">
