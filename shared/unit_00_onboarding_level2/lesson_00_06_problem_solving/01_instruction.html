@@ -30,12 +30,59 @@
   .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
   .page-nav-menu { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
   .page-nav-menu:hover { background: #eef1f5; }
-  .group-tag { display: inline-block; font-family: Verdana, Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.4rem; }
+  .section-tag { display: inline-block; font-family: Verdana, Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.4rem; }
+  .unit-menu-wrap { position: sticky; top: 0; z-index: 20; background: #fff; border: 1px solid #dde3ea; border-radius: 0 0 8px 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .unit-menu-toggle { cursor: pointer; padding: 0.7rem 1.3rem; font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a5aa8; font-size: 0.92rem; list-style: none; user-select: none; }
+  .unit-menu-toggle::-webkit-details-marker { display: none; }
+  .unit-menu-toggle:hover { background: #f4f6f9; }
+  .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
+  .unit-menu-section { margin-top: 0.9rem; }
+  .unit-menu-section:first-child { margin-top: 0.6rem; }
+  .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
+  .unit-menu-panel a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
+  .unit-menu-panel a:hover { background: #eef4fb; }
+  .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; }
+  .menu-check { display: inline-block; width: 1.05rem; height: 1.05rem; border: 1.5px solid #ccd3dd; border-radius: 50%; flex-shrink: 0; font-size: 0.72rem; line-height: 1rem; text-align: center; color: transparent; }
+  .menu-check.done { background: #2f7a2f; border-color: #2f7a2f; color: white; }
 </style>
 </head>
 <body>
 
-<span class="group-tag">Thinking Like a Builder</span>
+<div class="unit-menu-wrap">
+<details class="unit-menu">
+  <summary class="unit-menu-toggle">☰ Unit 0 Menu</summary>
+  <nav class="unit-menu-panel">
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Getting Started</div>
+      <a href="../lesson_00_01_welcome/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_01_welcome"></span>0.1 Welcome</a>
+      <a href="../lesson_00_02_how_learning_works/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_02_how_learning_works"></span>0.2 How Learning Works</a>
+      <a href="../lesson_00_03_using_your_tools/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_03_using_your_tools"></span>0.3 Using Your Tools</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Thinking Like a Builder</div>
+      <a href="../lesson_00_04_troubleshooting_is_learning/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_04_troubleshooting_is_learning"></span>0.4 Troubleshooting Is Learning</a>
+      <a href="../lesson_00_05_computational_thinking/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_05_computational_thinking"></span>0.5 Introduction to Computational Thinking</a>
+      <a href="../lesson_00_06_problem_solving/01_instruction.html" class="current"><span class="menu-check" data-lesson="lesson_00_06_problem_solving"></span>0.6 How Problem-Solving Works</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Working With Others</div>
+      <a href="../lesson_00_07_getting_unstuck/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_07_getting_unstuck"></span>0.7 Getting Unstuck</a>
+      <a href="../lesson_00_08_academic_integrity/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_08_academic_integrity"></span>0.8 Academic Integrity: Doing Your Own Work</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Choosing Your Path</div>
+      <a href="../lesson_00_09_choosing_your_pathway/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_09_choosing_your_pathway"></span>0.9 Choosing Your Pathway</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Kickoff Activity</div>
+      <a href="../kickoff/01_avatar_instructions.html"><span class="menu-check" data-lesson="kickoff_avatar"></span>Make Your Avatar</a>
+      <a href="../kickoff/02_self_intro_slide.html"><span class="menu-check" data-lesson="kickoff_slide"></span>Self-Intro Slide</a>
+    </div>
+  </nav>
+</details>
+</div>
+
+<span class="section-tag">Thinking Like a Builder</span>
 <h1>0.6 — How Problem-Solving Works</h1>
 
 <div class="objectives">
@@ -87,6 +134,23 @@
     <a href="../lesson_00_07_getting_unstuck/01_instruction.html" class="page-nav-next">Next: Getting Unstuck →</a>
   </div>
 </div>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'foxcs_unit00_level2_progress';
+  var THIS_LESSON = 'lesson_00_06_problem_solving';
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+  done[THIS_LESSON] = true;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch (e) {}
+  document.querySelectorAll('[data-lesson]').forEach(function(el) {
+    if (done[el.dataset.lesson]) {
+      el.classList.add('done');
+      el.textContent = '✓';
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
