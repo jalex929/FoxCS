@@ -18,6 +18,27 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-18 — Six more Micro Diagrams added across Unit 0, both editions
+
+**Context:** Jay asked to keep going through the rest of Unit 0's terms using best judgment, push everything, and be able to walk away.
+
+**Built, all following the new Section 21 SVG recipe, all verified in-browser:**
+
+- **0.5 Computational Thinking**: Pattern Recognition (two matching boxes with identical dot patterns, connected by a dashed line, green checkmark), Abstraction (a box with faded/hidden internal detail and one arrow in, one arrow out), Algorithmic Thinking (four connected steps, the last one checkmarked).
+- **0.2 How Learning Works**: an ascending three-step staircase for Reinforce/Core/Extend, placed right before the existing ladder cards.
+- **0.4 Troubleshooting Is Learning**: a magnifying glass focused on one marked spot on a line — deliberately not a literal bug icon (avoids a crude/juvenile hand-drawn insect), still reads as "finding exactly where the problem is."
+- **0.9 Choosing Your Pathway (Level 2 only)**: one path forking into two, colored to match the existing Web Dev (blue) and Game Design/Unity (purple) pathway boxes already on that page.
+
+**Deliberately skipped, judgment call, not oversight:**
+
+- **0.1 Welcome's MDA terms** (Mechanics/Dynamics/Aesthetics) — these are abstract design concepts, not structural/container concepts like a variable or a box splitting apart. Forcing a box-metaphor onto "a feeling the game gives you" risked landing cutesy (a heart/star icon) rather than mature, which the image guide explicitly warns against. Left for a later, more deliberate pass rather than a weak version now.
+- **0.6 How Problem-Solving Works' five-step process** — five distinct steps each carrying real meaning doesn't fit the Micro Diagram tier's "one metaphor, 0-2 labels" limit. This is what the full Process/Sequence template family (Section 10.5) exists for; illustrating it properly is future work, not a Micro Diagram.
+- **0.7 Getting Unstuck** and **0.8 Academic Integrity** — the former's "ask a peer for help" concept is hard to render abstractly without human figures (which the guide also cautions against); the latter is a serious-toned policy lesson where a decorative diagram would undercut the tone, not support it.
+
+**Every fully-shared lesson kept in sync across both editions** (0.2, 0.4, 0.5 edited once, copied into both `unit_00_onboarding_level1/` and `_level2/`).
+
+---
+
 ## 2026-08-18 — Micro Diagram production proven and documented as a repeatable SVG recipe
 
 **Context:** Continued the same day's image-guide work — Jay asked to actually see a lesson with real embedded images, then specifically a variable-as-box example, then a written spec for reproducing the technique.

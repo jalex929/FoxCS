@@ -28,6 +28,7 @@
   .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
   .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
   .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .micro-diagram { display: block; width: 100%; max-width: 620px; height: auto; margin: 1.4rem auto; }
 </style>
 </head>
 <body>
@@ -43,6 +44,13 @@
 </div>
 
 <p>At some point this year, something you build is going to break. Your code will throw an error. A layout will look wrong in the browser. A Unity scene won't run the way you expected. This isn't a maybe, it's a certainty, and it's true for every single person in this class, including the adults who do this professionally.</p>
+
+<svg class="micro-diagram" viewBox="0 0 700 280" role="img" aria-label="A magnifying glass focused on one marked spot on a line, representing finding exactly where a problem is located." style="max-width: 420px;">
+  <line x1="150" y1="130" x2="410" y2="130" stroke="#7b8491" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="280" cy="130" r="10" fill="#d83b32"/>
+  <circle cx="280" cy="130" r="72" fill="#ffffff" fill-opacity="0.5" stroke="#17365f" stroke-width="7"/>
+  <line x1="331" y1="181" x2="405" y2="255" stroke="#17365f" stroke-width="16" stroke-linecap="round"/>
+</svg>
 
 <div class="concept-card real-world">
 <div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="16.5" r="0.75" fill="currentColor" stroke="none"/></svg>Reframe: This Is Part of the Job</div>

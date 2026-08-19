@@ -36,6 +36,7 @@
   .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
   .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
   .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .micro-diagram { display: block; width: 100%; max-width: 620px; height: auto; margin: 1.4rem auto; }
 </style>
 </head>
 <body>
@@ -51,6 +52,15 @@
 </div>
 
 <p>Here's the choice: <strong>Web Dev</strong> or <strong>Game Design/Unity</strong>. Read both descriptions below, then decide.</p>
+
+<svg class="micro-diagram" viewBox="0 0 700 280" role="img" aria-label="One path splitting into two directions, representing the choice between the Web Dev pathway and the Game Design/Unity pathway.">
+  <line x1="350" y1="30" x2="350" y2="105" stroke="#17365f" stroke-width="4" stroke-linecap="round"/>
+  <line x1="350" y1="110" x2="185" y2="235" stroke="#1a5aa8" stroke-width="4" stroke-linecap="round"/>
+  <line x1="350" y1="110" x2="515" y2="235" stroke="#4a3aa7" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="350" cy="20" r="11" fill="#17365f"/>
+  <circle cx="180" cy="245" r="18" fill="#1a5aa8"/>
+  <circle cx="520" cy="245" r="18" fill="#4a3aa7"/>
+</svg>
 
 <div class="concept-card real-world">
 <div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>This Choice Isn't About Which Class You're In</div>
