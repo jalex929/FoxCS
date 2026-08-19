@@ -29,6 +29,11 @@
   .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
   .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
   .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  /* Micro Diagram — 02-authoring-system/instructional-image-guide.md Section 10.7.
+     One visual metaphor, no title/code/takeaway baked in, generous padding around
+     the shapes themselves rather than edge to edge. Real semantic color tokens
+     from that guide's Section 5.1 (blue-muted/-standard/-strong), not eyeballed. */
+  .micro-diagram { display: block; width: 100%; max-width: 620px; height: auto; margin: 1.4rem auto; }
 </style>
 </head>
 <body>
@@ -50,7 +55,19 @@
   <div class="term-card">
     <div class="term-name">Decomposition</div>
     <div class="term-def">Breaking a big problem into smaller, more manageable pieces.</div>
-    <div class="term-example"><strong>Example:</strong> "Build a website" is huge. "Build the header, then the navigation, then the main content" is a set of problems you can actually start on.</div>
+    <svg class="micro-diagram" viewBox="0 0 700 280" role="img" aria-label="A large box splits into three smaller connected boxes, showing one big problem breaking into smaller pieces.">
+      <rect x="60" y="80" width="140" height="120" rx="18" fill="#dce8f8" stroke="#3d73c7" stroke-width="3"/>
+      <line x1="200" y1="140" x2="322" y2="140" stroke="#1457d9" stroke-width="3"/>
+      <line x1="330" y1="140" x2="462" y2="50" stroke="#1457d9" stroke-width="3"/>
+      <line x1="330" y1="140" x2="462" y2="140" stroke="#1457d9" stroke-width="3"/>
+      <line x1="330" y1="140" x2="462" y2="230" stroke="#1457d9" stroke-width="3"/>
+      <polygon points="470,50 456,44 456,56" fill="#1457d9"/>
+      <polygon points="470,140 456,134 456,146" fill="#1457d9"/>
+      <polygon points="470,230 456,224 456,236" fill="#1457d9"/>
+      <rect x="470" y="15" width="70" height="70" rx="14" fill="#dce8f8" stroke="#3d73c7" stroke-width="2.5"/>
+      <rect x="470" y="105" width="70" height="70" rx="14" fill="#dce8f8" stroke="#3d73c7" stroke-width="2.5"/>
+      <rect x="470" y="195" width="70" height="70" rx="14" fill="#dce8f8" stroke="#3d73c7" stroke-width="2.5"/>
+    </svg>
   </div>
   <div class="term-card">
     <div class="term-name">Pattern recognition</div>
