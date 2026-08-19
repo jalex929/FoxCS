@@ -1,5 +1,7 @@
 <!-- FoxCS. Unit 0 Overview, Level 2 edition (Game II + Web II). Plain, functional styling
-     on purpose, matching courses/python/content/unit_01_what_is_programming/unit_01_overview.html. -->
+     on purpose, matching courses/python/content/unit_01_what_is_programming/unit_01_overview.html.
+     Grouped into labeled sections (added 2026-08-18 per Jay) so the lesson list has visual
+     structure, not one flat undifferentiated list -- the groups mirror the real arc of the unit. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +12,16 @@
   h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
   h2 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; margin-top: 2rem; }
   .badge { display: inline-block; background: #bbd4f2; color: #1a3a5c; font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; padding: 0.2rem 0.7rem; border-radius: 3px; margin-bottom: 0.5rem; }
-  .lesson-list { list-style: none; padding: 0; }
+  .group { margin-top: 1.8rem; }
+  .group-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.6rem; }
+  .lesson-list { list-style: none; padding: 0; margin: 0; }
   .lesson-list li { border: 1px solid #ccd3dd; border-radius: 8px; padding: 0.9rem 1.2rem; margin-bottom: 0.7rem; }
   .lesson-list a { font-weight: bold; color: #1a5aa8; text-decoration: none; font-family: Verdana, Arial, sans-serif; }
   .lesson-list a:hover { text-decoration: underline; }
   .lesson-desc { color: #445; font-size: 0.92rem; margin-top: 0.3rem; }
+  .start-nav { margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid #dde3ea; text-align: center; }
+  .start-link { display: inline-block; font-family: Verdana, Arial, sans-serif; font-weight: bold; background: #1a5aa8; color: white; text-decoration: none; padding: 0.7rem 1.6rem; border-radius: 6px; }
+  .start-link:hover { background: #12467f; }
 </style>
 </head>
 <body>
@@ -24,7 +31,8 @@
 
 <p>Welcome. Before your pathway's Unit 1 begins, this unit gets you set up: how the course works, your tools, how to solve problems and get unstuck, academic integrity, and choosing which pathway you'll follow. There's no unit project, your journal entries along the way are this unit's reflective work.</p>
 
-<h2>Lessons</h2>
+<div class="group">
+<div class="group-label">Getting Started</div>
 <ul class="lesson-list">
   <li>
     <a href="lesson_00_01_welcome/01_instruction.html">0.1 Welcome</a>
@@ -38,6 +46,12 @@
     <a href="lesson_00_03_using_your_tools/01_instruction.html">0.3 Using Your Tools</a>
     <div class="lesson-desc">Setting up tools for both pathways, since you haven't chosen yet.</div>
   </li>
+</ul>
+</div>
+
+<div class="group">
+<div class="group-label">Thinking Like a Builder</div>
+<ul class="lesson-list">
   <li>
     <a href="lesson_00_04_troubleshooting_is_learning/01_instruction.html">0.4 Troubleshooting Is Learning</a>
     <div class="lesson-desc">A real process for when something breaks, instead of guessing.</div>
@@ -50,6 +64,12 @@
     <a href="lesson_00_06_problem_solving/01_instruction.html">0.6 How Problem-Solving Works</a>
     <div class="lesson-desc">A five-step process for tackling a new problem.</div>
   </li>
+</ul>
+</div>
+
+<div class="group">
+<div class="group-label">Working With Others</div>
+<ul class="lesson-list">
   <li>
     <a href="lesson_00_07_getting_unstuck/01_instruction.html">0.7 Getting Unstuck</a>
     <div class="lesson-desc">What to try before asking for help, and how to ask well.</div>
@@ -58,15 +78,32 @@
     <a href="lesson_00_08_academic_integrity/01_instruction.html">0.8 Academic Integrity: Doing Your Own Work</a>
     <div class="lesson-desc">Why it matters, partner work, helping others the right way, AI use, and what happens if the line gets crossed.</div>
   </li>
+</ul>
+</div>
+
+<div class="group">
+<div class="group-label">Choosing Your Path</div>
+<ul class="lesson-list">
   <li>
     <a href="lesson_00_09_choosing_your_pathway/01_instruction.html">0.9 Choosing Your Pathway</a>
     <div class="lesson-desc">Web Dev or Game Design/Unity. Your choice, not tied to which class you're in.</div>
   </li>
+</ul>
+</div>
+
+<div class="group">
+<div class="group-label">Kickoff Activity</div>
+<ul class="lesson-list">
   <li>
-    <a href="kickoff/01_avatar_instructions.html">Kickoff Activity: Make Your Avatar</a>
+    <a href="kickoff/01_avatar_instructions.html">Make Your Avatar</a>
     <div class="lesson-desc">A short, fun MakeCode Arcade activity and a one-slide self-introduction.</div>
   </li>
 </ul>
+</div>
+
+<div class="start-nav">
+  <a href="lesson_00_01_welcome/01_instruction.html" class="start-link">Start Lesson 0.1: Welcome →</a>
+</div>
 
 </body>
 </html>

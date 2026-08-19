@@ -18,6 +18,35 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-18 — Navigation overhaul: menu links, group nesting, and a reusable authoring standard
+
+**Context:** Jay asked for a subagent-driven navigation consistency pass, real lesson names in nav text, and a way to jump around the unit without strict linear movement. Mid-pass, several more fixes queued up: a policy leak, warmer pathway-choice framing, labeled diagram nodes, wording fixes, and a missing-nav bug on the hub page itself.
+
+**Two parallel forks did a full navigation pass**, one per edition (`bc269e3` Level 1, `fde3312` Level 2, both reconciled and included in this push): fixed inaccurate next/previous claims (2 new real bugs found beyond the 2 already known — 0.8's "next" pointed at the overview instead of 0.9 in Level 2; the overview page's own 0.2 description was stale), replaced generic "Continue to the next lesson" link text with real lesson names everywhere, and added a "Unit 0 Menu" link to every single page so cross-lesson navigation isn't strictly linear.
+
+**Verified the two editions' shared lessons actually stayed in sync** after both forks worked independently — confirmed 0.2/0.4/0.5/0.7 fully identical (a scary-looking full-file diff turned out to be pure CRLF line-ending noise, not real divergence), 0.8 differs only in its legitimate structural next-link (Level 1 ends there, Level 2 continues to 0.9), and found/fixed one small gap (Level 2's 0.8 was missing the `.page-nav-menu` CSS rule the link depended on).
+
+**Nested group structure added, both to the hub page and every individual lesson**: four labeled sections (Getting Started / Thinking Like a Builder / Working With Others / Choosing Your Path for Level 2 only) replace what was one flat undifferentiated list. Each lesson now shows a small group-tag label above its title so a student always knows where they are in the unit's overall arc, not just which single lesson they're on.
+
+**Fixed the hub page's own missing navigation** — `unit_00_overview.html` had no footer nav at all, a real dead-end Jay caught. Added a prominent "Start Lesson 0.1: Welcome →" call to action.
+
+**Additional fixes found and applied during the same pass:**
+- Level 2's `0.9` still named "Reinforce/Core/Extend" in its "How They're Alike" list — a leftover from before that policy changed. Fixed to generic language.
+- `0.9`'s pathway-fork diagram now has real labels ("You" at the top node, "Web Dev" and "Game Design/Unity" at the branch ends) instead of relying entirely on surrounding text.
+- The "This choice isn't about which class you're in" framing rewritten warmer and more specific: Game II and Web II share the same room and period (a real scheduling fact, now saved to memory), not just a cross-enrollment policy — the goal is students feeling excited about their choice, not just permitted to make it.
+- "If You're Leaning Web Dev" / "...Game Design/Unity" changed to "Leaning Toward" for clarity — flagged as too conversational for written instructions.
+- `0.6`'s "This Isn't Just for Code" pro-tip now includes non-coding examples (a recipe, directions, a schedule), not just other tech examples.
+- `0.3` (Level 2) now includes a real copy-pasteable HTML sample for students who don't remember any HTML yet, plus the missing `<pre>` CSS and the bolded `Ctrl+S` shortcut it was missing.
+- **The kickoff `02_self_intro_slide.html`'s embedded "TEACHER TO-DO, not shown to Learners once filled in" box removed from both editions** — resolved per Jay: each student creates their own individual Google Slides file, not a shared class deck. This pattern (a teacher-only placeholder left inside a student-facing file) is now a documented standing rule, not just a one-off fix — see the new memory below.
+
+**New standing memories saved:**
+- Student-facing FoxCS content must always be immediately deployable with zero review — no embedded "TEACHER TO-DO" notes; surface teacher action items in chat instead.
+- Game II and Web II share the same room/period — a physical fact, not just a policy, that should keep shaping how pathway choice is framed.
+
+**New reference doc: `02-authoring-system/lesson-navigation-standards.md`** — the page-nav/menu/group-tag pattern written down as a real standard, plus a concrete checklist for what to update whenever a lesson is inserted, removed, or reordered (the exact bug class this whole session's cleanup was fixing by hand). Applies to Units 1+ in every course, not just Unit 0.
+
+---
+
 ## 2026-08-18 — Large accuracy/clarity/policy pass across Unit 0
 
 **Context:** Jay reviewed the built Unit 0 content directly and flagged a real cluster of issues: a genuine policy reversal on Reinforce/Core/Extend transparency, a Level 1/Level 2 content-leakage bug, several factual inaccuracies, ELL-accessibility idioms, and missing detail. All fixed and verified in-browser.
