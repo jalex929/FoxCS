@@ -12,6 +12,7 @@
   h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
   .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
   code { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  pre { background: #eef1f5; padding: 0.8rem 1rem; border-radius: 6px; font-family: Consolas, monospace; overflow-x: auto; line-height: 1.5; }
   .pathway-box { border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; border: 1px solid; }
   .pathway-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.5rem; }
   .pathway-box.web { background: #eef4fb; border-color: #1a5aa8; }
@@ -31,6 +32,8 @@
   .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
   .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
   .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-menu { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-menu:hover { background: #eef1f5; }
 </style>
 </head>
 <body>
@@ -52,8 +55,20 @@
 <ol class="steps">
   <li>Open VS Code.</li>
   <li>Make sure you have a modern browser available (Chrome, Edge, or Firefox all work fine).</li>
-  <li>Create a new file, save it as <code>index.html</code>, type a few lines of basic HTML, and open it in your browser to see it render. If a page shows up, everything is working correctly.</li>
+  <li>Create a new file and save it as <code>index.html</code>.</li>
+  <li>Type a few lines of basic HTML. If you don't remember any HTML yet, that's completely fine, you don't need to know it for this check. Just copy the sample below into your file and save it.</li>
+  <li>Open the file in your browser to see it render. If a page shows up with the heading and text from the sample, everything is working correctly.</li>
 </ol>
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;My Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Hello, World!&lt;/h1&gt;
+&lt;p&gt;This is my first web page.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
 </div>
 
 <div class="pathway-box unity">
@@ -69,19 +84,20 @@
 
 <div class="concept-card pro-tip">
 <div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/><path d="M19 15l0.8 2.2L22 18l-2.2 0.8L19 21l-0.8-2.2L16 18l2.2-0.8L19 15z"/></svg>Save Often</div>
-<p>Whichever pathway you end up on, get in the habit now: save your work constantly, not just when you're done. It costs nothing and it means you never lose more than a minute or two of work if something goes wrong.</p>
+<p>Whichever pathway you end up on, get in the habit now: save your work with <strong>Ctrl+S</strong> constantly, not just when you're done. It costs nothing and it means you never lose more than a minute or two of work if something goes wrong.</p>
 </div>
 
 <h2>What To Do Next</h2>
 <ol class="steps">
   <li>Get both setups working using the steps above.</li>
-  <li><strong>0.4 Troubleshooting Is Learning</strong>. <a href="../lesson_00_04_troubleshooting_is_learning/01_instruction.html">Continue to the next lesson</a>.</li>
+  <li><a href="../lesson_00_04_troubleshooting_is_learning/01_instruction.html">Continue to Lesson 0.4: Troubleshooting Is Learning</a>.</li>
 </ol>
 
 <div class="page-nav">
   <div class="page-nav-note">Nothing to save on this page itself, just confirm your setup works.</div>
   <div class="page-nav-links">
     <a href="../lesson_00_02_how_learning_works/01_instruction.html" class="page-nav-prev">← Back: How Learning Works</a>
+    <a href="../unit_00_overview.html" class="page-nav-menu">Unit 0 Menu</a>
     <a href="../lesson_00_04_troubleshooting_is_learning/01_instruction.html" class="page-nav-next">Next: Troubleshooting Is Learning →</a>
   </div>
 </div>
