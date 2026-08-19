@@ -112,7 +112,8 @@ FoxCS/
     content-voice-and-tone.md               Adapted from adaptive-python's tone/error-message standards
     objectives-and-skills-proficiency.md    Student-visible objectives, per-skill proficiency tracking, tip generation
     feedback-collection.md                  Embedded platform/content feedback reflection
-    image-style-guide.md                    Conceptual illustration palette + principles
+    image-style-guide.md                    Superseded 2026-08-18, kept for reference — see instructional-image-guide.md
+    instructional-image-guide.md            Current illustration standard: semantic color system, template families incl. Micro Diagram
     vscode-content-conventions.md           Save reminders, GMetrix naming, workbook-to-H5P recreation
     shared-styles/                          foxcs-base.css, dark-mode toggle, foxcs-fonts.css + fonts/ (self-hosted), 4 theme files — see shared-styles/README.md
     theme-system.md                         4 student-selectable themes (light/dark/natural/synthwave) — real palette + fonts, wired into the component library

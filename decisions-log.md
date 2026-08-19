@@ -18,6 +18,22 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-18 — Instructional image guide adopted, new Micro Diagram tier added
+
+**Context:** Jay dropped a comprehensive starting-point image guide (`starter context/FoxCS_Instructional_Image_Generation_Guide.md`) to address a real problem: current lesson pages read as walls of text, and Jay wants small, focused illustrations woven in, not dense anchor-chart-style graphics.
+
+**Decided/built:**
+
+- **Adopted as the canonical illustration standard.** Moved to `02-authoring-system/instructional-image-guide.md`, superseding the older `image-style-guide.md` (a thinner, validated-categorical-6-hue palette built for a since-paused Moodle/H5P color conflict that no longer applies). Old file kept as a superseded stub pointing to the new one, not deleted — same pattern as every other superseded doc in this repo.
+- **New Section 10.7, Micro Diagram, added** — the real gap Jay identified: every existing template family (even "Low Density") is a standalone teaching artifact with a title, definition, code panel, and takeaway footer. None of them fit "a labeled box with an arrow showing something being stored," embedded inline next to the sentence that describes it. Micro Diagram is the smallest tier: one visual metaphor, 0-2 short labels, explicitly no title/code/takeaway/corner-label. Added supporting updates to the density-rules section (new "Micro Density" tier), the production-prompt section, the metadata schema, the file-naming convention, and the nonnegotiable-rules list.
+- **Size resolved through back-and-forth with Jay**: not icon-scale — a real illustration, ~700-760px wide (matching the lesson content column's own `max-width: 760px`), with genuine padding around the metaphor inside that frame, not the shape stretched edge to edge.
+- **Production method**: still AI-generated (following the guide's existing art-direction/prompt system), not hand-coded SVG — Jay's size clarification (a real illustration, not a tiny icon) argued against hand-coding, since matching the guide's soft-shaded flat-vector style convincingly by hand isn't practical at that scale.
+- **Confirmed**: this guide (and all of `02-authoring-system/`) is teacher/authoring-side material, never distributed to students. Only the finished generated image files (plus required alt text) land in a lesson's real `content/` folder.
+
+**Not done yet:** no lesson HTML (Unit 0 or Python's Unit 01) has any real illustrations embedded per this guide yet — the guide existing doesn't retrofit existing pages. That's a real next step, not automatic.
+
+---
+
 ## 2026-08-18 — Shared Unit 0 built (both editions), plus a pathway-comparison lesson
 
 **Context:** Jay asked to build real Unit 0 HTML for all three courses, and to fill in the per-unit journal-thread lines for Game II and Web II first (both done via parallel forks earlier the same day — see the "throughline frameworks" entry above). Also asked, mid-build, for Lesson 0.9 to include a real comparison of the two Level 2 pathways.

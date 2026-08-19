@@ -1,3 +1,15 @@
+# Image Style Guide — Superseded 2026-08-18
+
+**Superseded, kept for reference — see `instructional-image-guide.md` for the current standard.** This file's validated 6-hue categorical palette (Red/Orange/Yellow/Green/Blue/Violet, computed for colorblind-safe separation) is replaced by that doc's semantic color system (Navy/Blue/Green/Purple/Yellow/Orange/Red/Grey, where each color carries a fixed *meaning* — red always means error, green always means success — rather than just distinguishing one concept from another).
+
+This file's H5P red/green conflict warning (Section "H5P Color Awareness" below) is also moot for the current MVP phase — Moodle and H5P are paused (see `../CLAUDE.md`'s Status section), so there's no live H5P feedback color to clash with. Worth re-checking if Moodle/H5P work resumes later.
+
+The one principle from this file that still holds and carries forward unchanged: **one concept, one consistent visual vocabulary, reused every time** — once a shape/metaphor represents something (a labeled box = a variable), keep using it, don't reinvent it per lesson. `instructional-image-guide.md`'s Section 10.7 (Micro Diagram) is built around exactly this idea.
+
+---
+
+## Original content, kept for reference only, not authoritative
+
 # Image Style Guide — Conceptual Illustrations
 
 For diagrams/illustrations that explain coding concepts (e.g. what a variable is, how a loop iterates, how a function call works) embedded in Moodle instructional content. Not for charts/data visualization — for illustration.
