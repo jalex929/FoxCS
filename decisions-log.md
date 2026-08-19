@@ -18,6 +18,19 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-18 — Micro Diagram production proven and documented as a repeatable SVG recipe
+
+**Context:** Continued the same day's image-guide work — Jay asked to actually see a lesson with real embedded images, then specifically a variable-as-box example, then a written spec for reproducing the technique.
+
+**Decided/built:**
+
+- **Clarified a real capability gap directly with Jay**: Claude has no image-generation capability at all (not a tool being underused — it doesn't exist), and the only image-adjacent tool available (Canva) is built for marketing documents, not precise semantic-color technical diagrams. Hand-coded inline SVG was proposed as the practical alternative for the Micro Diagram tier specifically, and confirmed as "okay" by Jay.
+- **Two real Micro Diagrams built and verified in-browser**: Decomposition (deployed live in Lesson 0.5, both editions) and Variable (`score` box, `100` inside, arrow in — matching Jay's own original example from earlier in the day). Both use the guide's exact hex tokens, not eyeballed colors.
+- **New reference tool: `02-authoring-system/illustration-examples-gallery.html`** — same status/purpose as `component-library/index.html` (a proof-before-deploying reference page, not lesson content), showing both examples with their real semantic-color/composition rationale.
+- **New `instructional-image-guide.md` Section 21, SVG Production Recipe for Micro Diagrams** — a concrete, repeatable spec extracted from actually building the two examples: canvas/coordinate conventions, the box/arrow/label recipes with exact hex values and size ranges, the embedding wrapper pattern (including required `role="img"`/`aria-label`), a QA checklist, and where new vs. deployed examples belong. Appended as a new section rather than inserted earlier, to avoid renumbering Sections 1-20 which are already cross-referenced by number elsewhere in this repo.
+
+---
+
 ## 2026-08-18 — Instructional image guide adopted, new Micro Diagram tier added
 
 **Context:** Jay dropped a comprehensive starting-point image guide (`starter context/FoxCS_Instructional_Image_Generation_Guide.md`) to address a real problem: current lesson pages read as walls of text, and Jay wants small, focused illustrations woven in, not dense anchor-chart-style graphics.

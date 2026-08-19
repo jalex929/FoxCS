@@ -1,6 +1,6 @@
 # FoxCS Instructional Image Generation Guide
 
-**Moved here 2026-08-18 from `starter context/FoxCS_Instructional_Image_Generation_Guide.md`** — Jay's own starting draft, now the canonical illustration standard for FoxCS, superseding `image-style-guide.md`'s older validated-categorical-palette approach (see that file for why). The description scope below says "the FoxCS introductory Python curriculum," written before this session's multi-course expansion — treat it as applying to all three FoxCS courses (Game I, Game II, Web II), not Python only, until told otherwise. Also extended the same day with a new Section 10.7 (Micro Diagram) and its supporting Section 13/17/18/19/20 updates — a smaller, inline-illustration tier for breaking up lesson-page prose, distinct from the six full standalone template families this doc originally defined. See `../decisions-log.md`'s 2026-08-18 entry.
+**Moved here 2026-08-18 from `starter context/FoxCS_Instructional_Image_Generation_Guide.md`** — Jay's own starting draft, now the canonical illustration standard for FoxCS, superseding `image-style-guide.md`'s older validated-categorical-palette approach (see that file for why). The description scope below says "the FoxCS introductory Python curriculum," written before this session's multi-course expansion — treat it as applying to all three FoxCS courses (Game I, Game II, Web II), not Python only, until told otherwise. Also extended the same day with a new Section 10.7 (Micro Diagram) and its supporting Section 13/17/18/19/20 updates — a smaller, inline-illustration tier for breaking up lesson-page prose, distinct from the six full standalone template families this doc originally defined — plus **Section 21, a concrete SVG production recipe** for actually hand-coding Micro Diagrams (coordinates, color tokens, arrow/label conventions, a QA checklist), proven against two real examples in `illustration-examples-gallery.html`. See `../decisions-log.md`'s 2026-08-18 entry.
 
 **Where this lives, per Jay (2026-08-18): this is authoring/teacher-side reference material, never distributed to students.** Same status as every other file in `02-authoring-system/` (`lesson-schema.md`, `authoring-workflow.md`, and the rest) — it stays out of `courses/<course>/content/` entirely. Images are generated separately, using this guide, and only the **finished image files** (plus their required alt text and text-equivalent, per Section 14) go into a lesson's actual `content/` folder alongside the instructional HTML. This guide itself, its production prompts, and its metadata records never ship to a student.
 
@@ -948,3 +948,72 @@ Micro Diagram example: `lesson_02_01_micro_variable_box_v01.png`
 - Keep code exact and readable.
 - Provide all essential content outside the image as accessible text.
 - Review every image for technical, visual, and instructional accuracy.
+
+---
+
+## 21. SVG Production Recipe for Micro Diagrams
+
+**Added 2026-08-18.** Appended as a new section rather than inserted earlier, to avoid renumbering Sections 1-20 (several are already cross-referenced by number elsewhere in this repo). This section is the concrete, repeatable recipe for hand-coding a Micro Diagram (Section 10.7) as inline SVG — proven against two real examples (`02-authoring-system/illustration-examples-gallery.html`: Variable, Decomposition), not theoretical.
+
+### 21.1 Why SVG, and only for this one tier
+
+Micro Diagrams are simple by design: one visual metaphor, 0-2 short labels, no title, no code panel, no takeaway. That simplicity is exactly what makes hand-coded SVG the right production method for this tier specifically: it hits the guide's exact spec every time — exact hex colors, exact shapes, zero risk of AI-garbled label text. **This does not extend to the six full template families in Section 10.1-10.6.** Those are genuinely complex, multi-panel, code-heavy compositions where AI generation (Sections 16-17) remains the right tool. SVG is a Micro Diagram technique, not a replacement for the whole illustration system.
+
+### 21.2 Canvas and coordinate conventions
+
+- Default canvas: `viewBox="0 0 700 280"`. This matches the ~700-760px column-width guidance from Section 10.7 and gives enough height for a labeled box or a small branching structure without going tall/multi-panel. Adjust the height for a genuinely wider or narrower composition, but keep it one landscape or near-square frame.
+- Leave real margin inside the frame before the first and after the last shape — nothing should start at `x="0"` or touch an edge. In practice: keep at least 15-20px of clear space around the outermost shapes on every side. This is what "generous padding" (Section 10.7's size rule) actually means in coordinates, not just a principle to remember.
+
+### 21.3 Shape recipe — boxes and containers
+
+```text
+<rect rx="14-20" fill="#dce8f8" stroke="#3d73c7" stroke-width="2.5-3" />
+```
+
+- `rx`: 18-20 for a primary/larger box, 12-14 for a smaller secondary box, so the rounding stays proportional to size rather than looking identical on every shape.
+- `fill`: always `#dce8f8` (blue-muted) for a structural container, per the semantic color system (Section 4.2) — blue means concept/structure.
+- `stroke`: always `#3d73c7` (blue-standard). Thicker (3) for a primary shape, thinner (2.5) for smaller satellite shapes, so the eye still reads which one is "main."
+
+### 21.4 Arrow recipe
+
+- Shaft: `<line>`, `stroke="#1457d9"` (blue-strong), `stroke-width="3"`.
+- Arrowhead: a small `<polygon>` triangle at the line's end, roughly 14px wide by 16px tall, pointed in the direction of travel. **Use an explicit polygon, not an SVG `<marker>` element** — markers are less predictable to hand-tune and less portable if this SVG is ever copy-pasted or exported elsewhere; a plain polygon is simple, visible in the raw markup, and easy to nudge.
+- **Fan-out pattern** (one thing becoming several, e.g. Decomposition): branch from a single point partway along the main shaft into multiple arrows, rather than drawing several separate parallel arrows from the source shape. Reads as "one becomes many" much more clearly than parallel arrows do. See the Decomposition example for the exact coordinates.
+
+### 21.5 Labels and values (text)
+
+- `font-family`: always `Consolas, monospace`, even for a plain-English label — this visually signals "this came from real code or real data," consistent with how code renders everywhere else on FoxCS lesson pages.
+- A **structural label** (a name attached to something, e.g. a variable name): `fill="#17365f"` (navy-standard), `font-weight="bold"`, `font-size` roughly 34-36.
+- A **value sitting inside a container**: `fill="#138a3d"` (green-strong), `font-weight="bold"`, `font-size` roughly 40-44 — slightly larger than the label, since it's the "payload" and should read as the most important thing inside its own box.
+- `text-anchor="middle"`, and hand-compute the `y` position against the actual box coordinates (box `y` + box `height / 2` + roughly 12-14 for baseline correction) — don't eyeball it, calculate it from the real rect coordinates so it's genuinely centered.
+- **Stay at 0-2 labels total, full stop.** If a diagram seems to need a third word to make sense on its own, it has outgrown the Micro Diagram tier — either simplify the metaphor further, or it should be a real Concept Breakdown instead.
+
+### 21.6 Wrapper and embedding pattern
+
+```html
+<svg class="micro-diagram" viewBox="0 0 700 280" role="img" aria-label="[a real one-sentence description of what the image actually shows]">
+  ...
+</svg>
+```
+
+```css
+.micro-diagram { display: block; width: 100%; max-width: 620px; height: auto; margin: 1.4rem auto; }
+```
+
+- `role="img"` and a real, specific `aria-label` are required every time, not optional — this is the image's accessible text equivalent per Section 14. "A box labeled score with an arrow pointing into it, and the value 100 sitting inside" is a real label; "variable diagram" is not.
+- The `.micro-diagram` CSS class is what makes the SVG scale responsively and sit centered with real vertical margin. Reuse this exact class/rule across lessons rather than redefining sizing per page.
+- **No surrounding `<div class="concept-card">` or similar bordered wrapper.** Per Section 10.7, a Micro Diagram must not compete visually with the page's existing card system — it drops directly into the flow of a term card, paragraph, or list item.
+
+### 21.7 QA checklist before calling one done
+
+- Uses only the guide's real hex tokens (Section 5.1) — never an eyeballed or approximate color.
+- Zero baked-in explanatory sentences; 0-2 short labels, maximum.
+- No title, no takeaway, no corner label anywhere in the SVG.
+- Real padding around every shape — nothing touches the frame edge.
+- A real, specific `aria-label` — not a placeholder, not just the concept name.
+- Actually rendered and checked in a browser at the real lesson column width (`max-width: 760px`), not just eyeballed in the source.
+
+### 21.8 Where new examples go
+
+- **Prove a new metaphor in `02-authoring-system/illustration-examples-gallery.html` first** if there's any real doubt about whether it reads clearly, using the same "prove the mechanic before deploying it" principle as `component-library/index.html` (see that file's own header comment for why — a fabricated placeholder that turned out broken once deployed is exactly the mistake this principle exists to prevent).
+- **Deployed Micro Diagrams live inline in the lesson's own instructional HTML**, directly in the flow of the prose they illustrate (inside the relevant term card, paragraph, or section) — never as a separately linked-out image file a student has to click through to.

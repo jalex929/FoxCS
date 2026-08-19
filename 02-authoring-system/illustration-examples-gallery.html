@@ -1,0 +1,68 @@
+<!-- FoxCS Illustration Examples Gallery — added 2026-08-18.
+     This is a REFERENCE TOOL, not lesson content, same status/purpose as
+     ../component-library/index.html (proven mechanic, kept separate from
+     deployed content so nothing here is mistaken for real authored material).
+     Every SVG below is a real, working Micro Diagram (instructional-image-guide.md
+     Section 10.7), hand-coded to that guide's exact semantic color tokens
+     (Section 5.1), not eyeballed. Open this file directly in a browser. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FoxCS Illustration Examples Gallery</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 820px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #17365f; border-bottom: 3px solid #3d73c7; padding-bottom: 0.4rem; }
+  h2 { font-family: Verdana, Arial, sans-serif; color: #17365f; margin-top: 0; }
+  .intro { color: #445; margin-bottom: 2rem; }
+  .intro code { background: #edf0f3; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  .example { border: 1px solid #ccd3dd; border-radius: 8px; padding: 1.3rem 1.5rem; margin: 1rem 0 2rem; }
+  .example-meta { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: bold; color: #3d73c7; margin-bottom: 0.6rem; }
+  .example-desc { font-size: 0.95rem; color: #445; margin-bottom: 1rem; }
+  .example-desc code { background: #edf0f3; padding: 0.1rem 0.3rem; border-radius: 3px; font-family: Consolas, monospace; }
+  .micro-diagram { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; }
+  .where { font-size: 0.85rem; color: #7b8491; margin-top: 0.8rem; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>FoxCS Illustration Examples Gallery</h1>
+
+<div class="intro">
+Working examples of the illustration system defined in <code>instructional-image-guide.md</code>. <strong>This page is a reference tool, not lesson content.</strong> Every example below is a real, deployed pattern (linked at the bottom of each card to where it actually lives), shown here on its own so the visual language can be reviewed and reused without hunting through a full lesson page.
+</div>
+
+<div class="example">
+<div class="example-meta">Micro Diagram &middot; Concept: Variable</div>
+<div class="example-desc">A named location holding a value. The label (<code>score</code>) stays connected to the box; the value inside (<code>100</code>) is what can change. Matches <code>instructional-image-guide.md</code> Section 12.2's own spec: "a named location, a label connected to a value, a value that may change while the name remains stable." Zero baked-in explanation text, exactly two labels (the variable name and its value), blue for structure, green for the value per the semantic color system.</div>
+<svg class="micro-diagram" viewBox="0 0 700 280" role="img" aria-label="A box labeled score with an arrow pointing into it, and the value 100 sitting inside the box.">
+  <text x="350" y="55" text-anchor="middle" font-family="Consolas, monospace" font-size="36" font-weight="bold" fill="#17365f">score</text>
+  <line x1="350" y1="72" x2="350" y2="105" stroke="#1457d9" stroke-width="3"/>
+  <polygon points="350,113 340,97 360,97" fill="#1457d9"/>
+  <rect x="230" y="115" width="240" height="130" rx="20" fill="#dce8f8" stroke="#3d73c7" stroke-width="3"/>
+  <text x="350" y="197" text-anchor="middle" font-family="Consolas, monospace" font-size="44" font-weight="bold" fill="#138a3d">100</text>
+</svg>
+<div class="where">Not yet deployed in a real lesson — Python's Unit 02 (Variables &amp; Data) isn't built yet. This is the reference example for when it is.</div>
+</div>
+
+<div class="example">
+<div class="example-meta">Micro Diagram &middot; Concept: Decomposition</div>
+<div class="example-desc">One big problem splitting into smaller, separately-solvable pieces. No labels at all here, the surrounding lesson text (term name + definition) already carries the explanation, so the image stays purely visual.</div>
+<svg class="micro-diagram" viewBox="0 0 700 280" role="img" aria-label="A large box splits into three smaller connected boxes, showing one big problem breaking into smaller pieces.">
+  <rect x="60" y="80" width="140" height="120" rx="18" fill="#dce8f8" stroke="#3d73c7" stroke-width="3"/>
+  <line x1="200" y1="140" x2="322" y2="140" stroke="#1457d9" stroke-width="3"/>
+  <line x1="330" y1="140" x2="462" y2="50" stroke="#1457d9" stroke-width="3"/>
+  <line x1="330" y1="140" x2="462" y2="140" stroke="#1457d9" stroke-width="3"/>
+  <line x1="330" y1="140" x2="462" y2="230" stroke="#1457d9" stroke-width="3"/>
+  <polygon points="470,50 456,44 456,56" fill="#1457d9"/>
+  <polygon points="470,140 456,134 456,146" fill="#1457d9"/>
+  <polygon points="470,230 456,224 456,236" fill="#1457d9"/>
+  <rect x="470" y="15" width="70" height="70" rx="14" fill="#dce8f8" stroke="#3d73c7" stroke-width="2.5"/>
+  <rect x="470" y="105" width="70" height="70" rx="14" fill="#dce8f8" stroke="#3d73c7" stroke-width="2.5"/>
+  <rect x="470" y="195" width="70" height="70" rx="14" fill="#dce8f8" stroke="#3d73c7" stroke-width="2.5"/>
+</svg>
+<div class="where">Live in <code>../../shared/unit_00_onboarding_level1/lesson_00_05_computational_thinking/01_instruction.html</code> (and the Level 2 copy), inside the Decomposition term card.</div>
+</div>
+
+</body>
+</html>
