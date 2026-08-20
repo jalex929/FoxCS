@@ -136,6 +136,27 @@ Every `.journal-box` must do one of the two things explicitly, never leave it im
 
 Never ship a `.journal-box` that just says "save what you write" without picking one of these two and making it concrete on the page itself.
 
+## Rule: Every Student-Facing HTML Page Gets the Top Menu, No Exceptions (added 2026-08-20)
+
+Per Jay: **every HTML page a student will actually see needs the sticky top menu**, not just the main instruction page of a lesson. This was a real, large gap found live — every page across Unit 0 already had it, but every single page in Python's Unit 01 (both the current-pattern lessons and the older ones) had only a bottom `.page-nav` footer and a separate `00_table_of_contents.html` a student would have to click back to. That's not good enough — the menu needs to be reachable from wherever the student currently is, the same way it already works in Unit 0.
+
+**For a course unit (not Unit 0), the top menu is scoped to the whole unit, mirroring Unit 0's own pattern exactly** — not just the current lesson's own numbered files. List every lesson in the unit (linking to that lesson's `01_instruction.html`) plus the unit project, grouped under the unit's own name, using the identical `.unit-menu-wrap` / `<details>` / `.menu-check` HTML/CSS/JS already proven in Unit 0 — copy it verbatim rather than re-deriving it. See `shared/unit_00_onboarding_level1/lesson_00_01_welcome/01_instruction.html` for the reference markup and `unit_00_overview.html` for the reference hub-page treatment.
+
+**Completion checkmarks use a per-unit localStorage key** (e.g. `foxcs_python_unit01_progress`, following the `foxcs_unit00_level1_progress` / `foxcs_unit00_level2_progress` naming pattern), keyed by lesson folder name (`lesson_01_01_what_programs_do`, etc.).
+
+**Added 2026-08-20, extended per Jay: each lesson in the menu must expand to show its own activities, and the lesson's checkmark only lights up once ALL of them are done — not just one step.** A lesson entry in the menu is a nested `<details class="lesson-entry">` (its own `<summary>` carries the lesson's aggregate checkmark via `data-lesson-group`), containing a `.lesson-steps` list of that lesson's actual files (instruction, flashcards, vocab quiz, practice, mastery check, feedback, and anything else it has), each with its own `.step-check[data-lesson][data-step]`. This is what makes "easy to identify what to do next" literal — a student can open any lesson's entry right there in the menu and see exactly which of its steps are done and which aren't, without navigating anywhere.
+
+The storage shape is nested per lesson: `{ "lesson_01_01_what_programs_do": { "vocab_quiz": true, "practice": true, "mastery_check": true } }`, not a flat boolean. A `REQUIRED_STEPS_FOR_LESSON_DONE` array (e.g. `['vocab_quiz', 'practice', 'mastery_check']` — the steps that actually have a real completion signal; `feedback` is tracked individually but intentionally excluded from what's required for the lesson's own aggregate checkmark, and untracked `.py`-only steps like `application.py`/`project.py` are listed as plain links with a small "can't auto-check" note rather than a checkmark slot, so the menu is still honest about what it can and can't detect) is checked with `.every()` to decide whether the lesson-level checkmark lights up.
+
+**Only each step's own real completion action writes that step's key** — `markStepDone(lessonKey, stepKey)`, called from inside that page's actual save/complete function (vocab quiz's `saveWork()`, practice's `saveWork()`, the mastery check's `markComplete()`), never from a page-load handler. Every other page (including the lesson's own instruction page) only *reads and renders* — see `courses/python/content/unit_01_what_is_programming/lesson_01_01_what_programs_do/05_mastery_check.html` (`markStepDone()`/`renderUnitMenuChecks()`, the write+read reference) and `01_instruction.html` (the read-only render block) — copy both verbatim rather than re-deriving them. **Watch the CSS selector**: the top-level flat lesson links live at `.unit-menu-section > a`, not `.unit-menu-panel > a` — the extra nesting level from `.unit-menu-section` matters, a real bug caught live (every flat sibling link collapsed onto one inline row until this was fixed).
+
+**Every page in the unit gets this menu, including:**
+- Every numbered file within every lesson (instruction, flashcards, vocab quiz, practice, mastery check, project, feedback, table of contents) — not just `01_instruction.html`.
+- The unit's own overview/hub page.
+- The unit's project instructions page.
+
+This applies going forward to every unit being built across every course, not just something to retrofit into what already exists once and forget. When scoping a new lesson-build task (for a fork or otherwise), include "add the unit-wide top menu to every file" as a required step from the start, the same way `.page-nav` and real link text already are — don't treat it as a separate cleanup pass.
+
 ## Applies Beyond Unit 0
 
 This whole pattern (page-nav footer, group tags, hub-page nav, the insertion checklist) should be the starting template for Units 1+ in every course, not something reinvented per course. When authoring `courses/<course>/content/unit_NN_slug/`, follow this same structure from the start rather than retrofitting it after the fact the way Unit 0 needed.
