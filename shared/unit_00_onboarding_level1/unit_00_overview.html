@@ -1,7 +1,25 @@
 <!-- FoxCS: Game Programming I. Unit 0 Overview, Level 1 edition. Plain, functional styling
      on purpose, matching courses/python/content/unit_01_what_is_programming/unit_01_overview.html.
-     Grouped into labeled sections (added 2026-08-18 per Jay) so the lesson list has visual
-     structure, not one flat undifferentiated list -- the groups mirror the real arc of the unit. -->
+
+     Sections redesigned 2026-08-18 per Jay: the "group" level of hierarchy (between Unit and
+     Lesson) is now consistently called a SECTION in class names, comments, and
+     02-authoring-system/lesson-navigation-standards.md. Previously the section-label text
+     rendered smaller than a lesson's own title, which read as backwards -- a section heading
+     should visually outrank the lessons inside it. Sections are now bordered boxes (same
+     visual language as .step in kickoff/01_avatar_instructions.html) with a bigger, bolder
+     label, so the box edge itself creates the "extra space after a section's last lesson"
+     Jay asked for, rather than relying on margin alone. See that doc for the full rationale.
+
+     Top Unit Menu added 2026-08-18 per Jay: a sticky dropdown at the top of every page in this
+     unit (this page included) listing every section/lesson with a live checkmark, so a student
+     can jump to any part of the unit from anywhere, not just prev/next. Checkmarks are backed
+     by localStorage (key foxcs_unit00_level1_progress), set the moment a student's browser
+     loads that lesson's own page -- see the script at the bottom of this file and
+     lesson-navigation-standards.md's "Top Unit Menu and Completion Checkmarks" section for why
+     visiting is the completion signal here (Unit 0 is mostly non-graded reading, not a save-
+     gated task, so "reached the page" is the honest, available signal). This is a convenience
+     indicator for the student, not a data source for grading -- nothing here is submitted or
+     read by 05-grader/. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,81 +30,162 @@
   h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
   h2 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; margin-top: 2rem; }
   .badge { display: inline-block; background: #bbd4f2; color: #1a3a5c; font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; padding: 0.2rem 0.7rem; border-radius: 3px; margin-bottom: 0.5rem; }
-  .group { margin-top: 1.8rem; }
-  .group-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.6rem; }
+  .section { border: 1px solid #ccd3dd; border-radius: 10px; padding: 1.3rem 1.4rem 1.5rem; margin-top: 2.2rem; }
+  .section:first-of-type { margin-top: 2rem; }
+  .section-label { font-family: Verdana, Arial, sans-serif; font-size: 1.2rem; font-weight: bold; color: #17365f; border-left: 5px solid #1a5aa8; padding-left: 0.7rem; margin-bottom: 1.1rem; }
   .lesson-list { list-style: none; padding: 0; margin: 0; }
-  .lesson-list li { border: 1px solid #ccd3dd; border-radius: 8px; padding: 0.9rem 1.2rem; margin-bottom: 0.7rem; }
+  .lesson-list li { display: flex; align-items: flex-start; gap: 0.7rem; border: 1px solid #ccd3dd; border-radius: 8px; padding: 0.9rem 1.2rem; margin-bottom: 0.7rem; background: #fff; }
+  .lesson-list li:last-child { margin-bottom: 0; }
+  .lesson-check { display: inline-flex; align-items: center; justify-content: center; width: 1.3rem; height: 1.3rem; border: 1.5px solid #ccd3dd; border-radius: 50%; flex-shrink: 0; margin-top: 0.15rem; font-size: 0.8rem; color: transparent; }
+  .lesson-check.done { background: #2f7a2f; border-color: #2f7a2f; color: white; }
+  .lesson-body { flex: 1; min-width: 0; }
   .lesson-list a { font-weight: bold; color: #1a5aa8; text-decoration: none; font-family: Verdana, Arial, sans-serif; }
   .lesson-list a:hover { text-decoration: underline; }
   .lesson-desc { color: #445; font-size: 0.92rem; margin-top: 0.3rem; }
   .start-nav { margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid #dde3ea; text-align: center; }
   .start-link { display: inline-block; font-family: Verdana, Arial, sans-serif; font-weight: bold; background: #1a5aa8; color: white; text-decoration: none; padding: 0.7rem 1.6rem; border-radius: 6px; }
   .start-link:hover { background: #12467f; }
+  .unit-menu-wrap { position: sticky; top: 0; z-index: 20; background: #fff; border: 1px solid #dde3ea; border-radius: 0 0 8px 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .unit-menu-toggle { cursor: pointer; padding: 0.7rem 1.3rem; font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a5aa8; font-size: 0.92rem; list-style: none; user-select: none; }
+  .unit-menu-toggle::-webkit-details-marker { display: none; }
+  .unit-menu-toggle:hover { background: #f4f6f9; }
+  .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
+  .unit-menu-section { margin-top: 0.9rem; }
+  .unit-menu-section:first-child { margin-top: 0.6rem; }
+  .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
+  .unit-menu-panel a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
+  .unit-menu-panel a:hover { background: #eef4fb; }
+  .menu-check { display: inline-block; width: 1.05rem; height: 1.05rem; border: 1.5px solid #ccd3dd; border-radius: 50%; flex-shrink: 0; font-size: 0.72rem; line-height: 1rem; text-align: center; color: transparent; }
+  .menu-check.done { background: #2f7a2f; border-color: #2f7a2f; color: white; }
 </style>
 </head>
 <body>
+
+<div class="unit-menu-wrap">
+<details class="unit-menu">
+  <summary class="unit-menu-toggle">☰ Unit 0 Menu</summary>
+  <nav class="unit-menu-panel">
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Getting Started</div>
+      <a href="lesson_00_01_welcome/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_01_welcome"></span>0.1 Welcome to Game Programming I</a>
+      <a href="lesson_00_02_how_learning_works/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_02_how_learning_works"></span>0.2 How Learning Works</a>
+      <a href="lesson_00_03_using_your_tools/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_03_using_your_tools"></span>0.3 Using Your Tools</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Thinking Like a Builder</div>
+      <a href="lesson_00_04_troubleshooting_is_learning/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_04_troubleshooting_is_learning"></span>0.4 Troubleshooting Is Learning</a>
+      <a href="lesson_00_05_computational_thinking/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_05_computational_thinking"></span>0.5 Computational Thinking</a>
+      <a href="lesson_00_06_problem_solving/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_06_problem_solving"></span>0.6 How Problem-Solving Works</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Working With Others</div>
+      <a href="lesson_00_07_getting_unstuck/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_07_getting_unstuck"></span>0.7 Getting Unstuck</a>
+      <a href="lesson_00_08_academic_integrity/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_08_academic_integrity"></span>0.8 Academic Integrity</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Kickoff Activity</div>
+      <a href="kickoff/01_avatar_instructions.html"><span class="menu-check" data-lesson="kickoff_avatar"></span>Make Your Avatar</a>
+      <a href="kickoff/02_self_intro_slide.html"><span class="menu-check" data-lesson="kickoff_slide"></span>Self-Intro Slide</a>
+    </div>
+  </nav>
+</details>
+</div>
 
 <span class="badge">Game Programming I · Unit 0</span>
 <h1>Course Onboarding</h1>
 
 <p>Welcome to Game Programming I. Before Unit 1 begins, this unit gets you set up: how the course works, your tools, how to solve problems and get unstuck, and academic integrity. There's no unit project, your journal entries along the way are this unit's reflective work.</p>
 
-<div class="group">
-<div class="group-label">Getting Started</div>
+<div class="section">
+<div class="section-label">Getting Started</div>
 <ul class="lesson-list">
   <li>
+    <span class="lesson-check" data-lesson="lesson_00_01_welcome"></span>
+    <div class="lesson-body">
     <a href="lesson_00_01_welcome/01_instruction.html">0.1 Welcome to Game Programming I</a>
     <div class="lesson-desc">What this course is, and the MDA framework you'll use all year.</div>
+    </div>
   </li>
   <li>
+    <span class="lesson-check" data-lesson="lesson_00_02_how_learning_works"></span>
+    <div class="lesson-body">
     <a href="lesson_00_02_how_learning_works/01_instruction.html">0.2 How Learning Works</a>
     <div class="lesson-desc">What mastery actually means, and how practice adjusts to what you need.</div>
+    </div>
   </li>
   <li>
+    <span class="lesson-check" data-lesson="lesson_00_03_using_your_tools"></span>
+    <div class="lesson-body">
     <a href="lesson_00_03_using_your_tools/01_instruction.html">0.3 Using Your Tools</a>
     <div class="lesson-desc">Confirming Python and VS Code are working correctly.</div>
+    </div>
   </li>
 </ul>
 </div>
 
-<div class="group">
-<div class="group-label">Thinking Like a Builder</div>
+<div class="section">
+<div class="section-label">Thinking Like a Builder</div>
 <ul class="lesson-list">
   <li>
+    <span class="lesson-check" data-lesson="lesson_00_04_troubleshooting_is_learning"></span>
+    <div class="lesson-body">
     <a href="lesson_00_04_troubleshooting_is_learning/01_instruction.html">0.4 Troubleshooting Is Learning</a>
     <div class="lesson-desc">A real process for when something breaks, instead of guessing.</div>
+    </div>
   </li>
   <li>
+    <span class="lesson-check" data-lesson="lesson_00_05_computational_thinking"></span>
+    <div class="lesson-body">
     <a href="lesson_00_05_computational_thinking/01_instruction.html">0.5 Introduction to Computational Thinking</a>
     <div class="lesson-desc">Decomposition, pattern recognition, abstraction, algorithmic thinking.</div>
+    </div>
   </li>
   <li>
+    <span class="lesson-check" data-lesson="lesson_00_06_problem_solving"></span>
+    <div class="lesson-body">
     <a href="lesson_00_06_problem_solving/01_instruction.html">0.6 How Problem-Solving Works</a>
     <div class="lesson-desc">A five-step process for tackling a new problem.</div>
+    </div>
   </li>
 </ul>
 </div>
 
-<div class="group">
-<div class="group-label">Working With Others</div>
+<div class="section">
+<div class="section-label">Working With Others</div>
 <ul class="lesson-list">
   <li>
+    <span class="lesson-check" data-lesson="lesson_00_07_getting_unstuck"></span>
+    <div class="lesson-body">
     <a href="lesson_00_07_getting_unstuck/01_instruction.html">0.7 Getting Unstuck</a>
     <div class="lesson-desc">What to try before asking for help, and how to ask well.</div>
+    </div>
   </li>
   <li>
+    <span class="lesson-check" data-lesson="lesson_00_08_academic_integrity"></span>
+    <div class="lesson-body">
     <a href="lesson_00_08_academic_integrity/01_instruction.html">0.8 Academic Integrity: Doing Your Own Work</a>
     <div class="lesson-desc">Why it matters, partner work, helping others the right way, AI use, and what happens if the line gets crossed.</div>
+    </div>
   </li>
 </ul>
 </div>
 
-<div class="group">
-<div class="group-label">Kickoff Activity</div>
+<div class="section">
+<div class="section-label">Kickoff Activity</div>
 <ul class="lesson-list">
   <li>
+    <span class="lesson-check" data-lesson="kickoff_avatar"></span>
+    <div class="lesson-body">
     <a href="kickoff/01_avatar_instructions.html">Make Your Avatar</a>
-    <div class="lesson-desc">A short, fun MakeCode Arcade activity and a one-slide self-introduction.</div>
+    <div class="lesson-desc">A short, fun MakeCode Arcade activity.</div>
+    </div>
+  </li>
+  <li>
+    <span class="lesson-check" data-lesson="kickoff_slide"></span>
+    <div class="lesson-body">
+    <a href="kickoff/02_self_intro_slide.html">Self-Intro Slide</a>
+    <div class="lesson-desc">A one-slide self-introduction using your new avatar.</div>
+    </div>
   </li>
 </ul>
 </div>
@@ -94,6 +193,20 @@
 <div class="start-nav">
   <a href="lesson_00_01_welcome/01_instruction.html" class="start-link">Start Lesson 0.1: Welcome →</a>
 </div>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'foxcs_unit00_level1_progress';
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+  document.querySelectorAll('[data-lesson]').forEach(function(el) {
+    if (done[el.dataset.lesson]) {
+      el.classList.add('done');
+      el.textContent = '✓';
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
