@@ -1,6 +1,27 @@
-# Grader (not yet built)
+# Grader
 
-This is a placeholder. The grading pipeline itself is real software (file validation → execution → hidden tests → static analysis → rubric scoring → feedback drafting → similarity analysis → proficiency-consistency review → XLSX export → teacher approval) and is a separate build from curriculum authoring. Per the phase order in `../00-project-overview/source-material/braindump.md`, the sequence is: confirm structure → define authoring process → build a small complete curriculum sample → *then* build/pilot the grader against real submissions. We're still in the first two phases.
+## Architecture, decided 2026-08-18: two tiers, two machines
+
+Jay's teacher machine (school) has cmd/PowerShell and Python, but **no Claude Code, no ChatGPT, no Claude products** — Copilot only, and Jay wants to avoid relying on it. Jay's home machine has Claude Code. The grading design splits along exactly that line, and it turns out to split cleanly along a line the content already has:
+
+- **School machine, stdlib-only Python, no AI, no network — `school-side/auto_grade.py`.** Grades the content that's *structurally* auto-gradable: the four HTML pages that save themselves with a `_completed` suffix and carry either a hidden `foxcs-telemetry` JSON block (vocab quiz, practice — attempts, correctness, drill IDs, all already logged by the page itself) or hidden timestamp spans (mastery check's unlock/complete times). This script never judges quality — it reads facts the page already recorded about itself. It also writes a `needs_review_manifest.csv` listing every file it deliberately did *not* grade (project code, application code, mastery-check written answers), so nothing gets silently skipped. Verified against the real fixture in `sample-submissions/` — see that folder's README for what the fixture represents.
+- **Home machine, Claude Code — everything in `needs_review_manifest.csv`.** Short-response, code, and project work need the holistic judgment `feedback-and-grading-spec.md` was written for (rubric preservation, best-fit scoring, evidence-based feedback voice, human-review triggers). That spec is Claude Code's context when grading these; it isn't reimplemented as rules in a script. Jay's own instinct (2026-08-18) was that trying to force this tier into regex/command-prompt grading would be worse than just using Claude Code where it's actually available — that's the design here, not a compromise.
+
+**The Release Gate still applies to both tiers.** `auto_grade.py`'s output is a report, not a released grade — see `../01-privacy-and-governance/data-boundaries.md`. Nothing reaches a student until Jay approves it, regardless of which machine produced it.
+
+**Tests:** `school-side/tests/test_auto_grade.py` (stdlib `unittest`, 21 tests) covers every extraction rule in isolation (telemetry parsing, malformed JSON, missing files) plus an end-to-end run against the real fixture in `sample-submissions/`, asserting the exact values documented in that fixture's persona. Run with `python -m unittest discover -s 05-grader/school-side/tests -v`. `.github/workflows/grader-tests.yml` runs this same suite in CI on every push touching the grader code — **code correctness only**, it never touches real student data, since none lives in this repo.
+
+**Spreadsheet output, decided 2026-08-18:** `auto_grade_report.csv` and `needs_review_manifest.csv` are already spreadsheet-native — CSV opens directly in Excel or imports straight into Google Sheets, no database layer needed. Jay's own call: prefer landing straight in a spreadsheet over standing up Supabase or similar, unless a real need for one shows up later. These two CSVs are meant to feed **the teacher spreadsheet** described in `../06-data-and-spreadsheets/` (not yet built) once that exists, rather than being a dead-end report.
+
+**Not decided:** whether `auto_grade.py` should ever run *inside* GitHub Actions against real (codenamed) submissions pushed to this repo, rather than run locally on the school machine. That's a data-boundary/retention decision (see `../01-privacy-and-governance/data-boundaries.md`'s still-open Retention question), not just a CI question — flagging it here rather than deciding it silently. The CI workflow that exists today only runs the test suite against synthetic and fixture data, never real submissions.
+
+**Not built yet, and out of scope for `auto_grade.py`:** the codename-swap-on-download script (`../01-privacy-and-governance/codename-policy.md`'s "Tooling Needed" section) — `auto_grade.py` assumes it's already running against codename-swapped folders, it doesn't do that swap itself. Also not built: getting the two reports (`auto_grade_report.csv`, `needs_review_manifest.csv`) plus the raw needs-review files from the school machine to the home machine — the repo itself (commit at school, pull at home) is the obvious sync path given everything else here already goes through git, but that workflow hasn't been walked end-to-end yet.
+
+Everything below this line is the original, broader design intent this two-tier split grew out of — kept for reference, most of it still applies to the home-machine/Claude Code tier specifically.
+
+---
+
+The grading pipeline itself is real software (file validation → execution → hidden tests → static analysis → rubric scoring → feedback drafting → similarity analysis → proficiency-consistency review → XLSX export → teacher approval) and is a separate build from curriculum authoring. Per the phase order in `../00-project-overview/source-material/braindump.md`, the sequence is: confirm structure → define authoring process → build a small complete curriculum sample → *then* build/pilot the grader against real submissions. We're still in the first two phases.
 
 ## Feedback and Grading Spec — Adopted 2026-08-06
 

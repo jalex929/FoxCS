@@ -1,0 +1,31 @@
+name: Grader tests
+
+# Runs the auto-grader's own test suite (05-grader/school-side/tests/) on
+# every push/PR that touches the grader code. This is code-correctness CI
+# only — it never touches real student submissions or student data, since
+# none of that lives in this repo (see 01-privacy-and-governance/data-
+# boundaries.md's Release Gate and the still-open retention question there).
+# A separate, not-yet-built workflow would be needed if Jay decides real
+# codenamed submissions should ever be pushed to this repo for CI to grade
+# automatically — that's a data-boundary decision, not just a CI one, and
+# hasn't been made yet.
+
+on:
+  push:
+    paths:
+      - '05-grader/school-side/**'
+      - '.github/workflows/grader-tests.yml'
+  pull_request:
+    paths:
+      - '05-grader/school-side/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Run auto_grade.py test suite
+        run: python -m unittest discover -s 05-grader/school-side/tests -v
