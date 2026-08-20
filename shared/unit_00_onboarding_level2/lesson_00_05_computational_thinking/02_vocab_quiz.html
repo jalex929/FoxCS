@@ -98,20 +98,24 @@
   <nav class="unit-menu-panel">
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Getting Started</div>
-      <a href="../lesson_00_01_welcome/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_01_welcome"></span>0.1 Welcome to Game Programming I</a>
+      <a href="../lesson_00_01_welcome/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_01_welcome"></span>0.1 Welcome</a>
       <a href="../lesson_00_02_how_learning_works/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_02_how_learning_works"></span>0.2 How Learning Works</a>
       <a href="../lesson_00_03_using_your_tools/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_03_using_your_tools"></span>0.3 Using Your Tools</a>
     </div>
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Thinking Like a Builder</div>
       <a href="../lesson_00_04_troubleshooting_is_learning/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_04_troubleshooting_is_learning"></span>0.4 Troubleshooting Is Learning</a>
-      <a href="01_instruction.html" class="current"><span class="menu-check" data-lesson="lesson_00_05_computational_thinking"></span>0.5 Computational Thinking</a>
+      <a href="01_instruction.html" class="current"><span class="menu-check" data-lesson="lesson_00_05_computational_thinking"></span>0.5 Introduction to Computational Thinking</a>
       <a href="../lesson_00_06_problem_solving/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_06_problem_solving"></span>0.6 How Problem-Solving Works</a>
     </div>
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Working With Others</div>
       <a href="../lesson_00_07_getting_unstuck/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_07_getting_unstuck"></span>0.7 Getting Unstuck</a>
-      <a href="../lesson_00_08_academic_integrity/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_08_academic_integrity"></span>0.8 Academic Integrity</a>
+      <a href="../lesson_00_08_academic_integrity/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_08_academic_integrity"></span>0.8 Academic Integrity: Doing Your Own Work</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Choosing Your Path</div>
+      <a href="../lesson_00_09_choosing_your_pathway/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_09_choosing_your_pathway"></span>0.9 Choosing Your Pathway</a>
     </div>
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Kickoff Activity</div>
@@ -385,7 +389,7 @@ function updateSaveGate() {
 
 buildQuiz();
 
-const UNIT_MENU_STORAGE_KEY = 'foxcs_unit00_level1_progress';
+const UNIT_MENU_STORAGE_KEY = 'foxcs_unit00_level2_progress';
 function renderUnitMenuChecks() {
   let done = {};
   try { done = JSON.parse(localStorage.getItem(UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }

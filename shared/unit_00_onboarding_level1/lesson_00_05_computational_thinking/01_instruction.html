@@ -24,6 +24,7 @@
   .quick-check .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
   .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
   .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+  ol.steps li { margin: 0.5rem 0; }
   .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
   .page-nav-note { color: #555; margin-bottom: 0.6rem; }
   .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
@@ -196,23 +197,29 @@
 <p>Every project you build this year is really a large problem made out of many small ones. Students who struggle the most usually aren't struggling with the basic building blocks, they're trying to solve the whole big problem at once instead of breaking it down first.</p>
 <p>When you get stuck later this year, one of the first useful questions to ask yourself is: what's the smallest piece of this I could try to solve first? That question is decomposition, and it's often the fastest way out of feeling stuck.</p>
 
+<h2>What To Do Next</h2>
+<ol class="steps">
+  <li><a href="02_vocab_quiz.html">Continue to the Vocab Quiz</a> to check that these four terms stuck, then save it.</li>
+</ol>
+
 <div class="page-nav">
   <div class="page-nav-note">Nothing to save on this page, it's reading only.</div>
   <div class="page-nav-links">
     <a href="../lesson_00_04_troubleshooting_is_learning/01_instruction.html" class="page-nav-prev">← Back: Troubleshooting Is Learning</a>
     <a href="../unit_00_overview.html" class="page-nav-menu">Unit 0 Menu</a>
-    <a href="../lesson_00_06_problem_solving/01_instruction.html" class="page-nav-next">Next: How Problem-Solving Works →</a>
+    <a href="02_vocab_quiz.html" class="page-nav-next">Next: Vocab Quiz →</a>
   </div>
 </div>
 
 <script>
 (function() {
+  // Read-only here on purpose (2026-08-18) — this lesson has a real vocab
+  // quiz now (02_vocab_quiz.html), so THIS_LESSON's checkmark is set there,
+  // on a successful save, not just by opening this reading page. See
+  // lesson-navigation-standards.md's "Interactive Checks" section.
   var STORAGE_KEY = 'foxcs_unit00_level1_progress';
-  var THIS_LESSON = 'lesson_00_05_computational_thinking';
   var done = {};
   try { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
-  done[THIS_LESSON] = true;
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch (e) {}
   document.querySelectorAll('[data-lesson]').forEach(function(el) {
     if (done[el.dataset.lesson]) {
       el.classList.add('done');
