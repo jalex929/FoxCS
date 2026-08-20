@@ -15,16 +15,23 @@
      This is read-only: it only checks for the presence of specific filenames,
      never opens or modifies anything.
 
-     Honest limitation, not silently glossed over: 02_example_01.py,
-     06_application.py, 08_project.py, and 10_mastery_check.py are saved
-     directly in VS Code (Ctrl+S) with a fixed filename — per
+     10_mastery_check.py added to the same tracked set, 2026-08-20 per Jay —
+     a deliberate, narrow exception to "No Self-Naming" (see
      01-privacy-and-governance/codename-policy.md and
-     02-authoring-system/mvp-unit-folder-structure.md's "No Self-Naming" rule,
-     students never rename or create their own files, so there's no renaming
-     mechanism available to mark those files done the way the HTML pages can
-     rename themselves on save. Those rows are shown as not auto-trackable
-     rather than faked with a heuristic (e.g., file size/edit time) that could
-     be wrong.
+     02-authoring-system/mvp-unit-folder-structure.md): 09_mastery_check.html's
+     own save instructions now tell the student to do a one-time "Save As"
+     to 10_mastery_check_completed.py once they've answered all four
+     questions, specifically so this page can detect it too. This does not
+     reopen self-naming generally — application.py and project.py are
+     unaffected and stay genuinely not-auto-trackable, since there's no
+     natural "I'm done" moment for those the way there is for a mastery
+     check's password-gated completion step.
+
+     Honest limitation, not silently glossed over: 02_example_01.py,
+     06_application.py, and 08_project.py are saved directly in VS Code
+     (Ctrl+S) with a fixed filename and no renaming mechanism, so those rows
+     stay not-auto-trackable rather than faked with a heuristic (e.g., file
+     size/edit time) that could be wrong.
 
      FIXED 2026-08-11 per Jay: file links weren't visually distinct as
      clickable (color + bold only, underline was hover-only). Now underlined
@@ -192,9 +199,9 @@
     <div class="toc-num">1.4.8b</div>
     <div class="toc-body">
       <div class="toc-filename"><span class="toc-type">Mastery Check</span> 10_mastery_check.py</div>
-      <div class="toc-desc">Your mastery check answers, written in VS Code. Save with Ctrl+S when done.</div>
+      <div class="toc-desc">Your mastery check answers, written in VS Code. Once you've answered all four, use "Save As" to save it as 10_mastery_check_completed.py.</div>
     </div>
-    <div class="status-badge untracked">Can't auto-check</div>
+    <div class="status-badge pending">Not yet</div>
   </div>
 
   <div class="toc-row" id="row-11">
@@ -212,13 +219,16 @@
 
 <script>
 // Known filenames that indicate a step was saved/completed, keyed by the
-// row they belong to. Only HTML pages with a save-in-place mechanism that
-// adds the _completed suffix are checkable — see header comment for why the
-// plain .py files can't be included here.
+// row they belong to. HTML pages with a save-in-place mechanism add the
+// _completed suffix automatically; row-10 is the one exception, where the
+// student does a one-time manual "Save As" per 09_mastery_check.html's own
+// instructions — see header comment for why the other plain .py files
+// can't be included here.
 const COMPLETED_TARGETS = {
   'row-04': '04_vocab_quiz_completed.html',
   'row-05': '05_practice_completed.html',
   'row-09': '09_mastery_check_completed.html',
+  'row-10': '10_mastery_check_completed.py',
   'row-11': '11_feedback_completed.html'
 };
 
@@ -278,7 +288,7 @@ async function checkProgress() {
     }
   }
 
-  statusEl.textContent = 'Checked ' + dirHandle.name + ' — ' + doneCount + ' of ' + total + ' auto-trackable files done. (06, 08, and 10 are VS Code files and can\'t be checked this way — open them to see your own work.)';
+  statusEl.textContent = 'Checked ' + dirHandle.name + ' — ' + doneCount + ' of ' + total + ' auto-trackable files done. (06 and 08 are VS Code files and can\'t be checked this way — open them to see your own work.)';
 }
 </script>
 

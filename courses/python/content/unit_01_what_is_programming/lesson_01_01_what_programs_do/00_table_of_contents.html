@@ -21,8 +21,13 @@
      mastery-check-standards.md, a .py file is fine even for a no-code lesson —
      the student writes prose answers in comments, same mechanism VS Code
      already uses everywhere else) — it's saved directly in VS Code (Ctrl+S)
-     with a fixed filename, so like every other .py file in this system it
-     can't be auto-tracked here; shown as "Can't auto-check" rather than faked.
+     with a fixed filename.
+
+     06_mastery_check.py IS tracked here, though, same exception as
+     lesson_01_04's 10_mastery_check.py (added 2026-08-20 per Jay, see
+     mvp-unit-folder-structure.md): 05_mastery_check.html's own instructions
+     tell the student to do a one-time manual "Save As" to
+     06_mastery_check_completed.py once all four questions are answered.
 
      Part numbering (1.1.N, per mvp-unit-folder-structure.md's "Part Numbering"
      section): 1.1.1 instruction, 1.1.2 flashcards, 1.1.3 vocab quiz, 1.1.4
@@ -128,9 +133,9 @@
     <div class="toc-num">1.1.5b</div>
     <div class="toc-body">
       <div class="toc-filename"><span class="toc-type">Mastery Check</span> 06_mastery_check.py</div>
-      <div class="toc-desc">Your mastery check answers, written in VS Code. Save with Ctrl+S when done.</div>
+      <div class="toc-desc">Your mastery check answers, written in VS Code. Once you've answered all four, use "Save As" to save it as 06_mastery_check_completed.py.</div>
     </div>
-    <div class="status-badge untracked">Can't auto-check</div>
+    <div class="status-badge pending">Not yet</div>
   </div>
 
   <div class="toc-row" id="row-07">
@@ -148,13 +153,14 @@
 
 <script>
 // Known filenames that indicate a step was saved/completed, keyed by the
-// row they belong to. Only HTML pages with a save-in-place mechanism that
-// adds the _completed suffix are checkable — see header comment for why the
-// plain .py file can't be included here.
+// row they belong to. HTML pages add the _completed suffix automatically;
+// row-06 is the one exception, a manual one-time "Save As" per
+// 05_mastery_check.html's own instructions — see header comment.
 const COMPLETED_TARGETS = {
   'row-03': '03_vocab_quiz_completed.html',
   'row-04': '04_practice_completed.html',
   'row-05': '05_mastery_check_completed.html',
+  'row-06': '06_mastery_check_completed.py',
   'row-07': '07_feedback_completed.html'
 };
 
@@ -214,7 +220,7 @@ async function checkProgress() {
     }
   }
 
-  statusEl.textContent = 'Checked ' + dirHandle.name + ' — ' + doneCount + ' of ' + total + ' auto-trackable files done. (06 is a VS Code file and can\'t be checked this way — open it to see your own work.)';
+  statusEl.textContent = 'Checked ' + dirHandle.name + ' — ' + doneCount + ' of ' + total + ' files done.';
 }
 </script>
 

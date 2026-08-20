@@ -48,6 +48,7 @@ import csv
 import json
 import re
 import sys
+from datetime import datetime
 from pathlib import Path
 
 # Files matching these suffixes carry a hidden foxcs-telemetry JSON block
@@ -73,8 +74,25 @@ TELEMETRY_BLOCK_RE = re.compile(
     r'<script type="application/json" id="foxcs-telemetry"[^>]*>(.*?)</script>',
     re.DOTALL,
 )
-UNLOCK_TIME_RE = re.compile(r'unlocked_at:([0-9T:\-Z]+)')
-COMPLETE_TIME_RE = re.compile(r'completed_at:([0-9T:\-Z]+)')
+UNLOCK_TIME_RE = re.compile(r'unlocked_at:([0-9T:.\-Z]+)')
+COMPLETE_TIME_RE = re.compile(r'completed_at:([0-9T:.\-Z]+)')
+
+
+def _parse_iso_timestamp(value):
+    """Parses a JS `Date.toISOString()` value, with or without milliseconds.
+
+    Real browser-generated timestamps always include milliseconds
+    (e.g. "2026-08-20T22:41:36.123Z"); the original hand-typed sample
+    fixture omitted them, which masked a real bug where this raised
+    ValueError and silently produced an empty
+    mastery_check_minutes_unlocked_to_complete for every real submission.
+    """
+    for fmt in ("%Y-%m-%dT%H:%M:%S.%fZ", "%Y-%m-%dT%H:%M:%SZ"):
+        try:
+            return datetime.strptime(value, fmt)
+        except ValueError:
+            continue
+    raise ValueError(f"Unrecognized timestamp format: {value!r}")
 REFLECTION_TEXTAREA_RE = re.compile(
     r'<textarea[^>]*id="memoryTrick"[^>]*>(.*?)</textarea>', re.DOTALL
 )
@@ -85,7 +103,7 @@ REFLECTION_TEXTAREA_RE = re.compile(
 NEEDS_REVIEW_PATTERNS = [
     (re.compile(r'project\.py$'), "project code — holistic rubric grading"),
     (re.compile(r'application\.py$'), "application code — holistic rubric grading"),
-    (re.compile(r'mastery_check\.py$'), "mastery check written answers — grade against the lesson's mastery_check_KEY.md"),
+    (re.compile(r'mastery_check(_completed)?\.py$'), "mastery check written answers — grade against the lesson's mastery_check_KEY.md"),
     (re.compile(r'example.*\.py$'), "view-only reference file — not a submission, skip"),
     (re.compile(r'project\.html$'), "project instructions/checklist — spot-check tier claims against the code"),
 ]
@@ -193,9 +211,7 @@ def grade_mastery_check(folder: Path, row: dict):
     row["mastery_check_completed_at"] = complete_m.group(1) if complete_m else ""
     if unlock_m and complete_m:
         try:
-            from datetime import datetime
-            fmt = "%Y-%m-%dT%H:%M:%SZ"
-            delta = datetime.strptime(complete_m.group(1), fmt) - datetime.strptime(unlock_m.group(1), fmt)
+            delta = _parse_iso_timestamp(complete_m.group(1)) - _parse_iso_timestamp(unlock_m.group(1))
             row["mastery_check_minutes_unlocked_to_complete"] = round(delta.total_seconds() / 60, 1)
         except ValueError:
             row["mastery_check_minutes_unlocked_to_complete"] = ""

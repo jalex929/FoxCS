@@ -186,6 +186,23 @@ class TestGradeMasteryCheck(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
+    def test_minutes_computed_with_milliseconds(self):
+        # Real browser-generated new Date().toISOString() values always
+        # include milliseconds — this is the format that actually reaches
+        # the grader in practice, not the millisecond-free format used
+        # elsewhere in this file for readability. Regression test for a
+        # real bug the Lesson 01.1 rebuild found: the original regex/strptime
+        # silently dropped this field to "" for every real submission.
+        html = (
+            '<span id="unlockTime">unlocked_at:2026-08-20T22:41:36.123Z</span>'
+            '<span id="completeTime">completed_at:2026-08-20T22:41:45.987Z</span>'
+        )
+        write(self.folder, "09_mastery_check_completed.html", html)
+        row = {}
+        auto_grade.grade_mastery_check(self.folder, row)
+        self.assertEqual(row["mastery_check_saved"], "Y")
+        self.assertEqual(row["mastery_check_minutes_unlocked_to_complete"], round(9.864 / 60, 1))
+
     def test_minutes_computed(self):
         html = (
             '<span id="unlockTime">unlocked_at:2026-08-11T15:10:03Z</span>'
@@ -263,6 +280,23 @@ class TestCollectNeedsReview(unittest.TestCase):
         self.assertNotIn("00_table_of_contents.html", flagged)
         self.assertNotIn("01_instruction.html", flagged)
         self.assertNotIn("04_vocab_quiz_completed.html", flagged)
+
+    def test_flags_mastery_check_py_with_or_without_completed_suffix(self):
+        # 2026-08-20: 10_mastery_check.py can now be manually saved-as
+        # 10_mastery_check_completed.py (see mvp-unit-folder-structure.md).
+        # Both the pre- and post-rename form are real submissions needing
+        # review -- the pattern must match either.
+        for name in ("10_mastery_check.py", "10_mastery_check_completed.py"):
+            with self.subTest(name=name):
+                folder = Path(tempfile.mkdtemp())
+                try:
+                    write(folder, name, "x")
+                    rows = []
+                    auto_grade.collect_needs_review(folder, "TEST", "lesson", rows)
+                    self.assertEqual({r["file"] for r in rows}, {name})
+                finally:
+                    import shutil
+                    shutil.rmtree(folder)
 
 
 @unittest.skipUnless(REAL_FIXTURE.is_dir(), "real sample-submissions fixture not found")
