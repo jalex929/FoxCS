@@ -1,0 +1,266 @@
+<!-- Teacher-only presentation tool, not student-facing. Built 2026-08-20 per Jay:
+     a single screen he can project and click through live with a room of
+     students, toggling instantly between all three courses without opening
+     new files. Content is drawn directly from the real, already-built Unit 0
+     onboarding content (shared/unit_00_onboarding_level1/ for Game I,
+     shared/unit_00_onboarding_level2/ for Game II + Web Design II) and each
+     course's course-plan.md Certification Framing section -- nothing invented.
+     This is a presenter's script/cue-card set, not a replacement for the real
+     student-facing Unit 0 lessons, which stay the actual source of record.
+
+     Game II and Web Design II share a room and a class period (see
+     02-authoring-system/lesson-navigation-standards.md and
+     shared/unit_00_onboarding_level2/lesson_00_09_choosing_your_pathway/ for
+     why), so their two tabs sit adjacent and use a shared teal "Level 2 room"
+     accent behind each pathway's own color, making it fast to flip between
+     them for the same room. Three distinct course accents, chosen to avoid
+     clashing with each other: Game I blue (#1a5aa8, matches its existing
+     badge), Game II purple (#4a3aa7, matches its existing Unity-pathway
+     accent), Web Design II green (#138a3d, a distinct existing semantic
+     token from instructional-image-guide.md's palette -- Web Dev's own
+     pathway-box styling elsewhere reuses Game I's blue, which would clash
+     here, so this tool gives it its own identity instead). -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Day 1 Orientation Presenter: FoxCS Teacher Materials</title>
+<style>
+  :root {
+    --game1: #1a5aa8; --game1-bg: #eef4fb; --game1-dark: #123f78;
+    --game2: #4a3aa7; --game2-bg: #f2effa; --game2-dark: #33297a;
+    --web2: #138a3d; --web2-bg: #eaf7ee; --web2-dark: #0d6129;
+    --ink: #1a1a1a; --paper: #fdfdfb;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, 'Times New Roman', serif; background: var(--paper); color: var(--ink); }
+
+  .tab-bar { position: sticky; top: 0; z-index: 30; display: flex; gap: 0; background: #17365f; padding: 0.6rem 0.8rem; box-shadow: 0 2px 10px rgba(0,0,0,0.25); }
+  .tab-btn { font-family: Verdana, Arial, sans-serif; font-weight: bold; font-size: 1.05rem; padding: 0.9rem 1.6rem; border: none; border-radius: 8px 8px 0 0; cursor: pointer; color: white; opacity: 0.6; margin-right: 0.4rem; transition: opacity 0.15s; }
+  .tab-btn:hover { opacity: 0.85; }
+  .tab-btn.active { opacity: 1; }
+  .tab-btn[data-course="game1"] { background: var(--game1); }
+  .tab-btn[data-course="game2"] { background: var(--game2); }
+  .tab-btn[data-course="web2"] { background: var(--web2); }
+  .room-note { margin-left: auto; align-self: center; color: #cdd8e8; font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; max-width: 220px; text-align: right; line-height: 1.3; }
+
+  .course-panel { display: none; padding: 2rem 3rem 4rem; max-width: 1100px; margin: 0 auto; }
+  .course-panel.active { display: block; }
+
+  .course-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+  .course-title { font-family: Verdana, Arial, sans-serif; font-weight: bold; font-size: 2.3rem; margin: 0; }
+  .course-sub { font-family: Verdana, Arial, sans-serif; font-size: 1.1rem; color: #445; }
+
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-top: 1.8rem; }
+  @media (max-width: 820px) { .card-grid { grid-template-columns: 1fr; } }
+  .card { border-radius: 14px; padding: 1.5rem 1.7rem; border: 2px solid; }
+  .card-label { font-family: Verdana, Arial, sans-serif; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.7rem; }
+  .card-body { font-size: 1.25rem; line-height: 1.55; }
+  .card-body p { margin: 0 0 0.7rem; }
+  .card-body p:last-child { margin-bottom: 0; }
+  .card.wide { grid-column: 1 / -1; }
+
+  .card-list { margin: 0; padding-left: 1.4rem; font-size: 1.2rem; line-height: 1.6; }
+  .card-list li { margin: 0.4rem 0; }
+
+  .pathway-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 0.8rem; }
+  @media (max-width: 820px) { .pathway-split { grid-template-columns: 1fr; } }
+  .pathway-box { border-radius: 10px; padding: 1.1rem 1.3rem; border: 2px solid; }
+  .pathway-box .pathway-title { font-family: Verdana, Arial, sans-serif; font-weight: bold; font-size: 1.15rem; margin-bottom: 0.4rem; }
+
+  .source-note { margin-top: 2.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; color: #666; }
+  .source-note code { background: #f4f6f9; padding: 0.1rem 0.35rem; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="tab-bar">
+  <button class="tab-btn active" data-course="game1" onclick="showCourse('game1')">Game Programming I</button>
+  <button class="tab-btn" data-course="game2" onclick="showCourse('game2')">Game Programming II</button>
+  <button class="tab-btn" data-course="web2" onclick="showCourse('web2')">Web Design II</button>
+  <div class="room-note">Game II &amp; Web Design II share a room and period — their tabs sit next to each other so you can flip straight across.</div>
+</div>
+
+<!-- ============ GAME PROGRAMMING I ============ -->
+<div class="course-panel active" id="panel-game1">
+  <div class="course-head">
+    <h1 class="course-title" style="color: var(--game1-dark);">Game Programming I</h1>
+    <div class="course-sub">Everyone learns Python, the whole way through — no pathway choice here.</div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card wide" style="background: var(--game1-bg); border-color: var(--game1);">
+      <div class="card-label" style="color: var(--game1-dark);">What This Course Actually Is</div>
+      <div class="card-body">
+        <p>Not just a Python-syntax class — a <strong>game design class</strong> that happens to use Python as the tool for building things. Every unit connects the code to a real idea about how games work and how they're designed to feel a certain way to play.</p>
+        <p>By the end of the year: real, working programs and games built from scratch, and preparation for a real industry certification — <strong>IT Specialist – Python</strong>.</p>
+      </div>
+    </div>
+
+    <div class="card" style="background: var(--game1-bg); border-color: var(--game1);">
+      <div class="card-label" style="color: var(--game1-dark);">The MDA Framework</div>
+      <div class="card-body">
+        <p>The lens used all year, starting today, before any real code: <strong>Mechanics</strong> (the rules) → <strong>Dynamics</strong> (what happens when players interact with those rules) → <strong>Aesthetics</strong> (how it feels to play).</p>
+        <p>Have them name an M/D/A for a game they already know — that's the whole idea.</p>
+      </div>
+    </div>
+
+    <div class="card" style="background: var(--game1-bg); border-color: var(--game1);">
+      <div class="card-label" style="color: var(--game1-dark);">Tools, Already Set Up</div>
+      <div class="card-body"><p><strong>Python + VS Code</strong> — pre-installed, students just confirm it works. Get them saving constantly with <strong>Ctrl+S</strong> from day one; it's the habit that saves the most pain all year.</p></div>
+    </div>
+
+    <div class="card" style="background: var(--game1-bg); border-color: var(--game1);">
+      <div class="card-label" style="color: var(--game1-dark);">How Practice Works Here</div>
+      <div class="card-body"><p>Practice adjusts to what each student actually needs — nobody is ever told they're "behind" or on a lower track. The work you get is the work that helps you right now.</p></div>
+    </div>
+
+    <div class="card" style="background: var(--game1-bg); border-color: var(--game1);">
+      <div class="card-label" style="color: var(--game1-dark);">When Something Breaks</div>
+      <div class="card-body"><p>Troubleshooting is learning, not a sign something went wrong. Five-step process: understand it → plan → try the smallest version → check against what you expected → revise. Errors are information, not failure.</p></div>
+    </div>
+
+    <div class="card" style="background: var(--game1-bg); border-color: var(--game1);">
+      <div class="card-label" style="color: var(--game1-dark);">Getting Unstuck</div>
+      <div class="card-body"><p>Asking a classmate first is genuinely a good option — not a fallback, as long as they know how to ask well (specific question, what they already tried). Then the teacher.</p></div>
+    </div>
+
+    <div class="card wide" style="background: #fdf1f1; border-color: #b33;">
+      <div class="card-label" style="color: #8a1f1f;">Academic Integrity — Say This Directly</div>
+      <div class="card-body">
+        <p><strong>To start the year, we will not be using AI in our work.</strong> Not code, not written responses, no exceptions until explicitly stated otherwise for a specific assignment.</p>
+        <p>Partner work: both people actually work, or only the person who did the work gets credit. Helping a classmate means explaining how to think through it — never handing over your file to copy.</p>
+        <p>If the line gets crossed: a call/email home → a logged incident in Aspen leading to a conversation with the Disciplinary Team → a 0% that can't be made up. <strong>An honest, wrong attempt always earns more credit than a cheated "correct" one.</strong> That's the whole point of how this is set up — say that part out loud.</p>
+      </div>
+    </div>
+
+    <div class="card wide" style="background: var(--game1-bg); border-color: var(--game1);">
+      <div class="card-label" style="color: var(--game1-dark);">Day-1 Kickoff Activity</div>
+      <div class="card-body"><p>MakeCode Arcade avatar (short, fun, hands-on) + a one-slide self-introduction in their own Google Slides file. Good icebreaker while you're doing the logistics above with the room.</p></div>
+    </div>
+  </div>
+
+  <div class="source-note">Sourced from <code>shared/unit_00_onboarding_level1/</code> and <code>courses/python/course-plan.md</code>. Full student-facing version: <code>shared/unit_00_onboarding_level1/unit_00_overview.html</code>.</div>
+</div>
+
+<!-- ============ GAME PROGRAMMING II ============ -->
+<div class="course-panel" id="panel-game2">
+  <div class="course-head">
+    <h1 class="course-title" style="color: var(--game2-dark);">Game Programming II</h1>
+    <div class="course-sub">Shares a room and period with Web Design II — the pathway choice below isn't tied to which class a student is enrolled in.</div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card wide" style="background: var(--game2-bg); border-color: var(--game2);">
+      <div class="card-label" style="color: var(--game2-dark);">Say This First, To the Whole Room</div>
+      <div class="card-body">
+        <p>"You're not split into two separate classes making two separate decisions. You're one room, and everyone here picks whichever pathway actually excites them — <strong>Web Dev</strong> or <strong>Game Design/Unity</strong>." A Game II student can choose Web Dev. A Web II student can choose Game Design/Unity. Frame it warm and exciting, not just as a rule.</p>
+      </div>
+    </div>
+
+    <div class="card" style="background: var(--game2-bg); border-color: var(--game2);">
+      <div class="card-label" style="color: var(--game2-dark);">Tools, Already Set Up</div>
+      <div class="card-body"><p>Both pathways' tools are pre-installed and already confirmed — <strong>Unity Hub</strong> for Game Design/Unity, <strong>VS Code + browser</strong> for Web Dev. Students haven't chosen yet, so both get confirmed before the choice is made.</p></div>
+    </div>
+
+    <div class="card" style="background: var(--game2-bg); border-color: var(--game2);">
+      <div class="card-label" style="color: var(--game2-dark);">Shared Foundation (Same as Game I)</div>
+      <div class="card-body"><p>Same non-R/C/E-labeled adaptive practice model, same troubleshooting-is-learning framing, same 5-step problem-solving process, same "ask a classmate first, then teacher" culture, same academic-integrity policy (no AI to start the year, partner-work rules, same consequence sequence).</p></div>
+    </div>
+
+    <div class="card wide">
+      <div class="card-label" style="color: var(--game2-dark);">The Pathway Choice</div>
+      <div class="pathway-split">
+        <div class="pathway-box" style="background: var(--game2-bg); border-color: var(--game2);">
+          <div class="pathway-title" style="color: var(--game2-dark);">Game Design / Unity</div>
+          <p style="margin:0;">Design and build real games in <strong>Unity</strong> using <strong>C#</strong> — mechanics, player experience, level design, moving from 2D into 3D partway through the year. Everyone starts with a few weeks of game-design basics and MakeCode Arcade before Unity itself, since Unity is new territory for almost everyone.</p>
+        </div>
+        <div class="pathway-box" style="background: var(--web2-bg); border-color: var(--web2);">
+          <div class="pathway-title" style="color: var(--web2-dark);">Web Dev</div>
+          <p style="margin:0;">Real, usable websites and web apps with <strong>HTML, CSS, and JavaScript</strong> — design for a real person using what you build, test it, revise it. A student who already knows HTML/CSS well can move faster into JavaScript.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card wide" style="background: var(--game2-bg); border-color: var(--game2);">
+      <div class="card-label" style="color: var(--game2-dark);">Certification Target</div>
+      <div class="card-body"><p><strong>Unity Certified User Programmer — required.</strong> Every student gets the full progression toward this. <strong>Unity Certified User Artist — achievable, not guaranteed.</strong> Real opportunity to add it if class time is used well; frame this supportively and honestly, not as a threat — completion depends on how the time gets used, and the content won't wait.</p></div>
+    </div>
+
+    <div class="card wide" style="background: var(--game2-bg); border-color: var(--game2);">
+      <div class="card-label" style="color: var(--game2-dark);">Day-1 Kickoff Activity</div>
+      <div class="card-body"><p>Same as every FoxCS course: MakeCode Arcade avatar + a one-slide self-introduction in their own Google Slides file.</p></div>
+    </div>
+  </div>
+
+  <div class="source-note">Sourced from <code>shared/unit_00_onboarding_level2/</code> and <code>courses/game-programming-2/course-plan.md</code>'s Certification Framing section. Full student-facing version: <code>shared/unit_00_onboarding_level2/unit_00_overview.html</code>.</div>
+</div>
+
+<!-- ============ WEB DESIGN II ============ -->
+<div class="course-panel" id="panel-web2">
+  <div class="course-head">
+    <h1 class="course-title" style="color: var(--web2-dark);">Web Design II</h1>
+    <div class="course-sub">Shares a room and period with Game Programming II — the pathway choice below isn't tied to which class a student is enrolled in.</div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card wide" style="background: var(--web2-bg); border-color: var(--web2);">
+      <div class="card-label" style="color: var(--web2-dark);">Say This First, To the Whole Room</div>
+      <div class="card-body">
+        <p>"You're not split into two separate classes making two separate decisions. You're one room, and everyone here picks whichever pathway actually excites them — <strong>Web Dev</strong> or <strong>Game Design/Unity</strong>." A Web II student can choose Game Design/Unity. A Game II student can choose Web Dev. Frame it warm and exciting, not just as a rule.</p>
+      </div>
+    </div>
+
+    <div class="card" style="background: var(--web2-bg); border-color: var(--web2);">
+      <div class="card-label" style="color: var(--web2-dark);">Tools, Already Set Up</div>
+      <div class="card-body"><p>Both pathways' tools are pre-installed and already confirmed — <strong>VS Code + browser</strong> for Web Dev, <strong>Unity Hub</strong> for Game Design/Unity. Students haven't chosen yet, so both get confirmed before the choice is made.</p></div>
+    </div>
+
+    <div class="card" style="background: var(--web2-bg); border-color: var(--web2);">
+      <div class="card-label" style="color: var(--web2-dark);">Shared Foundation (Same as Game I)</div>
+      <div class="card-body"><p>Same non-R/C/E-labeled adaptive practice model, same troubleshooting-is-learning framing, same 5-step problem-solving process, same "ask a classmate first, then teacher" culture, same academic-integrity policy (no AI to start the year, partner-work rules, same consequence sequence).</p></div>
+    </div>
+
+    <div class="card wide">
+      <div class="card-label" style="color: var(--web2-dark);">The Pathway Choice</div>
+      <div class="pathway-split">
+        <div class="pathway-box" style="background: var(--web2-bg); border-color: var(--web2);">
+          <div class="pathway-title" style="color: var(--web2-dark);">Web Dev</div>
+          <p style="margin:0;">Real, usable websites and web apps with <strong>HTML, CSS, and JavaScript</strong> — design for a real person using what you build, test it, revise it (usability). A student who already knows HTML/CSS well can move faster into JavaScript.</p>
+        </div>
+        <div class="pathway-box" style="background: var(--game2-bg); border-color: var(--game2);">
+          <div class="pathway-title" style="color: var(--game2-dark);">Game Design / Unity</div>
+          <p style="margin:0;">Design and build real games in <strong>Unity</strong> using <strong>C#</strong> — mechanics, player experience, level design, moving from 2D into 3D partway through the year. Everyone starts with a few weeks of game-design basics and MakeCode Arcade before Unity itself.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card wide" style="background: var(--web2-bg); border-color: var(--web2);">
+      <div class="card-label" style="color: var(--web2-dark);">Certification Target</div>
+      <div class="card-body"><p><strong>JavaScript — required.</strong> It's the prerequisite for the second credential, so it comes first regardless of pacing. <strong>HTML5 Application Development — encouraged second credential</strong>, gated by the JavaScript prerequisite — attempted later, once the major application-development sequence is underway.</p></div>
+    </div>
+
+    <div class="card wide" style="background: var(--web2-bg); border-color: var(--web2);">
+      <div class="card-label" style="color: var(--web2-dark);">Day-1 Kickoff Activity</div>
+      <div class="card-body"><p>Same as every FoxCS course: MakeCode Arcade avatar + a one-slide self-introduction in their own Google Slides file.</p></div>
+    </div>
+  </div>
+
+  <div class="source-note">Sourced from <code>shared/unit_00_onboarding_level2/</code> and <code>courses/web-dev/course-plan.md</code>'s Certification Framing section. Full student-facing version: <code>shared/unit_00_onboarding_level2/unit_00_overview.html</code>.</div>
+</div>
+
+<script>
+function showCourse(course) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.course === course));
+  document.querySelectorAll('.course-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + course));
+  try { localStorage.setItem('foxcs_orientation_last_tab', course); } catch (e) {}
+}
+(function() {
+  var last = null;
+  try { last = localStorage.getItem('foxcs_orientation_last_tab'); } catch (e) {}
+  if (last && document.getElementById('panel-' + last)) { showCourse(last); }
+})();
+</script>
+
+</body>
+</html>
