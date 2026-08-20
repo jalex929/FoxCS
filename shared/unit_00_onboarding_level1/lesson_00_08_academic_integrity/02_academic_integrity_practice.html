@@ -1,0 +1,360 @@
+<!-- Fully shared across all three FoxCS courses and both Unit 0 editions, verbatim
+     (except the final page-nav "next" link, which differs by edition the same way
+     01_instruction.html's does). Added 2026-08-20 per Jay: a real check-for-
+     understanding page for Academic Integrity, given the stakes of this content.
+     Reuses the "practice" telemetry pattern (drill_attempt events, per-question
+     Check buttons, Save not gated on full correctness) established in
+     courses/python's 05_practice.html, rather than the vocab-quiz drag-match
+     pattern — this is scenario/policy comprehension, not vocabulary, so a
+     single-select multiple-choice format fits the content better. Every
+     question and its correct answer is grounded directly in 01_instruction.html's
+     actual text (partner work, helping a classmate, AI use, consequences,
+     honest-effort-earns-credit) — nothing invented. Saving as *_practice_completed.html
+     means 05-grader/school-side/auto_grade.py reads this with zero code changes,
+     same as Lesson 0.5's vocab quiz. See lesson-navigation-standards.md's
+     "Interactive Checks" section. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>0.8.2 Check: Academic Integrity: FoxCS</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 780px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; line-height: 1.5; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
+
+  .progress-wrap { margin-bottom: 1.3rem; }
+  .progress-label { font-size: 0.85rem; color: #444; margin-bottom: 0.3rem; }
+  .progress-bar { background: #e2e7ee; border-radius: 6px; height: 8px; overflow: hidden; }
+  .progress-fill { background: #1a5aa8; height: 100%; border-radius: 6px; transition: width 0.3s; }
+
+  .question { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 1.2rem 1.4rem; margin: 1.2rem 0; }
+  .question.answered-correct { border-color: #2f7a2f; background: #f6fbf6; }
+  .question-num { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .question-prompt { font-weight: bold; margin-bottom: 0.9rem; }
+  .option-row { display: flex; align-items: flex-start; gap: 0.6rem; margin: 0.5rem 0; }
+  .option-row input[type="radio"] { margin-top: 0.3rem; flex-shrink: 0; width: 1.05rem; height: 1.05rem; }
+  .option-row label { cursor: pointer; }
+
+  button.check-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 0.8rem; }
+  button.check-btn:hover { background: #12467f; }
+  button.check-btn:disabled { background: #bbb; cursor: not-allowed; }
+
+  .feedback { margin-top: 0.8rem; padding: 0.7rem 0.9rem; border-radius: 5px; display: none; font-size: 0.95rem; }
+  .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+
+  .save-row { text-align: center; margin-top: 1.8rem; }
+  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+  button.save-btn:hover { background: #5c2c00; }
+  .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+  .save-note { font-size: 0.85rem; color: #555; margin-top: 0.4rem; }
+
+  .complete-banner { background: #d7ecd7; border: 2px solid #2f7a2f; color: #1a4a1a; padding: 1rem 1.2rem; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 1.2rem; display: none; }
+  body[data-all-correct="true"] .complete-banner { display: block; }
+
+  .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-menu { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-menu:hover { background: #eef1f5; }
+
+  .unit-menu-wrap { position: sticky; top: 0; z-index: 20; background: #fff; border: 1px solid #dde3ea; border-radius: 0 0 8px 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .unit-menu-toggle { cursor: pointer; padding: 0.7rem 1.3rem; font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a5aa8; font-size: 0.92rem; list-style: none; user-select: none; }
+  .unit-menu-toggle::-webkit-details-marker { display: none; }
+  .unit-menu-toggle:hover { background: #f4f6f9; }
+  .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
+  .unit-menu-section { margin-top: 0.9rem; }
+  .unit-menu-section:first-child { margin-top: 0.6rem; }
+  .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
+  .unit-menu-panel a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
+  .unit-menu-panel a:hover { background: #eef4fb; }
+  .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; }
+  .menu-check { display: inline-block; width: 1.05rem; height: 1.05rem; border: 1.5px solid #ccd3dd; border-radius: 50%; flex-shrink: 0; font-size: 0.72rem; line-height: 1rem; text-align: center; color: transparent; }
+  .menu-check.done { background: #2f7a2f; border-color: #2f7a2f; color: white; }
+</style>
+<script type="application/json" id="foxcs-telemetry" aria-hidden="true">
+{ "page_id": "lesson_00_08_academic_integrity/02_academic_integrity_practice", "opened_at": "", "saves": [], "events": [] }
+</script>
+</head>
+<body data-all-correct="false">
+
+<div class="unit-menu-wrap">
+<details class="unit-menu">
+  <summary class="unit-menu-toggle">☰ Unit 0 Menu</summary>
+  <nav class="unit-menu-panel">
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Getting Started</div>
+      <a href="../lesson_00_01_welcome/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_01_welcome"></span>0.1 Welcome to Game Programming I</a>
+      <a href="../lesson_00_02_how_learning_works/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_02_how_learning_works"></span>0.2 How Learning Works</a>
+      <a href="../lesson_00_03_using_your_tools/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_03_using_your_tools"></span>0.3 Using Your Tools</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Thinking Like a Builder</div>
+      <a href="../lesson_00_04_troubleshooting_is_learning/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_04_troubleshooting_is_learning"></span>0.4 Troubleshooting Is Learning</a>
+      <a href="../lesson_00_05_computational_thinking/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_05_computational_thinking"></span>0.5 Computational Thinking</a>
+      <a href="../lesson_00_06_problem_solving/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_06_problem_solving"></span>0.6 How Problem-Solving Works</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Working With Others</div>
+      <a href="../lesson_00_07_getting_unstuck/01_instruction.html"><span class="menu-check" data-lesson="lesson_00_07_getting_unstuck"></span>0.7 Getting Unstuck</a>
+      <a href="01_instruction.html" class="current"><span class="menu-check" data-lesson="lesson_00_08_academic_integrity"></span>0.8 Academic Integrity</a>
+    </div>
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Kickoff Activity</div>
+      <a href="../kickoff/01_avatar_instructions.html"><span class="menu-check" data-lesson="kickoff_avatar"></span>Make Your Avatar</a>
+      <a href="../kickoff/02_self_intro_slide.html"><span class="menu-check" data-lesson="kickoff_slide"></span>Self-Intro Slide</a>
+    </div>
+  </nav>
+</details>
+</div>
+
+<h1>0.8.2 — Check: Academic Integrity</h1>
+<div class="intro">Five scenarios, based directly on what you just read. Pick the answer that matches the actual policy, click <strong>Check</strong>, and if it's wrong you can try again — the point is that you leave this page actually knowing the answer, not guessing right on the first try.</div>
+
+<div class="complete-banner">All five correct. You're clear on the policy — save below to finish this check.</div>
+
+<div class="progress-wrap">
+  <div class="progress-label"><span id="progressText">0 of 5 correct</span></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+
+<div id="quizContainer"></div>
+
+<div class="save-row">
+  <button class="save-btn" id="saveBtn" onclick="saveWork()">Save My Check</button>
+  <div class="save-status" id="saveStatus"></div>
+  <div class="save-note" id="saveNote">You can save at any point — this records your real path through the questions, including any you're still working out. Getting all five correct is what actually shows you know the policy, though, so keep trying before you move on.</div>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-note">Save above before you leave this page.</div>
+  <div class="page-nav-links">
+    <a href="01_instruction.html" class="page-nav-prev">← Back: Academic Integrity</a>
+    <a href="../unit_00_overview.html" class="page-nav-menu">Unit 0 Menu</a>
+    <a href="../unit_00_overview.html" class="page-nav-next">Back to Unit 0 Overview →</a>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    id: 'partner_work',
+    prompt: 'You and your partner are assigned partner work. Your partner ends up doing almost all of the work while you watch. What actually happens?',
+    options: [
+      { id: 'a', text: 'Both partners get credit, since it was assigned as partner work.' },
+      { id: 'b', text: 'Only the partner who did the work gets credit. You don’t, and you restart the assignment on your own.' },
+      { id: 'c', text: 'Neither partner gets credit, since the partnership broke down.' },
+      { id: 'd', text: 'The teacher splits the credit evenly between both partners.' }
+    ],
+    correct: 'b',
+    explain: 'The lesson states this exactly: only the partner who did the work gets credit. The other partner restarts the assignment on their own — it’s not a surprise rule, it’s stated up front.'
+  },
+  {
+    id: 'helping',
+    prompt: 'A classmate is stuck and asks you for help. What’s the right way to help them?',
+    options: [
+      { id: 'a', text: 'Send them your file so they can see exactly how you did it.' },
+      { id: 'b', text: 'Do the problem for them so they don’t fall behind.' },
+      { id: 'c', text: 'Explain how to think through the problem and help them find their own mistake.' },
+      { id: 'd', text: 'Tell them you can’t help at all, since any help risks crossing a line.' }
+    ],
+    correct: 'c',
+    explain: 'Actually helping means explaining how to think through the problem and pointing at what’s off — not handing over your work, and not refusing to help either. Helping someone find their own mistake is the real skill.'
+  },
+  {
+    id: 'handing_over',
+    prompt: 'If you hand a classmate your code so they can copy it and submit it as their own, what happens to you?',
+    options: [
+      { id: 'a', text: 'Nothing — you didn’t submit anyone else’s work as your own.' },
+      { id: 'b', text: 'A warning, the first time it happens.' },
+      { id: 'c', text: 'You get the same consequence as cheating does, since you enabled it.' },
+      { id: 'd', text: 'A small point deduction on your next assignment.' }
+    ],
+    correct: 'c',
+    explain: 'Handing over work to be copied carries the same consequence as cheating itself — for both people involved, not just whoever submitted the copied work.'
+  },
+  {
+    id: 'ai_use',
+    prompt: 'To start this school year, when are you allowed to use AI tools to help write your code or your written responses for this class?',
+    options: [
+      { id: 'a', text: 'Anytime, as long as you understand what it produced.' },
+      { id: 'b', text: 'Only for written responses, not code.' },
+      { id: 'c', text: 'Whenever you’re stuck and have run out of other options.' },
+      { id: 'd', text: 'Not at all right now — the class starts the year without using AI in your work.' }
+    ],
+    correct: 'd',
+    explain: 'The lesson states this directly: to start the year, AI is not used in your work at all. If that ever changes, your teacher will say so explicitly, for a specific assignment — until you hear that, the answer is no.'
+  },
+  {
+    id: 'honest_effort',
+    prompt: 'A student attempts a problem honestly but gets it wrong. Another student uses AI to submit a perfect answer. Which one earns more credit?',
+    options: [
+      { id: 'a', text: 'The AI-assisted answer, since it’s correct.' },
+      { id: 'b', text: 'Both earn the same amount, since only the final answer is graded.' },
+      { id: 'c', text: 'The honest attempt — effort is part of what’s graded, and AI-generated work earns none.' }
+    ],
+    correct: 'c',
+    explain: 'Genuine effort always earns credit, even when the work is wrong or incomplete — that’s stated as the whole point of how this class is set up. Work generated by AI shows no effort, so it earns none, no matter how correct it looks.'
+  }
+];
+
+let telemetry = { page_id: 'lesson_00_08_academic_integrity/02_academic_integrity_practice', opened_at: new Date().toISOString(), saves: [], events: [] };
+let hasUnsavedWork = false;
+const correctSoFar = new Set();
+const attemptCounts = {};
+
+function writeTelemetryToDom() {
+  let el = document.getElementById('foxcs-telemetry');
+  if (!el) {
+    el = document.createElement('script');
+    el.type = 'application/json';
+    el.id = 'foxcs-telemetry';
+    el.setAttribute('aria-hidden', 'true');
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(telemetry, null, 2);
+}
+writeTelemetryToDom();
+
+window.addEventListener('beforeunload', (e) => {
+  if (hasUnsavedWork) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  QUESTIONS.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'question';
+    card.id = 'q-' + q.id;
+    const optionsHtml = q.options.map(opt =>
+      '<div class="option-row"><input type="radio" name="' + q.id + '" id="' + q.id + '-' + opt.id + '" value="' + opt.id + '">' +
+      '<label for="' + q.id + '-' + opt.id + '">' + opt.text + '</label></div>'
+    ).join('');
+    card.innerHTML =
+      '<div class="question-num">Question ' + (idx + 1) + ' of ' + QUESTIONS.length + '</div>' +
+      '<div class="question-prompt">' + q.prompt + '</div>' +
+      optionsHtml +
+      '<div><button class="check-btn" onclick="checkQuestion(\'' + q.id + '\')">Check</button></div>' +
+      '<div class="feedback" id="fb-' + q.id + '"></div>';
+    container.appendChild(card);
+  });
+}
+
+function checkQuestion(qId) {
+  const q = QUESTIONS.find(x => x.id === qId);
+  const selected = document.querySelector('input[name="' + qId + '"]:checked');
+  const fb = document.getElementById('fb-' + qId);
+  const card = document.getElementById('q-' + qId);
+  if (!selected) {
+    fb.className = 'feedback incorrect';
+    fb.textContent = 'Choose an answer first.';
+    return;
+  }
+  attemptCounts[qId] = (attemptCounts[qId] || 0) + 1;
+  const isCorrect = selected.value === q.correct;
+  telemetry.events.push({
+    type: 'drill_attempt',
+    at: new Date().toISOString(),
+    drill_id: qId,
+    correct: isCorrect,
+    attempt_number: attemptCounts[qId],
+    selected: selected.value
+  });
+  writeTelemetryToDom();
+  hasUnsavedWork = true;
+  if (isCorrect) {
+    fb.className = 'feedback correct';
+    fb.textContent = q.explain;
+    card.classList.add('answered-correct');
+    correctSoFar.add(qId);
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.textContent = 'Not quite. Look again at what the lesson actually said about this, then try another answer.';
+    card.classList.remove('answered-correct');
+    correctSoFar.delete(qId);
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  document.getElementById('progressText').textContent = correctSoFar.size + ' of ' + QUESTIONS.length + ' correct';
+  document.getElementById('progressFill').style.width = ((correctSoFar.size / QUESTIONS.length) * 100) + '%';
+  document.body.dataset.allCorrect = (correctSoFar.size === QUESTIONS.length) ? 'true' : 'false';
+}
+
+buildQuiz();
+
+const UNIT_MENU_STORAGE_KEY = 'foxcs_unit00_level1_progress';
+function renderUnitMenuChecks() {
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem(UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+  document.querySelectorAll('.menu-check[data-lesson]').forEach(function(el) {
+    if (done[el.dataset.lesson]) { el.classList.add('done'); el.textContent = '✓'; }
+  });
+}
+function markLessonDone() {
+  // Only marks the unit-menu checkmark when all five are correct at save time
+  // (not just "attempted") -- same rule as Lesson 0.5's vocab quiz, given the
+  // stakes of this content. Saving itself is never blocked either way.
+  if (correctSoFar.size !== QUESTIONS.length) return;
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem(UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+  done['lesson_00_08_academic_integrity'] = true;
+  try { localStorage.setItem(UNIT_MENU_STORAGE_KEY, JSON.stringify(done)); } catch (e) {}
+  renderUnitMenuChecks();
+}
+renderUnitMenuChecks();
+
+let savedFileHandle = null;
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  const original = decodeURIComponent(parts[parts.length - 1]) || '02_academic_integrity_practice.html';
+  if (original.includes('_completed')) return original;
+  return original.replace(/\.html$/, '_completed.html');
+}
+async function saveWork() {
+  telemetry.saves.push({ at: new Date().toISOString() });
+  writeTelemetryToDom();
+  hasUnsavedWork = false;
+  markLessonDone();
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+  const statusEl = document.getElementById('saveStatus');
+  if (savedFileHandle) {
+    try {
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved as ' + savedFileHandle.name + '.';
+      return;
+    } catch (err) { savedFileHandle = null; }
+  }
+  if ('showSaveFilePicker' in window) {
+    try {
+      savedFileHandle = await window.showSaveFilePicker({ suggestedName: currentFileName(), types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }] });
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved as ' + savedFileHandle.name + '.';
+      return;
+    } catch (err) { if (err.name === 'AbortError') return; }
+  }
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+</script>
+
+</body>
+</html>

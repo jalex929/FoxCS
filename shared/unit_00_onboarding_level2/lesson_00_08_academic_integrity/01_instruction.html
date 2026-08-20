@@ -155,23 +155,29 @@
 <p>Genuine effort always earns credit, even when the work is incomplete or wrong. A real, honest attempt that doesn't fully work is worth more than a submission that skipped the effort entirely, because effort is part of what's actually being graded here, not just the final answer. Using AI to do your work for you shows no effort at all, and earns none.</p>
 <p>Put plainly: even when you don't get it right, trying it yourself will always earn you more points than cheating would. That's true on purpose. It's the whole point of how this is set up.</p>
 
+<h2>What To Do Next</h2>
+<ol class="steps">
+  <li><a href="02_academic_integrity_practice.html">Continue to the Check</a> to make sure this policy is actually clear, then save it.</li>
+</ol>
+
 <div class="page-nav">
   <div class="page-nav-note">Nothing to save on this page, it's reading only.</div>
   <div class="page-nav-links">
     <a href="../lesson_00_07_getting_unstuck/01_instruction.html" class="page-nav-prev">← Back: Getting Unstuck</a>
     <a href="../unit_00_overview.html" class="page-nav-menu">Unit 0 Menu</a>
-    <a href="../lesson_00_09_choosing_your_pathway/01_instruction.html" class="page-nav-next">Next: Choosing Your Pathway →</a>
+    <a href="02_academic_integrity_practice.html" class="page-nav-next">Next: Check →</a>
   </div>
 </div>
 
 <script>
 (function() {
+  // Read-only here on purpose (2026-08-20) — this lesson has a real check now
+  // (02_academic_integrity_practice.html), so THIS_LESSON's checkmark is set
+  // there, on getting all five correct, not just by opening this reading
+  // page. See lesson-navigation-standards.md's "Interactive Checks" section.
   var STORAGE_KEY = 'foxcs_unit00_level2_progress';
-  var THIS_LESSON = 'lesson_00_08_academic_integrity';
   var done = {};
   try { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
-  done[THIS_LESSON] = true;
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch (e) {}
   document.querySelectorAll('[data-lesson]').forEach(function(el) {
     if (done[el.dataset.lesson]) {
       el.classList.add('done');
