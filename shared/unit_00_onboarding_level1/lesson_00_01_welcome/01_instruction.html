@@ -29,6 +29,13 @@
   .pathway-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.5rem; }
   .journal-box { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
   .journal-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #7a4800; margin-bottom: 0.5rem; }
+  .journal-answer { width: 100%; min-height: 5em; font-family: Georgia, serif; font-size: 1rem; padding: 0.6rem; box-sizing: border-box; border: 1px solid #e3cf9a; border-radius: 5px; margin-top: 0.7rem; }
+  .journal-save-row { margin-top: 0.7rem; }
+  button.journal-save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.55rem 1.3rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
+  button.journal-save-btn:hover:not(:disabled) { background: #5c2c00; }
+  button.journal-save-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .journal-save-status { font-size: 0.88rem; color: #2f7a2f; margin-top: 0.4rem; min-height: 1.2em; }
+  .journal-save-note { font-size: 0.82rem; color: #7a4800; margin-top: 0.3rem; }
   ol.steps li { margin: 0.5rem 0; }
   .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
   .page-nav-note { color: #555; margin-bottom: 0.6rem; }
@@ -166,6 +173,13 @@
 <div class="journal-box">
 <div class="journal-label">Journal (50-75 words)</div>
 <p>Pick a game you enjoy. Name one Mechanic (a rule), one Dynamic (something that happens because of that rule), and one Aesthetic (a feeling the game gives you). You'll revisit this answer later in the year, so save what you write.</p>
+<p><strong>Type your answer in the box below, then click "Save My Journal Entry."</strong></p>
+<textarea class="journal-answer" id="journalAnswer" placeholder="Write your answer here." oninput="updateJournalSaveGate()"></textarea>
+<div class="journal-save-row">
+  <button class="journal-save-btn" id="journalSaveBtn" onclick="saveJournal()" disabled>Save My Journal Entry</button>
+  <div class="journal-save-status" id="journalSaveStatus"></div>
+  <div class="journal-save-note" id="journalSaveNote">Write something above to unlock Save.</div>
+</div>
 </div>
 
 <h2>What To Do Next</h2>
@@ -182,6 +196,61 @@
     <a href="../lesson_00_02_how_learning_works/01_instruction.html" class="page-nav-next">Next: How Learning Works →</a>
   </div>
 </div>
+
+<script>
+let journalHasUnsavedWork = false;
+window.addEventListener('beforeunload', function(e) {
+  if (journalHasUnsavedWork) { e.preventDefault(); e.returnValue = ''; }
+});
+function updateJournalSaveGate() {
+  const filled = document.getElementById('journalAnswer').value.trim().length > 0;
+  const btn = document.getElementById('journalSaveBtn');
+  const note = document.getElementById('journalSaveNote');
+  btn.disabled = !filled;
+  note.textContent = filled ? '' : 'Write something above to unlock Save.';
+  journalHasUnsavedWork = true;
+}
+let journalFileHandle = null;
+function journalFileName() {
+  const parts = location.pathname.split('/');
+  const original = decodeURIComponent(parts[parts.length - 1]) || '01_instruction.html';
+  if (original.includes('_completed')) return original;
+  return original.replace(/\.html$/, '_completed.html');
+}
+async function saveJournal() {
+  document.querySelectorAll('textarea').forEach(function(t) { t.textContent = t.value; });
+  journalHasUnsavedWork = false;
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+  const statusEl = document.getElementById('journalSaveStatus');
+  if (journalFileHandle) {
+    try {
+      const writable = await journalFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved as ' + journalFileHandle.name + '.';
+      return;
+    } catch (err) { journalFileHandle = null; }
+  }
+  if ('showSaveFilePicker' in window) {
+    try {
+      journalFileHandle = await window.showSaveFilePicker({ suggestedName: journalFileName(), types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }] });
+      const writable = await journalFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved as ' + journalFileHandle.name + '.';
+      return;
+    } catch (err) { if (err.name === 'AbortError') return; }
+  }
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = journalFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+</script>
 
 <script>
 (function() {

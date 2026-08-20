@@ -1,24 +1,78 @@
-<!-- Plain styling on purpose. See unit_01_overview.html's header comment. Restyle all Unit 01 pages together once Jay's image/style guide lands, not one at a time. -->
+<!-- Rebuilt 2026-08-20 to match lesson_01_04_printing_output's current visual/
+     engine pattern (Georgia body, Verdana headers, .objectives, .concept-card
+     family, embedded quick-checks, .page-nav footer) — see
+     02-authoring-system/mvp-unit-folder-structure.md. Colors per
+     02-authoring-system/design-system.md (the corrected #1a5aa8/#9a5a00
+     palette, not the old #2a78d6/#eda100 pairing this lesson previously used,
+     which measured below the AA contrast threshold with white text).
+     Instructional content (the recipe analogy, the "computers are literal"
+     idea, the game connection, and all 4 key terms) is preserved from the
+     lesson's original draft — only the format/engine changed, plus two new
+     embedded quick-checks and a real-world concept card that weren't in the
+     original. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>01.1 What Programs Do: FoxCS: Python</title>
+<title>1.1.1 What Programs Do: FoxCS: Python</title>
 <style>
   body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
   h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
-  h1 { border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
-  .objectives { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 0.8rem 1.2rem; }
-  .vocab dt { font-weight: bold; color: #1a3a5c; }
-  .vocab dd { margin-bottom: 0.6rem; }
-  .game-tie-in { background: #c5c0e3; border-left: 4px solid #4a3aa7; padding: 0.8rem 1.2rem; margin: 1.2rem 0; }
-  .handoff { background: #f9e1ad; border: 1px solid #eda100; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  code, pre { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
+  pre { padding: 0.8rem 1rem; overflow-x: auto; }
+  .term-list { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0; }
+  .term-card { background: #eef4fb; border: 1px solid #c8d6e8; border-radius: 6px; padding: 0.7rem 1rem; }
+  .term-name { font-weight: bold; color: #1a3a5c; margin-bottom: 0.25rem; }
+  .term-example { margin-top: 0.4rem; font-size: 0.92rem; color: #445; }
+  .term-example strong { color: #1a5aa8; }
+  .term-analogy { margin-top: 0.4rem; font-size: 0.92rem; color: #445; font-style: italic; }
+  .term-analogy strong { color: #4a3aa7; font-style: normal; }
+
+  /* Concept cards — same reusable family as lesson_01_04_printing_output's
+     01_instruction.html. A card is for content with a real, recurring
+     PURPOSE (a real-world parallel, a tie to game design), not a decorative
+     wrapper for an ordinary aside. Rounded on all four corners, flat/static
+     (no hover state), color-coded label distinguishes the type. */
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-family: Verdana, Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card-title { font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.game { background: #f4f2fb; border-color: #ded7f5; }
+  .concept-card.game .concept-card-label { color: #4a3aa7; }
+  .concept-card.real-world { background: #f0f8f5; border-color: #cdeadd; }
+  .concept-card.real-world .concept-card-label { color: #1f5c47; }
+
+  .quick-check { border: 1px solid #ccd3dd; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
+  .quick-check-label { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .quick-check-prompt { margin-bottom: 0.7rem; }
+  .quick-check select { font-family: Consolas, monospace; font-size: 0.95rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .quick-check button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 0.5rem; }
+  .quick-check button:hover { background: #12467f; }
+  .quick-check .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
+  .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+
+  .handoff { background: #f9e1ad; border: 1px solid #9a5a00; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .handoff p:first-child { margin-top: 0; }
   .save-reminder { font-weight: bold; color: #7a3a00; }
+  ol.steps li { margin: 0.5rem 0; }
+
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
 </style>
 </head>
 <body>
 
-<h1>01.1: What Programs Do</h1>
+<h1>1.1.1 — Instruction: What Programs Do</h1>
 
 <div class="objectives">
 <strong>Learning objectives:</strong>
@@ -35,41 +89,138 @@
 <h2>What Is a Program?</h2>
 <p>A <strong>program</strong> is a set of step-by-step instructions that a computer follows, exactly, in order. That's the whole idea. Everything else you learn this year is really just learning more powerful ways to write those instructions.</p>
 
-<p>Think about a recipe. A recipe doesn't just say "make dinner". It breaks the task into exact steps: preheat the oven, chop the onion, add two cups of water. A cook who has never seen the dish before can still follow it, step by step, and produce the same result every time. A program does the same thing for a computer: it breaks a task into exact steps the computer can follow without needing to understand *why*, only *what*.</p>
+<p>Think about a recipe. A recipe doesn't just say "make dinner." It breaks the task into exact steps: preheat the oven, chop the onion, add two cups of water. A cook who has never seen the dish before can still follow it, step by step, and produce the same result every time. A program does the same thing for a computer: it breaks a task into exact steps the computer can follow without needing to understand why, only what.</p>
 
-<p>This matters because computers are extremely literal. A computer does not guess what you probably meant. It does exactly what the instructions say. No more, no less. That's not a limitation to work around; it's the whole reason programs are useful. If a computer improvised, you couldn't trust it to do the same thing twice.</p>
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">A recipe and a computer program are similar because they are both ___.</div>
+  <select id="qc1-select">
+    <option value="">Choose...</option>
+    <option value="a">a set of exact, ordered steps</option>
+    <option value="b">something only an expert can understand</option>
+    <option value="c">a list of ingredients or tools</option>
+    <option value="d">a finished result, like a meal or a working app</option>
+  </select>
+  <button onclick="checkQc1()">Check</button>
+  <div class="feedback" id="qc1-feedback"></div>
+</div>
+
+<h2>Computers Are Very Literal</h2>
+<p>This matters because computers are extremely literal. A computer does not guess what you probably meant. It does exactly what the instructions say, no more, no less. That's not a limitation to work around, it's the whole reason programs are useful. If a computer improvised, you couldn't trust it to do the same thing twice.</p>
+
+<div class="concept-card real-world">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><circle cx="10" cy="16" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="16" r="1" fill="currentColor" stroke="none"/></svg>Real-World Example</div>
+<div class="concept-card-title">A vending machine is a program too</div>
+<p>A vending machine takes your money, checks whether you inserted enough, then either releases the item or shows an error. Every one of those checks and decisions was written ahead of time by a programmer as an exact instruction: "if the amount inserted is less than the price, do not release the item."</p>
+<p>The machine isn't deciding anything in the moment. It's following instructions someone else already wrote, the same way a program running on any computer does.</p>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">A program's instructions say to add two numbers, but the programmer wrote the wrong numbers by mistake. What will the computer display when the program runs?</div>
+  <select id="qc2-select">
+    <option value="">Choose...</option>
+    <option value="a">The result of the instructions exactly as written, mistake included</option>
+    <option value="b">The result the programmer actually meant to get</option>
+    <option value="c">An automatic correction of the mistake</option>
+    <option value="d">Nothing, because the computer will notice the mistake and stop on its own</option>
+  </select>
+  <button onclick="checkQc2()">Check</button>
+  <div class="feedback" id="qc2-feedback"></div>
+</div>
 
 <h2>Where Python Fits In</h2>
-<p><strong>Python</strong> is a programming language. A tool humans use to write instructions in a form a computer can actually carry out. There are many programming languages, the same way there are many spoken languages; they're different ways of writing the same kind of thing: precise, step-by-step instructions.</p>
+<p><strong>Python</strong> is a programming language: a tool humans use to write instructions in a form a computer can actually carry out. There are many programming languages, the same way there are many spoken languages. They're different ways of writing the same kind of thing: precise, step-by-step instructions.</p>
 
-<div class="game-tie-in">
-<strong>Game connection:</strong> Every video game you've ever played is a program. A game is a (very large) set of instructions: when the player presses this button, move the character that direction; when health reaches zero, show the game-over screen. Nothing in a game happens by magic or by the game "wanting" something to happen. Somewhere, a programmer wrote the exact instruction for it. This whole course is about learning to write those instructions yourself, starting from the smallest possible piece.
+<div class="concept-card game">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><line x1="12" y1="10" x2="12" y2="17"/><path d="M7 17h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>Game Connection</div>
+<div class="concept-card-title">Every game you've ever played is a program</div>
+<p>A game is a (very large) set of instructions: when the player presses this button, move the character that direction; when health reaches zero, show the game-over screen. Nothing in a game happens by magic or by the game "wanting" something to happen. Somewhere, a programmer wrote the exact instruction for it.</p>
+<p>This whole course is about learning to write those instructions yourself, starting from the smallest possible piece.</p>
 </div>
 
 <h2>Key Terms</h2>
-<dl class="vocab">
-  <dt>program</dt>
-  <dd>A set of step-by-step instructions a computer follows.</dd>
-  <dt>programmer</dt>
-  <dd>A person who writes code to give computers instructions.</dd>
-  <dt>Python</dt>
-  <dd>A programming language used to write instructions for computers. The one this course uses.</dd>
-  <dt>instruction</dt>
-  <dd>A single step in a program that tells the computer what to do.</dd>
-</dl>
+<div class="term-list">
+  <div class="term-card">
+    <div class="term-name">program</div>
+    <div class="term-def">A set of step-by-step instructions a computer follows, in order.</div>
+    <div class="term-example"><strong>Example:</strong> A calculator app, a video game, and a weather app are all programs. Each one is a set of instructions a computer runs.</div>
+    <div class="term-analogy"><strong>Think of it like:</strong> a recipe. A cook who has never made the dish before can still follow it exactly, step by step, and get the same result every time.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">instruction</div>
+    <div class="term-def">A single step in a program that tells the computer exactly what to do.</div>
+    <div class="term-example"><strong>Example:</strong> "Display this message" or "check whether this number is bigger than zero" are each one instruction.</div>
+    <div class="term-analogy"><strong>Think of it like:</strong> one line in a recipe, such as "preheat the oven to 350 degrees." A whole recipe is a series of instructions; so is a whole program.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">programmer</div>
+    <div class="term-def">A person who writes the instructions that make up a program.</div>
+    <div class="term-example"><strong>Example:</strong> Every app, website, and game you've ever used was written by at least one programmer.</div>
+    <div class="term-analogy"><strong>Think of it like:</strong> the person who writes a recipe, deciding exactly which steps a cook will need to follow.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">Python</div>
+    <div class="term-def">A programming language: a tool for writing instructions in a form a computer can carry out. The one this course uses.</div>
+    <div class="term-example"><strong>Example:</strong> There are many programming languages, the same way there are many spoken languages. This course uses Python.</div>
+    <div class="term-analogy"><strong>Think of it like:</strong> one specific language a recipe could be written in: English, Spanish, or French. Different languages, same idea: precise instructions.</div>
+  </div>
+</div>
 
 <h2>What To Do Next</h2>
-<p>Everything for this lesson is in this same folder, numbered in the order you should do it:</p>
-<ol>
-  <li><strong>02_flashcards.html (optional warm-up):</strong> <a href="02_flashcards.html">Open the flashcards</a> if you want to review the vocabulary first.</li>
-  <li><strong>03_practice.html:</strong> <a href="03_practice.html">Open the practice page</a>. It's interactive. It checks your answers as you go and builds up a record of your work on the page. Save it when you're done (there's a button for that at the end).</li>
-  <li><strong>04_mastery_check.html (do this last):</strong> <a href="04_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher to unlock it.</li>
+<p>Everything for this lesson is numbered in the order you should do it:</p>
+<ol class="steps">
+  <li><strong>02_flashcards.html</strong> (optional warm-up). <a href="02_flashcards.html">Open the flashcards</a> to review the 4 terms above.</li>
+  <li><strong>03_vocab_quiz.html</strong>. <a href="03_vocab_quiz.html">Open the vocab quiz</a>. Match all four terms, get them all right to earn XP. Studying the flashcards first will make this fast.</li>
+  <li><strong>04_practice.html</strong>. <a href="04_practice.html">Open Practice</a>. 8 questions with immediate feedback — save this one too, it records your own path through the material.</li>
+  <li><strong>05_mastery_check.html</strong>. <a href="05_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
+  <li><strong>06_mastery_check.py</strong>. Where you'll write your mastery check answers, once unlocked.</li>
+  <li><strong>07_feedback.html</strong> (do this last). <a href="07_feedback.html">Quick feedback about this lesson</a>, 2-3 minutes.</li>
 </ol>
 
 <div class="handoff">
-<strong>No VS Code needed this lesson</strong>. There's no code to write yet, 01.1 is entirely about the big idea. Everything happens in the practice page and mastery check above.
-<p class="save-reminder">Don't forget to save your practice page and your mastery check (each has its own Save button) when you're done.</p>
+<p><strong>No VS Code needed for most of this lesson.</strong> There's no code to write yet, 01.1 is entirely about the big idea. You'll only open VS Code once, for <code>06_mastery_check.py</code>.</p>
+<p class="save-reminder">Remember to save every file you work in (the on-page Save button for the vocab quiz, Practice, the mastery check, and the feedback form; Ctrl+S in VS Code for 06_mastery_check.py).</p>
 </div>
+
+<div class="page-nav">
+  <div class="page-nav-note">Nothing to save on this page — it's reading only.</div>
+  <div class="page-nav-links">
+    <a href="00_table_of_contents.html" class="page-nav-prev">← Table of Contents</a>
+    <a href="02_flashcards.html" class="page-nav-next">Next: Flashcards →</a>
+  </div>
+</div>
+
+<script>
+// Guided-practice quick checks — nothing saved, nothing graded. Formative,
+// meant to catch a misread before moving on, same pattern as
+// lesson_01_04_printing_output/01_instruction.html's checkQc1().
+function checkQc1() {
+  const val = document.getElementById('qc1-select').value;
+  const fb = document.getElementById('qc1-feedback');
+  fb.className = 'feedback ' + (val === 'a' ? 'correct' : 'incorrect');
+  if (val === 'a') {
+    fb.textContent = 'Right! Both a recipe and a program are exact, ordered steps that produce the same result every time they\'re followed.';
+  } else if (val) {
+    fb.textContent = 'Look again at the recipe example above. Think about the one thing a recipe and a program both actually are, structurally.';
+  } else {
+    fb.textContent = 'Pick an option first.';
+  }
+}
+
+function checkQc2() {
+  const val = document.getElementById('qc2-select').value;
+  const fb = document.getElementById('qc2-feedback');
+  fb.className = 'feedback ' + (val === 'a' ? 'correct' : 'incorrect');
+  if (val === 'a') {
+    fb.textContent = 'Right! The computer follows the instructions exactly as written. It has no way to know what the programmer "really" meant, only what was actually written down.';
+  } else if (val) {
+    fb.textContent = 'Remember the vending machine example: the machine doesn\'t decide anything on its own. Re-read the "Computers Are Very Literal" section above.';
+  } else {
+    fb.textContent = 'Pick an option first.';
+  }
+}
+</script>
 
 </body>
 </html>

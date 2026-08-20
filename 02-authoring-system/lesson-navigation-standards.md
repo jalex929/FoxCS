@@ -125,6 +125,17 @@ Any interactive pattern with two parallel lists a student pairs up (a term bank 
 
 **The fix, required in every future matching component:** derange the second list against the first — shuffle it, then reject and reshuffle until no index holds the same value in both lists (a full derangement), not just two independent shuffles. See `shuffleDerangement()` in `02_vocab_quiz.html` for the reference implementation (small rejection-sampling loop, safe for the list sizes these quizzes use). Copy that function verbatim into any new matching component rather than re-deriving it.
 
+## Rule: Journal Prompts Must Have a Real, Unambiguous Save Mechanism (added 2026-08-20)
+
+A `.journal-box` prompt must never be just text with a "save what you write" instruction and nothing to actually write in — that was a real bug found live in both `lesson_00_01_welcome/01_instruction.html` (Level 1) and `lesson_00_09_choosing_your_pathway/01_instruction.html` (Level 2): the prompt told students to save their answer, but the page had no textbox and named no file to open. Per Jay: this needs to be so clear it can't be misread, because the mechanism itself will be unfamiliar to students the first few times they hit one.
+
+Every `.journal-box` must do one of the two things explicitly, never leave it implicit:
+
+1. **An in-page textarea with a real save-in-place button** — the pattern now used in both fixed lessons: a `<textarea class="journal-answer" id="journalAnswer">`, a bold instruction sentence directly above it ("Type your answer in the box below, then click..."), and a `Save My Journal Entry` button disabled until the textarea has content, saving the whole page in place with a `_completed` suffix via the same `showSaveFilePicker` pattern used everywhere else (vocab quiz, practice, mastery check). Copy the JS block verbatim from either fixed file rather than re-deriving it — `updateJournalSaveGate()`, `saveJournal()`, `journalFileName()`, and the `beforeunload` guard are all reusable as-is.
+2. **A named file to open instead**, if the journal is meant to live in its own file (e.g. a `.txt` companion, matching the convention already used in `courses/python/content/unit_01_what_is_programming/lesson_01_02_input_process_output/05_journal.txt`) — in that case the prompt must name the exact filename and say explicitly to save it there (e.g. "Open `05_journal.txt` and write your answer there, then save with Ctrl+S").
+
+Never ship a `.journal-box` that just says "save what you write" without picking one of these two and making it concrete on the page itself.
+
 ## Applies Beyond Unit 0
 
 This whole pattern (page-nav footer, group tags, hub-page nav, the insertion checklist) should be the starting template for Units 1+ in every course, not something reinvented per course. When authoring `courses/<course>/content/unit_NN_slug/`, follow this same structure from the start rather than retrofitting it after the fact the way Unit 0 needed.

@@ -1,0 +1,177 @@
+<!-- Rebuilt 2026-08-20 to match lesson_01_04_printing_output's mastery-check
+     pattern (see 02-authoring-system/mvp-unit-folder-structure.md's "Mastery
+     Checks" section) — password-gated prompt sheet only, plain readable text
+     once unlocked, no base64 obfuscation (that mechanism was retired
+     2026-08-06 once answer content moved off this page entirely — nothing
+     left here to obfuscate). Answers go in the paired 06_mastery_check.py,
+     saved normally in VS Code. unlocked_at / completed_at timestamps write
+     automatically into hidden fields — nothing for the student to transcribe.
+
+     Single password, not the old multi-variant (A/B/C) design — matches
+     lesson_01_04_printing_output's current standard pattern. Multi-variant
+     is still available per mastery-check-standards.md if a future need
+     justifies the extra authoring effort; not built here since it wasn't
+     requested and 01.4's own reference implementation doesn't use it either. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1.1.5a Mastery Check: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .q { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 1rem 1.2rem; margin: 1.2rem 0; }
+  pre { background: #eef1f5; padding: 0.6rem 0.9rem; border-radius: 3px; font-family: Consolas, monospace; overflow-x: auto; }
+  #lock { background: #f4f6f9; border: 2px solid #1a5aa8; border-radius: 8px; padding: 1.5rem; text-align: center; }
+  #lock input { font-size: 1.1rem; padding: 0.4rem 0.6rem; margin-right: 0.5rem; text-transform: uppercase; }
+  #lock button, .next-link { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; }
+  #lock button:hover { background: #12467f; }
+  #pwError { color: #b02a2a; display: none; margin-top: 0.6rem; }
+  #mcContent { display: none; }
+  .save-reminder { font-weight: bold; color: #7a3a00; margin-top: 1.5rem; }
+  .next-box { background: #f9e1ad; border: 1px solid #9a5a00; padding: 1rem 1.2rem; border-radius: 6px; margin-top: 1.5rem; }
+  .next-box p { margin: 0; }
+  .next-link { margin-top: 0.5rem; }
+  .complete-box { background: #f4f6f9; border: 2px solid #1a5aa8; border-radius: 8px; padding: 1rem 1.2rem; margin-top: 1.5rem; text-align: center; }
+  .complete-box button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.6rem 1.3rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
+  .complete-box button:hover { background: #12467f; }
+  .complete-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
+</style>
+</head>
+<body>
+
+<h1>1.1.5a — Mastery Check: What Programs Do</h1>
+
+<div id="lock">
+  <p>Ask your teacher for this mastery check's password.</p>
+  <input type="text" id="pwInput" placeholder="Password" maxlength="6">
+  <button onclick="checkPassword()">Unlock</button>
+  <p id="pwError">That's not the right password. Check with your teacher and try again.</p>
+</div>
+
+<div id="mcContent">
+
+<p>Answer all four questions in <code>06_mastery_check.py</code>. This page has the questions; your answers go in that file. Nothing to copy from this page — when you're done, come back here and click "Mark Complete &amp; Save" below.</p>
+
+<div class="q">
+<strong>1.</strong> Explain, in your own words, what a program is. Use an example from everyday life that is <em>not</em> a video game and <em>not</em> a calculator app.
+</div>
+
+<div class="q">
+<strong>2.</strong> A vending machine takes your money, checks whether you inserted enough, and then either gives you the item or shows an error. Describe at least one specific instruction you think must exist somewhere inside the vending machine's program for this to work.
+</div>
+
+<div class="q">
+<strong>3.</strong> A friend tells you, "Computers are smart. They figure things out on their own." Based on what you learned in this lesson, do you agree or disagree? Explain your answer using the word <em>instruction</em>.
+</div>
+
+<div class="q">
+<strong>4.</strong> Explain what a programming language like Python is for, and why a programmer needs one to make a computer do something.
+</div>
+
+<p class="save-reminder">Save <code>06_mastery_check.py</code> once you've answered all four.</p>
+
+<div class="complete-box">
+  Done answering? Click below — it's how this page records that you finished, no copying required.
+  <div><button onclick="markComplete()">Mark Complete &amp; Save</button></div>
+  <div class="complete-status" id="completeStatus"></div>
+</div>
+
+<div class="next-box">
+  <p><strong>Up next:</strong> <code>06_mastery_check.py</code> to write your answers, then <code>07_feedback.html</code> to close out the lesson.</p>
+</div>
+</div>
+
+<!-- Outside #mcContent on purpose — Back/TOC should work even before the
+     page is unlocked, not just once the password is entered. -->
+<div class="page-nav">
+  <div class="page-nav-note">Click "Mark Complete &amp; Save" above once <code>06_mastery_check.py</code> is done, before you leave this page.</div>
+  <div class="page-nav-links">
+    <a href="04_practice.html" class="page-nav-prev">← Back: Practice</a>
+    <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
+    <a href="06_mastery_check.py" class="page-nav-next">Next: 06_mastery_check.py →</a>
+  </div>
+</div>
+
+<span id="unlockTime" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;" aria-hidden="true"></span>
+<span id="completeTime" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;" aria-hidden="true"></span>
+
+<script>
+const PASSWORD = "T4WPR8"; // CHANGE ME before distributing — 6-character alphanumeric.
+let mcFileHandle = null;
+
+function checkPassword() {
+  const val = document.getElementById('pwInput').value.trim().toUpperCase();
+  if (val === PASSWORD) {
+    document.getElementById('lock').style.display = 'none';
+    document.getElementById('mcContent').style.display = 'block';
+    document.getElementById('unlockTime').textContent = 'unlocked_at:' + new Date().toISOString();
+  } else {
+    document.getElementById('pwError').style.display = 'block';
+  }
+}
+
+document.getElementById('pwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
+
+async function markComplete() {
+  document.getElementById('completeTime').textContent = 'completed_at:' + new Date().toISOString();
+  const statusEl = document.getElementById('completeStatus');
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+
+  if (mcFileHandle) {
+    try {
+      const writable = await mcFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved.';
+      return;
+    } catch (err) {
+      mcFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      mcFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const writable = await mcFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved.';
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  const original = decodeURIComponent(parts[parts.length - 1]) || '05_mastery_check.html';
+  if (original.includes('_completed')) return original;
+  return original.replace(/\.html$/, '_completed.html');
+}
+</script>
+
+</body>
+</html>
