@@ -136,6 +136,8 @@ Every `.journal-box` must do one of the two things explicitly, never leave it im
 
 Never ship a `.journal-box` that just says "save what you write" without picking one of these two and making it concrete on the page itself.
 
+**A textarea-based journal-box also gets a live word-count display**, added just above the `<textarea>`, updating on every `oninput` (same handler that already drives the save gate, extended to also call `updateJournalWordCount()`). Three states, matching the prompt's own stated word range (e.g. "50-75 words"): below target (amber, "a bit short, aim for X-Y"), within target (green, "right in the target range"), above target (neutral gray, "that's plenty, feel free to wrap up" — never scolds for writing more). See `shared/unit_00_onboarding_level1/lesson_00_01_welcome/01_instruction.html`'s `updateJournalWordCount()` for the reference implementation — copy verbatim, only the `JOURNAL_WORD_TARGET_MIN`/`MAX` constants change per lesson's actual stated target.
+
 ## Hierarchy Terminology (clarified 2026-08-20 per Jay)
 
 The full naming, top to bottom, across FoxCS generally:

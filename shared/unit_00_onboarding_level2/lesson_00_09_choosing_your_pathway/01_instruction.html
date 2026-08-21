@@ -31,6 +31,10 @@
   .journal-box { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
   .journal-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #7a4800; margin-bottom: 0.5rem; }
   .journal-answer { width: 100%; min-height: 5em; font-family: Georgia, serif; font-size: 1rem; padding: 0.6rem; box-sizing: border-box; border: 1px solid #e3cf9a; border-radius: 5px; margin-top: 0.7rem; }
+  .word-count { font-family: Verdana, Arial, sans-serif; font-size: 0.8rem; font-weight: bold; color: #7b8491; margin-top: 0.8rem; }
+  .word-count.short { color: #7a4800; }
+  .word-count.in-range { color: #1f5c47; }
+  .word-count.long { color: #445; }
   .journal-save-row { margin-top: 0.7rem; }
   button.journal-save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.55rem 1.3rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
   button.journal-save-btn:hover:not(:disabled) { background: #5c2c00; }
@@ -169,6 +173,7 @@
 <div class="journal-label">Journal (50-75 words)</div>
 <p>Which pathway are you choosing, or are you planning to work in both? Give one honest reason for your choice, based on what you actually want to build this year, not what you think sounds impressive.</p>
 <p><strong>Type your answer in the box below, then click "Save My Journal Entry."</strong></p>
+<div class="word-count" id="journalWordCount">0 words — aim for 50-75</div>
 <textarea class="journal-answer" id="journalAnswer" placeholder="Write your answer here." oninput="updateJournalSaveGate()"></textarea>
 <div class="journal-save-row">
   <button class="journal-save-btn" id="journalSaveBtn" onclick="saveJournal()" disabled>Save My Journal Entry</button>
@@ -198,6 +203,26 @@ let journalHasUnsavedWork = false;
 window.addEventListener('beforeunload', function(e) {
   if (journalHasUnsavedWork) { e.preventDefault(); e.returnValue = ''; }
 });
+const JOURNAL_WORD_TARGET_MIN = 50;
+const JOURNAL_WORD_TARGET_MAX = 75;
+function updateJournalWordCount() {
+  const text = document.getElementById('journalAnswer').value.trim();
+  const wordCount = text.length === 0 ? 0 : text.split(/\s+/).length;
+  const el = document.getElementById('journalWordCount');
+  el.classList.remove('short', 'in-range', 'long');
+  if (wordCount === 0) {
+    el.textContent = '0 words — aim for ' + JOURNAL_WORD_TARGET_MIN + '-' + JOURNAL_WORD_TARGET_MAX;
+  } else if (wordCount < JOURNAL_WORD_TARGET_MIN) {
+    el.textContent = wordCount + ' words — a bit short, aim for ' + JOURNAL_WORD_TARGET_MIN + '-' + JOURNAL_WORD_TARGET_MAX;
+    el.classList.add('short');
+  } else if (wordCount <= JOURNAL_WORD_TARGET_MAX) {
+    el.textContent = wordCount + ' words — right in the target range';
+    el.classList.add('in-range');
+  } else {
+    el.textContent = wordCount + ' words — that\'s plenty, feel free to wrap up';
+    el.classList.add('long');
+  }
+}
 function updateJournalSaveGate() {
   const filled = document.getElementById('journalAnswer').value.trim().length > 0;
   const btn = document.getElementById('journalSaveBtn');
@@ -205,6 +230,7 @@ function updateJournalSaveGate() {
   btn.disabled = !filled;
   note.textContent = filled ? '' : 'Write something above to unlock Save.';
   journalHasUnsavedWork = true;
+  updateJournalWordCount();
 }
 let journalFileHandle = null;
 function journalFileName() {
