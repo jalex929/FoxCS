@@ -54,68 +54,109 @@
   .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
   .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
   .unit-menu-section > a:hover { background: #eef4fb; }
-  .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; }
-  .menu-check { display: inline-block; width: 1.05rem; height: 1.05rem; border: 1.5px solid #ccd3dd; border-radius: 50%; flex-shrink: 0; font-size: 0.72rem; line-height: 1rem; text-align: center; color: transparent; }
-  .menu-check.done { background: #2f7a2f; border-color: #2f7a2f; color: white; }
+  .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
   .lesson-entry { margin: 0.15rem 0; }
   .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
   .lesson-entry summary:hover { background: #eef4fb; }
   .lesson-entry summary::-webkit-details-marker { display: none; }
-  .lesson-entry summary::before { content: '▸'; color: #99a; font-size: 0.75rem; width: 0.8rem; }
-  .lesson-entry[open] summary::before { content: '▾'; }
+  .lesson-entry summary::after { content: '▸'; color: #99a; font-size: 0.75rem; margin-left: auto; padding-left: 0.6rem; }
+  .lesson-entry[open] summary::after { content: '▾'; }
   .lesson-steps { padding-left: 1.85rem; display: flex; flex-direction: column; gap: 0.1rem; margin: 0.15rem 0 0.4rem; }
   .lesson-steps a { display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.85rem; border-radius: 4px; }
   .lesson-steps a:hover { background: #eef4fb; }
-  .lesson-steps a.current { font-weight: bold; color: #1a5aa8; }
-  .step-check { display: inline-block; width: 0.9rem; height: 0.9rem; border: 1.5px solid #ccd3dd; border-radius: 50%; flex-shrink: 0; font-size: 0.6rem; line-height: 0.82rem; text-align: center; color: transparent; }
-  .step-check.done { background: #2f7a2f; border-color: #2f7a2f; color: white; }
+  .lesson-steps a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
   .step-untracked { font-size: 0.72rem; color: #999; margin-left: auto; font-family: Georgia, serif; font-style: italic; }
+  .done-chip { font-size: 0.68rem; padding: 0.1rem 0.5rem; border-radius: 999px; margin-left: auto; font-family: Verdana, Arial, sans-serif; font-weight: bold; background: #ddeee3; color: #1f5c47; display: none; }
+  .done-chip.shown { display: inline-block; }
 </style>
 </head>
 <body>
 
 <div class="unit-menu-wrap">
 <details class="unit-menu">
-  <summary class="unit-menu-toggle">☰ Unit 01 Menu</summary>
+  <summary class="unit-menu-toggle">☰ Unit 01: What Is Programming?</summary>
   <nav class="unit-menu-panel">
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
 
       <details class="lesson-entry" open>
-        <summary><span class="menu-check" data-lesson-group="lesson_01_01_what_programs_do"></span>01.1 What Programs Do</summary>
+        <summary>01.1 What Programs Do</summary>
         <div class="lesson-steps">
           <a href="01_instruction.html">Instruction</a>
           <a href="02_flashcards.html">Flashcards</a>
-          <a href="03_vocab_quiz.html"><span class="step-check" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span>Vocab Quiz</a>
-          <a href="04_practice.html"><span class="step-check" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span>Practice</a>
-          <a href="05_mastery_check.html" class="current"><span class="step-check" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span>Mastery Check</a>
-          <a href="07_feedback.html"><span class="step-check" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span>Feedback</a>
+          <a href="03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
+          <a href="04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
+          <a href="05_mastery_check.html" class="current">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
         </div>
       </details>
 
-      <a href="../lesson_01_02_input_process_output/01_instruction.html"><span class="menu-check" data-lesson="lesson_01_02_input_process_output"></span>01.2 Input-Process-Output</a>
-      <a href="../lesson_01_03_writing_your_first_program/01_instruction.html"><span class="menu-check" data-lesson="lesson_01_03_writing_your_first_program"></span>01.3 Writing Your First Program</a>
+      <details class="lesson-entry">
+        <summary>01.2 Input-Process-Output</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_02_input_process_output/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_02_input_process_output/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_02_input_process_output/03_practice.html">Practice</a>
+          <a href="../lesson_01_02_input_process_output/04_mastery_check.html">Mastery Check</a>
+          <a href="../lesson_01_02_input_process_output/05_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+        </div>
+      </details>
 
       <details class="lesson-entry">
-        <summary><span class="menu-check" data-lesson-group="lesson_01_04_printing_output"></span>01.4 Printing Output</summary>
+        <summary>01.3 Writing Your First Program</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_03_writing_your_first_program/04_practice.html">Practice</a>
+          <a href="../lesson_01_03_writing_your_first_program/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_03_writing_your_first_program/05_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/06_mastery_check.html">Mastery Check</a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.4 Printing Output</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
           <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
           <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards</a>
-          <a href="../lesson_01_04_printing_output/04_vocab_quiz.html"><span class="step-check" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span>Vocab Quiz</a>
-          <a href="../lesson_01_04_printing_output/05_practice.html"><span class="step-check" data-lesson="lesson_01_04_printing_output" data-step="practice"></span>Practice</a>
+          <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
           <a href="../lesson_01_04_printing_output/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/07_project.html">Project Instructions</a>
           <a href="../lesson_01_04_printing_output/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
-          <a href="../lesson_01_04_printing_output/09_mastery_check.html"><span class="step-check" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span>Mastery Check</a>
-          <a href="../lesson_01_04_printing_output/11_feedback.html"><span class="step-check" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span>Feedback</a>
+          <a href="../lesson_01_04_printing_output/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_04_printing_output/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
         </div>
       </details>
 
-      <a href="../lesson_01_05_comments_and_documentation/01_instruction.html"><span class="menu-check" data-lesson="lesson_01_05_comments_and_documentation"></span>01.5 Comments and Documentation</a>
-      <a href="../lesson_01_06_common_syntax_mistakes/01_instruction.html"><span class="menu-check" data-lesson="lesson_01_06_common_syntax_mistakes"></span>01.6 Common Syntax Mistakes</a>
-      <a href="../project/unit_01_project_instructions.html"><span class="menu-check" data-lesson="unit_01_project"></span>Unit Project</a>
+      <details class="lesson-entry">
+        <summary>01.5 Comments and Documentation</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_05_comments_and_documentation/04_practice.html">Practice</a>
+          <a href="../lesson_01_05_comments_and_documentation/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_05_comments_and_documentation/05_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/06_mastery_check.html">Mastery Check</a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.6 Common Syntax Mistakes</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_06_common_syntax_mistakes/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/03_practice.html">Practice</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/04_project.html">Project Instructions</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/04_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/05_mastery_check.html">Mastery Check</a>
+        </div>
+      </details>
+      <a href="../project/unit_01_project_instructions.html">Unit Project</a>
     </div>
   </nav>
 </details>
@@ -214,6 +255,11 @@ function renderUnitMenuChecks() {
   });
   document.querySelectorAll('.menu-check[data-lesson]:not([data-lesson-group])').forEach(function(el) {
     if (done[el.dataset.lesson] === true) { el.classList.add('done'); el.textContent = '✓'; }
+  });
+  document.querySelectorAll('.lesson-progress-text[data-lesson-progress]').forEach(function(el) {
+    const lesson = done[el.dataset.lessonProgress] || {};
+    const completedCount = REQUIRED_STEPS_FOR_LESSON_DONE.filter(function(s) { return lesson[s]; }).length;
+    el.textContent = '(' + completedCount + ' of ' + REQUIRED_STEPS_FOR_LESSON_DONE.length + ' complete)';
   });
 }
 function markStepDone(lessonKey, stepKey) {
