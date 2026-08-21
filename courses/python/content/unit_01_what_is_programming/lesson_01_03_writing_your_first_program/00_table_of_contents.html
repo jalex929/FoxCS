@@ -1,0 +1,140 @@
+<!-- Built 2026-08-21 to match lesson_01_01_what_programs_do's pattern. See
+     02-authoring-system/mvp-unit-folder-structure.md. 01.3 is the first
+     lesson with real code: 02_example_01.py and 07_project.py are plain
+     VS Code files with no save-in-place mechanism (see "No Self-Naming"),
+     so they aren't part of COMPLETED_TARGETS. 09_mastery_check.py IS
+     tracked, via the same one-time "Save As" exception used everywhere
+     else in this unit.
+
+     Part numbering (1.3.N): 1.3.1 instruction, 1.3.2 example, 1.3.3
+     flashcards, 1.3.4 vocab quiz, 1.3.5 practice, 1.3.6a/1.3.6b project
+     (paired HTML+PY), 1.3.7a/1.3.7b mastery check (paired HTML+PY), 1.3.8
+     feedback. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1.3 Table of Contents: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 780px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  h2 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; font-size: 1.05rem; margin-top: 2rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
+  .progress-panel { background: #f4f6f9; border: 1px solid #ccd3dd; border-radius: 8px; padding: 1.1rem 1.3rem; margin-bottom: 1.6rem; }
+  .progress-panel p { margin: 0 0 0.8rem; font-size: 0.92rem; }
+  button.check-progress-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: bold; }
+  button.check-progress-btn:hover { background: #12467f; }
+  .progress-status { font-size: 0.88rem; color: #2f7a2f; margin-top: 0.7rem; min-height: 1.2em; }
+  .progress-status.error { color: #b02a2a; }
+  .toc-list { display: flex; flex-direction: column; gap: 0.7rem; }
+  .toc-row { display: flex; align-items: center; gap: 0.9rem; background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 0.8rem 1rem; }
+  .toc-num { font-family: Verdana, Arial, sans-serif; font-weight: bold; color: white; background: #1a5aa8; min-width: 1.8rem; height: 1.8rem; padding: 0 0.35rem; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
+  .toc-body { flex: 1; min-width: 0; }
+  .toc-filename { font-family: Consolas, monospace; font-size: 0.95rem; display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+  .toc-filename a { color: #1a5aa8; text-decoration: underline; font-weight: bold; }
+  .toc-filename a:hover { color: #12467f; }
+  .toc-type { font-family: Verdana, Arial, sans-serif; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; color: #445; background: #eef1f5; padding: 0.15rem 0.5rem; border-radius: 4px; }
+  .toc-desc { font-size: 0.88rem; color: #444; margin-top: 0.15rem; }
+  .status-badge { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; font-weight: bold; letter-spacing: 0.03em; padding: 0.28rem 0.6rem; border-radius: 12px; flex-shrink: 0; white-space: nowrap; }
+  .status-badge.pending { background: #eef1f5; color: #556; border: 1px solid #ccd3dd; }
+  .status-badge.done { background: #d7ecd7; color: #1a4a1a; border: 1px solid #2f7a2f; }
+  .status-badge.untracked { background: #f4f6f9; color: #888; border: 1px dashed #ccd3dd; }
+  .toc-row.toc-done { border-color: #9fd0a0; background: #f6fbf6; }
+  .save-reminder { font-weight: bold; color: #7a3a00; }
+</style>
+</head>
+<body>
+
+<h1>1.3 Writing Your First Program — Table of Contents</h1>
+<div class="intro">Every file in this lesson, in order. Click any filename to open it directly. If you're picking up where you left off, use "Check My Progress" below first.</div>
+
+<div class="progress-panel">
+  <p><strong>Check My Progress</strong> looks in your lesson folder for files you've already saved and marks them done below. It only checks filenames — it doesn't open or change anything.</p>
+  <button class="check-progress-btn" onclick="checkProgress()">Check My Progress</button>
+  <div class="progress-status" id="progressStatus"></div>
+</div>
+
+<h2>Lesson Files</h2>
+<div class="toc-list">
+
+  <div class="toc-row" id="row-01"><div class="toc-num">1.3.1</div><div class="toc-body"><div class="toc-filename"><span class="toc-type">Instruction</span> <a href="01_instruction.html">01_instruction.html</a></div><div class="toc-desc">The lesson itself: writing and running your first real Python program.</div></div></div>
+
+  <div class="toc-row" id="row-02"><div class="toc-num">1.3.2</div><div class="toc-body"><div class="toc-filename"><span class="toc-type">Example</span> <a href="02_example_01.py">02_example_01.py</a></div><div class="toc-desc">Open in VS Code and run it. View-only reference file — not auto-trackable.</div></div><div class="status-badge untracked">Open in VS Code</div></div>
+
+  <div class="toc-row" id="row-03"><div class="toc-num">1.3.3</div><div class="toc-body"><div class="toc-filename"><span class="toc-type">Flashcards</span> <a href="03_flashcards.html">03_flashcards.html</a></div><div class="toc-desc">Click-to-flip term/definition flashcards. Study tool only.</div></div><div class="status-badge untracked">Not saved</div></div>
+
+  <div class="toc-row" id="row-04"><div class="toc-num">1.3.4</div><div class="toc-body"><div class="toc-filename"><span class="toc-type">Vocab Quiz</span> <a href="04_vocab_quiz.html">04_vocab_quiz.html</a></div><div class="toc-desc">Match all 4 terms, check your answers, write a short reflection, then save.</div></div><div class="status-badge pending">Not yet</div></div>
+
+  <div class="toc-row" id="row-05"><div class="toc-num">1.3.5</div><div class="toc-body"><div class="toc-filename"><span class="toc-type">Practice</span> <a href="05_practice.html">05_practice.html</a></div><div class="toc-desc">Practice with immediate feedback. Save when you're done.</div></div><div class="status-badge pending">Not yet</div></div>
+
+  <div class="toc-row" id="row-06"><div class="toc-num">1.3.6a</div><div class="toc-body"><div class="toc-filename"><span class="toc-type">Project</span> <a href="06_project.html">06_project.html</a></div><div class="toc-desc">Project instructions: Startup Sequence. Read this, then write your program in 07_project.py.</div></div></div>
+
+  <div class="toc-row" id="row-07"><div class="toc-num">1.3.6b</div><div class="toc-body"><div class="toc-filename"><span class="toc-type">Project</span> 07_project.py</div><div class="toc-desc">Where you write the project. Fixed filename, no renaming. Not auto-trackable — saved directly in VS Code.</div></div><div class="status-badge untracked">Open in VS Code</div></div>
+
+  <div class="toc-row" id="row-08"><div class="toc-num">1.3.7a</div><div class="toc-body"><div class="toc-filename"><span class="toc-type">Mastery Check</span> <a href="08_mastery_check.html">08_mastery_check.html</a></div><div class="toc-desc">Password-gated mastery check questions. Click "Mark Complete &amp; Save" once you've answered them in 09_mastery_check.py.</div></div><div class="status-badge pending">Not yet</div></div>
+
+  <div class="toc-row" id="row-09"><div class="toc-num">1.3.7b</div><div class="toc-body"><div class="toc-filename"><span class="toc-type">Mastery Check</span> 09_mastery_check.py</div><div class="toc-desc">Your mastery check answers. Once done, use "Save As" to save it as 09_mastery_check_completed.py.</div></div><div class="status-badge pending">Not yet</div></div>
+
+  <div class="toc-row" id="row-10"><div class="toc-num">1.3.8</div><div class="toc-body"><div class="toc-filename"><span class="toc-type">Feedback</span> <a href="10_feedback.html">10_feedback.html</a></div><div class="toc-desc">Quick feedback about this lesson. 2-3 minutes.</div></div><div class="status-badge pending">Not yet</div></div>
+
+</div>
+
+<p style="margin-top: 1.6rem; font-size: 0.88rem; color: #555;"><span class="save-reminder">Remember:</span> each page you save is its own step — save it there before moving to the next one, not all at the end.</p>
+
+<script>
+const COMPLETED_TARGETS = {
+  'row-04': '04_vocab_quiz_completed.html',
+  'row-05': '05_practice_completed.html',
+  'row-08': '08_mastery_check_completed.html',
+  'row-09': '09_mastery_check_completed.py',
+  'row-10': '10_feedback_completed.html'
+};
+
+async function checkProgress() {
+  const statusEl = document.getElementById('progressStatus');
+  statusEl.className = 'progress-status';
+  if (!('showDirectoryPicker' in window)) {
+    statusEl.className = 'progress-status error';
+    statusEl.textContent = 'Your browser doesn\'t support checking a folder automatically. Try Chrome or Edge, or just open each file directly.';
+    return;
+  }
+  let dirHandle;
+  try {
+    dirHandle = await window.showDirectoryPicker();
+  } catch (err) {
+    if (err.name === 'AbortError') return;
+    statusEl.className = 'progress-status error';
+    statusEl.textContent = 'Could not open that folder.';
+    return;
+  }
+  try {
+    await dirHandle.getFileHandle('01_instruction.html');
+  } catch (err) {
+    statusEl.className = 'progress-status error';
+    statusEl.textContent = 'That doesn\'t look like this lesson\'s folder — pick the folder that has 01_instruction.html in it.';
+    return;
+  }
+  let doneCount = 0;
+  const total = Object.keys(COMPLETED_TARGETS).length;
+  for (const [rowId, fname] of Object.entries(COMPLETED_TARGETS)) {
+    const row = document.getElementById(rowId);
+    const badge = row.querySelector('.status-badge');
+    let found = false;
+    try { await dirHandle.getFileHandle(fname); found = true; } catch (err) { found = false; }
+    if (found) {
+      doneCount++;
+      row.classList.add('toc-done');
+      badge.className = 'status-badge done';
+      badge.textContent = 'Done';
+    } else {
+      row.classList.remove('toc-done');
+      badge.className = 'status-badge pending';
+      badge.textContent = 'Not yet';
+    }
+  }
+  statusEl.textContent = 'Checked ' + dirHandle.name + ' — ' + doneCount + ' of ' + total + ' files done.';
+}
+</script>
+
+</body>
+</html>

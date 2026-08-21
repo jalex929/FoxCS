@@ -1,0 +1,561 @@
+<!-- Built 2026-08-21, reusing lesson_01_01_what_programs_do's vocab-quiz
+     engine verbatim (drag-to-match, shuffleDerangement(), tentative
+     placement until Check Answers, wrong guesses stay visible, hidden
+     foxcs-telemetry log, save gated on 4/4 matched + a real reflection,
+     _completed filename suffix). 01.2 previously had no vocab quiz at all —
+     this is a real gap being filled, using the same 4 terms as
+     02_flashcards.html. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1.2.3 Vocab Quiz: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 780px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; }
+  h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.2rem; font-size: 0.95rem; font-family: Georgia, serif; }
+  .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
+  .progress-wrap { margin-bottom: 1.3rem; }
+  .progress-label { font-size: 0.85rem; color: #444; margin-bottom: 0.3rem; }
+  .progress-bar { background: #e2e7ee; border-radius: 6px; height: 8px; overflow: hidden; }
+  .progress-fill { background: #1a5aa8; height: 100%; border-radius: 6px; transition: width 0.3s; }
+  .quiz-layout { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .term-bank { flex: 0 0 190px; display: flex; flex-direction: column; gap: 0.6rem; }
+  .definitions { flex: 1; min-width: 280px; display: flex; flex-direction: column; gap: 0.7rem; }
+  .term-chip { font-family: Consolas, monospace; background: #1a5aa8; color: white; padding: 0.6rem 0.8rem; border-radius: 6px; cursor: grab; text-align: center; border: 3px solid transparent; user-select: none; }
+  .term-chip:active { cursor: grabbing; }
+  .term-chip.selected { border-color: #7a3a00; box-shadow: 0 0 0 2px #f9e1ad; }
+  .term-chip.placed { display: none; }
+  .def-slot { background: #f4f6f9; border: 2px dashed #9ab6d8; border-radius: 8px; padding: 0.9rem 1rem; font-family: Georgia, serif; font-size: 0.95rem; min-height: 2.6rem; display: flex; align-items: center; gap: 0.7rem; cursor: pointer; }
+  .def-slot.dragover { background: #eaf1fb; border-color: #1a5aa8; }
+  .def-slot.pending { background: #eef4fb; border: 2px solid #9ab6d8; }
+  .def-slot.correct { background: #d7ecd7; border: 2px solid #2f7a2f; cursor: default; }
+  .def-slot.incorrect { background: #f4e3d0; border: 2px solid #b0562a; }
+  .def-slot.shake { animation: shake 0.35s; }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+  .slot-answer { font-family: Consolas, monospace; background: #2f7a2f; color: white; padding: 0.3rem 0.6rem; border-radius: 5px; font-size: 0.9rem; flex-shrink: 0; }
+  .slot-answer.pending { background: #1a5aa8; }
+  .slot-answer.incorrect { background: #b0562a; }
+  .slot-text { flex: 1; }
+  .check-row { text-align: center; margin: 1rem 0; }
+  button.check-quiz-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.6rem 1.4rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+  button.check-quiz-btn:hover { background: #12467f; }
+  button.reset-quiz-btn { font-family: Verdana, Arial, sans-serif; background: none; color: #445; border: 1px solid #ccd3dd; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; margin-left: 0.5rem; }
+  button.reset-quiz-btn:hover { background: #eef1f5; }
+  .check-feedback { font-size: 0.9rem; color: #6a4a1a; margin-top: 0.5rem; min-height: 1.2em; }
+  .reflection { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.9rem 1.2rem; margin: 1.3rem 0; font-family: Georgia, serif; }
+  .reflection-prompt { font-size: 0.95rem; margin-bottom: 0.6rem; }
+  textarea.answer-space { width: 100%; min-height: 4em; font-family: Georgia, serif; font-size: 1rem; padding: 0.5rem; box-sizing: border-box; border: 1px solid #ccd3dd; border-radius: 4px; }
+  .save-row { text-align: center; margin-top: 1.6rem; }
+  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+  button.save-btn:hover:not(:disabled) { background: #5c2c00; }
+  button.save-btn:disabled { background: #bbb; cursor: not-allowed; }
+  .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+  .save-gate-note { font-size: 0.85rem; color: #555; margin-top: 0.4rem; }
+  .complete-banner { background: #d7ecd7; border: 2px solid #2f7a2f; color: #1a4a1a; padding: 1rem 1.2rem; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 1.2rem; display: none; }
+  #quizArea[data-completed="true"] .complete-banner { display: block; }
+  .unit-menu-wrap { position: sticky; top: 0; z-index: 20; background: #fff; border: 1px solid #dde3ea; border-radius: 0 0 8px 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .unit-menu-toggle { cursor: pointer; padding: 0.7rem 1.3rem; font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a5aa8; font-size: 0.92rem; list-style: none; user-select: none; }
+  .unit-menu-toggle::-webkit-details-marker { display: none; }
+  .unit-menu-toggle:hover { background: #f4f6f9; }
+  .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
+  .unit-menu-section { margin-top: 0.9rem; }
+  .unit-menu-section:first-child { margin-top: 0.6rem; }
+  .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
+  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
+  .unit-menu-section > a:hover { background: #eef4fb; }
+  .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
+  .lesson-entry { margin: 0.15rem 0; }
+  .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
+  .lesson-entry summary:hover { background: #eef4fb; }
+  .lesson-entry summary::-webkit-details-marker { display: none; }
+  .lesson-entry summary::after { content: '▸'; color: #99a; font-size: 0.75rem; margin-left: auto; padding-left: 0.6rem; }
+  .lesson-entry[open] summary::after { content: '▾'; }
+  .lesson-steps { padding-left: 1.85rem; display: flex; flex-direction: column; gap: 0.1rem; margin: 0.15rem 0 0.4rem; }
+  .lesson-steps a { display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.85rem; border-radius: 4px; }
+  .lesson-steps a:hover { background: #eef4fb; }
+  .lesson-steps a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
+  .step-untracked { font-size: 0.72rem; color: #999; margin-left: auto; font-family: Georgia, serif; font-style: italic; }
+  .done-chip { font-size: 0.68rem; padding: 0.1rem 0.5rem; border-radius: 999px; margin-left: auto; font-family: Verdana, Arial, sans-serif; font-weight: bold; background: #ddeee3; color: #1f5c47; display: none; }
+  .done-chip.shown { display: inline-block; }
+</style>
+</head>
+<body data-completed="false" id="quizRoot">
+
+<div class="unit-menu-wrap">
+<details class="unit-menu">
+  <summary class="unit-menu-toggle">☰ Unit 01: What Is Programming?</summary>
+  <nav class="unit-menu-panel">
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
+
+      <details class="lesson-entry">
+        <summary>01.1 What Programs Do</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_01_what_programs_do/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
+          <a href="../lesson_01_01_what_programs_do/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_01_what_programs_do/07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry" open>
+        <summary>01.2 Input-Process-Output</summary>
+        <div class="lesson-steps">
+          <a href="01_instruction.html">Instruction</a>
+          <a href="02_flashcards.html">Flashcards</a>
+          <a href="03_vocab_quiz.html" class="current">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
+          <a href="04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
+          <a href="05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
+          <a href="07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.3 Writing Your First Program</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_03_writing_your_first_program/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/06_project.html">Project Instructions</a>
+          <a href="../lesson_01_03_writing_your_first_program/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.4 Printing Output</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
+          <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
+          <a href="../lesson_01_04_printing_output/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_04_printing_output/07_project.html">Project Instructions</a>
+          <a href="../lesson_01_04_printing_output/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_04_printing_output/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_04_printing_output/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.5 Comments and Documentation</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_05_comments_and_documentation/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/06_project.html">Project Instructions</a>
+          <a href="../lesson_01_05_comments_and_documentation/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.6 Common Syntax Mistakes</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_06_common_syntax_mistakes/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="practice"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <a href="../project/unit_01_project_instructions.html">Unit Project</a>
+    </div>
+  </nav>
+</details>
+</div>
+
+<h1>1.2.3 — Vocab Quiz</h1>
+<div class="intro">Place each term onto the definition you think matches (drag, or click a term then click a definition) — it's fine to place all four before checking anything. Click <strong>Check Answers</strong> when you're ready to see what's right. Correct pairs lock in; wrong ones stay marked so you can see what you guessed, and you can click one to try a different term. Get all four right, then finish the reflection below, to unlock saving.</div>
+
+<div id="quizArea" data-completed="false">
+<div class="complete-banner">All matched! Finish the reflection below, then save your quiz.</div>
+
+<div class="progress-wrap">
+  <div class="progress-label"><span id="progressText">0 of 4 matched</span></div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+
+<div class="quiz-layout">
+  <div class="term-bank" id="termBank"></div>
+  <div class="definitions" id="defList"></div>
+</div>
+
+<div class="check-row">
+  <button class="check-quiz-btn" onclick="checkQuiz()">Check Answers</button>
+  <button class="reset-quiz-btn" onclick="resetQuiz()">Reset</button>
+  <div class="check-feedback" id="checkFeedback"></div>
+</div>
+
+<div class="reflection">
+  <div class="reflection-prompt">Before you save: did you use any tricks to remember these four terms? A rhyme, a picture in your head, connecting a word to something you already know? Write it below, even if it's short. It's fine to say "I didn't need one," but write <em>something</em>. This is required to save, and if you come up with something good, Mr. Fox may ask to share it with the class to help others.</div>
+  <textarea class="answer-space" id="memoryTrick" placeholder="What helped you remember, if anything?" oninput="updateSaveGate()"></textarea>
+</div>
+
+<div class="save-row">
+  <button class="save-btn" id="saveBtn" onclick="saveWork()" disabled>Save My Quiz</button>
+  <div class="save-status" id="saveStatus"></div>
+  <div class="save-gate-note" id="saveGateNote"></div>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-note">Save above before you leave this page — it won't unlock until all four are matched and the reflection has something written in it.</div>
+  <div class="page-nav-links">
+    <a href="02_flashcards.html" class="page-nav-prev">← Back: Flashcards</a>
+    <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
+    <a href="04_practice.html" class="page-nav-next">Next: Practice →</a>
+  </div>
+</div>
+</div>
+
+<script>
+const TERMS = [
+  {id: 'input', def: 'Data a program receives from outside itself.'},
+  {id: 'process', def: 'The work a program does with input. Calculating, comparing, deciding.'},
+  {id: 'output', def: 'What a program delivers back as a result. Text, sound, anything the outside world can perceive.'},
+  {id: 'system', def: 'Any program or machine considered as a whole, made of input/process/output working together.'}
+];
+
+let matchedCount = 0;
+let selectedTermId = null;
+let placements = {};
+let hasUnsavedWork = false;
+
+let telemetry = { page_id: 'lesson_01_02_input_process_output/03_vocab_quiz', opened_at: new Date().toISOString(), saves: [], events: [] };
+let checkAttemptNumber = 0;
+function writeTelemetryToDom() {
+  let el = document.getElementById('foxcs-telemetry');
+  if (!el) {
+    el = document.createElement('script');
+    el.type = 'application/json';
+    el.id = 'foxcs-telemetry';
+    el.setAttribute('aria-hidden', 'true');
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(telemetry, null, 2);
+}
+writeTelemetryToDom();
+
+window.addEventListener('beforeunload', (e) => {
+  if (hasUnsavedWork) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function shuffleDerangement(base) {
+  if (base.length < 2) return [...base];
+  let attempt;
+  do { attempt = shuffle(base); } while (attempt.some((v, i) => v === base[i]));
+  return attempt;
+}
+
+function buildQuiz() {
+  const termOrder = shuffle(TERMS.map(t => t.id));
+  const defOrder = shuffleDerangement(termOrder);
+
+  const bank = document.getElementById('termBank');
+  bank.innerHTML = '';
+  termOrder.forEach(id => {
+    const chip = document.createElement('div');
+    chip.className = 'term-chip';
+    chip.id = 'chip-' + id;
+    chip.textContent = id;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', id); });
+    chip.addEventListener('click', () => selectTerm(id));
+    bank.appendChild(chip);
+  });
+
+  const defList = document.getElementById('defList');
+  defList.innerHTML = '';
+  defOrder.forEach(id => {
+    const term = TERMS.find(t => t.id === id);
+    const slot = document.createElement('div');
+    slot.className = 'def-slot';
+    slot.id = 'slot-' + id;
+    slot.dataset.answer = id;
+    slot.innerHTML = '<div class="slot-text">' + term.def + '</div>';
+    slot.addEventListener('dragover', e => { e.preventDefault(); slot.classList.add('dragover'); });
+    slot.addEventListener('dragleave', () => slot.classList.remove('dragover'));
+    slot.addEventListener('drop', e => {
+      e.preventDefault();
+      slot.classList.remove('dragover');
+      const droppedId = e.dataTransfer.getData('text/plain');
+      placeTentative(droppedId, id);
+    });
+    slot.addEventListener('click', () => {
+      if (slot.classList.contains('correct')) return;
+      if (placements[id]) {
+        unplace(id);
+      } else if (selectedTermId) {
+        placeTentative(selectedTermId, id);
+      }
+    });
+    defList.appendChild(slot);
+  });
+}
+
+function selectTerm(id) {
+  const chip = document.getElementById('chip-' + id);
+  if (!chip || chip.classList.contains('placed')) return;
+  document.querySelectorAll('.term-chip').forEach(c => c.classList.remove('selected'));
+  if (selectedTermId === id) {
+    selectedTermId = null;
+  } else {
+    selectedTermId = id;
+    chip.classList.add('selected');
+  }
+}
+
+function placeTentative(termId, slotId) {
+  const chip = document.getElementById('chip-' + termId);
+  const slot = document.getElementById('slot-' + slotId);
+  if (!chip || chip.classList.contains('placed') || slot.classList.contains('correct')) return;
+
+  if (placements[slotId]) unplace(slotId);
+  Object.keys(placements).forEach(sId => { if (placements[sId] === termId) unplace(sId); });
+
+  placements[slotId] = termId;
+  chip.classList.add('placed');
+  chip.classList.remove('selected');
+  selectedTermId = null;
+  const defText = slot.querySelector('.slot-text') ? slot.querySelector('.slot-text').textContent : slot.textContent;
+  slot.innerHTML = '<span class="slot-answer pending">' + termId + '</span><div class="slot-text">' + defText + '</div>';
+  slot.classList.add('pending');
+}
+
+function unplace(slotId) {
+  const termId = placements[slotId];
+  if (!termId) return;
+  const slot = document.getElementById('slot-' + slotId);
+  const chip = document.getElementById('chip-' + termId);
+  const term = TERMS.find(t => t.id === slot.dataset.answer);
+  slot.innerHTML = '<div class="slot-text">' + term.def + '</div>';
+  slot.classList.remove('pending');
+  slot.classList.remove('incorrect');
+  if (chip) chip.classList.remove('placed');
+  delete placements[slotId];
+}
+
+function checkQuiz() {
+  checkAttemptNumber++;
+  const fb = document.getElementById('checkFeedback');
+  const attempted = [];
+  let anyPlaced = false;
+  let anyWrong = false;
+
+  Object.keys(placements).forEach(slotId => {
+    anyPlaced = true;
+    const termId = placements[slotId];
+    const correct = termId === slotId;
+    attempted.push({ slot: slotId, placed_term: termId, correct: correct });
+    const slot = document.getElementById('slot-' + slotId);
+    if (correct) {
+      slot.classList.remove('pending');
+      slot.classList.add('correct');
+      const answerEl = slot.querySelector('.slot-answer');
+      if (answerEl) answerEl.classList.remove('pending');
+      matchedCount++;
+      delete placements[slotId];
+    } else {
+      anyWrong = true;
+      slot.classList.add('shake');
+      setTimeout(() => slot.classList.remove('shake'), 350);
+      const guessedTerm = termId;
+      const defText = slot.querySelector('.slot-text') ? slot.querySelector('.slot-text').textContent : slot.textContent;
+      slot.innerHTML = '<span class="slot-answer incorrect">' + guessedTerm + '</span><div class="slot-text">' + defText + '</div>';
+      slot.classList.remove('pending');
+      slot.classList.add('incorrect');
+    }
+  });
+
+  telemetry.events.push({ type: 'quiz_check', at: new Date().toISOString(), attempt_number: checkAttemptNumber, attempted: attempted });
+  writeTelemetryToDom();
+  hasUnsavedWork = true;
+
+  if (!anyPlaced) {
+    fb.textContent = 'Place at least one term before checking.';
+  } else if (anyWrong) {
+    fb.textContent = 'Some of those aren\'t right yet — they\'re marked below. Click a wrong one to try a different term.';
+  } else {
+    fb.textContent = 'All correct!';
+  }
+  updateProgress();
+}
+
+function resetQuiz() {
+  matchedCount = 0;
+  selectedTermId = null;
+  placements = {};
+  checkAttemptNumber = 0;
+  telemetry.events.push({ type: 'quiz_reset', at: new Date().toISOString() });
+  writeTelemetryToDom();
+  hasUnsavedWork = true;
+  document.getElementById('checkFeedback').textContent = '';
+  document.getElementById('quizArea').setAttribute('data-completed', 'false');
+  document.getElementById('quizRoot').dataset.completed = 'false';
+  buildQuiz();
+  updateProgress();
+}
+
+function updateProgress() {
+  document.getElementById('progressText').textContent = matchedCount + ' of ' + TERMS.length + ' matched';
+  document.getElementById('progressFill').style.width = ((matchedCount / TERMS.length) * 100) + '%';
+  if (matchedCount === TERMS.length) {
+    document.getElementById('quizArea').setAttribute('data-completed', 'true');
+    document.getElementById('quizRoot').dataset.completed = 'true';
+  }
+  updateSaveGate();
+}
+
+function updateSaveGate() {
+  const reflectionFilled = document.getElementById('memoryTrick').value.trim().length > 0;
+  const allMatched = matchedCount === TERMS.length;
+  const saveBtn = document.getElementById('saveBtn');
+  const note = document.getElementById('saveGateNote');
+  saveBtn.disabled = !(allMatched && reflectionFilled);
+  if (allMatched && !reflectionFilled) {
+    note.textContent = 'All matched — write something in the reflection above to unlock Save.';
+  } else if (!allMatched && reflectionFilled) {
+    note.textContent = 'Reflection looks good — match all four terms to unlock Save.';
+  } else {
+    note.textContent = '';
+  }
+}
+
+if (document.getElementById('quizRoot').dataset.completed === 'true') {
+  document.getElementById('quizArea').setAttribute('data-completed', 'true');
+  matchedCount = TERMS.length;
+  document.getElementById('progressText').textContent = TERMS.length + ' of ' + TERMS.length + ' matched';
+  document.getElementById('progressFill').style.width = '100%';
+  updateSaveGate();
+} else {
+  buildQuiz();
+}
+
+let savedFileHandle = null;
+
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  const original = decodeURIComponent(parts[parts.length - 1]) || '03_vocab_quiz.html';
+  if (original.includes('_completed')) return original;
+  return original.replace(/\.html$/, '_completed.html');
+}
+
+function syncFormStateToDom() {
+  document.querySelectorAll('textarea').forEach(t => { t.textContent = t.value; });
+}
+
+function markStepDone(stepKey) {
+  var STORAGE_KEY = 'foxcs_python_unit01_progress';
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+  if (!done['lesson_01_02_input_process_output']) done['lesson_01_02_input_process_output'] = {};
+  done['lesson_01_02_input_process_output'][stepKey] = true;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch (e) {}
+  if (window.renderDoneChips) window.renderDoneChips();
+}
+
+async function saveWork() {
+  syncFormStateToDom();
+  telemetry.saves.push({ at: new Date().toISOString() });
+  writeTelemetryToDom();
+  hasUnsavedWork = false;
+  markStepDone('vocab_quiz');
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+  const statusEl = document.getElementById('saveStatus');
+
+  if (savedFileHandle) {
+    try {
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved as ' + savedFileHandle.name + '.';
+      return;
+    } catch (err) {
+      savedFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      savedFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved as ' + savedFileHandle.name + '.';
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+</script>
+
+<script>
+(function() {
+  window.FOXCS_UNIT_MENU_STORAGE_KEY = 'foxcs_python_unit01_progress';
+  window.renderDoneChips = function() {
+    var done = {};
+    try { done = JSON.parse(localStorage.getItem(window.FOXCS_UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+    document.querySelectorAll('.done-chip[data-lesson][data-step]').forEach(function(el) {
+      var lesson = done[el.dataset.lesson];
+      if (lesson && lesson[el.dataset.step]) {
+        el.classList.add('shown');
+        el.textContent = 'Marked as Done';
+      } else {
+        el.classList.remove('shown');
+        el.textContent = '';
+      }
+    });
+  };
+  renderDoneChips();
+})();
+</script>
+
+</body>
+</html>

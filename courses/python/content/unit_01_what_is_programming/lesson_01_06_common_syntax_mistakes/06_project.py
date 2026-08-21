@@ -1,4 +1,4 @@
-# 01.6 Project: Bug Hunt Challenge
+# 1.6.5b - Project: Bug Hunt Challenge
 # Every line below has exactly one mistake. Fix all four, running the file
 # after each fix. No renaming needed. Just save this file.
 

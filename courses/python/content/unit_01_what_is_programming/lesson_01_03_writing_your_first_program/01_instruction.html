@@ -1,26 +1,182 @@
-<!-- Plain styling on purpose. See unit_01_overview.html's header comment. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>01.3 Writing Your First Program: FoxCS: Python</title>
+<title>1.3.1 Writing Your First Program: FoxCS: Python</title>
 <style>
-  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; }
+  h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.2rem; font-size: 0.95rem; font-family: Georgia, serif; }
+  .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
+  body { line-height: 1.65; }
   h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
-  h1 { border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
-  .objectives { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 0.8rem 1.2rem; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
   code, pre { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
   pre { padding: 0.8rem 1rem; overflow-x: auto; }
-  .vocab dt { font-weight: bold; color: #1a3a5c; }
-  .vocab dd { margin-bottom: 0.6rem; }
-  .game-tie-in { background: #c5c0e3; border-left: 4px solid #4a3aa7; padding: 0.8rem 1.2rem; margin: 1.2rem 0; }
-  .handoff { background: #f9e1ad; border: 1px solid #eda100; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .term-list { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0; }
+  .term-card { background: #eef4fb; border: 1px solid #c8d6e8; border-radius: 6px; padding: 0.7rem 1rem; }
+  .term-name { font-weight: bold; color: #1a3a5c; margin-bottom: 0.25rem; }
+  .term-example { margin-top: 0.4rem; font-size: 0.92rem; color: #445; }
+  .term-example strong { color: #1a5aa8; }
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-family: Verdana, Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card-title { font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.game { background: #f4f2fb; border-color: #ded7f5; }
+  .concept-card.game .concept-card-label { color: #4a3aa7; }
+  .concept-card.real-world { background: #f0f8f5; border-color: #cdeadd; }
+  .concept-card.real-world .concept-card-label { color: #1f5c47; }
+  .quick-check { border: 1px solid #ccd3dd; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
+  .quick-check-label { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .quick-check-prompt { margin-bottom: 0.7rem; }
+  .quick-check select { font-family: Consolas, monospace; font-size: 0.95rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .quick-check button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 0.5rem; }
+  .quick-check button:hover { background: #12467f; }
+  .quick-check .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
+  .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+  .handoff { background: #f9e1ad; border: 1px solid #9a5a00; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .handoff p:first-child { margin-top: 0; }
   .save-reminder { font-weight: bold; color: #7a3a00; }
+  ol.steps li { margin: 0.5rem 0; }
+  .unit-menu-wrap { position: sticky; top: 0; z-index: 20; background: #fff; border: 1px solid #dde3ea; border-radius: 0 0 8px 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .unit-menu-toggle { cursor: pointer; padding: 0.7rem 1.3rem; font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a5aa8; font-size: 0.92rem; list-style: none; user-select: none; }
+  .unit-menu-toggle::-webkit-details-marker { display: none; }
+  .unit-menu-toggle:hover { background: #f4f6f9; }
+  .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
+  .unit-menu-section { margin-top: 0.9rem; }
+  .unit-menu-section:first-child { margin-top: 0.6rem; }
+  .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
+  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
+  .unit-menu-section > a:hover { background: #eef4fb; }
+  .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
+  .lesson-entry { margin: 0.15rem 0; }
+  .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
+  .lesson-entry summary:hover { background: #eef4fb; }
+  .lesson-entry summary::-webkit-details-marker { display: none; }
+  .lesson-entry summary::after { content: '▸'; color: #99a; font-size: 0.75rem; margin-left: auto; padding-left: 0.6rem; }
+  .lesson-entry[open] summary::after { content: '▾'; }
+  .lesson-steps { padding-left: 1.85rem; display: flex; flex-direction: column; gap: 0.1rem; margin: 0.15rem 0 0.4rem; }
+  .lesson-steps a { display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.85rem; border-radius: 4px; }
+  .lesson-steps a:hover { background: #eef4fb; }
+  .lesson-steps a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
+  .step-untracked { font-size: 0.72rem; color: #999; margin-left: auto; font-family: Georgia, serif; font-style: italic; }
+  .done-chip { font-size: 0.68rem; padding: 0.1rem 0.5rem; border-radius: 999px; margin-left: auto; font-family: Verdana, Arial, sans-serif; font-weight: bold; background: #ddeee3; color: #1f5c47; display: none; }
+  .done-chip.shown { display: inline-block; }
 </style>
 </head>
 <body>
 
-<h1>01.3: Writing Your First Program</h1>
+<div class="unit-menu-wrap">
+<details class="unit-menu">
+  <summary class="unit-menu-toggle">☰ Unit 01: What Is Programming?</summary>
+  <nav class="unit-menu-panel">
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
+
+      <details class="lesson-entry">
+        <summary>01.1 What Programs Do</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_01_what_programs_do/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
+          <a href="../lesson_01_01_what_programs_do/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_01_what_programs_do/07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.2 Input-Process-Output</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_02_input_process_output/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_02_input_process_output/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_02_input_process_output/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_02_input_process_output/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
+          <a href="../lesson_01_02_input_process_output/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="../lesson_01_02_input_process_output/08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry" open>
+        <summary>01.3 Writing Your First Program</summary>
+        <div class="lesson-steps">
+          <a href="01_instruction.html" class="current">Instruction</a>
+          <a href="02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="03_flashcards.html">Flashcards</a>
+          <a href="04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
+          <a href="05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
+          <a href="06_project.html">Project Instructions</a>
+          <a href="07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.4 Printing Output</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
+          <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
+          <a href="../lesson_01_04_printing_output/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_04_printing_output/07_project.html">Project Instructions</a>
+          <a href="../lesson_01_04_printing_output/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_04_printing_output/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_04_printing_output/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.5 Comments and Documentation</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_05_comments_and_documentation/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/06_project.html">Project Instructions</a>
+          <a href="../lesson_01_05_comments_and_documentation/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.6 Common Syntax Mistakes</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_06_common_syntax_mistakes/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="practice"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <a href="../project/unit_01_project_instructions.html">Unit Project</a>
+    </div>
+  </nav>
+</details>
+</div>
+
+<h1>1.3.1 — Instruction: Writing Your First Program</h1>
+
 
 <div class="objectives">
 <strong>Learning objectives:</strong>
@@ -35,7 +191,7 @@
 </div>
 
 <h2>Your First Real Program</h2>
-<p>Everything up to now has been ideas. This lesson, you write an actual program and run it. Open <code>2_examples/example_01.py</code> in VS Code, and you'll see something like this:</p>
+<p>Everything up to now has been ideas. This lesson, you write an actual program and run it. Open <code>02_example_01.py</code> in VS Code, and you'll see something like this:</p>
 
 <pre>print("Hello, Python!")
 print("This is my first program.")</pre>
@@ -45,7 +201,21 @@ print("This is my first program.")</pre>
 <h2>Python Runs Top to Bottom, One Line at a Time</h2>
 <p>Python reads your file starting at the very first line and works its way down, running one instruction, then the next, then the next. It never skips ahead, never runs two lines at the exact same moment, and never runs them out of order. If a program has five lines, the fifth line's effect is always the last thing that happens, because Python didn't get to it until it finished the first four.</p>
 
-<p>This is called running <strong>sequentially</strong>. In a fixed sequence, one step at a time. It's the same idea from 01.1's recipe comparison: a recipe's steps happen in the order they're written, not in whatever order looks convenient in the moment.</p>
+<p>This is called running <strong>sequentially</strong>: in a fixed sequence, one step at a time. It's the same idea from 01.1's recipe comparison: a recipe's steps happen in the order they're written, not in whatever order looks convenient in the moment.</p>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">A program has three print() statements, one per line. In what order does Python run them?</div>
+  <select id="qc1-select">
+    <option value="">Choose...</option>
+    <option value="a">Top to bottom, in the order they're written</option>
+    <option value="b">Whichever order finishes fastest</option>
+    <option value="c">Bottom to top</option>
+    <option value="d">Python picks the order that makes the most sense</option>
+  </select>
+  <button onclick="checkQc1()">Check</button>
+  <div class="feedback" id="qc1-feedback"></div>
+</div>
 
 <h2>Predicting Output Before You Run It</h2>
 <p>Reading code and predicting what it will display <em>before</em> you run it, then checking whether you were right, is a genuinely useful skill you'll use all year. Try it here:</p>
@@ -55,36 +225,132 @@ print("Line 2")</pre>
 
 <p>Before you scroll on: what will this display, and in what order? (It displays <code>Line 1</code> then <code>Line 2</code>, each on its own line, because Python ran the first <code>print()</code> completely before starting the second one.)</p>
 
-<div class="game-tie-in">
-<strong>Game connection:</strong> "Runs top to bottom, one instruction at a time" is true of game code too. Before a game can respond to your input at all, it typically runs setup code first: loading the level, placing objects in their starting positions, initializing the score to zero. That setup code runs in order, once, before anything else happens, using the same sequential rule you just used to predict <code>Line 1</code> then <code>Line 2</code>. (What happens after setup, the part that repeats over and over while you play, is the "game loop" you'll meet properly in Unit 06.)
+<div class="concept-card real-world">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><circle cx="10" cy="16" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="16" r="1" fill="currentColor" stroke="none"/></svg>Real-World Example</div>
+<div class="concept-card-title">A step-by-step assembly guide only works in order</div>
+<p>Furniture assembly instructions are sequential too: attach the legs before you flip the table over, not after. If you ran the steps out of order, the result wouldn't just look different, it might not work at all. Python's statements are exactly this literal about order.</p>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">This program runs. What does it display, in order?</div>
+  <pre>print("Setting up...")
+print("Loading level 1...")
+print("Ready!")</pre>
+  <select id="qc2-select">
+    <option value="">Choose...</option>
+    <option value="a">Setting up... / Loading level 1... / Ready!</option>
+    <option value="b">Ready! / Loading level 1... / Setting up...</option>
+    <option value="c">All three lines print at the same time</option>
+    <option value="d">Python picks whichever line is shortest first</option>
+  </select>
+  <button onclick="checkQc2()">Check</button>
+  <div class="feedback" id="qc2-feedback"></div>
+</div>
+
+<div class="concept-card game">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><line x1="12" y1="10" x2="12" y2="17"/><path d="M7 17h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>Game Connection</div>
+<p>"Runs top to bottom, one instruction at a time" is true of game code too. Before a game can respond to your input at all, it typically runs setup code first: loading the level, placing objects in their starting positions, initializing the score to zero. That setup code runs in order, once, before anything else happens, using the same sequential rule you just used to predict the setup example above. What happens after setup, the part that repeats over and over while you play, is the "game loop" you'll meet properly in Unit 06.</p>
 </div>
 
 <h2>Key Terms</h2>
-<dl class="vocab">
-  <dt>execute</dt>
-  <dd>To run a line of code. To carry out its instruction.</dd>
-  <dt>sequential</dt>
-  <dd>In a specific order, one step at a time.</dd>
-  <dt>output</dt>
-  <dd>Text or data that appears on the screen when code runs.</dd>
-  <dt>statement</dt>
-  <dd>A single instruction in a Python program.</dd>
-</dl>
+<div class="term-list">
+  <div class="term-card">
+    <div class="term-name">execute</div>
+    <div class="term-def">To run a line of code. To carry out its instruction.</div>
+    <div class="term-example"><strong>Example:</strong> When Python executes <code>print("Hi")</code>, it displays <code>Hi</code>.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">sequential</div>
+    <div class="term-def">In a specific order, one step at a time.</div>
+    <div class="term-example"><strong>Example:</strong> <code>print("Line 1")</code> then <code>print("Line 2")</code> always displays Line 1 then Line 2, in that order.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">output</div>
+    <div class="term-def">Text or data that appears on the screen when code runs.</div>
+    <div class="term-example"><strong>Example:</strong> Running <code>print("Ready!")</code> produces the output <code>Ready!</code>.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">statement</div>
+    <div class="term-def">A single instruction in a Python program.</div>
+    <div class="term-example"><strong>Example:</strong> <code>print("Hello!")</code> is one whole statement.</div>
+  </div>
+</div>
 
 <h2>What To Do Next</h2>
-<p>Everything for this lesson is in this same folder, numbered in the order you should do it:</p>
-<ol>
-  <li><strong>02_example_01.py:</strong> open it in VS Code and run it.</li>
-  <li><strong>03_flashcards.html (optional warm-up):</strong> <a href="03_flashcards.html">Open the flashcards</a>.</li>
-  <li><strong>04_practice.html:</strong> <a href="04_practice.html">Open the practice page</a>. Save it when you're done.</li>
-  <li><strong>05_project.html:</strong> <a href="05_project.html">Open the project</a>, a short applied task before the mastery check.</li>
-  <li><strong>06_mastery_check.html (do this last):</strong> <a href="06_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
+<p>Everything for this lesson is numbered in the order you should do it:</p>
+<ol class="steps">
+  <li><strong>02_example_01.py</strong>. Open it in VS Code and run it.</li>
+  <li><strong>03_flashcards.html</strong> (optional warm-up). <a href="03_flashcards.html">Open the flashcards</a> to review the 4 terms above.</li>
+  <li><strong>04_vocab_quiz.html</strong>. <a href="04_vocab_quiz.html">Open the vocab quiz</a>. Match all four terms to earn XP.</li>
+  <li><strong>05_practice.html</strong>. <a href="05_practice.html">Open Practice</a> — save this one too.</li>
+  <li><strong>06_project.html</strong>. <a href="06_project.html">Open the project</a>, a short applied task before the mastery check.</li>
+  <li><strong>08_mastery_check.html</strong>. <a href="08_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
+  <li><strong>10_feedback.html</strong> (do this last). <a href="10_feedback.html">Quick feedback about this lesson</a>, 2-3 minutes.</li>
 </ol>
 
 <div class="handoff">
-<strong>Handoff to VS Code:</strong> Open <code>2_examples/example_01.py</code> and run it before you start the practice page.
-<p class="save-reminder">Don't forget to save your practice page and mastery check when you're done.</p>
+<p><strong>Handoff to VS Code:</strong> Open <code>02_example_01.py</code> and run it before you start the practice page.</p>
+<p class="save-reminder">Don't forget to save your work as you go (the on-page Save button for the vocab quiz, Practice, the mastery check, and the feedback form; Ctrl+S in VS Code for the .py files).</p>
 </div>
+
+
+<div class="page-nav">
+  <div class="page-nav-note">Nothing to save on this page — it's reading only.</div>
+  <div class="page-nav-links">
+    <a href="00_table_of_contents.html" class="page-nav-prev">← Table of Contents</a>
+    <a href="03_flashcards.html" class="page-nav-next">Next: Flashcards →</a>
+  </div>
+</div>
+
+<script>
+function checkQc1() {
+  const val = document.getElementById('qc1-select').value;
+  const fb = document.getElementById('qc1-feedback');
+  fb.className = 'feedback ' + (val === 'a' ? 'correct' : 'incorrect');
+  if (val === 'a') {
+    fb.textContent = 'Right! Python starts at the first line and works its way down, one statement at a time.';
+  } else if (val) {
+    fb.textContent = 'Python never reorders your code and never runs two lines at once. Re-read the "Python Runs Top to Bottom" section above.';
+  } else {
+    fb.textContent = 'Pick an option first.';
+  }
+}
+
+function checkQc2() {
+  const val = document.getElementById('qc2-select').value;
+  const fb = document.getElementById('qc2-feedback');
+  fb.className = 'feedback ' + (val === 'a' ? 'correct' : 'incorrect');
+  if (val === 'a') {
+    fb.textContent = 'Right! Each print() runs completely before the next one starts, in the exact order they\'re written.';
+  } else if (val) {
+    fb.textContent = 'Look at the order the lines are written in the code above. Python follows that order exactly, every time.';
+  } else {
+    fb.textContent = 'Pick an option first.';
+  }
+}
+</script>
+
+<script>
+(function() {
+  window.FOXCS_UNIT_MENU_STORAGE_KEY = 'foxcs_python_unit01_progress';
+  window.renderDoneChips = function() {
+    var done = {};
+    try { done = JSON.parse(localStorage.getItem(window.FOXCS_UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+    document.querySelectorAll('.done-chip[data-lesson][data-step]').forEach(function(el) {
+      var lesson = done[el.dataset.lesson];
+      if (lesson && lesson[el.dataset.step]) {
+        el.classList.add('shown');
+        el.textContent = 'Marked as Done';
+      } else {
+        el.classList.remove('shown');
+        el.textContent = '';
+      }
+    });
+  };
+  renderDoneChips();
+})();
+</script>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 # Example 01: Comments
-# Run this file. Notice the comments themselves produce no output at all :
+# Run this file. Notice the comments themselves produce no output at all:
 # only the two print() statements below actually display anything.
 
 # Display the welcome message

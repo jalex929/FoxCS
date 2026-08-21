@@ -1,26 +1,182 @@
-<!-- Plain styling on purpose. See unit_01_overview.html's header comment. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>01.5 Comments and Documentation: FoxCS: Python</title>
+<title>1.5.1 Comments and Documentation: FoxCS: Python</title>
 <style>
-  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; }
+  h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.2rem; font-size: 0.95rem; font-family: Georgia, serif; }
+  .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
+  body { line-height: 1.65; }
   h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
-  h1 { border-bottom: 3px solid #2a78d6; padding-bottom: 0.4rem; }
-  .objectives { background: #f4f6f9; border-left: 4px solid #2a78d6; padding: 0.8rem 1.2rem; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
   code, pre { background: #eef1f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: Consolas, monospace; }
   pre { padding: 0.8rem 1rem; overflow-x: auto; }
-  .vocab dt { font-weight: bold; color: #1a3a5c; }
-  .vocab dd { margin-bottom: 0.6rem; }
-  .game-tie-in { background: #c5c0e3; border-left: 4px solid #4a3aa7; padding: 0.8rem 1.2rem; margin: 1.2rem 0; }
-  .handoff { background: #f9e1ad; border: 1px solid #eda100; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .term-list { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0; }
+  .term-card { background: #eef4fb; border: 1px solid #c8d6e8; border-radius: 6px; padding: 0.7rem 1rem; }
+  .term-name { font-weight: bold; color: #1a3a5c; margin-bottom: 0.25rem; }
+  .term-example { margin-top: 0.4rem; font-size: 0.92rem; color: #445; }
+  .term-example strong { color: #1a5aa8; }
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-family: Verdana, Arial, sans-serif; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card-title { font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.game { background: #f4f2fb; border-color: #ded7f5; }
+  .concept-card.game .concept-card-label { color: #4a3aa7; }
+  .concept-card.real-world { background: #f0f8f5; border-color: #cdeadd; }
+  .concept-card.real-world .concept-card-label { color: #1f5c47; }
+  .quick-check { border: 1px solid #ccd3dd; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
+  .quick-check-label { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .quick-check-prompt { margin-bottom: 0.7rem; }
+  .quick-check select { font-family: Consolas, monospace; font-size: 0.95rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .quick-check button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 0.5rem; }
+  .quick-check button:hover { background: #12467f; }
+  .quick-check .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
+  .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+  .handoff { background: #f9e1ad; border: 1px solid #9a5a00; padding: 1rem 1.2rem; border-radius: 4px; margin-top: 2rem; }
+  .handoff p:first-child { margin-top: 0; }
   .save-reminder { font-weight: bold; color: #7a3a00; }
+  ol.steps li { margin: 0.5rem 0; }
+  .unit-menu-wrap { position: sticky; top: 0; z-index: 20; background: #fff; border: 1px solid #dde3ea; border-radius: 0 0 8px 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .unit-menu-toggle { cursor: pointer; padding: 0.7rem 1.3rem; font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a5aa8; font-size: 0.92rem; list-style: none; user-select: none; }
+  .unit-menu-toggle::-webkit-details-marker { display: none; }
+  .unit-menu-toggle:hover { background: #f4f6f9; }
+  .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
+  .unit-menu-section { margin-top: 0.9rem; }
+  .unit-menu-section:first-child { margin-top: 0.6rem; }
+  .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
+  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
+  .unit-menu-section > a:hover { background: #eef4fb; }
+  .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
+  .lesson-entry { margin: 0.15rem 0; }
+  .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
+  .lesson-entry summary:hover { background: #eef4fb; }
+  .lesson-entry summary::-webkit-details-marker { display: none; }
+  .lesson-entry summary::after { content: '▸'; color: #99a; font-size: 0.75rem; margin-left: auto; padding-left: 0.6rem; }
+  .lesson-entry[open] summary::after { content: '▾'; }
+  .lesson-steps { padding-left: 1.85rem; display: flex; flex-direction: column; gap: 0.1rem; margin: 0.15rem 0 0.4rem; }
+  .lesson-steps a { display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.85rem; border-radius: 4px; }
+  .lesson-steps a:hover { background: #eef4fb; }
+  .lesson-steps a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
+  .step-untracked { font-size: 0.72rem; color: #999; margin-left: auto; font-family: Georgia, serif; font-style: italic; }
+  .done-chip { font-size: 0.68rem; padding: 0.1rem 0.5rem; border-radius: 999px; margin-left: auto; font-family: Verdana, Arial, sans-serif; font-weight: bold; background: #ddeee3; color: #1f5c47; display: none; }
+  .done-chip.shown { display: inline-block; }
 </style>
 </head>
 <body>
 
-<h1>01.5: Comments and Documentation</h1>
+<div class="unit-menu-wrap">
+<details class="unit-menu">
+  <summary class="unit-menu-toggle">☰ Unit 01: What Is Programming?</summary>
+  <nav class="unit-menu-panel">
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
+
+      <details class="lesson-entry">
+        <summary>01.1 What Programs Do</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_01_what_programs_do/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
+          <a href="../lesson_01_01_what_programs_do/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_01_what_programs_do/07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.2 Input-Process-Output</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_02_input_process_output/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_02_input_process_output/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_02_input_process_output/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_02_input_process_output/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
+          <a href="../lesson_01_02_input_process_output/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="../lesson_01_02_input_process_output/08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.3 Writing Your First Program</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_03_writing_your_first_program/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/06_project.html">Project Instructions</a>
+          <a href="../lesson_01_03_writing_your_first_program/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.4 Printing Output</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
+          <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
+          <a href="../lesson_01_04_printing_output/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_04_printing_output/07_project.html">Project Instructions</a>
+          <a href="../lesson_01_04_printing_output/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_04_printing_output/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_04_printing_output/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry" open>
+        <summary>01.5 Comments and Documentation</summary>
+        <div class="lesson-steps">
+          <a href="01_instruction.html" class="current">Instruction</a>
+          <a href="02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="03_flashcards.html">Flashcards</a>
+          <a href="04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
+          <a href="05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
+          <a href="06_project.html">Project Instructions</a>
+          <a href="07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.6 Common Syntax Mistakes</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_06_common_syntax_mistakes/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="practice"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <a href="../project/unit_01_project_instructions.html">Unit Project</a>
+    </div>
+  </nav>
+</details>
+</div>
+
+<h1>1.5.1 — Instruction: Comments and Documentation</h1>
+
 
 <div class="objectives">
 <strong>Learning objectives:</strong>
@@ -41,13 +197,36 @@ print("Hello!")
 # End of program</pre>
 <p>Run this, and you'll see only <code>Hello!</code>. Both comment lines produce no output at all, because Python skips them entirely. They're not for the computer. They're for <em>you</em>, and for anyone else who reads your code later.</p>
 
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">What does this program display?</div>
+  <pre># This line explains the next line
+print("Score: 0")</pre>
+  <select id="qc1-select">
+    <option value="">Choose...</option>
+    <option value="a">Score: 0</option>
+    <option value="b">This line explains the next line, then Score: 0</option>
+    <option value="c">This line explains the next line</option>
+    <option value="d">Nothing displays at all</option>
+  </select>
+  <button onclick="checkQc1()">Check</button>
+  <div class="feedback" id="qc1-feedback"></div>
+</div>
+
 <h2>Why Bother, If Python Ignores Them Anyway?</h2>
-<p>Because code gets hard to remember. Code that makes perfect sense while you're writing it can look like a mystery a week later. Or to a classmate seeing it for the first time. A comment that explains *why* a piece of code exists (not just *what* it does, which the code already shows) saves real time and confusion later.</p>
+<p>Because code gets hard to remember. Code that makes perfect sense while you're writing it can look like a mystery a week later, or to a classmate seeing it for the first time. A comment that explains why a piece of code exists (not just what it does, which the code already shows) saves real time and confusion later.</p>
 
-<p>A weak comment just repeats the code: <code># print the score</code> above <code>print(score)</code> adds nothing you couldn't already read. A strong comment adds something the code doesn't already say: <code># show the score after every round, per the game design doc</code> tells you <em>why</em> this line exists.</p>
+<p>A weak comment just repeats the code:</p>
+<pre># print the score
+print(score)</pre>
+<p>That adds nothing you couldn't already read. A strong comment adds something the code doesn't already say:</p>
+<pre># show the score after every round, per the game design doc
+print(score)</pre>
 
-<div class="game-tie-in">
-<strong>Game connection:</strong> Professional game studios have whole teams of programmers working on the same codebase at once. A comment like <code># TODO: rebalance this enemy's health before playtesting</code> or <code># this check exists because level 3 had a bug where the timer went negative</code> is exactly how one programmer leaves useful context for the next person who opens the file. Sometimes that "next person" is the same programmer, six months later, who has genuinely forgotten why they wrote something a certain way.
+<div class="concept-card real-world">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><circle cx="10" cy="16" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="16" r="1" fill="currentColor" stroke="none"/></svg>Real-World Example</div>
+<div class="concept-card-title">Sticky notes on a recipe card</div>
+<p>Imagine a recipe card with a sticky note that says "double this for a crowd" next to a step. The sticky note isn't part of the recipe itself, a cook could ignore it and still make the dish. But it adds real, useful context for whoever reads the card next. That's exactly what a comment does for code.</p>
 </div>
 
 <h2>Comments Can Also "Turn Off" a Line Temporarily</h2>
@@ -59,30 +238,118 @@ print("Welcome")
 print("Ready to go")</pre>
 <p>This displays only <code>Welcome</code> and <code>Ready to go</code>. The commented-out <code>print("Press start")</code> never runs, even though it's valid Python code sitting right there in the file.</p>
 
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">In the example above, why doesn't "Press start" ever display?</div>
+  <select id="qc2-select">
+    <option value="">Choose...</option>
+    <option value="a">Because the # in front of it turns that line into a comment, which Python skips</option>
+    <option value="b">Because the text has a typo</option>
+    <option value="c">Because print() only works once per file</option>
+    <option value="d">Because it's missing quotation marks</option>
+  </select>
+  <button onclick="checkQc2()">Check</button>
+  <div class="feedback" id="qc2-feedback"></div>
+</div>
+
+<div class="concept-card game">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><line x1="12" y1="10" x2="12" y2="17"/><path d="M7 17h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>Game Connection</div>
+<p>Professional game studios have whole teams of programmers working on the same codebase at once. A comment like <code># TODO: rebalance this enemy's health before playtesting</code> or <code># this check exists because level 3 had a bug where the timer went negative</code> is exactly how one programmer leaves useful context for the next person who opens the file. Sometimes that "next person" is the same programmer, six months later, who has genuinely forgotten why they wrote something a certain way.</p>
+</div>
+
 <h2>Key Terms</h2>
-<dl class="vocab">
-  <dt>comment</dt>
-  <dd>A line (or part of a line) starting with <code>#</code> that Python ignores when running the program.</dd>
-  <dt>documentation</dt>
-  <dd>Written explanation of what code does and why. Comments are the simplest form of it.</dd>
-  <dt>commenting out</dt>
-  <dd>Disabling a line of real code temporarily by putting a <code>#</code> in front of it, without deleting it.</dd>
-</dl>
+<div class="term-list">
+  <div class="term-card">
+    <div class="term-name">comment</div>
+    <div class="term-def">A line (or part of a line) starting with # that Python ignores when running the program.</div>
+    <div class="term-example"><strong>Example:</strong> <code># this is a comment</code> above <code>print("this is not")</code>.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">documentation</div>
+    <div class="term-def">Written explanation of what code does and why. Comments are the simplest form of it.</div>
+    <div class="term-example"><strong>Example:</strong> A well-commented file is documented; a file with zero comments has no documentation.</div>
+  </div>
+  <div class="term-card">
+    <div class="term-name">commenting out</div>
+    <div class="term-def">Disabling a line of real code temporarily by putting a # in front of it, without deleting it.</div>
+    <div class="term-example"><strong>Example:</strong> <code># print("this line will not run")</code> above <code>print("this line will")</code>.</div>
+  </div>
+</div>
 
 <h2>What To Do Next</h2>
-<p>Everything for this lesson is in this same folder, numbered in the order you should do it:</p>
-<ol>
-  <li><strong>02_example_01.py:</strong> open it in VS Code and run it.</li>
-  <li><strong>03_flashcards.html (optional warm-up):</strong> <a href="03_flashcards.html">Open the flashcards</a>.</li>
-  <li><strong>04_practice.html:</strong> <a href="04_practice.html">Open the practice page</a>. Save it when you're done. (Yes, reading the comments carefully matters more in this practice page than most. That's on purpose.)</li>
-  <li><strong>05_project.html:</strong> <a href="05_project.html">Open the project</a>, a short applied task before the mastery check.</li>
-  <li><strong>06_mastery_check.html (do this last):</strong> <a href="06_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
+<p>Everything for this lesson is numbered in the order you should do it:</p>
+<ol class="steps">
+  <li><strong>02_example_01.py</strong>. Open it in VS Code and run it.</li>
+  <li><strong>03_flashcards.html</strong> (optional warm-up). <a href="03_flashcards.html">Open the flashcards</a>.</li>
+  <li><strong>04_vocab_quiz.html</strong>. <a href="04_vocab_quiz.html">Open the vocab quiz</a>.</li>
+  <li><strong>05_practice.html</strong>. <a href="05_practice.html">Open Practice</a> — save this one too. (Reading the comments carefully matters more here than most. That's on purpose.)</li>
+  <li><strong>06_project.html</strong>. <a href="06_project.html">Open the project</a>, a short applied task before the mastery check.</li>
+  <li><strong>08_mastery_check.html</strong>. <a href="08_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
+  <li><strong>10_feedback.html</strong> (do this last). <a href="10_feedback.html">Quick feedback about this lesson</a>, 2-3 minutes.</li>
 </ol>
 
 <div class="handoff">
-<strong>Handoff to VS Code:</strong> Open <code>02_example_01.py</code> and run it first.
-<p class="save-reminder">Don't forget to save your file (Ctrl+S) before you're done.</p>
+<p><strong>Handoff to VS Code:</strong> Open <code>02_example_01.py</code> and run it first.</p>
+<p class="save-reminder">Don't forget to save your work as you go.</p>
 </div>
+
+
+<div class="page-nav">
+  <div class="page-nav-note">Nothing to save on this page — it's reading only.</div>
+  <div class="page-nav-links">
+    <a href="00_table_of_contents.html" class="page-nav-prev">← Table of Contents</a>
+    <a href="03_flashcards.html" class="page-nav-next">Next: Flashcards →</a>
+  </div>
+</div>
+
+<script>
+function checkQc1() {
+  const val = document.getElementById('qc1-select').value;
+  const fb = document.getElementById('qc1-feedback');
+  fb.className = 'feedback ' + (val === 'a' ? 'correct' : 'incorrect');
+  if (val === 'a') {
+    fb.textContent = 'Right! The comment line produces no output at all. Only the print() line actually displays anything.';
+  } else if (val) {
+    fb.textContent = 'A line starting with # is a comment, and Python skips it entirely, no output from it at all.';
+  } else {
+    fb.textContent = 'Pick an option first.';
+  }
+}
+
+function checkQc2() {
+  const val = document.getElementById('qc2-select').value;
+  const fb = document.getElementById('qc2-feedback');
+  fb.className = 'feedback ' + (val === 'a' ? 'correct' : 'incorrect');
+  if (val === 'a') {
+    fb.textContent = 'Right! The # turns that whole line into a comment, so Python skips it completely, even though the print() code underneath is otherwise valid.';
+  } else if (val) {
+    fb.textContent = 'Look again at the # right before print("Press start"). That symbol is what disables the line.';
+  } else {
+    fb.textContent = 'Pick an option first.';
+  }
+}
+</script>
+
+<script>
+(function() {
+  window.FOXCS_UNIT_MENU_STORAGE_KEY = 'foxcs_python_unit01_progress';
+  window.renderDoneChips = function() {
+    var done = {};
+    try { done = JSON.parse(localStorage.getItem(window.FOXCS_UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+    document.querySelectorAll('.done-chip[data-lesson][data-step]').forEach(function(el) {
+      var lesson = done[el.dataset.lesson];
+      if (lesson && lesson[el.dataset.step]) {
+        el.classList.add('shown');
+        el.textContent = 'Marked as Done';
+      } else {
+        el.classList.remove('shown');
+        el.textContent = '';
+      }
+    });
+  };
+  renderDoneChips();
+})();
+</script>
 
 </body>
 </html>
