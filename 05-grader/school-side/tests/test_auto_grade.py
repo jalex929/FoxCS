@@ -247,6 +247,116 @@ class TestGradeFeedback(unittest.TestCase):
         self.assertEqual(row2["feedback_saved"], "Y")
 
 
+class TestFindFileFuzzy(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.folder = Path(self.tmp.name)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_exact_match_no_naming_issue(self):
+        write(self.folder, "04_vocab_quiz_completed.html", "x")
+        path, naming_issue = auto_grade.find_file_fuzzy(self.folder, "vocab_quiz_completed.html", "vocab_quiz")
+        self.assertEqual(path.name, "04_vocab_quiz_completed.html")
+        self.assertFalse(naming_issue)
+
+    def test_fuzzy_match_flags_naming_issue(self):
+        # Real scenario: a student saves under a name that doesn't match the
+        # expected convention at all -- the grader should still find it.
+        write(self.folder, "VocabQuizFinal.html", "x")
+        path, naming_issue = auto_grade.find_file_fuzzy(self.folder, "vocab_quiz_completed.html", "vocab_quiz")
+        self.assertEqual(path.name, "VocabQuizFinal.html")
+        self.assertTrue(naming_issue)
+
+    def test_no_match_at_all(self):
+        write(self.folder, "01_instruction.html", "x")
+        path, naming_issue = auto_grade.find_file_fuzzy(self.folder, "vocab_quiz_completed.html", "vocab_quiz")
+        self.assertIsNone(path)
+        self.assertFalse(naming_issue)
+
+
+class TestXPAwards(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.folder = Path(self.tmp.name)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def _vocab_quiz_html(self, reflection="A real reflection here."):
+        events = [{"type": "quiz_check", "attempted": [{"correct": True}] * 5}]
+        return (
+            '<html><head><script type="application/json" id="foxcs-telemetry">'
+            f'{json.dumps({"events": events})}</script></head><body>'
+            f'<textarea id="memoryTrick">{reflection}</textarea>'
+            "</body></html>"
+        )
+
+    def test_vocab_quiz_full_xp_when_genuinely_complete(self):
+        write(self.folder, "04_vocab_quiz_completed.html", self._vocab_quiz_html())
+        row = {}
+        auto_grade.grade_vocab_quiz(self.folder, row)
+        self.assertEqual(row["vocab_quiz_xp_awarded"], auto_grade.XP_TABLE["vocab_quiz"])
+        self.assertEqual(row["vocab_quiz_naming_issue"], "")
+
+    def test_vocab_quiz_zero_xp_without_reflection(self):
+        write(self.folder, "04_vocab_quiz_completed.html", self._vocab_quiz_html(reflection=""))
+        row = {}
+        auto_grade.grade_vocab_quiz(self.folder, row)
+        self.assertEqual(row["vocab_quiz_xp_awarded"], 0)
+
+    def test_vocab_quiz_naming_penalty_applied(self):
+        write(self.folder, "MyQuizVocabDone.html", self._vocab_quiz_html())
+        row = {}
+        auto_grade.grade_vocab_quiz(self.folder, row)
+        expected = max(auto_grade.MIN_XP_AFTER_PENALTY, auto_grade.XP_TABLE["vocab_quiz"] - auto_grade.NAMING_PENALTY_XP)
+        self.assertEqual(row["vocab_quiz_xp_awarded"], expected)
+        self.assertNotEqual(row["vocab_quiz_xp_awarded"], auto_grade.XP_TABLE["vocab_quiz"])
+        self.assertIn("MyQuizVocabDone.html", row["vocab_quiz_naming_issue"])
+
+    def test_naming_penalty_never_zeroes_genuine_work(self):
+        # Guard against a future XP_TABLE tweak making the penalty exceed
+        # the award and silently produce negative/zero XP for real work.
+        self.assertGreaterEqual(auto_grade.XP_TABLE["feedback"] - auto_grade.NAMING_PENALTY_XP, 0)
+        xp = auto_grade._apply_naming_penalty(auto_grade.XP_TABLE["feedback"], True)
+        self.assertGreaterEqual(xp, auto_grade.MIN_XP_AFTER_PENALTY)
+
+    def test_mastery_check_xp_requires_both_timestamps(self):
+        html_incomplete = '<span id="unlockTime">unlocked_at:2026-08-11T15:10:03Z</span>'
+        write(self.folder, "09_mastery_check_completed.html", html_incomplete)
+        row = {}
+        auto_grade.grade_mastery_check(self.folder, row)
+        self.assertEqual(row["mastery_check_xp_awarded"], 0)
+
+    def test_practice_xp_awarded_for_any_genuine_attempt_not_gated_on_perfection(self):
+        events = [{"type": "drill_attempt", "drill_id": "drill1", "correct": False}]
+        html = (
+            '<html><head><script type="application/json" id="foxcs-telemetry">'
+            f'{json.dumps({"events": events})}</script></head><body></body></html>'
+        )
+        write(self.folder, "05_practice_completed.html", html)
+        row = {}
+        auto_grade.grade_practice(self.folder, row)
+        self.assertEqual(row["practice_xp_awarded"], auto_grade.XP_TABLE["practice"])
+
+    def test_total_xp_sums_all_four(self):
+        write(self.folder, "04_vocab_quiz_completed.html", self._vocab_quiz_html())
+        write(self.folder, "11_feedback_completed.html", "<html></html>")
+        row = {}
+        auto_grade.grade_vocab_quiz(self.folder, row)
+        auto_grade.grade_practice(self.folder, row)
+        auto_grade.grade_mastery_check(self.folder, row)
+        auto_grade.grade_feedback(self.folder, row)
+        total = (
+            row.get("vocab_quiz_xp_awarded", 0)
+            + row.get("practice_xp_awarded", 0)
+            + row.get("mastery_check_xp_awarded", 0)
+            + row.get("feedback_xp_awarded", 0)
+        )
+        self.assertEqual(total, auto_grade.XP_TABLE["vocab_quiz"] + auto_grade.XP_TABLE["feedback"])
+
+
 class TestCollectNeedsReview(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

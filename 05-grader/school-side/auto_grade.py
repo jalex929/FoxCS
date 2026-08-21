@@ -108,6 +108,35 @@ NEEDS_REVIEW_PATTERNS = [
     (re.compile(r'project\.html$'), "project instructions/checklist — spot-check tier claims against the code"),
 ]
 
+# Fuzzy fallback keyword sets (2026-08-21, per Jay), used ONLY when the exact
+# expected filename isn't found. Real students will misname files (wrong
+# convention, typo, missing "_completed") — the grader should still make its
+# best attempt to identify what the file actually is rather than silently
+# reporting "not submitted." All keywords (lowercase substrings) must appear
+# in the filename for a fuzzy match. See find_file_fuzzy() and XP_TABLE below
+# for how a fuzzy match gets flagged and lightly penalized rather than either
+# ignored or treated as if nothing were wrong.
+FUZZY_KEYWORDS = {
+    "vocab_quiz": ["vocab", "quiz"],
+    "practice": ["practice"],
+    "mastery_check": ["mastery"],
+    "feedback": ["feedback"],
+}
+
+# Draft XP values (2026-08-21, per Jay — a first pass, adjustable; see
+# 02-authoring-system/xp-and-incentives.md for the full framework and
+# reasoning). XP is a separate incentive layer from the completion columns
+# above: awarded only when the activity shows genuine completion (not just
+# "the file exists"), never awarded for an untouched template.
+XP_TABLE = {
+    "vocab_quiz": 5,
+    "practice": 8,
+    "mastery_check": 20,
+    "feedback": 3,
+}
+NAMING_PENALTY_XP = 2  # flat deduction when the file had to be fuzzy-matched
+MIN_XP_AFTER_PENALTY = 1  # a naming slip never zeroes out otherwise-genuine work
+
 
 def parse_submission_dirname(dirname):
     """'PY1-A-DELTA04_lesson_01_04_printing_output' -> ('PY1-A-DELTA04', 'lesson_01_04_printing_output')."""
@@ -120,6 +149,41 @@ def parse_submission_dirname(dirname):
 def find_file(folder: Path, suffix: str):
     matches = sorted(folder.glob(f"*{suffix}"))
     return matches[0] if matches else None
+
+
+def find_file_fuzzy(folder: Path, exact_suffix: str, fuzzy_type: str, extension: str = ".html"):
+    """Returns (path, naming_issue). Tries the exact expected suffix first
+    (naming_issue False, no penalty). If that's not found, falls back to any
+    file of the given extension whose lowercased name contains every fuzzy
+    keyword for this type (naming_issue True) — a best-effort identification
+    of a misnamed submission, not a silent "not submitted." Returns
+    (None, False) if nothing matches at all, exact or fuzzy.
+
+    Deliberately does not try to distinguish a genuine misnamed submission
+    from an accidentally-matched untouched template: the completion-quality
+    checks each grade_*() function already runs (attempts, all-correct,
+    non-empty reflection, unlock/complete timestamps) naturally score an
+    untouched template as 0 XP regardless, so no extra logic is needed here
+    to guard against that case.
+    """
+    exact = find_file(folder, exact_suffix)
+    if exact:
+        return exact, False
+    keywords = FUZZY_KEYWORDS.get(fuzzy_type, [])
+    if not keywords:
+        return None, False
+    candidates = sorted(p for p in folder.glob(f"*{extension}") if p.is_file())
+    for p in candidates:
+        name_lower = p.name.lower()
+        if all(k in name_lower for k in keywords):
+            return p, True
+    return None, False
+
+
+def _apply_naming_penalty(xp: int, naming_issue: bool) -> int:
+    if xp and naming_issue:
+        return max(MIN_XP_AFTER_PENALTY, xp - NAMING_PENALTY_XP)
+    return xp
 
 
 def score_telemetry_file(path: Path, event_type: str):
@@ -148,9 +212,11 @@ def score_telemetry_file(path: Path, event_type: str):
 
 
 def grade_vocab_quiz(folder: Path, row: dict):
-    path = find_file(folder, TELEMETRY_SUFFIXES["vocab_quiz"])
+    path, naming_issue = find_file_fuzzy(folder, TELEMETRY_SUFFIXES["vocab_quiz"], "vocab_quiz")
     if not path:
         row["vocab_quiz_saved"] = "N"
+        row["vocab_quiz_xp_awarded"] = 0
+        row["vocab_quiz_naming_issue"] = ""
         return
     saved, attempts, first_ok, last_ok = score_telemetry_file(path, "quiz_check")
     text = path.read_text(encoding="utf-8", errors="replace")
@@ -162,23 +228,31 @@ def grade_vocab_quiz(folder: Path, row: dict):
     row["vocab_quiz_all_correct_by_save"] = "" if last_ok is None else ("Y" if last_ok else "N")
     row["vocab_quiz_reflection_word_count"] = len(reflection_text.split())
     row["vocab_quiz_reflection_text"] = reflection_text
+    row["vocab_quiz_naming_issue"] = f"Saved as '{path.name}', not the expected filename — please use the correct naming convention next time." if naming_issue else ""
+    earned = bool(last_ok) and len(reflection_text.split()) > 0
+    row["vocab_quiz_xp_awarded"] = _apply_naming_penalty(XP_TABLE["vocab_quiz"] if earned else 0, naming_issue)
 
 
 def grade_practice(folder: Path, row: dict):
-    path = find_file(folder, TELEMETRY_SUFFIXES["practice"])
+    path, naming_issue = find_file_fuzzy(folder, TELEMETRY_SUFFIXES["practice"], "practice")
     if not path:
         row["practice_saved"] = "N"
+        row["practice_xp_awarded"] = 0
+        row["practice_naming_issue"] = ""
         return
     text = path.read_text(encoding="utf-8", errors="replace")
+    row["practice_naming_issue"] = f"Saved as '{path.name}', not the expected filename — please use the correct naming convention next time." if naming_issue else ""
     m = TELEMETRY_BLOCK_RE.search(text)
     row["practice_saved"] = "Y"
     if not m:
         row["practice_check_events"] = 0
+        row["practice_xp_awarded"] = 0
         return
     try:
         telemetry = json.loads(m.group(1))
     except json.JSONDecodeError:
         row["practice_check_events"] = 0
+        row["practice_xp_awarded"] = 0
         return
     events = telemetry.get("events", [])
     row["practice_check_events"] = len(events)
@@ -196,12 +270,19 @@ def grade_practice(folder: Path, row: dict):
     )
     row["practice_drills_attempted"] = drills_seen
     row["practice_first_try_correct_count"] = first_try_correct
+    # XP rewards genuine attempt/completion, not perfection -- practice save
+    # is deliberately not gated on getting every drill right (see
+    # mvp-unit-folder-structure.md), so XP shouldn't be either.
+    earned = drills_seen > 0
+    row["practice_xp_awarded"] = _apply_naming_penalty(XP_TABLE["practice"] if earned else 0, naming_issue)
 
 
 def grade_mastery_check(folder: Path, row: dict):
-    path = find_file(folder, MASTERY_CHECK_SUFFIX)
+    path, naming_issue = find_file_fuzzy(folder, MASTERY_CHECK_SUFFIX, "mastery_check")
     if not path:
         row["mastery_check_saved"] = "N"
+        row["mastery_check_xp_awarded"] = 0
+        row["mastery_check_naming_issue"] = ""
         return
     text = path.read_text(encoding="utf-8", errors="replace")
     unlock_m = UNLOCK_TIME_RE.search(text)
@@ -209,17 +290,22 @@ def grade_mastery_check(folder: Path, row: dict):
     row["mastery_check_saved"] = "Y"
     row["mastery_check_unlocked_at"] = unlock_m.group(1) if unlock_m else ""
     row["mastery_check_completed_at"] = complete_m.group(1) if complete_m else ""
+    row["mastery_check_naming_issue"] = f"Saved as '{path.name}', not the expected filename — please use the correct naming convention next time." if naming_issue else ""
     if unlock_m and complete_m:
         try:
             delta = _parse_iso_timestamp(complete_m.group(1)) - _parse_iso_timestamp(unlock_m.group(1))
             row["mastery_check_minutes_unlocked_to_complete"] = round(delta.total_seconds() / 60, 1)
         except ValueError:
             row["mastery_check_minutes_unlocked_to_complete"] = ""
+    earned = bool(unlock_m) and bool(complete_m)
+    row["mastery_check_xp_awarded"] = _apply_naming_penalty(XP_TABLE["mastery_check"] if earned else 0, naming_issue)
 
 
 def grade_feedback(folder: Path, row: dict):
-    path = find_file(folder, FEEDBACK_SUFFIX)
+    path, naming_issue = find_file_fuzzy(folder, FEEDBACK_SUFFIX, "feedback")
     row["feedback_saved"] = "Y" if path else "N"
+    row["feedback_naming_issue"] = f"Saved as '{path.name}', not the expected filename — please use the correct naming convention next time." if (path and naming_issue) else ""
+    row["feedback_xp_awarded"] = _apply_naming_penalty(XP_TABLE["feedback"] if path else 0, naming_issue)
 
 
 def collect_needs_review(folder: Path, codename: str, lesson: str, manifest_rows: list):
@@ -266,6 +352,12 @@ def main():
         grade_practice(folder, row)
         grade_mastery_check(folder, row)
         grade_feedback(folder, row)
+        row["total_xp_awarded"] = (
+            row.get("vocab_quiz_xp_awarded", 0)
+            + row.get("practice_xp_awarded", 0)
+            + row.get("mastery_check_xp_awarded", 0)
+            + row.get("feedback_xp_awarded", 0)
+        )
         report_rows.append(row)
         collect_needs_review(folder, codename, lesson, manifest_rows)
 
@@ -274,11 +366,15 @@ def main():
         "vocab_quiz_saved", "vocab_quiz_check_attempts",
         "vocab_quiz_first_attempt_all_correct", "vocab_quiz_all_correct_by_save",
         "vocab_quiz_reflection_word_count", "vocab_quiz_reflection_text",
+        "vocab_quiz_xp_awarded", "vocab_quiz_naming_issue",
         "practice_saved", "practice_check_events",
         "practice_drills_attempted", "practice_first_try_correct_count",
+        "practice_xp_awarded", "practice_naming_issue",
         "mastery_check_saved", "mastery_check_unlocked_at",
         "mastery_check_completed_at", "mastery_check_minutes_unlocked_to_complete",
-        "feedback_saved",
+        "mastery_check_xp_awarded", "mastery_check_naming_issue",
+        "feedback_saved", "feedback_xp_awarded", "feedback_naming_issue",
+        "total_xp_awarded",
     ]
     report_path = out_dir / "auto_grade_report.csv"
     with report_path.open("w", newline="", encoding="utf-8") as f:
@@ -294,6 +390,12 @@ def main():
         for row in manifest_rows:
             writer.writerow(row)
 
+    naming_issue_count = sum(
+        1 for row in report_rows
+        for key in ("vocab_quiz_naming_issue", "practice_naming_issue", "mastery_check_naming_issue", "feedback_naming_issue")
+        if row.get(key)
+    )
+
     print(f"Graded {len(report_rows)} submission(s).")
     print(f"  Auto-grade report: {report_path}")
     print(f"  Needs-review manifest ({len(manifest_rows)} file(s)): {manifest_path}")
@@ -301,6 +403,12 @@ def main():
     print("  Claude Code, using feedback-and-grading-spec.md as the grading-voice/rubric")
     print("  reference. Nothing generated by AI reaches a student without your approval")
     print("  (see 01-privacy-and-governance/data-boundaries.md's Release Gate).")
+    if naming_issue_count:
+        print(f"  {naming_issue_count} file(s) were fuzzy-matched due to a naming issue — see the")
+        print("  *_naming_issue columns in the report. A small XP penalty was already applied;")
+        print("  no other action needed unless you want to remind the student directly.")
+    print("  XP values are a first-pass draft (02-authoring-system/xp-and-incentives.md)")
+    print("  — adjust XP_TABLE in this script if the amounts need to change.")
 
 
 if __name__ == "__main__":
