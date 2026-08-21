@@ -248,48 +248,19 @@ document.getElementById('pwInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') checkPassword();
 });
 
-const UNIT_MENU_STORAGE_KEY = 'foxcs_python_unit01_progress';
-const REQUIRED_STEPS_FOR_LESSON_DONE = ['vocab_quiz', 'practice', 'mastery_check'];
-function renderUnitMenuChecks() {
-  let done = {};
-  try { done = JSON.parse(localStorage.getItem(UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
-  document.querySelectorAll('.step-check[data-lesson][data-step]').forEach(function(el) {
-    const lesson = done[el.dataset.lesson];
-    if (lesson && lesson[el.dataset.step]) { el.classList.add('done'); el.textContent = '✓'; }
-  });
-  document.querySelectorAll('.menu-check[data-lesson-group]').forEach(function(el) {
-    const lesson = done[el.dataset.lessonGroup] || {};
-    const allDone = REQUIRED_STEPS_FOR_LESSON_DONE.every(function(s) { return lesson[s]; });
-    if (allDone) { el.classList.add('done'); el.textContent = '✓'; }
-  });
-  document.querySelectorAll('.menu-check[data-lesson]:not([data-lesson-group])').forEach(function(el) {
-    if (done[el.dataset.lesson] === true) { el.classList.add('done'); el.textContent = '✓'; }
-  });
-  document.querySelectorAll('.lesson-progress-text[data-lesson-progress]').forEach(function(el) {
-    const lesson = done[el.dataset.lessonProgress] || {};
-    const completedCount = REQUIRED_STEPS_FOR_LESSON_DONE.filter(function(s) { return lesson[s]; }).length;
-    el.textContent = '(' + completedCount + ' of ' + REQUIRED_STEPS_FOR_LESSON_DONE.length + ' complete)';
-  });
+function markStepDone(stepKey) {
+  var STORAGE_KEY = 'foxcs_python_unit01_progress';
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+  if (!done['lesson_01_01_what_programs_do']) done['lesson_01_01_what_programs_do'] = {};
+  done['lesson_01_01_what_programs_do'][stepKey] = true;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch (e) {}
+  if (window.renderDoneChips) window.renderDoneChips();
 }
-function markStepDone(lessonKey, stepKey) {
-  // Called from this page's own markComplete() below, only once the
-  // mastery check is actually marked complete -- not by opening any page
-  // in the lesson. A lesson's aggregate checkmark requires ALL of
-  // REQUIRED_STEPS_FOR_LESSON_DONE to be true, not just this one step. See
-  // lesson-navigation-standards.md's "Every Student-Facing HTML Page Gets
-  // the Top Menu" section.
-  let done = {};
-  try { done = JSON.parse(localStorage.getItem(UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
-  if (!done[lessonKey]) done[lessonKey] = {};
-  done[lessonKey][stepKey] = true;
-  try { localStorage.setItem(UNIT_MENU_STORAGE_KEY, JSON.stringify(done)); } catch (e) {}
-  renderUnitMenuChecks();
-}
-renderUnitMenuChecks();
 
 async function markComplete() {
   document.getElementById('completeTime').textContent = 'completed_at:' + new Date().toISOString();
-  markStepDone('lesson_01_01_what_programs_do', 'mastery_check');
+  markStepDone('mastery_check');
   const statusEl = document.getElementById('completeStatus');
   const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
 
@@ -337,6 +308,27 @@ function currentFileName() {
   if (original.includes('_completed')) return original;
   return original.replace(/\.html$/, '_completed.html');
 }
+</script>
+
+<script>
+(function() {
+  window.FOXCS_UNIT_MENU_STORAGE_KEY = 'foxcs_python_unit01_progress';
+  window.renderDoneChips = function() {
+    var done = {};
+    try { done = JSON.parse(localStorage.getItem(window.FOXCS_UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+    document.querySelectorAll('.done-chip[data-lesson][data-step]').forEach(function(el) {
+      var lesson = done[el.dataset.lesson];
+      if (lesson && lesson[el.dataset.step]) {
+        el.classList.add('shown');
+        el.textContent = 'Marked as Done';
+      } else {
+        el.classList.remove('shown');
+        el.textContent = '';
+      }
+    });
+  };
+  renderDoneChips();
+})();
 </script>
 
 </body>
