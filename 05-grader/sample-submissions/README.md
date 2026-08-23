@@ -39,3 +39,132 @@ Deliberately **nearing proficiency overall** — not a perfect submission, not a
 ### Regenerating or extending
 
 If the real lesson content changes (new drills, renamed fields, a new save convention), this fixture will go stale. There's no automated sync — it was hand-built once against the state of `courses/python/content/unit_01_what_is_programming/lesson_01_04_printing_output/` as of 2026-08-11. Treat it as a snapshot, not a live mirror.
+
+---
+
+## Unit 01 mixed-proficiency arc — added 2026-08-21/22 per Jay
+
+The five folders below (`lesson_01_01`, `_01_02`, `_01_03`, `_01_05`, `_01_06`) all reuse the **same codename, `PY1-A-DELTA04`**, as the `lesson_01_04` fixture above — this is deliberately **one student's folder across the whole unit**, not five unrelated students. Purpose: pressure-test the grading pipeline (`05-grader/school-side/auto_grade.py`) against realistic variance in a single student's work — noticeably better on some lessons than others — rather than one uniform performance level repeated six times. Each lesson was hand-built against that lesson's own real content (real vocab terms, real drill prompts/answer keys, real telemetry event shape) as it stood on 2026-08-21/22, the same way `lesson_01_04`'s fixture was built against 01.4's real content on 2026-08-11 — treat all six as independent snapshots, not a live mirror.
+
+Two structural notes that apply across all five new folders, not just one:
+
+- **Timestamps use millisecond precision** (`2026-08-21T08:50:10.000Z`) instead of `lesson_01_04`'s whole-second style. `auto_grade.py`'s `_parse_iso_timestamp()` accepts both formats (it originally only accepted whole seconds, which masked a real bug against actual browser-generated timestamps — see that function's docstring), so this is just exercising the millisecond path deliberately rather than only ever testing the format that already had a fixture.
+- Several lessons' real content folders picked up a sticky unit-navigation menu (`.unit-menu-wrap`) mid-build from a separate, concurrent content pass — some pages in a lesson have it, some don't, depending on exactly when each page was last touched. That inconsistency was already present in the real `courses/python/content/` folders at copy time and was left as-is here (copied verbatim, same as every other "unmodified" file) — it isn't something this fixture introduced or needs to fix.
+
+### PY1-A-DELTA04_lesson_01_01_what_programs_do/
+
+#### Persona
+
+**Strong start — coasting on Day 1 energy.** High proficiency across the board: vocab quiz all 4 terms matched on the first check attempt, practice all 8 drills correct on the first try, mastery check unlocked and completed in about 5 minutes, feedback rated the lesson clear (5) and interesting (5), checked "None — I can explain all 4 words," and wrote genuinely specific (not generic) answers to the open-ended reading-reflection questions. This is the "everything clicks on Day 1" lesson the unit arc opens on, before the more mixed lessons that follow.
+
+#### What's in each file
+
+| File | State |
+|---|---|
+| `00_table_of_contents.html` | Unmodified |
+| `01_instruction.html` | Unmodified — reading only, no save mechanism |
+| `02_flashcards.html` | Unmodified — no save mechanism |
+| `03_vocab_quiz_completed.html` | All 4 terms (`program`, `instruction`, `programmer`, `Python`) matched on the first check attempt; specific, non-generic reflection (a recipe-card analogy tying all 4 terms together) |
+| `04_practice_completed.html` | All 8 drills correct on the first try |
+| `05_mastery_check_completed.html` | Unlocked and marked complete about 5 minutes apart |
+| `06_mastery_check.py` | All 4 questions answered with specific, well-reasoned answers (e.g. a traffic light example for Q1, distinct from the vending-machine scenario already used in Q2) |
+| `07_feedback_completed.html` | High ratings, "None" checked on the term-difficulty question, both open-ended reflection questions answered with specific detail |
+
+---
+
+### PY1-A-DELTA04_lesson_01_02_input_process_output/
+
+#### Persona
+
+**A naming-convention mistake, content otherwise genuine.** `03_vocab_quiz.html` is deliberately left saved under its **original, un-renamed filename** — no `_completed` suffix — even though the quiz itself was completed for real (all 4 terms matched, second check attempt, honest reflection about mixing up `process`/`system`). This is meant to represent a real, plausible slip: the browser's Save-As dialog suggests `03_vocab_quiz_completed.html`, but a student edits the filename back down, or their OS autocompletes a previously-used name, during the save. It exercises `find_file_fuzzy()`'s fallback path in `auto_grade.py` — the exact-suffix lookup fails, so the grader falls back to any `*.html` file whose name contains every keyword in `FUZZY_KEYWORDS["vocab_quiz"]` (`["vocab", "quiz"]`); `03_vocab_quiz.html` contains both, so the fuzzy match fires, `vocab_quiz_naming_issue` gets populated, and `NAMING_PENALTY_XP` (-2) is deducted from an otherwise-earned 5 XP, landing at 3 — penalized, not zeroed, per `MIN_XP_AFTER_PENALTY`. Every other file uses its expected `_completed` filename normally, so this is an isolated naming slip, not a pattern across the lesson.
+
+The other three trackable files are solid, unremarkable, competent work (a couple of first-attempt misses recovered on retry) — the point of this lesson's fixture is the naming mechanism, not a proficiency extreme.
+
+#### What's in each file
+
+| File | State |
+|---|---|
+| `00_table_of_contents.html` | Unmodified |
+| `01_instruction.html` | Unmodified — reading only, no save mechanism |
+| `02_flashcards.html` | Unmodified — no save mechanism |
+| `03_vocab_quiz.html` | **Deliberately not renamed to `_completed`** — content complete and genuine (all 4 terms matched, 2 check attempts, honest reflection); tests `find_file_fuzzy()`'s naming-issue path |
+| `04_practice_completed.html` | 8 drills; Drill 1 and Drill 7 each took 2 attempts, the rest correct on the first try |
+| `05_mastery_check_completed.html` | Unlocked and completed about 12 minutes apart |
+| `06_mastery_check.py` | All 3 questions answered genuinely |
+| `07_journal.txt` | Iterative journal entry filled in (Rocket League Input-Process-Output example), within the 50-100 word target |
+| `08_feedback_completed.html` | Ratings + both textareas filled in; `system` checked as still-hard-to-explain, consistent with the process/system mix-up named in the vocab quiz reflection |
+
+---
+
+### PY1-A-DELTA04_lesson_01_03_writing_your_first_program/
+
+#### Persona
+
+**Genuine struggle — worked hard, still learning, but gets there.** Not a failing or abandoned submission: every trackable activity is eventually completed correctly, just with visible friction along the way. The vocab quiz took 3 check attempts to land all 4 terms (`execute`, `sequential`, `output`, `statement`), and the reflection is thin — `"not really, I just kept trying"` — genuinely non-empty (clears `auto_grade.py`'s bar, since `vocab_quiz_xp_awarded` only requires a non-empty reflection, not a substantive one) but visibly minimal effort compared to `lesson_01_01`'s specific, multi-sentence reflection. Practice shows multiple wrong attempts before success on several drills (Drill 1 took 3 tries, Drill 3 and Drill 5 each took 2, Drill 6 took 3) while still finishing every drill correctly. The mastery check was unlocked on one day and not completed until the next — about **25 hours (1523 minutes)** apart — representing either a real conceptual gap this student needed a full day to close, or simply a big gap between class periods; either reading is consistent with "struggle," and `auto_grade.py`'s `mastery_check_minutes_unlocked_to_complete` field captures the raw number without judging which. Feedback names the difficulty honestly (clarity 3, difficulty 4) and checks both `sequential` and `statement` as still-hard-to-explain.
+
+#### What's in each file
+
+| File | State |
+|---|---|
+| `00_table_of_contents.html` | Unmodified |
+| `01_instruction.html` | Unmodified — reading only, no save mechanism |
+| `02_example_01.py` | Unmodified — view-only reference file |
+| `03_flashcards.html` | Unmodified — no save mechanism |
+| `04_vocab_quiz_completed.html` | All 4 matched, but took 3 check attempts; reflection is thin (`"not really, I just kept trying"`) — barely clears the non-empty bar |
+| `05_practice_completed.html` | 8 drills; Drills 1 and 6 each took 3 attempts, Drills 3 and 5 each took 2, the rest correct on the first try — real struggle, but every drill eventually correct |
+| `06_project.html` | Unmodified — checkboxes are self-tracking only, real save happens in `07_project.py` |
+| `07_project.py` | Completed with a comment noting a line had to be moved after getting the order wrong once — consistent with the struggle thread |
+| `08_mastery_check_completed.html` | Unlocked and completed **~25 hours apart** (`mastery_check_minutes_unlocked_to_complete` ≈ 1523) |
+| `09_mastery_check.py` | All 3 questions answered correctly, if a little more effortfully explained than `lesson_01_01`'s |
+| `10_feedback_completed.html` | Clarity 3, difficulty 4, both scale follow-ups describe genuine friction; `sequential` and `statement` checked as still-hard-to-explain |
+
+---
+
+### PY1-A-DELTA04_lesson_01_05_comments_and_documentation/
+
+#### Persona
+
+**Incomplete — ran out of steam before the lesson closed out.** Vocab quiz and practice were both submitted genuinely and completely (3 terms — `comment`, `documentation`, `commenting-out` — matched in 2 check attempts; 8 practice drills, one retry on Drill 6). The project (`07_project.py`) was also completed for real. But **feedback was never submitted at all** — `10_feedback_completed.html` (and the blank `10_feedback.html` template) simply isn't in this folder, the same way a real student's folder would look if they closed the tab before reaching the last page. `grade_feedback()` reports `feedback_saved = N` and `feedback_xp_awarded = 0`, with no naming-issue penalty, since there's nothing to fuzzy-match against — an absent file is a different case from a misnamed one, and the grader correctly doesn't conflate them.
+
+**Mastery check: unlocked but never completed — file left out entirely, not saved with an empty `completed_at`.** This was a deliberate choice between the two options Jay's spec flagged, and here's the reasoning: `08_mastery_check.html`'s only save mechanism is the single "Mark Complete & Save" button (`markComplete()`), which sets **both** the `unlocked_at`-populated state (already in memory from unlocking) **and** `completed_at` in the same action before writing the file. There is no code path in the real page that saves a file with `unlocked_at` populated and `completed_at` still empty — that combination can only exist in memory, never on disk, unless someone hand-edits the saved bytes (which wouldn't be a realistic student submission). So the realistic result of "unlocked it, started answering in `09_mastery_check.py`, then never came back to click Mark Complete" is that **no `_completed` file for the mastery check exists at all** — the original blank `08_mastery_check.html` template would still technically be sitting in the folder, untouched, exactly as distributed.
+
+That blank template is **deliberately left out of this fixture folder entirely**, rather than kept in its untouched state, for one more reason worth flagging to Jay directly: `find_file_fuzzy()`'s fallback only checks whether every keyword in `FUZZY_KEYWORDS["mastery_check"]` (`["mastery"]`) appears in a filename — it does **not** distinguish a genuinely-misnamed submission from an untouched blank template that just happens to have "mastery" in its name (the function's own docstring calls this out as accepted behavior, since either way the completion-quality check downstream scores it 0 XP). Had the blank `08_mastery_check.html` been left in this folder, the fuzzy fallback would have matched it and populated `mastery_check_naming_issue` with a "please use the correct naming convention" message that isn't really true — nothing was misnamed, it just was never touched. Removing the file entirely avoids that slightly-misleading message and produces the cleaner, more accurate signal: `mastery_check_saved = N`, both timestamp columns empty, 0 XP, no naming-issue text — matching how the missing-feedback case above is handled. `09_mastery_check.py` (the paired answer file) is left in the folder with only Question 1 answered, Questions 2 and 3 blank — consistent with a session that got cut short mid-way rather than one that was fully abandoned.
+
+#### What's in each file
+
+| File | State |
+|---|---|
+| `00_table_of_contents.html` | Unmodified |
+| `01_instruction.html` | Unmodified — reading only, no save mechanism |
+| `02_example_01.py` | Unmodified — view-only reference file |
+| `03_flashcards.html` | Unmodified — no save mechanism |
+| `04_vocab_quiz_completed.html` | All 3 terms matched, 2 check attempts, genuine reflection |
+| `05_practice_completed.html` | 8 drills; Drill 6 took 2 attempts, the rest correct on the first try |
+| `06_project.html` | Unmodified — checkboxes are self-tracking only, real save happens in `07_project.py` |
+| `07_project.py` | Completed genuinely — a specific, non-generic reason comment above each `print()` |
+| *(`08_mastery_check.html`/`_completed.html`)* | **Not present** — see reasoning above; tests `mastery_check_saved = N` / 0 XP / empty timestamp columns |
+| `09_mastery_check.py` | Only Question 1 answered; Questions 2 and 3 left blank — session cut short before the mastery check was ever marked complete |
+| *(`10_feedback.html`/`_completed.html`)* | **Not present at all** — tests `feedback_saved = N` / 0 XP / no naming-issue text (nothing to fuzzy-match) |
+
+---
+
+### PY1-A-DELTA04_lesson_01_06_common_syntax_mistakes/
+
+#### Persona
+
+**Above and beyond — found their footing, closing the unit on a high note.** Not just correct — visibly more effort than the assignment asked for. Vocab quiz: all 4 terms (`SyntaxError`, `EOL`, `syntax`, `parenthesis`) matched on the first check attempt, with a reflection that chains all four terms into one connected explanation instead of four separate memory tricks. Practice: 8 drills, first-try correct on 7 of 8 (only Drill 5 — the "two mistakes in one line" drill — took a second attempt, which keeps this believable rather than suspiciously flawless). The project (`06_project.py`) fixes all four required broken lines **and** completes both Tier 1 bonus items (an extra intentionally-broken-then-fixed line, plus a comment explaining SyntaxError vs. NameError in the student's own words) — going past the required checklist unprompted. The mastery check was unlocked and completed in under 5 minutes, and both open-ended feedback questions (`q5`, `q6`) get genuinely specific, multi-sentence answers naming exactly which drill was rewarding and why, and what strategy the student developed and reused on the project — not generic "it was fun" answers.
+
+#### What's in each file
+
+| File | State |
+|---|---|
+| `00_table_of_contents.html` | Unmodified |
+| `01_instruction.html` | Unmodified — reading only, no save mechanism |
+| `02_flashcards.html` | Unmodified — no save mechanism |
+| `03_vocab_quiz_completed.html` | All 4 terms matched on the first check attempt; reflection specifically chains all 4 terms into one explanation |
+| `04_practice_completed.html` | 8 drills; only Drill 5 took a second attempt, the rest correct on the first try |
+| `05_project.html` | Unmodified — checkboxes are self-tracking only, real save happens in `06_project.py` |
+| `06_project.py` | All 4 required fixes, plus both Tier 1 bonus items (extra broken-then-fixed line, SyntaxError-vs-NameError comment) |
+| `07_mastery_check_completed.html` | Unlocked and completed about 4.7 minutes apart |
+| `08_mastery_check.py` | All 4 questions answered thoroughly, including reasoning about which error Python would actually report when a line has two mistakes at once |
+| `09_feedback_completed.html` | High ratings, "None" checked on the term-difficulty question, both open-ended reflection questions answered with specific, detailed examples |

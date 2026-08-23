@@ -1,0 +1,42 @@
+UNIT 01 JOURNAL
+================
+
+Word count target: 50-100 words. This is your second entry of the year.
+
+Look back at your Unit 00 entry before you write this one. That habit of
+checking your earlier thinking is part of what makes this thread iterative,
+not just repeated.
+
+PROMPT:
+Every game takes input from a player and gives output back. Describe the
+Input-Process-Output loop for a game you know, using specific examples.
+
+HOW THIS GETS GRADED:
+- Thoughtfulness and completion of the ask. Did you actually answer what
+  was asked, with specific examples from a real game, not a generic
+  description.
+- Genuine reflection rooted in the actual concept (Input/Process/Output as
+  taught in this unit), not a vague restatement.
+- If you take a stance or opinion anywhere, justify it, and tie it back to
+  your example.
+- It should sound like YOU wrote it.
+
+ACADEMIC INTEGRITY: Using AI to write any part of this journal entry, and
+submitting it as your own, is a 0 on the assignment and gets documented as
+a logged incident. This is a serious rule, not a formality. Write your own
+thinking, even if it's imperfect. See your teacher if you're stuck on what
+to write, not an AI tool.
+
+------------------------------------------------------------------------
+WRITE YOUR ANSWER BELOW THIS LINE. SAVE THIS FILE WHEN YOU'RE DONE.
+------------------------------------------------------------------------
+
+In Rocket League, the Input is me moving the joystick and hitting the jump
+and boost buttons. The Process is the game deciding what my car actually
+does with that input, like whether I have enough boost meter left, whether
+my car is touching the ground so it can turn, and whether my hitbox is
+actually touching the ball at the angle I hit it at. The Output is what
+shows up on screen: my car turning or flipping, the boost meter going down,
+and the ball flying off in whatever direction the physics decided. If the
+Process step got the ball's direction wrong, the Output would look broken
+even though my Input was fine, which is basically what a lag glitch is.

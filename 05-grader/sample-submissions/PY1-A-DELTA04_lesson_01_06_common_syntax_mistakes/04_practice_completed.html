@@ -1,0 +1,513 @@
+<!-- Built 2026-08-21 to match lesson_01_01_what_programs_do's
+     practice pattern — auto-checked drills, hidden foxcs-telemetry event log
+     (drill_attempt events), Save button using showSaveFilePicker with a
+     _completed suffix, not gated on a perfect score. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>1.6.4 Practice: FoxCS: Python</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 780px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; }
+  h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.2rem; font-size: 0.95rem; font-family: Georgia, serif; }
+  .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-size: 0.9rem; }
+  .page-nav-note { color: #555; margin-bottom: 0.6rem; }
+  .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
+  .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
+  .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
+  .page-nav-toc:hover { background: #eef1f5; }
+  .drill { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 1.2rem 1.4rem; margin: 1.2rem 0; }
+  .drill-type { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .drill-prompt { font-weight: bold; margin-bottom: 0.9rem; }
+  .drill-prompt pre, .drill code.code-block { display: block; margin: 0.5rem 0; }
+  select.drill-select, input.drill-input { font-family: Consolas, monospace; font-size: 1rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .check-options label { display: block; margin: 0.4rem 0; cursor: pointer; font-family: Georgia, serif; }
+  .check-options input { margin-right: 0.5rem; }
+  button.check-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
+  button.check-btn:hover { background: #12467f; }
+  .feedback { margin-top: 0.8rem; padding: 0.6rem 0.9rem; border-radius: 5px; display: none; font-size: 0.95rem; }
+  .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+  .save-row { text-align: center; margin: 2rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid #dde3ea; }
+  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+  button.save-btn:hover { background: #5c2c00; }
+  .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+  .unit-menu-wrap { position: sticky; top: 0; z-index: 20; background: #fff; border: 1px solid #dde3ea; border-radius: 0 0 8px 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .unit-menu-toggle { cursor: pointer; padding: 0.7rem 1.3rem; font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a5aa8; font-size: 0.92rem; list-style: none; user-select: none; }
+  .unit-menu-toggle::-webkit-details-marker { display: none; }
+  .unit-menu-toggle:hover { background: #f4f6f9; }
+  .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
+  .unit-menu-section { margin-top: 0.9rem; }
+  .unit-menu-section:first-child { margin-top: 0.6rem; }
+  .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
+  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
+  .unit-menu-section > a:hover { background: #eef4fb; }
+  .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
+  .lesson-entry { margin: 0.15rem 0; }
+  .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
+  .lesson-entry summary:hover { background: #eef4fb; }
+  .lesson-entry summary::-webkit-details-marker { display: none; }
+  .lesson-entry summary::after { content: '▸'; color: #99a; font-size: 0.75rem; margin-left: auto; padding-left: 0.6rem; }
+  .lesson-entry[open] summary::after { content: '▾'; }
+  .lesson-steps { padding-left: 1.85rem; display: flex; flex-direction: column; gap: 0.1rem; margin: 0.15rem 0 0.4rem; }
+  .lesson-steps a { display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.85rem; border-radius: 4px; }
+  .lesson-steps a:hover { background: #eef4fb; }
+  .lesson-steps a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
+  .step-untracked { font-size: 0.72rem; color: #999; margin-left: auto; font-family: Georgia, serif; font-style: italic; }
+  .done-chip { font-size: 0.68rem; padding: 0.1rem 0.5rem; border-radius: 999px; margin-left: auto; font-family: Verdana, Arial, sans-serif; font-weight: bold; background: #ddeee3; color: #1f5c47; display: none; }
+  .done-chip.shown { display: inline-block; }
+</style>
+<script type="application/json" id="foxcs-telemetry" aria-hidden="true">
+{
+  "page_id": "lesson_01_06_common_syntax_mistakes/04_practice",
+  "opened_at": "2026-08-21T08:36:10.000Z",
+  "saves": [
+    { "at": "2026-08-21T08:44:52.000Z" }
+  ],
+  "events": [
+    { "type": "drill_attempt", "at": "2026-08-21T08:36:50.000Z", "drill_id": "drill1", "correct": true, "attempt_number": 1, "selected": "b" },
+    { "type": "drill_attempt", "at": "2026-08-21T08:37:30.000Z", "drill_id": "drill2", "correct": true, "attempt_number": 1, "typed": "print(\"hello\")" },
+    { "type": "drill_attempt", "at": "2026-08-21T08:38:05.000Z", "drill_id": "drill3", "correct": true, "attempt_number": 1, "selected": "b" },
+    { "type": "drill_attempt", "at": "2026-08-21T08:38:40.000Z", "drill_id": "drill4", "correct": true, "attempt_number": 1, "selected": "a" },
+    { "type": "drill_attempt", "at": "2026-08-21T08:39:35.000Z", "drill_id": "drill5", "correct": false, "attempt_number": 1, "typed": "print(gamestart)" },
+    { "type": "drill_attempt", "at": "2026-08-21T08:40:05.000Z", "drill_id": "drill5", "correct": true, "attempt_number": 2, "typed": "print(\"gamestart\")" },
+    { "type": "drill_attempt", "at": "2026-08-21T08:41:00.000Z", "drill_id": "drill6", "correct": true, "attempt_number": 1, "selected": ["a", "c"] },
+    { "type": "drill_attempt", "at": "2026-08-21T08:41:40.000Z", "drill_id": "drill7", "correct": true, "attempt_number": 1, "selected": "a" },
+    { "type": "drill_attempt", "at": "2026-08-21T08:42:20.000Z", "drill_id": "drill8", "correct": true, "attempt_number": 1, "selected": "a" }
+  ]
+}
+</script>
+</head>
+<body data-page-id="lesson_01_06_common_syntax_mistakes/04_practice">
+
+<div class="unit-menu-wrap">
+<details class="unit-menu">
+  <summary class="unit-menu-toggle">☰ Unit 01: What Is Programming?</summary>
+  <nav class="unit-menu-panel">
+    <div class="unit-menu-section">
+      <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
+
+      <details class="lesson-entry">
+        <summary>01.1 What Programs Do</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_01_what_programs_do/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
+          <a href="../lesson_01_01_what_programs_do/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_01_what_programs_do/07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.2 Input-Process-Output</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_02_input_process_output/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_02_input_process_output/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_02_input_process_output/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_02_input_process_output/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
+          <a href="../lesson_01_02_input_process_output/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="../lesson_01_02_input_process_output/08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.3 Writing Your First Program</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_03_writing_your_first_program/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/06_project.html">Project Instructions</a>
+          <a href="../lesson_01_03_writing_your_first_program/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.4 Printing Output</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
+          <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
+          <a href="../lesson_01_04_printing_output/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_04_printing_output/07_project.html">Project Instructions</a>
+          <a href="../lesson_01_04_printing_output/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_04_printing_output/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_04_printing_output/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry">
+        <summary>01.5 Comments and Documentation</summary>
+        <div class="lesson-steps">
+          <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_05_comments_and_documentation/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/06_project.html">Project Instructions</a>
+          <a href="../lesson_01_05_comments_and_documentation/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <details class="lesson-entry" open>
+        <summary>01.6 Common Syntax Mistakes</summary>
+        <div class="lesson-steps">
+          <a href="01_instruction.html">Instruction</a>
+          <a href="02_flashcards.html">Flashcards</a>
+          <a href="03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="vocab_quiz"></span></a>
+          <a href="04_practice.html" class="current">Practice<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="practice"></span></a>
+          <a href="05_project.html">Project Instructions</a>
+          <a href="06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
+        </div>
+      </details>
+
+      <a href="../project/unit_01_project_instructions.html">Unit Project</a>
+    </div>
+  </nav>
+</details>
+</div>
+
+<h1>1.6.4 — Practice</h1>
+<div class="intro">Some questions ask you to name which error a broken line would raise. Others ask you to fix the line yourself. <strong>This page is saved and submitted.</strong></div>
+
+
+<div class="drill" id="drill1">
+  <div class="drill-type">Choose the Best Answer</div>
+  <div class="drill-prompt">What error would this line raise?<pre>print(Hello)</pre></div>
+  <select class="drill-select" id="d1-select">
+    <option value="">Choose...</option>
+    <option value="a">SyntaxError</option>
+    <option value="b" selected>NameError</option>
+  </select>
+  <button class="check-btn" onclick="checkDrill1()">Check</button>
+  <div class="feedback correct" id="d1-feedback">Right! Hello with no quotes looks like a variable name to Python, and there is no variable called Hello. NameError.</div>
+</div>
+
+<div class="drill" id="drill2">
+  <div class="drill-type">Fill in the Blank</div>
+  <div class="drill-prompt">Fix this line so it displays exactly: Hello<pre>print(Hello)</pre>Type the corrected line.</div>
+  <input type="text" class="drill-input" id="d2-input" placeholder='print("Hello")' style="width:70%" value='print("hello")'>
+  <button class="check-btn" onclick="checkDrill2()">Check</button>
+  <div class="feedback correct" id="d2-feedback">Right! Adding quotes turns Hello into a string instead of an undefined variable name.</div>
+</div>
+
+<div class="drill" id="drill3">
+  <div class="drill-type">Choose the Best Answer</div>
+  <div class="drill-prompt">What error would this line raise?<pre>Print("Python")</pre></div>
+  <select class="drill-select" id="d3-select">
+    <option value="">Choose...</option>
+    <option value="a">SyntaxError</option>
+    <option value="b" selected>NameError</option>
+  </select>
+  <button class="check-btn" onclick="checkDrill3()">Check</button>
+  <div class="feedback correct" id="d3-feedback">Right! Print with a capital letter is not the same name as print, so Python cannot find it. NameError.</div>
+</div>
+
+<div class="drill" id="drill4">
+  <div class="drill-type">Choose the Best Answer</div>
+  <div class="drill-prompt">What error would this line raise?<pre>print("Hello</pre></div>
+  <select class="drill-select" id="d4-select">
+    <option value="">Choose...</option>
+    <option value="a" selected>SyntaxError</option>
+    <option value="b">NameError</option>
+  </select>
+  <button class="check-btn" onclick="checkDrill4()">Check</button>
+  <div class="feedback correct" id="d4-feedback">Right! A missing closing quote breaks Python's grammar rules before the line can even run. SyntaxError.</div>
+</div>
+
+<div class="drill" id="drill5">
+  <div class="drill-type">Fill in the Blank</div>
+  <div class="drill-prompt">This line has TWO mistakes at once. Fix both. It should display exactly: GameStart<pre>Print(GameStart)</pre>Type the corrected line.</div>
+  <input type="text" class="drill-input" id="d5-input" placeholder='print("GameStart")' style="width:70%" value='print("gamestart")'>
+  <button class="check-btn" onclick="checkDrill5()">Check</button>
+  <div class="feedback correct" id="d5-feedback">Right! print should be lowercase, and GameStart needs quotes to be a string instead of an undefined name.</div>
+</div>
+
+<div class="drill" id="drill6">
+  <div class="drill-type">Select All That Apply</div>
+  <div class="drill-prompt">Check all of the following lines that would raise a NameError (not a SyntaxError).</div>
+  <div class="check-options">
+    <label><input type="checkbox" name="d6opt" value="a" checked> print(Score)</label>
+    <label><input type="checkbox" name="d6opt" value="b"> print("Score</label>
+    <label><input type="checkbox" name="d6opt" value="c" checked> Print("Score")</label>
+    <label><input type="checkbox" name="d6opt" value="d"> print "Score"</label>
+  </div>
+  <button class="check-btn" onclick="checkDrill6()">Check</button>
+  <div class="feedback correct" id="d6-feedback">Right! print(Score) and Print("Score") both look grammatically valid to Python, so both raise NameError. The other two break grammar rules and raise SyntaxError instead.</div>
+</div>
+
+<div class="drill" id="drill7">
+  <div class="drill-type">Choose the Best Answer</div>
+  <div class="drill-prompt">A missing closing quote breaks Python's grammar before the line can even run. Which term describes this class of problem?</div>
+  <select class="drill-select" id="d7-select">
+    <option value="">Choose...</option>
+    <option value="a" selected>syntax</option>
+    <option value="b">documentation</option>
+    <option value="c">output</option>
+    <option value="d">sequence</option>
+  </select>
+  <button class="check-btn" onclick="checkDrill7()">Check</button>
+  <div class="feedback correct" id="d7-feedback">Right! Syntax is the grammar rules for writing valid code, and a missing quote breaks those rules.</div>
+</div>
+
+<div class="drill" id="drill8">
+  <div class="drill-type">Diagnose the Mistake</div>
+  <div class="drill-prompt">This line has more than one thing wrong with it. Name the mistakes.<pre>print(Ready to play</pre></div>
+  <select class="drill-select" id="d8-select">
+    <option value="">Choose...</option>
+    <option value="a" selected>Missing quotes around the text, and a missing closing parenthesis</option>
+    <option value="b">Nothing is wrong with this line</option>
+    <option value="c">The word "Ready" is spelled wrong</option>
+    <option value="d">print should be capitalized</option>
+  </select>
+  <button class="check-btn" onclick="checkDrill8()">Check</button>
+  <div class="feedback correct" id="d8-feedback">Right! The text is missing quotes AND the closing parenthesis is missing.</div>
+</div>
+
+
+<div class="save-row">
+  <button class="save-btn" onclick="saveWork()">Save My Practice</button>
+  <div class="save-status" id="saveStatus">Saved as 04_practice_completed.html.</div>
+</div>
+
+<div class="page-nav">
+  <div class="page-nav-note">Save above before you leave this page.</div>
+  <div class="page-nav-links">
+    <a href="03_vocab_quiz.html" class="page-nav-prev">← Back: Vocab Quiz</a>
+    <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
+    <a href="05_project.html" class="page-nav-next">Next: Project Instructions →</a>
+  </div>
+</div>
+
+<script>
+let telemetry = { page_id: 'lesson_01_06_common_syntax_mistakes/04_practice', opened_at: new Date().toISOString(), saves: [], events: [] };
+const drillAttemptCounts = {};
+let hasUnsavedWork = false;
+function logDrillAttempt(drillId, correct, extra) {
+  drillAttemptCounts[drillId] = (drillAttemptCounts[drillId] || 0) + 1;
+  telemetry.events.push(Object.assign({
+    type: 'drill_attempt', at: new Date().toISOString(),
+    drill_id: drillId, correct: correct, attempt_number: drillAttemptCounts[drillId]
+  }, extra || {}));
+  hasUnsavedWork = true;
+}
+
+window.addEventListener('beforeunload', (e) => {
+  if (hasUnsavedWork) { e.preventDefault(); e.returnValue = ''; }
+});
+function writeTelemetryToDom() {
+  let el = document.getElementById('foxcs-telemetry');
+  if (!el) {
+    el = document.createElement('script');
+    el.type = 'application/json';
+    el.id = 'foxcs-telemetry';
+    el.setAttribute('aria-hidden', 'true');
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(telemetry, null, 2);
+}
+writeTelemetryToDom();
+
+function checkTyped(inputId, feedbackId, acceptable, correctMsg, incorrectMsg, drillId) {
+  const val = document.getElementById(inputId).value.trim().toLowerCase();
+  const fb = document.getElementById(feedbackId);
+  const isCorrect = acceptable.includes(val);
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+  fb.textContent = isCorrect ? correctMsg : incorrectMsg;
+  logDrillAttempt(drillId, isCorrect, { typed: val });
+  writeTelemetryToDom();
+}
+
+function checkDrill1() {
+  const val = document.getElementById('d1-select').value;
+  const fb = document.getElementById('d1-feedback');
+  const correct = val === 'b';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  if (val === 'b') { fb.textContent = 'Right! Hello with no quotes looks like a variable name to Python, and there is no variable called Hello. NameError.'; }
+  else { fb.textContent = 'This line is grammatically valid Python. Python just cannot find anything named Hello. That is a NameError, not a SyntaxError.'; }
+  if (!val) { fb.textContent = 'Pick an option first.'; return; }
+  logDrillAttempt('drill1', correct, { selected: val });
+  writeTelemetryToDom();
+}
+
+function checkDrill2() {
+  checkTyped('d2-input', 'd2-feedback', ['print("hello")', "print('hello')"],
+    'Right! Adding quotes turns Hello into a string instead of an undefined variable name.',
+    'Not quite. Hello needs quotes around it so Python treats it as text, not a variable name.', 'drill2');
+}
+
+function checkDrill3() {
+  const val = document.getElementById('d3-select').value;
+  const fb = document.getElementById('d3-feedback');
+  const correct = val === 'b';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  if (val === 'b') { fb.textContent = 'Right! Print with a capital letter is not the same name as print, so Python cannot find it. NameError.'; }
+  else { fb.textContent = 'Capitalized Print looks grammatically valid, so this is not a SyntaxError. Python just cannot find anything named Print.'; }
+  if (!val) { fb.textContent = 'Pick an option first.'; return; }
+  logDrillAttempt('drill3', correct, { selected: val });
+  writeTelemetryToDom();
+}
+
+function checkDrill4() {
+  const val = document.getElementById('d4-select').value;
+  const fb = document.getElementById('d4-feedback');
+  const correct = val === 'a';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  if (val === 'a') { fb.textContent = 'Right! A missing closing quote breaks Python\'s grammar rules before the line can even run. SyntaxError.'; }
+  else { fb.textContent = 'A missing closing quote means Python cannot even parse this line as valid grammar. That makes it a SyntaxError.'; }
+  if (!val) { fb.textContent = 'Pick an option first.'; return; }
+  logDrillAttempt('drill4', correct, { selected: val });
+  writeTelemetryToDom();
+}
+
+function checkDrill5() {
+  checkTyped('d5-input', 'd5-feedback', ['print("gamestart")', "print('gamestart')"],
+    'Right! print should be lowercase, and GameStart needs quotes to be a string instead of an undefined name.',
+    'Not quite. There are two separate mistakes here: capitalization and missing quotes.', 'drill5');
+}
+
+function checkDrill6() {
+  const boxes = Array.from(document.querySelectorAll('input[name="d6opt"]'));
+  const selected = boxes.filter(b => b.checked).map(b => b.value).sort();
+  const answer = ['a', 'c'];
+  const fb = document.getElementById('d6-feedback');
+  if (selected.length === 0) { fb.className = 'feedback incorrect'; fb.textContent = 'Check at least one option first.'; return; }
+  const correct = selected.length === answer.length && selected.every((v, i) => v === answer[i]);
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  fb.textContent = correct
+    ? 'Right! print(Score) and Print("Score") both look grammatically valid to Python, so both raise NameError. The other two break grammar rules and raise SyntaxError instead.'
+    : 'Not quite. Ask: does this line look grammatically valid to Python, just referencing something that does not exist? Or does it break Python\'s grammar rules outright?';
+  logDrillAttempt('drill6', correct, { selected: selected });
+  writeTelemetryToDom();
+}
+
+function checkDrill7() {
+  const val = document.getElementById('d7-select').value;
+  const fb = document.getElementById('d7-feedback');
+  const correct = val === 'a';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  if (val === 'a') { fb.textContent = 'Right! Syntax is the grammar rules for writing valid code, and a missing quote breaks those rules.'; }
+  else { fb.textContent = 'Not quite. Think about the word for "the grammar rules for writing valid code."'; }
+  if (!val) { fb.textContent = 'Pick an option first.'; return; }
+  logDrillAttempt('drill7', correct, { selected: val });
+  writeTelemetryToDom();
+}
+
+function checkDrill8() {
+  const val = document.getElementById('d8-select').value;
+  const fb = document.getElementById('d8-feedback');
+  const correct = val === 'a';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  if (val === 'a') { fb.textContent = 'Right! The text is missing quotes AND the closing parenthesis is missing.'; }
+  else { fb.textContent = 'Look carefully at the whole line: check both the quotes and the parentheses.'; }
+  if (!val) { fb.textContent = 'Pick an option first.'; return; }
+  logDrillAttempt('drill8', correct, { selected: val });
+  writeTelemetryToDom();
+}
+
+function markStepDone(stepKey) {
+  var STORAGE_KEY = 'foxcs_python_unit01_progress';
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+  if (!done['lesson_01_06_common_syntax_mistakes']) done['lesson_01_06_common_syntax_mistakes'] = {};
+  done['lesson_01_06_common_syntax_mistakes'][stepKey] = true;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch (e) {}
+  if (window.renderDoneChips) window.renderDoneChips();
+}
+
+let savedFileHandle = null;
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  const original = decodeURIComponent(parts[parts.length - 1]) || '04_practice.html';
+  if (original.includes('_completed')) return original;
+  return original.replace(/\.html$/, '_completed.html');
+}
+function syncFormStateToDom() {
+  document.querySelectorAll('select').forEach(sel => {
+    Array.from(sel.options).forEach(opt => opt.toggleAttribute('selected', opt.value === sel.value));
+  });
+  document.querySelectorAll('input[type="text"]').forEach(inp => { inp.setAttribute('value', inp.value); });
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.toggleAttribute('checked', cb.checked); });
+}
+
+async function saveWork() {
+  syncFormStateToDom();
+  telemetry.saves.push({ at: new Date().toISOString() });
+  writeTelemetryToDom();
+  hasUnsavedWork = false;
+  markStepDone('practice');
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+  const statusEl = document.getElementById('saveStatus');
+
+  if (savedFileHandle) {
+    try {
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved as ' + savedFileHandle.name + '.';
+      return;
+    } catch (err) { savedFileHandle = null; }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      savedFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: { 'text/html': ['.html'] } }]
+      });
+      const writable = await savedFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved as ' + savedFileHandle.name + '.';
+      return;
+    } catch (err) { if (err.name === 'AbortError') return; }
+  }
+
+  const blob = new Blob([htmlContent], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+</script>
+
+<script>
+(function() {
+  window.FOXCS_UNIT_MENU_STORAGE_KEY = 'foxcs_python_unit01_progress';
+  window.renderDoneChips = function() {
+    var done = {};
+    try { done = JSON.parse(localStorage.getItem(window.FOXCS_UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+    document.querySelectorAll('.done-chip[data-lesson][data-step]').forEach(function(el) {
+      var lesson = done[el.dataset.lesson];
+      if (lesson && lesson[el.dataset.step]) {
+        el.classList.add('shown');
+        el.textContent = 'Marked as Done';
+      } else {
+        el.classList.remove('shown');
+        el.textContent = '';
+      }
+    });
+  };
+  renderDoneChips();
+})();
+</script>
+
+</body>
+</html>
