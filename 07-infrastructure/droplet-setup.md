@@ -64,7 +64,7 @@ Type `cd ~/FoxCS` and press Enter — this moves into the FoxCS repo folder, alr
 - Monitoring: enabled (free, no downside)
 - Startup script: none — setup was done manually so each step could be verified
 
-**Cost note:** this is a real recurring charge, billed hourly whether it's actively being used or not, ~$6-12/mo depending on size. Destroy or power off the droplet if it'll sit unused for a while.
+**Cost note:** this is a real recurring charge, billed hourly whether it's actively being used or not, ~$6-12/mo depending on size. **Powering off does NOT stop billing** — DigitalOcean charges the full rate as long as the droplet exists, powered on or off, since the disk/IP/resources stay reserved either way. The only way to actually stop being charged is to **destroy** the droplet, which deletes everything on it (this whole setup, the cloned repo) unless a snapshot is taken first (snapshots have their own small ongoing storage cost, much cheaper than a running droplet). If this will sit unused for a while and the cost matters, take a snapshot, destroy the droplet, and restore from the snapshot later — otherwise just leave it running.
 
 ## SSH key setup — do this before creating the droplet
 
