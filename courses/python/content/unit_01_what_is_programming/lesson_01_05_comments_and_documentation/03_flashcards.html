@@ -37,6 +37,12 @@
   .util-row { display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.7rem; }
   button.util-btn { background: none; color: #445; border: 1px solid #ccd3dd; padding: 0.35rem 0.9rem; border-radius: 5px; cursor: pointer; font-family: Verdana, Arial, sans-serif; font-size: 0.82rem; }
   button.util-btn:hover { background: #eef1f5; }
+  .review-row { text-align: center; margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid #dde3ea; }
+  .review-note { font-size: 0.85rem; color: #555; margin-bottom: 0.6rem; }
+  button.review-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.6rem 1.4rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+  button.review-btn:hover:not(:disabled) { background: #5c2c00; }
+  button.review-btn:disabled { background: #bbb; cursor: not-allowed; }
+  .review-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
   .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
   .page-nav-note { color: #555; margin-bottom: 0.6rem; text-align: center; }
   .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
@@ -83,7 +89,7 @@
         <summary>01.1 What Programs Do</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_01_what_programs_do/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="flashcards"></span></a>
           <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
           <a href="../lesson_01_01_what_programs_do/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
@@ -95,7 +101,7 @@
         <summary>01.2 Input-Process-Output</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_02_input_process_output/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_02_input_process_output/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_02_input_process_output/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="flashcards"></span></a>
           <a href="../lesson_01_02_input_process_output/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_02_input_process_output/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
           <a href="../lesson_01_02_input_process_output/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
@@ -109,7 +115,7 @@
         <div class="lesson-steps">
           <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
           <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
-          <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="flashcards"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/06_project.html">Project Instructions</a>
@@ -125,7 +131,7 @@
           <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
           <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
-          <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="flashcards"></span></a>
           <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
           <a href="../lesson_01_04_printing_output/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
@@ -141,7 +147,7 @@
         <div class="lesson-steps">
           <a href="01_instruction.html">Instruction</a>
           <a href="02_example_01.py">Example <span class="step-untracked">view only</span></a>
-          <a href="03_flashcards.html" class="current">Flashcards</a>
+          <a href="03_flashcards.html" class="current">Flashcards<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="flashcards"></span></a>
           <a href="04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
           <a href="05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
           <a href="06_project.html">Project Instructions</a>
@@ -155,7 +161,7 @@
         <summary>01.6 Common Syntax Mistakes</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_06_common_syntax_mistakes/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_06_common_syntax_mistakes/02_flashcards.html">Flashcards</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="flashcards"></span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="practice"></span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
@@ -208,8 +214,16 @@
   <button class="util-btn" onclick="restartCards()">Start Over</button>
 </div>
 
+<div class="review-row">
+  <div class="review-note" id="reviewNote">Flip every card at least once to unlock "Mark as Reviewed".</div>
+  <div class="review-note"><span id="reviewedCount">0</span> of <span id="reviewedTotal"></span> reviewed so far.</div>
+  <button class="review-btn" id="reviewBtn" onclick="markReviewed()" disabled>Mark as Reviewed</button>
+  <div class="review-status" id="reviewStatus"></div>
+</div>
+<span id="reviewedTime" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;" aria-hidden="true"></span>
+
 <div class="page-nav">
-  <div class="page-nav-note">Nothing to save here — flip through as many times as you want, then move on when you're ready.</div>
+  <div class="page-nav-note">Flipping cards isn't saved anywhere — flip through as many times as you want. "Mark as Reviewed" above is the only part that saves, and only once you've flipped every card.</div>
   <div class="page-nav-links">
     <a href="01_instruction.html" class="page-nav-prev">← Back: Instruction</a>
     <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
@@ -226,6 +240,7 @@ let CARDS = [
 
 let order = CARDS.map((_, i) => i);
 let index = 0;
+let viewedCards = new Set();
 
 function currentCard() { return CARDS[order[index]]; }
 
@@ -244,9 +259,31 @@ function render() {
   exampleBox.textContent = '';
   exampleBtn.style.display = card.example ? 'inline-block' : 'none';
   exampleBtn.textContent = 'Show Example';
+
+  updateReviewProgress();
 }
 
-function flip() { document.getElementById('card').classList.toggle('flipped'); }
+function flip() {
+  document.getElementById('card').classList.toggle('flipped');
+  viewedCards.add(order[index]);
+  updateReviewProgress();
+}
+
+function updateReviewProgress() {
+  document.getElementById('reviewedCount').textContent = viewedCards.size;
+  document.getElementById('reviewedTotal').textContent = CARDS.length;
+  const allViewed = viewedCards.size >= CARDS.length;
+  const reviewBtn = document.getElementById('reviewBtn');
+  const note = document.getElementById('reviewNote');
+  if (!reviewBtn.dataset.saved) {
+    reviewBtn.disabled = !allViewed;
+  }
+  if (allViewed && !reviewBtn.dataset.saved) {
+    note.textContent = 'All ' + CARDS.length + ' cards reviewed — click "Mark as Reviewed" below.';
+  } else if (!reviewBtn.dataset.saved) {
+    note.textContent = 'Flip every card at least once to unlock "Mark as Reviewed".';
+  }
+}
 
 function toggleExample(evt) {
   evt.stopPropagation();
@@ -283,6 +320,95 @@ function restartCards() {
 }
 
 render();
+
+function markStepDone(stepKey) {
+  var STORAGE_KEY = 'foxcs_python_unit01_progress';
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+  if (!done['lesson_01_05_comments_and_documentation']) done['lesson_01_05_comments_and_documentation'] = {};
+  done['lesson_01_05_comments_and_documentation'][stepKey] = true;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch (e) {}
+  if (window.renderDoneChips) window.renderDoneChips();
+}
+
+let reviewFileHandle = null;
+
+async function markReviewed() {
+  if (viewedCards.size < CARDS.length) return;
+  document.getElementById('reviewedTime').textContent = 'reviewed_at:' + new Date().toISOString();
+  markStepDone('flashcards');
+  const reviewBtn = document.getElementById('reviewBtn');
+  reviewBtn.dataset.saved = 'true';
+  reviewBtn.disabled = true;
+  document.getElementById('reviewNote').textContent = 'Reviewed and saved.';
+  const statusEl = document.getElementById('reviewStatus');
+  const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
+
+  if (reviewFileHandle) {
+    try {
+      const writable = await reviewFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved.';
+      return;
+    } catch (err) {
+      reviewFileHandle = null;
+    }
+  }
+
+  if ('showSaveFilePicker' in window) {
+    try {
+      reviewFileHandle = await window.showSaveFilePicker({
+        suggestedName: currentFileName(),
+        types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
+      });
+      const writable = await reviewFileHandle.createWritable();
+      await writable.write(htmlContent);
+      await writable.close();
+      statusEl.textContent = 'Saved.';
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') { reviewBtn.dataset.saved = ''; reviewBtn.disabled = false; document.getElementById('reviewNote').textContent = 'All ' + CARDS.length + ' cards reviewed — click "Mark as Reviewed" below.'; return; }
+    }
+  }
+
+  const blob = new Blob([htmlContent], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = currentFileName();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  const original = decodeURIComponent(parts[parts.length - 1]) || '03_flashcards.html';
+  if (original.includes('_completed')) return original;
+  return original.replace(/\.html$/, '_completed.html');
+}
+</script>
+
+<script>
+(function() {
+  window.FOXCS_UNIT_MENU_STORAGE_KEY = 'foxcs_python_unit01_progress';
+  window.renderDoneChips = function() {
+    var done = {};
+    try { done = JSON.parse(localStorage.getItem(window.FOXCS_UNIT_MENU_STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
+    document.querySelectorAll('.done-chip[data-lesson][data-step]').forEach(function(el) {
+      var lesson = done[el.dataset.lesson];
+      if (lesson && lesson[el.dataset.step]) {
+        el.classList.add('shown');
+        el.textContent = 'Marked as Done';
+      } else {
+        el.classList.remove('shown');
+        el.textContent = '';
+      }
+    });
+  };
+  renderDoneChips();
+})();
 </script>
 
 </body>
