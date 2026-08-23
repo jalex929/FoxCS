@@ -4,6 +4,50 @@ A small remote Linux server Jay can SSH into from any personal, unblocked device
 
 The droplet's current public IP isn't recorded here on purpose — it can change if the droplet is ever destroyed and recreated (it already has been, twice, during initial setup). Check the DigitalOcean dashboard for the live IP.
 
+## Quick Start: Setting Up a New Device (plain-language walkthrough)
+
+Use this section when getting a *different* computer (e.g. an older laptop) able to connect for the first time. It assumes zero prior familiarity with any of these terms — everything is explained as it comes up.
+
+### Step 1 — Get the connection key onto this device
+
+To prove it's really you connecting, the droplet checks for a small file called an SSH key (already set up on Jay's main desktop, in a folder called `.ssh`). The simplest way to get a new device working is to copy that same key file over rather than making a brand new one:
+
+1. On the desktop where the key already exists, find these two files: `C:\Users\Jay Fox\.ssh\id_ed25519` and `C:\Users\Jay Fox\.ssh\id_ed25519.pub`.
+2. Copy both files onto a USB drive (or another private transfer method — not email, since one of these two files is meant to stay secret).
+3. On the new device, create a folder called `.ssh` inside your user folder if one doesn't already exist, and copy both files into it.
+4. In that same `.ssh` folder on the new device, create a file named `config` (no file extension) containing:
+   ```
+   Host foxcs-droplet
+       HostName <droplet's current public IPv4 — check the DigitalOcean dashboard>
+       User jay
+       IdentityFile ~/.ssh/id_ed25519
+   ```
+
+*(A more locked-down approach — a separate key per device, so one device's access can be revoked without affecting others — is possible later; see "SSH key setup" below. Not necessary to start.)*
+
+### Step 2 — Connect
+
+1. Open **PowerShell** (Windows Start menu → type "PowerShell" → Enter) or **Terminal** (Mac).
+2. Type `ssh foxcs-droplet` and press Enter.
+3. Everything you type after this happens *on the remote server*, not on the device in front of you — think of it as remote-controlling a different computer.
+
+### Step 3 — Start a session that survives disconnects
+
+Type `tmux new -s work` and press Enter. `tmux` just means "keep this session running even if my connection drops or I close the laptop" — a safety net so nothing gets lost if wifi hiccups or the lid closes. A green bar at the bottom of the window means it's active.
+
+If reconnecting later (rather than starting fresh), type `tmux attach -t work` instead — this picks back up exactly where you left off.
+
+### Step 4 — Run Claude Code
+
+1. Type `claude` and press Enter.
+2. The first time on a new device, it'll print a web address (starts with `https://`). Select and copy that text, then open it in any browser (on any device — doesn't have to be the same one).
+3. Log in with the Anthropic account and approve it there.
+4. Switch back to the terminal — it should confirm you're logged in. (This login is tied to this specific installation, so a brand-new droplet would need this step again — but once done here, this device won't need to repeat it.)
+
+### Step 5 — Get to the actual project
+
+Type `cd ~/FoxCS` and press Enter — this moves into the FoxCS repo folder, already cloned onto the droplet. From here, everything works the same as running Claude Code locally: read/edit files, run the grader, `git pull`/`git push`, etc.
+
 ## Spec used
 
 - Ubuntu 24.04 LTS
@@ -58,8 +102,10 @@ Then just `ssh foxcs-droplet` from PowerShell/Terminal.
 3. `cd` into the project folder and run `claude` as usual.
 4. Just close the terminal/laptop when done — no explicit logout needed, tmux keeps it alive.
 
+## GitHub access
+
+The droplet has its own dedicated SSH key (`~/.ssh/github_deploy` on the droplet) added to the FoxCS repo as a **Deploy Key** (repo-scoped, not tied to Jay's personal GitHub account, "Allow write access" enabled) — see GitHub repo Settings → Deploy keys. Repo is cloned at `~/FoxCS` on the droplet. Scoped this way so revoking the droplet's access later (or if it's ever compromised) doesn't touch anything else.
+
 ## Not yet done
 
-- Authenticating Claude Code on the droplet (one-time interactive login).
-- Getting the FoxCS repo onto the droplet (`git clone`) and deciding how it authenticates to GitHub from there (SSH deploy key vs. `gh auth login` device flow).
-- Per-device SSH keys for any device beyond the one this was first set up from.
+- Per-device SSH keys for any device beyond the one this was first set up from (currently every device shares one key pair, copied device to device — see the Quick Start above; splitting into one key per device is a nice-to-have, not urgent).
