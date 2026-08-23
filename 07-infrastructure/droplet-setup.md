@@ -44,6 +44,14 @@ If reconnecting later (rather than starting fresh), type `tmux attach -t work` i
 3. Log in with the Anthropic account and approve it there.
 4. Switch back to the terminal — it should confirm you're logged in. (This login is tied to this specific installation, so a brand-new droplet would need this step again — but once done here, this device won't need to repeat it.)
 
+**Where the actual work happens, and why this satisfies "goes through the droplet":** the browser is only used for that one moment of proving "yes, this is really me" — it's not an ongoing relay for anything after that. What actually happens:
+
+1. `claude` runs *on the droplet* (you're SSH'd in, so that process is on the remote server, not the laptop in front of you).
+2. That droplet-side process generates the login URL and waits.
+3. Approving the URL in a browser (any device) is a one-time human click, nothing more.
+4. Once approved, the droplet-side process receives and **stores the login credentials on the droplet's own filesystem** (a config folder under `jay`'s home directory).
+5. From then on, every real Claude Code request — reading files, running the agent, calling the model — is a network call made **directly from the droplet to Anthropic's servers**. The laptop's only role, before and after login, is displaying the terminal text over SSH; it never touches the actual API traffic.
+
 ### Step 5 — Get to the actual project
 
 Type `cd ~/FoxCS` and press Enter — this moves into the FoxCS repo folder, already cloned onto the droplet. From here, everything works the same as running Claude Code locally: read/edit files, run the grader, `git pull`/`git push`, etc.
