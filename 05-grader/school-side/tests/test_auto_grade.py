@@ -247,6 +247,40 @@ class TestGradeFeedback(unittest.TestCase):
         self.assertEqual(row2["feedback_saved"], "Y")
 
 
+class TestGradeFlashcards(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.folder = Path(self.tmp.name)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_not_saved(self):
+        row = {}
+        auto_grade.grade_flashcards(self.folder, row)
+        self.assertEqual(row["flashcards_saved"], "N")
+        self.assertEqual(row["flashcards_xp_awarded"], 0)
+
+    def test_saved_with_reviewed_timestamp(self):
+        html = '<span id="reviewedTime">reviewed_at:2026-08-22T14:05:00.000Z</span>'
+        write(self.folder, "02_flashcards_completed.html", html)
+        row = {}
+        auto_grade.grade_flashcards(self.folder, row)
+        self.assertEqual(row["flashcards_saved"], "Y")
+        self.assertEqual(row["flashcards_reviewed_at"], "2026-08-22T14:05:00.000Z")
+        self.assertEqual(row["flashcards_xp_awarded"], auto_grade.XP_TABLE["flashcards"])
+
+    def test_saved_file_missing_reviewed_marker_earns_no_xp(self):
+        # An untouched template accidentally saved with the _completed
+        # suffix (or a page that got interrupted before the button fired)
+        # shouldn't earn XP just for existing.
+        write(self.folder, "02_flashcards_completed.html", "<html></html>")
+        row = {}
+        auto_grade.grade_flashcards(self.folder, row)
+        self.assertEqual(row["flashcards_saved"], "Y")
+        self.assertEqual(row["flashcards_xp_awarded"], 0)
+
+
 class TestFindFileFuzzy(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -274,6 +308,12 @@ class TestFindFileFuzzy(unittest.TestCase):
         path, naming_issue = auto_grade.find_file_fuzzy(self.folder, "vocab_quiz_completed.html", "vocab_quiz")
         self.assertIsNone(path)
         self.assertFalse(naming_issue)
+
+    def test_flashcards_fuzzy_match(self):
+        write(self.folder, "MyFlashcardsDone.html", "x")
+        path, naming_issue = auto_grade.find_file_fuzzy(self.folder, "flashcards_completed.html", "flashcards")
+        self.assertEqual(path.name, "MyFlashcardsDone.html")
+        self.assertTrue(naming_issue)
 
 
 class TestXPAwards(unittest.TestCase):
@@ -340,21 +380,34 @@ class TestXPAwards(unittest.TestCase):
         auto_grade.grade_practice(self.folder, row)
         self.assertEqual(row["practice_xp_awarded"], auto_grade.XP_TABLE["practice"])
 
-    def test_total_xp_sums_all_four(self):
+    def test_flashcards_xp_awarded_when_reviewed(self):
+        html = '<span id="reviewedTime">reviewed_at:2026-08-22T14:05:00.000Z</span>'
+        write(self.folder, "02_flashcards_completed.html", html)
+        row = {}
+        auto_grade.grade_flashcards(self.folder, row)
+        self.assertEqual(row["flashcards_xp_awarded"], auto_grade.XP_TABLE["flashcards"])
+
+    def test_total_xp_sums_all_five(self):
         write(self.folder, "04_vocab_quiz_completed.html", self._vocab_quiz_html())
         write(self.folder, "11_feedback_completed.html", "<html></html>")
+        write(self.folder, "02_flashcards_completed.html", '<span id="reviewedTime">reviewed_at:2026-08-22T14:05:00.000Z</span>')
         row = {}
         auto_grade.grade_vocab_quiz(self.folder, row)
         auto_grade.grade_practice(self.folder, row)
         auto_grade.grade_mastery_check(self.folder, row)
         auto_grade.grade_feedback(self.folder, row)
+        auto_grade.grade_flashcards(self.folder, row)
         total = (
             row.get("vocab_quiz_xp_awarded", 0)
             + row.get("practice_xp_awarded", 0)
             + row.get("mastery_check_xp_awarded", 0)
             + row.get("feedback_xp_awarded", 0)
+            + row.get("flashcards_xp_awarded", 0)
         )
-        self.assertEqual(total, auto_grade.XP_TABLE["vocab_quiz"] + auto_grade.XP_TABLE["feedback"])
+        self.assertEqual(
+            total,
+            auto_grade.XP_TABLE["vocab_quiz"] + auto_grade.XP_TABLE["feedback"] + auto_grade.XP_TABLE["flashcards"],
+        )
 
 
 class TestCollectNeedsReview(unittest.TestCase):
@@ -424,6 +477,7 @@ class TestRealFixtureEndToEnd(unittest.TestCase):
         auto_grade.grade_practice(REAL_FIXTURE, row)
         auto_grade.grade_mastery_check(REAL_FIXTURE, row)
         auto_grade.grade_feedback(REAL_FIXTURE, row)
+        auto_grade.grade_flashcards(REAL_FIXTURE, row)
         cls.row = row
         cls.manifest = []
         auto_grade.collect_needs_review(REAL_FIXTURE, "PY1-A-DELTA04", "lesson_01_04_printing_output", cls.manifest)
@@ -446,6 +500,20 @@ class TestRealFixtureEndToEnd(unittest.TestCase):
 
     def test_feedback(self):
         self.assertEqual(self.row["feedback_saved"], "Y")
+
+    def test_flashcards_not_reviewed(self):
+        # The checked-in fixture's 03_flashcards.html is unmodified (no
+        # _completed suffix, no reviewed_at marker) — this feature didn't
+        # exist yet when the fixture was built. No exact "flashcards_completed"
+        # match exists, so find_file_fuzzy() falls back to the untouched
+        # 03_flashcards.html itself (its filename already contains
+        # "flashcard") -- the same accepted tradeoff find_file_fuzzy()'s own
+        # docstring documents for every activity type, not unique to
+        # flashcards. flashcards_saved reads "Y" (something matched) but XP
+        # correctly comes out to 0 since there's no reviewed_at marker to earn it.
+        self.assertEqual(self.row["flashcards_saved"], "Y")
+        self.assertEqual(self.row["flashcards_xp_awarded"], 0)
+        self.assertIn("03_flashcards.html", self.row["flashcards_naming_issue"])
 
     def test_needs_review_manifest_has_five_files(self):
         flagged = {r["file"] for r in self.manifest}

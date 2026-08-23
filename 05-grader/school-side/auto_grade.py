@@ -70,12 +70,21 @@ MASTERY_CHECK_SUFFIX = "mastery_check_completed.html"
 # opinion of the lesson, not a rubric target).
 FEEDBACK_SUFFIX = "feedback_completed.html"
 
+# Flashcards (added 2026-08-22, per Jay) — like mastery check, a hidden
+# timestamp span rather than a telemetry block, since there's nothing to
+# score but whether it happened: the button that writes it is itself gated
+# in the page's own JS on flipping every card at least once, so by the time
+# reviewed_at exists the "no XP for passive content" check has already been
+# satisfied client-side.
+FLASHCARDS_SUFFIX = "flashcards_completed.html"
+
 TELEMETRY_BLOCK_RE = re.compile(
     r'<script type="application/json" id="foxcs-telemetry"[^>]*>(.*?)</script>',
     re.DOTALL,
 )
 UNLOCK_TIME_RE = re.compile(r'unlocked_at:([0-9T:.\-Z]+)')
 COMPLETE_TIME_RE = re.compile(r'completed_at:([0-9T:.\-Z]+)')
+REVIEWED_TIME_RE = re.compile(r'reviewed_at:([0-9T:.\-Z]+)')
 
 
 def _parse_iso_timestamp(value):
@@ -121,9 +130,10 @@ FUZZY_KEYWORDS = {
     "practice": ["practice"],
     "mastery_check": ["mastery"],
     "feedback": ["feedback"],
+    "flashcards": ["flashcard"],
 }
 
-# Draft XP values (2026-08-21, per Jay — a first pass, adjustable; see
+# Baseline XP values, locked in 2026-08-22 per Jay (see
 # 02-authoring-system/xp-and-incentives.md for the full framework and
 # reasoning). XP is a separate incentive layer from the completion columns
 # above: awarded only when the activity shows genuine completion (not just
@@ -133,6 +143,7 @@ XP_TABLE = {
     "practice": 8,
     "mastery_check": 20,
     "feedback": 3,
+    "flashcards": 3,
 }
 NAMING_PENALTY_XP = 2  # flat deduction when the file had to be fuzzy-matched
 MIN_XP_AFTER_PENALTY = 1  # a naming slip never zeroes out otherwise-genuine work
@@ -308,6 +319,22 @@ def grade_feedback(folder: Path, row: dict):
     row["feedback_xp_awarded"] = _apply_naming_penalty(XP_TABLE["feedback"] if path else 0, naming_issue)
 
 
+def grade_flashcards(folder: Path, row: dict):
+    path, naming_issue = find_file_fuzzy(folder, FLASHCARDS_SUFFIX, "flashcards")
+    if not path:
+        row["flashcards_saved"] = "N"
+        row["flashcards_xp_awarded"] = 0
+        row["flashcards_naming_issue"] = ""
+        return
+    text = path.read_text(encoding="utf-8", errors="replace")
+    reviewed_m = REVIEWED_TIME_RE.search(text)
+    row["flashcards_saved"] = "Y"
+    row["flashcards_reviewed_at"] = reviewed_m.group(1) if reviewed_m else ""
+    row["flashcards_naming_issue"] = f"Saved as '{path.name}', not the expected filename — please use the correct naming convention next time." if naming_issue else ""
+    earned = bool(reviewed_m)
+    row["flashcards_xp_awarded"] = _apply_naming_penalty(XP_TABLE["flashcards"] if earned else 0, naming_issue)
+
+
 def collect_needs_review(folder: Path, codename: str, lesson: str, manifest_rows: list):
     for path in sorted(folder.iterdir()):
         if not path.is_file():
@@ -352,11 +379,13 @@ def main():
         grade_practice(folder, row)
         grade_mastery_check(folder, row)
         grade_feedback(folder, row)
+        grade_flashcards(folder, row)
         row["total_xp_awarded"] = (
             row.get("vocab_quiz_xp_awarded", 0)
             + row.get("practice_xp_awarded", 0)
             + row.get("mastery_check_xp_awarded", 0)
             + row.get("feedback_xp_awarded", 0)
+            + row.get("flashcards_xp_awarded", 0)
         )
         report_rows.append(row)
         collect_needs_review(folder, codename, lesson, manifest_rows)
@@ -374,6 +403,8 @@ def main():
         "mastery_check_completed_at", "mastery_check_minutes_unlocked_to_complete",
         "mastery_check_xp_awarded", "mastery_check_naming_issue",
         "feedback_saved", "feedback_xp_awarded", "feedback_naming_issue",
+        "flashcards_saved", "flashcards_reviewed_at",
+        "flashcards_xp_awarded", "flashcards_naming_issue",
         "total_xp_awarded",
     ]
     report_path = out_dir / "auto_grade_report.csv"
