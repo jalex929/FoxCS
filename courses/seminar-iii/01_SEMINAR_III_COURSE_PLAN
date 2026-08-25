@@ -51,7 +51,7 @@ All students develop skills in:
 
 The primary academic sequence is:
 
-**Math Foundations → ACT Math → Reading → English → Data/Science → Integrated Practice**
+**Math Foundations → ACT Math Strategy → Science/Data → Reading → English → Integrated ACT Review → Exam**
 
 Math receives the greatest amount of dedicated instructional time.
 
@@ -406,8 +406,8 @@ and
 |---|---|---|---|
 | Q1 | Math Foundations | Learning, organization, problem-solving | Self-knowledge + broad options |
 | Q2 | Algebra, Functions, Geometry, Statistics | Financial math + decision-making | Light exploration |
-| Q3 | ACT Math, Reading, English | Information literacy + communication | Light application |
-| Q4 | Data/Science + Integrated Retrieval | Financial, communication, decision-making skills | College Prep / Workforce Readiness |
+| Q3 | ACT Math Strategy, Science/Data, Reading, English | Information literacy + communication | Light application |
+| Q4 | Integrated ACT Review + Exam, then Postsecondary Application | Financial, communication, decision-making skills | College Prep / Workforce Readiness |
 
 ---
 
@@ -832,8 +832,10 @@ Students compare current performance with the beginning-of-year baseline.
 ---
 
 # 12. QUARTER 3
-## ACT Application + Information Literacy
+## ACT Content Completion: Math Strategy, Science, Reading & English
 ### January 25 – April 2
+
+> **Restructured 2026-08-25.** Original sequencing taught Reading and English before Data/Science, and left Data/Science until Quarter 4 (after the spring ACT exam window). Two changes: (1) all four ACT content domains now complete within Quarter 3, before the exam, per the Q2-Q4 pacing constraint (see `decisions-log.md`); (2) within Quarter 3, Science/Data now comes immediately after Math Strategy rather than last, since it is historically the toughest domain for students and benefits from the most runway before the exam. Reading and English follow, since students also receive reinforcement in those two domains through their actual English class. Exact dates are approximate pending the official CPS academic calendar (see root `CLAUDE.md` Hard Constraints) and confirmation of the real spring ACT date.
 
 ---
 
@@ -856,25 +858,68 @@ Strategy does not replace mathematical understanding.
 
 ---
 
-## Week 21: Integrated ACT Math
+## Week 21: Tables, Charts & Data
 
-Mixed practice involving:
+### Academic
 
-- Number & Quantity
-- Algebra
-- Functions
-- Geometry
-- Statistics & Probability
-- Integrating Essential Skills
-- Modeling
+- tables;
+- graphs;
+- variables;
+- values;
+- trends;
+- comparisons;
+- supported conclusions.
 
-Students receive targeted practice based on skill gaps.
+### Process
 
-Dedicated Math instruction decreases after this unit, but Math retrieval continues.
+1. Read the title.
+2. Identify variables.
+3. Identify units.
+4. Determine what changes.
+5. Locate requested information.
+6. Draw only conclusions supported by the data.
 
 ---
 
-## Week 22: Reading for Main Ideas & Details
+## Week 22: Experiments & Scientific Reasoning
+
+### Academic
+
+- research questions;
+- independent variables;
+- dependent variables;
+- controlled variables;
+- results;
+- evidence;
+- predictions.
+
+---
+
+## Week 23: Claims, Evidence & Information Literacy
+
+### Academic/Life Skills
+
+- identify claims;
+- locate evidence;
+- determine whether evidence supports a claim;
+- separate observation from interpretation;
+- identify missing information;
+- recognize misleading data.
+
+### Digital Information Literacy
+
+Students ask:
+
+- Who produced this information?
+- What claim is being made?
+- What evidence is provided?
+- Does the evidence support the claim?
+- What information is missing?
+- Can the information be verified elsewhere?
+
+---
+
+## Week 24: Reading for Main Ideas & Details
 
 ### Academic
 
@@ -898,7 +943,7 @@ Use:
 
 ---
 
-## Week 23: Evidence & Inference
+## Week 25: Evidence & Inference
 
 ### Academic
 
@@ -917,7 +962,7 @@ Students:
 
 ---
 
-## Week 24: Reading Efficiently
+## Week 26: Reading Efficiently
 
 ### Academic
 
@@ -935,7 +980,7 @@ Students locate requirements, deadlines, costs, or restrictions in unfamiliar do
 
 ---
 
-## Week 25: Complete & Clear Sentences
+## Week 27: Complete & Clear Sentences
 
 ### Academic
 
@@ -959,7 +1004,7 @@ Professional email structure:
 
 ---
 
-## Week 26: Grammar, Usage & Punctuation
+## Week 28: Grammar, Usage & Punctuation
 
 ### Academic
 
@@ -973,7 +1018,7 @@ Professional email structure:
 
 ---
 
-## Week 27: Organization, Precision & Tone
+## Week 29: Organization, Precision & Tone
 
 ### Academic
 
@@ -996,100 +1041,77 @@ Students revise:
 
 ---
 
-## Week 28: Quarter 3 Integration
-
-Retrieve:
-
-### Math
-
-2–4 recurring questions.
-
-### Reading
-
-Passage analysis.
-
-### English
-
-Editing and revision.
-
-Students identify:
-
-- strongest academic domain;
-- most improved domain;
-- highest-priority domain;
-- recurring error type.
-
----
-
 # 13. QUARTER 4
-## Data, Life Skills & Postsecondary Application
+## ACT Review, Exam & Postsecondary Application
 ### April 5 – June 11
 
----
-
-## Week 29: Tables, Charts & Data
-
-### Academic
-
-- tables;
-- graphs;
-- variables;
-- values;
-- trends;
-- comparisons;
-- supported conclusions.
-
-### Process
-
-1. Read the title.
-2. Identify variables.
-3. Identify units.
-4. Determine what changes.
-5. Locate requested information.
-6. Draw only conclusions supported by the data.
+> **Restructured 2026-08-25.** All new ACT content instruction ends at the close of Quarter 3. Quarter 4 opens with two full review weeks spanning all four ACT sections, then the exam itself, then shifts entirely to postsecondary-application content (Weeks 33-39), none of which requires completion before the exam. Exact placement of Weeks 30-32 should be confirmed once the real spring ACT date is set; the goal is for Weeks 30-31 to sit immediately before test day and Week 32 to contain the exam itself, not a fixed calendar position.
 
 ---
 
-## Week 30: Experiments & Scientific Reasoning
+## Week 30: Integrated ACT Review I — Math & Science/Data
 
-### Academic
+Mixed practice involving:
 
-- research questions;
-- independent variables;
-- dependent variables;
-- controlled variables;
-- results;
-- evidence;
-- predictions.
+- Number & Quantity
+- Algebra
+- Functions
+- Geometry
+- Statistics & Probability
+- Data & Scientific Reasoning
+- Integrating Essential Skills
+- Modeling
 
----
+Students complete a full-length ACT Math practice section and a full-length ACT Science practice section, then receive targeted practice based on their own skill gaps.
 
-## Week 31: Claims, Evidence & Information Literacy
-
-### Academic/Life Skills
-
-- identify claims;
-- locate evidence;
-- determine whether evidence supports a claim;
-- compare explanations;
-- separate observation from interpretation;
-- identify missing information;
-- recognize misleading data.
-
-### Digital Information Literacy
-
-Students ask:
-
-- Who produced this information?
-- What claim is being made?
-- What evidence is provided?
-- Does the evidence support the claim?
-- What information is missing?
-- Can the information be verified elsewhere?
+Dedicated new Math and Science instruction ended at the close of Quarter 3. This week is retrieval and targeted practice only, not new content.
 
 ---
 
-## Week 32: Postsecondary Options
+## Week 31: Integrated ACT Review II — Reading & English
+
+Mixed practice involving:
+
+- Reading (main idea, evidence, inference, efficient reading)
+- English (sentence structure, grammar, usage, punctuation, organization, tone)
+
+Students complete a full-length ACT Reading practice section and a full-length ACT English practice section, then receive targeted practice based on their own skill gaps.
+
+Students identify, across all four ACT sections:
+
+- strongest domain;
+- most improved domain;
+- highest-priority domain for the final days before the exam;
+- recurring error type.
+
+This week is retrieval and targeted practice only, not new content.
+
+---
+
+## Week 32: ACT Exam Week
+
+### Before the Exam
+
+- confirm test-day logistics (location, time, required materials);
+- brief, low-stakes confidence-building review, not new content;
+- calculator and materials check;
+- test-day routine and stress-management strategies.
+
+### Test Administration
+
+Students take the official spring ACT.
+
+### After the Exam
+
+- brief reflection: what felt manageable, what felt difficult;
+- no new academic instruction is introduced this week;
+- remaining time supports Study Hall, coursework, or early postsecondary work.
+
+> **Calendar Note:** The official spring ACT date is not finalized as of this writing but typically falls between April 10 and April 17. This week's placement should be confirmed once the exact date is set, and Weeks 30-31 shifted earlier or later as needed so students go into test day with review time, not new instruction, in the days immediately before.
+
+---
+
+## Week 33: Postsecondary Options
 
 All students reconsider their beginning-of-year plans.
 
@@ -1122,7 +1144,7 @@ Students may change pathways.
 
 ---
 
-## Week 33: Financial Readiness
+## Week 34: Financial Readiness
 
 ### Shared
 
@@ -1160,7 +1182,7 @@ Students may change pathways.
 
 ---
 
-## Week 34: Applications & Qualifications
+## Week 35: Applications & Qualifications
 
 ### Shared
 
@@ -1194,7 +1216,7 @@ Students distinguish:
 
 ---
 
-## Week 35: Professional & Academic Communication
+## Week 36: Professional & Academic Communication
 
 ### Shared
 
@@ -1228,7 +1250,7 @@ Applications include:
 
 ---
 
-## Week 36: My Postsecondary Plan
+## Week 37: My Postsecondary Plan
 
 Students identify:
 
@@ -1252,7 +1274,7 @@ Primary question:
 
 ---
 
-## Week 37: Practical Skills Application
+## Week 38: Practical Skills Application
 
 Possible application stations:
 
@@ -1290,7 +1312,7 @@ Review responsibilities and determine priorities.
 
 ---
 
-## Week 38: Final Reflection & Transition
+## Week 39: Final Reflection & Transition
 
 Students:
 
