@@ -1,0 +1,86 @@
+<!-- Student-facing quick-reference handout, Week 3 (Numbers & Operations). Built 2026-08-26
+     as styled HTML for real HTML->PDF rendering, matching the visual language of
+     instructional-content/week-03-numbers-that-make-sense.html and the Teacher decks.
+     Designed to be dense enough to fit on one printed page as a handy reference card. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 3 Quick Reference: Numbers &amp; Operations</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  .page { max-width: 800px; margin: 0 auto; background: var(--paper); }
+  .banner { background: var(--accent-dark); color: white; padding: 1.4rem 2rem; }
+  .banner .kicker { font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: #cfe6ee; font-weight: bold; margin: 0 0 0.3rem; }
+  .banner h1 { font-size: 1.6rem; margin: 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .card { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); break-inside: avoid; }
+  .card:nth-child(2n) { border-right: none; }
+  .card h2 { font-size: 1.05rem; color: var(--accent-dark); margin: 0 0 0.5rem; }
+  .card p, .card li { font-size: 0.88rem; line-height: 1.45; margin: 0 0 0.4rem; }
+  .card ol, .card ul { margin: 0.3rem 0; padding-left: 1.2rem; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.4rem 0; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.15rem 0.6rem; font-size: 0.8rem; font-weight: bold; }
+  .checklist { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .checklist span { background: var(--floor); border: 1px solid var(--line); border-radius: 6px; padding: 0.2rem 0.5rem; font-size: 0.82rem; }
+  @media print { body { background: white; } .page { max-width: none; } .card { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="banner">
+    <p class="kicker">Seminar III &middot; Week 3</p>
+    <h1>Quick Reference: Numbers &amp; Operations</h1>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h2>Order of Operations</h2>
+      <ol>
+        <li>Parentheses (or other grouping symbols)</li>
+        <li>Exponents</li>
+        <li>Multiplication and Division, left to right</li>
+        <li>Addition and Subtraction, left to right</li>
+      </ol>
+      <p>Multiplication does not automatically come before division, and addition does not automatically come before subtraction &mdash; each pair has equal priority, worked left to right.</p>
+    </div>
+    <div class="card">
+      <h2>Positive and Negative Numbers</h2>
+      <p>On a number line, numbers farther right are greater. Every positive number is greater than every negative number. A negative number with a bigger digit is smaller, not bigger: &minus;12 &lt; &minus;5.</p>
+      <p>Absolute value is distance from zero. It is never negative. |&minus;8| = 8.</p>
+    </div>
+    <div class="card">
+      <h2>Sign Rules: Multiply &amp; Divide</h2>
+      <div class="chip-row">
+        <span class="chip">Same signs &rarr; positive</span>
+        <span class="chip">Different signs &rarr; negative</span>
+      </div>
+      <p>Applies to multiplication and division only &mdash; not addition or subtraction.</p>
+    </div>
+    <div class="card">
+      <h2>Which Operation Do I Need?</h2>
+      <ul>
+        <li><strong>Addition:</strong> combined, total, gained, increased by</li>
+        <li><strong>Subtraction:</strong> difference, decreased, remaining</li>
+        <li><strong>Multiplication:</strong> equal groups, rate &times; quantity</li>
+        <li><strong>Division:</strong> split equally, amount per group</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Does My Answer Make Sense?</h2>
+      <div class="checklist">
+        <span>Operation</span><span>Size</span><span>Sign</span><span>Unit</span><span>Context</span>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Estimate Before You Trust</h2>
+      <p>Round to numbers you can work with easily, then compare your exact answer to that estimate. If they're far apart, something likely went wrong &mdash; often a decimal point or an entry mistake.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
