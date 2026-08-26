@@ -1,2 +1,8 @@
 __pycache__/
 *.pyc
+
+# Regenerable PDF build output (render locally via tools/render-deck-pdf, don't commit)
+courses/seminar-iii/teacher-materials/*.pdf
+courses/seminar-iii/instructional-content/*.pdf
+courses/seminar-iii/tools/render-deck-pdf/node_modules/
+courses/seminar-iii/tools/render-deck-pdf/*.pdf

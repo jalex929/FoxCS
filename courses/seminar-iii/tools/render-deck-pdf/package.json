@@ -1,0 +1,9 @@
+{
+  "name": "render-deck-pdf",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Renders Seminar III's self-contained HTML decks and instructional docs to PDF via headless Chrome.",
+  "dependencies": {
+    "puppeteer": "^24"
+  }
+}
