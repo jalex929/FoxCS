@@ -1,0 +1,13 @@
+{
+  "name": "html-to-pdf",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Render self-contained HTML files (e.g. Seminar III presentation decks) to PDF via headless Chromium. Works over SSH with no display/GUI -- see ../../../07-infrastructure/droplet-setup.md for droplet install steps.",
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.58.2"
+  }
+}

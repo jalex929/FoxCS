@@ -1,0 +1,220 @@
+<!-- Instructor-only presentation deck for Seminar III Week 9 (Quarter 1 Consolidation).
+     Unlike Weeks 3-8, this week introduces no new content -- week-09-plan section 1 is
+     explicit that its purpose is retrieval, recognition, and reflection across the six
+     Quarter 1 skills, ending in a cumulative Growth Check and a Quarter 2 goal. So instead
+     of the "merge N teaching days into 2-3 sessions" pattern used for Weeks 4-8, this deck
+     is organized around the week's own three real ideas: the quarter as one connected
+     system (not six separate reviews), recognizing a skill without being told which unit
+     it came from, and the Growth Check/goal-setting close. Same self-contained single-file
+     pattern as the other week decks. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 9 Presentation: Quarter 1 Consolidation</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  #deck { position: relative; height: 100vh; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; background: var(--paper); padding: 6vh 8vw 9vh; }
+  .slide.active { display: flex; }
+  .kicker { font-size: 1.05rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6rem; }
+  h1 { font-size: 3rem; line-height: 1.15; margin: 0 0 1rem; color: var(--ink); text-align: left; max-width: 24ch; }
+  h2.prompt { font-size: 2.1rem; line-height: 1.3; margin: 0.4rem 0 1.2rem; color: var(--accent-dark); text-align: left; max-width: 32ch; }
+  .say { font-size: 1.7rem; color: var(--ink); border-left: 6px solid var(--accent); padding: 0.3rem 0 0.3rem 1.2rem; margin: 0.6rem 0 1.4rem; max-width: 36ch; font-style: italic; }
+  ul.points, ol.points { font-size: 1.5rem; line-height: 1.55; margin: 0.5rem 0 1rem; padding-left: 1.4rem; max-width: 48ch; }
+  ul.points li, ol.points li { margin-bottom: 0.3rem; }
+  .sub { font-size: 1.3rem; color: var(--muted); max-width: 50ch; margin: 0.2rem 0 0.8rem; }
+  .note { position: absolute; left: 8vw; right: 8vw; bottom: 5vh; font-size: 1.05rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 0.6rem; max-width: 78ch; }
+  .note strong { color: var(--accent-dark); }
+  table.glance { border-collapse: collapse; font-size: 1.15rem; max-width: 68ch; }
+  table.glance th, table.glance td { border: 1px solid var(--line); padding: 0.45rem 0.8rem; text-align: left; }
+  table.glance th { background: var(--accent-bg); color: var(--accent-dark); }
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1.2rem 1.5rem; font-size: 1.5rem; max-width: 54ch; margin: 0.5rem 0 1rem; }
+  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 0.9rem 1.3rem; font-size: 1.3rem; max-width: 54ch; margin: 0.6rem 0; }
+  .divider { background: var(--accent-dark); color: white; }
+  .divider .kicker { color: #cfe6ee; }
+  .divider h1 { color: white; font-size: 3.2rem; }
+  .divider .sub { color: #cfe6ee; font-size: 1.4rem; }
+  .title-slide { background: var(--accent-dark); color: white; }
+  .title-slide .kicker { color: #cfe6ee; }
+  .title-slide h1 { color: white; font-size: 3.3rem; max-width: 26ch; }
+  .title-slide .sub { color: #dff1f6; font-size: 1.35rem; max-width: 52ch; }
+  #chrome { position: fixed; left: 0; right: 0; bottom: 0; height: 4.5vh; min-height: 42px; background: var(--ink); color: #cfd6de; display: flex; align-items: center; justify-content: space-between; padding: 0 1.2rem; font-size: 0.95rem; z-index: 10; }
+  #chrome .left, #chrome .right { display: flex; align-items: center; gap: 0.7rem; }
+  #chrome button, #chrome select { background: #2a3444; color: #eef2f6; border: 1px solid #3d4a5e; border-radius: 5px; padding: 0.3rem 0.7rem; font-size: 0.95rem; cursor: pointer; }
+  #chrome button:hover { background: #3d4a5e; }
+  #daytag { background: var(--accent); color: white; font-weight: bold; padding: 0.25rem 0.7rem; border-radius: 4px; font-size: 0.9rem; letter-spacing: 0.04em; }
+  @media print {
+    #chrome { display: none; }
+    #deck { position: static; height: auto; overflow: visible; }
+    .slide { display: flex !important; position: relative; page-break-after: always; height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <section class="slide title-slide" data-day="0" data-title="Title">
+    <p class="kicker">Seminar III &middot; Week 9</p>
+    <h1>Quarter 1 Consolidation</h1>
+    <p class="sub">No new content this week &mdash; retrieval, recognition, a Growth Check, and a Quarter 2 goal.</p>
+  </section>
+
+  <!-- PART 1: ONE SYSTEM -->
+  <section class="slide divider" data-day="1" data-title="Part 1 divider">
+    <p class="kicker">Part 1</p>
+    <h1>One Connected System, Not Six Reviews</h1>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Quarter 1 skill map">
+    <p class="kicker">The Quarter 1 Skill Map</p>
+    <table class="glance">
+      <tr><th>Week</th><th>Skill</th><th>Core Question</th></tr>
+      <tr><td>3</td><td>Numbers &amp; Operations</td><td>Does my answer make sense?</td></tr>
+      <tr><td>4</td><td>Fractions &amp; Decimals</td><td>Which form should I use?</td></tr>
+      <tr><td>5</td><td>Percent</td><td>What is this a percent of?</td></tr>
+      <tr><td>6</td><td>Ratios, Rates &amp; Proportions</td><td>What two quantities am I comparing?</td></tr>
+      <tr><td>7</td><td>Variables &amp; Expressions</td><td>What does this symbol represent?</td></tr>
+      <tr><td>8</td><td>Equations</td><td>What value makes both sides equal?</td></tr>
+    </table>
+    <div class="note">Each skill built on the one before it &mdash; show the quarter as one system, not six disconnected weeks.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Recognizing a skill without being told">
+    <p class="kicker">The Real Shift This Week</p>
+    <h2 class="prompt">Which skill does this problem need &mdash; if it doesn't say?</h2>
+    <div class="problem-box">A recipe calls for 3 eggs for every 2 cups of flour. A baker uses 9 eggs. How many cups of flour are needed?</div>
+    <div class="note">This never announces "ratio problem." That recognition is the same skill the ACT and real situations demand.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Error patterns across the quarter">
+    <p class="kicker">Error Patterns Across the Quarter</p>
+    <h1>Which Category Shows Up Most in <em>Your</em> Work?</h1>
+    <table class="glance">
+      <tr><th>Type</th><th>Look For</th></tr>
+      <tr><td>Knowledge</td><td>Same "I don't remember this" error in more than one week</td></tr>
+      <tr><td>Process</td><td>Errors during multi-step procedures (two-step equations, proportion setups)</td></tr>
+      <tr><td>Execution</td><td>Small arithmetic/sign mistakes despite a correct approach</td></tr>
+      <tr><td>Comprehension</td><td>Misreading the question (e.g. part-to-whole vs. part-to-part)</td></tr>
+      <tr><td>Strategy</td><td>An inefficient approach when a faster one existed</td></tr>
+    </table>
+    <div class="note">Use real evidence &mdash; exit tickets and checks from Weeks 2&ndash;8 &mdash; not a guess.</div>
+  </section>
+
+  <!-- PART 2: GROWTH CHECK -->
+  <section class="slide divider" data-day="2" data-title="Part 2 divider">
+    <p class="kicker">Part 2</p>
+    <h1>The Quarter 1 Growth Check</h1>
+    <p class="sub">Same framing as the Week 2 baseline: informative, not punitive.</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Growth check purpose">
+    <p class="kicker">Purpose</p>
+    <ul class="points">
+      <li>Measure retention and transfer across all six Quarter 1 skills</li>
+      <li>Compare directly to the Week 2 baseline where possible</li>
+      <li>Surface what needs continued attention heading into Quarter 2</li>
+    </ul>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Comparing to baseline">
+    <p class="kicker">Reading the Results</p>
+    <h2 class="prompt">Not just a score.</h2>
+    <div class="note">Numbers/fractions can compare directly to the Week 2 baseline. Percent, ratios, expressions, and equations weren't tested then &mdash; report those as <strong>new mastery</strong>. Use the same <strong>Strength / Developing / Priority</strong> language from Week 2, not "you scored 21/31."</div>
+  </section>
+
+  <!-- PART 3: GOAL SETTING -->
+  <section class="slide divider" data-day="3" data-title="Part 3 divider">
+    <p class="kicker">Part 3</p>
+    <h1>Analyze Results, Set a Quarter 2 Goal</h1>
+  </section>
+
+  <section class="slide" data-day="3" data-title="Five things with evidence">
+    <p class="kicker">The Quarter 1 Reflection</p>
+    <h2 class="prompt">Name five things, each with real evidence.</h2>
+    <ol class="points">
+      <li>Your strongest skill</li>
+      <li>A developing skill</li>
+      <li>A priority skill</li>
+      <li>Your most frequent error type across the quarter</li>
+      <li>One specific, actionable goal for Quarter 2</li>
+    </ol>
+  </section>
+
+  <section class="slide" data-day="3" data-title="Circulate cue">
+    <p class="kicker">While Students Work</p>
+    <h2 class="prompt">Connect specific missed questions to specific error types.</h2>
+    <p class="say">Not "I'm bad at math."</p>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="slide divider" data-day="4" data-title="Closing / transition">
+    <p class="kicker">Transition to Quarter 2 &middot; Week 10</p>
+    <h1>Inequalities &amp; Constraints</h1>
+    <p class="sub">Same inverse-operation logic as Week 8's equations, plus one new rule: the inequality symbol flips when multiplying or dividing both sides by a negative. Open by connecting it to Week 8 &mdash; not as an unrelated new topic.</p>
+  </section>
+
+</div>
+
+<div id="chrome">
+  <div class="left">
+    <button onclick="go(-1)">&larr; Prev</button>
+    <button onclick="go(1)">Next &rarr;</button>
+    <span id="daytag">Day 0</span>
+  </div>
+  <div class="right">
+    <select id="jump" onchange="jumpTo(this.value)"></select>
+    <span id="counter">1 / 1</span>
+    <button onclick="document.documentElement.requestFullscreen && document.documentElement.requestFullscreen()">Fullscreen</button>
+  </div>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var current = 0;
+  var dayNames = {0:'Title',1:'Part 1',2:'Part 2',3:'Part 3',4:'Closing'};
+
+  function render() {
+    slides.forEach(function(s, i) { s.classList.toggle('active', i === current); });
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+    var day = slides[current].getAttribute('data-day');
+    document.getElementById('daytag').textContent = dayNames[day] || ('Day ' + day);
+    document.getElementById('jump').value = current;
+  }
+  function go(delta) { current = Math.max(0, Math.min(slides.length - 1, current + delta)); render(); }
+  function jumpTo(i) { current = parseInt(i, 10); render(); }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { go(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+    else if (e.key === 'Home') { current = 0; render(); }
+    else if (e.key === 'End') { current = slides.length - 1; render(); }
+  });
+  document.getElementById('deck').addEventListener('click', function(e) {
+    if (e.target.closest('a')) return;
+    var rect = deck.getBoundingClientRect();
+    if (e.clientX - rect.left > rect.width / 2) go(1); else go(-1);
+  });
+
+  var jumpSelect = document.getElementById('jump');
+  slides.forEach(function(s, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    var day = s.getAttribute('data-day');
+    var title = s.getAttribute('data-title') || ('Slide ' + (i + 1));
+    opt.textContent = (i + 1) + '. [' + (dayNames[day] || day) + '] ' + title;
+    jumpSelect.appendChild(opt);
+  });
+
+  render();
+</script>
+
+</body>
+</html>

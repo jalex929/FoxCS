@@ -1,0 +1,244 @@
+<!-- Instructor-only presentation deck for Seminar III Week 6 (Ratios, Rates & Proportions).
+     week-06-plan's Instructional Sequence has 4 real teaching days (Ratios: Meaning/Writing/
+     Simplifying, Equivalent Ratios and Rates, Proportions: Setting Up and Solving, Unit
+     Conversion and Comparing Rates) plus a light Apply/Analyze/Retry day -- merged into 2
+     sessions (Session A = ratios & rates, Session B = proportions & conversion) per the same
+     45-minute/2-3-day constraint used for Weeks 4-5. Same self-contained single-file pattern
+     as the other week decks. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 6 Presentation: Ratios, Rates &amp; Proportions</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  #deck { position: relative; height: 100vh; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; background: var(--paper); padding: 6vh 8vw 9vh; }
+  .slide.active { display: flex; }
+  .kicker { font-size: 1.05rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6rem; }
+  h1 { font-size: 3rem; line-height: 1.15; margin: 0 0 1rem; color: var(--ink); text-align: left; max-width: 24ch; }
+  h2.prompt { font-size: 2.1rem; line-height: 1.3; margin: 0.4rem 0 1.2rem; color: var(--accent-dark); text-align: left; max-width: 30ch; }
+  .say { font-size: 1.7rem; color: var(--ink); border-left: 6px solid var(--accent); padding: 0.3rem 0 0.3rem 1.2rem; margin: 0.6rem 0 1.4rem; max-width: 34ch; font-style: italic; }
+  ul.points, ol.points { font-size: 1.5rem; line-height: 1.55; margin: 0.5rem 0 1rem; padding-left: 1.4rem; max-width: 46ch; }
+  ul.points li, ol.points li { margin-bottom: 0.3rem; }
+  .sub { font-size: 1.3rem; color: var(--muted); max-width: 48ch; margin: 0.2rem 0 0.8rem; }
+  .note { position: absolute; left: 8vw; right: 8vw; bottom: 5vh; font-size: 1.05rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 0.6rem; max-width: 76ch; }
+  .note strong { color: var(--accent-dark); }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0 1.2rem; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.3rem 0.9rem; font-size: 1.15rem; font-weight: bold; }
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1.2rem 1.5rem; font-size: 1.5rem; max-width: 54ch; margin: 0.5rem 0 1rem; }
+  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 0.9rem 1.3rem; font-size: 1.3rem; max-width: 54ch; margin: 0.6rem 0; }
+  .divider { background: var(--accent-dark); color: white; }
+  .divider .kicker { color: #cfe6ee; }
+  .divider h1 { color: white; font-size: 3.4rem; }
+  .divider .sub { color: #cfe6ee; font-size: 1.4rem; }
+  .title-slide { background: var(--accent-dark); color: white; }
+  .title-slide .kicker { color: #cfe6ee; }
+  .title-slide h1 { color: white; font-size: 3.3rem; max-width: 26ch; }
+  .title-slide .sub { color: #dff1f6; font-size: 1.35rem; max-width: 52ch; }
+  #chrome { position: fixed; left: 0; right: 0; bottom: 0; height: 4.5vh; min-height: 42px; background: var(--ink); color: #cfd6de; display: flex; align-items: center; justify-content: space-between; padding: 0 1.2rem; font-size: 0.95rem; z-index: 10; }
+  #chrome .left, #chrome .right { display: flex; align-items: center; gap: 0.7rem; }
+  #chrome button, #chrome select { background: #2a3444; color: #eef2f6; border: 1px solid #3d4a5e; border-radius: 5px; padding: 0.3rem 0.7rem; font-size: 0.95rem; cursor: pointer; }
+  #chrome button:hover { background: #3d4a5e; }
+  #daytag { background: var(--accent); color: white; font-weight: bold; padding: 0.25rem 0.7rem; border-radius: 4px; font-size: 0.9rem; letter-spacing: 0.04em; }
+  @media print {
+    #chrome { display: none; }
+    #deck { position: static; height: auto; overflow: visible; }
+    .slide { display: flex !important; position: relative; page-break-after: always; height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <section class="slide title-slide" data-day="0" data-title="Title">
+    <p class="kicker">Seminar III &middot; Week 6 &middot; Foundations</p>
+    <h1>Ratios, Rates &amp; Proportions</h1>
+    <p class="sub">The big question this week: what two quantities am I comparing?</p>
+    <p class="sub">Two teaching sessions, not four separate lessons.</p>
+  </section>
+
+  <!-- SESSION A -->
+  <section class="slide divider" data-day="1" data-title="Session A divider">
+    <p class="kicker">Session A</p>
+    <h1>Ratios and Rates</h1>
+  </section>
+
+  <section class="slide" data-day="1" data-title="What a ratio compares">
+    <p class="kicker">What Is a Ratio?</p>
+    <h2 class="prompt">Part-to-part, or part-to-whole?</h2>
+    <div class="chip-row"><span class="chip">students to computers</span><span class="chip">wins to losses</span><span class="chip">recipe ingredients</span></div>
+    <div class="note">Same relationship, three ways to write it: 3 to 2, 3:2, 3/2.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Ratio order misconception">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Does 3:2 mean the same as 2:3?</h2>
+    <p class="say">No &mdash; order tells you which quantity is being compared to which.</p>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Simplifying misconception">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Does simplifying 18:12 to 3:2 change what's being compared?</h2>
+    <p class="say">No &mdash; same relationship, different scale.</p>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Ratio vs fraction of whole misconception">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">5 forwards : 7 defenders &mdash; are forwards 5/7 of the team?</h2>
+    <div class="warn-box">No. The team has 12 players total, so forwards are 5/12 of the team &mdash; not 5/7. Part-to-part isn't part-to-whole.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Equivalent ratios and unit rates">
+    <p class="kicker">Equivalent Ratios &amp; Unit Rates</p>
+    <h2 class="prompt">Scale by multiplying, not adding.</h2>
+    <div class="warn-box">Wrong: "add 2 cups of sugar, so add 2 cups of everything else." Right: multiply or divide every quantity by the same factor.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Larger numbers misconception">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Does a higher price always mean a worse deal?</h2>
+    <p class="say">No &mdash; the unit rate determines value, not the total price.</p>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Best buy activity">
+    <p class="kicker">Application &mdash; Best Buy</p>
+    <h2 class="prompt">Compare two offers using unit rates.</h2>
+    <div class="chip-row"><span class="chip">groceries</span><span class="chip">phone plans</span><span class="chip">subscriptions</span></div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Session A exit ticket">
+    <p class="kicker">Exit Ticket &mdash; Session A</p>
+    <ol class="points">
+      <li>Generate an equivalent ratio</li>
+      <li>Calculate a unit rate</li>
+      <li>Pick the better value between two rates</li>
+    </ol>
+  </section>
+
+  <!-- SESSION B -->
+  <section class="slide divider" data-day="2" data-title="Session B divider">
+    <p class="kicker">Session B</p>
+    <h1>Proportions and Unit Conversion</h1>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Setting up a proportion">
+    <p class="kicker">Setting Up a Proportion</p>
+    <h2 class="prompt">Matching quantities in matching positions.</h2>
+    <div class="note">Introduce cross multiplication and the unit-rate method as two paths to the same answer &mdash; then always check the solution.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Cross multiplication misconception">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Can any two fractions in a proportion be cross multiplied?</h2>
+    <p class="say">Only if the proportion was set up with matching quantities in matching positions.</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Unit rate direction misconception">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Is a unit rate always the larger number divided by the smaller?</h2>
+    <p class="say">No &mdash; divide so the reference quantity becomes 1, based on what the question asks "per," not which number is bigger.</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Conversion factors as ratios">
+    <p class="kicker">Unit Conversion</p>
+    <h2 class="prompt">A conversion factor is just a ratio.</h2>
+    <div class="note">The trick is arranging it so the unwanted unit cancels &mdash; and checking multi-step conversions with estimation.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Conversion factor direction misconception">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Does it matter which unit goes on top of a conversion factor?</h2>
+    <p class="say">Yes &mdash; flip it and the unwanted unit doesn't cancel. The result comes out wrong, often obviously unreasonable.</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Convert and compare activity">
+    <p class="kicker">Activity &mdash; Convert and Compare</p>
+    <h2 class="prompt">Price per ounce vs. price per pound &mdash; convert to a common unit first.</h2>
+    <ul class="points">
+      <li>Why does the unit need to match before comparing?</li>
+      <li>What happens if the conversion factor is flipped?</li>
+      <li>How can estimation catch an unreasonable conversion?</li>
+    </ul>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Closing session B">
+    <p class="kicker">Closing This Week</p>
+    <ul class="points">
+      <li>Mixed practice: ratios, rates, proportions, conversions</li>
+      <li>Error analysis on missed proportion setups, then retry</li>
+      <li>Week 6 check, then reflection</li>
+    </ul>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="slide divider" data-day="3" data-title="Closing / transition">
+    <p class="kicker">Transition to Week 7</p>
+    <h1>Variables &amp; Expressions</h1>
+    <p class="sub">A proportion asks us to find an unknown quantity. Algebra gives us a more general way to represent and solve for unknowns.</p>
+  </section>
+
+</div>
+
+<div id="chrome">
+  <div class="left">
+    <button onclick="go(-1)">&larr; Prev</button>
+    <button onclick="go(1)">Next &rarr;</button>
+    <span id="daytag">Day 0</span>
+  </div>
+  <div class="right">
+    <select id="jump" onchange="jumpTo(this.value)"></select>
+    <span id="counter">1 / 1</span>
+    <button onclick="document.documentElement.requestFullscreen && document.documentElement.requestFullscreen()">Fullscreen</button>
+  </div>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var current = 0;
+  var dayNames = {0:'Title',1:'Session A',2:'Session B',3:'Closing'};
+
+  function render() {
+    slides.forEach(function(s, i) { s.classList.toggle('active', i === current); });
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+    var day = slides[current].getAttribute('data-day');
+    document.getElementById('daytag').textContent = dayNames[day] || ('Day ' + day);
+    document.getElementById('jump').value = current;
+  }
+  function go(delta) { current = Math.max(0, Math.min(slides.length - 1, current + delta)); render(); }
+  function jumpTo(i) { current = parseInt(i, 10); render(); }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { go(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+    else if (e.key === 'Home') { current = 0; render(); }
+    else if (e.key === 'End') { current = slides.length - 1; render(); }
+  });
+  document.getElementById('deck').addEventListener('click', function(e) {
+    if (e.target.closest('a')) return;
+    var rect = deck.getBoundingClientRect();
+    if (e.clientX - rect.left > rect.width / 2) go(1); else go(-1);
+  });
+
+  var jumpSelect = document.getElementById('jump');
+  slides.forEach(function(s, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    var day = s.getAttribute('data-day');
+    var title = s.getAttribute('data-title') || ('Slide ' + (i + 1));
+    opt.textContent = (i + 1) + '. [' + (dayNames[day] || day) + '] ' + title;
+    jumpSelect.appendChild(opt);
+  });
+
+  render();
+</script>
+
+</body>
+</html>
