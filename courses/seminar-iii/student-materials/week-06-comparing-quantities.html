@@ -1,0 +1,124 @@
+<!-- Student-facing concept-teaching document for Seminar III Week 6, styled HTML rendered
+     to PDF (see 02-authoring-system/tools/html-to-pdf/). No Drive-authored doc exists yet
+     for this week, so this is composed from week-06-plan's "Student Instructional PDF"
+     section outline (sections 50-61) plus its Common Misconceptions (32-41) and Error
+     Analysis Connections (42) sections for concrete worked examples, written out as
+     finished student-facing prose. Same template/palette as week-02 through 05. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Comparing Quantities</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d;
+    --k-color: #1f6f8b; --p-color: #6a4fa0; --e-color: #b3541e; --c-color: #a12f4f; --s-color: #2f7a4f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
+  body { display: flex; justify-content: center; }
+  main { max-width: 720px; width: 100%; background: var(--paper); padding: 4rem 3.5rem 5rem; }
+  .kicker { font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6rem; text-align: left; }
+  h1 { font-size: 2.4rem; line-height: 1.2; margin: 0 0 1.2rem; color: var(--ink); text-align: left; }
+  h2 { font-size: 1.6rem; margin: 2.6rem 0 1rem; color: var(--accent-dark); text-align: left; border-bottom: 3px solid var(--accent); padding-bottom: 0.4rem; }
+  p { font-size: 1.05rem; line-height: 1.65; margin: 0 0 1rem; text-align: left; }
+  .lede { font-size: 1.2rem; line-height: 1.6; color: var(--ink); }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0 1.2rem; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.35rem 0.95rem; font-size: 0.95rem; }
+  .example-box { background: var(--floor); border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0 1.6rem; }
+  .example-box .row { font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.35rem; }
+  .example-box .row b { color: var(--accent-dark); }
+  .warn-box { background: var(--warn-bg); border-left: 5px solid var(--warn-line); border-radius: 0 6px 6px 0; padding: 1rem 1.3rem; margin: 1.2rem 0 1.6rem; font-size: 1rem; line-height: 1.55; }
+  table.checklist { border-collapse: collapse; width: 100%; margin: 1rem 0 1.6rem; font-size: 0.98rem; }
+  table.checklist th, table.checklist td { border: 1px solid var(--line); padding: 0.55rem 0.9rem; text-align: left; }
+  table.checklist th { background: var(--accent-bg); color: var(--accent-dark); }
+  .error-grid { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.2rem 0 1.6rem; }
+  .error-card { border-left: 5px solid var(--line); background: var(--floor); border-radius: 0 6px 6px 0; padding: 0.8rem 1.1rem; }
+  .error-card .name { font-weight: bold; font-size: 1.05rem; margin-bottom: 0.25rem; }
+  .error-card .detail { font-size: 0.96rem; line-height: 1.5; color: var(--ink); }
+  .error-card.knowledge { border-color: var(--k-color); } .error-card.knowledge .name { color: var(--k-color); }
+  .error-card.process { border-color: var(--p-color); } .error-card.process .name { color: var(--p-color); }
+  .error-card.execution { border-color: var(--e-color); } .error-card.execution .name { color: var(--e-color); }
+  .error-card.comprehension { border-color: var(--c-color); } .error-card.comprehension .name { color: var(--c-color); }
+  .error-card.strategy { border-color: var(--s-color); } .error-card.strategy .name { color: var(--s-color); }
+  .quick-ref { margin-top: 3rem; border: 3px solid var(--accent-dark); border-radius: 10px; padding: 1.8rem 2rem; background: var(--accent-bg); page-break-inside: avoid; }
+  .quick-ref h2 { border: none; margin-top: 0; color: var(--accent-dark); }
+  .quick-ref .row { font-size: 0.98rem; line-height: 1.6; margin-bottom: 0.5rem; }
+  .quick-ref .row b { color: var(--accent-dark); }
+  .quick-ref .keep { margin-top: 1.2rem; font-weight: bold; color: var(--accent-dark); text-align: left; }
+  @media print { body { background: var(--paper); } main { padding: 0.4in 0.5in; max-width: none; } }
+</style>
+</head>
+<body>
+<main>
+
+  <p class="kicker">Seminar III &middot; Week 6</p>
+  <h1>Comparing Quantities</h1>
+  <p class="lede">This week's big question: what two quantities am I comparing? Ratios, rates, and proportions are all different ways of answering it.</p>
+
+  <h2>What Does a Ratio Compare?</h2>
+  <p>A ratio compares two quantities. Some ratios compare a part to another part &mdash; 5 forwards to 7 defenders. Others compare a part to a whole &mdash; forwards to the entire 12-player team. These aren't the same statement: 5 forwards out of 12 total players is 5/12 of the team, not 5/7.</p>
+
+  <h2>Writing and Simplifying Ratios</h2>
+  <p>The same ratio can be written three ways: 3 to 2, 3:2, or 3/2. Order matters &mdash; 3:2 and 2:3 describe different comparisons. Simplify a ratio the same way you'd simplify a fraction, using the greatest common factor: 18:12 simplifies to 3:2. The relationship being compared doesn't change, just the numbers used to describe it.</p>
+
+  <h2>Equivalent Ratios</h2>
+  <p>Scale a ratio up or down by multiplying or dividing <em>both</em> quantities by the same factor.</p>
+  <div class="warn-box"><strong>Common mistake:</strong> if a recipe ratio needs more sugar, some students add the same amount to every ingredient instead of multiplying. Equivalent ratios come from multiplying or dividing, not adding.</div>
+
+  <h2>What Is a Rate?</h2>
+  <p>A rate is a ratio that compares quantities with <em>different</em> units &mdash; miles to hours, dollars to items. Every rate is a ratio, but not every ratio is a rate. Keep the units attached as you work; they're part of the answer, not an afterthought.</p>
+
+  <h2>Unit Rates</h2>
+  <p>A unit rate divides so the second quantity becomes exactly 1 &mdash; dollars per one item, miles per one hour.</p>
+  <div class="example-box"><div class="row"><b>$104 for 8 hours of work:</b> 104 &divide; 8 = <strong>$13 per hour</strong>.</div></div>
+  <div class="warn-box">A unit rate isn't automatically &ldquo;bigger number &divide; smaller number.&rdquo; It's whichever quantity the question calls the reference &mdash; the &ldquo;per one&rdquo; unit.</div>
+
+  <h2>Comparing Rates: Best Buy</h2>
+  <p>To compare two offers, calculate each one's unit rate, then compare those directly.</p>
+  <div class="warn-box">A higher total price doesn't automatically mean a worse deal &mdash; the unit rate decides value, not the sticker price.</div>
+
+  <h2>Proportions</h2>
+  <p>A proportion is a statement that two ratios (or rates) are equal &mdash; for example, 4/5 = x/30.</p>
+
+  <h2>Solving Proportions</h2>
+  <p>Two paths to the same answer: cross multiply, or find a unit rate and scale. Either way, the proportion has to be set up with matching quantities in matching positions first &mdash; cross multiplication only gives a correct answer when that's true.</p>
+  <div class="example-box"><div class="row"><b>Solve 4/5 = x/30:</b> cross multiply: 4&times;30 = 5&times;x, so 120 = 5x, x = <strong>24</strong>.</div></div>
+
+  <h2>Unit Conversion</h2>
+  <p>A conversion factor is just a ratio, arranged so the unit you don't want cancels out. Flip it, and it cancels the wrong thing &mdash; watch for a result that's obviously the wrong size.</p>
+
+  <h2>Does My Answer Make Sense?</h2>
+  <table class="checklist">
+    <tr><th>Check</th><th>Ask</th></tr>
+    <tr><td>Size</td><td>Is the answer approximately the size I expected?</td></tr>
+    <tr><td>Direction</td><td>Did I scale up or down the way the situation actually requires?</td></tr>
+    <tr><td>Units</td><td>Did the units cancel or combine the way they should?</td></tr>
+    <tr><td>Context</td><td>Does this answer make sense in the real situation?</td></tr>
+  </table>
+
+  <h2>Error Detective</h2>
+  <div class="error-grid">
+    <div class="error-card knowledge"><div class="name">Knowledge &mdash; &ldquo;I don't remember how to set up a proportion.&rdquo;</div><div class="detail">Fix: review the setup rule &mdash; matching quantities in matching positions.</div></div>
+    <div class="error-card process"><div class="name">Process &mdash; correct setup, wrong cross multiplication</div><div class="detail">The proportion was set up correctly but the cross-multiplication steps went wrong. Fix: review the steps and retry.</div></div>
+    <div class="error-card execution"><div class="name">Execution &mdash; correct setup and cross multiplication, arithmetic slip</div><div class="detail">Everything about the method was right; the final division had a small mistake. Fix: check the calculation and verify with estimation.</div></div>
+    <div class="error-card comprehension"><div class="name">Comprehension &mdash; comparing forwards to defenders instead of forwards to the whole team</div><div class="detail">The question asked for a part-to-whole comparison; the student compared part-to-part instead. Fix: reread the question and identify exactly what's being compared.</div></div>
+    <div class="error-card strategy"><div class="name">Strategy &mdash; comparing total prices instead of unit rates</div><div class="detail">The reasoning wasn't wrong, just inefficient and easy to misread. Fix: convert to a unit rate before comparing.</div></div>
+  </div>
+
+  <div class="quick-ref">
+    <h2>Quick Reference</h2>
+    <div class="row"><b>Ratio:</b> a comparison of two quantities.</div>
+    <div class="row"><b>Rate:</b> a ratio comparing different units.</div>
+    <div class="row"><b>Unit rate:</b> a rate where the second quantity equals one.</div>
+    <div class="row"><b>Proportion:</b> a statement that two ratios or rates are equal.</div>
+    <div class="row"><b>Solving a proportion:</b> cross multiply, or find the unit rate and scale.</div>
+    <div class="row"><b>Check your answer:</b> Size &rarr; Direction &rarr; Units &rarr; Context.</div>
+    <div class="keep">Keep this page. You'll use it all year.</div>
+  </div>
+
+</main>
+</body>
+</html>
