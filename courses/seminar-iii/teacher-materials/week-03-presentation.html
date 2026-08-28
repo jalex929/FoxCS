@@ -1,14 +1,8 @@
-<!-- Instructor-only presentation deck for Seminar III Week 3 (Numbers & Operations),
-     built from courses/seminar-iii/week-03-plan. Unlike Week 2, this week's source file has
-     no authored "Teacher Presentation / Recommended Slides" section -- per Jay's direction,
-     this deck is instead derived from the week's own "Instructional Sequence" (Day 1-4,
-     section 42-46), reusing that day-by-day teaching structure rather than a separate
-     from-scratch outline. Per Jay's follow-up direction, only the genuinely instructional
-     days get full slide treatment (Days 1-3, each introducing new content); Day 4
-     ("Apply, Analyze, Retry") is deliberately light since it's independent practice/retry,
-     not new direct instruction -- same asymmetry Week 2's own deck already has between its
-     teaching days and its assessment/reflection days. Same self-contained single-file
-     pattern, styling, and keyboard/click navigation as week-02-presentation.html. -->
+<!-- Student-facing instructor slideshow for Seminar III Week 3 (Numbers & Operations).
+     Rewritten so every slide speaks directly to students -- no facilitation cues. Content
+     drawn from ../student-materials/week-03-numbers-that-make-sense.html, broken into
+     slide-sized pieces with SVG number-line diagrams added where a picture helps. Same
+     16:9 letterboxed canvas and print pipeline as week-02-presentation.html. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,189 +10,74 @@
 <title>Week 3 Presentation: Numbers &amp; Operations</title>
 <style>
   :root {
-    --ink: #1a2230;
-    --muted: #5b6472;
-    --accent: #1f6f8b;
-    --accent-dark: #144d61;
-    --accent-bg: #eaf3f6;
-    --line: #d7dde3;
-    --paper: #ffffff;
-    --floor: #f4f6f8;
-    --warn-bg: #fdf3ec;
-    --warn-line: #d98a3d;
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d; --stage-bg: #10161d;
   }
   * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0; height: 100%;
-    background: var(--floor);
-    color: var(--ink);
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-  }
-  #deck { position: relative; height: 100vh; overflow: hidden; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--stage-bg); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  #stage-wrap { position: fixed; inset: 0; bottom: 4.5vh; display: flex; align-items: center; justify-content: center; background: var(--stage-bg); }
+  #deck { position: relative; background: var(--paper); overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+  #deck { width: 100vw; height: calc(100vw * 9 / 16); max-height: calc(100vh - 4.5vh); }
+  @media (min-aspect-ratio: 16/9) { #deck { width: calc((100vh - 4.5vh) * 16 / 9); height: calc(100vh - 4.5vh); } }
 
-  .slide {
-    position: absolute; inset: 0;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    background: var(--paper);
-    padding: 6vh 8vw 9vh;
-  }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; background: var(--paper); padding: 5% 6.5%; }
   .slide.active { display: flex; }
 
-  .kicker {
-    font-size: 1.05rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: bold;
-    margin: 0 0 0.6rem;
-  }
-  h1 {
-    font-size: 3rem;
-    line-height: 1.15;
-    margin: 0 0 1rem;
-    color: var(--ink);
-    text-align: left;
-    max-width: 22ch;
-  }
-  h2.prompt {
-    font-size: 2.1rem;
-    line-height: 1.3;
-    margin: 0.4rem 0 1.2rem;
-    color: var(--accent-dark);
-    text-align: left;
-    max-width: 30ch;
-  }
-  .say {
-    font-size: 1.7rem;
-    color: var(--ink);
-    border-left: 6px solid var(--accent);
-    padding: 0.3rem 0 0.3rem 1.2rem;
-    margin: 0.6rem 0 1.4rem;
-    max-width: 32ch;
-    font-style: italic;
-  }
-  ul.points, ol.points {
-    font-size: 1.5rem;
-    line-height: 1.55;
-    margin: 0.5rem 0 1rem;
-    padding-left: 1.4rem;
-    max-width: 44ch;
-  }
-  ul.points li, ol.points li { margin-bottom: 0.3rem; }
-  .sub { font-size: 1.3rem; color: var(--muted); max-width: 46ch; margin: 0.2rem 0 0.8rem; }
+  .kicker { font-size: 1.35vw; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6em; }
+  h1 { font-size: 3.8vw; line-height: 1.15; margin: 0 0 0.5em; color: var(--ink); text-align: left; max-width: 22ch; }
+  h2.prompt { font-size: 2.6vw; line-height: 1.25; margin: 0.3em 0 0.5em; color: var(--accent-dark); text-align: left; max-width: 28ch; }
+  .say { font-size: 2vw; color: var(--ink); border-left: 0.4vw solid var(--accent); padding: 0.2em 0 0.2em 0.8em; margin: 0.4em 0 0.6em; max-width: 34ch; font-style: italic; }
+  p.body { font-size: 1.5vw; line-height: 1.5; max-width: 48ch; margin: 0 0 0.5em; }
+  ul.points, ol.points { font-size: 1.5vw; line-height: 1.5; margin: 0.3em 0; padding-left: 1.2em; max-width: 46ch; }
+  ul.points li, ol.points li { margin-bottom: 0.25em; }
+  .sub { font-size: 1.6vw; color: var(--muted); max-width: 48ch; margin: 0.2em 0 0.5em; }
 
-  .note {
-    position: absolute;
-    left: 8vw; right: 8vw; bottom: 5vh;
-    font-size: 1.05rem;
-    color: var(--muted);
-    border-top: 1px dashed var(--line);
-    padding-top: 0.6rem;
-    max-width: 74ch;
-  }
-  .note strong { color: var(--accent-dark); }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5em; margin: 0.5em 0 0.6em; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.25em 0.8em; font-size: 1.25vw; font-weight: bold; }
 
-  table.glance { border-collapse: collapse; font-size: 1.25rem; max-width: 60ch; }
-  table.glance th, table.glance td { border: 1px solid var(--line); padding: 0.5rem 0.9rem; text-align: left; }
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 0.4vw solid var(--accent); padding: 0.7em 1.1em; font-size: 1.5vw; max-width: 52ch; margin: 0.4em 0 0.6em; font-family: 'Courier New', monospace; }
+  .warn-box { background: var(--warn-bg); border-left: 0.4vw solid var(--warn-line); padding: 0.6em 1.1em; font-size: 1.35vw; max-width: 50ch; margin: 0.4em 0; }
+  table.glance { border-collapse: collapse; font-size: 1.3vw; max-width: 62ch; }
+  table.glance th, table.glance td { border: 1px solid var(--line); padding: 0.4em 0.8em; text-align: left; }
   table.glance th { background: var(--accent-bg); color: var(--accent-dark); }
-
-  .chip-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0 1.2rem; }
-  .chip {
-    background: var(--accent-bg); color: var(--accent-dark);
-    border: 1px solid var(--accent); border-radius: 999px;
-    padding: 0.3rem 0.9rem; font-size: 1.15rem; font-weight: bold;
-  }
-
-  .numberline {
-    display: flex; align-items: center; gap: 0.4rem; margin: 1rem 0 1.4rem; font-size: 1.3rem;
-    font-family: 'Courier New', monospace; color: var(--ink);
-  }
-  .numberline .tick {
-    border: 2px solid var(--line); border-radius: 6px; padding: 0.3rem 0.7rem; background: var(--floor);
-  }
-  .numberline .tick.hi { border-color: var(--accent); background: var(--accent-bg); color: var(--accent-dark); font-weight: bold; }
-
-  .problem-box {
-    background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent);
-    padding: 1.2rem 1.5rem; font-size: 1.5rem; max-width: 52ch; margin: 0.5rem 0 1rem;
-  }
-  .reveal-btn {
-    display: inline-block; font-size: 1.1rem; font-weight: bold;
-    background: var(--accent); color: white; border: none; border-radius: 6px;
-    padding: 0.55rem 1.2rem; cursor: pointer; margin-top: 0.4rem;
-  }
-  .reveal-btn:hover { background: var(--accent-dark); }
-  .reveal-content { display: none; margin-top: 1rem; }
-  .reveal-content.shown { display: block; }
-  .classification {
-    display: inline-block; font-size: 1.4rem; font-weight: bold;
-    color: var(--accent-dark); background: var(--accent-bg);
-    border: 1px solid var(--accent); border-radius: 8px; padding: 0.4rem 1rem;
-    margin-bottom: 0.5rem;
-  }
-  .next-step { font-size: 1.25rem; color: var(--ink); max-width: 48ch; }
-
-  .steps5 { font-size: 1.2rem; line-height: 1.6; max-width: 50ch; margin: 0.6rem 0 1rem; }
-  .steps5 b { color: var(--accent-dark); }
 
   .divider { background: var(--accent-dark); color: white; }
   .divider .kicker { color: #cfe6ee; }
-  .divider h1 { color: white; font-size: 3.6rem; }
-  .divider .sub { color: #cfe6ee; font-size: 1.4rem; }
-
+  .divider h1 { color: white; font-size: 4.3vw; }
+  .divider .sub { color: #cfe6ee; font-size: 1.75vw; }
   .title-slide { background: var(--accent-dark); color: white; }
   .title-slide .kicker { color: #cfe6ee; }
-  .title-slide h1 { color: white; font-size: 3.3rem; max-width: 26ch; }
-  .title-slide .sub { color: #dff1f6; font-size: 1.35rem; max-width: 52ch; }
+  .title-slide h1 { color: white; font-size: 3.9vw; max-width: 26ch; }
+  .title-slide .sub { color: #dff1f6; font-size: 1.6vw; max-width: 52ch; }
 
-  .warn-box {
-    background: var(--warn-bg); border-left: 6px solid var(--warn-line);
-    padding: 0.9rem 1.3rem; font-size: 1.3rem; max-width: 50ch; margin: 0.6rem 0;
-  }
+  .svg-wrap { margin: 0.5em 0 0.4em; }
+  .svg-wrap svg { display: block; width: 100%; height: auto; max-width: 58vw; }
 
-  #chrome {
-    position: fixed; left: 0; right: 0; bottom: 0; height: 4.5vh; min-height: 42px;
-    background: var(--ink); color: #cfd6de;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 1.2rem; font-size: 0.95rem; z-index: 10;
-  }
+  #chrome { position: fixed; left: 0; right: 0; bottom: 0; height: 4.5vh; min-height: 42px; background: var(--ink); color: #cfd6de; display: flex; align-items: center; justify-content: space-between; padding: 0 1.2rem; font-size: 0.95rem; z-index: 10; }
   #chrome .left, #chrome .right { display: flex; align-items: center; gap: 0.7rem; }
-  #chrome button, #chrome select {
-    background: #2a3444; color: #eef2f6; border: 1px solid #3d4a5e;
-    border-radius: 5px; padding: 0.3rem 0.7rem; font-size: 0.95rem; cursor: pointer;
-  }
+  #chrome button, #chrome select { background: #2a3444; color: #eef2f6; border: 1px solid #3d4a5e; border-radius: 5px; padding: 0.3rem 0.7rem; font-size: 0.95rem; cursor: pointer; }
   #chrome button:hover { background: #3d4a5e; }
-  #daytag {
-    background: var(--accent); color: white; font-weight: bold;
-    padding: 0.25rem 0.7rem; border-radius: 4px; font-size: 0.9rem; letter-spacing: 0.04em;
-  }
+  #daytag { background: var(--accent); color: white; font-weight: bold; padding: 0.25rem 0.7rem; border-radius: 4px; font-size: 0.9rem; letter-spacing: 0.04em; }
 
   @media print {
+    html, body { background: var(--paper); }
     #chrome { display: none; }
-    #deck { position: static; height: auto; overflow: visible; }
-    .slide {
-      display: flex !important;
-      position: relative;
-      page-break-after: always;
-      height: 100vh;
-    }
-    .reveal-btn { display: none; }
-    .reveal-content { display: block !important; }
+    #stage-wrap { position: static; display: block; background: var(--paper); overflow: visible; }
+    #deck { position: static; width: auto; height: auto; max-height: none; overflow: visible; box-shadow: none; }
+    .slide { display: flex !important; position: relative; page-break-after: always; height: 100vh; }
   }
 </style>
 </head>
 <body>
 
+<div id="stage-wrap">
 <div id="deck">
 
-  <!-- 0 -->
   <section class="slide title-slide" data-day="0" data-title="Title">
     <p class="kicker">Seminar III &middot; Week 3 &middot; Foundations</p>
     <h1>Numbers &amp; Operations</h1>
-    <p class="sub">Learn &rarr; Practice &rarr; Check &rarr; Analyze &rarr; Retry &rarr; Apply</p>
-    <p class="sub">Shortened week (Labor Day, Mon Sept 7) &mdash; four instructional days.</p>
+    <p class="sub">This week's big question: does my answer make sense? By the end you'll have a real checklist for it.</p>
   </section>
 
   <!-- DAY 1 -->
@@ -210,53 +89,93 @@
 
   <section class="slide" data-day="1" data-title="Numbers tell a story">
     <p class="kicker">Numbers Tell a Story</p>
-    <h2 class="prompt">The sign communicates meaning.</h2>
+    <h2 class="prompt">A positive or negative sign isn't decoration &mdash; it tells you something real.</h2>
     <div class="chip-row">
       <span class="chip">+$50 gained</span><span class="chip">&minus;$50 owed</span>
-      <span class="chip">8&deg;F above zero</span><span class="chip">&minus;8&deg;F below zero</span>
+      <span class="chip">8&deg;F above zero</span><span class="chip">&minus;8&deg;F below</span>
       <span class="chip">+100 ft elevation</span><span class="chip">&minus;100 ft below sea level</span>
     </div>
-    <div class="note">Have students interpret the sign in context <strong>before</strong> calculating anything.</div>
+    <p class="body">Before you calculate anything, ask what the sign actually means in the situation.</p>
   </section>
 
-  <section class="slide" data-day="1" data-title="Comparing on a number line">
+  <section class="slide" data-day="1" data-title="Which number is greater">
     <p class="kicker">Which Number Is Greater?</p>
-    <h2 class="prompt">Farther right on the number line &rarr; greater.</h2>
-    <div class="numberline">
-      <span class="tick">&minus;8</span><span>&lt;</span>
-      <span class="tick">&minus;2</span><span>&lt;</span>
-      <span class="tick hi">0</span><span>&lt;</span>
-      <span class="tick">3</span><span>&lt;</span>
-      <span class="tick">10</span>
+    <h2 class="prompt">Farther right on the number line means greater.</h2>
+    <div class="svg-wrap">
+      <svg viewBox="0 0 900 130" role="img" aria-label="Number line from negative ten to ten, with negative eight, negative two, zero, three, and ten marked">
+        <g font-family="Verdana, Arial, sans-serif">
+          <line x1="40" y1="70" x2="860" y2="70" stroke="#1a2230" stroke-width="3" marker-end="url(#nlarrow)" marker-start="url(#nlarrowback)"/>
+          <g stroke="#5b6472" stroke-width="2">
+            <!-- ticks every 2 units from -10 to 10, x = 450 + v*40 -->
+            <line x1="50" y1="62" x2="50" y2="78"/>
+            <line x1="130" y1="62" x2="130" y2="78"/>
+            <line x1="210" y1="62" x2="210" y2="78"/>
+            <line x1="290" y1="62" x2="290" y2="78"/>
+            <line x1="370" y1="62" x2="370" y2="78"/>
+            <line x1="450" y1="62" x2="450" y2="78"/>
+            <line x1="530" y1="62" x2="530" y2="78"/>
+            <line x1="610" y1="62" x2="610" y2="78"/>
+            <line x1="690" y1="62" x2="690" y2="78"/>
+            <line x1="770" y1="62" x2="770" y2="78"/>
+            <line x1="850" y1="62" x2="850" y2="78"/>
+          </g>
+          <!-- highlighted points -->
+          <circle cx="130" cy="70" r="9" fill="#a12f4f"/>
+          <text x="130" y="105" text-anchor="middle" font-size="22" font-weight="bold" fill="#a12f4f">&minus;8</text>
+          <circle cx="370" cy="70" r="9" fill="#b3541e"/>
+          <text x="370" y="105" text-anchor="middle" font-size="22" font-weight="bold" fill="#b3541e">&minus;2</text>
+          <circle cx="450" cy="70" r="9" fill="#1a2230"/>
+          <text x="450" y="105" text-anchor="middle" font-size="22" font-weight="bold" fill="#1a2230">0</text>
+          <circle cx="570" cy="70" r="9" fill="#2f7a4f"/>
+          <text x="570" y="105" text-anchor="middle" font-size="22" font-weight="bold" fill="#2f7a4f">3</text>
+          <circle cx="850" cy="70" r="9" fill="#1f6f8b"/>
+          <text x="850" y="105" text-anchor="middle" font-size="22" font-weight="bold" fill="#1f6f8b">10</text>
+          <text x="850" y="35" text-anchor="end" font-size="18" fill="#5b6472">greater &rarr;</text>
+        </g>
+        <defs>
+          <marker id="nlarrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1a2230"/></marker>
+          <marker id="nlarrowback" markerWidth="10" markerHeight="10" refX="4" refY="3" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#1a2230"/></marker>
+        </defs>
+      </svg>
     </div>
-    <div class="note">Every positive number is greater than every negative number. Zero is neither positive nor negative.</div>
+    <p class="body">Every positive number is greater than every negative number. Zero is neither positive nor negative.</p>
   </section>
 
   <section class="slide" data-day="1" data-title="Comparing negatives misconception">
-    <p class="kicker">Common Misconception</p>
+    <p class="kicker">A Trap Worth Knowing</p>
     <h2 class="prompt">Is &minus;12 greater than &minus;5?</h2>
-    <p class="say">No &mdash; on the number line, &minus;12 is farther left.</p>
-    <div class="warn-box"><strong>Debt framing:</strong> would you rather owe $5, or owe $12? A balance of &minus;$5 is greater than &minus;$12.</div>
+    <p class="say">No &mdash; on the number line, &minus;12 sits farther left.</p>
+    <div class="warn-box">Think about debt: would you rather owe $5, or owe $12? A balance of &minus;$5 is better (greater) than a balance of &minus;$12.</div>
   </section>
 
   <section class="slide" data-day="1" data-title="Absolute value">
     <p class="kicker">Absolute Value</p>
-    <h2 class="prompt">Distance from zero.</h2>
-    <div class="chip-row">
-      <span class="chip">|&minus;8| = 8</span><span class="chip">|8| = 8</span>
+    <h2 class="prompt">The distance a number is from zero.</h2>
+    <div class="svg-wrap">
+      <svg viewBox="0 0 900 130" role="img" aria-label="Number line showing negative 8 and 8 are both 8 units from zero">
+        <g font-family="Verdana, Arial, sans-serif">
+          <line x1="60" y1="80" x2="840" y2="80" stroke="#1a2230" stroke-width="3"/>
+          <circle cx="130" cy="80" r="9" fill="#a12f4f"/>
+          <text x="130" y="115" text-anchor="middle" font-size="22" font-weight="bold" fill="#a12f4f">&minus;8</text>
+          <circle cx="450" cy="80" r="9" fill="#1a2230"/>
+          <text x="450" y="115" text-anchor="middle" font-size="22" font-weight="bold" fill="#1a2230">0</text>
+          <circle cx="770" cy="80" r="9" fill="#1f6f8b"/>
+          <text x="770" y="115" text-anchor="middle" font-size="22" font-weight="bold" fill="#1f6f8b">8</text>
+          <path d="M130,50 Q290,20 445,50" stroke="#a12f4f" stroke-width="2" fill="none" marker-end="url(#dvarrow)"/>
+          <text x="290" y="20" text-anchor="middle" font-size="17" fill="#a12f4f">8 units</text>
+          <path d="M455,50 Q610,20 770,50" stroke="#1f6f8b" stroke-width="2" fill="none" marker-end="url(#dvarrow)"/>
+          <text x="610" y="20" text-anchor="middle" font-size="17" fill="#1f6f8b">8 units</text>
+        </g>
+        <defs>
+          <marker id="dvarrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5b6472"/></marker>
+        </defs>
+      </svg>
     </div>
-    <div class="note">&minus;8 and 8 are different numbers &mdash; but both are eight units from zero. Value and distance-from-zero are not the same idea.</div>
-  </section>
-
-  <section class="slide" data-day="1" data-title="Absolute value misconception">
-    <p class="kicker">Common Misconception</p>
-    <h2 class="prompt">"Absolute value just means make it positive."</h2>
-    <div class="problem-box">The temperature is &minus;4&deg;F. |&minus;4| = 4. This does <strong>not</strong> mean the temperature becomes 4&deg;F.</div>
-    <div class="note">It means &minus;4&deg;F is four degrees away from zero &mdash; the shortcut can hide the real meaning.</div>
+    <p class="body">|&minus;8| = 8 and |8| = 8, because both are 8 units from zero. Absolute value is never negative &mdash; it doesn't mean "make the number positive." A temperature of &minus;4&deg;F doesn't become 4&deg;F just because its absolute value is 4; it means &minus;4&deg;F is four degrees away from zero.</p>
   </section>
 
   <section class="slide" data-day="1" data-title="Day 1 exit ticket">
-    <p class="kicker">Exit Ticket &mdash; Day 1</p>
+    <p class="kicker">Before We Move On</p>
     <ol class="points">
       <li>Compare two negative numbers.</li>
       <li>Find an absolute value.</li>
@@ -283,28 +202,27 @@
   <section class="slide" data-day="2" data-title="Subtracting negatives">
     <p class="kicker">Subtraction With Negatives</p>
     <h2 class="prompt">8 &minus; (&minus;3) = 11</h2>
-    <div class="note">Subtracting a negative removes a negative quantity. <strong>Context:</strong> removing a $3 loss improves your position by $3.</div>
+    <p class="body">Subtracting a negative removes a negative quantity, which increases the result. Think of it in context: if a $3 loss is removed from your situation, your position improves by $3.</p>
   </section>
 
   <section class="slide" data-day="2" data-title="Think-aloud bank balance">
-    <p class="kicker">Teacher Think-Aloud</p>
-    <h2 class="prompt">"Watch me work through this one."</h2>
-    <div class="problem-box">A bank account has $45. A $62 charge is processed. What's the new balance?</div>
-    <div class="steps5">
-      <b>STOP</b> $45 balance, $62 charge &nbsp;&middot;&nbsp;
-      <b>FIND</b> new balance &nbsp;&middot;&nbsp;
-      <b>CONNECT</b> a charge decreases balance &nbsp;&middot;&nbsp;
-      <b>TRY</b> 45 &minus; 62 = &minus;17 &nbsp;&middot;&nbsp;
-      <b>CHECK</b> a $62 charge on $45 should go below zero &mdash; it does.
-    </div>
-    <div class="note"><strong>Answer: &minus;$17</strong></div>
+    <p class="kicker">Let's Work One Together</p>
+    <h2 class="prompt">A bank account has $45. A $62 charge is processed. What's the new balance?</h2>
+    <ul class="points">
+      <li><strong>STOP:</strong> $45 balance, $62 charge.</li>
+      <li><strong>FIND:</strong> the new balance.</li>
+      <li><strong>CONNECT:</strong> a charge decreases the balance.</li>
+      <li><strong>TRY:</strong> 45 &minus; 62 = &minus;17.</li>
+      <li><strong>CHECK:</strong> a $62 charge on a $45 balance should go below zero &mdash; it does.</li>
+    </ul>
+    <p class="body"><strong>Answer: &minus;$17</strong></p>
   </section>
 
   <section class="slide" data-day="2" data-title="Multiplication division signs">
     <p class="kicker">Multiplying &amp; Dividing Negatives</p>
     <h1>Same Signs &rarr; Positive</h1>
-    <p class="sub">Different signs &rarr; negative. Applies to multiplication <em>and</em> division.</p>
-    <div class="warn-box">Doesn't transfer to addition/subtraction &mdash; that's a different rule.</div>
+    <p class="sub">Different signs &rarr; negative. This applies to multiplication and division only.</p>
+    <div class="warn-box">It doesn't transfer to addition/subtraction &mdash; that's a different rule, and mixing them up is a common trap.</div>
   </section>
 
   <section class="slide" data-day="2" data-title="Choosing the operation">
@@ -315,7 +233,7 @@
       <li>What am I trying to find?</li>
       <li>How are the quantities related?</li>
     </ol>
-    <div class="note">"Total means add" and "each means multiply" are helpful clues &mdash; but the situation decides, not the word.</div>
+    <p class="body">"Total means add" and "each means multiply" are helpful clues &mdash; but the situation decides, not the word.</p>
   </section>
 
   <section class="slide" data-day="2" data-title="Order of operations">
@@ -328,20 +246,14 @@
   </section>
 
   <section class="slide" data-day="2" data-title="PEMDAS misconception">
-    <p class="kicker">Common Misconception</p>
-    <h2 class="prompt">"Multiplication always comes before division."</h2>
+    <p class="kicker">A Trap Worth Knowing</p>
+    <h2 class="prompt">Does multiplication always come before division?</h2>
     <div class="problem-box">20 &divide; 5 &times; 2</div>
-    <div class="note">Multiplication and division have <strong>equal priority</strong> &mdash; work left to right: 20&divide;5=4, then 4&times;2=<strong>8</strong> (not 2).</div>
-  </section>
-
-  <section class="slide" data-day="2" data-title="Addition subtraction equal priority">
-    <p class="kicker">Same Idea, Addition &amp; Subtraction</p>
-    <div class="problem-box">12 &minus; 5 + 3 &nbsp;=&nbsp; left to right &nbsp;=&nbsp; <strong>10</strong></div>
-    <div class="note">PEMDAS doesn't mean "all addition before all subtraction."</div>
+    <p class="body">No &mdash; multiplication and division have <strong>equal priority</strong>. Work left to right: 20&divide;5=4, then 4&times;2=<strong>8</strong> (not 2). Same for addition/subtraction: 12&minus;5+3 &rarr; 7+3 = <strong>10</strong>, not 12&minus;(5+3).</p>
   </section>
 
   <section class="slide" data-day="2" data-title="Day 2 exit ticket">
-    <p class="kicker">Exit Ticket &mdash; Day 2</p>
+    <p class="kicker">Before We Move On</p>
     <ol class="points">
       <li>One integer operation</li>
       <li>One order-of-operations problem</li>
@@ -359,33 +271,29 @@
   <section class="slide" data-day="3" data-title="Estimation as a tool">
     <p class="kicker">Estimate Before You Trust</p>
     <div class="problem-box">49 &times; 21 &nbsp;&rarr;&nbsp; round to 50 &times; 20 &nbsp;&rarr;&nbsp; &asymp; 1,000</div>
-    <div class="note">If a calculator shows 10,290, that should immediately look wrong.</div>
+    <p class="body">If a calculator shows 10,290, that should immediately look wrong. Estimating isn't random guessing &mdash; it's rounding to numbers you can work with easily, then reasoning from there.</p>
   </section>
 
   <section class="slide" data-day="3" data-title="Which answer could be right">
-    <p class="kicker">Activity &mdash; Which Answer Could Be Right?</p>
+    <p class="kicker">Which Answer Could Be Right?</p>
     <div class="problem-box">49 &times; 21 = ?<br>A. 102.9&nbsp;&nbsp; B. 1,029&nbsp;&nbsp; C. 10,290&nbsp;&nbsp; D. 102,900</div>
-    <button class="reveal-btn" onclick="reveal(this)">Reveal</button>
-    <div class="reveal-content">
-      <div class="classification">B &mdash; 1,029</div>
-      <p class="next-step">50 &times; 20 &asymp; 1,000, so only B is reasonable. Ask: which choices could we eliminate without calculating exactly?</p>
-    </div>
+    <p class="body">50 &times; 20 &asymp; 1,000, so only <strong>B</strong> is reasonable. You can eliminate three choices without calculating exactly &mdash; that's the whole point of estimating first.</p>
   </section>
 
   <section class="slide" data-day="3" data-title="Calculator entry errors">
-    <p class="kicker">A Calculator Is Not a Correctness Check</p>
-    <h2 class="prompt">Intended: 52 &times; 18. Entered: 52 &times; 81.</h2>
-    <div class="note">The calculator correctly answers the <strong>wrong</strong> calculation. Estimate first, then check what was actually entered.</div>
+    <p class="kicker">A Calculator Isn't a Correctness Check</p>
+    <h2 class="prompt">You meant 52 &times; 18, but you typed 52 &times; 81.</h2>
+    <p class="body">The calculator correctly answers the <strong>wrong</strong> calculation. It can't tell you that. Estimate first, then double-check what you actually entered.</p>
   </section>
 
   <section class="slide" data-day="3" data-title="Reasonableness checklist">
     <p class="kicker">The Week 3 Checklist</p>
     <h1>Operation &rarr; Size &rarr; Sign &rarr; Unit &rarr; Context</h1>
-    <div class="note">This becomes a standing reference &mdash; use it before accepting any answer as final, not just this week.</div>
+    <p class="sub">Use this before accepting any answer as final &mdash; this week, and every week after it.</p>
   </section>
 
   <section class="slide" data-day="3" data-title="Day 3 exit ticket">
-    <p class="kicker">Exit Ticket &mdash; Day 3</p>
+    <p class="kicker">Before We Move On</p>
     <h2 class="prompt">Why can't an incorrect calculator result ever be "reasonable"?</h2>
   </section>
 
@@ -393,15 +301,16 @@
   <section class="slide divider" data-day="4" data-title="Day 4 divider">
     <p class="kicker">Day 4</p>
     <h1>Apply, Analyze, Retry</h1>
-    <p class="sub">Mixed practice, error analysis on missed items, retry after feedback &mdash; independent work, not new instruction.</p>
+    <p class="sub">Mixed practice, checking your own missed items, retrying after feedback.</p>
   </section>
 
   <section class="slide" data-day="4" data-title="Day 4 flow">
+    <p class="kicker">Today's Plan</p>
     <ul class="points">
       <li>Mixed retrieval: comparison, operations, order of operations, estimation, reasonableness</li>
-      <li>Students classify missed questions &mdash; don't default to "execution error" for everything</li>
+      <li>When you miss a question, classify it &mdash; don't default to "I made a careless mistake" for everything</li>
       <li>Retry after reviewing an example or getting feedback</li>
-      <li>Week 3 check, then reflection: one strength, one developing skill, one error, what you did about it</li>
+      <li>Week 3 check, then a quick reflection: one strength, one developing skill, one error, what you did about it</li>
     </ul>
   </section>
 
@@ -409,9 +318,10 @@
   <section class="slide divider" data-day="5" data-title="Closing / transition">
     <p class="kicker">Transition to Week 4</p>
     <h1>Fractions &amp; Decimals</h1>
-    <p class="sub">Same cycle: Learn &rarr; Practice &rarr; Check &rarr; Analyze &rarr; Retry &rarr; Apply. Keep retrieving operation choice, order of operations, estimation, and reasonableness.</p>
+    <p class="sub">Same cycle: Learn &rarr; Practice &rarr; Check &rarr; Analyze &rarr; Retry &rarr; Apply. Keep using operation choice, order of operations, estimation, and reasonableness &mdash; they don't retire after this week.</p>
   </section>
 
+</div>
 </div>
 
 <div id="chrome">
@@ -439,21 +349,8 @@
     document.getElementById('daytag').textContent = dayNames[day] || ('Day ' + day);
     document.getElementById('jump').value = current;
   }
-
-  function go(delta) {
-    current = Math.max(0, Math.min(slides.length - 1, current + delta));
-    render();
-  }
-
-  function jumpTo(i) {
-    current = parseInt(i, 10);
-    render();
-  }
-
-  function reveal(btn) {
-    var content = btn.nextElementSibling;
-    content.classList.toggle('shown');
-  }
+  function go(delta) { current = Math.max(0, Math.min(slides.length - 1, current + delta)); render(); }
+  function jumpTo(i) { current = parseInt(i, 10); render(); }
 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowRight' || e.key === ' ') { go(1); e.preventDefault(); }
@@ -461,9 +358,8 @@
     else if (e.key === 'Home') { current = 0; render(); }
     else if (e.key === 'End') { current = slides.length - 1; render(); }
   });
-
   document.getElementById('deck').addEventListener('click', function(e) {
-    if (e.target.closest('.reveal-btn') || e.target.closest('a')) return;
+    if (e.target.closest('a')) return;
     var rect = deck.getBoundingClientRect();
     if (e.clientX - rect.left > rect.width / 2) go(1); else go(-1);
   });
