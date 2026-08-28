@@ -4,6 +4,25 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-28 — Moodle resumed, build/dev instance stood up on the FoxCS droplet
+
+**Context:** Jay asked, from a Claude Code session running on the `foxcs-droplet` (see `07-infrastructure/droplet-setup.md`), to resume Moodle work and stand up a real running instance — reversing the 2026-08-04 pause, which had held Moodle back pending a proven MVP folder/Classroom content-and-grading loop. Confirmed explicitly (not assumed) before proceeding, since it directly reverses a documented decision.
+
+**Decided:**
+
+- **Moodle resumed as of today**, ahead of the MVP loop being fully proven. The MVP folder/Classroom track is not abandoned or paused by this — both tracks are active in parallel.
+- **This droplet is build/dev-only, not the production host.** Jay's stated intent: build the Moodle side here (themes, plugins, course structure, H5P content, iframe-embedded interactive components pulled from this repo's component library), then host the real student-facing instance somewhere else once ready. Which host that will be is not yet decided — see `07-infrastructure/moodle-vm-setup.md`'s Known gaps.
+- Installed a fresh Moodle **5.2.2+ (Build: 20260818)** instance (latest stable branch, `MOODLE_502_STABLE`) directly on the droplet: Apache + PHP 8.3 + MariaDB, source cloned to `/var/www/moodle`, data at `/var/www/moodledata`. Full stack/paths/gotchas documented in new `07-infrastructure/moodle-vm-setup.md`.
+- **This is a third, separate Moodle instance** — distinct from Jay's local Windows install (`C:\Users\Jay Fox\server\moodle`, 5.3dev) referenced in this file's Moodle-role history. None of the three share a database or content.
+- Corrected a version mismatch: Jay referred to "Moodle 5.5.5+" when asking for this to be set up. **No such version exists** — `git ls-remote` against `moodle/moodle` shows the latest stable branch is 5.2 (tags through v5.2.2). Installed 5.2.2 instead and flagged the discrepancy rather than guessing at a nonexistent target.
+- Firewall: briefly opened `ufw` for 80/443 at Jay's explicit confirmation to test public reachability, then closed again once Jay clarified the droplet is dev-only — confirmed closed via an external fetch (not a self-curl to the droplet's own public IP, which is misleading due to how Linux routes traffic to a box's own address over loopback).
+
+**Not yet done:** TLS/domain, admin password rotation, DB/moodledata backups, choosing the production host, migrating anything built here to it. See `07-infrastructure/moodle-vm-setup.md`.
+
+**Supersedes:** the 2026-08-04 "Moodle paused" status in this file's Status and Platform Decisions sections, updated to match.
+
+---
+
 ## 2026-08-18 — Academic integrity policy substantially expanded; Web II cert order corrected; MakeCode avatar mechanics researched
 
 **Context:** Continued the same day's work — Jay dictated a full academic integrity policy, corrected the Web II certification required/encouraged order, and asked for real (not fabricated) MakeCode Arcade avatar instructions.
