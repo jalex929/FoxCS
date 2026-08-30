@@ -306,7 +306,12 @@ Wrote `07-infrastructure/h5p-content-type-guide.md` — what's installed (~140 l
 
 **Unit 01's Day 3-5 gap (item 3 above) is now closed.** The 24-question ACT Math Baseline, a pre-baseline rules-reference card, both Day 4/5 reflections, a teacher-only answer key/skill map, and a student+teacher "Week at a Glance" pacing sheet are all built and live in Moodle (`01.12` through `01.15`, plus the pacing sheet at the top of the section). Item 1 above (reusable question-to-.h5p script) is also now done — `07-infrastructure/moodle-scripts/h5p-builder/`. Full detail in `decisions-log.md`'s matching entry.
 
+**Unit 01 consolidated from 16 to 12 visible Moodle items.** Jay flagged the sprawl and asked about a Unit->Lesson rename; scoped down to just fixing activity count (his call, rename explicitly deferred). Merged Guided/Independent Practice with their Classify-the-Error questions, folded the baseline Quick Reference into the baseline's own intro page, merged the two Day 4/5 reflections into one two-part activity. Full detail in `decisions-log.md`. `07-infrastructure/moodle-scripts/h5p-builder/merge_unit01.py` is a reusable template for consolidating other units later.
+
+**NTC Hosting has a "Moodle Admin" folder already provisioned** — Jay found and downloaded `foxcs.online.zip` (142MB, likely the deployed Moodle codebase) and `moodledata.zip` (348 bytes, empty except for a `moodledata/foxcs.online/` skeleton, dated 2026-08-28) from the panel, saved to the SY27 Drive folder. Confirms the domain is already attached as a hosted/addon domain in the panel, ahead of registration finishing — the "attach the domain" step may already be done. Panel type still not identified (Jay wasn't sure what it's called). Domain still shows "Pending Registration" as of this check.
+
 **Next up:**
-1. Finish the NTC Hosting DNS/production setup once the domain registration clears (items 5-6 above, still accurate).
+1. Finish the NTC Hosting DNS/production setup once the domain registration clears (items 5-6 above, still accurate) — likely less work than expected given the panel already has a Moodle skeleton provisioned.
 2. Rebuild Unit 02's checks/practice as interactive H5P (item 3 above still applies to Unit 02).
-3. Items 6-9 above are all still accurate and untouched.
+3. Decide whether/when to revisit the Unit->Lesson rename (deferred, not rejected).
+4. Items 6-9 above are all still accurate and untouched.

@@ -47,6 +47,29 @@ Then verify via the authenticated-embed-page method documented in
 only works after the activity has been viewed at least once through the
 player -- the record isn't created at upload time).
 
+## `merge_unit01.py`
+
+One-off script (2026-08-30) that consolidated Unit 01 from 16 visible Moodle
+items to 12: pulls the *actual stored* `jsoncontent` for existing activities
+straight from `mdl_h5p` (via the `cmid -> mdl_files.pathnamehash -> mdl_h5p.id`
+join documented below, since `mdl_h5pactivity` has no direct FK to it) and
+recombines real content blocks into merged Column/QuestionSet packages --
+never re-authors content from scratch. Useful as a template for any future
+"combine these existing activities" pass on another unit.
+
+**Finding a cmid's actual H5P content id** (needed before pulling
+`jsoncontent` -- `mdl_h5pactivity` doesn't store this directly, and it isn't
+created until the activity has been viewed at least once):
+
+```sql
+SELECT ctx.instanceid AS cmid, f.filename, h.id AS h5p_id
+FROM mdl_context ctx
+JOIN mdl_files f ON f.contextid = ctx.id AND f.component='mod_h5pactivity'
+                 AND f.filearea='package' AND f.filename != '.'
+LEFT JOIN mdl_h5p h ON h.pathnamehash = f.pathnamehash
+WHERE ctx.instanceid IN (<cmids>) AND ctx.contextlevel = 70;
+```
+
 ## Extending to a new activity
 
 Write a new `unitNN_*.py` module with a `QUESTIONS` list (for a QuestionSet)

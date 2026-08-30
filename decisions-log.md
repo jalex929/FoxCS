@@ -4,6 +4,26 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-30 (later) — Unit 01 consolidated from 16 to 12 activities
+
+**Context:** Jay flagged that 16 separate items in one Moodle section felt sprawling, and asked whether "1 week = 1 unit" was the right model going forward, floating a Unit-to-Lesson rename with A/B letter suffixes for academic vs. postsecondary content. Scoped down to just the activity-count problem first (his call, explicitly deferring the rename) since the rename would touch ~40 sections and 30+ filenames for a naming question, while the sprawl was a real, separately-fixable problem.
+
+**Decided/built:** Merged 4 pairs of activities using real H5P-content-level merges (not just Moodle grouping), respecting the standalone-SortParagraphs constraint discovered 2026-08-29 (still can't nest inside Column/QuestionSet):
+
+- Guided Practice (Column/Essay) + its Classify-the-Error questions (QuestionSet/MultiChoice) → one Column, since MultiChoice *is* an allowed Column sub-type (already proven). Same for Independent Practice.
+- The pre-baseline Quick Reference (Column of text blocks) folded directly into the ACT Math Baseline's own `introPage.introduction` HTML field, rather than standing alone — H5P.QuestionSet already has a rich-HTML intro slot built for exactly this.
+- The Day 4 (baseline) and Day 5 (final "Build Your Starting Strategy") reflections merged into one two-part Column, since they're structurally identical (Column + Essay) and pedagogically sequential.
+
+Built via `07-infrastructure/moodle-scripts/h5p-builder/merge_unit01.py`, which pulls each source activity's *actual stored* `jsoncontent` from the DB (not re-authored from scratch) and recombines the real content blocks — no content was rewritten or lost, only regrouped. All 4 merges verified via the same authenticated-embed-page method as every other activity in this build (block/question counts, library versions, no validity errors) before hiding any originals.
+
+**Result:** Unit 01 section now shows 12 visible items (Week at a Glance + 01.1-01.11) instead of 16. The three SortParagraphs sequencing activities (01.2/01.4/01.5) stay standalone — genuinely can't be merged given the H5P constraint, and they test distinct sequences that shouldn't be combined content-wise anyway.
+
+**Not decided:** the Unit-to-Lesson rename with A/B postsecondary suffixes — explicitly deferred, not rejected. Revisit once Jay wants to reopen it; it's a bigger job (touches every section name, every `unit-NN-*` filename, and every script from the 2026-08-29 renumbering) than today's consolidation.
+
+**Supersedes:** nothing structural — the 8 originals (cmids 66,64,67,65,69,68,70,71) are hidden, not deleted, consistent with this repo's standing "hide, don't delete superseded content" convention.
+
+---
+
 ## 2026-08-30 — Unit 01's ACT Math Baseline built (Day 3-5 gap closed); reusable question-to-H5P builder script added
 
 **Context:** Jay confirmed Unit 01 (Aug 31-Sep 4) is a fully academic week with no postsecondary content this cycle, then asked to build whatever was left. A readiness check against the live Moodle dev instance found Days 1-2 fully built (10 interactive H5P activities) but Day 3 (the ACT Math Baseline) completely missing, with Days 4-5 blocked on it — the same gap flagged and never picked up in yesterday's worklog.
