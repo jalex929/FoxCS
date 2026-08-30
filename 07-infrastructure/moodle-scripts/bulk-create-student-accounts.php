@@ -1,13 +1,15 @@
 <?php
 // Bulk-creates real Moodle student accounts from a codename-only CSV
-// (codename,shortname,password), enrolls each into its course as Student,
-// and forces a password change on first login. Written 2026-08-30 for the
-// first real roster rollout -- generalizes create-foxcs-test-student.php's
-// single-account pattern to 210 accounts across 4 courses. Deliberately
-// takes no real student names: codename is the username, firstname/lastname
-// are placeholder text, matching the codename-only account design in
-// 01-privacy-and-governance/codename-policy.md. Safe to re-run (skips users
-// that already exist, re-enrolment is idempotent).
+// (codename,shortname,password), enrolls each into its course as Student.
+// Written 2026-08-30 for the first real roster rollout -- generalizes
+// create-foxcs-test-student.php's single-account pattern to 210 accounts
+// across 4 courses. Deliberately takes no real student names: codename is
+// the username, firstname/lastname are placeholder text, matching the
+// codename-only account design in 01-privacy-and-governance/codename-policy.md.
+// Does NOT force a password change -- per Jay directly, students keep the
+// password assigned on the roster rather than being prompted to set their
+// own on first login. Safe to re-run (skips users that already exist,
+// re-enrolment is idempotent, password gets refreshed either way).
 // Run: sudo -u www-data php bulk-create-student-accounts.php /path/to/accounts.csv
 
 define('CLI_SCRIPT', true);
@@ -53,7 +55,6 @@ while ($row = fgetcsv($fh)) {
         $newuser->policyagreed = 1;
 
         $userid = user_create_user($newuser, true, false);
-        set_user_preference('auth_forcepasswordchange', 1, $userid);
         $user = $DB->get_record('user', ['id' => $userid], '*', MUST_EXIST);
         $created++;
         echo "Created {$codename} (id {$userid})\n";
@@ -63,7 +64,6 @@ while ($row = fgetcsv($fh)) {
         // Moodle's minimum-length policy), and a stale password would silently
         // leave that student unable to log in with what's on the real roster.
         user_update_user((object) ['id' => $user->id, 'password' => $password], true, false);
-        set_user_preference('auth_forcepasswordchange', 1, $user->id);
         $skipped++;
         echo "{$codename} already exists (id {$user->id}), password updated\n";
     }
