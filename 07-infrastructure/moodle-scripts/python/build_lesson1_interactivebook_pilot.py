@@ -138,7 +138,7 @@ ch1 = chapter([
         ],
         "Quick Check: What Is a Program?",
     ),
-    block_text("<h2>Computers Are Very Literal</h2><p>This matters because computers are extremely literal. A computer does not guess what you probably meant. It does exactly what the instructions say, no more, no less. That's not a limitation to work around, it's the whole reason programs are useful. If a computer improvised, you couldn't trust it to do the same thing twice.</p><p><strong>Real-World Example: a vending machine is a program too.</strong> A vending machine takes your money, checks whether you inserted enough, then either releases the item or shows an error. Every one of those checks and decisions was written ahead of time by a programmer as an exact instruction: &quot;if the amount inserted is less than the price, do not release the item.&quot; The machine isn't deciding anything in the moment. It's following instructions someone else already wrote, the same way a program running on any computer does.</p>"),
+    block_text("<h2>Computers Are Very Literal</h2><p>This matters because computers are extremely literal. A computer does not guess what you probably meant. It does exactly what the instructions say, no more, no less. That's not a limitation to work around, it's the whole reason programs are useful. If a computer improvised, you couldn't trust it to do the same thing twice.</p><p><strong>Real-World Example: a vending machine is a program too.</strong> A vending machine takes your money, checks whether you inserted enough, then either releases the item or shows an error. Every one of those checks and decisions was written ahead of time by a programmer as an exact instruction: &quot;<strong>if</strong> the amount inserted is less than the price, <strong>then</strong> do not release the item.&quot; The machine isn't deciding anything in the moment. It's following instructions someone else already wrote, the same way a program running on any computer does.</p>"),
     block_multichoice(
         "<p>A program's instructions say to add two numbers, but the programmer wrote the wrong numbers by mistake. What will the computer display when the program runs?</p>",
         [
@@ -305,7 +305,18 @@ ch4 = chapter([
 # ---- Chapter 5: Project ----
 ch5 = chapter([
     block_text("<h2>Project: Design a Program</h2><p>A short applied task. You haven't learned real Python syntax yet (that starts in Lesson 01.3), so this project applies this lesson's big idea directly: a program is an exact, ordered set of instructions. You'll write that set of instructions yourself, in plain English, for a system of your choice.</p><p>Pick <strong>one</strong> real-world system that runs on a program, other than the vending machine from this lesson (an ATM, a microwave, a traffic light, an alarm clock, or a simple game mechanic like a jump button are all good choices). Write out the exact, numbered instructions a computer would need to follow to run it.</p>"),
-    block_text("<h2>How to Write an &quot;If This, Then That&quot; Instruction</h2><p>Some instructions only happen when something is true. These are called <strong>conditional instructions</strong>, and they all follow the same simple pattern:</p><p style=\"text-align:center;\"><strong>If</strong> [something is true], <strong>then</strong> [do this].</p><p>First you name the exact thing being checked (the &quot;if&quot; part). Then you say exactly what happens as a result (the &quot;then&quot; part). The vending machine example from earlier in this lesson uses this pattern: &quot;If the amount inserted is less than the price, then do not release the item.&quot;</p><p>Here's one more example, for a different system, an alarm clock: &quot;If the current time matches the alarm time, then sound the alarm.&quot; Notice both examples name one specific thing to check, then one specific thing that happens. Your project needs at least one instruction shaped exactly like this, for whatever system you choose.</p>"),
+    block_text(
+        "<h2>How to Write an &quot;If This, Then That&quot; Instruction</h2>"
+        "<p>Some instructions only happen when something is true. These are called <strong>conditional instructions</strong>, and every one of them has exactly two parts:</p>"
+        "<p><strong>IF</strong> part: name the exact thing being checked.</p>"
+        "<p><strong>THEN</strong> part: say exactly what happens as a result.</p>"
+        "<p>Put together, the pattern reads: <strong>If</strong> [something is true], <strong>then</strong> [this happens].</p>"
+        "<h3>Example You've Already Seen</h3>"
+        "<p>The vending machine instruction from earlier in this lesson uses this exact pattern: &quot;<strong>If</strong> the amount inserted is less than the price, <strong>then</strong> do not release the item.&quot; The <strong>IF</strong> part is &quot;the amount inserted is less than the price.&quot; The <strong>THEN</strong> part is &quot;do not release the item.&quot;</p>"
+        "<h3>A New Example</h3>"
+        "<p>Here's the same pattern for a different system, an alarm clock: &quot;<strong>If</strong> the current time matches the alarm time, <strong>then</strong> sound the alarm.&quot; Same two parts: one specific thing to check, one specific thing that happens.</p>"
+        "<p>Your project needs at least one instruction shaped exactly like this, for whatever system you choose.</p>"
+    ),
     block_text("<h2>Requirements</h2><ul><li>Name the system you chose in one sentence. It cannot be the vending machine from this lesson.</li><li>Write at least 5 numbered instructions, each exact enough that someone unfamiliar with your system could follow it without guessing.</li><li>Include at least one &quot;if this, then that&quot; instruction (see above), naming one specific thing to check and one specific thing that happens as a result.</li><li>No vague steps like &quot;do the right thing&quot; or &quot;handle it&quot;. Every instruction says exactly what happens.</li></ul>"),
     block_essay(
         "<p>Write your numbered instruction list here (at least 5 steps, including one &quot;if this, then that&quot; instruction). Name your system in your first line.</p>",
@@ -314,14 +325,70 @@ ch5 = chapter([
     ),
 ], "Project")
 
-# ---- Chapter 6: What's Next ----
+# ---- Chapter 6: Mastery Check ----
+# NOTE: the real (repo) mastery check is password-gated by the teacher and
+# auto-timestamps unlock/completion (see 07_mastery_check.html) -- H5P has no
+# equivalent mechanism for either (no way to run a password gate or write a
+# timestamp inside a content package), so this book version is the same 4
+# questions with neither. This is a real, known gap in this format, not an
+# oversight -- flagged for Jay's decision, not silently dropped.
 ch6 = chapter([
-    block_text("<h2>What's Next</h2><p>Nice work finishing this lesson's reading and practice. Two more things to do, outside this book:</p><p><strong>Mastery Check:</strong> a short password-gated check your teacher will unlock, with your answers written in a paired file. Ask your teacher for the current password.</p><p><strong>Feedback:</strong> a quick 2-3 minute form about how this lesson went for you.</p>"),
-], "What's Next")
+    block_text("<h2>Mastery Check</h2><p>Four questions checking your understanding of this lesson. Answer each one in your own words.</p>"),
+    block_essay(
+        "<p>1. Explain, in your own words, what a program is. Use an example from everyday life that is <em>not</em> a video game and <em>not</em> a calculator app.</p>",
+        "Type your answer here.",
+        "Mastery Check: What Is a Program?",
+    ),
+    block_essay(
+        "<p>2. A vending machine takes your money, checks whether you inserted enough, and then either gives you the item or shows an error. Describe at least one specific instruction you think must exist somewhere inside the vending machine's program for this to work.</p>",
+        "Type your answer here.",
+        "Mastery Check: The Vending Machine's Instructions",
+    ),
+    block_essay(
+        "<p>3. A friend tells you, &quot;Computers are smart. They figure things out on their own.&quot; Based on what you learned in this lesson, do you agree or disagree? Explain your answer using the word <em>instruction</em>.</p>",
+        "Type your answer here.",
+        "Mastery Check: Are Computers Smart?",
+    ),
+    block_essay(
+        "<p>4. Explain what a programming language like Python is for, and why a programmer needs one to make a computer do something.</p>",
+        "Type your answer here.",
+        "Mastery Check: What Python Is For",
+    ),
+], "Mastery Check")
+
+# ---- Chapter 7: Feedback ----
+ch7 = chapter([
+    block_text("<h2>Feedback</h2><p>2-3 minutes. This is about the lesson, not about grading you. Your honest answers help decide what changes for next time.</p>"),
+    block_essay(
+        "<p>1. How clear was it what you were being asked to do in this lesson? Rate 1-5 (1 = confusing, 5 = totally clear), then explain. If any part was unclear, describe what it was.</p>",
+        "Type your rating and answer here.",
+        "Feedback: Clarity",
+    ),
+    block_essay(
+        "<p>2. How difficult was this lesson for you? Rate 1-5 (1 = too easy, 5 = too difficult), then explain. What part felt the most difficult, if any?</p>",
+        "Type your rating and answer here.",
+        "Feedback: Difficulty",
+    ),
+    block_essay(
+        "<p>3. How interesting did this lesson feel to you? Rate 1-5 (1 = not interesting, 5 = very interesting).</p>",
+        "Type your rating here.",
+        "Feedback: Interest",
+    ),
+    block_essay(
+        "<p>4. This lesson taught 4 words: <code>program</code>, <code>instruction</code>, <code>programmer</code>, <code>Python</code>. Name any that you still find hard to explain in your own words, or write &quot;none&quot; if you can explain all 4.</p>",
+        "Type your answer here.",
+        "Feedback: Which Terms Are Still Hard?",
+    ),
+    block_essay(
+        "<p>5. What part of this lesson felt the most rewarding, or helped you learn the most? Give a specific example.</p>",
+        "Type your answer here.",
+        "Feedback: What Helped Most",
+    ),
+], "Feedback")
 
 content = {
     "showCoverPage": False,
-    "chapters": [ch1, ch2, ch3, ch4, ch5, ch6],
+    "chapters": [ch1, ch2, ch3, ch4, ch5, ch6, ch7],
     # "page" is the counter-label word shown with the chapter position (e.g.
     # "X of Y" / "X/Y" depending on theme). Left at its H5P default ("Page")
     # this duplicated each chapter's own on-page title in the counter, which
