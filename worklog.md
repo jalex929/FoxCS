@@ -353,8 +353,15 @@ Jay asked to start building out Game I (Python), picking Units 00 and 01. **Unit
 
 **Unit 01's content is now also viewable in Moodle** (`foxcs-python`, section 2), since Jay had no way to open local files from this droplet session before reaching his desktop. Overview page + all 6 lessons (each one Moodle resource, multi-file, with `00_table_of_contents.html` as the entry point) + the unit project pair, 9 resources total. **One real, permanent limitation**: the nav menu's links to *other* lessons don't work from inside Moodle (they'd silently show the wrong lesson's content, not a clean 404, so they were stripped from the Moodle copies specifically) — within-lesson navigation works fine, but moving between lessons in Moodle means going back to the section list. Full detail in `decisions-log.md`; scripts and reasoning in `07-infrastructure/moodle-scripts/python/README.md`. Access: same SSH tunnel as Seminar III (`ssh -L 8080:localhost:80 foxcs-droplet`, browse `http://localhost:8080`), admin login `FoxCS2026Admin!`.
 
+**Moodle nav simplified per Jay's feedback** — the in-page menu on each Moodle-uploaded lesson now shows just that lesson's own files, not the whole "Unit 01 with 6 collapsed lessons" structure (redundant now that each lesson is its own Moodle tab). All 6 lessons re-uploaded with this (cmids 98-103).
+
+**H5P Interactive Book piloted for Lesson 01.1** (cmid 97, right after the overview page, before the HTML-file version) — Jay asked whether this format might solve the navigation issues better than the file-based model. Covers Instruction/Flashcards/Vocab Quiz/Practice/Project with real adapted content; Mastery Check stays separate (no H5P equivalent for the password-gate mechanism), matching the original Two-Surface model. **Hit a genuinely nasty silent bug** building this — H5P's `InteractiveBook` chapters need to be bare `Column` objects, not wrapped in `{"chapter": {...}}` like the semantics field name suggests; the wrong version uploads with zero errors but Moodle quietly strips all chapter content. Found by reading Moodle's own validator source, documented in `h5p-content-type-guide.md` so it's not rediscovered. Full detail in `decisions-log.md`.
+
+**Jay's subitem-click "blank page" report is still not independently diagnosed** — checked Moodle's embed iframe code for sandbox restrictions (none found), but couldn't fully test without a real browser. Becomes moot for 01.1 if the Interactive Book pilot gets adopted.
+
 **Next up (Python):**
-1. Get Jay's call on 01.1's project step.
-2. The Playwright verification checklist above, once Jay's on his desktop — now also covers reviewing the Moodle copies, not just the repo files.
-3. Em-dash sweep beyond Unit 01 — Unit 00's shared onboarding content and the rest of FoxCS haven't been checked.
-4. Units 00 (now resolved) and 02-20 are still the real remaining Python scope — only Unit 01 has content, in the repo or in Moodle.
+1. **Jay's review of the Interactive Book pilot vs. the HTML-file version** — decides whether to port Lessons 01.2-01.6 to the same format. This is the big fork in the road right now.
+2. Get Jay's call on 01.1's project step (HTML-file version).
+3. The Playwright verification checklist above, once Jay's on his desktop — now also covers reviewing the Moodle copies (both versions) and the subitem-click symptom.
+4. Em-dash sweep beyond Unit 01 — Unit 00's shared onboarding content and the rest of FoxCS haven't been checked.
+5. Units 00 (now resolved) and 02-20 are still the real remaining Python scope — only Unit 01 has content, in the repo or in Moodle.

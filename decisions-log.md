@@ -4,6 +4,23 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-30 (final) — Simplified Python's Moodle nav; piloted H5P Interactive Book for Lesson 01.1
+
+**Context:** Jay reviewed the Moodle-uploaded Unit 01 content (previous entry) and gave two pieces of feedback: (1) the in-page nav menu showing "Unit 01" with all 6 lessons collapsed inside is redundant now that each lesson is its own Moodle tab — it should just show the current lesson's own sub-items; (2) clicking a subitem link produced a blank page/error (a real symptom, not fully diagnosable without a real browser — see `worklog.md`'s Playwright checklist). Jay also asked whether an H5P Interactive Book might be a better fit given its native page navigation, floated as a real architectural question, not a snap decision.
+
+**Decided:**
+
+- **Nav simplified.** `stage_unit01_for_moodle.py` rewritten to replace the full nested unit-menu with a flat, always-visible list of just the current lesson's own files, for the Moodle-uploaded copies only — the real repo files keep their full cross-lesson menu, since that's correct for actual Classroom-folder delivery. All 6 lessons re-uploaded (old cmids 85-90 deleted, new cmids 98-103).
+- **H5P Interactive Book piloted on Lesson 01.1 only**, not committed to for all 6 lessons — real rebuild cost (existing custom JS drills have no direct H5P equivalent) justified proving the idea first. Covers the conceptual content (Instruction as `H5P.Column`/`AdvancedText`+`MultiChoice` quick-checks, Flashcards as `H5P.Dialogcards`, Vocab Quiz and Practice as `H5P.QuestionSet`, Project as `H5P.Essay`) adapted from the real existing lesson content, not fabricated. Mastery Check deliberately excluded (no H5P equivalent for the password-gate + auto-timestamp mechanism `mvp-unit-folder-structure.md` specifies) and code-writing steps stay in VS Code — this resumes the original pre-pause "Moodle for concepts, VS Code for applied work" Two-Surface model rather than replacing it. Live at cmid 97, positioned right after the overview page and before the HTML-file version of 01.1 for direct side-by-side comparison.
+
+**Real bug found and fixed, worth remembering:** `H5P.InteractiveBook`'s `chapters` list appeared to want each item wrapped as `{"chapter": {...Column...}}`, matching the semantics field name. This is wrong and **fails completely silently** — no upload error, no validity message, the package looks fine, but Moodle's content filter strips the entire `chapters` array during processing (confirmed: `mdl_h5p.filtered` ended up ~176 bytes, just the top-level settings). Root cause, found by reading `h5p.classes.php`'s `validateGroup()` directly: a semantics `group` with exactly one field gets auto-flattened by the validator, so the wrapper key must be omitted — each chapter is the bare `H5P.Column` object, same flat shape `H5P.QuestionSet`'s `questions` list already uses. Documented in `07-infrastructure/h5p-content-type-guide.md`'s new section, alongside the general lesson: don't just check for the absence of a validity error, verify actual content text survived filtering.
+
+**Still open:** Jay's decision on porting the other 5 lessons to Interactive Book format, pending his review of the pilot. The subitem-click symptom Jay reported is still not independently diagnosed (no sandbox restriction found in Moodle's embed iframe code, but no real browser available to fully test) — moot for 01.1 once/if the Interactive Book pilot is adopted, since H5P handles its own navigation internally rather than raw iframe-embedded static files.
+
+**Supersedes:** nothing structural in the earlier entry — the same 6 lesson resources exist, just re-uploaded with simplified nav, plus one new pilot resource.
+
+---
+
 ## 2026-08-30 (yet later still) — Python Unit 01 content uploaded to Moodle, as a review channel
 
 **Context:** Jay tried to review Unit 01's content but has no way to open local HTML files from this droplet session (not on his desktop yet). He'd apparently looked at the `foxcs-python` Moodle shell (built 2026-08-29 as an empty structural skeleton) and found "Unit 1 empty" — accurate for Moodle specifically, even though the repo's Unit 01 content is fully built. Asked directly whether to keep Python's Moodle shell empty (repo-only review, wait for desktop) or upload the built content there now; chose to upload.

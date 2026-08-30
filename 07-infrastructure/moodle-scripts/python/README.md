@@ -81,13 +81,53 @@ unit-level project files, which don't need the multi-file treatment.
 either upload script as `www-data`, same pattern as every other script in
 this directory.
 
+## Nav simplified further, 2026-08-30 (later)
+
+Jay's feedback after the first upload: since each lesson is now its own tab
+in Moodle's section list, the in-page menu showing "Unit 01" with all 6
+lessons collapsed inside was redundant, and he wanted just the current
+lesson's own sub-items. `stage_unit01_for_moodle.py` was rewritten:
+instead of stripping cross-lesson `<details>` entries from the full nested
+menu, it now replaces the whole thing with a flat, always-visible list of
+just the current lesson's own files (`.lesson-menu-wrap`, no toggle, no
+per-lesson collapse) — the real repo files' full nested menu is
+untouched, this only affects the staged Moodle copies.
+
+## `build_lesson1_interactivebook_pilot.py`
+
+A parallel exploration, not a replacement (yet): Jay asked whether an
+`H5P.InteractiveBook` (native chapter/page navigation, avoids the
+cross-lesson-link problem entirely) might be a better fit than the
+HTML-file model. Piloted on Lesson 01.1 only, covering the *conceptual*
+content (Instruction, Flashcards as `H5P.Dialogcards`, Vocab Quiz and
+Practice as `H5P.QuestionSet`, Project as `H5P.Essay`) — real content
+adapted from the existing lesson, not fabricated. The Mastery Check step
+deliberately stays outside the book (password-gate + auto-timestamp has
+no H5P equivalent) and the code-writing steps stay in VS Code as before —
+this maps onto the original "Moodle for concepts, VS Code for applied
+work" Two-Surface model from before Moodle was paused.
+
+**Hit and fixed a real, silent H5P bug building this** — see
+`../../h5p-content-type-guide.md`'s new "single-field group gets
+auto-flattened" section. Short version: `chapters` list items must be the
+bare `H5P.Column` object, not wrapped in `{"chapter": {...}}` the way the
+semantics' field name suggests — the wrapped version uploads with zero
+errors but Moodle silently strips the entire chapter list during
+filtering. Caught by directly reading `h5p.classes.php`'s `validateGroup()`,
+not guessed.
+
+Live at `foxcs-python` section 2, cmid 97, right after the overview page
+and before the HTML-file version of 01.1, specifically so Jay can compare
+both directly before deciding whether to port the other 5 lessons.
+
 ## What's live as of 2026-08-30
 
-`foxcs-python`, section 2 (Unit 01): Overview, all 6 lessons (01.1-01.6,
-each a multi-file resource), and the unit-level project pair. Verified via
-authenticated fetch: every lesson's main file renders with the right title,
-and a same-lesson sibling file (`01_instruction.html`) resolves correctly
-from within each lesson's own resource.
+`foxcs-python`, section 2 (Unit 01): Overview, the Interactive Book pilot,
+all 6 HTML-file lessons (01.1-01.6, each a multi-file resource, simplified
+nav), and the unit-level project pair. Verified via authenticated fetch:
+every lesson's main file renders with the right title, a same-lesson
+sibling file resolves correctly, and the pilot's all 6 chapters/13
+questions/1 flashcard deck/1 essay render with zero validity errors.
 
 ## Not done
 
@@ -99,3 +139,5 @@ from within each lesson's own resource.
 - No verification via a real rendered browser (see root `worklog.md`'s
   Playwright checklist) — everything here was checked via authenticated
   `curl`, same method used throughout the Seminar III Moodle build.
+- Jay's decision on whether to port the other 5 lessons to Interactive
+  Book format, pending his review of the pilot.

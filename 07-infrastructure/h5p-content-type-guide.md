@@ -14,6 +14,14 @@ Nothing is available until `\core\task\h5p_get_content_types_task` runs (it's no
 - **`H5P.QuestionSet` (1.21) accepts:** MultiChoice, DragQuestion, Blanks, MarkTheWords, DragText, TrueFalse, Essay, MultiMediaChoice. Narrower than Column — it's specifically a quiz wrapper, not a general content container.
 - **Not accepted by either:** `SortParagraphs` — confirmed standalone-only. If a design calls for sequencing/reordering, it has to be its own separate `h5pactivity` module, not embedded in a reading.
 
+## Another hard-won rule: a single-field `group` gets auto-flattened, silently
+
+Found 2026-08-30 building the first `H5P.InteractiveBook` (see Python's `07-infrastructure/moodle-scripts/python/README.md`). `InteractiveBook`'s `chapters` list has a `field` of `type: "group"` with exactly one named sub-field (`chapter`, itself `type: "library"` accepting `H5P.Column`). The natural-looking JSON — each list item as `{"chapter": {library, params, subContentId, metadata}}`, matching the semantics' field name — is **wrong**, and Moodle gives no error for it. It just silently drops the entire `chapters` array during filtering (`mdl_h5p.filtered` ends up ~176 bytes, just the top-level `showCoverPage`/`behaviour` fields, no error message logged anywhere).
+
+**Root cause, found by reading `h5p.classes.php`'s `validateGroup()` directly, not guessed:** a group with `count($semantics->fields) == 1` gets flattened — the validator applies the *single field's own* validator directly to the group's value, expecting the wrapper key to already be gone. So each `chapters` list item must be the **bare `H5P.Column` library object directly**, no `{"chapter": ...}` wrapper at all — same flat shape `H5P.QuestionSet`'s `questions` list already uses, just non-obvious here because `chapters`' semantics *look* like they want a named wrapper.
+
+**General lesson:** when a `list`'s `field` is `type: "group"`, check `validateGroup()`'s flattening rule (single-field groups collapse; multi-field groups keep their key structure) before assuming the wrapper key from the semantics' field name belongs in the JSON. A silent, error-free content loss like this is easy to misread as "the package uploaded fine, so the content must be fine too" — verify actual chapter/section content survived filtering (grep the embed page for real content text, not just check for a validity-error string), don't just check for the absence of an error.
+
 ## What's actually built into Seminar III so far (proven working)
 
 | Type | Used for | Notes |
