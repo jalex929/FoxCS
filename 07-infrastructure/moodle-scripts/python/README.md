@@ -3,8 +3,19 @@
 Built 2026-08-30, when Jay decided to start using the `foxcs-python` Moodle
 shell to review Python's already-authored MVP folder content (previously
 Moodle was paused platform-wide for Python, delivery was Google Classroom
-folders only — see root `CLAUDE.md`'s Status section; that decision hasn't
-changed, this is an additional review channel, not a replacement).
+folders only — see root `CLAUDE.md`'s Status section).
+
+**Direction later the same day: Jay said he'd be happy to make Moodle the
+real replacement for Google Classroom**, not just a preview mirror — but
+that's a large change (student enrollment, a real submission mechanism per
+content type, reworking the `05-grader/` codename-swap pipeline which is
+built around Classroom's download format) that hasn't been scoped or
+decided in full. Starting narrow, per Jay's own call: prove the pattern on
+one real piece (Mastery Check as a native Moodle Quiz, see below) before
+committing to the full migration. Root `CLAUDE.md`'s Status section still
+describes the old paused-Moodle/Classroom-only state and hasn't been
+updated to reflect this in-progress reconsideration -- update it once a
+real decision is made, not before.
 
 ## The core problem this solves
 
@@ -129,6 +140,34 @@ every lesson's main file renders with the right title, a same-lesson
 sibling file resolves correctly, and the pilot's all 6 chapters/13
 questions/1 flashcard deck/1 essay render with zero validity errors.
 
+## `create_lesson1_mastery_check_quiz.php` / `cleanup_question_category.php`
+
+Proves the "Mastery Check as a real Moodle Quiz" pattern for password
+protection, since H5P has no password-gate mechanism at all (confirmed --
+not a single installed content type supports it). Creates 4 `qtype_essay`
+questions (manually graded, matching `07_mastery_check.html`'s real
+open-ended questions) in a course-scoped question category, then a real
+`mod_quiz` instance with a native "require password" setting
+(`quizpassword`, currently `T4WPR8`, same placeholder as the HTML version --
+CHANGE ME before distributing). **Verified end to end**, not just checked
+for absence of errors: fetched the actual quiz view page and confirmed a
+real `<input type="password" name="quizpassword">` renders, tied to
+Moodle's own native quiz access-control code, not anything hand-built.
+
+Both real gotchas hit while building this (the `quizpassword` vs.
+`password` field-name mismatch, and `quiz_update_sumgrades()`'s rename to
+`\mod_quiz\grade_calculator::recompute_quiz_sumgrades()`) are documented in
+the script's own header comment.
+
+Live at `foxcs-python` section 2, cmid 114, positioned right after the
+Interactive Book pilot.
+
+`cleanup_question_category.php` deletes a named question-bank category and
+everything in it via Moodle's real deletion path -- needed since
+re-running the create script without cleanup first duplicates the
+category/questions each time (used repeatedly while iterating on the two
+gotchas above).
+
 ## Not done
 
 - Units 00, 02-20 — only Unit 01 has real content to upload yet.
@@ -141,3 +180,10 @@ questions/1 flashcard deck/1 essay render with zero validity errors.
   `curl`, same method used throughout the Seminar III Moodle build.
 - Jay's decision on whether to port the other 5 lessons to Interactive
   Book format, pending his review of the pilot.
+- The Mastery Check Quiz is a standalone proof right now, not yet wired
+  into either the HTML-file lesson or the Interactive Book as "the" real
+  mastery check for 01.1 -- that integration, and whether to build the
+  same pattern for Lessons 01.2-01.6, is still open.
+- The bigger "Moodle replaces Classroom" scope (enrollment, submission
+  mechanism per content type, grader-pipeline rework) is entirely
+  unscoped -- deliberately deferred until this one piece is proven out.

@@ -4,6 +4,26 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-30 (final) — Mastery Check built as a real Moodle Quiz; Moodle-replaces-Classroom floated, deliberately not scoped yet
+
+**Context:** Jay asked about password-protected mastery checks going forward, which surfaced that today's Moodle upload work (both the file-based lessons and the Interactive Book pilot) is currently a **read-only preview mirror** -- students aren't actually submitting anything to Moodle at all. The real submission path is still Google Classroom (students edit files in their own copy, submit the whole folder back through Classroom, Jay downloads and grades). Asked directly whether Jay wanted Moodle to become the real submission point; he said yes in principle ("I would be happy to make moodle the replacement to Google Classroom"), and confirmed he's not worried about needing one unified submission -- per-activity is fine.
+
+**Decided:** that's a large migration (student enrollment, a real submission mechanism per content type, reworking `05-grader/`'s Classroom-shaped codename-swap pipeline) that hasn't been scoped, so **deliberately started narrow**: prove the pattern on Mastery Check specifically, since that's what prompted the question and is the one piece H5P categorically cannot do (no password-gate mechanism exists in any installed H5P content type, confirmed while building yesterday's pilot).
+
+**Built:** Lesson 01.1's Mastery Check as a real `mod_quiz` instance -- 4 `qtype_essay` questions (manually graded, same real open-ended questions as `07_mastery_check.html`) plus a native "require password" setting. This is Moodle's own supported password mechanism, not anything hand-rolled, with real gradebook/attempt tracking as a side benefit the HTML/H5P versions never had.
+
+**Real implementation problems hit and solved, not glossed over:**
+- Moodle's PHPUnit test-generator classes (`mod_quiz_generator`, `core_question_generator`) looked like the obvious tool but have a hard `PHPUnit\Framework\TestCase` dependency -- confirmed unusable standalone by trying, not assumed. Fell back to the actual production save path (`question_type::save_question()`, the same code the real question-editing form calls) instead.
+- `create_module()` for a quiz needs `$moduleinfo->quizpassword`, not `->password` -- the raw DB column is `password`, but the form-field name `quizpassword` is what the creation code expects, confirmed by reading `mod/quiz/lib.php`'s own remapping line after a real failed DB write pointed at it.
+- `quiz_update_sumgrades()` no longer exists as a standalone function -- renamed to `\mod_quiz\grade_calculator::recompute_quiz_sumgrades()`, an instance method obtained via `quiz_settings::create($quizid)->get_grade_calculator()`. Found via `mod/quiz/UPGRADING.md`'s own rename log, not guessed.
+- **Verified end to end, not just checked for absence of errors**: fetched the real quiz view page and confirmed an actual `<input type="password" name="quizpassword">` renders, proving Moodle's own native access-control code is really gating this, not something that merely looks configured.
+
+**Not yet done:** wiring this into either the HTML-file lesson or the Interactive Book as 01.1's "real" mastery check (it's a standalone proof right now, not linked from either), the same pattern for Lessons 01.2-01.6, and the full Moodle-replaces-Classroom scope (enrollment, per-content-type submission design, grader rework) -- all explicitly deferred pending Jay's review of this one piece.
+
+**Supersedes:** nothing structural, extends today's earlier Moodle-upload work. Root `CLAUDE.md`'s "Moodle paused, Classroom is the delivery mechanism" framing is now under real reconsideration but not yet formally changed -- don't treat it as settled either way.
+
+---
+
 ## 2026-08-30 (final) — Simplified Python's Moodle nav; piloted H5P Interactive Book for Lesson 01.1
 
 **Context:** Jay reviewed the Moodle-uploaded Unit 01 content (previous entry) and gave two pieces of feedback: (1) the in-page nav menu showing "Unit 01" with all 6 lessons collapsed inside is redundant now that each lesson is its own Moodle tab — it should just show the current lesson's own sub-items; (2) clicking a subitem link produced a blank page/error (a real symptom, not fully diagnosable without a real browser — see `worklog.md`'s Playwright checklist). Jay also asked whether an H5P Interactive Book might be a better fit given its native page navigation, floated as a real architectural question, not a snap decision.
