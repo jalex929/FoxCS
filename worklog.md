@@ -314,6 +314,8 @@ Wrote `07-infrastructure/h5p-content-type-guide.md` — what's installed (~140 l
 
 **Domain registration is in manual review**, per an email Jay received from NTC/the registrar -- explains why it's taking longer than a typical few-hour `.online` registration. No action possible until that clears.
 
+**Flagged, not yet acted on: Seminar III needs more postsecondary content than currently planned.** Jay: the course should have postsecondary content in most lessons -- **Lesson 1 is essentially the only one that shouldn't**, not the "light Q1 touch, real work concentrated in Q4" model `01_SEMINAR_III_COURSE_PLAN` and `project-seminar3-plan-mismatch` (memory) currently describe. This is a real design reversal, not a small tweak -- it likely means postsecondary content needs building for most of Lessons 2 and up (using the not-yet-used A/B letter-suffix convention from the rename above), not just Lessons 32-38. Not scoped or built yet; revisit before assuming the current Q1 lesson plans (which have zero postsecondary content) are complete.
+
 **Next up:**
 1. Finish the NTC Hosting DNS/production setup once the domain registration clears (items 5-6 above, still accurate) — likely less work than expected given the panel already has a Moodle skeleton provisioned.
 2. Rebuild Lesson 2's checks/practice as interactive H5P (item 3 above still applies, now under the new naming).
