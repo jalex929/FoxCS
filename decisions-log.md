@@ -1201,3 +1201,38 @@ Built via `07-infrastructure/moodle-scripts/h5p-builder/merge_unit01.py`, which 
 **Superseded:** the FoxCS `CLAUDE.md` and `courses/python/CLAUDE.md` written in the prior session (Moodle-Lesson-branching-centric, ~30-question flat practice pool per lesson). Both rewritten to match this entry.
 
 **Still open:** see `open-questions.md`.
+
+---
+
+## 2026-08-30 — Moodle resumed as the real delivery platform; the 2026-08-04 pause is over
+
+**Context:** Between the 2026-08-04 pause entry above and now, Jay actually stood up live Moodle infrastructure on his own DigitalOcean droplet, pointed `foxcs.online` at it with real Let's Encrypt SSL, and built real content against it: an H5P Interactive Book pilot for Python Lesson 1 (Instruction), an H5P BranchingScenario for Practice, a native Moodle Quiz for Mastery Check (password-gated, 3-attempt cap, `QUIZ_GRADEAVERAGE`), a `foxcstest` student account enrolled across all `foxcs-%` courses, and admin access. Root `CLAUDE.md` still read "Moodle is paused" throughout this build, unedited. Jay flagged this directly: *"mopodle is not paused, that is an old note. let's change it."*
+
+**Decided:**
+
+- **Moodle is the live, real delivery platform now** — not paused, not "infrastructure prep for later." The MVP folder-and-Classroom pivot from 2026-08-04 is itself superseded, not the other way around.
+- **The 4-module-per-lesson structure is the real, current lesson shape**: (1) Instruction — H5P Interactive Book (concept + vocab + vocab quiz + guided examples), (2) Practice — H5P BranchingScenario (light adaptive remediation, chosen over QuestionSet for its "safer long-term" text-based breakdown-on-struggle behavior), (3) Project — native Moodle Assignment (rubric, downloadable zip of starter files, real file-upload submission, self-serve CodeHS-Sandbox fallback for Chromebook days), (4) Mastery Check + Feedback — one native, password-gated Moodle Quiz (3-attempt cap, averaged not highest, genuine 1-5 feedback question, rubric-tied "how to reach the next tier" guidance).
+- **Submissions are back on Moodle**, not Google Classroom — Project file-upload via `mod_assign`, Mastery Check via `mod_quiz`, both native to the live course.
+- Content is still authored as self-contained instructional HTML first where that's the natural drafting format (concept pages, practice items) — that step doesn't change. What changes is the packaging/delivery step: it now ends in an H5P/Moodle-native artifact, not a Classroom folder.
+- The Starter/Skilled/Legendary/Mythic XP-tier vocabulary (2026-08-04 entry below) stays exactly as decided — cosmetic label, not a routing mechanism — unaffected by this reversal.
+
+**Superseded:** the 2026-08-04 "Paused Moodle, pivoted to an MVP" entry above, and root `CLAUDE.md`'s Purpose/Status sections, Two-Surface Delivery Model pause note, and the Submissions row of its Platform Decisions table — all rewritten to match this entry.
+
+**Still open:** whether the MVP folder format is kept as a fallback for any course/situation (e.g., a Chromebook-only day, or Seminar III's non-unit-shaped content) or fully retired now that Moodle is live — not raised by Jay, not guessed at here.
+
+---
+
+## 2026-08-30 — Created FoxCS: Software Dev, the 5th course, from session context alone (no local source document)
+
+**Context:** Jay asked for course maps to be built out for each CS pathway. Root `CLAUDE.md`'s Courses table already had a stub row for Software Dev (added earlier this session, referencing the CPS-authenticated "Fox Game II/Web II Syllabus SY27" Google Doc Jay had read into the session via browser), but the course folder itself — `CLAUDE.md`, `course-plan.md`, any content — did not exist yet.
+
+**Decided:**
+
+- Built `courses/software-dev/CLAUDE.md` and `courses/software-dev/course-plan.md` from what was already established in-session about the pathway (5-stage progression: HTML+CSS → JavaScript → HTML5 Application Development → Java → Software Development) plus the framing already written into the Unit 0 pathway-choice page's `.pathway-box.softwaredev`/`.concept-card.softwaredev`. **No local copy of the source Google Doc exists in this repo** — checked `starter context/` directly, confirmed absent. Recommend Jay export it in so future sessions aren't relying on session memory of a browser read.
+- **Software Dev's own course-plan starts at Unit SD-01, not a continuation of Web Dev's Unit 01-21 numbering.** Stages 1-3 of the 5-stage progression (HTML+CSS, JavaScript, HTML5 App Dev) are `courses/web-dev/course-plan.md`'s content already — Software Dev is a genuinely separate course that begins only once a student clears a Web Dev prerequisite (exact threshold undefined), not Web Dev's own later units. This resolved a real risk of accidentally duplicating Web Dev's curriculum under a new name.
+- **First real unit count for this pathway: 16 units** (SD-01 to SD-16, split into Stage 4 "Java Fundamentals" and Stage 5 "Software Development"). This resolves the `.placeholder-flag` left in the Unit 0 pathway-choice page's "How They're Different" comparison, which previously had no number to cite for this pathway. Flagged everywhere as a first-pass estimate, not validated against a real calendar or confirmed with Jay.
+- **Real content gap surfaced and flagged, not papered over:** no licensed Java curriculum source (workbook, support files, exam-objective document) exists anywhere in this repo, unlike Python (GMetrix) and Web Dev (LearnKey JS/HTML5 workbooks). Every unit's "Tie-in" line in the new course-plan is marked "(no source — flagged)" rather than inventing exercise numbers. This is the top blocker before any real Java lesson content can be authored.
+- "IT Specialist – Java" is used as a working-assumption certification target for the Java stage, consistent with Certiport being FoxCS's throughline elsewhere — explicitly marked unconfirmed, since no exam-objective document exists locally to verify against (contrast Python/JS/HTML5, which all have one).
+- Updated root `CLAUDE.md`'s Courses table row for Software Dev from "Not yet created" to reflect the new folder and its real status.
+
+**Still open:** see `courses/software-dev/CLAUDE.md`'s Open Questions — sourcing a Java curriculum, the exact Web Dev→Software Dev prerequisite threshold, whether "IT Specialist – Java" is the right certification target, Stage 5's lack of any certification mapping, scheduling for a variable-entry-point course, and realistic enrollment size.

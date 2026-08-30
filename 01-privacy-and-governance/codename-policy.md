@@ -1,6 +1,6 @@
 # Codename Policy
 
-Status: **provisional** — format is proposed, not finalized (see `open-questions.md`).
+Status: **locked 2026-08-30** for the real 2026-27 roster — the `PY1-A-ALPHA01` format below was provisional and never actually used to generate a real roster. It's superseded by the format Jay specified directly when asking for the first real 35-per-class codename batch (see `decisions-log.md`, 2026-08-30 entry, and `06-data-and-spreadsheets/roster-schema.md` for the real generated roster).
 
 ## Purpose
 
@@ -9,14 +9,14 @@ Remove student PII from any external/AI-assisted tooling (grader, similarity ana
 ## Format
 
 ```
-PY1-A-ALPHA01
+G1-1-NOVA
 ```
 
-- `PY1` — course code (Python 1). Other FoxCS courses get their own prefix (e.g. `WD1` for Web Dev, `UN1` for Unity) when they start.
-- `A` — class section letter.
-- `ALPHA01` — alphabetized roster position within that section, zero-padded.
+- `G1` — course code, chosen so the class's own name is directly readable (`G1` = Game I, `G2` = Game II, `W2` = Web II, `S3` = Seminar III). One letter + the course's own numeral, not an arbitrary abbreviation, per Jay's explicit requirement that the class be visually identifiable at a glance — this matters because Game II and Web II share the same room and period, and students may choose either pathway regardless of which course they're actually enrolled/graded under.
+- `1` — class period (1st, 4th, 5th, 7th, 8th — whichever period that specific section meets).
+- `NOVA` — one word from a shared Space & Astronomy theme word list (non-animal, real astronomy vocabulary, "fun but not goofy" per Jay's standing preference — see `decisions-log.md`'s earlier band-vocabulary-style entries for the same tone bar). 40 words cover each class (35 active seats + 5 reserve slots for transfers) with no repeats; see `06-data-and-spreadsheets/roster-schema.md` for the full word list and generation notes if a class ever needs more.
 
-Codenames are assigned once at the start of the year and stay stable across all assignments and both delivery surfaces (Moodle account username *and* the folder/file name students use in VS Code — same codename, both places).
+Codenames are assigned once at the start of the year and stay stable across all assignments and both delivery surfaces (Moodle account username *and* the folder/file name students use in VS Code — same codename, both places). **Word-to-student mapping isn't alphabetized yet** — the word list is generated in a fixed order; Jay assigns word #1 to the alphabetically-first real student on each class roster once he has it, same principle the old `ALPHA01` suffix was going for, just reusable across classes without collision since the course-period prefix already guarantees global uniqueness.
 
 ## Private Roster (school-controlled only, never leaves teacher-controlled storage)
 
