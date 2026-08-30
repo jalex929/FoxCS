@@ -1,0 +1,298 @@
+<!-- Student-facing instructional document for Seminar III Unit 03 (Fractions & Decimals),
+     "Different Ways to Show the Same Amount." Built 2026-08-26 to match the pipeline
+     established for Unit 02: a real styled HTML page rendered to PDF, reusing the same
+     visual component language (banner/kicker, section.block, problem-box/warn-box,
+     chip-row, check-grid, error-grid, reference) so it reads as part of the same system.
+     Content sourced from week-04-plan (Sections 1-63, 70-82); mirrors the Session A
+     (fractions) / Session B (decimals) / Apply structure used in week-04-presentation.html. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unit 03: Fractions &amp; Decimals</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d; --warn-ink: #7a4413;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  .page { max-width: 800px; margin: 0 auto; background: var(--paper); padding: 0 0 4rem; }
+
+  .banner { background: var(--accent-dark); color: white; padding: 3rem 3rem 2.2rem; }
+  .banner .kicker { font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: #cfe6ee; font-weight: bold; margin: 0 0 0.5rem; }
+  .banner h1 { font-size: 2.4rem; margin: 0 0 0.6rem; line-height: 1.15; }
+  .banner .sub { font-size: 1.15rem; color: #dff1f6; margin: 0; }
+
+  section.block { padding: 1.8rem 3rem; border-bottom: 1px solid var(--line); break-inside: avoid; page-break-inside: avoid; }
+  section.block:last-of-type { border-bottom: none; }
+
+  h2 { font-size: 1.5rem; color: var(--accent-dark); margin: 0 0 0.9rem; }
+  p { font-size: 1.02rem; line-height: 1.6; margin: 0 0 0.8rem; }
+  p:last-child { margin-bottom: 0; }
+
+  ul.facts { list-style: none; margin: 0.8rem 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  ul.facts li { background: var(--accent-bg); border-left: 4px solid var(--accent); padding: 0.6rem 1rem; font-size: 1rem; line-height: 1.5; border-radius: 0 6px 6px 0; }
+  ul.facts li strong { color: var(--accent-dark); }
+
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1rem 1.3rem; font-size: 1.05rem; line-height: 1.55; margin: 0.9rem 0; }
+  .problem-box strong { color: var(--accent-dark); }
+
+  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 1rem 1.3rem; font-size: 1.02rem; line-height: 1.55; margin: 0.9rem 0; color: var(--warn-ink); }
+  .warn-box .label { display: block; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; color: var(--warn-line); margin-bottom: 0.35rem; }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.92rem; font-weight: bold; }
+
+  ol.steps { margin: 0.8rem 0; padding-left: 1.4rem; font-size: 1.02rem; line-height: 1.6; }
+  ol.steps li { margin-bottom: 0.3rem; }
+  ol.steps b { color: var(--accent-dark); }
+
+  .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin: 0.9rem 0; }
+  .check-item { background: var(--accent-bg); border-radius: 8px; padding: 0.7rem 1rem; }
+  .check-item .term { font-weight: bold; color: var(--accent-dark); display: block; margin-bottom: 0.2rem; font-size: 0.95rem; }
+  .check-item .q { font-size: 0.95rem; color: var(--ink); }
+
+  .error-grid { display: flex; flex-direction: column; gap: 0.6rem; margin: 0.9rem 0; }
+  .error-item { border: 1px solid var(--line); border-radius: 8px; padding: 0.7rem 1rem; }
+  .error-item .term { font-weight: bold; color: var(--accent-dark); }
+
+  .reference { background: var(--accent-dark); color: white; padding: 1.8rem 3rem 2.4rem; }
+  .reference h2 { color: white; }
+  .reference .ref-row { display: grid; grid-template-columns: 1fr 2fr; gap: 0.3rem 1rem; font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.7rem; }
+  .reference .ref-row b { color: #a9d8e6; }
+  .reference p { color: #dff1f6; }
+
+  @media print {
+    body { background: white; }
+    .page { max-width: none; }
+    section.block { break-inside: avoid; page-break-inside: avoid; }
+    .reference { break-inside: avoid; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="banner">
+    <p class="kicker">Seminar III &middot; Unit 03 &middot; Fractions &amp; Decimals</p>
+    <h1>Different Ways to Show the Same Amount</h1>
+    <p class="sub">This week's big questions: <strong>What quantity does this number represent?</strong> and <strong>would a fraction or decimal be more useful here?</strong></p>
+  </div>
+
+  <div class="reference">
+    <h2>Session A: Fractions</h2>
+    <p>Meaning, equivalence, comparison, and operations.</p>
+  </div>
+
+  <section class="block">
+    <h2>What Does a Fraction Mean?</h2>
+    <p>A fraction should not be treated as just two numbers separated by a line. A fraction can represent part of a whole, part of a group, a point on a number line, or division.</p>
+    <div class="problem-box">3/4 &nbsp;&rarr;&nbsp; one whole has been divided into four equal parts, and three of those parts are represented.</div>
+    <ul class="facts">
+      <li><strong>Numerator:</strong> the top number. It tells how many selected parts are being represented.</li>
+      <li><strong>Denominator:</strong> the bottom number. It tells how many equal parts make one whole.</li>
+    </ul>
+    <p>A fraction also means division. 3/4 also means 3 &divide; 4, which equals 0.75. This connection matters when converting fractions to decimals later this week.</p>
+    <p>Fractions are also points on a number line, not only "pieces of something." 1/2 is a point halfway between 0 and 1. 3/2 is greater than 1, located halfway between 1 and 2.</p>
+    <div class="warn-box">
+      <span class="label">Common Misconception</span>
+      Fractions do not have to be less than 1. 5/4, 7/3, and 10/5 are legitimate values, not "wrong" answers that need fixing.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Equivalent Fractions and Simplifying</h2>
+    <p>Equivalent fractions look different but represent the same quantity.</p>
+    <div class="problem-box">1/2 = 2/4 = 3/6 = 5/10</div>
+    <p>If both the numerator and denominator are multiplied by the same nonzero number, the size of the quantity does not change.</p>
+    <ol class="steps">
+      <li>Start with <b>1/2</b>.</li>
+      <li>Multiply numerator and denominator by 3: (1 &times; 3)/(2 &times; 3) = <b>3/6</b>.</li>
+      <li>1/2 and 3/6 represent the same quantity.</li>
+    </ol>
+    <p>Simplifying rewrites a fraction using smaller whole numbers. 12/18 is divisible by 6 in both places: 12 &divide; 6 = 2 and 18 &divide; 6 = 3, so 12/18 = 2/3.</p>
+    <div class="warn-box">
+      <span class="label">Common Misconception</span>
+      Simplifying does not make a fraction smaller. 6/8 = 3/4. The representation changes. The quantity does not.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Comparing Fractions</h2>
+    <p>No single strategy works best for every comparison. Choose the one that fits the problem.</p>
+    <div class="chip-row">
+      <span class="chip">same denominator</span><span class="chip">same numerator</span><span class="chip">common denominator</span><span class="chip">convert to decimal</span><span class="chip">benchmarks</span>
+    </div>
+    <ul class="facts">
+      <li><strong>Same denominator:</strong> 3/8 and 5/8 have equal-size pieces. Five eighths contains more pieces, so 5/8 &gt; 3/8.</li>
+      <li><strong>Same numerator:</strong> 3/4 and 3/8 both have three pieces, but fourths are larger than eighths, so 3/4 &gt; 3/8.</li>
+      <li><strong>Common denominator:</strong> to compare 3/4 and 5/8, convert 3/4 to 6/8. Since 6/8 &gt; 5/8, 3/4 &gt; 5/8.</li>
+      <li><strong>Convert to decimal:</strong> 3/4 = 0.75 and 5/8 = 0.625, so 3/4 &gt; 5/8.</li>
+      <li><strong>Benchmarks:</strong> 7/10 is greater than 1/2, and 3/8 is less than 1/2, so 7/10 &gt; 3/8. This strategy can be faster than calculating.</li>
+    </ul>
+    <div class="warn-box">
+      <span class="label">Common Misconception</span>
+      A larger denominator does not mean a larger fraction. 1/8 is not greater than 1/4. More equal parts means each piece is smaller: 1/8 &lt; 1/4.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Adding and Subtracting Fractions</h2>
+    <p>With the same denominator, the pieces are already the same size. Add or subtract the number of pieces and keep the denominator.</p>
+    <div class="problem-box">1/5 + 2/5 &nbsp;&rarr;&nbsp; add the pieces: 1 + 2 = 3 &nbsp;&rarr;&nbsp; keep the denominator: <strong>3/5</strong></div>
+    <div class="warn-box">
+      <span class="label">Common Mistake</span>
+      1/5 + 2/5 &ne; 3/10. Adding the denominators would incorrectly change the size of the pieces. The operation combines fifths. It does not turn fifths into tenths.
+    </div>
+    <p>With different denominators, the pieces are different sizes. Create equivalent fractions with same-size pieces before adding or subtracting.</p>
+    <ol class="steps">
+      <li>1/2 + 1/4: the pieces are different sizes.</li>
+      <li>Convert: 1/2 = 2/4.</li>
+      <li>Add: 2/4 + 1/4 = <b>3/4</b>.</li>
+    </ol>
+    <p>Subtraction works the same way. 5/6 - 1/3: convert 1/3 to 2/6, then 5/6 - 2/6 = 3/6, which simplifies to 1/2.</p>
+    <p>Why does this matter conceptually? If one person has 1/2 of a pizza and another has 1/4 of the same pizza, you cannot say "one piece plus one piece equals two pieces" without noticing the pieces are different sizes. A common denominator rewrites the quantities using equal-size pieces.</p>
+  </section>
+
+  <section class="block">
+    <h2>Multiplying and Dividing Fractions</h2>
+    <p>Fraction multiplication means <strong>part of a part</strong>. 1/2 &times; 3/4 means one-half of three-fourths.</p>
+    <div class="problem-box">1/2 &times; 3/4 &nbsp;&rarr;&nbsp; multiply numerators: 1 &times; 3 = 3 &nbsp;&rarr;&nbsp; multiply denominators: 2 &times; 4 = 8 &nbsp;&rarr;&nbsp; result: <strong>3/8</strong></div>
+    <p>Multiplication does not require a common denominator. 2/3 &times; 4/5 = (2 &times; 4)/(3 &times; 5) = 8/15.</p>
+    <div class="warn-box">
+      <span class="label">Reasonableness Check</span>
+      Both values in 1/2 &times; 3/4 are positive and less than 1. Taking part of a number less than 1 should produce something smaller. An answer such as 6/4 should immediately look unreasonable.
+    </div>
+    <p>Division asks a different question. 3/4 &divide; 1/2 asks: how many groups of one-half fit into three-fourths? The answer is 3/2, or 1 1/2.</p>
+    <ol class="steps">
+      <li>Keep the first fraction: 3/4.</li>
+      <li>Change division to multiplication.</li>
+      <li>Use the reciprocal of the second fraction: 1/2 becomes 2/1.</li>
+      <li>Multiply: 3/4 &times; 2/1 = 6/4, which simplifies to <b>3/2</b>.</li>
+    </ol>
+    <p>Learners may use the reciprocal procedure ("keep, change, flip"), but should first ask what the original division represents rather than relying on the shortcut alone.</p>
+  </section>
+
+  <section class="block">
+    <h2>Mixed Numbers and Improper Fractions</h2>
+    <ul class="facts">
+      <li><strong>Proper fraction:</strong> numerator is smaller than the denominator. Example: 3/5.</li>
+      <li><strong>Improper fraction:</strong> numerator is equal to or greater than the denominator. Example: 7/4.</li>
+      <li><strong>Mixed number:</strong> a whole number combined with a fraction. Example: 1 3/4.</li>
+    </ul>
+    <p>7/4 = 1 3/4. Being able to recognize and interpret these forms matters more this week than heavy mixed-number arithmetic.</p>
+  </section>
+
+  <div class="reference">
+    <h2>Session B: Decimals</h2>
+    <p>Place value, operations, and connecting decimals back to fractions.</p>
+  </div>
+
+  <section class="block">
+    <h2>Decimal Place Value</h2>
+    <p>Each digit in a decimal represents a specific place value.</p>
+    <div class="problem-box">4.583 &nbsp;&rarr;&nbsp; 4 ones, 5 tenths, 8 hundredths, 3 thousandths</div>
+    <div class="chip-row">
+      <span class="chip">ones = 1</span><span class="chip">tenths = 0.1</span><span class="chip">hundredths = 0.01</span><span class="chip">thousandths = 0.001</span>
+    </div>
+    <p>In 4.583, the 8 represents 0.08, because it sits in the hundredths place.</p>
+    <p>Trailing zeros added to the right of a decimal do not change its value: 0.5 = 0.50 = 0.500. This is useful when comparing decimals.</p>
+  </section>
+
+  <section class="block">
+    <h2>Comparing Decimals</h2>
+    <p>Compare digits according to place value, not according to how many digits are present.</p>
+    <ol class="steps">
+      <li>Compare 0.58 and 0.6.</li>
+      <li>Rewrite with the same number of places: 0.58 and 0.60.</li>
+      <li>Compare tenths first: 0.60 &gt; 0.58.</li>
+      <li>Therefore <b>0.6 &gt; 0.58</b>.</li>
+    </ol>
+    <div class="warn-box">
+      <span class="label">Common Misconception</span>
+      0.58 is not greater than 0.6 just because 58 is greater than 6. Place value decides, not digit count. 0.6 means six tenths. 0.58 means fifty-eight hundredths. Since 0.60 &gt; 0.58, 0.6 &gt; 0.58.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Decimal Operations</h2>
+    <p><strong>Addition and subtraction:</strong> line up the decimal points so digits with the same place value are combined.</p>
+    <div class="problem-box">4.75 + 2.60 = <strong>7.35</strong></div>
+    <div class="problem-box">8.20 &minus; 3.47 = <strong>4.73</strong></div>
+    <p><strong>Multiplication:</strong> 2.5 &times; 4 can be reasoned as 2.5 + 2.5 + 2.5 + 2.5 = 10. For more complex multiplication, a calculator may be appropriate, but estimate first or afterward.</p>
+    <div class="problem-box">Estimate 4.9 &times; 3.1 &nbsp;&rarr;&nbsp; round to 5 &times; 3 &nbsp;&rarr;&nbsp; &asymp; 15. An exact result should land near 15. An answer such as 151.9 should immediately look wrong.</div>
+    <p><strong>Division:</strong> interpret the meaning in context. $12.60 divided equally among 3 people is 12.60 &divide; 3 = $4.20 each.</p>
+    <div class="warn-box">
+      <span class="label">Common Misconception</span>
+      Correct digits do not guarantee a correct answer if the decimal point is placed incorrectly. 2.4 &times; 3 answered as 72 should immediately look wrong: 2 &times; 3 &asymp; 6.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Fractions and Decimals Are Connected</h2>
+    <p>A fraction represents division, so any fraction can be converted to a decimal by dividing.</p>
+    <div class="problem-box">3/4 &nbsp;&rarr;&nbsp; 3 &divide; 4 = <strong>0.75</strong></div>
+    <p>A terminating decimal can be converted back to a fraction using place value.</p>
+    <ol class="steps">
+      <li>0.6 means six tenths: 6/10.</li>
+      <li>Simplify: 6/10 = <b>3/5</b>.</li>
+    </ol>
+    <p>Learners should gradually become fluent with common benchmarks:</p>
+    <div class="chip-row">
+      <span class="chip">1/2 = 0.5</span><span class="chip">1/4 = 0.25</span><span class="chip">3/4 = 0.75</span><span class="chip">1/5 = 0.2</span><span class="chip">2/5 = 0.4</span><span class="chip">3/5 = 0.6</span><span class="chip">4/5 = 0.8</span><span class="chip">1/10 = 0.1</span>
+    </div>
+    <p>These benchmarks will be especially important next week, when percent is introduced.</p>
+  </section>
+
+  <section class="block">
+    <h2>Choosing a Useful Representation</h2>
+    <p>The same quantity can often be shown in more than one way. 3/4 and 0.75 are the same number. One form may simply be easier in a given context.</p>
+    <ul class="facts">
+      <li><strong>Money:</strong> a price is usually written as $2.75, not $2 3/4, because decimals match how money is normally written.</li>
+      <li><strong>Measurement:</strong> a recipe usually calls for 3/4 cup rather than 0.75 cup, because that form is more familiar in the kitchen.</li>
+      <li><strong>Comparison:</strong> to compare 7/8 and 0.82, converting 7/8 to 0.875 makes the comparison immediate: 0.875 &gt; 0.82.</li>
+    </ul>
+    <p>The key idea: the representation can change while the value stays the same.</p>
+  </section>
+
+  <section class="block">
+    <h2>Does My Answer Make Sense?</h2>
+    <p>Continue using Operation &rarr; Size &rarr; Sign &rarr; Unit &rarr; Context. For fractions and decimals, <strong>size</strong> becomes especially important.</p>
+    <div class="check-grid">
+      <div class="check-item"><span class="term">Operation</span><span class="q">Did I choose an operation that matches what the situation actually asks?</span></div>
+      <div class="check-item"><span class="term">Size</span><span class="q">Should this answer be greater than 1 or less than 1? Should multiplying make the quantity smaller?</span></div>
+      <div class="check-item"><span class="term">Sign</span><span class="q">Does the sign of the result make sense for the situation?</span></div>
+      <div class="check-item"><span class="term">Unit</span><span class="q">Am I answering in the unit the question actually asked for (dollars, cups, miles)?</span></div>
+      <div class="check-item" style="grid-column: span 2;"><span class="term">Context</span><span class="q">Is this decimal close to the benchmark I expected? Does the result have a reasonable size for this situation?</span></div>
+    </div>
+    <p>Example: a learner calculates 1/2 &times; 1/3 = 5/6. One-half of one-third must be smaller than one-third, but 5/6 is much larger. The answer cannot be reasonable. Example: a learner calculates 4.7 + 3.2 = 79. Estimating gives 5 + 3 = 8, and 79 is nowhere near 8, which suggests a decimal-place or entry error.</p>
+  </section>
+
+  <section class="block">
+    <h2>Learn From the Error</h2>
+    <p>Not every wrong answer means the same thing. Use the five error types from Unit 01.</p>
+    <div class="error-grid">
+      <div class="error-item"><span class="term">Knowledge:</span> "I don't remember how to add fractions with different denominators." <em>Response: review common denominators and work through an example.</em></div>
+      <div class="error-item"><span class="term">Process:</span> knowing a common denominator is needed, but changing the denominator without changing the numerator. <em>Response: compare the work with an equivalent-fraction example.</em></div>
+      <div class="error-item"><span class="term">Execution:</span> correctly setting up 0.74 + 1.26, then making an arithmetic mistake. <em>Response: recalculate and estimate to verify.</em></div>
+      <div class="error-item"><span class="term">Comprehension:</span> a recipe uses 3/4 cup of milk and asks how much remains from 1 cup, but the learner reports 3/4. <em>Response: reread what the question actually asks.</em></div>
+      <div class="error-item"><span class="term">Strategy:</span> doing complicated common-denominator work to compare 1/2 and 0.45 instead of recognizing 1/2 = 0.5. <em>Response: choose a more useful representation.</em></div>
+    </div>
+  </section>
+
+  <div class="reference">
+    <h2>Quick Reference</h2>
+    <div class="ref-row"><b>Numerator</b><span>Selected parts.</span></div>
+    <div class="ref-row"><b>Denominator</b><span>Equal parts in one whole.</span></div>
+    <div class="ref-row"><b>Add / subtract fractions</b><span>Common denominator required.</span></div>
+    <div class="ref-row"><b>Multiply fractions</b><span>Multiply numerators and denominators. No common denominator needed.</span></div>
+    <div class="ref-row"><b>Divide fractions</b><span>Multiply by the reciprocal of the divisor.</span></div>
+    <div class="ref-row"><b>Common benchmarks</b><span>1/2 = 0.5, 1/4 = 0.25, 3/4 = 0.75, 1/5 = 0.2, 1/10 = 0.1</span></div>
+    <div class="ref-row"><b>Check your answer</b><span>Operation, Size, Sign, Unit, Context.</span></div>
+  </div>
+
+</div>
+</body>
+</html>

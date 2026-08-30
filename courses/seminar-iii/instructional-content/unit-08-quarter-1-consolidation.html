@@ -1,0 +1,179 @@
+<!-- Student-facing instructional document for Seminar III Unit 08 (Quarter 1 Consolidation).
+     Built from week-09-plan Sections 1-15 and 40. Unlike Weeks 3-8, this document teaches no
+     new skill. It explains how to use a consolidation week: the retrieval framework, why mixed
+     unlabeled problems test something different than a single-topic check, how to read Growth
+     Check results with Strength/Developing/Priority language instead of a raw score, how to
+     synthesize a whole quarter of error-analysis evidence into one pattern, and how to choose a
+     priority skill using evidence. Same visual system as week-03-numbers-that-make-sense.html.
+     The fill-in personal-record worksheet lives separately in
+     printable-sheets/week-09-reflection.html, matching week-09-plan Section 34. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unit 08: Quarter 1 Consolidation</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d; --warn-ink: #7a4413;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  .page { max-width: 800px; margin: 0 auto; background: var(--paper); padding: 0 0 4rem; }
+
+  .banner { background: var(--accent-dark); color: white; padding: 3rem 3rem 2.2rem; }
+  .banner .kicker { font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: #cfe6ee; font-weight: bold; margin: 0 0 0.5rem; }
+  .banner h1 { font-size: 2.4rem; margin: 0 0 0.6rem; line-height: 1.15; }
+  .banner .sub { font-size: 1.15rem; color: #dff1f6; margin: 0; }
+
+  section.block { padding: 1.8rem 3rem; border-bottom: 1px solid var(--line); break-inside: avoid; page-break-inside: avoid; }
+  section.block:last-of-type { border-bottom: none; }
+
+  h2 { font-size: 1.5rem; color: var(--accent-dark); margin: 0 0 0.9rem; }
+  p { font-size: 1.02rem; line-height: 1.6; margin: 0 0 0.8rem; }
+  p:last-child { margin-bottom: 0; }
+
+  table.skillmap { border-collapse: collapse; width: 100%; margin: 0.5rem 0; font-size: 0.98rem; }
+  table.skillmap th, table.skillmap td { border: 1px solid var(--line); padding: 0.5rem 0.8rem; text-align: left; }
+  table.skillmap th { background: var(--accent-bg); color: var(--accent-dark); }
+
+  ul.facts { list-style: none; margin: 0.8rem 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  ul.facts li { background: var(--accent-bg); border-left: 4px solid var(--accent); padding: 0.6rem 1rem; font-size: 1rem; line-height: 1.5; border-radius: 0 6px 6px 0; }
+  ul.facts li strong { color: var(--accent-dark); }
+
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1rem 1.3rem; font-size: 1.05rem; line-height: 1.55; margin: 0.9rem 0; }
+  .problem-box strong { color: var(--accent-dark); }
+
+  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 1rem 1.3rem; font-size: 1.02rem; line-height: 1.55; margin: 0.9rem 0; color: var(--warn-ink); }
+  .warn-box .label { display: block; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; color: var(--warn-line); margin-bottom: 0.35rem; }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.92rem; font-weight: bold; }
+
+  ol.steps { margin: 0.8rem 0; padding-left: 1.4rem; font-size: 1.02rem; line-height: 1.6; }
+  ol.steps li { margin-bottom: 0.3rem; }
+  ol.steps b { color: var(--accent-dark); }
+
+  .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin: 0.9rem 0; }
+  .check-item { background: var(--accent-bg); border-radius: 8px; padding: 0.7rem 1rem; }
+  .check-item .term { font-weight: bold; color: var(--accent-dark); display: block; margin-bottom: 0.2rem; font-size: 0.95rem; }
+  .check-item .q { font-size: 0.95rem; color: var(--ink); }
+
+  .error-grid { display: flex; flex-direction: column; gap: 0.6rem; margin: 0.9rem 0; }
+  .error-item { border: 1px solid var(--line); border-radius: 8px; padding: 0.7rem 1rem; }
+  .error-item .term { font-weight: bold; color: var(--accent-dark); }
+
+  .reference { background: var(--accent-dark); color: white; padding: 1.8rem 3rem 2.4rem; }
+  .reference h2 { color: white; }
+  .reference .ref-row { display: grid; grid-template-columns: 1fr 2fr; gap: 0.3rem 1rem; font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.7rem; }
+  .reference .ref-row b { color: #a9d8e6; }
+
+  @media print {
+    body { background: white; }
+    .page { max-width: none; }
+    section.block { break-inside: avoid; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="banner">
+    <p class="kicker">Seminar III &middot; Unit 08 &middot; Quarter 1 Consolidation</p>
+    <h1>Looking Back Across a Whole Quarter</h1>
+    <p class="sub">This week's big question: <strong>What have I learned about how I learn?</strong></p>
+  </div>
+
+  <section class="block">
+    <h2>Why This Week Is Different</h2>
+    <p>Unit 08 does not teach a new skill. Weeks 3 through 8 built the first full Quarter 1 sequence: Numbers &amp; Operations, Fractions &amp; Decimals, Percent, Ratios/Rates/Proportions, Variables &amp; Expressions, and Equations. This week asks you to look back across all six at once, instead of one skill at a time.</p>
+    <p>The goal is not a test for its own sake. The goal is to leave Quarter 1 with an honest, evidence-based answer about how you learn: a skill you have mastered, a skill still developing, a skill that should be a priority in Quarter 2, and the error pattern that shows up most often in your own work.</p>
+  </section>
+
+  <section class="block">
+    <h2>The Quarter 1 Skill Map</h2>
+    <p>Six skills, one connected system. Each one built on the one before it: fractions and decimals extended number sense, percent is a fraction compared to 100, ratios and rates generalize percent into comparisons between any two quantities, rates became coefficients in expressions, and expressions became one side of an equation.</p>
+    <table class="skillmap">
+      <tr><th>Week</th><th>Skill</th><th>Core Question</th></tr>
+      <tr><td>3</td><td>Numbers &amp; Operations</td><td>Does my answer make sense?</td></tr>
+      <tr><td>4</td><td>Fractions &amp; Decimals</td><td>Which form should I use?</td></tr>
+      <tr><td>5</td><td>Percent</td><td>What is this a percent of?</td></tr>
+      <tr><td>6</td><td>Ratios, Rates &amp; Proportions</td><td>What two quantities am I comparing?</td></tr>
+      <tr><td>7</td><td>Variables &amp; Expressions</td><td>What does this symbol represent?</td></tr>
+      <tr><td>8</td><td>Equations</td><td>What value makes both sides equal?</td></tr>
+    </table>
+  </section>
+
+  <section class="block">
+    <h2>Recognizing a Skill Without Being Told</h2>
+    <p>Skills taught in separate weeks are often practiced in isolation. You might do well on a percent question during Unit 04, then fail to recognize a percent situation buried inside a Unit 08 mixed problem, simply because the skill was never asked for outside its own week.</p>
+    <div class="problem-box"><strong>Example:</strong> A recipe calls for 3 eggs for every 2 cups of flour. If a baker uses 9 eggs, how many cups of flour are needed?</div>
+    <p>This problem never says "this is a ratio problem." You have to recognize the comparison yourself. That recognition, not the calculation, is the real skill this week adds on top of Weeks 3 through 8. It is also closer to how problems appear on the ACT and in real situations, where nothing is pre-sorted by topic.</p>
+    <div class="chip-row">
+      <span class="chip">Which skill does this require?</span>
+      <span class="chip">How can I tell, if it doesn't say?</span>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>The Quarter 1 Growth Check</h2>
+    <p>The Growth Check is this week's cumulative assessment: 28 to 32 questions spanning every Quarter 1 domain, some clearly labeled by topic and some mixed and unlabeled on purpose. It is informative, not punitive, in the same spirit as the Unit 01 baseline.</p>
+    <ol class="steps">
+      <li><b>Numbers &amp; operations, fractions &amp; decimals, percent:</b> direct retrieval, similar to what Unit 01 tested.</li>
+      <li><b>Ratios/rates/proportions, expressions, equations:</b> new mastery, since these were not part of the Unit 01 baseline.</li>
+      <li><b>Mixed, unlabeled application:</b> requires recognizing which skill applies before solving anything.</li>
+    </ol>
+    <div class="warn-box">
+      <span class="label">Before You Begin</span>
+      Some questions will not announce which skill they require. Attempting an unfamiliar-looking question still gives useful information. Use the Unit 01 problem-solving routine throughout: STOP, FIND, CONNECT, TRY, CHECK.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Reading Your Results</h2>
+    <p>A raw score, such as 21 out of 31, does not tell you what to do next. Use the same three-part language established in Unit 01 instead.</p>
+    <div class="check-grid">
+      <div class="check-item"><span class="term">Current Strengths</span><span class="q">Skills you now demonstrate consistently, including any measurable growth since Unit 01.</span></div>
+      <div class="check-item"><span class="term">Developing Skills</span><span class="q">Skills you partially demonstrate.</span></div>
+      <div class="check-item" style="grid-column: span 2;"><span class="term">Priority Skills</span><span class="q">Skills that need continued instruction or review heading into Quarter 2.</span></div>
+    </div>
+    <p>Where a Unit 01 baseline question has a direct match on the Growth Check, compare the two results directly. Where a skill was not part of the baseline (percent, ratios/rates, expressions, equations), report it as new mastery rather than growth from a prior score, since there was no prior score to grow from.</p>
+  </section>
+
+  <section class="block">
+    <h2>Synthesizing a Quarter of Errors</h2>
+    <p>You already know the five error categories from Unit 01. This week, apply them across an entire quarter of evidence instead of a single problem. Review your error-analysis records, exit tickets, and check results from Weeks 2 through 8 to answer each question with real evidence, not a guess.</p>
+    <div class="error-grid">
+      <div class="error-item"><span class="term">Knowledge:</span> Did the same "I don't remember this" error appear in more than one week?</div>
+      <div class="error-item"><span class="term">Process:</span> Did errors happen most often while following multi-step procedures, such as two-step equations or proportion setups?</div>
+      <div class="error-item"><span class="term">Execution:</span> Did errors happen most often through small arithmetic or sign mistakes, even when the approach was correct?</div>
+      <div class="error-item"><span class="term">Comprehension:</span> Did errors happen most often from misreading what a question asked, such as confusing a part-to-whole ratio with a part-to-part ratio?</div>
+      <div class="error-item"><span class="term">Strategy:</span> Did errors happen most often from choosing an inefficient approach, such as long calculation when estimation would have worked?</div>
+    </div>
+    <p>Whichever category appears most often across the quarter, not just in one week, is your most frequent error pattern. That pattern tells you what to prioritize going into Quarter 2.</p>
+  </section>
+
+  <section class="block">
+    <h2>How to Pick a Priority Skill</h2>
+    <p>A priority skill is not simply "whatever felt hardest." Use evidence from three places before deciding:</p>
+    <ol class="steps">
+      <li><b>Growth Check accuracy</b> by domain: which domain had the lowest accuracy?</li>
+      <li><b>Confidence ratings</b> from the Day 1 Skill Map activity: did you rate a skill low, and did the Growth Check confirm it?</li>
+      <li><b>Error pattern</b>: does one error type keep showing up specifically inside one domain?</li>
+    </ol>
+    <p>A priority skill supported by all three kinds of evidence is a stronger, more specific target than a guess. This is the same evidence you will use to complete the Unit 08 Quarter 1 Reflection.</p>
+  </section>
+
+  <div class="reference">
+    <h2>Quick Reference</h2>
+    <div class="ref-row"><b>Recognition</b><span>Which Quarter 1 skill does this problem require, if the problem doesn't say?</span></div>
+    <div class="ref-row"><b>Reporting language</b><span>Strength, Developing, Priority. Never just a raw score.</span></div>
+    <div class="ref-row"><b>The five error types</b><span>Knowledge, Process, Execution, Comprehension, Strategy.</span></div>
+    <div class="ref-row"><b>Priority skill evidence</b><span>Growth Check accuracy by domain, Day 1 confidence ratings, and your error pattern, together.</span></div>
+    <div class="ref-row"><b>The routine</b><span>STOP, FIND, CONNECT, TRY, CHECK. Same as Unit 01, used all year.</span></div>
+  </div>
+
+</div>
+</body>
+</html>

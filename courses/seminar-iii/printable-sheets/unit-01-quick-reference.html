@@ -1,0 +1,86 @@
+<!-- Student-facing quick-reference handout, Unit 01 (Academic Problem-Solving). Built
+     2026-08-29, matching the visual language of instructional-content/unit-01-* and the
+     rest of Seminar III's printable sheets. Designed to fit on one printed page. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unit 01 Quick Reference: Academic Problem-Solving</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  .page { max-width: 800px; margin: 0 auto; background: var(--paper); }
+  .banner { background: var(--accent-dark); color: white; padding: 1.4rem 2rem; }
+  .banner .kicker { font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: #cfe6ee; font-weight: bold; margin: 0 0 0.3rem; }
+  .banner h1 { font-size: 1.6rem; margin: 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .card { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); break-inside: avoid; }
+  .card:nth-child(2n) { border-right: none; }
+  .card h2 { font-size: 1.05rem; color: var(--accent-dark); margin: 0 0 0.5rem; }
+  .card p, .card li { font-size: 0.88rem; line-height: 1.45; margin: 0 0 0.4rem; }
+  .card ol, .card ul { margin: 0.3rem 0; padding-left: 1.2rem; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0.4rem 0; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.15rem 0.6rem; font-size: 0.8rem; font-weight: bold; }
+  @media print { body { background: white; } .page { max-width: none; } .card { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="banner">
+    <p class="kicker">Seminar III &middot; Unit 01</p>
+    <h1>Quick Reference: Academic Problem-Solving</h1>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h2>The Five Questions</h2>
+      <ol>
+        <li>What information do I have?</li>
+        <li>What am I trying to determine?</li>
+        <li>What skill or information could help?</li>
+        <li>What strategy can I try?</li>
+        <li>Does my answer make sense?</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>Short Version</h2>
+      <div class="chip-row">
+        <span class="chip">STOP</span>
+        <span class="chip">FIND</span>
+        <span class="chip">CONNECT</span>
+        <span class="chip">TRY</span>
+        <span class="chip">CHECK</span>
+      </div>
+      <p>Same routine, five words instead of five sentences.</p>
+    </div>
+    <div class="card">
+      <h2>Knowledge Error</h2>
+      <p>You don't know or remember something you need. <strong>Try this:</strong> review the concept or a worked example.</p>
+    </div>
+    <div class="card">
+      <h2>Process Error</h2>
+      <p>Right idea, but the steps went wrong or out of order. <strong>Try this:</strong> compare your work to a correct example.</p>
+    </div>
+    <div class="card">
+      <h2>Execution Error</h2>
+      <p>Right idea and steps, a small mistake carrying it out. <strong>Try this:</strong> slow down and check against an estimate.</p>
+    </div>
+    <div class="card">
+      <h2>Comprehension Error</h2>
+      <p>You misunderstood what the question was asking. <strong>Try this:</strong> reread it and identify the actual task.</p>
+    </div>
+    <div class="card">
+      <h2>Strategy Error</h2>
+      <p>You understood it, but the approach was inefficient. <strong>Try this:</strong> ask, "is there an easier way?"</p>
+    </div>
+    <div class="card">
+      <h2>Remember</h2>
+      <p>Errors can overlap. Pick whichever category best explains what got in your way. Different problems need different responses, not just more practice.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

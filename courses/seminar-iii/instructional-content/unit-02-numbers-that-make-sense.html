@@ -1,0 +1,198 @@
+<!-- Student-facing instructional document for Seminar III Unit 02 (Numbers & Operations),
+     "Numbers That Make Sense." Rebuilt 2026-08-26 per Jay's direction: instructional content
+     should be a real styled HTML page rendered to PDF (not a plain Google Doc), reusing the
+     same visual component language as the Teacher presentation decks (kicker labels,
+     problem-box/warn-box callouts, chip-row tags, note asides) so it reads as a designed
+     handout instead of plain paragraphs. Flowing document, not a slideshow -- print CSS
+     keeps each section from breaking awkwardly across a page. Content is unchanged from the
+     original Drive doc; only the presentation changed. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unit 02: Numbers That Make Sense</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d; --warn-ink: #7a4413;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  .page { max-width: 800px; margin: 0 auto; background: var(--paper); padding: 0 0 4rem; }
+
+  .banner { background: var(--accent-dark); color: white; padding: 3rem 3rem 2.2rem; }
+  .banner .kicker { font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: #cfe6ee; font-weight: bold; margin: 0 0 0.5rem; }
+  .banner h1 { font-size: 2.4rem; margin: 0 0 0.6rem; line-height: 1.15; }
+  .banner .sub { font-size: 1.15rem; color: #dff1f6; margin: 0; }
+
+  section.block { padding: 1.8rem 3rem; border-bottom: 1px solid var(--line); break-inside: avoid; page-break-inside: avoid; }
+  section.block:last-of-type { border-bottom: none; }
+
+  h2 { font-size: 1.5rem; color: var(--accent-dark); margin: 0 0 0.9rem; }
+  p { font-size: 1.02rem; line-height: 1.6; margin: 0 0 0.8rem; }
+  p:last-child { margin-bottom: 0; }
+
+  ul.facts { list-style: none; margin: 0.8rem 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  ul.facts li { background: var(--accent-bg); border-left: 4px solid var(--accent); padding: 0.6rem 1rem; font-size: 1rem; line-height: 1.5; border-radius: 0 6px 6px 0; }
+  ul.facts li strong { color: var(--accent-dark); }
+
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1rem 1.3rem; font-size: 1.05rem; line-height: 1.55; margin: 0.9rem 0; }
+  .problem-box strong { color: var(--accent-dark); }
+
+  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 1rem 1.3rem; font-size: 1.02rem; line-height: 1.55; margin: 0.9rem 0; color: var(--warn-ink); }
+  .warn-box .label { display: block; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; color: var(--warn-line); margin-bottom: 0.35rem; }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.92rem; font-weight: bold; }
+
+  ol.steps { margin: 0.8rem 0; padding-left: 1.4rem; font-size: 1.02rem; line-height: 1.6; }
+  ol.steps li { margin-bottom: 0.3rem; }
+  ol.steps b { color: var(--accent-dark); }
+
+  .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin: 0.9rem 0; }
+  .check-item { background: var(--accent-bg); border-radius: 8px; padding: 0.7rem 1rem; }
+  .check-item .term { font-weight: bold; color: var(--accent-dark); display: block; margin-bottom: 0.2rem; font-size: 0.95rem; }
+  .check-item .q { font-size: 0.95rem; color: var(--ink); }
+
+  .error-grid { display: flex; flex-direction: column; gap: 0.6rem; margin: 0.9rem 0; }
+  .error-item { border: 1px solid var(--line); border-radius: 8px; padding: 0.7rem 1rem; }
+  .error-item .term { font-weight: bold; color: var(--accent-dark); }
+
+  .reference { background: var(--accent-dark); color: white; padding: 1.8rem 3rem 2.4rem; }
+  .reference h2 { color: white; }
+  .reference .ref-row { display: grid; grid-template-columns: 1fr 2fr; gap: 0.3rem 1rem; font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.7rem; }
+  .reference .ref-row b { color: #a9d8e6; }
+
+  @media print {
+    body { background: white; }
+    .page { max-width: none; }
+    section.block { break-inside: avoid; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="banner">
+    <p class="kicker">Seminar III &middot; Unit 02 &middot; Numbers &amp; Operations</p>
+    <h1>Numbers That Make Sense</h1>
+    <p class="sub">This week's big question: <strong>Does my answer make sense?</strong></p>
+  </div>
+
+  <section class="block">
+    <h2>Numbers Tell a Story</h2>
+    <p>A positive or negative sign is not just decoration. It tells you something real about a situation.</p>
+    <ul class="facts">
+      <li><strong>Money:</strong> +$50 means gaining $50. &minus;$50 means owing or losing $50.</li>
+      <li><strong>Temperature:</strong> 8&deg;F is eight degrees above zero. &minus;8&deg;F is eight degrees below zero.</li>
+      <li><strong>Elevation:</strong> +100 ft could mean 100 feet above sea level. &minus;100 ft could mean 100 feet below sea level.</li>
+      <li><strong>Change:</strong> +12 could mean an increase of 12. &minus;12 could mean a decrease of 12.</li>
+    </ul>
+    <p>Before you calculate anything, ask what the sign actually means in the situation.</p>
+  </section>
+
+  <section class="block">
+    <h2>Which Number Is Greater?</h2>
+    <p>On a number line, numbers farther to the right are greater.</p>
+    <div class="problem-box">&minus;8 &lt; &minus;2 &lt; 0 &lt; 3 &lt; 10</div>
+    <p>Every positive number is greater than every negative number. Zero is neither positive nor negative.</p>
+    <div class="warn-box">
+      <span class="label">Common Mistake</span>
+      Assuming a negative number with a bigger digit is bigger. It's the opposite: &minus;12 is less than &minus;5, not greater. Think about debt: would you rather owe $5 or owe $12? A balance of &minus;$5 is better (greater) than a balance of &minus;$12.
+    </div>
+    <p><strong>Absolute value</strong> is the distance a number is from zero. |&minus;8| = 8 and |8| = 8, because both are 8 units from zero. Absolute value describes distance, so it is never negative. It does not mean "make the number positive." A temperature of &minus;4&deg;F does not become 4&deg;F just because its absolute value is 4. It means &minus;4&deg;F is four degrees away from zero.</p>
+  </section>
+
+  <section class="block">
+    <h2>Working With Positive and Negative Numbers</h2>
+    <div class="problem-box"><strong>Addition, same direction:</strong> &minus;5 + (&minus;3). Start at &minus;5, move 3 more in the negative direction. Result: &minus;8.</div>
+    <div class="problem-box"><strong>Addition, opposite directions:</strong> &minus;5 + 8. Start at &minus;5, move 8 in the positive direction. Result: 3.</div>
+    <div class="problem-box"><strong>Subtraction:</strong> 8 &minus; (&minus;3) = 11. Subtracting a negative removes a negative quantity, which increases the result. If a $3 loss is removed, your financial position improves by $3.</div>
+    <p><strong>Multiplication and division signs:</strong></p>
+    <div class="chip-row">
+      <span class="chip">Same signs &rarr; positive</span>
+      <span class="chip">Different signs &rarr; negative</span>
+    </div>
+    <p>This shortcut applies to multiplication and division only. It does not transfer to addition and subtraction.</p>
+  </section>
+
+  <section class="block">
+    <h2>Which Operation Do I Need?</h2>
+    <ul class="facts">
+      <li><strong>Addition:</strong> combined, total, gained, increased by.</li>
+      <li><strong>Subtraction:</strong> difference, decreased, remaining, change between values.</li>
+      <li><strong>Multiplication:</strong> equal groups, a repeated amount, rate times quantity.</li>
+      <li><strong>Division:</strong> split equally, amount per group, how many groups, or finding a rate from a total and a quantity.</li>
+    </ul>
+    <p>Keywords are clues, not guarantees. Always ask: what quantities do I have, what am I trying to find, and how are the quantities related?</p>
+  </section>
+
+  <section class="block">
+    <h2>What Happens First? (Order of Operations)</h2>
+    <ol class="steps">
+      <li><b>P:</b> Parentheses (or other grouping symbols)</li>
+      <li><b>E:</b> Exponents</li>
+      <li><b>M/D:</b> Multiplication and Division, left to right</li>
+      <li><b>A/S:</b> Addition and Subtraction, left to right</li>
+    </ol>
+    <div class="problem-box">6 + 3 &times; 4 &nbsp;&rarr;&nbsp; multiply first: 3 &times; 4 = 12 &nbsp;&rarr;&nbsp; then add: 6 + 12 = <strong>18</strong> (not 36)</div>
+    <div class="warn-box">
+      <span class="label">Common Misconception</span>
+      Multiplication does not always happen before division. They have equal priority, worked left to right. 20 &divide; 5 &times; 2 is worked as 20 &divide; 5 = 4, then 4 &times; 2 = 8. It is not 20 &divide; (5 &times; 2) = 2.
+    </div>
+    <p>The same is true for addition and subtraction: equal priority, left to right. 12 &minus; 5 + 3 is 7 + 3 = 10, not 12 minus (5+3).</p>
+  </section>
+
+  <section class="block">
+    <h2>Estimate Before You Trust</h2>
+    <p>Estimating gives you a rough target so you can catch mistakes.</p>
+    <div class="problem-box">49 &times; 21 &nbsp;&rarr;&nbsp; round to 50 &times; 20 &nbsp;&rarr;&nbsp; &asymp; 1,000</div>
+    <p>The exact answer should land near 1,000. If a calculator shows 10,290, that should immediately look wrong. Estimating is not random guessing. It is rounding to numbers you can work with easily, then reasoning from there.</p>
+  </section>
+
+  <section class="block">
+    <h2>Using a Calculator Well</h2>
+    <p>Calculators are useful for lengthy arithmetic, decimals, and checking your work. They cannot decide which operation a situation needs, what a question is actually asking, or whether your answer is reasonable.</p>
+    <div class="warn-box">
+      <span class="label">Watch Out</span>
+      A calculator only evaluates what you typed in. If you meant to calculate 52 &times; 18 but typed 52 &times; 81, the calculator will correctly answer the wrong question. Estimate first, and check what you entered.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Does My Answer Make Sense?</h2>
+    <p>Before trusting an answer, check it against five things:</p>
+    <div class="check-grid">
+      <div class="check-item"><span class="term">Operation</span><span class="q">Did I use the correct operation for this situation?</span></div>
+      <div class="check-item"><span class="term">Size</span><span class="q">Is the answer approximately the size I expected?</span></div>
+      <div class="check-item"><span class="term">Sign</span><span class="q">Should the answer be positive, negative, or zero?</span></div>
+      <div class="check-item"><span class="term">Unit</span><span class="q">Did I answer in the correct unit (dollars, degrees, items)?</span></div>
+      <div class="check-item" style="grid-column: span 2;"><span class="term">Context</span><span class="q">Does this answer actually make sense in the situation?</span></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Learn From the Error</h2>
+    <p>Not every wrong answer means the same thing. Use the five error types from Unit 01:</p>
+    <div class="error-grid">
+      <div class="error-item"><span class="term">Knowledge:</span> "I don't remember the rule for multiplying negative numbers." <em>Response: review the concept.</em></div>
+      <div class="error-item"><span class="term">Process:</span> using the wrong order of operations. <em>Response: review the steps and retry.</em></div>
+      <div class="error-item"><span class="term">Execution:</span> setting up 42 &times; 6 correctly but making an arithmetic mistake. <em>Response: check the calculation.</em></div>
+      <div class="error-item"><span class="term">Comprehension:</span> calculating the final amount when the question asked for the amount of change. <em>Response: reread the question.</em></div>
+      <div class="error-item"><span class="term">Strategy:</span> doing a long exact calculation when estimating would have been faster. <em>Response: consider a more efficient approach.</em></div>
+    </div>
+  </section>
+
+  <div class="reference">
+    <h2>Quick Reference</h2>
+    <div class="ref-row"><b>Number line</b><span>Negative numbers, then zero, then positive numbers, increasing left to right.</span></div>
+    <div class="ref-row"><b>Absolute value</b><span>Distance from zero.</span></div>
+    <div class="ref-row"><b>Multiply / divide signs</b><span>Same signs give a positive result, different signs give a negative result.</span></div>
+    <div class="ref-row"><b>Order of operations</b><span>Parentheses, Exponents, Multiplication/Division left to right, Addition/Subtraction left to right.</span></div>
+    <div class="ref-row"><b>Check your answer</b><span>Operation, Size, Sign, Unit, Context.</span></div>
+  </div>
+
+</div>
+</body>
+</html>

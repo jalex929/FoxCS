@@ -1,0 +1,1828 @@
+# Seminar III — Unit 7: Equations
+
+**Quarter:** 1
+**Week:** 8
+**Dates:** October 12–16, 2026
+**Quarter Theme:** Foundations
+**Academic Focus:** Equality, one-step and two-step equations, inverse operations, and checking solutions
+**Recurring Routine:** Learn → Practice → Check → Analyze → Retry → Apply
+
+---
+
+# 1. Week Purpose
+
+Unit 6 built the ability to represent and simplify expressions. Unit 7 introduces the equal sign as a formal claim: two expressions have the same value.
+
+An equation states a balance. Whatever is done to one side must be done to the other side to keep that balance true. This single idea, maintaining equality, is the foundation for solving every equation students will encounter for the rest of the course and beyond.
+
+The purpose of Unit 7 is not simply to teach students a set of steps to move numbers around. Students should understand:
+
+1. what an equation claims;
+2. why the same operation must be applied to both sides;
+3. how to use inverse operations to isolate a variable;
+4. how to solve equations requiring one step and equations requiring two steps;
+5. how to check whether a solution is correct;
+6. how to interpret an equation as a description of a real situation.
+
+The major question for the week is:
+
+> **What value makes both sides of this equation equal?**
+
+---
+
+# 2. Learning Targets
+
+By the end of Unit 7, students should be able to:
+
+1. explain what an equation states;
+2. explain why an operation applied to one side of an equation must also be applied to the other side;
+3. identify the inverse operation needed to isolate a variable;
+4. solve a one-step equation involving addition or subtraction;
+5. solve a one-step equation involving multiplication or division;
+6. solve a two-step equation;
+7. solve an equation that requires combining like terms or distributing before isolating the variable;
+8. check a solution by substituting it back into the original equation;
+9. write an equation to represent a real situation;
+10. interpret the solution to an equation in the context of a real situation.
+
+---
+
+# 3. Prerequisite Knowledge
+
+Students may have previously encountered all of this content.
+
+Do not assume they currently remember it.
+
+Likely prerequisite skills include:
+
+- substitution and evaluating expressions (Unit 6);
+- combining like terms (Unit 6);
+- the distributive property (Unit 6);
+- operations with signed numbers (Unit 2);
+- fraction and decimal operations (Unit 3).
+
+Unit 6 substitution is especially important, since checking an equation's solution uses the same skill.
+
+---
+
+# 4. Essential Questions
+
+Students should encounter these questions throughout the week.
+
+## Equality
+
+- What does it mean for two expressions to be equal?
+- Why must the same operation be applied to both sides?
+
+## Solving
+
+- What operation is currently being applied to the variable?
+- What is the inverse of that operation?
+- What should I do first if there is more than one step?
+
+## Checking
+
+- Does my solution make both sides of the equation equal?
+- Does my solution make sense in the context of the situation?
+
+## Application
+
+- What equation represents this situation?
+- What does the solution actually mean here?
+
+---
+
+# 5. Vocabulary
+
+Students should understand and use the following vocabulary.
+
+## Equation
+
+A statement that two expressions are equal, connected by an equal sign.
+
+Example:
+
+`x + 4 = 10`
+
+---
+
+## Solution
+
+The value of the variable that makes an equation true.
+
+Example:
+
+In `x + 4 = 10`, the solution is `x = 6`.
+
+---
+
+## Inverse Operation
+
+An operation that undoes another operation.
+
+Examples:
+
+Addition and subtraction are inverse operations.
+
+Multiplication and division are inverse operations.
+
+---
+
+## Isolate
+
+To get the variable alone on one side of the equation.
+
+---
+
+## Balance
+
+The idea that both sides of an equation must remain equal throughout the solving process.
+
+---
+
+## One-Step Equation
+
+An equation that requires a single inverse operation to solve.
+
+Example:
+
+`x + 9 = 15`
+
+---
+
+## Two-Step Equation
+
+An equation that requires two inverse operations to solve.
+
+Example:
+
+`3x + 5 = 20`
+
+---
+
+## Check
+
+The process of substituting a solution back into the original equation to confirm it is correct.
+
+---
+
+# 6. What Is an Equation?
+
+An equation is a statement that two expressions represent the same value.
+
+Example:
+
+`x + 4 = 10`
+
+This states that whatever `x` is, adding `4` to it produces `10`.
+
+An equation is different from an expression, which was the focus of Unit 6. An expression has no equal sign and represents a value that can change depending on the variable. An equation makes a specific claim about that value.
+
+---
+
+# 7. The Balance Idea
+
+An equation can be pictured as a balanced scale. Both sides must weigh the same.
+
+If a quantity is added, subtracted, multiplied, or divided on one side, the exact same operation must be applied to the other side, or the balance is broken.
+
+Example:
+
+`x + 4 = 10`
+
+Subtract `4` from both sides.
+
+`x + 4 - 4 = 10 - 4`
+
+`x = 6`
+
+The balance stayed true because the same operation was applied to both sides.
+
+---
+
+# 8. Inverse Operations
+
+Solving an equation depends on undoing whatever operation is currently applied to the variable.
+
+| Operation Applied | Inverse Operation |
+|---|---|
+| Addition | Subtraction |
+| Subtraction | Addition |
+| Multiplication | Division |
+| Division | Multiplication |
+
+Students should ask:
+
+> What is currently being done to the variable, and what undoes it?
+
+---
+
+# 9. Solving a One-Step Equation — Addition
+
+Example:
+
+`x + 7 = 12`
+
+`7` is being added to `x`.
+
+The inverse operation is subtraction.
+
+Subtract `7` from both sides.
+
+`x + 7 - 7 = 12 - 7`
+
+`x = 5`
+
+---
+
+# 10. Solving a One-Step Equation — Subtraction
+
+Example:
+
+`x - 9 = 4`
+
+`9` is being subtracted from `x`.
+
+The inverse operation is addition.
+
+Add `9` to both sides.
+
+`x - 9 + 9 = 4 + 9`
+
+`x = 13`
+
+---
+
+# 11. Solving a One-Step Equation — Multiplication
+
+Example:
+
+`5x = 35`
+
+`x` is being multiplied by `5`.
+
+The inverse operation is division.
+
+Divide both sides by `5`.
+
+`5x ÷ 5 = 35 ÷ 5`
+
+`x = 7`
+
+---
+
+# 12. Solving a One-Step Equation — Division
+
+Example:
+
+`x/4 = 9`
+
+`x` is being divided by `4`.
+
+The inverse operation is multiplication.
+
+Multiply both sides by `4`.
+
+`(x/4) × 4 = 9 × 4`
+
+`x = 36`
+
+---
+
+# 13. Solving a Two-Step Equation
+
+A two-step equation requires undoing two operations, generally in reverse order from how they were applied.
+
+Example:
+
+`3x + 5 = 20`
+
+`x` is first multiplied by `3`, then `5` is added.
+
+Undo the addition first.
+
+Subtract `5` from both sides.
+
+`3x = 15`
+
+Undo the multiplication next.
+
+Divide both sides by `3`.
+
+`x = 5`
+
+---
+
+# 14. Why the Order Matters
+
+Following order of operations in reverse keeps each step simple.
+
+If a student instead divided by `3` before subtracting `5`, every term, including the constant, would need to be divided, creating unnecessary fractions and increasing the chance of error.
+
+Example of the harder path:
+
+`3x + 5 = 20`
+
+Divide everything by `3` first (not recommended):
+
+`x + 5/3 = 20/3`
+
+This is mathematically valid but far more error-prone. Undoing addition or subtraction before undoing multiplication or division is the more reliable order.
+
+---
+
+# 15. Solving a Two-Step Equation With Subtraction
+
+Example:
+
+`4x - 6 = 18`
+
+Add `6` to both sides.
+
+`4x = 24`
+
+Divide both sides by `4`.
+
+`x = 6`
+
+---
+
+# 16. Solving a Two-Step Equation With a Negative Coefficient
+
+Example:
+
+`-2x + 9 = 1`
+
+Subtract `9` from both sides.
+
+`-2x = -8`
+
+Divide both sides by `-2`.
+
+`x = 4`
+
+Students should remember Unit 2's sign rules: a negative divided by a negative is positive.
+
+---
+
+# 17. Equations Requiring Combining Like Terms First
+
+Some equations have like terms on the same side that must be combined before solving.
+
+Example:
+
+`2x + 3x - 4 = 16`
+
+Combine like terms.
+
+`5x - 4 = 16`
+
+Add `4` to both sides.
+
+`5x = 20`
+
+Divide both sides by `5`.
+
+`x = 4`
+
+---
+
+# 18. Equations Requiring the Distributive Property First
+
+Some equations require distributing before the variable can be isolated.
+
+Example:
+
+`3(x + 2) = 21`
+
+Distribute.
+
+`3x + 6 = 21`
+
+Subtract `6` from both sides.
+
+`3x = 15`
+
+Divide both sides by `3`.
+
+`x = 5`
+
+---
+
+# 19. Combined Example — Distribute, Combine, Solve
+
+Example:
+
+`2(x + 4) + x = 20`
+
+Distribute.
+
+`2x + 8 + x = 20`
+
+Combine like terms.
+
+`3x + 8 = 20`
+
+Subtract `8` from both sides.
+
+`3x = 12`
+
+Divide both sides by `3`.
+
+`x = 4`
+
+---
+
+# 20. Checking a Solution
+
+After solving, substitute the solution back into the **original** equation, not a simplified version, to confirm it is correct.
+
+Example:
+
+`3x + 5 = 20`, solved as `x = 5`
+
+Substitute:
+
+`3(5) + 5 = 20`
+
+`15 + 5 = 20`
+
+`20 = 20`
+
+The solution checks.
+
+---
+
+# 21. Why Checking Matters
+
+A solving mistake and a checking mistake are different kinds of errors, and checking catches many solving mistakes before they become a final wrong answer.
+
+Example:
+
+A student solves `4x - 3 = 13` and gets `x = 4`.
+
+Check:
+
+`4(4) - 3 = 13`
+
+`16 - 3 = 13`
+
+`13 = 13`
+
+The solution checks and the student can move on with confidence.
+
+If the check had failed, the student would know to review their steps rather than assume the answer is correct.
+
+---
+
+# 22. Equations in Context
+
+Word problems often require translating a situation into an equation before solving.
+
+Example:
+
+A rental company charges a `$20` flat fee plus `$6` per hour. A customer's total bill was `$56`. How many hours did the customer rent the equipment?
+
+Write the equation.
+
+`6h + 20 = 56`
+
+Solve.
+
+`6h = 36`
+
+`h = 6`
+
+**Answer: 6 hours**
+
+---
+
+# 23. Interpreting a Solution in Context
+
+The number that solves an equation is not automatically the final answer to a word problem. Students must connect the solution back to what it represents.
+
+Using the rental example, `h = 6` means the customer rented the equipment for `6` hours, not that the answer is simply "6."
+
+Students should state their answer with the correct unit and context.
+
+---
+
+# 24. Reasonableness With Equations
+
+Students should continue applying the Unit 2 reasonableness habit.
+
+## Size
+
+Is the solution a realistic size for the situation?
+
+## Sign
+
+Should the solution be positive, negative, or zero?
+
+## Check
+
+Does substituting the solution back into the original equation make both sides equal?
+
+## Context
+
+Does the solution make sense given the situation described?
+
+---
+
+# 25. Reasonableness Example
+
+A student solves `6h + 20 = 56` and gets `h = -6`.
+
+A negative number of hours does not make sense in this context. The negative result signals a likely sign error while subtracting or dividing, and the work should be reviewed.
+
+---
+
+# 26. Calculator Use
+
+Calculators are useful for:
+
+- performing the arithmetic in each solving step;
+- checking a solution by substitution.
+
+Calculators cannot determine:
+
+- which inverse operation to use;
+- the correct order of steps;
+- whether an equation was translated correctly from a word problem;
+- whether a solution is reasonable in context.
+
+---
+
+# 27. Common Misconception 1 — Operations Only Need to Change One Side
+
+Incorrect idea:
+
+> If `4` is subtracted from the left side, the right side stays the same.
+
+Correct:
+
+Whatever operation is applied to one side of an equation must be applied to the other side as well, or the equation is no longer balanced.
+
+---
+
+# 28. Common Misconception 2 — Any Operation Can Be Used to Isolate the Variable
+
+Incorrect idea:
+
+> To solve `x + 7 = 12`, multiply both sides by something.
+
+Correct:
+
+The operation used should be the inverse of whatever is currently applied to the variable. Since `7` is being added, subtraction, not multiplication, undoes it.
+
+---
+
+# 29. Common Misconception 3 — Two-Step Equations Should Be Solved in the Original Order
+
+Incorrect idea:
+
+> In `3x + 5 = 20`, divide by `3` first because multiplication happened first when the equation was built.
+
+Correct:
+
+Undo operations in reverse order: undo addition or subtraction first, then undo multiplication or division.
+
+---
+
+# 30. Common Misconception 4 — Negative Coefficients Change the Solving Process
+
+Incorrect idea:
+
+> Equations with a negative coefficient, such as `-2x + 9 = 1`, require a different method.
+
+Correct:
+
+The same steps apply. Dividing by a negative number simply requires the sign rules from Unit 2.
+
+---
+
+# 31. Common Misconception 5 — Checking Means Re-Solving
+
+Incorrect idea:
+
+> Checking a solution means solving the equation again from scratch.
+
+Correct:
+
+Checking means substituting the solution into the original equation and confirming both sides are equal. This is a different process from solving.
+
+---
+
+# 32. Common Misconception 6 — The Solution Is Always the Final Answer
+
+Incorrect idea:
+
+> Once `x` is found, the word problem is finished.
+
+Correct:
+
+The value of `x` must be interpreted in the context of the situation, including its unit and meaning, before it becomes the final answer to a word problem.
+
+---
+
+# 33. Common Misconception 7 — Distributing Is Optional
+
+Incorrect idea:
+
+> `3(x + 2) = 21` can be solved by dividing both sides by `3` and subtracting `2` without distributing first.
+
+Correct:
+
+This particular equation could be solved correctly using that alternate method, but only if every term inside and outside the parentheses is divided consistently. Distributing first is more reliable and less likely to cause errors, especially when the equation contains additional terms outside the grouping symbol.
+
+---
+
+# 34. Common Misconception 8 — Combining Like Terms Changes the Equation's Meaning
+
+Incorrect idea:
+
+> Combining `2x + 3x` into `5x` changes what the equation represents.
+
+Correct:
+
+Combining like terms simplifies the equation without changing its meaning or its solution.
+
+---
+
+# 35. Common Misconception 9 — A Solution Must Be a Whole Number
+
+Incorrect idea:
+
+> If solving an equation produces a fraction or decimal, a mistake was made.
+
+Correct:
+
+Many real equations have fraction or decimal solutions. The solution should be evaluated for reasonableness in context, not rejected simply because it is not a whole number.
+
+---
+
+# 36. Common Misconception 10 — Calculator Trust
+
+Incorrect idea:
+
+> A calculator result during equation solving is automatically correct.
+
+Correct:
+
+A calculator only evaluates what was entered. It cannot confirm the correct inverse operation was chosen or that the equation was translated correctly from a word problem.
+
+---
+
+# 37. Error Analysis Connections
+
+Unit 7 should deliberately revisit all five Unit 1 error categories.
+
+## Knowledge Error
+
+Example:
+
+> "I don't remember what the inverse of multiplication is."
+
+### Response
+
+Review the inverse operations table.
+
+---
+
+## Process Error
+
+Example:
+
+A student subtracts `5` from only one side of `3x + 5 = 20`.
+
+### Response
+
+Review the balance idea and retry, applying the operation to both sides.
+
+---
+
+## Execution Error
+
+Example:
+
+A student correctly sets up `3x = 15` but divides incorrectly and gets `x = 6`.
+
+### Response
+
+Check the calculation and verify by substitution.
+
+---
+
+## Comprehension Error
+
+Example:
+
+A student solves `6h + 20 = 56` correctly but reports the answer as "36" instead of "6 hours," misunderstanding what the solution represents.
+
+### Response
+
+Reread the question and identify exactly what the solution should describe.
+
+---
+
+## Strategy Error
+
+Example:
+
+A student attempts to guess and check values for `x` in a two-step equation instead of using inverse operations, spending significantly more time than necessary.
+
+### Response
+
+Consider whether using inverse operations directly would be more efficient.
+
+---
+
+# 38. Instructional Sequence
+
+Unit 7 is a full five-day instructional week.
+
+---
+
+# 39. Day 1 — What Is an Equation? One-Step Equations
+
+## Opening Retrieval
+
+Briefly retrieve Unit 6:
+
+1. What is the difference between an expression and an equation?
+2. How do you substitute a value into an expression?
+
+## Teach
+
+Introduce or review:
+
+- what an equation states;
+- the balance idea;
+- inverse operations;
+- solving one-step equations (all four operations).
+
+## Teacher Modeling
+
+Model solving one example of each type: addition, subtraction, multiplication, division.
+
+## Guided Practice
+
+Approximately **8 questions**.
+
+## Independent Practice
+
+Approximately **10 questions**.
+
+## Exit Ticket
+
+3 questions:
+
+1. solve a one-step addition/subtraction equation;
+2. solve a one-step multiplication/division equation;
+3. identify the inverse operation needed for a given equation.
+
+---
+
+# 40. Day 2 — Two-Step Equations
+
+## Retrieval
+
+2–3 questions from Day 1.
+
+## Teach
+
+Introduce or review:
+
+- solving two-step equations;
+- why order matters (undo addition/subtraction before multiplication/division);
+- two-step equations with a negative coefficient.
+
+## Guided Practice
+
+Approximately **8 questions**.
+
+## Independent Practice
+
+Approximately **10–12 questions**.
+
+## Error Analysis
+
+Students inspect at least 2 incorrect two-step solutions.
+
+For each:
+
+1. What did the student do?
+2. Where did the work go wrong?
+3. Which Unit 1 error category best fits?
+4. What should the student do next?
+5. What is the correct solution?
+
+## Exit Ticket
+
+3 questions:
+
+- solve a two-step equation;
+- solve a two-step equation with a negative coefficient;
+- identify the correct first step for a given two-step equation.
+
+---
+
+# 41. Day 3 — Combining Like Terms and Distributing Before Solving
+
+## Retrieval
+
+3 previous questions.
+
+## Teach
+
+Introduce or reinforce:
+
+- equations requiring combining like terms first;
+- equations requiring the distributive property first;
+- combined distribute-and-combine equations.
+
+## Guided Practice
+
+Approximately **8 questions**.
+
+## Independent Practice
+
+Approximately **10 questions**.
+
+## Exit Ticket
+
+3 questions:
+
+- solve an equation requiring combining like terms;
+- solve an equation requiring the distributive property;
+- solve a combined distribute-and-combine equation.
+
+---
+
+# 42. Day 4 — Checking Solutions and Equations in Context
+
+## Retrieval
+
+3–4 mixed questions.
+
+## Teach
+
+Introduce or reinforce:
+
+- checking a solution by substitution;
+- translating a word problem into an equation;
+- interpreting a solution in context.
+
+## Activity — Build, Solve, Interpret
+
+Students receive short scenarios (rental fees, wages with a bonus, ticket pricing), write an equation, solve it, and state what the solution means in the situation.
+
+## Guided Practice
+
+Approximately **6 questions**.
+
+## Independent Practice
+
+Approximately **8 questions**.
+
+## Exit Ticket
+
+Students write an equation from a scenario, solve it, and state the answer with correct units and context.
+
+---
+
+# 43. Day 5 — Apply, Analyze, Retry
+
+## Retrieval
+
+4–5 mixed questions covering one-step, two-step, and context-based equations.
+
+## Mixed Practice
+
+Students complete questions involving:
+
+- one-step and two-step equations;
+- equations requiring combining like terms or distribution;
+- checking solutions;
+- contextual applications.
+
+## Error Analysis
+
+Students classify missed questions where sufficient evidence exists.
+
+## Retry
+
+Students retry selected questions after:
+
+- reviewing an example;
+- receiving feedback;
+- identifying the error;
+- selecting a next step.
+
+## Unit 7 Check
+
+Complete the Unit 7 understanding/mastery check.
+
+## Reflection
+
+Students identify:
+
+- one strength;
+- one skill still developing;
+- one error they made;
+- what they did after recognizing it.
+
+---
+
+# 44. Student Instructional PDF
+
+## Proposed Title
+
+**Seminar III: Keeping Both Sides Equal**
+
+The document should function as both instruction and a later reference.
+
+---
+
+# 45. PDF Section 1 — What Is an Equation?
+
+Introduce equality and the balance idea.
+
+---
+
+# 46. PDF Section 2 — Inverse Operations
+
+Provide the inverse operations table.
+
+---
+
+# 47. PDF Section 3 — Solving One-Step Equations
+
+Include one worked example for each of the four operations.
+
+---
+
+# 48. PDF Section 4 — Solving Two-Step Equations
+
+Explain the reverse-order strategy.
+
+Include a worked example.
+
+---
+
+# 49. PDF Section 5 — Combining Like Terms and Distributing First
+
+Include one worked example of each.
+
+---
+
+# 50. PDF Section 6 — Checking Your Solution
+
+Teach substitution as a checking tool.
+
+---
+
+# 51. PDF Section 7 — Equations in Real Life
+
+Show building, solving, and interpreting an equation from a scenario.
+
+---
+
+# 52. PDF Section 8 — Does My Answer Make Sense?
+
+Provide the Unit 7 checklist.
+
+## Check:
+
+**Size → Sign → Substitution Check → Context**
+
+---
+
+# 53. PDF Section 9 — Error Detective
+
+Provide 3–5 short error-analysis examples.
+
+Connect them to:
+
+- Knowledge;
+- Process;
+- Execution;
+- Comprehension;
+- Strategy.
+
+---
+
+# 54. PDF Section 10 — Quick Reference
+
+The final reference page should include:
+
+## Equation
+
+**A statement that two expressions are equal**
+
+## Inverse Operations
+
+**Addition ↔ Subtraction**
+
+**Multiplication ↔ Division**
+
+## Two-Step Order
+
+**Undo addition/subtraction first, then multiplication/division**
+
+## Check Your Solution
+
+**Substitute back into the original equation**
+
+## Check Your Answer
+
+**Size → Sign → Substitution Check → Context**
+
+---
+
+# 55. Question Design Philosophy
+
+Questions should not consist entirely of direct calculations.
+
+Unit 7 questions should measure four increasingly complex forms of understanding.
+
+---
+
+# 56. Level 1 — Recognize
+
+Can the student recognize the concept?
+
+Examples:
+
+- identify the inverse operation needed;
+- identify whether an equation requires one or two steps;
+- identify the correct first step in a multi-step equation.
+
+---
+
+# 57. Level 2 — Execute
+
+Can the student perform the skill?
+
+Examples:
+
+- solve a one-step equation;
+- solve a two-step equation;
+- solve an equation requiring combining like terms or distribution.
+
+---
+
+# 58. Level 3 — Apply
+
+Can the student recognize and use the skill in context?
+
+Examples:
+
+- translate a word problem into an equation;
+- solve an equation representing a real situation;
+- interpret a solution in context.
+
+---
+
+# 59. Level 4 — Reason
+
+Can the student evaluate or explain a result?
+
+Examples:
+
+- determine whether a solution is reasonable;
+- identify why a solving step was incorrect;
+- explain why a solution does or does not check;
+- choose an efficient solving order.
+
+---
+
+# 60. Unit 7 Question Blueprint
+
+Before writing the final question bank, create questions according to this blueprint.
+
+| Skill | Recognize | Execute | Apply | Reason | Total |
+|---|---:|---:|---:|---:|---:|
+| Inverse operations / equation meaning | 3 | 1 | 1 | 1 | 6 |
+| One-step equations | 1 | 7 | 2 | 1 | 11 |
+| Two-step equations | 1 | 8 | 3 | 2 | 14 |
+| Combining like terms / distributing first | 1 | 6 | 3 | 2 | 12 |
+| Checking solutions | 2 | 3 | 2 | 3 | 10 |
+| Equations in context | 1 | 2 | 6 | 3 | 12 |
+| Reasonableness | 1 | 1 | 3 | 5 | 10 |
+
+**Target reusable bank:** approximately 85 questions.
+
+These questions do **not** all need to be assigned during Unit 7.
+
+The bank supports:
+
+- guided instruction;
+- independent practice;
+- retrieval;
+- differentiation;
+- exit tickets;
+- assessment;
+- reassessment;
+- later spiral review.
+
+---
+
+# 61. Assigned Question Volume
+
+Students should not complete every bank question during the week.
+
+Recommended student-facing volume:
+
+## Guided Practice
+
+Approximately **24 questions**
+
+Many are completed together.
+
+## Independent Practice
+
+Approximately **28 questions**
+
+Distributed throughout the week.
+
+## Retrieval
+
+Approximately **10 questions**
+
+Distributed across later days.
+
+## Exit Tickets
+
+Approximately **12 questions**
+
+## Week Check
+
+Approximately **15 questions**
+
+Some questions can overlap with instructional activities.
+
+Target independent student workload should remain manageable.
+
+---
+
+# 62. Unit 7 Check Blueprint
+
+Recommended length:
+
+**15 questions**
+
+| Skill | Questions |
+|---|---:|
+| Inverse operations / equation meaning | 1 |
+| One-step equations | 2 |
+| Two-step equations | 3 |
+| Combining like terms / distributing first | 2 |
+| Checking solutions | 2 |
+| Equations in context | 3 |
+| Reasonableness / error analysis | 2 |
+
+---
+
+# 63. Assessment Difficulty
+
+Approximately:
+
+## 5 Level 1–2 Questions
+
+Direct recognition or execution.
+
+## 6 Level 2–3 Questions
+
+Execution and application.
+
+## 4 Level 3–4 Questions
+
+Application and reasoning.
+
+The assessment should allow students to demonstrate foundational competence without making every question ACT-style.
+
+---
+
+# 64. Sample Assessment Question 1 — Inverse Operation
+
+Which operation should be used to solve `x - 8 = 15`?
+
+A. Add `8` to both sides
+B. Subtract `8` from both sides
+C. Multiply both sides by `8`
+D. Divide both sides by `8`
+
+**Answer: A**
+
+---
+
+# 65. Sample Assessment Question 2 — One-Step Equation
+
+Solve:
+
+`x + 9 = 22`
+
+A. `x = 13`
+B. `x = 31`
+C. `x = -13`
+D. `x = 198`
+
+**Answer: A**
+
+---
+
+# 66. Sample Assessment Question 3 — One-Step Equation (Multiplication)
+
+Solve:
+
+`7x = 56`
+
+A. `x = 7`
+B. `x = 8`
+C. `x = 49`
+D. `x = 63`
+
+**Answer: B**
+
+---
+
+# 67. Sample Assessment Question 4 — Two-Step Equation
+
+Solve:
+
+`4x + 3 = 27`
+
+A. `x = 6`
+B. `x = 7.5`
+C. `x = 30`
+D. `x = 108`
+
+**Answer: A**
+
+---
+
+# 68. Sample Assessment Question 5 — Two-Step Equation With Negative Coefficient
+
+Solve:
+
+`-3x + 4 = -8`
+
+A. `x = -4`
+B. `x = 4`
+C. `x = -1.33`
+D. `x = 1.33`
+
+**Answer: B**
+
+---
+
+# 69. Sample Assessment Question 6 — Combining Like Terms First
+
+Solve:
+
+`2x + 5x - 4 = 24`
+
+A. `x = 4`
+B. `x = 5.6`
+C. `x = 6`
+D. `x = 28`
+
+**Answer: A**
+
+---
+
+# 70. Sample Assessment Question 7 — Distributive Property First
+
+Solve:
+
+`5(x - 2) = 15`
+
+A. `x = 1`
+B. `x = 3`
+C. `x = 5`
+D. `x = 25`
+
+**Answer: C**
+
+**Likely Misconception:** Not distributing before combining or solving
+
+---
+
+# 71. Sample Assessment Question 8 — Checking a Solution
+
+A student solves `2x + 7 = 19` and gets `x = 6`.
+
+Which calculation correctly checks this solution?
+
+A. `2(6) + 7 = 19`
+B. `2 + 6(7) = 19`
+C. `6 + 7 = 19`
+D. `2(6) - 7 = 19`
+
+**Answer: A**
+
+---
+
+# 72. Sample Assessment Question 9 — Equation From Context
+
+A parking garage charges `$5` plus `$2` per hour. A customer's total bill was `$17`.
+
+Which equation represents this situation, where `h` is the number of hours?
+
+A. `5h + 2 = 17`
+B. `2h + 5 = 17`
+C. `5 + 2 = 17h`
+D. `2h - 5 = 17`
+
+**Answer: B**
+
+---
+
+# 73. Sample Assessment Question 10 — Solve and Interpret
+
+Using the equation `2h + 5 = 17` from the parking garage scenario, how many hours did the customer park?
+
+A. `2 hours`
+B. `5 hours`
+C. `6 hours`
+D. `11 hours`
+
+**Answer: C**
+
+---
+
+# 74. Sample Assessment Question 11 — Application (Wages)
+
+A worker's pay is represented by `15h - 20 = 100`, where `h` is hours worked and `20` is a fixed deduction.
+
+How many hours did the worker work?
+
+A. `5.33`
+B. `6.67`
+C. `8`
+D. `120`
+
+**Answer: C**
+
+---
+
+# 75. Sample Assessment Question 12 — Application (Ticket Sales)
+
+A school club sells tickets for `$8` each and has already collected `$40` from sponsorships. Their goal is `$200`.
+
+Which equation finds the number of tickets, `t`, needed to reach the goal, and what is the solution?
+
+A. `8t + 40 = 200`; `t = 20`
+B. `8t - 40 = 200`; `t = 30`
+C. `40t + 8 = 200`; `t = 4.8`
+D. `8t = 200`; `t = 25`
+
+**Answer: A**
+
+---
+
+# 76. Sample Assessment Question 13 — Reasonableness
+
+A student solves an equation representing a number of hours worked and gets `h = -5`.
+
+Which statement is BEST?
+
+A. The answer is reasonable because equations can have negative solutions.
+B. The answer is unreasonable in this context because a number of hours cannot be negative, so the work should be reviewed.
+C. The answer is unreasonable because all equation solutions must be whole numbers.
+D. There is no way to evaluate the answer without a calculator.
+
+**Answer: B**
+
+---
+
+# 77. Sample Assessment Question 14 — Error Analysis
+
+A student solves `3x + 5 = 20` as follows:
+
+`3x = 20 + 5`
+
+`3x = 25`
+
+`x = 8.33`
+
+What most likely happened?
+
+A. Knowledge error
+B. Process error
+C. Comprehension error
+D. Strategy error
+
+**Answer: B**
+
+The student understood that the constant needed to move but performed the inverse operation incorrectly, adding instead of subtracting.
+
+---
+
+# 78. Sample Assessment Question 15 — Comprehension
+
+A student correctly solves `6h + 20 = 56` and finds `h = 6`. The question asks how many hours the customer rented equipment.
+
+The student writes "6" as their final answer without a unit.
+
+Which error type BEST describes this?
+
+A. Knowledge error
+B. Execution error
+C. Comprehension error
+D. Strategy error
+
+**Answer: C**
+
+The student solved correctly but did not fully interpret what the solution represents in context.
+
+---
+
+# 79. ACT-Style Transfer Questions
+
+The reusable bank should include approximately **8–10 ACT-style transfer questions**.
+
+These should not dominate instruction.
+
+ACT-style questions should:
+
+- place familiar one-step or two-step equations in less familiar presentations;
+- include plausible distractors matching common sign or order errors;
+- occasionally require translating a word problem into an equation before solving;
+- require students to identify relevant information;
+- occasionally include unnecessary information.
+
+---
+
+# 80. ACT-Style Transfer Example
+
+A gym charges a one-time `$25` enrollment fee plus a monthly membership fee. After `4` months, a member has paid a total of `$145`.
+
+Which equation can be used to find the monthly fee, `m`, and what is its value?
+
+A. `4m + 25 = 145`; `m = 30`
+B. `25m + 4 = 145`; `m = 5.64`
+C. `4m - 25 = 145`; `m = 42.5`
+D. `m + 25 = 145`; `m = 120`
+
+**Answer: A**
+
+---
+
+# 81. ACT-Style Strategy
+
+When students encounter an unfamiliar-looking equation question, return to the Unit 1 routine.
+
+## STOP
+
+What information does the problem give me?
+
+## FIND
+
+What am I trying to determine, and does it need an equation?
+
+## CONNECT
+
+What operations connect the known quantities to the unknown?
+
+## TRY
+
+Write the equation, then solve using inverse operations in the correct order.
+
+## CHECK
+
+Substitute the solution back and confirm the answer fits the situation.
+
+---
+
+# 82. Real-Life Application Contexts
+
+Prioritize contexts students can plausibly encounter.
+
+Use:
+
+- hourly wages with a flat fee or deduction;
+- rental and service fees;
+- ticket or fundraising goals;
+- gym or subscription membership fees;
+- simple budgeting scenarios;
+- savings goals with a fixed contribution.
+
+Avoid forcing artificial "real-world" contexts onto questions where a direct mathematical problem would be clearer.
+
+---
+
+# 83. Retrieval From Unit 6
+
+High-priority Unit 6 retrieval skills:
+
+1. combining like terms;
+2. the distributive property;
+3. substitution and evaluating expressions, which becomes the checking step this week.
+
+Approximately **2–3 Unit 6 questions** should appear in Unit 7 retrieval sets, since these skills are used directly while solving equations.
+
+---
+
+# 84. Retrieval From Units 2–5
+
+Continue lightly retrieving:
+
+1. operations with signed numbers;
+2. fraction and decimal operations;
+3. unit rates, which often appear as coefficients in equation-based word problems.
+
+Approximately **2 questions** from Units 2–5 should appear across Unit 7 retrieval sets.
+
+---
+
+# 85. Differentiation — Students Requiring Support
+
+Provide:
+
+- an inverse operations reference card;
+- step-by-step solving templates with labeled boxes;
+- color-coded examples showing what happens to each side of the equation;
+- worked examples for two-step and combined equations;
+- smaller numerical values;
+- partially completed examples;
+- opportunities to explain reasoning verbally.
+
+Support should help students access the same concepts rather than permanently lower expectations.
+
+---
+
+# 86. Differentiation — Students Ready for Extension
+
+Provide:
+
+- equations with variables on both sides (preview, not required mastery);
+- equations requiring both distributing and combining like terms;
+- multi-part word problems requiring an equation to be built from scratch;
+- error analysis;
+- ACT-style transfer;
+- questions requiring explanation of why a solving order was chosen.
+
+Extension should emphasize reasoning rather than simply using larger numbers.
+
+---
+
+# 87. Student Reflection
+
+Students answer:
+
+1. Which Unit 7 skill feels strongest?
+2. Which skill still needs practice?
+3. Describe one mistake you made this week.
+4. Which error category best describes it?
+5. What did you do after recognizing the error?
+6. Give one example of how you translated a real situation into an equation.
+7. What is one thing you should check before trusting a solved equation?
+8. How confident are you with solving equations now?
+
+Use a 1–5 confidence scale.
+
+---
+
+# 88. Data to Collect
+
+Where technically feasible, Unit 7 results should track:
+
+- overall accuracy;
+- accuracy by skill;
+- accuracy by question level;
+- direct vs. applied performance;
+- reasonableness performance;
+- error-analysis performance;
+- retrieval performance on Units 2–6 content;
+- student confidence;
+- retry performance.
+
+---
+
+# 89. Useful Comparison — Solving vs. Checking
+
+Ask:
+
+> Can the student both solve an equation and independently verify their own solution?
+
+A student who can solve but never checks may not catch their own process or execution errors before submitting an answer.
+
+---
+
+# 90. Useful Comparison — Procedure vs. Meaning
+
+Ask:
+
+> Can the student explain what an equation represents in a real situation, not just carry out the solving steps?
+
+A student who can solve `6h + 20 = 56` but cannot explain that `h` represents hours has a procedural skill without full conceptual understanding.
+
+---
+
+# 91. Useful Comparison — First Attempt vs. Retry
+
+Ask:
+
+> Does feedback result in successful correction on a similar equation?
+
+If a student misses a two-step equation, receives targeted feedback, and then succeeds on a parallel problem, that provides different information than repeated incorrect attempts.
+
+---
+
+# 92. Materials to Build
+
+## Student Materials
+
+- [ ] Unit 7 HTML instructional document
+- [ ] Unit 7 PDF
+- [ ] guided practice
+- [ ] independent practice
+- [ ] inverse operations reference
+- [ ] step-by-step solving template
+- [ ] build-solve-interpret activity
+- [ ] error-analysis activity
+- [ ] Unit 7 check
+- [ ] Unit 7 reflection
+
+## Teacher Materials
+
+- [ ] Unit 7 presentation
+- [ ] teacher worked-example notes
+- [ ] practice answer keys
+- [ ] Unit 7 check answer key
+- [ ] question metadata
+- [ ] question bank
+- [ ] retrieval set for future weeks
+
+---
+
+# 93. Question Assets to Build
+
+Target reusable bank:
+
+**Approximately 85 questions**
+
+Approximate composition:
+
+- 20 direct one-step/two-step equations;
+- 20 combining-like-terms/distributive equations;
+- 15 applied/context questions;
+- 8–10 ACT-style transfer questions;
+- 10 error-analysis and checking questions;
+- 10 retrieval/retry variants;
+- remaining items for alternate forms and differentiation.
+
+Every question does not need to be unique in mathematical structure.
+
+Parallel versions are desirable.
+
+Example:
+
+`3x + 5 = 20`
+
+and
+
+`4x + 3 = 27`
+
+can measure the same underlying skill.
+
+---
+
+# 94. Question Metadata
+
+Each bank question should eventually include:
+
+```text
+Question ID
+Quarter
+Week
+Domain
+Skill
+Subskill
+Difficulty
+Question Type
+Context
+Calculator Appropriate
+Correct Answer
+Distractor Rationale
+Likely Misconception
+Likely Error Type
+ACT-Style
+Retrieval Eligible
+```
+
+For multiple-choice questions, distractors should be intentional whenever possible.
+
+They should correspond to plausible mistakes rather than random numbers.
+
+---
+
+# 95. Example Question Metadata
+
+```text
+Question ID: Q1-W8-TS-07
+Quarter: 1
+Week: 8
+Domain: Equations
+Skill: Two-Step Equations
+Subskill: Negative coefficient
+Difficulty: Level 2
+Question Type: Multiple Choice
+Context: Direct
+Calculator Appropriate: Yes
+Correct Answer: 4
+Distractor Rationale:
+  -4 = sign error while dividing by a negative coefficient
+Likely Misconception: Negative divided by negative produces a negative result
+Likely Error Type: Process
+ACT-Style: No
+Retrieval Eligible: Yes
+```
+
+This structure should make later question-bank generation and analysis easier.
+
+---
+
+# 96. Unit 7 Completion Criteria
+
+A student has successfully completed the week when they have:
+
+- completed the core instructional material;
+- solved one-step equations for all four operations;
+- solved two-step equations, including with negative coefficients;
+- solved equations requiring combining like terms or the distributive property;
+- checked a solution by substitution;
+- translated a word problem into an equation and interpreted the solution;
+- analyzed at least one incorrect response;
+- retried work after feedback;
+- completed the Unit 7 check;
+- completed the Unit 7 reflection.
+
+---
+
+# 97. Quarter-Long Skills Reinforced This Week
+
+Unit 7 should continue reinforcing the larger Seminar III academic habits.
+
+Students should practice:
+
+## Reading Before Solving
+
+Understand what an equation represents before choosing a solving strategy.
+
+## Selecting a Strategy
+
+Decide the correct order of inverse operations based on the equation's structure.
+
+## Showing Enough Work to Diagnose Errors
+
+Students should record each solving step, not just a final answer, so errors can be found.
+
+## Checking
+
+Substitute a solution back into the original equation before trusting it.
+
+## Learning From Errors
+
+Identify what happened and choose an appropriate response.
+
+## Retrying
+
+Use feedback to attempt the skill again.
+
+---
+
+# 98. Transition to Unit 8
+
+Units 2 through 7 built the full first-quarter academic skill sequence: number operations, fractions and decimals, percent, ratios and rates, expressions, and equations.
+
+Unit 8 does not introduce new academic content. Instead, it consolidates the quarter:
+
+# Quarter 1 Consolidation
+
+Students will retrieve and reflect on:
+
+- number operations;
+- fractions;
+- decimals;
+- percent;
+- ratios and rates;
+- variables and expressions;
+- equations.
+
+Students will identify:
+
+- their strongest skill;
+- a skill that is improving;
+- a priority skill for continued practice;
+- their most common error type across the quarter.
+
+The major Unit 8 question becomes:
+
+> **What have I learned about how I learn?**
+
+The academic cycle completes its first full pass:
+
+> **Learn → Practice → Check → Analyze → Retry → Apply**

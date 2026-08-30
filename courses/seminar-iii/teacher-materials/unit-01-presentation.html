@@ -1,0 +1,612 @@
+<!-- Instructor-only presentation deck for Seminar III Unit 01 (Academic Problem-Solving),
+     built from courses/seminar-iii/week-02-plan section 36 "Teacher Presentation" and its
+     "Recommended Slides / Sections" outline. Per that section: "should emphasize modeling
+     and discussion rather than duplicating the PDF" -- slides here are deliberately light
+     (a prompt, a question, a scenario), not full scripted paragraphs. Organized by the
+     Suggested Weekly Sequence (section 30: Day 1-5) so Jay can jump straight to a given
+     day rather than paging through the whole week. Single self-contained file (no external
+     CSS/JS/fonts) so it opens anywhere and survives being moved on its own -- same reasoning
+     as teacher-materials/day1-orientation-presenter.html one level up. Click/tap a slide,
+     arrow keys, or the day jump menu to navigate; browser Print > Save as PDF renders one
+     slide per page with all reveals already shown. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unit 01 Presentation: Academic Problem-Solving</title>
+<style>
+  :root {
+    --ink: #1a2230;
+    --muted: #5b6472;
+    --accent: #1f6f8b;
+    --accent-dark: #144d61;
+    --accent-bg: #eaf3f6;
+    --line: #d7dde3;
+    --paper: #ffffff;
+    --floor: #f4f6f8;
+    --warn-bg: #fdf3ec;
+    --warn-line: #d98a3d;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: var(--floor);
+    color: var(--ink);
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+  }
+  #deck { position: relative; height: 100vh; overflow: hidden; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--paper);
+    padding: 6vh 8vw 9vh;
+  }
+  .slide.active { display: flex; }
+
+  .kicker {
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: bold;
+    margin: 0 0 0.6rem;
+  }
+  h1 {
+    font-size: 3rem;
+    line-height: 1.15;
+    margin: 0 0 1rem;
+    color: var(--ink);
+    text-align: left;
+    max-width: 22ch;
+  }
+  h2.prompt {
+    font-size: 2.1rem;
+    line-height: 1.3;
+    margin: 0.4rem 0 1.2rem;
+    color: var(--accent-dark);
+    text-align: left;
+    max-width: 26ch;
+  }
+  .say {
+    font-size: 1.7rem;
+    color: var(--ink);
+    border-left: 6px solid var(--accent);
+    padding: 0.3rem 0 0.3rem 1.2rem;
+    margin: 0.6rem 0 1.4rem;
+    max-width: 32ch;
+    font-style: italic;
+  }
+  ul.points, ol.points {
+    font-size: 1.5rem;
+    line-height: 1.55;
+    margin: 0.5rem 0 1rem;
+    padding-left: 1.4rem;
+    max-width: 42ch;
+  }
+  ul.points li, ol.points li { margin-bottom: 0.3rem; }
+  .sub { font-size: 1.3rem; color: var(--muted); max-width: 46ch; margin: 0.2rem 0 0.8rem; }
+
+  .note {
+    position: absolute;
+    left: 8vw; right: 8vw; bottom: 5vh;
+    font-size: 1.05rem;
+    color: var(--muted);
+    border-top: 1px dashed var(--line);
+    padding-top: 0.6rem;
+    max-width: 70ch;
+  }
+  .note strong { color: var(--accent-dark); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+
+  table.glance { border-collapse: collapse; font-size: 1.25rem; max-width: 60ch; }
+  table.glance th, table.glance td { border: 1px solid var(--line); padding: 0.5rem 0.9rem; text-align: left; }
+  table.glance th { background: var(--accent-bg); color: var(--accent-dark); }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0 1.2rem; }
+  .chip {
+    background: var(--accent-bg); color: var(--accent-dark);
+    border: 1px solid var(--accent); border-radius: 999px;
+    padding: 0.3rem 0.9rem; font-size: 1.15rem; font-weight: bold;
+  }
+
+  .mnemonic { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0; }
+  .mnemonic .step {
+    background: var(--accent-bg); border: 2px solid var(--accent);
+    border-radius: 10px; padding: 0.9rem 1.3rem; min-width: 8rem;
+    text-align: left;
+  }
+  .mnemonic .step b { display: block; font-size: 1.5rem; color: var(--accent-dark); }
+  .mnemonic .step span { font-size: 1rem; color: var(--muted); }
+  .mnemonic .arrow { align-self: center; font-size: 1.6rem; color: var(--muted); }
+
+  .problem-box {
+    background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent);
+    padding: 1.2rem 1.5rem; font-size: 1.5rem; max-width: 48ch; margin: 0.5rem 0 1rem;
+  }
+  .reveal-btn {
+    display: inline-block; font-size: 1.1rem; font-weight: bold;
+    background: var(--accent); color: white; border: none; border-radius: 6px;
+    padding: 0.55rem 1.2rem; cursor: pointer; margin-top: 0.4rem;
+  }
+  .reveal-btn:hover { background: var(--accent-dark); }
+  .reveal-content { display: none; margin-top: 1rem; }
+  .reveal-content.shown { display: block; }
+  .classification {
+    display: inline-block; font-size: 1.4rem; font-weight: bold;
+    color: var(--accent-dark); background: var(--accent-bg);
+    border: 1px solid var(--accent); border-radius: 8px; padding: 0.4rem 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .next-step { font-size: 1.25rem; color: var(--ink); max-width: 44ch; }
+
+  .divider { background: var(--accent-dark); color: white; }
+  .divider .kicker { color: #cfe6ee; }
+  .divider h1 { color: white; font-size: 3.6rem; }
+  .divider .sub { color: #cfe6ee; font-size: 1.4rem; }
+
+  .title-slide { background: var(--accent-dark); color: white; }
+  .title-slide .kicker { color: #cfe6ee; }
+  .title-slide h1 { color: white; font-size: 3.3rem; max-width: 26ch; }
+  .title-slide .sub { color: #dff1f6; font-size: 1.35rem; max-width: 50ch; }
+
+  .warn-box {
+    background: var(--warn-bg); border-left: 6px solid var(--warn-line);
+    padding: 0.9rem 1.3rem; font-size: 1.3rem; max-width: 48ch; margin: 0.6rem 0;
+  }
+
+  /* Chrome / controls */
+  #chrome {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 4.5vh; min-height: 42px;
+    background: var(--ink); color: #cfd6de;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1.2rem; font-size: 0.95rem; z-index: 10;
+  }
+  #chrome .left, #chrome .right { display: flex; align-items: center; gap: 0.7rem; }
+  #chrome button, #chrome select {
+    background: #2a3444; color: #eef2f6; border: 1px solid #3d4a5e;
+    border-radius: 5px; padding: 0.3rem 0.7rem; font-size: 0.95rem; cursor: pointer;
+  }
+  #chrome button:hover { background: #3d4a5e; }
+  #daytag {
+    background: var(--accent); color: white; font-weight: bold;
+    padding: 0.25rem 0.7rem; border-radius: 4px; font-size: 0.9rem; letter-spacing: 0.04em;
+  }
+
+  @media print {
+    #chrome { display: none; }
+    #deck { position: static; height: auto; overflow: visible; }
+    .slide {
+      display: flex !important;
+      position: relative;
+      page-break-after: always;
+      height: 100vh;
+    }
+    .reveal-btn { display: none; }
+    .reveal-content { display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- 0 -->
+  <section class="slide title-slide" data-day="0" data-title="Title">
+    <p class="kicker">Seminar III &middot; Unit 01</p>
+    <h1>Academic Problem-Solving</h1>
+    <p class="sub">Teacher presentation &mdash; five days, built for modeling and discussion, not for reading off the slide.</p>
+  </section>
+
+  <!-- DAY 1 -->
+  <section class="slide divider" data-day="1" data-title="Day 1 divider">
+    <p class="kicker">Day 1</p>
+    <h1>How Do We Solve Problems?</h1>
+    <p class="sub">Introduce the five-question routine &middot; model one problem &middot; students try it themselves</p>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Warm-up: unfamiliar problem">
+    <p class="kicker">Warm-Up</p>
+    <h2 class="prompt">When You Don't Know What to Do</h2>
+    <p class="say">"What could you do, even if you don't know the answer?"</p>
+    <div class="note"><strong>Cue:</strong> put up a problem that looks unfamiliar or intimidating first. The point of this slide isn't the answer &mdash; it's proving students already have moves to make before they know the solution.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Five Questions intro">
+    <p class="kicker">The Routine</p>
+    <h1>The Five Questions</h1>
+    <p class="sub">One routine, used all year, for math and non-math problems alike.</p>
+    <div class="note">Introduce one question at a time &mdash; the next five slides.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Q1">
+    <p class="kicker">Question 1</p>
+    <h2 class="prompt">What information do I have?</h2>
+    <div class="chip-row">
+      <span class="chip">numbers</span><span class="chip">facts</span><span class="chip">definitions</span>
+      <span class="chip">labels</span><span class="chip">diagrams</span><span class="chip">graphs</span>
+      <span class="chip">tables</span><span class="chip">instructions</span><span class="chip">context</span>
+    </div>
+    <div class="note"><strong>Say:</strong> don't calculate yet &mdash; first figure out what's actually available.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Q2">
+    <p class="kicker">Question 2</p>
+    <h2 class="prompt">What am I trying to determine?</h2>
+    <p class="say">"I need to find __________."</p>
+    <div class="note">Have students say the sentence out loud before they touch a calculation &mdash; it stops blind calculating without a goal.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Q3">
+    <p class="kicker">Question 3</p>
+    <h2 class="prompt">What skill or information could help?</h2>
+    <div class="chip-row">
+      <span class="chip">addition</span><span class="chip">percentages</span><span class="chip">fractions</span>
+      <span class="chip">ratios</span><span class="chip">an equation</span><span class="chip">a graph</span>
+      <span class="chip">a formula</span><span class="chip">a definition</span>
+    </div>
+    <div class="note">Students don't need the whole solution yet &mdash; just a lead worth following.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Q4">
+    <p class="kicker">Question 4</p>
+    <h2 class="prompt">What strategy can I try?</h2>
+    <div class="chip-row">
+      <span class="chip">write an equation</span><span class="chip">draw a diagram</span><span class="chip">make a table</span>
+      <span class="chip">estimate</span><span class="chip">eliminate choices</span><span class="chip">work backward</span>
+      <span class="chip">try a simpler example</span>
+    </div>
+    <div class="note">The important word is <strong>try</strong>. It doesn't need to be guaranteed to work.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Q5">
+    <p class="kicker">Question 5</p>
+    <h2 class="prompt">Does my answer make sense?</h2>
+    <ul class="points">
+      <li>Too large? Too small?</li>
+      <li>Positive or negative?</li>
+      <li>Does the unit make sense?</li>
+      <li>Did I answer what was actually asked?</li>
+    </ul>
+    <div class="note">This question matters more and more as the quarter goes on &mdash; don't rush past it.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="STOP FIND CONNECT TRY CHECK">
+    <p class="kicker">Memory Aid</p>
+    <h1>The Shortcut</h1>
+    <div class="mnemonic">
+      <div class="step"><b>STOP</b><span>What do I have?</span></div>
+      <div class="arrow">&rarr;</div>
+      <div class="step"><b>FIND</b><span>What am I solving for?</span></div>
+      <div class="arrow">&rarr;</div>
+      <div class="step"><b>CONNECT</b><span>What could help?</span></div>
+      <div class="arrow">&rarr;</div>
+      <div class="step"><b>TRY</b><span>What's a strategy?</span></div>
+      <div class="arrow">&rarr;</div>
+      <div class="step"><b>CHECK</b><span>Does it make sense?</span></div>
+    </div>
+    <div class="note">The five questions stay the course's real language &mdash; this is just the fast version to reference mid-problem.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Think-aloud">
+    <p class="kicker">Teacher Think-Aloud</p>
+    <h2 class="prompt">"Watch me think through one, out loud."</h2>
+    <div class="problem-box">A student earns $15 per hour and works 6 hours. How much before taxes?</div>
+    <div class="note">Model it live, narrating all five questions as you go &mdash; STOP ($15/hr, 6 hrs) &rarr; FIND (total earned) &rarr; CONNECT (rate &times; hours) &rarr; TRY (15 &times; 6) &rarr; CHECK (should land between $75 and $100 &mdash; $90 does).</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Not always a math problem">
+    <p class="kicker">Beyond Math</p>
+    <h2 class="prompt">A Problem Is Not Always a Math Problem</h2>
+    <div class="problem-box">A project is due Friday. It needs a written response, a visual, and a presentation. It's Wednesday.</div>
+    <div class="note">Run the same five questions on this &mdash; the routine isn't just for math class.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Day 1 exit ticket">
+    <p class="kicker">Exit Ticket &mdash; Day 1</p>
+    <h2 class="prompt">Which of the five questions do you think you most often skip?</h2>
+  </section>
+
+  <!-- DAY 2 -->
+  <section class="slide divider" data-day="2" data-title="Day 2 divider">
+    <p class="kicker">Day 2</p>
+    <h1>Why Did I Get It Wrong?</h1>
+    <p class="sub">Introduce the five error types &middot; analyze sample wrong answers &middot; students classify 8&ndash;10 scenarios</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Wrong doesn't tell us enough">
+    <p class="kicker">Set-Up</p>
+    <h2 class="prompt">"Wrong" Doesn't Tell Us Enough</h2>
+    <p class="sub">Three students answer the same problem incorrectly &mdash; for three different reasons.</p>
+    <ul class="points">
+      <li><strong>Student A</strong> &mdash; doesn't know the rule</li>
+      <li><strong>Student B</strong> &mdash; knows the rule, calculates wrong</li>
+      <li><strong>Student C</strong> &mdash; solves correctly, answers a different question</li>
+    </ul>
+    <p class="say">"Do these students need the same help?"</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Five Error Types intro">
+    <p class="kicker">The Framework</p>
+    <h1>The Five Error Types</h1>
+    <p class="sub">An incorrect answer doesn't automatically mean "I don't know how to do this."</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Knowledge Error">
+    <p class="kicker">Error Type 1</p>
+    <h2 class="prompt">Knowledge Error</h2>
+    <p class="say">"There's something I need to know that I don't currently know or remember."</p>
+    <div class="note"><strong>Example:</strong> doesn't remember how negative numbers behave during multiplication. &mdash; <strong>Next step:</strong> review the concept, study a worked example.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Process Error">
+    <p class="kicker">Error Type 2</p>
+    <h2 class="prompt">Process Error</h2>
+    <p class="say">"I had the right general idea, but something went wrong in my steps."</p>
+    <div class="note"><strong>Example:</strong> uses the correct formula but substitutes values into the wrong places. &mdash; <strong>Next step:</strong> compare with a correct example, write out intermediate steps.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Execution Error">
+    <p class="kicker">Error Type 3</p>
+    <h2 class="prompt">Execution Error</h2>
+    <p class="say">"I knew how to solve it, but I made a mistake while doing the work."</p>
+    <div class="note"><strong>Example:</strong> copying 36 as 63; dropping a negative sign. &mdash; <strong>Next step:</strong> slow down, check work against an estimate.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Comprehension Error">
+    <p class="kicker">Error Type 4</p>
+    <h2 class="prompt">Comprehension Error</h2>
+    <p class="say">"I didn't correctly understand what the question was asking or telling me."</p>
+    <div class="note"><strong>Example:</strong> finds the radius when asked for diameter; overlooks the word "NOT." &mdash; <strong>Next step:</strong> reread, underline the actual task.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Strategy Error">
+    <p class="kicker">Error Type 5</p>
+    <h2 class="prompt">Strategy Error</h2>
+    <p class="say">"I understood the problem, but the approach I chose wasn't the best way to solve it."</p>
+    <div class="note"><strong>Example:</strong> solving algebraically for several minutes when substituting answer choices would be faster. &mdash; <strong>Next step:</strong> ask "is there an easier way?"</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Error types at a glance">
+    <p class="kicker">Recap</p>
+    <h1>Error Types at a Glance</h1>
+    <table class="glance">
+      <tr><th>Type</th><th>Main Question</th></tr>
+      <tr><td>Knowledge</td><td>Did I know the information or skill I needed?</td></tr>
+      <tr><td>Process</td><td>Did I correctly follow the steps?</td></tr>
+      <tr><td>Execution</td><td>Did I make a smaller mistake doing something I knew how to do?</td></tr>
+      <tr><td>Comprehension</td><td>Did I understand the question correctly?</td></tr>
+      <tr><td>Strategy</td><td>Did I choose an effective approach?</td></tr>
+    </table>
+    <div class="note">Errors can overlap &mdash; the goal isn't a perfect label, it's answering "what should I do differently next time?"</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Error Detective intro">
+    <p class="kicker">Practice</p>
+    <h1>Error Detective</h1>
+    <p class="sub">Let's classify these together. Click each answer choice to check yours.</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Error Detective 1">
+    <p class="kicker">Error Detective &middot; 1 of 5</p>
+    <div class="problem-box">6 + 3 &times; 4 = ?<br>Student answers <strong>36</strong> (6+3=9, then 9&times;4=36)</div>
+    <button class="reveal-btn" onclick="reveal(this)">Reveal classification</button>
+    <div class="reveal-content">
+      <div class="classification">Process Error</div>
+      <p class="next-step">Correct calculations, wrong order of operations. Review order of operations and retry.</p>
+    </div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Error Detective 2">
+    <p class="kicker">Error Detective &middot; 2 of 5</p>
+    <div class="problem-box">A $80 jacket is discounted 25%.<br>Student correctly finds the discount is $20 and answers <strong>$20</strong>.</div>
+    <button class="reveal-btn" onclick="reveal(this)">Reveal classification</button>
+    <div class="reveal-content">
+      <div class="classification">Comprehension Error</div>
+      <p class="next-step">Calculated the discount, not the final price. Identify exactly what's being asked before answering.</p>
+    </div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Error Detective 3">
+    <p class="kicker">Error Detective &middot; 3 of 5</p>
+    <div class="problem-box">&minus;7 + 12 = ?<br>Student: "I don't remember what I'm supposed to do when one number is negative."</div>
+    <button class="reveal-btn" onclick="reveal(this)">Reveal classification</button>
+    <div class="reveal-content">
+      <div class="classification">Knowledge Error</div>
+      <p class="next-step">Review adding positive and negative numbers.</p>
+    </div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Error Detective 4">
+    <p class="kicker">Error Detective &middot; 4 of 5</p>
+    <div class="problem-box">48 &divide; 6 = ?<br>Student correctly picks division, writes <strong>48 &divide; 6 = 6</strong>.</div>
+    <button class="reveal-btn" onclick="reveal(this)">Reveal classification</button>
+    <div class="reveal-content">
+      <div class="classification">Execution Error</div>
+      <p class="next-step">Right operation, wrong arithmetic. Check by multiplying the answer back out.</p>
+    </div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Error Detective 5">
+    <p class="kicker">Error Detective &middot; 5 of 5</p>
+    <div class="problem-box">A multiple-choice problem could be solved fast by testing the four choices. Student instead builds a long multi-step equation, spends six minutes, doesn't finish. Reasoning is valid throughout.</div>
+    <button class="reveal-btn" onclick="reveal(this)">Reveal classification</button>
+    <div class="reveal-content">
+      <div class="classification">Strategy Error</div>
+      <p class="next-step">Look for a faster method before starting a long calculation.</p>
+    </div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Day 2 exit ticket">
+    <p class="kicker">Exit Ticket &mdash; Day 2</p>
+    <h2 class="prompt">What type of error most likely occurred here, and what should the student do next?</h2>
+    <div class="note">Give one incorrect response as the prompt.</div>
+  </section>
+
+  <!-- DAY 3 -->
+  <section class="slide divider" data-day="3" data-title="Day 3 divider">
+    <p class="kicker">Day 3</p>
+    <h1>ACT Math Baseline</h1>
+    <p class="sub">20&ndash;24 questions &middot; diagnostic, not a grade</p>
+  </section>
+
+  <section class="slide" data-day="3" data-title="Before the assessment">
+    <p class="kicker">Before Students Begin</p>
+    <h2 class="prompt">Remind Them</h2>
+    <ul class="points">
+      <li>This is diagnostic &mdash; the goal is a starting point, not a score to defend.</li>
+      <li>Attempting unfamiliar questions still gives useful information.</li>
+      <li>Don't randomly click just to finish.</li>
+    </ul>
+  </section>
+
+  <section class="slide" data-day="3" data-title="After the assessment">
+    <p class="kicker">If Time Remains</p>
+    <h2 class="prompt">Initial Reaction</h2>
+    <ul class="points">
+      <li>What felt familiar?</li>
+      <li>What felt unfamiliar?</li>
+      <li>Where did you feel most confident?</li>
+    </ul>
+  </section>
+
+  <!-- DAY 4 -->
+  <section class="slide divider" data-day="4" data-title="Day 4 divider">
+    <p class="kicker">Day 4</p>
+    <h1>What Does My Baseline Tell Me?</h1>
+    <p class="sub">Same score, different needs &middot; students read their own results</p>
+  </section>
+
+  <section class="slide" data-day="4" data-title="Two students same score">
+    <p class="kicker">Mini-Lesson</p>
+    <h2 class="prompt">Two students can get the same score and need completely different support.</h2>
+    <div class="note">Demonstrate with a quick example before students look at their own results.</div>
+  </section>
+
+  <section class="slide" data-day="4" data-title="Reading your results">
+    <p class="kicker">Reading Your Results</p>
+    <h1>Not Just a Score</h1>
+    <div class="grid2">
+      <div>
+        <p class="sub" style="margin-bottom:0;"><strong>Current Strengths</strong><br>skills shown consistently</p>
+      </div>
+      <div>
+        <p class="sub" style="margin-bottom:0;"><strong>Developing Skills</strong><br>partially shown / partly remembered</p>
+      </div>
+    </div>
+    <p class="sub" style="margin-top:1rem;"><strong>Priority Skills</strong> &mdash; need real instruction or review</p>
+    <div class="note">Avoid presenting results as just "you scored 9/24."</div>
+  </section>
+
+  <section class="slide" data-day="4" data-title="Circulate cue">
+    <p class="kicker">While Students Work</p>
+    <h2 class="prompt">Help students tell these apart:</h2>
+    <p class="say">"I don't know this."</p>
+    <p class="say">"I knew this but made a mistake."</p>
+  </section>
+
+  <!-- DAY 5 -->
+  <section class="slide divider" data-day="5" data-title="Day 5 divider">
+    <p class="kicker">Day 5</p>
+    <h1>Build Your Starting Strategy</h1>
+    <p class="sub">Unit 01 reflection &middot; study hall / catch-up for remaining time</p>
+  </section>
+
+  <section class="slide" data-day="5" data-title="Four commitments">
+    <p class="kicker">Unit 01 Reflection</p>
+    <h1>Name Four Things</h1>
+    <ol class="points">
+      <li><strong>One Strength</strong> &mdash; something you do reasonably well</li>
+      <li><strong>One Priority</strong> &mdash; something you want to improve</li>
+      <li><strong>One Strategy</strong> &mdash; something to try when stuck</li>
+      <li><strong>One Checking Habit</strong> &mdash; something to do before submitting an answer</li>
+    </ol>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="slide divider" data-day="6" data-title="Closing recap">
+    <p class="kicker">This Routine Continues All Quarter</p>
+    <h1>Keep Using Both</h1>
+    <div class="mnemonic" style="margin-top:1.5rem;">
+      <div class="step"><b>STOP</b><span>&rarr; FIND &rarr; CONNECT &rarr; TRY &rarr; CHECK</span></div>
+    </div>
+    <div class="mnemonic">
+      <div class="step"><b>Knowledge</b><span>&rarr; Process &rarr; Execution &rarr; Comprehension &rarr; Strategy</span></div>
+    </div>
+    <p class="sub" style="margin-top:1rem;">Unit 02 begins Numbers &amp; Operations &mdash; the first full run of this cycle on real content.</p>
+  </section>
+
+</div>
+
+<div id="chrome">
+  <div class="left">
+    <button onclick="go(-1)">&larr; Prev</button>
+    <button onclick="go(1)">Next &rarr;</button>
+    <span id="daytag">Day 0</span>
+  </div>
+  <div class="right">
+    <select id="jump" onchange="jumpTo(this.value)"></select>
+    <span id="counter">1 / 1</span>
+    <button onclick="document.documentElement.requestFullscreen && document.documentElement.requestFullscreen()">Fullscreen</button>
+  </div>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var current = 0;
+  var dayNames = {0:'Title',1:'Day 1',2:'Day 2',3:'Day 3',4:'Day 4',5:'Day 5',6:'Closing'};
+
+  function render() {
+    slides.forEach(function(s, i) { s.classList.toggle('active', i === current); });
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+    var day = slides[current].getAttribute('data-day');
+    document.getElementById('daytag').textContent = dayNames[day] || ('Day ' + day);
+    document.getElementById('jump').value = current;
+  }
+
+  function go(delta) {
+    current = Math.max(0, Math.min(slides.length - 1, current + delta));
+    render();
+  }
+
+  function jumpTo(i) {
+    current = parseInt(i, 10);
+    render();
+  }
+
+  function reveal(btn) {
+    var content = btn.nextElementSibling;
+    content.classList.toggle('shown');
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { go(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+    else if (e.key === 'Home') { current = 0; render(); }
+    else if (e.key === 'End') { current = slides.length - 1; render(); }
+  });
+
+  document.getElementById('deck').addEventListener('click', function(e) {
+    if (e.target.closest('.reveal-btn') || e.target.closest('a')) return;
+    var rect = deck.getBoundingClientRect();
+    if (e.clientX - rect.left > rect.width / 2) go(1); else go(-1);
+  });
+
+  var jumpSelect = document.getElementById('jump');
+  slides.forEach(function(s, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    var day = s.getAttribute('data-day');
+    var title = s.getAttribute('data-title') || ('Slide ' + (i + 1));
+    opt.textContent = (i + 1) + '. [' + (dayNames[day] || day) + '] ' + title;
+    jumpSelect.appendChild(opt);
+  });
+
+  render();
+</script>
+
+</body>
+</html>

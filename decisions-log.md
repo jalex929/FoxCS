@@ -4,6 +4,43 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-29 (later) — Seminar III renumbered Week N → Unit (N-1), decoupled from the calendar for self-paced work
+
+**Context:** Jay asked to scope Unit 00 (orientation)/Unit 01/Unit 02 content, introducing "Week 0" as the intro week distinct from the existing "Week 1: Welcome to Seminar III." Asked directly whether this meant a real renumbering or just conversational shorthand — Jay's answer: shift to identifying by **unit number**, not week-of-year, specifically so the numbering doesn't have to keep changing as self-paced student progress diverges from a fixed calendar. Confirmed this applies to Seminar III only — Python already uses `Unit NN`, Game II/Web Dev have no numbering yet (no course-plan for either).
+
+**Decided:** Old `Week N` → new `Unit (N-1)`, zero-padded 2 digits (Week 1 → Unit 00 ... Week 39 → Unit 38), matching Python's existing `Unit 00` starting point. Applied everywhere, since nothing here was committed to git yet (low-risk to do properly rather than leave mixed terminology):
+
+- Both Seminar III source docs (`01_SEMINAR_III_COURSE_PLAN`, `02_SEMINAR_III_ACADEMIC_CONTENT_MAP`) — all `Week N`/`Weeks N-M` headings, prose, and ranges converted (64 replacements total across both files).
+- Every content file renamed `week-NN-*` → `unit-(NN-1)-*` (30 files across `teacher-materials/`, `instructional-content/`, `printable-sheets/`) plus the 8 top-level `week-0N-plan` source docs → `unit-0N-plan`, and literal `Week N` text inside all of them (titles, headers, cross-references) updated to match (367 replacements across the 8 plan docs alone).
+- `tools/render-deck-pdf/README.md`'s usage examples.
+- The dev Moodle instance: all 39 section display names and all 31 already-uploaded resources' `mdl_resource.name` field. Section **number** (1-39) was deliberately left unchanged — only labels moved, so no uploaded content had to be relocated between sections. Full detail: `07-infrastructure/moodle-course-shells.md`'s new "Renumbering" section.
+- `populate-seminar3-resources.php` updated to match `unit-NN-*` filenames going forward (target section = unit number + 1) rather than `week-NN-*`.
+
+**Deliberately not touched:** Quarter-level date ranges (Quarter 1: Aug 24 – Oct 23, etc.) — those are real grading-period boundaries, not part of the per-unit sequence being decoupled from the calendar. Also not touched: historical entries in this file and in `worklog.md` that refer to "Week N" — those describe what was true at the time under the old naming and aren't being rewritten after the fact.
+
+**Supersedes:** the calendar-week-based numbering used throughout Seminar III's source docs and file naming since the course was first scoped (2026-08-24) through the 2026-08-25 restructure.
+
+---
+
+## 2026-08-29 — Moodle production host resolved to NTC Hosting; dev-droplet course shells built for all 4 courses
+
+**Context:** Jay asked to continue the Moodle resume from 2026-08-28 by connecting a newly-registered domain (`foxcs.online`). That surfaced two things: the domain wasn't actually registered yet (confirmed via direct RDAP query against Radix, the `.online` registry — "available for registration" — then confirmed by Jay: "it is hosted but not registered"), and the production-host question flagged as unresolved in `moodle-vm-setup.md` needed an answer before DNS could mean anything.
+
+**Decided:**
+
+- **NTC Hosting (a shared hosting account Jay already has, confirmed by him as Moodle-5.2.2-ready despite being the basic plan) is the production Moodle host.** The `foxcs-droplet` stays build/dev-only, unchanged from the 2026-08-28 decision — nothing here reverses that.
+- **Domain registration is blocked on payment**, which Jay can't complete until 2026-08-30. Plan once paid: register `foxcs.online` **through NTC Hosting directly** (same provider as the hosting account) so nameservers auto-configure, rather than registering elsewhere and manually pointing NS records. Jay separately provided NTC's standing NS records (`dns.ntchosting.com`/`dns2`/`dns3`/`dns4`, default route `198.23.48.50`, shared SSL IP `162.210.96.119`) in case that changes.
+- **Browser automation isn't available in this session even though Jay's Claude in Chrome extension is active locally** — this Claude Code session runs directly on the `foxcs-droplet` (confirmed via `hostname`), a remote SSH-based session the local extension can't pair with. Confirmed via `ToolSearch` returning zero `mcp__claude-in-chrome__*` tools here. Registrar/cPanel work in this session has to be a manual walkthrough (Jay reports what he sees, told what to click) until/unless a Claude Code session running on Jay's own machine picks up that part.
+- **Built Moodle course shells for all 4 FoxCS courses on the dev instance**, at Jay's request ("let's build the shell for all classes") ahead of hosting being ready, so courses are structurally ready to receive content and/or migrate once NTC Hosting is live: one `FoxCS` category, 4 `topics`-format course shells (`foxcs-python` 21 sections renamed to the real Unit 00-20 titles, `foxcs-seminar3` 39 sections renamed to the real Week 1-39 titles, `foxcs-game2`/`foxcs-webdev` left as single-section skeletons since neither has a `course-plan.md` yet). Full detail and the scripts used: `07-infrastructure/moodle-course-shells.md`.
+- **Uploaded Seminar III's existing real content** (decks, instructional pages, printable sheets) into the matching week sections as File resources — nothing invented, only what the repo audit in `worklog.md` already confirmed exists. Teacher decks and the one existing answer-key doc were uploaded **hidden** (`visible=0`) rather than trusted to a "don't look" convention, since students could otherwise open a deck's speaker-note script or an answer key directly.
+- **Found and documented a real infrastructure gotcha:** `/home/jay` (where this repo lives) is `750 jay:jay` — `www-data` can't traverse into it at all, so any Moodle CLI script or upload that needs to read a repo file has to stage it in `/tmp` first. Chose not to loosen `/home/jay`'s permissions to fix this — too broad a change for a narrow need. See `07-infrastructure/moodle-course-shells.md`'s "Known gotcha" section.
+
+**Not yet done:** actually registering the domain (blocked on payment), custom Moodle theme/branding, enrollment/roles, H5P-native content (vs. the uploaded static HTML), any content for Game II/Web Dev/most of Python (doesn't exist in the repo yet), migrating any of this dev-instance work to NTC Hosting once it's live.
+
+**Supersedes:** nothing — this extends the 2026-08-28 Moodle-resumed decision and resolves the "production hosting target not yet decided" gap it explicitly left open.
+
+---
+
 ## 2026-08-28 — Moodle resumed, build/dev instance stood up on the FoxCS droplet
 
 **Context:** Jay asked, from a Claude Code session running on the `foxcs-droplet` (see `07-infrastructure/droplet-setup.md`), to resume Moodle work and stand up a real running instance — reversing the 2026-08-04 pause, which had held Moodle back pending a proven MVP folder/Classroom content-and-grading loop. Confirmed explicitly (not assumed) before proceeding, since it directly reverses a documented decision.

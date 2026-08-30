@@ -1,0 +1,304 @@
+<!-- Instructor-only presentation deck for Seminar III Unit 06 (Variables & Expressions).
+     week-07-plan's own Instructional Sequence lists 5 real teaching days (Variables/Constants/
+     Expressions, Substitution/Evaluating, Like Terms, The Distributive Property, Apply/Analyze/
+     Retry) -- more instructional days than fit a realistic 2-3 day Academic Skills week. Per the
+     same merging approach used in week-04-presentation.html, Day 1 and Day 2 (variables,
+     expressions, translating, substitution) are merged into one denser "Session A", and Day 3
+     and Day 4 (like terms, distributive property) are merged into "Session B", with Day 5's
+     apply/check content kept as its own short apply day rather than building 5 separate full
+     decks. Same self-contained single-file pattern as week-03/04-presentation.html. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unit 06 Presentation: Variables &amp; Expressions</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  #deck { position: relative; height: 100vh; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; background: var(--paper); padding: 6vh 8vw 9vh; }
+  .slide.active { display: flex; }
+  .kicker { font-size: 1.05rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6rem; }
+  h1 { font-size: 3rem; line-height: 1.15; margin: 0 0 1rem; color: var(--ink); text-align: left; max-width: 24ch; }
+  h2.prompt { font-size: 2.1rem; line-height: 1.3; margin: 0.4rem 0 1.2rem; color: var(--accent-dark); text-align: left; max-width: 30ch; }
+  .say { font-size: 1.7rem; color: var(--ink); border-left: 6px solid var(--accent); padding: 0.3rem 0 0.3rem 1.2rem; margin: 0.6rem 0 1.4rem; max-width: 32ch; font-style: italic; }
+  ul.points, ol.points { font-size: 1.5rem; line-height: 1.55; margin: 0.5rem 0 1rem; padding-left: 1.4rem; max-width: 46ch; }
+  ul.points li, ol.points li { margin-bottom: 0.3rem; }
+  .sub { font-size: 1.3rem; color: var(--muted); max-width: 48ch; margin: 0.2rem 0 0.8rem; }
+  .note { position: absolute; left: 8vw; right: 8vw; bottom: 5vh; font-size: 1.05rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 0.6rem; max-width: 76ch; }
+  .note strong { color: var(--accent-dark); }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0 1.2rem; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.3rem 0.9rem; font-size: 1.15rem; font-weight: bold; }
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1.2rem 1.5rem; font-size: 1.5rem; max-width: 54ch; margin: 0.5rem 0 1rem; }
+  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 0.9rem 1.3rem; font-size: 1.3rem; max-width: 52ch; margin: 0.6rem 0; }
+  .divider { background: var(--accent-dark); color: white; }
+  .divider .kicker { color: #cfe6ee; }
+  .divider h1 { color: white; font-size: 3.4rem; }
+  .divider .sub { color: #cfe6ee; font-size: 1.4rem; }
+  .title-slide { background: var(--accent-dark); color: white; }
+  .title-slide .kicker { color: #cfe6ee; }
+  .title-slide h1 { color: white; font-size: 3.3rem; max-width: 26ch; }
+  .title-slide .sub { color: #dff1f6; font-size: 1.35rem; max-width: 52ch; }
+  .card-row { display: flex; gap: 1.2rem; flex-wrap: wrap; margin: 0.8rem 0 1rem; }
+  .card { border: 2px solid var(--accent); background: var(--accent-bg); border-radius: 10px; padding: 0.8rem 1.2rem; font-size: 1.4rem; color: var(--accent-dark); font-weight: bold; min-width: 6rem; text-align: center; }
+  #chrome { position: fixed; left: 0; right: 0; bottom: 0; height: 4.5vh; min-height: 42px; background: var(--ink); color: #cfd6de; display: flex; align-items: center; justify-content: space-between; padding: 0 1.2rem; font-size: 0.95rem; z-index: 10; }
+  #chrome .left, #chrome .right { display: flex; align-items: center; gap: 0.7rem; }
+  #chrome button, #chrome select { background: #2a3444; color: #eef2f6; border: 1px solid #3d4a5e; border-radius: 5px; padding: 0.3rem 0.7rem; font-size: 0.95rem; cursor: pointer; }
+  #chrome button:hover { background: #3d4a5e; }
+  #daytag { background: var(--accent); color: white; font-weight: bold; padding: 0.25rem 0.7rem; border-radius: 4px; font-size: 0.9rem; letter-spacing: 0.04em; }
+  @media print {
+    #chrome { display: none; }
+    #deck { position: static; height: auto; overflow: visible; }
+    .slide { display: flex !important; position: relative; page-break-after: always; height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <section class="slide title-slide" data-day="0" data-title="Title">
+    <p class="kicker">Seminar III &middot; Unit 06 &middot; Foundations</p>
+    <h1>Variables &amp; Expressions</h1>
+    <p class="sub">Learn &rarr; Practice &rarr; Check &rarr; Analyze &rarr; Retry &rarr; Apply</p>
+    <p class="sub">Two teaching sessions this week (variables and substitution, then like terms and distribution) plus an apply/retry day, not five separate full lessons.</p>
+  </section>
+
+  <!-- SESSION A: VARIABLES, EXPRESSIONS & SUBSTITUTION -->
+  <section class="slide divider" data-day="1" data-title="Session A divider">
+    <p class="kicker">Session A</p>
+    <h1>Variables, Expressions &amp; Substitution</h1>
+    <p class="sub">What a variable represents &middot; reading and writing expressions &middot; substituting to evaluate</p>
+  </section>
+
+  <section class="slide" data-day="1" data-title="What is a variable">
+    <p class="kicker">What Is a Variable?</p>
+    <h2 class="prompt">A letter can represent a number.</h2>
+    <div class="chip-row"><span class="chip">unknown value</span><span class="chip">changing value</span><span class="chip">general pattern</span></div>
+    <div class="note">Example: a pay stub might read <strong>15h</strong>, where h is hours worked. The value of h changes week to week, but the relationship stays the same.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Variable vs constant">
+    <p class="kicker">Variable vs. Constant</p>
+    <h2 class="prompt">One changes. One never does.</h2>
+    <div class="problem-box">3x + 7</div>
+    <div class="note"><strong>x</strong> is a variable, its value is not fixed. <strong>7</strong> is a constant, its value never changes here. <strong>3</strong> is a coefficient, the number that multiplies the variable.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Expressions are not equations">
+    <p class="kicker">Expressions vs. Equations</p>
+    <h2 class="prompt">An expression has no equal sign.</h2>
+    <div class="problem-box">3x + 7 &nbsp;is an expression.<br>3x + 7 = 22 &nbsp;is an equation.</div>
+    <div class="note">An expression can be <strong>evaluated</strong>. An equation can be <strong>solved</strong>. Unit 06 works only with expressions; solving begins in Unit 07.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Reading an expression in words">
+    <p class="kicker">Reading an Expression</p>
+    <h2 class="prompt">Say what the symbols mean.</h2>
+    <div class="problem-box">4x + 9</div>
+    <p class="say">"Nine more than four times a number."</p>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Translating words into expressions">
+    <p class="kicker">Translating Words to Expressions</p>
+    <h2 class="prompt">Match the phrase to the operation.</h2>
+    <div class="chip-row"><span class="chip">more than &rarr; add</span><span class="chip">less than &rarr; subtract</span><span class="chip">times, of &rarr; multiply</span><span class="chip">per, quotient &rarr; divide</span></div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Translation pitfall">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Does "five less than a number" mean 5 - x?</h2>
+    <p class="say">No. It reverses the order.</p>
+    <div class="warn-box">"Five less than a number" is x - 5, not 5 - x. Ask which quantity is actually being reduced.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Substitution">
+    <p class="kicker">Substitution</p>
+    <h2 class="prompt">Replace the variable with its value.</h2>
+    <div class="problem-box">If x = 4, then 3x + 2 becomes:<br>3(4) + 2 = 12 + 2 = 14</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Substitution with order of operations">
+    <p class="kicker">Substitution + Order of Operations</p>
+    <h2 class="prompt">Substitute first, then follow PEMDAS.</h2>
+    <div class="problem-box">Evaluate 2x&sup2; + 5 when x = 3<br>2(3)&sup2; + 5 = 2(9) + 5 = 18 + 5 = 23</div>
+    <div class="note">Exponents are evaluated before multiplication.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Substitution with negatives">
+    <p class="kicker">Substitution With Negative Values</p>
+    <h2 class="prompt">Parentheses protect the sign.</h2>
+    <div class="problem-box">Evaluate 4x &minus; 6 when x = &minus;3<br>4(&minus;3) &minus; 6 = &minus;12 &minus; 6 = &minus;18</div>
+    <div class="warn-box">Always place a substituted negative value in parentheses to avoid sign errors.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Substitution with two variables">
+    <p class="kicker">Substitution With More Than One Variable</p>
+    <h2 class="prompt">Replace every variable, every time.</h2>
+    <div class="problem-box">Evaluate 3a + 2b when a = 5, b = &minus;4<br>3(5) + 2(&minus;4) = 15 + (&minus;8) = 7</div>
+    <div class="note">Every occurrence of each variable must be replaced, not just the first one.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Session A exit ticket">
+    <p class="kicker">Exit Ticket &middot; Session A</p>
+    <ol class="points">
+      <li>Identify the coefficient, variable, and constant in an expression</li>
+      <li>Translate a phrase into an expression</li>
+      <li>Substitute and evaluate, including a negative value</li>
+    </ol>
+  </section>
+
+  <!-- SESSION B: LIKE TERMS & DISTRIBUTION -->
+  <section class="slide divider" data-day="2" data-title="Session B divider">
+    <p class="kicker">Session B</p>
+    <h1>Like Terms &amp; the Distributive Property</h1>
+    <p class="sub">Which terms can combine &middot; multiplying every term inside a grouping symbol</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Like terms">
+    <p class="kicker">Like Terms</p>
+    <h2 class="prompt">Same variable, same power.</h2>
+    <div class="chip-row"><span class="chip">4x and 9x: like terms</span><span class="chip">7y&sup2; and 2y&sup2;: like terms</span></div>
+    <div class="warn-box">4x and 4x&sup2; are not like terms (different powers). 3x and 3y are not like terms (different variables).</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Combining like terms">
+    <p class="kicker">Combining Like Terms</p>
+    <h2 class="prompt">Add or subtract the coefficients.</h2>
+    <div class="problem-box">5x + 3x = (5 + 3)x = 8x</div>
+    <div class="note">The variable part stays the same. Only the coefficients combine.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Combining like terms multiple groups">
+    <p class="kicker">Combining Like Terms: Multiple Groups</p>
+    <h2 class="prompt">Group the like terms first.</h2>
+    <div class="problem-box">4x + 3 + 2x &minus; 5<br>(4x + 2x) + (3 &minus; 5) = 6x &minus; 2</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Combining like terms two variables">
+    <p class="kicker">Combining Like Terms: Two Variables</p>
+    <h2 class="prompt">Only combine matching variables.</h2>
+    <div class="problem-box">3a + 5b &minus; a + 2b<br>(3a &minus; a) + (5b + 2b) = 2a + 7b</div>
+    <div class="note">2a and 7b are not like terms, so the expression cannot simplify further.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Distributive property">
+    <p class="kicker">The Distributive Property</p>
+    <h2 class="prompt">The outside factor multiplies every term inside.</h2>
+    <div class="problem-box">3(x + 4) = 3(x) + 3(4) = 3x + 12</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Distributing negative factor">
+    <p class="kicker">Distributing a Negative Factor</p>
+    <h2 class="prompt">The negative sign is part of the factor.</h2>
+    <div class="problem-box">&minus;2(x + 6) = &minus;2(x) + (&minus;2)(6) = &minus;2x &minus; 12</div>
+    <div class="note">Watch sign changes closely when the outside factor is negative.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Common distributive error">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Does 3(x + 4) equal 3x + 4?</h2>
+    <p class="say">No. The 3 must multiply both terms.</p>
+    <div class="warn-box">Incorrect: 3(x + 4) = 3x + 4. Correct: 3(x + 4) = 3x + 12.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Distribute then combine">
+    <p class="kicker">Distribute, Then Combine Like Terms</p>
+    <h2 class="prompt">Many expressions need both skills together.</h2>
+    <div class="problem-box">4(x + 3) + 2x<br>4x + 12 + 2x<br>6x + 12</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Session B exit ticket">
+    <p class="kicker">Exit Ticket &middot; Session B</p>
+    <ol class="points">
+      <li>Determine whether two terms are like terms</li>
+      <li>Combine like terms in an expression with two variables</li>
+      <li>Distribute and simplify one expression with a negative factor</li>
+    </ol>
+  </section>
+
+  <!-- APPLY DAY -->
+  <section class="slide divider" data-day="3" data-title="Apply day divider">
+    <p class="kicker">Apply, Analyze, Retry</p>
+    <h1>Mixed Practice &amp; Unit 06 Check</h1>
+    <p class="sub">Independent work and assessment, not new instruction.</p>
+  </section>
+
+  <section class="slide" data-day="3" data-title="Apply day flow">
+    <ul class="points">
+      <li>Mixed retrieval: translating expressions, substitution, like terms, and distribution</li>
+      <li>Students classify missed items by error category, then retry after feedback</li>
+      <li>Unit 06 check, then reflection: one strength, one developing skill, one error pattern, one confidence rating</li>
+    </ul>
+    <div class="note">Reasonableness routine all week: <strong>Size &rarr; Sign &rarr; Substitution &rarr; Order of Operations.</strong></div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="slide divider" data-day="4" data-title="Closing / transition">
+    <p class="kicker">Transition to Unit 07</p>
+    <h1>Equations</h1>
+    <p class="sub">The equal sign becomes a formal claim. Students solve one-step and two-step equations, using substitution to check their solutions.</p>
+  </section>
+
+</div>
+
+<div id="chrome">
+  <div class="left">
+    <button onclick="go(-1)">&larr; Prev</button>
+    <button onclick="go(1)">Next &rarr;</button>
+    <span id="daytag">Day 0</span>
+  </div>
+  <div class="right">
+    <select id="jump" onchange="jumpTo(this.value)"></select>
+    <span id="counter">1 / 1</span>
+    <button onclick="document.documentElement.requestFullscreen && document.documentElement.requestFullscreen()">Fullscreen</button>
+  </div>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var current = 0;
+  var dayNames = {0:'Title',1:'Session A',2:'Session B',3:'Apply Day',4:'Closing'};
+
+  function render() {
+    slides.forEach(function(s, i) { s.classList.toggle('active', i === current); });
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+    var day = slides[current].getAttribute('data-day');
+    document.getElementById('daytag').textContent = dayNames[day] || ('Day ' + day);
+    document.getElementById('jump').value = current;
+  }
+  function go(delta) { current = Math.max(0, Math.min(slides.length - 1, current + delta)); render(); }
+  function jumpTo(i) { current = parseInt(i, 10); render(); }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { go(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+    else if (e.key === 'Home') { current = 0; render(); }
+    else if (e.key === 'End') { current = slides.length - 1; render(); }
+  });
+  document.getElementById('deck').addEventListener('click', function(e) {
+    if (e.target.closest('a')) return;
+    var rect = deck.getBoundingClientRect();
+    if (e.clientX - rect.left > rect.width / 2) go(1); else go(-1);
+  });
+
+  var jumpSelect = document.getElementById('jump');
+  slides.forEach(function(s, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    var day = s.getAttribute('data-day');
+    var title = s.getAttribute('data-title') || ('Slide ' + (i + 1));
+    opt.textContent = (i + 1) + '. [' + (dayNames[day] || day) + '] ' + title;
+    jumpSelect.appendChild(opt);
+  });
+
+  render();
+</script>
+
+</body>
+</html>

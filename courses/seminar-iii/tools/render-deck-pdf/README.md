@@ -25,14 +25,14 @@ node render.js <input.html> <output.pdf> [slide|doc]
 ```
 
 - `slide` (default) — 13.333x7.5in widescreen, no margins. Use for
-  `teacher-materials/week-NN-presentation.html`.
+  `teacher-materials/unit-NN-presentation.html`.
 - `doc` — US Letter, 0.4in margins. Use for `instructional-content/*.html`.
 
 Example:
 
 ```
-node render.js ../../teacher-materials/week-04-presentation.html week-04-presentation.pdf slide
-node render.js ../../instructional-content/week-03-numbers-that-make-sense.html week-03-numbers-that-make-sense.pdf doc
+node render.js ../../teacher-materials/unit-03-presentation.html unit-03-presentation.pdf slide
+node render.js ../../instructional-content/unit-02-numbers-that-make-sense.html unit-02-numbers-that-make-sense.pdf doc
 ```
 
 ## A note on the source HTML's print CSS

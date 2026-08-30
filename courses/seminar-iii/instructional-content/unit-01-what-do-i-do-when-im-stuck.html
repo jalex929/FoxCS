@@ -1,0 +1,181 @@
+<!-- Student-facing instructional document for Seminar III Unit 01 (Academic
+     Problem-Solving), "What Do I Do When I'm Stuck?" Built 2026-08-29, content
+     drawn from courses/seminar-iii/unit-01-plan sections 1-20 (Week Purpose,
+     the five-question routine, worked examples, and the five error types).
+     Same visual component language as the rest of instructional-content/.
+     The ACT Math baseline itself (unit-01-plan sections 21-29) is a separate
+     assessment deliverable, not built yet -- this page covers the concept
+     teaching students need before taking it. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unit 01: What Do I Do When I'm Stuck?</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d; --warn-ink: #7a4413;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  .page { max-width: 800px; margin: 0 auto; background: var(--paper); padding: 0 0 4rem; }
+
+  .banner { background: var(--accent-dark); color: white; padding: 3rem 3rem 2.2rem; }
+  .banner .kicker { font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: #cfe6ee; font-weight: bold; margin: 0 0 0.5rem; }
+  .banner h1 { font-size: 2.4rem; margin: 0 0 0.6rem; line-height: 1.15; }
+  .banner .sub { font-size: 1.15rem; color: #dff1f6; margin: 0; }
+
+  section.block { padding: 1.8rem 3rem; border-bottom: 1px solid var(--line); break-inside: avoid; page-break-inside: avoid; }
+  section.block:last-of-type { border-bottom: none; }
+
+  h2 { font-size: 1.5rem; color: var(--accent-dark); margin: 0 0 0.9rem; }
+  p { font-size: 1.02rem; line-height: 1.6; margin: 0 0 0.8rem; }
+  p:last-child { margin-bottom: 0; }
+
+  ul.facts { list-style: none; margin: 0.8rem 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  ul.facts li { background: var(--accent-bg); border-left: 4px solid var(--accent); padding: 0.6rem 1rem; font-size: 1rem; line-height: 1.5; border-radius: 0 6px 6px 0; }
+  ul.facts li strong { color: var(--accent-dark); }
+
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1rem 1.3rem; font-size: 1.05rem; line-height: 1.55; margin: 0.9rem 0; }
+  .problem-box strong { color: var(--accent-dark); }
+
+  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 1rem 1.3rem; font-size: 1.02rem; line-height: 1.55; margin: 0.9rem 0; color: var(--warn-ink); }
+  .warn-box .label { display: block; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; color: var(--warn-line); margin-bottom: 0.35rem; }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.92rem; font-weight: bold; }
+
+  ol.steps { margin: 0.8rem 0; padding-left: 1.4rem; font-size: 1.02rem; line-height: 1.6; }
+  ol.steps li { margin-bottom: 0.5rem; }
+  ol.steps b { color: var(--accent-dark); }
+
+  .reference { background: var(--accent-dark); color: white; padding: 1.8rem 3rem 2.4rem; }
+  .reference h2 { color: white; }
+  .reference .ref-row { display: grid; grid-template-columns: 1fr 2fr; gap: 0.3rem 1rem; font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.7rem; }
+  .reference .ref-row b { color: #a9d8e6; }
+
+  @media print {
+    body { background: white; }
+    .page { max-width: none; }
+    section.block { break-inside: avoid; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="banner">
+    <p class="kicker">Seminar III &middot; Unit 01 &middot; Academic Problem-Solving</p>
+    <h1>What Do I Do When I'm Stuck?</h1>
+    <p class="sub">A routine for solving unfamiliar problems, and for figuring out why an answer went wrong.</p>
+  </div>
+
+  <section class="block">
+    <h2>Getting Stuck Is Information</h2>
+    <p>This year you will run into questions you know how to solve right away, questions you partially remember, questions you do not remember at all, questions you misunderstand, and questions you solve but still get wrong. These are not the same problem, and they do not need the same response.</p>
+    <p>The goal of this unit is to move from:</p>
+    <div class="problem-box">"I got it wrong."</div>
+    <p>toward:</p>
+    <div class="problem-box"><strong>"I know why I got it wrong, and I know what I can try next."</strong></div>
+  </section>
+
+  <section class="block">
+    <h2>The Five-Question Routine</h2>
+    <p>Use these five questions on every problem this year, in math and outside of it.</p>
+    <ol class="steps">
+      <li><b>What information do I have?</b> Numbers, facts, definitions, labels, diagrams, graphs, tables, instructions, context. Do not calculate yet. First figure out what you are actually given.</li>
+      <li><b>What am I trying to determine?</b> Finish the sentence: "I need to find ____." This stops you from calculating before you know your goal.</li>
+      <li><b>What skill or information could help?</b> An operation, a formula, a definition, information from a graph or a passage. You do not need the full solution yet, just a place to start.</li>
+      <li><b>What strategy can I try?</b> Write an equation, draw a diagram, make a table, estimate, eliminate impossible choices, substitute answer choices, reread the question, break it into smaller steps. The important word is try. A strategy does not need to be guaranteed to work before you attempt it.</li>
+      <li><b>Does my answer make sense?</b> Too large, too small, positive or negative, does the unit make sense, did you answer the question that was actually asked, could you estimate to check it?</li>
+    </ol>
+    <p>Short version for quick reference:</p>
+    <div class="chip-row">
+      <span class="chip">STOP</span>
+      <span class="chip">FIND</span>
+      <span class="chip">CONNECT</span>
+      <span class="chip">TRY</span>
+      <span class="chip">CHECK</span>
+    </div>
+    <p>The five full questions are still the real course language. STOP-FIND-CONNECT-TRY-CHECK is just a memory aid for the same routine.</p>
+  </section>
+
+  <section class="block">
+    <h2>Walk Through a Problem</h2>
+    <div class="problem-box">
+      <strong>Scenario:</strong> A learner earns $15 per hour and works 6 hours. How much does the learner earn before taxes?
+      <ol class="steps">
+        <li><b>What information do I have?</b> $15 per hour, 6 hours.</li>
+        <li><b>What am I trying to determine?</b> The total amount earned.</li>
+        <li><b>What skill or information could help?</b> A rate multiplied by the number of hours.</li>
+        <li><b>What strategy can I try?</b> Multiply: 15 &times; 6 = 90.</li>
+        <li><b>Does my answer make sense?</b> Yes. $15 an hour for six hours should land between $75 and $100. <strong>Answer: $90.</strong></li>
+      </ol>
+    </div>
+    <p>The same routine works outside of math. You have a project due Friday that needs a written response, a visual, and a short presentation. It is currently Wednesday.</p>
+    <ul class="facts">
+      <li><strong>What information do I have?</strong> Three required parts, due Friday, two days left.</li>
+      <li><strong>What am I trying to determine?</strong> How to finish on time.</li>
+      <li><strong>What strategy can I try?</strong> Break the project into smaller tasks and decide what gets done Wednesday versus Thursday.</li>
+      <li><strong>Does my answer make sense?</strong> Check whether the plan actually leaves time for all three parts.</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2>Why Was My Answer Wrong?</h2>
+    <p>A wrong answer does not automatically mean "I don't know how to do this." Three learners can miss the exact same problem for three different reasons, and they do not need the same help. Use these five categories to figure out which one actually happened.</p>
+
+    <div class="problem-box"><strong>Knowledge Error.</strong> "There is something I need to know that I don't currently know or remember." Example: you don't remember how negative numbers behave when you multiply them. <strong>Try this:</strong> review the concept, look at a worked example, or ask for an explanation.</div>
+
+    <div class="problem-box"><strong>Process Error.</strong> "I had the right general idea, but something went wrong in my steps." Example: you use the correct formula but put values in the wrong places, or you do the steps out of order. <strong>Try this:</strong> compare your work to a correct example and find exactly where it changed.</div>
+
+    <div class="problem-box"><strong>Execution Error.</strong> "I knew how to solve it, but I made a mistake while doing the work." Example: 7 &times; 8 = 54, or copying 36 as 63. <strong>Try this:</strong> slow down and check your calculations against an estimate.</div>
+
+    <div class="problem-box"><strong>Comprehension Error.</strong> "I didn't correctly understand what the question was asking or telling me." Example: calculating the total when the question asked for the difference, or missing the word "NOT." <strong>Try this:</strong> reread the question and identify the actual task before you answer.</div>
+
+    <div class="problem-box"><strong>Strategy Error.</strong> "I understood the problem, but the approach I chose wasn't the best way to solve it." Example: doing a long calculation by hand when estimating would eliminate most of the answer choices in seconds. <strong>Try this:</strong> ask yourself, "is there an easier way?"</div>
+
+    <div class="warn-box">
+      <span class="label">Errors Can Overlap</span>
+      Don't treat these as perfectly rigid boxes. A problem can involve more than one issue, for example misunderstanding a question and then using the wrong process. The point isn't finding a perfect label. The point is answering: what should I do differently next time? Pick whichever category best explains what actually got in your way.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Learn From the Error</h2>
+    <p>Here are three real examples of classifying a wrong answer.</p>
+
+    <div class="problem-box">
+      <strong>Problem:</strong> 6 + 3 &times; 4 = ? A learner answers 36, working it as 6 + 3 = 9, then 9 &times; 4 = 36.
+      <br><strong>What happened:</strong> The calculations themselves were done correctly, but in the wrong order. Multiplication should have happened before addition.
+      <br><strong>Best classification: Process Error.</strong> Review order of operations and retry.
+    </div>
+
+    <div class="problem-box">
+      <strong>Problem:</strong> A jacket costs $80 and is discounted 25%. A learner correctly finds the discount is $20, and answers $20.
+      <br><strong>What happened:</strong> The math was right, but the question asked for the final price, not the discount amount.
+      <br><strong>Best classification: Comprehension Error.</strong> Reread the question and identify exactly what it's asking before locking in an answer.
+    </div>
+
+    <div class="problem-box">
+      <strong>Problem:</strong> 48 &divide; 6 = ? A learner correctly identifies that division is needed, then writes 48 &divide; 6 = 6.
+      <br><strong>What happened:</strong> The right operation, the right setup, a mistake in carrying it out.
+      <br><strong>Best classification: Execution Error.</strong> Check the calculation, and verify by multiplying the answer back out.
+    </div>
+  </section>
+
+  <div class="reference">
+    <h2>Quick Reference</h2>
+    <div class="ref-row"><b>The routine</b><span>STOP (what do I have) &rarr; FIND (what am I solving for) &rarr; CONNECT (what could help) &rarr; TRY (pick a strategy) &rarr; CHECK (does it make sense).</span></div>
+    <div class="ref-row"><b>Knowledge</b><span>You don't know or remember something you need.</span></div>
+    <div class="ref-row"><b>Process</b><span>Right idea, steps went wrong or out of order.</span></div>
+    <div class="ref-row"><b>Execution</b><span>Right idea and steps, a small mistake carrying it out.</span></div>
+    <div class="ref-row"><b>Comprehension</b><span>You misunderstood what the question was asking.</span></div>
+    <div class="ref-row"><b>Strategy</b><span>You understood it, but picked an inefficient approach.</span></div>
+    <div class="ref-row"><b>Remember</b><span>Different problems need different responses. More practice isn't always the right fix.</span></div>
+  </div>
+
+</div>
+</body>
+</html>

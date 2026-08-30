@@ -2442,11 +2442,11 @@ Integrated retrieval:
 
 Primary instruction:
 
-- Weeks 3–6
+- Units 2–5
 
 Retrieved:
 
-- Weeks 7–21
+- Units 6–20
 - Quarter 4 financial applications
 
 Includes:
@@ -2463,11 +2463,11 @@ Includes:
 
 Primary instruction:
 
-- Weeks 7–10
+- Units 6–9
 
 Continued:
 
-- Weeks 13, 20, 21
+- Units 12, 19, 20
 
 Includes:
 
@@ -2482,11 +2482,11 @@ Includes:
 
 Primary instruction:
 
-- Weeks 12–13
+- Units 11–12
 
 Continued:
 
-- Weeks 20–21
+- Units 19–20
 
 Includes:
 
@@ -2500,11 +2500,11 @@ Includes:
 
 Primary instruction:
 
-- Weeks 14–15
+- Units 13–14
 
 Retrieved:
 
-- Weeks 20–21
+- Units 19–20
 
 Includes:
 
@@ -2520,11 +2520,11 @@ Includes:
 
 Primary instruction:
 
-- Weeks 18–19
+- Units 17–18
 
 Continued:
 
-- Weeks 29–31
+- Units 28–30
 
 Includes:
 
@@ -2572,11 +2572,11 @@ Students repeatedly:
 
 Primary:
 
-- Weeks 22–23
+- Units 21–22
 
 Continued:
 
-- Weeks 24 and 29–38
+- Unit 23 and Units 28–37
 
 Includes:
 
@@ -2592,11 +2592,11 @@ Includes:
 
 Primary:
 
-- Weeks 22–24
+- Units 21–23
 
 Continued:
 
-- Weeks 25–27
+- Units 24–26
 
 Includes:
 
@@ -2610,11 +2610,11 @@ Includes:
 
 Primary:
 
-- Weeks 23–24
+- Units 22–23
 
 Expanded:
 
-- Weeks 29–31
+- Units 28–30
 
 Includes:
 
@@ -2632,7 +2632,7 @@ Includes:
 
 Primary:
 
-- Weeks 25–26
+- Units 24–25
 
 Includes:
 
@@ -2648,7 +2648,7 @@ Includes:
 
 Primary:
 
-- Weeks 25–27
+- Units 24–26
 
 Includes:
 
@@ -2662,11 +2662,11 @@ Includes:
 
 Primary:
 
-- Week 27
+- Unit 26
 
 Continued:
 
-- Weeks 34–36
+- Units 33–35
 
 Includes:
 
@@ -2683,13 +2683,13 @@ Includes:
 
 Primary instruction:
 
-- Weeks 29–31
+- Units 28–30
 
 Earlier foundations:
 
-- Week 12
-- Weeks 18–19
-- Weeks 22–24
+- Unit 11
+- Units 17–18
+- Units 21–23
 
 Includes:
 
@@ -2869,6 +2869,7 @@ When creating Seminar III instructional content:
 13. Connect academic skills to practical applications.
 14. Do not require postsecondary exploration every week.
 15. Use life-skills instruction as an additional opportunity to apply academic content.
+16. Use "Learner" (capital L), not "student," in curriculum copy shown directly to Learners: instructional pages, printable practice/check sheets, and interactive (H5P) content. Matches `../../02-authoring-system/content-voice-and-tone.md`'s FoxCS-wide rule, adopted for Seminar III 2026-08-29 (previously used "student" throughout; converted). Internal/design documents -- this file, `01_SEMINAR_III_COURSE_PLAN`, the `unit-NN-plan` source docs -- and teacher-only material (`teacher-materials/` decks and answer keys) can still say "student," same carve-out the voice doc gives grading rubrics and teacher-only keys generally.
 
 ---
 

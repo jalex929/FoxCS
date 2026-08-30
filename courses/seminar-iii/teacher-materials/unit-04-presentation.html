@@ -1,0 +1,345 @@
+<!-- Instructor-only presentation deck for Seminar III Unit 04 (Percent).
+     week-05-plan's Calendar Note says Friday, Sept 25, 2026 is a non-attendance day, so the
+     plan's own Instructional Sequence already assumes four real teaching days: Day 1 (Percent
+     as Another Representation), Day 2 (Find the Part/Percent/Whole), Day 3 (Percent in Money),
+     Day 4 (Percent Change, Apply/Analyze/Retry/Check). That is still more instructional days
+     than fit a realistic 45-minute-period, 2-3-day week. Per the same merging logic used in
+     week-04-presentation.html, Day 1 + Day 2 are merged into one denser "Session A" (percent
+     meaning and the three percent structures) and Day 3 + Day 4 into "Session B" (percent
+     applied to money, then percent change, folding the Day 4 apply/analyze/retry/check flow
+     directly into Session B rather than a separate apply-day deck, since there is no fifth
+     instructional day this week). Same self-contained single-file pattern as week-02/03/04
+     presentation.html, including the print-CSS fix: .slide { position: relative } under
+     @media print, not position: static. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Unit 04 Presentation: Percent</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  #deck { position: relative; height: 100vh; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; background: var(--paper); padding: 6vh 8vw 9vh; }
+  .slide.active { display: flex; }
+  .kicker { font-size: 1.05rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6rem; }
+  h1 { font-size: 3rem; line-height: 1.15; margin: 0 0 1rem; color: var(--ink); text-align: left; max-width: 24ch; }
+  h2.prompt { font-size: 2.1rem; line-height: 1.3; margin: 0.4rem 0 1.2rem; color: var(--accent-dark); text-align: left; max-width: 30ch; }
+  .say { font-size: 1.7rem; color: var(--ink); border-left: 6px solid var(--accent); padding: 0.3rem 0 0.3rem 1.2rem; margin: 0.6rem 0 1.4rem; max-width: 32ch; font-style: italic; }
+  ul.points, ol.points { font-size: 1.5rem; line-height: 1.55; margin: 0.5rem 0 1rem; padding-left: 1.4rem; max-width: 46ch; }
+  ul.points li, ol.points li { margin-bottom: 0.3rem; }
+  .sub { font-size: 1.3rem; color: var(--muted); max-width: 48ch; margin: 0.2rem 0 0.8rem; }
+  .note { position: absolute; left: 8vw; right: 8vw; bottom: 5vh; font-size: 1.05rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 0.6rem; max-width: 76ch; }
+  .note strong { color: var(--accent-dark); }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0 1.2rem; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.3rem 0.9rem; font-size: 1.15rem; font-weight: bold; }
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1.2rem 1.5rem; font-size: 1.5rem; max-width: 54ch; margin: 0.5rem 0 1rem; }
+  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 0.9rem 1.3rem; font-size: 1.3rem; max-width: 52ch; margin: 0.6rem 0; }
+  .divider { background: var(--accent-dark); color: white; }
+  .divider .kicker { color: #cfe6ee; }
+  .divider h1 { color: white; font-size: 3.4rem; }
+  .divider .sub { color: #cfe6ee; font-size: 1.4rem; }
+  .title-slide { background: var(--accent-dark); color: white; }
+  .title-slide .kicker { color: #cfe6ee; }
+  .title-slide h1 { color: white; font-size: 3.3rem; max-width: 26ch; }
+  .title-slide .sub { color: #dff1f6; font-size: 1.35rem; max-width: 52ch; }
+  .card-row { display: flex; gap: 1.2rem; flex-wrap: wrap; margin: 0.8rem 0 1rem; }
+  .card { border: 2px solid var(--accent); background: var(--accent-bg); border-radius: 10px; padding: 0.8rem 1.2rem; font-size: 1.4rem; color: var(--accent-dark); font-weight: bold; min-width: 6rem; text-align: center; }
+  #chrome { position: fixed; left: 0; right: 0; bottom: 0; height: 4.5vh; min-height: 42px; background: var(--ink); color: #cfd6de; display: flex; align-items: center; justify-content: space-between; padding: 0 1.2rem; font-size: 0.95rem; z-index: 10; }
+  #chrome .left, #chrome .right { display: flex; align-items: center; gap: 0.7rem; }
+  #chrome button, #chrome select { background: #2a3444; color: #eef2f6; border: 1px solid #3d4a5e; border-radius: 5px; padding: 0.3rem 0.7rem; font-size: 0.95rem; cursor: pointer; }
+  #chrome button:hover { background: #3d4a5e; }
+  #daytag { background: var(--accent); color: white; font-weight: bold; padding: 0.25rem 0.7rem; border-radius: 4px; font-size: 0.9rem; letter-spacing: 0.04em; }
+  @media print {
+    #chrome { display: none; }
+    #deck { position: static; height: auto; overflow: visible; }
+    .slide { display: flex !important; position: relative; page-break-after: always; height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <section class="slide title-slide" data-day="0" data-title="Title">
+    <p class="kicker">Seminar III &middot; Unit 04 &middot; Foundations</p>
+    <h1>Percent</h1>
+    <p class="sub">Learn &rarr; Practice &rarr; Check &rarr; Analyze &rarr; Retry &rarr; Apply</p>
+    <p class="sub">Two teaching sessions this week (meaning and structure, then applied money and change) built from four real teaching days. Friday is a non-attendance day this week.</p>
+  </section>
+
+  <!-- SESSION A: PERCENT MEANING & STRUCTURE -->
+  <section class="slide divider" data-day="1" data-title="Session A divider">
+    <p class="kicker">Session A</p>
+    <h1>Percent: Meaning &amp; Structure</h1>
+    <p class="sub">Percent as out of 100 &middot; fraction &harr; decimal &harr; percent &middot; benchmarks &middot; find the part, the percent, or the whole</p>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Percent means out of 100">
+    <p class="kicker">Percent Means Out of 100</p>
+    <h2 class="prompt">Percent comes from "per hundred."</h2>
+    <div class="problem-box">25% = 25/100 = 0.25 = 1/4</div>
+    <div class="note">Percent is not a new kind of number &mdash; it is a new way of writing a quantity students already understand as a fraction or decimal.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Fraction decimal percent connection">
+    <p class="kicker">Same Number, Different Form</p>
+    <h2 class="prompt">Fraction &harr; Decimal &harr; Percent</h2>
+    <div class="chip-row">
+      <span class="chip">1/2 = 0.5 = 50%</span>
+      <span class="chip">1/4 = 0.25 = 25%</span>
+      <span class="chip">3/4 = 0.75 = 75%</span>
+    </div>
+    <div class="note">Unit 04 builds directly on Unit 03's fraction-decimal work rather than introducing percent as unrelated content.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Misconception percent as whole number">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Is 20% the same as 20?</h2>
+    <div class="warn-box">No. 20% = 0.20, or 20/100. Treating the percent number as a whole number skips the "out of 100" meaning entirely.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Misconception wrong decimal direction">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Does 35% become 3.5?</h2>
+    <p class="say">No &mdash; it becomes 0.35.</p>
+    <div class="note">Reasonableness catches this: 35% is less than 100%, so its decimal form must be less than 1.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Benchmark percentages">
+    <p class="kicker">Benchmark Percentages</p>
+    <h2 class="prompt">Useful reference points for estimating.</h2>
+    <div class="card-row">
+      <span class="card">10% = 1/10</span>
+      <span class="card">25% = 1/4</span>
+      <span class="card">50% = 1/2</span>
+      <span class="card">75% = 3/4</span>
+    </div>
+    <div class="note">Mental strategy chain: 10% of a number &rarr; divide by 10. 1% &rarr; divide by 100. 5% is half of 10%. 20% is double 10%. Build less familiar percents from these.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Percentages over 100">
+    <p class="kicker">Percent Is Not Limited to 0-100</p>
+    <h2 class="prompt">200% means twice the original amount.</h2>
+    <div class="chip-row">
+      <span class="chip">50% = half</span>
+      <span class="chip">100% = the whole amount</span>
+      <span class="chip">200% = double</span>
+    </div>
+    <div class="note">Students should not assume percentages must always fall between 0% and 100%.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Three major percent questions">
+    <p class="kicker">The Three Major Percent Questions</p>
+    <h2 class="prompt">Which quantity is missing?</h2>
+    <div class="chip-row">
+      <span class="chip">Find the Part</span>
+      <span class="chip">Find the Percent</span>
+      <span class="chip">Find the Whole</span>
+    </div>
+    <div class="note">Understanding which quantity is unknown matters more than memorizing three separate formulas.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Type 1 find the part">
+    <p class="kicker">Type 1 &mdash; Find the Part</p>
+    <h2 class="prompt">What is 30% of 80?</h2>
+    <div class="problem-box">30% = 0.30 &nbsp;&rarr;&nbsp; 0.30 &times; 80 = 24</div>
+    <div class="note">The whole and percent are known. The part is unknown.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Type 2 find the percent">
+    <p class="kicker">Type 2 &mdash; Find the Percent</p>
+    <h2 class="prompt">18 out of 24 students completed an assignment. What percent?</h2>
+    <div class="problem-box">18 &divide; 24 = 0.75 &nbsp;&rarr;&nbsp; 75%</div>
+    <div class="note">The part and whole are known. The percent is unknown. Setup: part &divide; whole, then convert to percent.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Type 3 find the whole">
+    <p class="kicker">Type 3 &mdash; Find the Whole</p>
+    <h2 class="prompt">$15 is 25% of what amount?</h2>
+    <div class="problem-box">25% = 1/4 &nbsp;&rarr;&nbsp; 15 &times; 4 = 60</div>
+    <div class="note">The part and percent are known. The whole is unknown. Benchmark reasoning or dividing by the decimal percent both work.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Misconception confusing part and whole">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">18 of 24 students &mdash; which number goes on top?</h2>
+    <div class="warn-box">Incorrect: 24 &divide; 18. Correct: 18 &divide; 24. Identify the part and the whole before calculating, not after.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Session A exit ticket">
+    <p class="kicker">Exit Ticket &mdash; Session A</p>
+    <ol class="points">
+      <li>Convert a decimal to a percent</li>
+      <li>Convert a percent to a decimal</li>
+      <li>Convert a fraction to a percent</li>
+    </ol>
+  </section>
+
+  <!-- SESSION B: PERCENT IN MONEY & CHANGE -->
+  <section class="slide divider" data-day="2" data-title="Session B divider">
+    <p class="kicker">Session B</p>
+    <h1>Percent in Money &amp; Change</h1>
+    <p class="sub">Discounts, tax, tips &middot; percent increase and decrease &middot; apply, analyze, retry, and the Unit 04 check</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Identifying the whole">
+    <p class="kicker">One of the Most Important Skills This Week</p>
+    <h2 class="prompt">What is the complete starting amount?</h2>
+    <div class="chip-row">
+      <span class="chip">Discount &rarr; original price</span>
+      <span class="chip">Test score &rarr; total points</span>
+      <span class="chip">Survey &rarr; total students</span>
+      <span class="chip">Percent change &rarr; original value</span>
+    </div>
+    <div class="note">A student who identifies the wrong whole can perform an otherwise correct calculation and still get the wrong answer.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Discounts">
+    <p class="kicker">Discounts</p>
+    <h2 class="prompt">A $70 jacket is 20% off.</h2>
+    <div class="problem-box">Discount: 0.20 &times; 70 = $14 &nbsp;&middot;&nbsp; Sale price: 70 &minus; 14 = $56</div>
+    <div class="note">A discount reduces an original price. Find the discount, then subtract it.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Misconception discount vs sale price">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Is the discount amount the same as the sale price?</h2>
+    <div class="warn-box">No. "How much is the discount?" and "What is the sale price?" are two different questions with two different answers &mdash; $14 vs. $56 in the jacket example.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Sales tax">
+    <p class="kicker">Sales Tax</p>
+    <h2 class="prompt">A $40 purchase has 10% tax.</h2>
+    <div class="problem-box">Tax: 0.10 &times; 40 = $4 &nbsp;&middot;&nbsp; Total: 40 + 4 = $44</div>
+    <div class="note">Tax increases the amount owed. Find the tax, then add it.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Misconception subtracting tax">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Should tax ever be subtracted?</h2>
+    <p class="say">No &mdash; tax increases the amount owed.</p>
+    <div class="note">A $50 purchase with $5 tax totals $55, not $45.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Tips">
+    <p class="kicker">Estimating Tips</p>
+    <h2 class="prompt">A meal costs $36. Estimate a 20% tip.</h2>
+    <div class="problem-box">10% of $36 = $3.60 &nbsp;&rarr;&nbsp; double it: 20% &asymp; $7.20</div>
+    <div class="note">The 10%-then-adjust strategy works for most tip percentages without exact decimal multiplication.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Percent increase and decrease">
+    <p class="kicker">Percent Increase &amp; Decrease</p>
+    <h2 class="prompt">Compare the change to the original value, not the new value.</h2>
+    <div class="chip-row">
+      <span class="chip">50 &rarr; 60: 10 &divide; 50 = 20% increase</span>
+      <span class="chip">80 &rarr; 60: 20 &divide; 80 = 25% decrease</span>
+    </div>
+    <div class="note">Ask: how large was the change compared with where I started?</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Misconception increase decrease cancel">
+    <p class="kicker">Common Misconception</p>
+    <h2 class="prompt">Does a 20% increase then a 20% decrease return to the start?</h2>
+    <div class="warn-box">$100 &rarr; +20% &rarr; $120 &rarr; &minus;20% &rarr; $96, not $100. The second 20% is calculated from a different, larger whole.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Reasonableness with percent">
+    <p class="kicker">Does My Answer Make Sense?</p>
+    <h2 class="prompt">Operation &rarr; Size &rarr; Direction &rarr; Unit &rarr; Context</h2>
+    <ul class="points">
+      <li>Is the percent less than 100%? Should the part be smaller than the whole?</li>
+      <li>Is this a discount or an increase &mdash; should the amount go up or down?</li>
+      <li>Did I answer with the percent amount or the final amount?</li>
+    </ul>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Apply analyze retry check">
+    <p class="kicker">Apply, Analyze, Retry</p>
+    <h2 class="prompt">Mixed practice, error analysis, and the Unit 04 check</h2>
+    <ul class="points">
+      <li>Mixed retrieval: conversions, part/percent/whole, discounts, tax, tips, percent change</li>
+      <li>Students classify a missed item by error type, then retry after feedback</li>
+      <li>Unit 04 check, then reflection: one percent skill for outside school, one skill needing practice, one error made, one checking strategy</li>
+    </ul>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Session B exit ticket">
+    <p class="kicker">Exit Ticket &mdash; Session B</p>
+    <ol class="points">
+      <li>Solve one discount or tax problem</li>
+      <li>Report both the percent amount and the final total</li>
+      <li>Explain which value you used as the whole</li>
+    </ol>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="slide divider" data-day="3" data-title="Closing / transition">
+    <p class="kicker">Transition to Unit 05</p>
+    <h1>Ratios, Rates &amp; Proportions</h1>
+    <p class="sub">Percent compares a quantity to 100. Unit 05 expands to comparisons between any two quantities: ratios, rates, unit prices, and proportions.</p>
+  </section>
+
+</div>
+
+<div id="chrome">
+  <div class="left">
+    <button onclick="go(-1)">&larr; Prev</button>
+    <button onclick="go(1)">Next &rarr;</button>
+    <span id="daytag">Day 0</span>
+  </div>
+  <div class="right">
+    <select id="jump" onchange="jumpTo(this.value)"></select>
+    <span id="counter">1 / 1</span>
+    <button onclick="document.documentElement.requestFullscreen && document.documentElement.requestFullscreen()">Fullscreen</button>
+  </div>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var current = 0;
+  var dayNames = {0:'Title',1:'Session A',2:'Session B',3:'Closing'};
+
+  function render() {
+    slides.forEach(function(s, i) { s.classList.toggle('active', i === current); });
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+    var day = slides[current].getAttribute('data-day');
+    document.getElementById('daytag').textContent = dayNames[day] || ('Day ' + day);
+    document.getElementById('jump').value = current;
+  }
+  function go(delta) { current = Math.max(0, Math.min(slides.length - 1, current + delta)); render(); }
+  function jumpTo(i) { current = parseInt(i, 10); render(); }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { go(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+    else if (e.key === 'Home') { current = 0; render(); }
+    else if (e.key === 'End') { current = slides.length - 1; render(); }
+  });
+  document.getElementById('deck').addEventListener('click', function(e) {
+    if (e.target.closest('a')) return;
+    var rect = deck.getBoundingClientRect();
+    if (e.clientX - rect.left > rect.width / 2) go(1); else go(-1);
+  });
+
+  var jumpSelect = document.getElementById('jump');
+  slides.forEach(function(s, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    var day = s.getAttribute('data-day');
+    var title = s.getAttribute('data-title') || ('Slide ' + (i + 1));
+    opt.textContent = (i + 1) + '. [' + (dayNames[day] || day) + '] ' + title;
+    jumpSelect.appendChild(opt);
+  });
+
+  render();
+</script>
+
+</body>
+</html>

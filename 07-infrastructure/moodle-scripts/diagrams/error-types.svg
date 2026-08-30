@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" font-family="Verdana, Arial, Helvetica, sans-serif">
+  <rect x="0" y="0" width="1000" height="300" fill="#ffffff"/>
+  <text x="500" y="32" text-anchor="middle" font-size="22" font-weight="bold" fill="#144d61">The Five Error Types</text>
+
+  <!-- shared card background -->
+  <g font-size="13">
+    <!-- Card 1: Knowledge (lightbulb) -->
+    <g transform="translate(20,60)">
+      <rect x="0" y="0" width="180" height="215" rx="10" fill="#eaf3f6" stroke="#1f6f8b" stroke-width="1.5"/>
+      <circle cx="90" cy="55" r="26" fill="none" stroke="#144d61" stroke-width="4"/>
+      <rect x="80" y="78" width="20" height="14" rx="2" fill="#144d61"/>
+      <line x1="82" y1="98" x2="98" y2="98" stroke="#144d61" stroke-width="3"/>
+      <text x="90" y="130" text-anchor="middle" font-weight="bold" fill="#144d61" font-size="15">Knowledge</text>
+      <text x="90" y="152" text-anchor="middle" fill="#5b6472">Don't know or</text>
+      <text x="90" y="168" text-anchor="middle" fill="#5b6472">remember something</text>
+      <text x="90" y="184" text-anchor="middle" fill="#5b6472">you need.</text>
+      <text x="90" y="205" text-anchor="middle" font-style="italic" fill="#1f6f8b">Review the concept</text>
+    </g>
+
+    <!-- Card 2: Process (looping arrow) -->
+    <g transform="translate(215,60)">
+      <rect x="0" y="0" width="180" height="215" rx="10" fill="#eaf3f6" stroke="#1f6f8b" stroke-width="1.5"/>
+      <path d="M 90,33 A 22,22 0 1 1 68,55" fill="none" stroke="#144d61" stroke-width="4" stroke-linecap="round"/>
+      <path d="M 61,62 L 68,55 L 75,62" fill="none" stroke="#144d61" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="90" y="130" text-anchor="middle" font-weight="bold" fill="#144d61" font-size="15">Process</text>
+      <text x="90" y="152" text-anchor="middle" fill="#5b6472">Right idea, steps</text>
+      <text x="90" y="168" text-anchor="middle" fill="#5b6472">went wrong or</text>
+      <text x="90" y="184" text-anchor="middle" fill="#5b6472">out of order.</text>
+      <text x="90" y="205" text-anchor="middle" font-style="italic" fill="#1f6f8b">Compare the steps</text>
+    </g>
+
+    <!-- Card 3: Execution (target, off-center hit) -->
+    <g transform="translate(410,60)">
+      <rect x="0" y="0" width="180" height="215" rx="10" fill="#eaf3f6" stroke="#1f6f8b" stroke-width="1.5"/>
+      <circle cx="90" cy="55" r="28" fill="none" stroke="#144d61" stroke-width="3"/>
+      <circle cx="90" cy="55" r="17" fill="none" stroke="#144d61" stroke-width="3"/>
+      <circle cx="90" cy="55" r="6" fill="none" stroke="#144d61" stroke-width="3"/>
+      <circle cx="104" cy="42" r="5" fill="#d98a3d"/>
+      <text x="90" y="130" text-anchor="middle" font-weight="bold" fill="#144d61" font-size="15">Execution</text>
+      <text x="90" y="152" text-anchor="middle" fill="#5b6472">Right idea and</text>
+      <text x="90" y="168" text-anchor="middle" fill="#5b6472">steps, a small slip</text>
+      <text x="90" y="184" text-anchor="middle" fill="#5b6472">carrying it out.</text>
+      <text x="90" y="205" text-anchor="middle" font-style="italic" fill="#1f6f8b">Slow down, check work</text>
+    </g>
+
+    <!-- Card 4: Comprehension (speech bubble with ?) -->
+    <g transform="translate(605,60)">
+      <rect x="0" y="0" width="180" height="215" rx="10" fill="#eaf3f6" stroke="#1f6f8b" stroke-width="1.5"/>
+      <rect x="60" y="32" width="60" height="42" rx="10" fill="none" stroke="#144d61" stroke-width="4"/>
+      <path d="M 78,74 L 78,86 L 92,74 Z" fill="#144d61"/>
+      <text x="90" y="62" text-anchor="middle" font-size="24" font-weight="bold" fill="#144d61">?</text>
+      <text x="90" y="130" text-anchor="middle" font-weight="bold" fill="#144d61" font-size="15">Comprehension</text>
+      <text x="90" y="152" text-anchor="middle" fill="#5b6472">Misunderstood what</text>
+      <text x="90" y="168" text-anchor="middle" fill="#5b6472">the question was</text>
+      <text x="90" y="184" text-anchor="middle" fill="#5b6472">asking.</text>
+      <text x="90" y="205" text-anchor="middle" font-style="italic" fill="#1f6f8b">Reread the question</text>
+    </g>
+
+    <!-- Card 5: Strategy (signpost) -->
+    <g transform="translate(800,60)">
+      <rect x="0" y="0" width="180" height="215" rx="10" fill="#eaf3f6" stroke="#1f6f8b" stroke-width="1.5"/>
+      <line x1="90" y1="30" x2="90" y2="90" stroke="#144d61" stroke-width="4"/>
+      <path d="M 90,38 L 130,38 L 122,48 L 130,58 L 90,58 Z" fill="#144d61"/>
+      <path d="M 90,58 L 55,58 L 63,68 L 55,78 L 90,78 Z" fill="#d98a3d"/>
+      <text x="90" y="130" text-anchor="middle" font-weight="bold" fill="#144d61" font-size="15">Strategy</text>
+      <text x="90" y="152" text-anchor="middle" fill="#5b6472">Understood it, but</text>
+      <text x="90" y="168" text-anchor="middle" fill="#5b6472">picked an inefficient</text>
+      <text x="90" y="184" text-anchor="middle" fill="#5b6472">approach.</text>
+      <text x="90" y="205" text-anchor="middle" font-style="italic" fill="#1f6f8b">Ask: an easier way?</text>
+    </g>
+  </g>
+</svg>
