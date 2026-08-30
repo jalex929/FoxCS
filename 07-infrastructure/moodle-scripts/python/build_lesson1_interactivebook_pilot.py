@@ -24,7 +24,7 @@ def block_multichoice(question, answers, title):
                 ],
                 "overallFeedback": [{"from": 0, "to": 100}],
                 "behaviour": {
-                    "enableRetry": True, "enableSolutionsButton": True, "enableCheckButton": True,
+                    "enableRetry": True, "enableSolutionsButton": False, "enableCheckButton": True,
                     "type": "auto", "singlePoint": False, "randomAnswers": True,
                     "showSolutionsRequiresInput": True, "confirmCheckDialog": False,
                     "confirmRetryDialog": False, "autoCheck": False, "passPercentage": 100,
@@ -195,7 +195,7 @@ ch3 = chapter([
                 },
                 "disableBackwardsNavigation": False, "randomQuestions": False,
                 "endGame": {
-                    "showResultPage": True, "showSolutionButton": True, "showRetryButton": True,
+                    "showResultPage": True, "showSolutionButton": False, "showRetryButton": True,
                     "noResultMessage": "Finished", "message": "Your Results", "amountCorrect": "You got @finals of @totals correct",
                     "scoreBarLabel": "You got @finals out of @totals points", "scoreHeader": "Score",
                     "solutionButtonText": "Show solution", "retryButtonText": "Retry", "finishButtonText": "Finish",
@@ -287,7 +287,7 @@ ch4 = chapter([
                 },
                 "disableBackwardsNavigation": False, "randomQuestions": False,
                 "endGame": {
-                    "showResultPage": True, "showSolutionButton": True, "showRetryButton": True,
+                    "showResultPage": True, "showSolutionButton": False, "showRetryButton": True,
                     "noResultMessage": "Finished", "message": "Your Results", "amountCorrect": "You got @finals of @totals correct",
                     "scoreBarLabel": "You got @finals out of @totals points", "scoreHeader": "Score",
                     "solutionButtonText": "Show solution", "retryButtonText": "Retry", "finishButtonText": "Finish",
