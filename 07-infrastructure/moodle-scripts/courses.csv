@@ -1,0 +1,5 @@
+shortname,fullname,category,idnumber,format,numsections,visible
+foxcs-python,FoxCS: Python (Game Programming I),2,foxcs-python,topics,21,1
+foxcs-game2,FoxCS: Game Programming II (Game II),2,foxcs-game2,topics,1,1
+foxcs-webdev,FoxCS: Web Dev (Web II),2,foxcs-webdev,topics,1,1
+foxcs-seminar3,FoxCS: Seminar III,2,foxcs-seminar3,topics,39,1

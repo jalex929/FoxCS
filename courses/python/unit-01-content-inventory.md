@@ -1,5 +1,7 @@
 # Unit 01 Content Inventory & Gap Analysis: "What Is Programming?"
 
+**Status note, 2026-08-30: the gaps this doc identifies (mastery checks, the Interactive Greeting project, 01.2/01.5's TSV practice) have all since been built into real FoxCS lesson content** — see `../../decisions-log.md`'s 2026-08-30 entry and `../../02-authoring-system/mvp-unit-folder-structure.md`. Kept below as a historical record of what `adaptive-python`'s source material offered for sampling, still useful if a future unit needs the same kind of source-material audit, but don't treat "What to prioritize next" as current.
+
 What already exists in `adaptive-python` for Unit 01, checked against the lesson's actual Programming/Computational-Thinking/Language objectives (`Curriculum_Python Fundamentals.md`), and what's genuinely missing. Read directly from the source files (`python-app/curriculum/`), not inferred from filenames — see `02-authoring-system/moodle-quick-pilot-workflow.md` for how to pull from these into Moodle.
 
 ## Per-lesson status

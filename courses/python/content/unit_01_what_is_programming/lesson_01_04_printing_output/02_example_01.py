@@ -1,4 +1,4 @@
-# 1.4.2 — Example: print() Basics
+# 1.4.2 Example: print() Basics
 # Run this file and compare the output to what each print() statement says.
 
 print("Learning Python is fun!")

@@ -4,6 +4,204 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-30 (final) — Mastery Check built as a real Moodle Quiz; Moodle-replaces-Classroom floated, deliberately not scoped yet
+
+**Context:** Jay asked about password-protected mastery checks going forward, which surfaced that today's Moodle upload work (both the file-based lessons and the Interactive Book pilot) is currently a **read-only preview mirror** -- students aren't actually submitting anything to Moodle at all. The real submission path is still Google Classroom (students edit files in their own copy, submit the whole folder back through Classroom, Jay downloads and grades). Asked directly whether Jay wanted Moodle to become the real submission point; he said yes in principle ("I would be happy to make moodle the replacement to Google Classroom"), and confirmed he's not worried about needing one unified submission -- per-activity is fine.
+
+**Decided:** that's a large migration (student enrollment, a real submission mechanism per content type, reworking `05-grader/`'s Classroom-shaped codename-swap pipeline) that hasn't been scoped, so **deliberately started narrow**: prove the pattern on Mastery Check specifically, since that's what prompted the question and is the one piece H5P categorically cannot do (no password-gate mechanism exists in any installed H5P content type, confirmed while building yesterday's pilot).
+
+**Built:** Lesson 01.1's Mastery Check as a real `mod_quiz` instance -- 4 `qtype_essay` questions (manually graded, same real open-ended questions as `07_mastery_check.html`) plus a native "require password" setting. This is Moodle's own supported password mechanism, not anything hand-rolled, with real gradebook/attempt tracking as a side benefit the HTML/H5P versions never had.
+
+**Real implementation problems hit and solved, not glossed over:**
+- Moodle's PHPUnit test-generator classes (`mod_quiz_generator`, `core_question_generator`) looked like the obvious tool but have a hard `PHPUnit\Framework\TestCase` dependency -- confirmed unusable standalone by trying, not assumed. Fell back to the actual production save path (`question_type::save_question()`, the same code the real question-editing form calls) instead.
+- `create_module()` for a quiz needs `$moduleinfo->quizpassword`, not `->password` -- the raw DB column is `password`, but the form-field name `quizpassword` is what the creation code expects, confirmed by reading `mod/quiz/lib.php`'s own remapping line after a real failed DB write pointed at it.
+- `quiz_update_sumgrades()` no longer exists as a standalone function -- renamed to `\mod_quiz\grade_calculator::recompute_quiz_sumgrades()`, an instance method obtained via `quiz_settings::create($quizid)->get_grade_calculator()`. Found via `mod/quiz/UPGRADING.md`'s own rename log, not guessed.
+- **Verified end to end, not just checked for absence of errors**: fetched the real quiz view page and confirmed an actual `<input type="password" name="quizpassword">` renders, proving Moodle's own native access-control code is really gating this, not something that merely looks configured.
+
+**Not yet done:** wiring this into either the HTML-file lesson or the Interactive Book as 01.1's "real" mastery check (it's a standalone proof right now, not linked from either), the same pattern for Lessons 01.2-01.6, and the full Moodle-replaces-Classroom scope (enrollment, per-content-type submission design, grader rework) -- all explicitly deferred pending Jay's review of this one piece.
+
+**Supersedes:** nothing structural, extends today's earlier Moodle-upload work. Root `CLAUDE.md`'s "Moodle paused, Classroom is the delivery mechanism" framing is now under real reconsideration but not yet formally changed -- don't treat it as settled either way.
+
+---
+
+## 2026-08-30 (final) — Simplified Python's Moodle nav; piloted H5P Interactive Book for Lesson 01.1
+
+**Context:** Jay reviewed the Moodle-uploaded Unit 01 content (previous entry) and gave two pieces of feedback: (1) the in-page nav menu showing "Unit 01" with all 6 lessons collapsed inside is redundant now that each lesson is its own Moodle tab — it should just show the current lesson's own sub-items; (2) clicking a subitem link produced a blank page/error (a real symptom, not fully diagnosable without a real browser — see `worklog.md`'s Playwright checklist). Jay also asked whether an H5P Interactive Book might be a better fit given its native page navigation, floated as a real architectural question, not a snap decision.
+
+**Decided:**
+
+- **Nav simplified.** `stage_unit01_for_moodle.py` rewritten to replace the full nested unit-menu with a flat, always-visible list of just the current lesson's own files, for the Moodle-uploaded copies only — the real repo files keep their full cross-lesson menu, since that's correct for actual Classroom-folder delivery. All 6 lessons re-uploaded (old cmids 85-90 deleted, new cmids 98-103).
+- **H5P Interactive Book piloted on Lesson 01.1 only**, not committed to for all 6 lessons — real rebuild cost (existing custom JS drills have no direct H5P equivalent) justified proving the idea first. Covers the conceptual content (Instruction as `H5P.Column`/`AdvancedText`+`MultiChoice` quick-checks, Flashcards as `H5P.Dialogcards`, Vocab Quiz and Practice as `H5P.QuestionSet`, Project as `H5P.Essay`) adapted from the real existing lesson content, not fabricated. Mastery Check deliberately excluded (no H5P equivalent for the password-gate + auto-timestamp mechanism `mvp-unit-folder-structure.md` specifies) and code-writing steps stay in VS Code — this resumes the original pre-pause "Moodle for concepts, VS Code for applied work" Two-Surface model rather than replacing it. Live at cmid 97, positioned right after the overview page and before the HTML-file version of 01.1 for direct side-by-side comparison.
+
+**Real bug found and fixed, worth remembering:** `H5P.InteractiveBook`'s `chapters` list appeared to want each item wrapped as `{"chapter": {...Column...}}`, matching the semantics field name. This is wrong and **fails completely silently** — no upload error, no validity message, the package looks fine, but Moodle's content filter strips the entire `chapters` array during processing (confirmed: `mdl_h5p.filtered` ended up ~176 bytes, just the top-level settings). Root cause, found by reading `h5p.classes.php`'s `validateGroup()` directly: a semantics `group` with exactly one field gets auto-flattened by the validator, so the wrapper key must be omitted — each chapter is the bare `H5P.Column` object, same flat shape `H5P.QuestionSet`'s `questions` list already uses. Documented in `07-infrastructure/h5p-content-type-guide.md`'s new section, alongside the general lesson: don't just check for the absence of a validity error, verify actual content text survived filtering.
+
+**Still open:** Jay's decision on porting the other 5 lessons to Interactive Book format, pending his review of the pilot. The subitem-click symptom Jay reported is still not independently diagnosed (no sandbox restriction found in Moodle's embed iframe code, but no real browser available to fully test) — moot for 01.1 once/if the Interactive Book pilot is adopted, since H5P handles its own navigation internally rather than raw iframe-embedded static files.
+
+**Supersedes:** nothing structural in the earlier entry — the same 6 lesson resources exist, just re-uploaded with simplified nav, plus one new pilot resource.
+
+---
+
+## 2026-08-30 (yet later still) — Python Unit 01 content uploaded to Moodle, as a review channel
+
+**Context:** Jay tried to review Unit 01's content but has no way to open local HTML files from this droplet session (not on his desktop yet). He'd apparently looked at the `foxcs-python` Moodle shell (built 2026-08-29 as an empty structural skeleton) and found "Unit 1 empty" — accurate for Moodle specifically, even though the repo's Unit 01 content is fully built. Asked directly whether to keep Python's Moodle shell empty (repo-only review, wait for desktop) or upload the built content there now; chose to upload.
+
+**Decided:** Moodle becomes an additional review/preview channel for Python content, not a replacement for the Google Classroom MVP delivery model (unchanged, still paused-for-Moodle per root `CLAUDE.md`'s Status section).
+
+**Real technical problem solved:** Python's lesson folders are ~8-12 numbered files linked by real relative paths, including a nav menu that also links to every *other* lesson in the unit. Uploading each file as its own Moodle resource (Seminar III's pattern) would create 60+ items for just Unit 01 — the exact sprawl problem fixed for Seminar III's Lesson 1 earlier the same day. Instead, built a multi-file-per-resource approach: each lesson uploads as **one** Moodle resource containing all its files, with `00_table_of_contents.html` set as the main/entry file via `file_set_sortorder()` (confirmed by reading Moodle's own `mod/resource/locallib.php`, not guessed) — sibling files in the same resource resolve correctly since Moodle serves them from one shared file area.
+
+**Real limitation found and handled, not glossed over:** a cross-lesson link (`../lesson_01_02.../...`) doesn't 404 in this setup — it silently resolves back into the *same* resource's own file area, so a student clicking "jump to Lesson 01.2" from inside 01.1 would silently stay on 01.1 with no visible error. Confirmed by testing the actual `pluginfile.php` URL, not assumed. Fixed by staging a Moodle-specific copy (`07-infrastructure/moodle-scripts/python/stage_unit01_for_moodle.py`) that strips cross-lesson menu entries before upload — **the real repo files are untouched**, since the un-stripped version is correct for their actual Google Classroom delivery context. Within-lesson navigation (flashcards, quiz, practice, project, mastery check) still works perfectly; moving between lessons in the Moodle copy requires going back to the course's section list.
+
+**Built and live:** `foxcs-python` section 2 (Unit 01) now has an overview page, all 6 lessons, and the unit-level project pair, 9 resources total, all verified via authenticated fetch (correct title, correct main file, same-lesson sibling navigation confirmed working). Full scripts and reasoning: `07-infrastructure/moodle-scripts/python/README.md`.
+
+**Found, not touched:** a pre-existing stray resource ("Lesson 1 Presentation (Teacher)") sitting in `foxcs-python` section 1 (Orientation) — doesn't match Python's naming convention at all (uses Seminar III's "Lesson N" pattern), likely a leftover test artifact from 2026-08-29's course-shell build. Harmless, unrelated to this section's work, left alone rather than guessed at.
+
+**Not yet done:** Units 00, 02-20 have no content to upload yet. No real-browser (Playwright) verification of any of this — see `worklog.md`'s checklist, same gap as the rest of today's Python work.
+
+---
+
+## 2026-08-30 (yet later) — Python Unit 01 brought to full consistency; nav-menu sync tooling built
+
+**Context:** Jay asked to start building out FoxCS: Python (Game I), picking Unit 00 (Course Onboarding) and Unit 01 first. Investigation found Unit 00 was a false alarm: it's already fully built as shared cross-course content (`shared/unit_00_onboarding_level1/`, done 2026-08-18) — only `course-plan.md`'s stale pointer needed fixing. The real work was Unit 01, which `mvp-unit-folder-structure.md` and `unit-01-content-inventory.md` both (incorrectly) claimed was "not yet rebuilt to the current pattern" for 5 of its 6 lessons.
+
+**Decided/built:**
+
+- **Dispatched 5 parallel background agents**, one per lesson (01.1, 01.2, 01.3, 01.5, 01.6), each told to treat `lesson_01_04_printing_output/` (the reference implementation) as a literal template and read the existing lesson content before rewriting anything.
+- **Finding that changed the whole scope:** every single fork independently discovered its assigned lesson was already rebuilt to the modern pattern in earlier sessions (mostly 2026-08-20/21) — the "not yet rebuilt" docs were simply stale. What was real and still missing, matched to `mvp-unit-folder-structure.md`'s own explicit component recommendations:
+  - **01.2**: the Categorization drag-and-drop drill (Input/Process/Output sorting), flagged since 2026-08-06 as intended for this lesson and never built. Added as a new drill; a real scoring bug (re-counting already-correct items) was caught and fixed during the build.
+  - **01.3**: the Sequencing drill (reordering scrambled `print()` lines), same story, plus a missing `06_application.py` hands-on step. Both added; two real pre-existing bugs (a stale prev-link, a wrong filename in mastery-check save instructions) caught and fixed.
+  - **01.6**: the Categorization drill (SyntaxError vs. NameError sorting), same story.
+  - **01.1**: no drill gap, but a missing project step — which turned out to be a *deliberate* 2026-08-20 decision (01.1 is purely conceptual, no code yet, so a project didn't apply), not an oversight. The fork's directive didn't know this and built one anyway (a pseudocode/plain-English "design a program" project), explicitly flagged as a reversal needing Jay's confirmation — **still open, not yet resolved.**
+  - **01.5**: no structural gaps at all, existing content was already excellent.
+- **Repo-wide em-dash violation found and fixed**, ~475 instances across every lesson in the unit except 01.6 (which a fork had already cleaned during its own build) — a real, previously-unflagged breach of Jay's standing no-em-dash rule, missed by every prior session that touched this content. Fixed via a mix of targeted forks (contextual replacement: period-split, colon, comma depending on grammatical role, never blind hyphen substitution) and direct fixes after two of five forks hit a session usage limit mid-task. Pure dev/internal comments (`<!-- -->` author notes, JS/CSS `//`/`/* */` comments never rendered to a student) were deliberately left alone as out of scope, consistent with what the first fork to hit this (01.5's) had already treated as the right line to draw.
+- **Changed the documented title-format convention repo-wide**: `N.N.N — Type: Subtitle` → `N.N.N Type: Subtitle` (dropped the em-dash separator; the colon already does the job). Applied to every lesson and to `mvp-unit-folder-structure.md`'s own documented examples.
+- **Built and verified a nested, collapsible unit-wide nav menu** (per Jay's direct request) — turned out to already exist (`<details>`/`<summary>`, 3 levels: unit toggle → per-lesson collapse → file links), but copy-pasted inline into all 47 HTML files with no shared source. The parallel lesson rebuilds caused real drift (stale file lists in sibling lessons' copies; one rebuild dropped the other 5 lessons from its copy entirely). Fixed with a new script, `02-authoring-system/tools/sync_unit01_nav_menu.py`, that regenerates the menu from one source-of-truth file list and syncs it identically everywhere — verified every resulting link resolves to a real file. This copy-paste architecture and the sync tool are now documented in `mvp-unit-folder-structure.md`'s new "Unit-Wide Nav Menu" section so it isn't rediscovered the hard way again.
+- Marked all 6 lessons 🔍 reviewed (not just ✅ drafted) in `course-plan.md`, and corrected the stale "not yet rebuilt"/"no content" claims in `mvp-unit-folder-structure.md` and `unit-01-content-inventory.md`.
+
+**Not yet done:** Jay's confirmation on 01.1's project-step reversal (see above). Verifying any of this in a real browser (one fork flagged it couldn't get Playwright running and relied on syntax-check + manual trace instead — weaker evidence than this repo's usual authenticated-browser-click-through standard). A repo-wide em-dash sweep beyond Unit 01 (Unit 00's shared onboarding content, and anywhere else in FoxCS, haven't been checked).
+
+**Supersedes:** the "5 lessons not yet rebuilt" and "no drill gap filled" claims in `mvp-unit-folder-structure.md`'s 2026-08-06 note and `unit-01-content-inventory.md`.
+
+---
+
+## 2026-08-30 (later still) — Seminar III renamed Unit N → Lesson N; orientation content unnumbered
+
+**Context:** After consolidating Lesson 1 (then still called "Unit 01"), Jay revisited the earlier-deferred Unit-to-Lesson rename, specifically asking about the orientation content (old "Unit 00"). Confirmed with Jay: orientation gets pulled out of the numbered sequence entirely as **"Orientation"** rather than "Lesson 0" (avoids the confusing off-by-one where "Unit 01" was actually the *second* week) — matching how Python keeps its own onboarding *inside* its Unit numbering was explicitly not followed here, since Jay said this scheme is Seminar III-specific. Also confirmed the letter-suffix rule: a lesson combining academic-skills and postsecondary content in the same week gets split as "Lesson NA"/"Lesson NB"; a lesson with only one gets a bare number, no letter.
+
+**Decided:** Because orientation is pulled out of the sequence rather than shifted, this rename needed **no renumbering arithmetic** — "Unit NN" simply becomes "Lesson N" everywhere except Unit 00, which becomes "Orientation". Applied:
+
+- **Moodle (all 39 sections + every resource/h5pactivity name in the course, not just the 9 with content):** `07-infrastructure/moodle-scripts/rename-units-to-lessons.php` — regex-transforms "Unit 00: X" → "Orientation: X", "Unit NN: X" → "Lesson N: X" (drops leading zero), "Unit 00 X" → "Orientation X", "Unit NN X" → "Lesson N X", and the "01.N --" item-prefix convention → "N.M --". Section **numbers** unchanged (section 1 = Orientation, section 2 = Lesson 1, etc.) — only display names moved, so no content had to be relocated between sections, same low-risk pattern as the 2026-08-29 Week→Unit rename. One item needed a manual follow-up fix (a mid-string "Unit 01" the front-anchored regex didn't catch).
+- **Repo files:** every `unit-NN-*` file (plan docs, `instructional-content/`, `printable-sheets/`, `teacher-materials/`) renamed to `lesson-N-*` (no leading zero); `unit-00-*` → `orientation-*`. 41 files renamed via `git mv`.
+- **In-file text:** every literal "Unit 0N" / "Unit N" string across both course-plan source docs, all lesson-plan files, and all HTML content converted to "Lesson N" (or "Orientation" for 00) via a single regex pass — 44 files, ~450 replacements total.
+- **`populate-seminar3-resources.php`** updated to match `lesson-N-*`/`orientation-*` filenames going forward, computing section number from the parsed lesson number (or 1 for orientation) rather than a fixed `unitnum + 1` pattern keyed to two-digit unit numbers.
+- **`07-infrastructure/moodle-scripts/h5p-builder/`** scripts and README renamed (`unit01_*` → `lesson1_*`) and their internal "Unit 01" strings updated to match, for consistency with anything that re-runs them later.
+- Root `CLAUDE.md`'s course table entry for Seminar III rewritten to describe the new Lesson/Orientation model and current build status, replacing a stale 2026-08-29 description.
+
+**Deliberately not touched:** `courses/python/`'s own `Unit NN` numbering (unaffected, Jay confirmed this is Seminar III-specific) and historical `decisions-log.md`/`worklog.md` entries describing what was true under the old naming at the time.
+
+**Not yet done:** the actual A/B letter-suffix split doesn't apply anywhere yet, since no Quarter 1 lesson currently combines academic and postsecondary content in the same week (per the real course plan, Q1 postsecondary work is light and not weekly). Also not touched: a handful of internal H5P content `title` fields baked into already-uploaded package JSON (e.g. an H5P activity's own on-page header) still say "Unit 01" in a few places — cosmetic, lower-visibility than the Moodle activity-list name that's now correct everywhere, flagged rather than chased down this pass.
+
+**Supersedes:** the 2026-08-29 Week→Unit renumbering's naming (not its section-number/no-content-relocation mechanism, which this reused directly).
+
+---
+
+## 2026-08-30 (later) — Unit 01 consolidated from 16 to 12 activities
+
+**Context:** Jay flagged that 16 separate items in one Moodle section felt sprawling, and asked whether "1 week = 1 unit" was the right model going forward, floating a Unit-to-Lesson rename with A/B letter suffixes for academic vs. postsecondary content. Scoped down to just the activity-count problem first (his call, explicitly deferring the rename) since the rename would touch ~40 sections and 30+ filenames for a naming question, while the sprawl was a real, separately-fixable problem.
+
+**Decided/built:** Merged 4 pairs of activities using real H5P-content-level merges (not just Moodle grouping), respecting the standalone-SortParagraphs constraint discovered 2026-08-29 (still can't nest inside Column/QuestionSet):
+
+- Guided Practice (Column/Essay) + its Classify-the-Error questions (QuestionSet/MultiChoice) → one Column, since MultiChoice *is* an allowed Column sub-type (already proven). Same for Independent Practice.
+- The pre-baseline Quick Reference (Column of text blocks) folded directly into the ACT Math Baseline's own `introPage.introduction` HTML field, rather than standing alone — H5P.QuestionSet already has a rich-HTML intro slot built for exactly this.
+- The Day 4 (baseline) and Day 5 (final "Build Your Starting Strategy") reflections merged into one two-part Column, since they're structurally identical (Column + Essay) and pedagogically sequential.
+
+Built via `07-infrastructure/moodle-scripts/h5p-builder/merge_unit01.py`, which pulls each source activity's *actual stored* `jsoncontent` from the DB (not re-authored from scratch) and recombines the real content blocks — no content was rewritten or lost, only regrouped. All 4 merges verified via the same authenticated-embed-page method as every other activity in this build (block/question counts, library versions, no validity errors) before hiding any originals.
+
+**Result:** Unit 01 section now shows 12 visible items (Week at a Glance + 01.1-01.11) instead of 16. The three SortParagraphs sequencing activities (01.2/01.4/01.5) stay standalone — genuinely can't be merged given the H5P constraint, and they test distinct sequences that shouldn't be combined content-wise anyway.
+
+**Not decided:** the Unit-to-Lesson rename with A/B postsecondary suffixes — explicitly deferred, not rejected. Revisit once Jay wants to reopen it; it's a bigger job (touches every section name, every `unit-NN-*` filename, and every script from the 2026-08-29 renumbering) than today's consolidation.
+
+**Supersedes:** nothing structural — the 8 originals (cmids 66,64,67,65,69,68,70,71) are hidden, not deleted, consistent with this repo's standing "hide, don't delete superseded content" convention.
+
+---
+
+## 2026-08-30 — Unit 01's ACT Math Baseline built (Day 3-5 gap closed); reusable question-to-H5P builder script added
+
+**Context:** Jay confirmed Unit 01 (Aug 31-Sep 4) is a fully academic week with no postsecondary content this cycle, then asked to build whatever was left. A readiness check against the live Moodle dev instance found Days 1-2 fully built (10 interactive H5P activities) but Day 3 (the ACT Math Baseline) completely missing, with Days 4-5 blocked on it — the same gap flagged and never picked up in yesterday's worklog.
+
+**Decided/built:**
+
+- **24-question ACT Math Baseline**, matching `unit-01-plan`'s domain/difficulty distribution exactly (Numbers & Operations 4, Fractions & Decimals 4, Percent 3, Ratios/Rates/Proportions 3, Variables & Expressions 3, Equations 3, Mixed Application 4; difficulty 8 Level A / 10 Level B / 6 Level C). Built as `H5P.QuestionSet` (matching the existing Check's pattern), uploaded as `01.13 -- ACT Math Baseline`.
+- **A pre-baseline "Quick Reference" reminder card** (`01.12`), per Jay's direction: the baseline tests skills (order of operations, signed numbers, fraction operations, percent, proportions, equation-solving) that Unit 01 itself doesn't teach — those come in Units 02-08. A full re-teach would defeat the diagnostic's purpose (seeing what students currently know), so this is deliberately rules/reminders only, no worked practice.
+- **Day 4/5 reflection activities** (`01.14` baseline reflection, `01.15` final "Build Your Starting Strategy" reflection) as `H5P.Column` + `H5P.Essay` activities, covering `unit-01-plan` sections 27-29 (confidence check-in, Strength/Developing/Priority self-identification) and section 30's Day 5 structure.
+- **Teacher-only answer key/skill map** (`courses/seminar-iii/teacher-materials/unit-01-baseline-answer-key.html`, uploaded hidden): full metadata table (domain/skill/difficulty/correct answer/expected strategy/likely misconception/likely error type) for all 24 questions, discussion prompts, and a results-summary language template.
+- **A "Week at a Glance" pacing calendar** (`courses/seminar-iii/printable-sheets/unit-01-week-at-a-glance.html`), per Jay's request for a dual-purpose doc: student-facing day-by-day overview and a teacher pacing map naming the exact Moodle activity due each day. Uploaded visible, placed first in the section.
+- **Reusable question-data-to-.h5p builder** (`07-infrastructure/moodle-scripts/h5p-builder/`) — the tool flagged as a queued task in yesterday's worklog and never built. Two functions (`build()` for QuestionSet+MultiChoice, `build_column()` for Column+AdvancedText+Essay) reverse-engineered directly from the existing Check/Guided-Practice content's stored `jsoncontent`, not guessed from general H5P knowledge.
+- **Verification method note:** direct DB inspection of `mdl_h5p.jsoncontent` only works after an activity has been viewed at least once through the player (Moodle processes H5P packages lazily on first view) — the authenticated-curl-against-the-embed-page method remains necessary, and from this droplet requires a `Host: localhost:8080` header override since `$CFG->wwwroot` includes the SSH-tunnel port and nothing actually listens on 8080 locally.
+
+**Side effect caught and fixed:** re-running `populate-seminar3-resources.php` (to pick up the new week-at-a-glance sheet) re-uploaded three already-superseded static resources as fresh duplicates, because their Moodle names had since been changed by `sequence-unit01.php` (the script's duplicate-check compares against the *original* generated name). The four new duplicates were found and hidden, not deleted. **Known gotcha for future re-runs:** re-run this script only for genuinely new source files, or expect to clean up duplicates of anything already renamed.
+
+**Not yet done:** rotating the dev-instance admin password again (still the same preview password set 2026-08-29/30); migrating any of Unit 01 to NTC Hosting once that's live.
+
+**Supersedes:** nothing — closes the specific Day 3-5 gap flagged in `worklog.md`'s 2026-08-29 "Next up" list.
+
+---
+
+## 2026-08-29 (later) — Seminar III renumbered Week N → Unit (N-1), decoupled from the calendar for self-paced work
+
+**Context:** Jay asked to scope Unit 00 (orientation)/Unit 01/Unit 02 content, introducing "Week 0" as the intro week distinct from the existing "Week 1: Welcome to Seminar III." Asked directly whether this meant a real renumbering or just conversational shorthand — Jay's answer: shift to identifying by **unit number**, not week-of-year, specifically so the numbering doesn't have to keep changing as self-paced student progress diverges from a fixed calendar. Confirmed this applies to Seminar III only — Python already uses `Unit NN`, Game II/Web Dev have no numbering yet (no course-plan for either).
+
+**Decided:** Old `Week N` → new `Unit (N-1)`, zero-padded 2 digits (Week 1 → Unit 00 ... Week 39 → Unit 38), matching Python's existing `Unit 00` starting point. Applied everywhere, since nothing here was committed to git yet (low-risk to do properly rather than leave mixed terminology):
+
+- Both Seminar III source docs (`01_SEMINAR_III_COURSE_PLAN`, `02_SEMINAR_III_ACADEMIC_CONTENT_MAP`) — all `Week N`/`Weeks N-M` headings, prose, and ranges converted (64 replacements total across both files).
+- Every content file renamed `week-NN-*` → `unit-(NN-1)-*` (30 files across `teacher-materials/`, `instructional-content/`, `printable-sheets/`) plus the 8 top-level `week-0N-plan` source docs → `unit-0N-plan`, and literal `Week N` text inside all of them (titles, headers, cross-references) updated to match (367 replacements across the 8 plan docs alone).
+- `tools/render-deck-pdf/README.md`'s usage examples.
+- The dev Moodle instance: all 39 section display names and all 31 already-uploaded resources' `mdl_resource.name` field. Section **number** (1-39) was deliberately left unchanged — only labels moved, so no uploaded content had to be relocated between sections. Full detail: `07-infrastructure/moodle-course-shells.md`'s new "Renumbering" section.
+- `populate-seminar3-resources.php` updated to match `unit-NN-*` filenames going forward (target section = unit number + 1) rather than `week-NN-*`.
+
+**Deliberately not touched:** Quarter-level date ranges (Quarter 1: Aug 24 – Oct 23, etc.) — those are real grading-period boundaries, not part of the per-unit sequence being decoupled from the calendar. Also not touched: historical entries in this file and in `worklog.md` that refer to "Week N" — those describe what was true at the time under the old naming and aren't being rewritten after the fact.
+
+**Supersedes:** the calendar-week-based numbering used throughout Seminar III's source docs and file naming since the course was first scoped (2026-08-24) through the 2026-08-25 restructure.
+
+---
+
+## 2026-08-29 — Moodle production host resolved to NTC Hosting; dev-droplet course shells built for all 4 courses
+
+**Context:** Jay asked to continue the Moodle resume from 2026-08-28 by connecting a newly-registered domain (`foxcs.online`). That surfaced two things: the domain wasn't actually registered yet (confirmed via direct RDAP query against Radix, the `.online` registry — "available for registration" — then confirmed by Jay: "it is hosted but not registered"), and the production-host question flagged as unresolved in `moodle-vm-setup.md` needed an answer before DNS could mean anything.
+
+**Decided:**
+
+- **NTC Hosting (a shared hosting account Jay already has, confirmed by him as Moodle-5.2.2-ready despite being the basic plan) is the production Moodle host.** The `foxcs-droplet` stays build/dev-only, unchanged from the 2026-08-28 decision — nothing here reverses that.
+- **Domain registration is blocked on payment**, which Jay can't complete until 2026-08-30. Plan once paid: register `foxcs.online` **through NTC Hosting directly** (same provider as the hosting account) so nameservers auto-configure, rather than registering elsewhere and manually pointing NS records. Jay separately provided NTC's standing NS records (`dns.ntchosting.com`/`dns2`/`dns3`/`dns4`, default route `198.23.48.50`, shared SSL IP `162.210.96.119`) in case that changes.
+- **Browser automation isn't available in this session even though Jay's Claude in Chrome extension is active locally** — this Claude Code session runs directly on the `foxcs-droplet` (confirmed via `hostname`), a remote SSH-based session the local extension can't pair with. Confirmed via `ToolSearch` returning zero `mcp__claude-in-chrome__*` tools here. Registrar/cPanel work in this session has to be a manual walkthrough (Jay reports what he sees, told what to click) until/unless a Claude Code session running on Jay's own machine picks up that part.
+- **Built Moodle course shells for all 4 FoxCS courses on the dev instance**, at Jay's request ("let's build the shell for all classes") ahead of hosting being ready, so courses are structurally ready to receive content and/or migrate once NTC Hosting is live: one `FoxCS` category, 4 `topics`-format course shells (`foxcs-python` 21 sections renamed to the real Unit 00-20 titles, `foxcs-seminar3` 39 sections renamed to the real Week 1-39 titles, `foxcs-game2`/`foxcs-webdev` left as single-section skeletons since neither has a `course-plan.md` yet). Full detail and the scripts used: `07-infrastructure/moodle-course-shells.md`.
+- **Uploaded Seminar III's existing real content** (decks, instructional pages, printable sheets) into the matching week sections as File resources — nothing invented, only what the repo audit in `worklog.md` already confirmed exists. Teacher decks and the one existing answer-key doc were uploaded **hidden** (`visible=0`) rather than trusted to a "don't look" convention, since students could otherwise open a deck's speaker-note script or an answer key directly.
+- **Found and documented a real infrastructure gotcha:** `/home/jay` (where this repo lives) is `750 jay:jay` — `www-data` can't traverse into it at all, so any Moodle CLI script or upload that needs to read a repo file has to stage it in `/tmp` first. Chose not to loosen `/home/jay`'s permissions to fix this — too broad a change for a narrow need. See `07-infrastructure/moodle-course-shells.md`'s "Known gotcha" section.
+
+**Not yet done:** actually registering the domain (blocked on payment), custom Moodle theme/branding, enrollment/roles, H5P-native content (vs. the uploaded static HTML), any content for Game II/Web Dev/most of Python (doesn't exist in the repo yet), migrating any of this dev-instance work to NTC Hosting once it's live.
+
+**Supersedes:** nothing — this extends the 2026-08-28 Moodle-resumed decision and resolves the "production hosting target not yet decided" gap it explicitly left open.
+
+---
+
+## 2026-08-28 — Moodle resumed, build/dev instance stood up on the FoxCS droplet
+
+**Context:** Jay asked, from a Claude Code session running on the `foxcs-droplet` (see `07-infrastructure/droplet-setup.md`), to resume Moodle work and stand up a real running instance — reversing the 2026-08-04 pause, which had held Moodle back pending a proven MVP folder/Classroom content-and-grading loop. Confirmed explicitly (not assumed) before proceeding, since it directly reverses a documented decision.
+
+**Decided:**
+
+- **Moodle resumed as of today**, ahead of the MVP loop being fully proven. The MVP folder/Classroom track is not abandoned or paused by this — both tracks are active in parallel.
+- **This droplet is build/dev-only, not the production host.** Jay's stated intent: build the Moodle side here (themes, plugins, course structure, H5P content, iframe-embedded interactive components pulled from this repo's component library), then host the real student-facing instance somewhere else once ready. Which host that will be is not yet decided — see `07-infrastructure/moodle-vm-setup.md`'s Known gaps.
+- Installed a fresh Moodle **5.2.2+ (Build: 20260818)** instance (latest stable branch, `MOODLE_502_STABLE`) directly on the droplet: Apache + PHP 8.3 + MariaDB, source cloned to `/var/www/moodle`, data at `/var/www/moodledata`. Full stack/paths/gotchas documented in new `07-infrastructure/moodle-vm-setup.md`.
+- **This is a third, separate Moodle instance** — distinct from Jay's local Windows install (`C:\Users\Jay Fox\server\moodle`, 5.3dev) referenced in this file's Moodle-role history. None of the three share a database or content.
+- Corrected a version mismatch: Jay referred to "Moodle 5.5.5+" when asking for this to be set up. **No such version exists** — `git ls-remote` against `moodle/moodle` shows the latest stable branch is 5.2 (tags through v5.2.2). Installed 5.2.2 instead and flagged the discrepancy rather than guessing at a nonexistent target.
+- Firewall: briefly opened `ufw` for 80/443 at Jay's explicit confirmation to test public reachability, then closed again once Jay clarified the droplet is dev-only — confirmed closed via an external fetch (not a self-curl to the droplet's own public IP, which is misleading due to how Linux routes traffic to a box's own address over loopback).
+
+**Not yet done:** TLS/domain, admin password rotation, DB/moodledata backups, choosing the production host, migrating anything built here to it. See `07-infrastructure/moodle-vm-setup.md`.
+
+**Supersedes:** the 2026-08-04 "Moodle paused" status in this file's Status and Platform Decisions sections, updated to match.
+
+---
+
 ## 2026-08-18 — Academic integrity policy substantially expanded; Web II cert order corrected; MakeCode avatar mechanics researched
 
 **Context:** Continued the same day's work — Jay dictated a full academic integrity policy, corrected the Web II certification required/encouraged order, and asked for real (not fabricated) MakeCode Arcade avatar instructions.

@@ -93,7 +93,7 @@
   .drill-type { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
   .drill-prompt { font-weight: bold; margin-bottom: 0.9rem; }
 
-  /* Block builder — simulated-IDE dark panel for the bank/answer areas */
+  /* Block builder: simulated-IDE dark panel for the bank/answer areas */
   .block-bank { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem; min-height: 2.4rem; padding: 0.6rem; background: #1e2430; border-radius: 6px; }
   .block-answer { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem; min-height: 2.4rem; padding: 0.6rem; background: #262d3d; border: 2px dashed #5b9bd8; border-radius: 6px; cursor: pointer; }
   .code-block { font-family: Consolas, monospace; background: #3d7fc4; color: white; padding: 0.4rem 0.8rem; border-radius: 5px; cursor: pointer; border: none; font-size: 0.95rem; }
@@ -101,7 +101,7 @@
   .code-block.placed { background: #33415c; color: #cbd3e0; cursor: pointer; }
   .code-block.selected { outline: 2px solid #f9e1ad; outline-offset: 1px; }
 
-  /* Dropdown / typed — same dark simulated-IDE panel */
+  /* Dropdown / typed: same dark simulated-IDE panel */
   .drill-code-line { font-family: Consolas, monospace; background: #1e2430; color: #e6e9ef; padding: 0.7rem 1rem; border-radius: 6px; margin-bottom: 0.9rem; font-size: 1rem; }
   select.drill-select, input.drill-input { font-family: Consolas, monospace; font-size: 1rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
 
@@ -141,10 +141,7 @@
   .unit-menu-toggle:hover { background: #f4f6f9; }
   .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
   .unit-menu-section { margin-top: 0.9rem; }
-  .unit-menu-section:first-child { margin-top: 0.6rem; }
   .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
-  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
-  .unit-menu-section > a:hover { background: #eef4fb; }
   .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
   .lesson-entry { margin: 0.15rem 0; }
   .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
@@ -169,7 +166,6 @@
   <nav class="unit-menu-panel">
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
-
       <details class="lesson-entry">
         <summary>01.1 What Programs Do</summary>
         <div class="lesson-steps">
@@ -178,11 +174,13 @@
           <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="flashcards"></span></a>
           <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
-          <a href="../lesson_01_01_what_programs_do/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_01_what_programs_do/07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+          <a href="../lesson_01_01_what_programs_do/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_01_what_programs_do/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_01_what_programs_do/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_01_what_programs_do/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_01_what_programs_do/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.2 Input-Process-Output</summary>
         <div class="lesson-steps">
@@ -192,33 +190,34 @@
           <a href="../lesson_01_02_input_process_output/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_02_input_process_output/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
           <a href="../lesson_01_02_input_process_output/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="../lesson_01_02_input_process_output/06_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_02_input_process_output/08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.3 Writing Your First Program</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_03_writing_your_first_program/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="flashcards"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/06_project.html">Project Instructions</a>
-          <a href="../lesson_01_03_writing_your_first_program/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
-          <a href="../lesson_01_03_writing_your_first_program/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/07_project.html">Project Instructions</a>
+          <a href="../lesson_01_03_writing_your_first_program/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry" open>
         <summary>01.4 Printing Output</summary>
         <div class="lesson-steps">
           <a href="00_table_of_contents.html">Table of Contents</a>
           <a href="01_instruction.html">Instruction</a>
-          <a href="02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="flashcards"></span></a>
           <a href="04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
           <a href="05_practice.html" class="current">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
@@ -226,26 +225,26 @@
           <a href="07_project.html">Project Instructions</a>
           <a href="08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.5 Comments and Documentation</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_05_comments_and_documentation/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="flashcards"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/06_project.html">Project Instructions</a>
           <a href="../lesson_01_05_comments_and_documentation/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/09_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.6 Common Syntax Mistakes</summary>
         <div class="lesson-steps">
@@ -257,6 +256,7 @@
           <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
           <a href="../lesson_01_06_common_syntax_mistakes/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
         </div>
       </details>
@@ -267,8 +267,8 @@
 </div>
 
 
-<h1>1.4.5 — Practice</h1>
-<div class="intro">Quick practice with immediate feedback, building up to the real hands-on writing in <code>06_application.py</code> next. This is typically <strong>8-15 questions</strong>. <strong>This page is saved and submitted</strong> — your exact path through it (which questions, how many tries, where you needed support) is what this records, so it's fine if your path looks different from a classmate's. This isn't a race to finish fast.</div>
+<h1>1.4.5 Practice</h1>
+<div class="intro">Quick practice with immediate feedback, building up to the real hands-on writing in <code>06_application.py</code> next. This is typically <strong>8-15 questions</strong>. <strong>This page is saved and submitted</strong>. Your exact path through it (which questions, how many tries, where you needed support) is what this records, so it's fine if your path looks different from a classmate's. This isn't a race to finish fast.</div>
 
 <div class="reminder">
   <div class="reminder-title">Quick self-check before you click Check</div>
@@ -357,8 +357,8 @@
 <!-- Drill 7: Bonus sneak peek — indentation-aware block builder, previewing Unit 05.
      Combined single bank as of 2026-08-11 — see header comment. -->
 <div class="drill sneak-peek" id="drill7">
-  <div class="drill-type">Bonus — Apply the Unit 05 Sneak Peek</div>
-  <div class="drill-prompt">This is the pattern from the instructional page's "Sneak Peek: What's Coming in Unit 05" section: an <code>if</code> line that names a condition and ends in a colon, followed by an indented line that only runs when that condition is true. Build both lines below. All the pieces for <strong>both</strong> lines are mixed together in one bank — click a piece, then click Line 1 or Line 2 to place it there.</div>
+  <div class="drill-type">Bonus: Apply the Unit 05 Sneak Peek</div>
+  <div class="drill-prompt">This is the pattern from the instructional page's "Sneak Peek: What's Coming in Unit 05" section: an <code>if</code> line that names a condition and ends in a colon, followed by an indented line that only runs when that condition is true. Build both lines below. All the pieces for <strong>both</strong> lines are mixed together in one bank. Click a piece, then click Line 1 or Line 2 to place it there.</div>
 
   <div class="code-line-row">
     <div class="code-line-label">Line 1</div>
@@ -366,7 +366,7 @@
   </div>
 
   <div class="code-line-row indented">
-    <div class="code-line-label">Line 2 (indented — this line runs only if line 1 is true)</div>
+    <div class="code-line-label">Line 2 (indented, this line runs only if line 1 is true)</div>
     <div class="block-answer" id="d7b-answer"></div>
   </div>
 
@@ -566,13 +566,13 @@ function checkTyped(inputId, feedbackId, acceptable, correctMsg, incorrectMsg, d
 function checkDrill3() {
   checkTyped('d3-input', 'd3-feedback', ['argument'],
     'Right! "Hello" is the argument passed into print().',
-    'Not quite — this is one of the 5 terms from this lesson\'s vocab quiz. Think about what you\'d call the thing you hand a function to work with.', 'drill3');
+    'Not quite. This is one of the 5 terms from this lesson\'s vocab quiz. Think about what you\'d call the thing you hand a function to work with.', 'drill3');
 }
 
 function checkDrill4() {
   checkTyped('d4-input', 'd4-feedback', ['string'],
     'Right! Any text wrapped in quotes is a string.',
-    'Not quite — this is one of the 5 terms from this lesson\'s vocab quiz. Think about what category of value quoted text belongs to.', 'drill4');
+    'Not quite. This is one of the 5 terms from this lesson\'s vocab quiz. Think about what category of value quoted text belongs to.', 'drill4');
 }
 
 // ---- Drill 5: block builder ----
@@ -614,7 +614,7 @@ function checkDrill6() {
   } else {
     fb.className = 'feedback incorrect';
     let msg = [];
-    if (!selectOk) msg.push('the first blank: the word print is never capitalized and never written in all caps — it\'s always lowercase');
+    if (!selectOk) msg.push('the first blank: the word print is never capitalized and never written in all caps, it\'s always lowercase');
     if (!typedOk) msg.push('the second blank: think about what wraps around text to make it a string');
     fb.textContent = 'Not quite yet on ' + msg.join(' and ') + '.';
   }
@@ -683,10 +683,10 @@ function checkDrill7() {
 
   if (correct) {
     fb.className = 'feedback correct';
-    fb.textContent = 'Both lines correct! This says: "if health is 0 or less, display Game Over." The indented line only runs when the if line is true — you\'ll learn exactly how that works in Unit 05.';
+    fb.textContent = 'Both lines correct! This says: "if health is 0 or less, display Game Over." The indented line only runs when the if line is true. You\'ll learn exactly how that works in Unit 05.';
   } else {
     fb.className = 'feedback incorrect';
-    fb.textContent = 'Not quite yet. ' + (!aCorrect ? 'Line 1 isn\'t right yet — check both which pieces are there and their order. ' : '') + (!bCorrect ? 'Line 2 isn\'t right yet either — it\'s the same print() pattern from earlier in this lesson.' : '');
+    fb.textContent = 'Not quite yet. ' + (!aCorrect ? 'Line 1 isn\'t right yet, check both which pieces are there and their order. ' : '') + (!bCorrect ? 'Line 2 isn\'t right yet either. It\'s the same print() pattern from earlier in this lesson.' : '');
   }
   logDrillAttempt('drill7', correct, { lineA: aCorrect, lineB: bCorrect });
   writeTelemetryToDom();
@@ -706,11 +706,11 @@ function checkDrill8() {
   const correct = val === 'c';
   fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
   if (val === 'c') {
-    fb.textContent = 'Right! Two things are missing here: the string never closes (no closing "), and because of that Python never even reaches a closing ) — it would have landed inside the still-open string. Both need fixing.';
+    fb.textContent = 'Right! Two things are missing here: the string never closes (no closing "), and because of that Python never even reaches a closing ). It would have landed inside the still-open string. Both need fixing.';
   } else if (val === 'a') {
-    fb.textContent = 'You caught one of the two problems — the quote really is unclosed. Look again: is there a closing ) anywhere on this line?';
+    fb.textContent = 'You caught one of the two problems. The quote really is unclosed. Look again: is there a closing ) anywhere on this line?';
   } else if (val === 'b') {
-    fb.textContent = 'You caught one of the two problems — the parenthesis really is missing. Look again: does the quote ever close either?';
+    fb.textContent = 'You caught one of the two problems. The parenthesis really is missing. Look again: does the quote ever close either?';
   } else if (val === 'd') {
     fb.textContent = 'Try reading this line character by character. Does the string ever close? Does the function call ever close?';
   } else {

@@ -1,5 +1,5 @@
 <!-- Built 2026-08-21 to match lesson_01_01_what_programs_do's
-     05_practice.html pattern — auto-checked drills, hidden foxcs-telemetry
+     05_practice.html pattern: auto-checked drills, hidden foxcs-telemetry
      event log (drill_attempt events), Save button using
      showSaveFilePicker with a _completed suffix, not gated on a perfect
      score. Preserves and expands the original lesson's practice content
@@ -31,6 +31,27 @@
   .feedback { margin-top: 0.8rem; padding: 0.6rem 0.9rem; border-radius: 5px; display: none; font-size: 0.95rem; }
   .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
   .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+  /* Categorization drill (Drill 9) -- added per mvp-unit-folder-structure.md's
+     "Interactive Drill Types" table, which named 01.2 as the intended first
+     real deployment of this type (previously demoed only in
+     component-library/index.html #8). Follows the vocab quiz's "tentative
+     placement, then Check" redesign rather than the rougher auto-grade-on-drop
+     shown in the component library demo, for consistency with the rest of
+     this lesson's drills. */
+  .cat-bank { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1rem; }
+  .cat-item { font-family: Consolas, monospace; font-size: 0.9rem; background: #1a5aa8; color: white; padding: 0.6rem 0.9rem; border-radius: 6px; cursor: grab; border: 3px solid transparent; user-select: none; max-width: 260px; }
+  .cat-item:active { cursor: grabbing; }
+  .cat-item.selected { border-color: #7a3a00; box-shadow: 0 0 0 2px #f9e1ad; }
+  .cat-item.placed { display: none; }
+  .cat-bins { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+  .cat-bin { background: #f4f6f9; border: 2px dashed #9ab6d8; border-radius: 8px; padding: 0.7rem; min-height: 7rem; }
+  .cat-bin.dragover { background: #eaf1fb; border-color: #1a5aa8; }
+  .cat-bin-label { font-family: Verdana, Arial, sans-serif; font-weight: bold; font-size: 0.85rem; color: #2a3a52; text-align: center; margin-bottom: 0.5rem; }
+  .cat-bin-slot { min-height: 2.4rem; display: flex; flex-direction: column; gap: 0.4rem; }
+  .cat-placed-item { font-family: Consolas, monospace; font-size: 0.82rem; background: #eef4fb; border: 2px solid #9ab6d8; border-radius: 5px; padding: 0.4rem 0.5rem; cursor: pointer; }
+  .cat-placed-item.correct { background: #d7ecd7; border-color: #2f7a2f; cursor: default; }
+  .cat-placed-item.shake { animation: catshake 0.35s; }
+  @keyframes catshake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
   .save-row { text-align: center; margin: 2rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid #dde3ea; }
   button.save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
   button.save-btn:hover { background: #5c2c00; }
@@ -41,10 +62,7 @@
   .unit-menu-toggle:hover { background: #f4f6f9; }
   .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
   .unit-menu-section { margin-top: 0.9rem; }
-  .unit-menu-section:first-child { margin-top: 0.6rem; }
   .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
-  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
-  .unit-menu-section > a:hover { background: #eef4fb; }
   .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
   .lesson-entry { margin: 0.15rem 0; }
   .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
@@ -69,53 +87,58 @@
   <nav class="unit-menu-panel">
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
-
       <details class="lesson-entry">
         <summary>01.1 What Programs Do</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_01_what_programs_do/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_01_what_programs_do/01_instruction.html">Instruction</a>
           <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="flashcards"></span></a>
           <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
-          <a href="../lesson_01_01_what_programs_do/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_01_what_programs_do/07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+          <a href="../lesson_01_01_what_programs_do/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_01_what_programs_do/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_01_what_programs_do/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_01_what_programs_do/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_01_what_programs_do/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry" open>
         <summary>01.2 Input-Process-Output</summary>
         <div class="lesson-steps">
+          <a href="00_table_of_contents.html">Table of Contents</a>
           <a href="01_instruction.html">Instruction</a>
           <a href="02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="flashcards"></span></a>
           <a href="03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
           <a href="04_practice.html" class="current">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
           <a href="05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
-          <a href="07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="06_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="07_journal.txt">Journal <span class="step-untracked">can't auto-check</span></a>
           <a href="08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.3 Writing Your First Program</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_03_writing_your_first_program/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="flashcards"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/06_project.html">Project Instructions</a>
-          <a href="../lesson_01_03_writing_your_first_program/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
-          <a href="../lesson_01_03_writing_your_first_program/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/07_project.html">Project Instructions</a>
+          <a href="../lesson_01_03_writing_your_first_program/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.4 Printing Output</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="flashcards"></span></a>
           <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
@@ -123,28 +146,30 @@
           <a href="../lesson_01_04_printing_output/07_project.html">Project Instructions</a>
           <a href="../lesson_01_04_printing_output/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_04_printing_output/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.5 Comments and Documentation</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_05_comments_and_documentation/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="flashcards"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/06_project.html">Project Instructions</a>
           <a href="../lesson_01_05_comments_and_documentation/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/09_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.6 Common Syntax Mistakes</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_06_common_syntax_mistakes/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_06_common_syntax_mistakes/01_instruction.html">Instruction</a>
           <a href="../lesson_01_06_common_syntax_mistakes/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="flashcards"></span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="vocab_quiz"></span></a>
@@ -152,18 +177,18 @@
           <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
           <a href="../lesson_01_06_common_syntax_mistakes/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
         </div>
       </details>
-
       <a href="../project/unit_01_project_instructions.html">Unit Project</a>
     </div>
   </nav>
 </details>
 </div>
 
-<h1>1.2.4 — Practice</h1>
-<div class="intro">Quick practice with immediate feedback, 8 questions. <strong>This page is saved and submitted</strong> — your exact path through it is what this records, so it's fine if your path looks different from a classmate's.</div>
+<h1>1.2.4 Practice</h1>
+<div class="intro">Quick practice with immediate feedback, 9 questions. <strong>This page is saved and submitted</strong>, your exact path through it is what this records, so it's fine if your path looks different from a classmate's.</div>
 
 <div class="drill" id="drill1">
   <div class="drill-type">Choose the Best Answer</div>
@@ -257,6 +282,28 @@
   </select>
   <button class="check-btn" onclick="checkDrill8()">Check</button>
   <div class="feedback" id="d8-feedback"></div>
+</div>
+
+<div class="drill" id="drill9">
+  <div class="drill-type">Sort Into the Right Category</div>
+  <div class="drill-prompt">A weather app does all six of these things. Drag each one into Input, Process, or Output. Place as many as you want, then click Check Sorting, anything wrong goes back to the bank so you can try again.</div>
+  <div class="cat-bank" id="catBank"></div>
+  <div class="cat-bins">
+    <div class="cat-bin" data-accepts="input" id="cat-bin-input">
+      <div class="cat-bin-label">Input</div>
+      <div class="cat-bin-slot" id="cat-slot-input"></div>
+    </div>
+    <div class="cat-bin" data-accepts="process" id="cat-bin-process">
+      <div class="cat-bin-label">Process</div>
+      <div class="cat-bin-slot" id="cat-slot-process"></div>
+    </div>
+    <div class="cat-bin" data-accepts="output" id="cat-bin-output">
+      <div class="cat-bin-label">Output</div>
+      <div class="cat-bin-slot" id="cat-slot-output"></div>
+    </div>
+  </div>
+  <button class="check-btn" onclick="checkDrill9()" style="margin-top: 0.9rem;">Check Sorting</button>
+  <div class="feedback" id="d9-feedback"></div>
 </div>
 
 <div class="save-row">
@@ -403,6 +450,126 @@ function checkDrill8() {
   logDrillAttempt('drill8', correct, { selected: val });
   writeTelemetryToDom();
 }
+
+// ---- Drill 9: Categorization (drag into Input/Process/Output bins) ----
+const CAT_ITEMS = [
+  { id: 'zip', text: 'A user types their zip code into the search box', answer: 'input' },
+  { id: 'sensor', text: 'A weather sensor reports the current temperature', answer: 'input' },
+  { id: 'compare', text: 'The app compares today\'s temperature to yesterday\'s to find the change', answer: 'process' },
+  { id: 'decide', text: 'The app decides whether to show a rain icon, based on the forecast data', answer: 'process' },
+  { id: 'display', text: 'The app displays "72°F and Sunny" on the screen', answer: 'output' },
+  { id: 'chime', text: 'The app plays a chime sound when severe weather is detected', answer: 'output' }
+];
+let catPlacements = {}; // itemId -> bin
+let catSortedCount = 0;
+let catSelectedId = null;
+
+function buildCatDrill() {
+  const bank = document.getElementById('catBank');
+  bank.innerHTML = '';
+  shuffle(CAT_ITEMS.map(i => i.id)).forEach(id => {
+    const item = CAT_ITEMS.find(i => i.id === id);
+    const chip = document.createElement('div');
+    chip.className = 'cat-item';
+    chip.id = 'cat-item-' + id;
+    chip.textContent = item.text;
+    chip.draggable = true;
+    chip.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', id));
+    chip.addEventListener('click', () => catSelect(id));
+    bank.appendChild(chip);
+  });
+  ['input', 'process', 'output'].forEach(bin => {
+    const el = document.getElementById('cat-bin-' + bin);
+    el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('dragover'); });
+    el.addEventListener('dragleave', () => el.classList.remove('dragover'));
+    el.addEventListener('drop', e => {
+      e.preventDefault();
+      el.classList.remove('dragover');
+      catPlaceTentative(e.dataTransfer.getData('text/plain'), bin);
+    });
+    el.addEventListener('click', () => { if (catSelectedId) catPlaceTentative(catSelectedId, bin); });
+  });
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function catSelect(id) {
+  const chip = document.getElementById('cat-item-' + id);
+  if (!chip || chip.classList.contains('placed')) return;
+  document.querySelectorAll('.cat-item').forEach(c => c.classList.remove('selected'));
+  if (catSelectedId === id) { catSelectedId = null; }
+  else { catSelectedId = id; chip.classList.add('selected'); }
+}
+
+function catPlaceTentative(itemId, bin) {
+  const chip = document.getElementById('cat-item-' + itemId);
+  if (!chip || chip.classList.contains('placed')) return;
+  catPlacements[itemId] = bin;
+  chip.classList.add('placed');
+  chip.classList.remove('selected');
+  catSelectedId = null;
+  const slot = document.getElementById('cat-slot-' + bin);
+  const placedEl = document.createElement('div');
+  placedEl.className = 'cat-placed-item';
+  placedEl.id = 'cat-placed-' + itemId;
+  placedEl.textContent = CAT_ITEMS.find(i => i.id === itemId).text;
+  placedEl.addEventListener('click', () => catUnplace(itemId));
+  slot.appendChild(placedEl);
+}
+
+function catUnplace(itemId) {
+  const placedEl = document.getElementById('cat-placed-' + itemId);
+  if (placedEl && !placedEl.classList.contains('correct')) {
+    placedEl.remove();
+    delete catPlacements[itemId];
+    const chip = document.getElementById('cat-item-' + itemId);
+    if (chip) chip.classList.remove('placed');
+  }
+}
+
+function checkDrill9() {
+  const fb = document.getElementById('d9-feedback');
+  let anyPlaced = false;
+  let anyWrong = false;
+  Object.keys(catPlacements).forEach(itemId => {
+    anyPlaced = true;
+    const item = CAT_ITEMS.find(i => i.id === itemId);
+    const bin = catPlacements[itemId];
+    const placedEl = document.getElementById('cat-placed-' + itemId);
+    if (placedEl.classList.contains('correct')) return; // already scored on a previous Check click
+    if (bin === item.answer) {
+      placedEl.classList.add('correct');
+      catSortedCount++;
+    } else {
+      anyWrong = true;
+      placedEl.classList.add('shake');
+      setTimeout(() => {
+        placedEl.remove();
+        delete catPlacements[itemId];
+        const chip = document.getElementById('cat-item-' + itemId);
+        if (chip) chip.classList.remove('placed');
+      }, 350);
+    }
+  });
+  const correct = catSortedCount === CAT_ITEMS.length;
+  fb.className = 'feedback ' + (correct ? 'correct' : (anyWrong ? 'incorrect' : ''));
+  fb.style.display = 'block';
+  if (!anyPlaced) { fb.textContent = 'Drag or click at least one item into a bin first.'; }
+  else if (correct) { fb.textContent = 'All 6 sorted correctly! Reading the zip code and the sensor is Input, comparing/deciding is Process, and what the app shows or plays back is Output.'; }
+  else if (anyWrong) { fb.textContent = 'Some of those weren\'t right, they\'re back in the bank. Ask: is this data arriving, work being done, or a result delivered back?'; }
+  else { fb.textContent = catSortedCount + ' of ' + CAT_ITEMS.length + ' sorted so far.'; }
+  logDrillAttempt('drill9', correct, { sorted_count: catSortedCount });
+  writeTelemetryToDom();
+}
+
+buildCatDrill();
 
 function markStepDone(stepKey) {
   var STORAGE_KEY = 'foxcs_python_unit01_progress';
