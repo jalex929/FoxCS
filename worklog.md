@@ -332,8 +332,27 @@ Jay asked to start building out Game I (Python), picking Units 00 and 01. **Unit
 
 **Still open:** Jay hasn't confirmed whether 01.1 should keep its new pseudocode project step (reverses a deliberate 2026-08-20 "conceptual only, no project" decision the rebuild directive didn't know about) or revert to conceptual-only.
 
+**Committed and pushed** (`77b3d64`) — everything below is already live, this session's work was verified programmatically (HTML balance, valid Python, no broken nav links, zero em-dashes outside dev comments) but not with a real rendered browser, since this droplet has no display and Playwright wasn't installed/available in the sessions that touched this. Needs a real click-through on Jay's desktop (`~/web-testing`'s existing Playwright harness, per `07-infrastructure/droplet-setup.md`) before treating any of it as fully proven:
+
+## Needs Playwright/desktop verification (added 2026-08-30)
+
+**New interactive content, never seen rendered:**
+- `lesson_01_02_input_process_output/04_practice.html` — new Drill 9 (Categorization: sort 6 weather-app items into Input/Process/Output bins). The building fork explicitly flagged it couldn't get Playwright running and relied on syntax-check + manual trace only — weakest-verified piece of this whole pass. Check: drag-and-drop actually works, Check-button scoring is correct (a real bug was already caught and fixed here in the scoring logic, worth confirming the fix holds), telemetry logs attempts.
+- `lesson_01_03_writing_your_first_program/05_practice.html` — new Drill 9 (Sequencing: reorder 4 scrambled `print()` lines via ▲▼ buttons, no native drag-and-drop). Check the reorder buttons work and final-order checking is correct.
+- `lesson_01_06_common_syntax_mistakes/04_practice.html` — new Drill 9 (Categorization: sort broken lines into SyntaxError/NameError bins). Custom CSS was hand-built for this one (no existing styled demo to copy) — worth a visual check that it actually matches the lesson's established look.
+- `lesson_01_01_what_programs_do/05_project.html` + `06_project.py` — brand new project step (design-a-program pseudocode task), only reviewed as text/HTML, never opened in a browser. Also gated on Jay's project-step decision above — hold this one until that's resolved.
+- `lesson_01_03_writing_your_first_program/06_application.py` — new hands-on step, simple enough it's low-risk, but still unseen.
+
+**Renumbered/restructured, check nothing broke in practice:**
+- `lesson_01_01_what_programs_do/` — files renamed (mastery check 05→07, feedback 07→09), part-numbers and footer nav updated to match. Click through the whole lesson start to finish.
+- `lesson_01_03_writing_your_first_program/` — files renamed 06→07 through 10→11 to make room for the new application.py. Same click-through check.
+
+**The unit-wide nav menu itself** — verified programmatically (every link resolves to a real file) but never actually opened and clicked through. Check across a few different lesson pages: does the ☰ toggle open/close correctly, does each lesson's `<details>` expand/collapse independently, does the done-chip styling still render right, does the currently-open lesson default correctly per page.
+
+**Lower priority, but worth a skim:** the ~475 em-dash fixes across 01.1-01.5 were mostly mechanical (period-split/colon/comma substitutions) — read through a page or two per lesson to confirm nothing reads awkwardly after the edit, especially in `05_practice.html`'s drill feedback strings (lesson_01_04) where several fixes landed inside JS template strings.
+
 **Next up (Python):**
-1. Get Jay's call on 01.1's project step, then commit and push the whole Unit 01 pass.
-2. A real browser (Playwright) verification pass — one fork couldn't get it running and fell back to syntax-check + manual trace, weaker than this repo's usual standard.
+1. Get Jay's call on 01.1's project step.
+2. The Playwright verification checklist above, once Jay's on his desktop.
 3. Em-dash sweep beyond Unit 01 — Unit 00's shared onboarding content and the rest of FoxCS haven't been checked.
 4. Units 00 (now resolved) and 02-20 are still the real remaining Python scope — only Unit 01 has content.
