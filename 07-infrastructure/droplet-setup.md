@@ -114,6 +114,60 @@ Then just `ssh foxcs-droplet` from PowerShell/Terminal.
 
 The droplet has its own dedicated SSH key (`~/.ssh/github_deploy` on the droplet) added to the FoxCS repo as a **Deploy Key** (repo-scoped, not tied to Jay's personal GitHub account, "Allow write access" enabled) — see GitHub repo Settings → Deploy keys. Repo is cloned at `~/FoxCS` on the droplet. Scoped this way so revoking the droplet's access later (or if it's ever compromised) doesn't touch anything else.
 
+## What does and doesn't work headless (no display/GUI)
+
+The droplet has no display server — there is no way to open a real, visible browser
+window on it, full stop. That's not a missing package, it's inherent to a headless
+Ubuntu server, and no amount of installing things fixes it. Worth knowing exactly where
+that line falls, so a session doesn't burn a turn attempting something that was never
+going to work:
+
+**Works fine headless, once Playwright + Chromium are installed (below):**
+- Rendering a self-contained HTML file to PDF (`page.pdf()`) — this is what generates
+  presentation-deck PDFs like `courses/seminar-iii/teacher-materials/week-02-presentation.pdf`.
+  See `02-authoring-system/tools/html-to-pdf/`.
+- Taking a screenshot of a rendered page (`page.screenshot()`) — useful for visually
+  spot-checking a layout without a real browser window; view the resulting `.png` after
+  pulling it locally, or open it directly if working from a machine with a display.
+- Any other headless Chromium automation (the same engine `~/web-testing`'s Playwright
+  harness uses on Jay's desktop) — clicking, filling forms, reading computed styles.
+  What's missing is a window to *see* it happen live, not the capability itself.
+
+**Cannot work here, regardless of what's installed:**
+- Opening a page and looking at it in a real browser window. For visual review, either
+  pull the repo to a machine with a display (the normal path — everything here is
+  git-synced) or generate a screenshot/PDF on the droplet and view *that* file instead.
+- Anything that depends on a physical display existing (screen recording, systems that
+  refuse to run without one).
+
+**Moving a generated file (a PDF, a screenshot) off the droplet:** not a package gap
+either — the droplet has no direct path to any local machine's filesystem. The existing
+git remote is the channel: commit and `git push` from the droplet, then `git pull`
+locally, same as any other file change made there.
+
+### Installing Playwright + headless Chromium on the droplet
+
+Not installed by default (see "What's installed" above — only Node/npm/git/tmux/
+build-essential/Claude Code). To add it:
+
+```
+cd ~/FoxCS/02-authoring-system/tools/html-to-pdf
+npm install
+npx playwright install --with-deps chromium
+```
+
+`--with-deps` runs `apt-get` under the hood to pull the system libraries headless
+Chromium needs (fonts, `libnss3`, and similar) — needs `sudo`, which `jay` already has
+passwordless (see Hardening above), so this should run without prompting. This was the
+step that used to just silently not work: attempting to render a PDF before this had
+ever been run.
+
+**Memory note:** this droplet is the 1 vCPU / 1GB RAM tier. Headless Chromium rendering
+one lightweight static HTML file at a time (the presentation decks, no heavy media)
+should fit comfortably. If a render ever fails with an out-of-memory-style error, the
+fix is adding a swap file, not upgrading the droplet tier — flag it here if that ever
+actually happens, it hasn't yet.
+
 ## Not yet done
 
 - Per-device SSH keys for any device beyond the one this was first set up from (currently every device shares one key pair, copied device to device — see the Quick Start above; splitting into one key per device is a nice-to-have, not urgent).

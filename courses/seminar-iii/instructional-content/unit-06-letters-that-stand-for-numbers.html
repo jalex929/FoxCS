@@ -1,219 +1,119 @@
-<!-- Student-facing instructional document for Seminar III Unit 06 (Variables & Expressions),
-     "Letters That Stand for Numbers" (title proposed directly in week-07-plan Section 50).
-     Built 2026-08-26 following the pattern established in
-     instructional-content/week-03-numbers-that-make-sense.html: same visual component
-     language as the Teacher presentation decks (kicker labels, problem-box/warn-box
-     callouts, chip-row tags, note asides), flowing document rather than a slideshow, print
-     CSS keeps each section from breaking awkwardly across a page. Content sourced directly
-     from week-07-plan's Sections 6-32 and 50-60 (What Is a Variable through PDF Section 10
-     Quick Reference). No em dashes used anywhere in authored text. -->
+<!-- Student-facing concept-teaching document for Seminar III Unit 06, styled HTML rendered
+     to PDF (see 02-authoring-system/tools/html-to-pdf/). No Drive-authored doc exists yet
+     for this week, so this is composed from week-07-plan's "Student Instructional PDF"
+     section outline (sections 51-60) plus its Common Misconceptions (33-42) for concrete
+     worked examples, written out as finished student-facing prose. Same template/palette
+     as week-02 through 06. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Unit 06: Letters That Stand for Numbers</title>
+<title>Letters That Stand for Numbers</title>
 <style>
   :root {
     --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
     --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
-    --warn-bg: #fdf3ec; --warn-line: #d98a3d; --warn-ink: #7a4413;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d;
+    --k-color: #1f6f8b; --p-color: #6a4fa0; --e-color: #b3541e; --c-color: #a12f4f; --s-color: #2f7a4f;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
-  .page { max-width: 800px; margin: 0 auto; background: var(--paper); padding: 0 0 4rem; }
-
-  .banner { background: var(--accent-dark); color: white; padding: 3rem 3rem 2.2rem; }
-  .banner .kicker { font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: #cfe6ee; font-weight: bold; margin: 0 0 0.5rem; }
-  .banner h1 { font-size: 2.4rem; margin: 0 0 0.6rem; line-height: 1.15; }
-  .banner .sub { font-size: 1.15rem; color: #dff1f6; margin: 0; }
-
-  section.block { padding: 1.8rem 3rem; border-bottom: 1px solid var(--line); break-inside: avoid; page-break-inside: avoid; }
-  section.block:last-of-type { border-bottom: none; }
-
-  h2 { font-size: 1.5rem; color: var(--accent-dark); margin: 0 0 0.9rem; }
-  p { font-size: 1.02rem; line-height: 1.6; margin: 0 0 0.8rem; }
-  p:last-child { margin-bottom: 0; }
-
-  ul.facts { list-style: none; margin: 0.8rem 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-  ul.facts li { background: var(--accent-bg); border-left: 4px solid var(--accent); padding: 0.6rem 1rem; font-size: 1rem; line-height: 1.5; border-radius: 0 6px 6px 0; }
-  ul.facts li strong { color: var(--accent-dark); }
-
-  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1rem 1.3rem; font-size: 1.05rem; line-height: 1.55; margin: 0.9rem 0; }
-  .problem-box strong { color: var(--accent-dark); }
-
-  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 1rem 1.3rem; font-size: 1.02rem; line-height: 1.55; margin: 0.9rem 0; color: var(--warn-ink); }
-  .warn-box .label { display: block; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; color: var(--warn-line); margin-bottom: 0.35rem; }
-
-  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0; }
-  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.92rem; font-weight: bold; }
-
-  ol.steps { margin: 0.8rem 0; padding-left: 1.4rem; font-size: 1.02rem; line-height: 1.6; }
-  ol.steps li { margin-bottom: 0.3rem; }
-  ol.steps b { color: var(--accent-dark); }
-
-  .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin: 0.9rem 0; }
-  .check-item { background: var(--accent-bg); border-radius: 8px; padding: 0.7rem 1rem; }
-  .check-item .term { font-weight: bold; color: var(--accent-dark); display: block; margin-bottom: 0.2rem; font-size: 0.95rem; }
-  .check-item .q { font-size: 0.95rem; color: var(--ink); }
-
-  .error-grid { display: flex; flex-direction: column; gap: 0.6rem; margin: 0.9rem 0; }
-  .error-item { border: 1px solid var(--line); border-radius: 8px; padding: 0.7rem 1rem; }
-  .error-item .term { font-weight: bold; color: var(--accent-dark); }
-
-  .reference { background: var(--accent-dark); color: white; padding: 1.8rem 3rem 2.4rem; }
-  .reference h2 { color: white; }
-  .reference .ref-row { display: grid; grid-template-columns: 1fr 2fr; gap: 0.3rem 1rem; font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.7rem; }
-  .reference .ref-row b { color: #a9d8e6; }
-
-  @media print {
-    body { background: white; }
-    .page { max-width: none; }
-    section.block { break-inside: avoid; page-break-inside: avoid; }
-  }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
+  body { display: flex; justify-content: center; }
+  main { max-width: 720px; width: 100%; background: var(--paper); padding: 4rem 3.5rem 5rem; }
+  .kicker { font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6rem; text-align: left; }
+  h1 { font-size: 2.4rem; line-height: 1.2; margin: 0 0 1.2rem; color: var(--ink); text-align: left; }
+  h2 { font-size: 1.6rem; margin: 2.6rem 0 1rem; color: var(--accent-dark); text-align: left; border-bottom: 3px solid var(--accent); padding-bottom: 0.4rem; }
+  p { font-size: 1.05rem; line-height: 1.65; margin: 0 0 1rem; text-align: left; }
+  .lede { font-size: 1.2rem; line-height: 1.6; color: var(--ink); }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0 1.2rem; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.35rem 0.95rem; font-size: 0.95rem; }
+  .example-box { background: var(--floor); border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0 1.6rem; }
+  .example-box .row { font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.35rem; }
+  .example-box .row b { color: var(--accent-dark); }
+  .warn-box { background: var(--warn-bg); border-left: 5px solid var(--warn-line); border-radius: 0 6px 6px 0; padding: 1rem 1.3rem; margin: 1.2rem 0 1.6rem; font-size: 1rem; line-height: 1.55; }
+  table.checklist { border-collapse: collapse; width: 100%; margin: 1rem 0 1.6rem; font-size: 0.98rem; }
+  table.checklist th, table.checklist td { border: 1px solid var(--line); padding: 0.55rem 0.9rem; text-align: left; }
+  table.checklist th { background: var(--accent-bg); color: var(--accent-dark); }
+  .error-grid { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.2rem 0 1.6rem; }
+  .error-card { border-left: 5px solid var(--line); background: var(--floor); border-radius: 0 6px 6px 0; padding: 0.8rem 1.1rem; }
+  .error-card .name { font-weight: bold; font-size: 1.05rem; margin-bottom: 0.25rem; }
+  .error-card .detail { font-size: 0.96rem; line-height: 1.5; color: var(--ink); }
+  .error-card.knowledge { border-color: var(--k-color); } .error-card.knowledge .name { color: var(--k-color); }
+  .error-card.process { border-color: var(--p-color); } .error-card.process .name { color: var(--p-color); }
+  .error-card.execution { border-color: var(--e-color); } .error-card.execution .name { color: var(--e-color); }
+  .error-card.comprehension { border-color: var(--c-color); } .error-card.comprehension .name { color: var(--c-color); }
+  .error-card.strategy { border-color: var(--s-color); } .error-card.strategy .name { color: var(--s-color); }
+  .quick-ref { margin-top: 3rem; border: 3px solid var(--accent-dark); border-radius: 10px; padding: 1.8rem 2rem; background: var(--accent-bg); page-break-inside: avoid; }
+  .quick-ref h2 { border: none; margin-top: 0; color: var(--accent-dark); }
+  .quick-ref .row { font-size: 0.98rem; line-height: 1.6; margin-bottom: 0.5rem; }
+  .quick-ref .row b { color: var(--accent-dark); }
+  .quick-ref .keep { margin-top: 1.2rem; font-weight: bold; color: var(--accent-dark); text-align: left; }
+  @media print { body { background: var(--paper); } main { padding: 0.4in 0.5in; max-width: none; } }
 </style>
 </head>
 <body>
-<div class="page">
+<main>
 
-  <div class="banner">
-    <p class="kicker">Seminar III &middot; Unit 06 &middot; Variables &amp; Expressions</p>
-    <h1>Letters That Stand for Numbers</h1>
-    <p class="sub">This week's big question: <strong>What does this symbol represent, and how does its value change the result?</strong></p>
+  <p class="kicker">Seminar III &middot; Unit 06</p>
+  <h1>Letters That Stand for Numbers</h1>
+  <p class="lede">A variable isn't a mystery to be solved every time you see one &mdash; sometimes it's just a value that changes, like hours worked or number of items bought. This week is about reading, building, and simplifying expressions that use them.</p>
+
+  <h2>What Is a Variable?</h2>
+  <p>A <strong>variable</strong> is a letter standing in for a number that's unknown or that changes &mdash; hours worked, number of tickets, temperature. A <strong>constant</strong> is a fixed value that doesn't change. In 3x + 7, the 3 is a <strong>coefficient</strong> (it multiplies the variable), x is the variable, and 7 is the constant.</p>
+  <div class="warn-box">A variable doesn't always mean &ldquo;find this missing number.&rdquo; Plenty of expressions describe a changing quantity and are never meant to be solved for x.</div>
+
+  <h2>Reading and Writing Expressions</h2>
+  <p>Translate carefully between words and symbols in both directions.</p>
+  <div class="warn-box"><strong>Watch the order:</strong> &ldquo;five less than a number&rdquo; means x&minus;5, <strong>not</strong> 5&minus;x. &ldquo;Less than&rdquo; reverses the order you might expect.</div>
+
+  <h2>Substituting Into an Expression</h2>
+  <p>Replace <em>every</em> occurrence of the variable with its given value, then follow the order of operations exactly as usual &mdash; substitution doesn't change that rule.</p>
+  <div class="example-box"><div class="row"><b>Evaluate 5x &minus; 3 when x = 4:</b> 5(4) &minus; 3 = 20 &minus; 3 = <strong>17</strong>.</div></div>
+  <div class="warn-box">In 3x + 2x, both x's get replaced when you substitute &mdash; not just one.</div>
+
+  <h2>Like Terms</h2>
+  <p>Terms combine only when they share the same variable raised to the same power. 2x and 3x combine to 5x. 4x and 3x&sup2; do <strong>not</strong> combine &mdash; different powers, not like terms.</p>
+
+  <h2>The Distributive Property</h2>
+  <p>The outside factor multiplies <em>every</em> term inside the parentheses: 3(x+2) = 3x+6, not 3x+2.</p>
+  <div class="warn-box">A negative factor distributes too: &minus;2(x+6) = &minus;2x&minus;12, not &minus;2x+6.</div>
+
+  <h2>Putting It Together</h2>
+  <div class="example-box"><div class="row"><b>Simplify 3(x + 2) + 4x:</b> distribute first: 3x+6+4x. Then combine like terms: <strong>7x + 6</strong>.</div></div>
+
+  <h2>Expressions in Real Life</h2>
+  <p>A weekly wage with a bonus, a car rental with a per-day fee, a subscription with a base price plus usage &mdash; all of these translate into expressions built from a variable, a coefficient, and a constant.</p>
+  <div class="example-box"><div class="row"><b>&ldquo;Twelve more than twice a number&rdquo;:</b> 2x + 12.</div></div>
+
+  <h2>Does My Answer Make Sense?</h2>
+  <table class="checklist">
+    <tr><th>Check</th><th>Ask</th></tr>
+    <tr><td>Size</td><td>Is the result approximately what I expected?</td></tr>
+    <tr><td>Sign</td><td>Should it be positive or negative?</td></tr>
+    <tr><td>Substitution</td><td>Did I replace every occurrence of the variable?</td></tr>
+    <tr><td>Order of Operations</td><td>Did I still follow it after substituting?</td></tr>
+  </table>
+
+  <h2>Error Detective</h2>
+  <div class="error-grid">
+    <div class="error-card knowledge"><div class="name">Knowledge &mdash; &ldquo;I don't remember what a coefficient is.&rdquo;</div><div class="detail">Fix: review the vocabulary &mdash; coefficient, variable, constant, term.</div></div>
+    <div class="error-card process"><div class="name">Process &mdash; distributing to only one term</div><div class="detail">3(x+4) becomes 3x+4 instead of 3x+12. Fix: multiply the outside factor by <em>every</em> term inside.</div></div>
+    <div class="error-card execution"><div class="name">Execution &mdash; correct setup, arithmetic slip</div><div class="detail">The right terms were combined, but a sign or digit was copied wrong along the way. Fix: check the work line by line.</div></div>
+    <div class="error-card comprehension"><div class="name">Comprehension &mdash; &ldquo;five less than a number&rdquo; written as 5&minus;x</div><div class="detail">The phrase was translated in the wrong order. Fix: reread the phrase and identify which quantity comes first.</div></div>
+    <div class="error-card strategy"><div class="name">Strategy &mdash; substituting before simplifying</div><div class="detail">Substituting into a messy, uncombined expression makes arithmetic harder than it needs to be. Fix: simplify (combine like terms, distribute) before substituting when possible.</div></div>
   </div>
 
-  <section class="block">
-    <h2>What Is a Variable?</h2>
-    <p>A variable is a symbol, most often a letter, that stands in for a number. A variable can represent an unknown value to be found, a value that changes depending on the situation, or a general value used to describe a pattern or rule.</p>
-    <div class="problem-box">A pay stub might describe earnings as <strong>15h</strong>, where h represents the number of hours worked. The value of h changes from week to week, but the relationship, earnings equal 15 times hours, stays the same.</div>
-    <p><strong>Variable:</strong> a symbol representing a value that is unknown or that can change. Example: x, n, t.</p>
-    <p><strong>Constant:</strong> a fixed value that does not change. In 3x + 7, the number 7 is a constant.</p>
-    <div class="problem-box">3x + 7 &nbsp;&rarr;&nbsp; x is a variable. Its value is not fixed. 7 is a constant. Its value never changes in this expression. 3 is a coefficient, a number that multiplies the variable.</div>
-    <p><strong>Coefficient:</strong> a number multiplied by a variable. In 3x, 3 is the coefficient of x. <strong>Term:</strong> a single number, variable, or product of numbers and variables, separated from other terms by addition or subtraction. 3x + 7 has two terms: 3x and 7.</p>
-    <div class="warn-box">
-      <span class="label">Common Misconception</span>
-      A variable does not always mean "find this missing number." A variable can represent an unknown to solve for, but it can also represent a quantity that changes, such as hours worked or number of items purchased. Not every expression needs to be solved.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>Reading and Writing Expressions</h2>
-    <p>An <strong>expression</strong> is a mathematical phrase made of numbers, variables, and operations that represents a value. Examples: x + 4, 3x &minus; 2, 2(x + 5). An expression does not contain an equal sign and does not claim that two quantities are equal.</p>
-    <div class="warn-box">
-      <span class="label">Expression vs. Equation</span>
-      3x + 7 is an expression. It represents a value and can be <strong>evaluated</strong>. 3x + 7 = 22 is an equation. It states that the expression equals a specific number, and can be <strong>solved</strong>. An expression without an equal sign cannot be solved, because there is nothing stating what it is equal to. Unit 06 works only with expressions. Solving equations begins in Unit 07.
-    </div>
-    <p>Expressions can be translated into words and back. 4x + 9 can be read as "nine more than four times a number." 2(x &minus; 3) can be read as "two times the difference of a number and three."</p>
-    <ul class="facts">
-      <li><strong>Addition:</strong> more than, increased by, sum, total, added to.</li>
-      <li><strong>Subtraction:</strong> less than, decreased by, difference, fewer than, subtracted from.</li>
-      <li><strong>Multiplication:</strong> times, product, of, twice, multiplied by.</li>
-      <li><strong>Division:</strong> divided by, quotient, per, split into.</li>
-    </ul>
-    <div class="warn-box">
-      <span class="label">Common Mistake</span>
-      "Less than" and "subtracted from" reverse the order of the terms. "Five less than a number" is written x &minus; 5, not 5 &minus; x. "Five less than a number" and "five minus a number" describe different expressions: x &minus; 5 means "five less than x," while 5 &minus; x means "five minus x," or "a number less than five." Slow down and identify which quantity comes first in the actual subtraction.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>Substituting Into an Expression</h2>
-    <p><strong>Substitute:</strong> to replace a variable with a given numerical value. <strong>Evaluate:</strong> to find the numerical value of an expression after substituting given values for the variables.</p>
-    <div class="problem-box">If x = 4, then 3x + 2 becomes 3(4) + 2 &rarr; 12 + 2 &rarr; 14.</div>
-    <p>Substitution must always be followed by the Unit 02 order of operations.</p>
-    <div class="problem-box">Evaluate 2x&sup2; + 5 when x = 3. &nbsp;2(3)&sup2; + 5 &rarr; 2(9) + 5 &rarr; 18 + 5 &rarr; 23. Exponents are evaluated before multiplication.</div>
-    <p>Substituting a negative value requires careful use of parentheses.</p>
-    <div class="problem-box">Evaluate 4x &minus; 6 when x = &minus;3. &nbsp;4(&minus;3) &minus; 6 &rarr; &minus;12 &minus; 6 &rarr; &minus;18. Placing the substituted value in parentheses avoids sign errors.</div>
-    <p>Some expressions contain more than one variable. Every occurrence of each variable must be replaced.</p>
-    <div class="problem-box">Evaluate 3a + 2b when a = 5 and b = &minus;4. &nbsp;3(5) + 2(&minus;4) &rarr; 15 + (&minus;8) &rarr; 7.</div>
-    <div class="warn-box">
-      <span class="label">Common Misconception</span>
-      In 3x + 2x, it is not true that only one x needs to be replaced. Every occurrence of the variable must be replaced with the given value.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>Like Terms</h2>
-    <p>Like terms contain the same variable raised to the same power. 4x and 9x are like terms. 7y&sup2; and 2y&sup2; are like terms. 4x and 4x&sup2; are not like terms, because they have different powers. 3x and 3y are not like terms, because they have different variables.</p>
-    <p>To combine like terms, add or subtract their coefficients. The variable part stays the same.</p>
-    <div class="problem-box">5x + 3x &nbsp;&rarr;&nbsp; (5 + 3)x &rarr; 8x</div>
-    <div class="problem-box">9y &minus; 4y &nbsp;&rarr;&nbsp; (9 &minus; 4)y &rarr; 5y</div>
-    <div class="problem-box">4x + 3 + 2x &minus; 5 &nbsp;&rarr;&nbsp; group like terms: (4x + 2x) + (3 &minus; 5) &rarr; 6x + (&minus;2) &rarr; 6x &minus; 2</div>
-    <div class="problem-box">3a + 5b &minus; a + 2b &nbsp;&rarr;&nbsp; group like terms: (3a &minus; a) + (5b + 2b) &rarr; 2a + 7b. 2a and 7b are not like terms, so this cannot be simplified further.</div>
-    <div class="warn-box">
-      <span class="label">Common Misconception</span>
-      4x + 3x&sup2; cannot be combined into 7x or 7x&sup2;. Terms can only be combined if they have the same variable raised to the same power. A related mistake is treating every number in an expression as a "coefficient": a coefficient multiplies a variable, while a constant stands alone with no variable attached. In 3x + 7, 3 is a coefficient and 7 is a constant.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>The Distributive Property</h2>
-    <p>The distributive property states that a factor outside a grouping symbol multiplies every term inside it.</p>
-    <div class="problem-box">3(x + 4) &nbsp;&rarr;&nbsp; 3(x) + 3(4) &rarr; 3x + 12</div>
-    <div class="problem-box">5(x &minus; 2) &nbsp;&rarr;&nbsp; 5(x) &minus; 5(2) &rarr; 5x &minus; 10</div>
-    <div class="problem-box">&minus;2(x + 6) &nbsp;&rarr;&nbsp; &minus;2(x) + (&minus;2)(6) &rarr; &minus;2x &minus; 12. Pay close attention to sign changes when the outside factor is negative.</div>
-    <div class="warn-box">
-      <span class="label">Common Misconception</span>
-      Incorrect: 3(x + 4) = 3x + 4. Correct: 3(x + 4) = 3x + 12. The 3 must multiply both terms inside the parentheses, not only the variable term. The same is true for a negative factor: incorrect is &minus;2(x + 6) = &minus;2x + 6, correct is &minus;2(x + 6) = &minus;2x &minus; 12. The negative sign is part of the factor being distributed and must multiply every term inside.
-    </div>
-  </section>
-
-  <section class="block">
-    <h2>Putting It Together: Distribute and Combine</h2>
-    <p>Many expressions require both distributing and combining like terms.</p>
-    <div class="problem-box">4(x + 3) + 2x &nbsp;&rarr;&nbsp; distribute: 4x + 12 + 2x &rarr; combine like terms: 6x + 12</div>
-    <div class="problem-box">2(3x &minus; 1) &minus; 4(x &minus; 5) &nbsp;&rarr;&nbsp; distribute both groups: 6x &minus; 2 &minus; 4x + 20 &rarr; combine like terms: (6x &minus; 4x) + (&minus;2 + 20) &rarr; 2x + 18. Distribute the negative sign in front of &minus;4(x &minus; 5) carefully, since it changes the sign of both terms inside.</div>
-  </section>
-
-  <section class="block">
-    <h2>Expressions in Real Life</h2>
-    <p>The examples below connect Unit 05's rate reasoning directly to Unit 06's expressions: the coefficient of the variable is often a rate.</p>
-    <ul class="facts">
-      <li><strong>Rental fee:</strong> a flat fee of $25 plus $8 per hour. Total cost for h hours: 25 + 8h.</li>
-      <li><strong>Phone plan:</strong> $40 per month plus $0.10 per text message beyond a limit. Total cost for t extra texts: 40 + 0.10t.</li>
-      <li><strong>Wages:</strong> a $12 hourly rate plus a $50 bonus. Total pay for h hours: 12h + 50.</li>
-      <li><strong>Rideshare:</strong> a $3 base fee plus $2 per mile. Total cost for m miles: 3 + 2m.</li>
-    </ul>
-    <div class="problem-box">Using the rental example, find the cost for 6 hours: 25 + 8(6) &rarr; 25 + 48 &rarr; 73. <strong>Answer: $73.</strong></div>
-  </section>
-
-  <section class="block">
-    <h2>Does My Answer Make Sense?</h2>
-    <p>Continue applying the Unit 02 reasonableness habit after evaluating or simplifying an expression.</p>
-    <div class="check-grid">
-      <div class="check-item"><span class="term">Size</span><span class="q">Is the evaluated result a realistic size for the situation?</span></div>
-      <div class="check-item"><span class="term">Sign</span><span class="q">Should the result be positive or negative?</span></div>
-      <div class="check-item"><span class="term">Substitution</span><span class="q">Was the given value substituted into every occurrence of the variable?</span></div>
-      <div class="check-item"><span class="term">Order of Operations</span><span class="q">Were operations completed in the correct order after substitution?</span></div>
-    </div>
-    <div class="warn-box">
-      <span class="label">Reasonableness Example</span>
-      A learner evaluates 25 + 8h for h = 6 and gets 198. This should look unreasonable. A quick estimate, 25 + 8(6) is about 25 + 50 = 75, shows the result should be close to 75, not 198. The likely cause is multiplying 8 by something other than 6, or adding before multiplying.
-    </div>
-    <p>Calculators are useful for evaluating expressions with larger or decimal values and for checking substitution and arithmetic. Calculators cannot determine what a variable represents, whether an expression was translated correctly from words, whether like terms were correctly identified, or whether the distributive property was applied to every term.</p>
-  </section>
-
-  <section class="block">
-    <h2>Error Detective</h2>
-    <p>Not every wrong answer means the same thing. Use the five error types from Unit 01 to diagnose what happened.</p>
-    <div class="error-grid">
-      <div class="error-item"><span class="term">Knowledge:</span> "I don't remember what a coefficient is." <em>Response: review the vocabulary and definitions.</em></div>
-      <div class="error-item"><span class="term">Process:</span> a learner distributes correctly but combines unlike terms afterward. <em>Response: review which terms qualify as like terms and retry.</em></div>
-      <div class="error-item"><span class="term">Execution:</span> a learner sets up substitution correctly but makes an arithmetic mistake evaluating the exponent. <em>Response: check the calculation step by step.</em></div>
-      <div class="error-item"><span class="term">Comprehension:</span> a learner translates "five less than a number" as 5 &minus; x instead of x &minus; 5. <em>Response: reread the phrase and identify which quantity is being reduced.</em></div>
-      <div class="error-item"><span class="term">Strategy:</span> a learner substitutes first without simplifying, creating unnecessary extra steps, when distributing first would have been faster. <em>Response: consider whether simplifying before or after substitution is more efficient.</em></div>
-    </div>
-  </section>
-
-  <div class="reference">
+  <div class="quick-ref">
     <h2>Quick Reference</h2>
-    <div class="ref-row"><b>Variable</b><span>A symbol representing an unknown or changing value.</span></div>
-    <div class="ref-row"><b>Constant</b><span>A fixed value.</span></div>
-    <div class="ref-row"><b>Coefficient</b><span>A number multiplied by a variable.</span></div>
-    <div class="ref-row"><b>Like terms</b><span>Same variable, same power.</span></div>
-    <div class="ref-row"><b>Distributive property</b><span>Multiply the outside factor by every term inside.</span></div>
-    <div class="ref-row"><b>Check your answer</b><span>Size, Sign, Substitution, Order of Operations.</span></div>
+    <div class="row"><b>Variable:</b> a symbol representing an unknown or changing value.</div>
+    <div class="row"><b>Constant:</b> a fixed value.</div>
+    <div class="row"><b>Coefficient:</b> a number multiplied by a variable.</div>
+    <div class="row"><b>Like terms:</b> same variable, same power &mdash; only then can they combine.</div>
+    <div class="row"><b>Distribute:</b> multiply the outside factor by every term inside.</div>
+    <div class="row"><b>Check:</b> Size &rarr; Sign &rarr; Substitution &rarr; Order of Operations.</div>
+    <div class="keep">Keep this page. You'll use it all year.</div>
   </div>
 
-</div>
+</main>
 </body>
 </html>

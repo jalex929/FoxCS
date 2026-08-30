@@ -1,0 +1,173 @@
+<!-- Student-facing concept-teaching document for Seminar III Unit 01, styled HTML rendered
+     to PDF (see 02-authoring-system/tools/html-to-pdf/). Content is Jay's already-authored
+     Google Doc "Unit 01 - What Do I Do When I'm Stuck?" (Student/ folder, Drive), carried
+     over verbatim -- this pass adds structure and visual design, not new content. Per
+     Jay's direction, this replaces that plain Doc as the canonical version once uploaded;
+     the Doc's wording is preserved here so nothing is lost in the swap. Self-contained,
+     portrait, print-ready. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Getting Stuck Is Information</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d;
+    --k-color: #1f6f8b; --p-color: #6a4fa0; --e-color: #b3541e; --c-color: #a12f4f; --s-color: #2f7a4f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
+  body { display: flex; justify-content: center; }
+  main { max-width: 720px; width: 100%; background: var(--paper); padding: 4rem 3.5rem 5rem; }
+
+  .kicker { font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6rem; text-align: left; }
+  h1 { font-size: 2.5rem; line-height: 1.15; margin: 0 0 1.2rem; color: var(--ink); text-align: left; }
+  h2 { font-size: 1.6rem; margin: 2.6rem 0 1rem; color: var(--accent-dark); text-align: left; border-bottom: 3px solid var(--accent); padding-bottom: 0.4rem; }
+  p { font-size: 1.05rem; line-height: 1.65; margin: 0 0 1rem; text-align: left; }
+  .lede { font-size: 1.2rem; line-height: 1.6; color: var(--ink); }
+
+  .routine { display: flex; flex-direction: column; gap: 0.9rem; margin: 1.2rem 0 1.6rem; }
+  .step { display: flex; gap: 1rem; border-left: 5px solid var(--accent); background: var(--accent-bg); padding: 0.8rem 1.1rem; border-radius: 0 6px 6px 0; }
+  .step .tag { flex: 0 0 auto; font-weight: bold; color: var(--accent-dark); font-size: 1.05rem; min-width: 5.2rem; }
+  .step .body { font-size: 1rem; line-height: 1.5; }
+
+  .example-box { background: var(--floor); border: 1px solid var(--line); border-radius: 8px; padding: 1.3rem 1.5rem; margin: 1.2rem 0 1.6rem; }
+  .example-box h3 { margin: 0 0 0.7rem; font-size: 1.1rem; color: var(--accent-dark); }
+  .example-box .row { font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.35rem; }
+  .example-box .row b { color: var(--accent-dark); }
+  .answer { font-weight: bold; color: var(--accent-dark); margin-top: 0.6rem; }
+
+  .error-grid { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.2rem 0 1.6rem; }
+  .error-card { border-left: 5px solid var(--line); background: var(--floor); border-radius: 0 6px 6px 0; padding: 0.8rem 1.1rem; }
+  .error-card .name { font-weight: bold; font-size: 1.05rem; margin-bottom: 0.25rem; }
+  .error-card .detail { font-size: 0.96rem; line-height: 1.5; color: var(--ink); }
+  .error-card.knowledge { border-color: var(--k-color); } .error-card.knowledge .name { color: var(--k-color); }
+  .error-card.process { border-color: var(--p-color); } .error-card.process .name { color: var(--p-color); }
+  .error-card.execution { border-color: var(--e-color); } .error-card.execution .name { color: var(--e-color); }
+  .error-card.comprehension { border-color: var(--c-color); } .error-card.comprehension .name { color: var(--c-color); }
+  .error-card.strategy { border-color: var(--s-color); } .error-card.strategy .name { color: var(--s-color); }
+
+  table.next { border-collapse: collapse; width: 100%; margin: 1rem 0 1.6rem; font-size: 0.98rem; }
+  table.next th, table.next td { border: 1px solid var(--line); padding: 0.55rem 0.9rem; text-align: left; }
+  table.next th { background: var(--accent-bg); color: var(--accent-dark); }
+
+  .callout { background: var(--warn-bg); border-left: 5px solid var(--warn-line); border-radius: 0 6px 6px 0; padding: 1rem 1.3rem; margin: 1.2rem 0 1.6rem; font-size: 1rem; line-height: 1.55; }
+
+  .results-grid { display: flex; flex-direction: column; gap: 0.7rem; margin: 1.2rem 0 1.6rem; }
+  .results-card { border: 1px solid var(--line); border-radius: 6px; padding: 0.8rem 1.1rem; }
+  .results-card .name { font-weight: bold; color: var(--accent-dark); font-size: 1.02rem; margin-bottom: 0.2rem; }
+  .results-card .detail { font-size: 0.96rem; color: var(--ink); }
+
+  .quick-ref { margin-top: 3rem; border: 3px solid var(--accent-dark); border-radius: 10px; padding: 1.8rem 2rem; background: var(--accent-bg); page-break-inside: avoid; }
+  .quick-ref h2 { border: none; margin-top: 0; color: var(--accent-dark); }
+  .quick-ref .mnemonic-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.2rem; }
+  .quick-ref .pill { background: var(--paper); border: 1.5px solid var(--accent); border-radius: 999px; padding: 0.4rem 1rem; font-size: 0.95rem; }
+  .quick-ref .pill b { color: var(--accent-dark); }
+  .quick-ref .err-row { font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.3rem; }
+  .quick-ref .err-row b { color: var(--accent-dark); }
+  .quick-ref .keep { margin-top: 1.2rem; font-weight: bold; color: var(--accent-dark); text-align: left; }
+
+  @media print {
+    body { background: var(--paper); }
+    main { padding: 0.4in 0.5in; max-width: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <p class="kicker">Seminar III &middot; Unit 01</p>
+  <h1>Getting Stuck Is Information</h1>
+
+  <p class="lede">This year you will encounter questions you know how to solve immediately, questions you partially remember, questions you don't remember how to solve, questions you misunderstand, and questions you know how to solve but still get wrong.</p>
+  <p>These are different situations. They call for different responses.</p>
+  <p>The goal of this week is to move from &ldquo;I got it wrong&rdquo; toward &ldquo;I know why I got it wrong, and I know what I can try next.&rdquo;</p>
+
+  <h2>The Five Questions</h2>
+  <p>Use this routine whenever you're working on a problem, in math or anywhere else.</p>
+  <div class="routine">
+    <div class="step"><span class="tag">STOP</span><span class="body"><strong>What information do I have?</strong> Identify the numbers, facts, definitions, labels, diagrams, or instructions in front of you. Don't calculate yet. First figure out what's actually available.</span></div>
+    <div class="step"><span class="tag">FIND</span><span class="body"><strong>What am I trying to determine?</strong> Finish the sentence &ldquo;I need to find ___.&rdquo; This keeps you from calculating before you understand the goal.</span></div>
+    <div class="step"><span class="tag">CONNECT</span><span class="body"><strong>What skill or information could help?</strong> Addition, a formula, information from a graph, a vocabulary definition. You don't need the whole solution yet, just something that might move you forward.</span></div>
+    <div class="step"><span class="tag">TRY</span><span class="body"><strong>What strategy can I try?</strong> Write an equation, draw a diagram, estimate, eliminate impossible choices, reread the question, break it into smaller steps. The important word is try. A strategy doesn't need to be guaranteed to work before you attempt it.</span></div>
+    <div class="step"><span class="tag">CHECK</span><span class="body"><strong>Does my answer make sense?</strong> Is it too large or too small? Should it be positive or negative? Did you answer the question that was actually asked?</span></div>
+  </div>
+
+  <h2>Walk Through a Problem</h2>
+  <div class="example-box">
+    <h3>A student earns $15 per hour and works 6 hours. How much does the student earn before taxes?</h3>
+    <div class="row"><b>STOP:</b> $15 per hour, 6 hours.</div>
+    <div class="row"><b>FIND:</b> The total amount earned.</div>
+    <div class="row"><b>CONNECT:</b> A rate multiplied by the number of hours.</div>
+    <div class="row"><b>TRY:</b> 15 &times; 6 = 90.</div>
+    <div class="row"><b>CHECK:</b> The student earns $15 each hour. Six hours should be more than $75 and less than $100. $90 fits.</div>
+    <div class="answer">Answer: $90</div>
+  </div>
+
+  <p>This routine works outside of math too. Suppose you have a project due Friday that needs a written response, a visual, and a short presentation, and it's currently Wednesday.</p>
+  <div class="example-box">
+    <div class="row"><b>STOP:</b> three required components, due Friday, two days remaining.</div>
+    <div class="row"><b>FIND:</b> how to finish the project on time.</div>
+    <div class="row"><b>CONNECT:</b> planning and prioritization.</div>
+    <div class="row"><b>TRY:</b> break the project into smaller tasks and decide what to complete Wednesday and Thursday.</div>
+    <div class="row"><b>CHECK:</b> does the plan leave enough time for all three parts?</div>
+  </div>
+
+  <h2>Why Was My Answer Wrong?</h2>
+  <p>An incorrect answer doesn't automatically mean &ldquo;I don't know how to do this.&rdquo; There are five different reasons an answer can be wrong, and each one calls for a different next step.</p>
+
+  <h2>Error Types at a Glance</h2>
+  <div class="error-grid">
+    <div class="error-card knowledge"><div class="name">Knowledge error</div><div class="detail">You don't currently know or remember the information or skill needed. Example: you don't remember how to convert a fraction to a decimal. Next step: review the concept, look at a worked example, or ask for an explanation.</div></div>
+    <div class="error-card process"><div class="name">Process error</div><div class="detail">You understand the concept but didn't correctly complete the steps, or completed them in the wrong order. Example: you use the correct formula but substitute values into the wrong places. Next step: compare your work with a correct example and identify where the process changed.</div></div>
+    <div class="error-card execution"><div class="name">Execution error</div><div class="detail">You knew what to do and used the correct process, but made a small mistake while carrying it out. Example: 7 &times; 8 = 54 instead of 56. Next step: slow down, check your calculations, and compare your answer with an estimate.</div></div>
+    <div class="error-card comprehension"><div class="name">Comprehension error</div><div class="detail">You misunderstood what the question, passage, graph, or directions were actually asking. Example: you calculate the total when the question asked for the difference. Next step: reread the question and identify exactly what's being asked.</div></div>
+    <div class="error-card strategy"><div class="name">Strategy error</div><div class="detail">You understood the information and the goal, but chose an approach that was inefficient or unlikely to work. Example: doing a long calculation by hand when estimating would eliminate most of the answer choices in seconds. Next step: try a different approach, estimate, or ask &ldquo;is there an easier way?&rdquo;</div></div>
+  </div>
+  <p>Errors can overlap. A problem might involve more than one issue. The goal isn't finding a perfect label &mdash; it's answering: <strong>what should I do differently next time?</strong></p>
+
+  <h2>What Should I Do Next?</h2>
+  <table class="next">
+    <tr><th>If the problem was&hellip;</th><th>Then&hellip;</th></tr>
+    <tr><td>a <strong>knowledge</strong> issue</td><td>learn or review the missing concept</td></tr>
+    <tr><td>a <strong>process</strong> issue</td><td>compare your steps with a correct process</td></tr>
+    <tr><td>an <strong>execution</strong> issue</td><td>check your work more carefully</td></tr>
+    <tr><td>a <strong>comprehension</strong> issue</td><td>reread and restate the question</td></tr>
+    <tr><td>a <strong>strategy</strong> issue</td><td>try a different approach</td></tr>
+  </table>
+  <p>Different problems require different responses. Doing &ldquo;more practice&rdquo; isn't always the best solution if you don't know what kind of practice you actually need.</p>
+
+  <h2>What Is a Diagnostic?</h2>
+  <div class="callout">This week you'll complete an ACT Math baseline. It's diagnostic, meaning its purpose is to find your starting point, not to produce a grade. Attempting unfamiliar questions still gives useful information, even if you get them wrong. Don't randomly click answers just to finish. A wrong answer you actually attempted tells your teacher more than a blank one.</div>
+
+  <h2>Reading Your Results</h2>
+  <p>Instead of just a score, your results will be described using three categories:</p>
+  <div class="results-grid">
+    <div class="results-card"><div class="name">Current strengths</div><div class="detail">Skills you currently demonstrate consistently.</div></div>
+    <div class="results-card"><div class="name">Developing skills</div><div class="detail">Skills you partially demonstrate or seem to remember.</div></div>
+    <div class="results-card"><div class="name">Priority skills</div><div class="detail">Skills that need instruction or real review.</div></div>
+  </div>
+  <p>This language will come back throughout the quarter, so it's worth getting familiar with now.</p>
+
+  <div class="quick-ref">
+    <h2>Quick Reference</h2>
+    <div class="mnemonic-row">
+      <span class="pill"><b>STOP</b> &mdash; what do I have?</span>
+      <span class="pill"><b>FIND</b> &mdash; what am I solving for?</span>
+      <span class="pill"><b>CONNECT</b> &mdash; what could help?</span>
+      <span class="pill"><b>TRY</b> &mdash; what's a strategy?</span>
+      <span class="pill"><b>CHECK</b> &mdash; does it make sense?</span>
+    </div>
+    <div class="err-row"><b>Knowledge:</b> did I know the information or skill I needed?</div>
+    <div class="err-row"><b>Process:</b> did I correctly follow the steps?</div>
+    <div class="err-row"><b>Execution:</b> did I make a small mistake while doing something I knew how to do?</div>
+    <div class="err-row"><b>Comprehension:</b> did I understand the question correctly?</div>
+    <div class="err-row"><b>Strategy:</b> did I choose an effective approach?</div>
+    <div class="keep">Keep this page. You'll use it all year.</div>
+  </div>
+
+</main>
+</body>
+</html>

@@ -1,71 +1,82 @@
-<!-- Instructor-only presentation deck for Seminar III Unit 03 (Fractions & Decimals).
-     week-04-plan's own Instructional Sequence lists 4 real teaching days (Fraction
-     Meaning/Equivalence/Comparison, Fraction Operations, Decimal Meaning/Operations,
-     Fractions+Decimals Together) plus one light Apply/Analyze/Retry day -- more
-     instructional days than fit a realistic 45-minute-period, 2-3-day week. Per Jay's
-     direction, the two fraction days are merged into one denser "Session A" and the two
-     decimal/combining days into "Session B", rather than building 4 separate full decks.
-     Same self-contained single-file pattern as week-02/03-presentation.html. -->
+<!-- Student-facing instructor slideshow for Seminar III Week 4 (Fractions & Decimals).
+     Rewritten so every slide speaks directly to students -- no facilitation cues. Content
+     drawn from ../student-materials/week-04-fractions-and-decimals.html, broken into
+     slide-sized pieces with fraction-bar and number-line SVG diagrams added where a
+     picture helps. Same 16:9 letterboxed canvas and print pipeline as week-02/03. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Unit 03 Presentation: Fractions &amp; Decimals</title>
+<title>Week 4 Presentation: Fractions &amp; Decimals</title>
 <style>
   :root {
     --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
     --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
-    --warn-bg: #fdf3ec; --warn-line: #d98a3d;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d; --stage-bg: #10161d;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; height: 100%; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
-  #deck { position: relative; height: 100vh; overflow: hidden; }
-  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; background: var(--paper); padding: 6vh 8vw 9vh; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--stage-bg); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  #stage-wrap { position: fixed; inset: 0; bottom: 4.5vh; display: flex; align-items: center; justify-content: center; background: var(--stage-bg); }
+  #deck { position: relative; background: var(--paper); overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+  #deck { width: 100vw; height: calc(100vw * 9 / 16); max-height: calc(100vh - 4.5vh); }
+  @media (min-aspect-ratio: 16/9) { #deck { width: calc((100vh - 4.5vh) * 16 / 9); height: calc(100vh - 4.5vh); } }
+
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; background: var(--paper); padding: 5% 6.5%; }
   .slide.active { display: flex; }
-  .kicker { font-size: 1.05rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6rem; }
-  h1 { font-size: 3rem; line-height: 1.15; margin: 0 0 1rem; color: var(--ink); text-align: left; max-width: 24ch; }
-  h2.prompt { font-size: 2.1rem; line-height: 1.3; margin: 0.4rem 0 1.2rem; color: var(--accent-dark); text-align: left; max-width: 30ch; }
-  .say { font-size: 1.7rem; color: var(--ink); border-left: 6px solid var(--accent); padding: 0.3rem 0 0.3rem 1.2rem; margin: 0.6rem 0 1.4rem; max-width: 32ch; font-style: italic; }
-  ul.points, ol.points { font-size: 1.5rem; line-height: 1.55; margin: 0.5rem 0 1rem; padding-left: 1.4rem; max-width: 46ch; }
-  ul.points li, ol.points li { margin-bottom: 0.3rem; }
-  .sub { font-size: 1.3rem; color: var(--muted); max-width: 48ch; margin: 0.2rem 0 0.8rem; }
-  .note { position: absolute; left: 8vw; right: 8vw; bottom: 5vh; font-size: 1.05rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 0.6rem; max-width: 76ch; }
-  .note strong { color: var(--accent-dark); }
-  .chip-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0 1.2rem; }
-  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.3rem 0.9rem; font-size: 1.15rem; font-weight: bold; }
-  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1.2rem 1.5rem; font-size: 1.5rem; max-width: 54ch; margin: 0.5rem 0 1rem; }
-  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 0.9rem 1.3rem; font-size: 1.3rem; max-width: 52ch; margin: 0.6rem 0; }
+
+  .kicker { font-size: 1.35vw; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6em; }
+  h1 { font-size: 3.6vw; line-height: 1.2; margin: 0 0 0.5em; color: var(--ink); text-align: left; max-width: 24ch; }
+  h2.prompt { font-size: 2.5vw; line-height: 1.25; margin: 0.3em 0 0.5em; color: var(--accent-dark); text-align: left; max-width: 30ch; }
+  p.body { font-size: 1.45vw; line-height: 1.5; max-width: 50ch; margin: 0 0 0.5em; }
+  ul.points, ol.points { font-size: 1.45vw; line-height: 1.5; margin: 0.3em 0; padding-left: 1.2em; max-width: 48ch; }
+  ul.points li, ol.points li { margin-bottom: 0.25em; }
+  .sub { font-size: 1.55vw; color: var(--muted); max-width: 50ch; margin: 0.2em 0 0.5em; }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.5em; margin: 0.5em 0 0.6em; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.25em 0.8em; font-size: 1.2vw; }
+
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 0.4vw solid var(--accent); padding: 0.7em 1.1em; font-size: 1.5vw; max-width: 54ch; margin: 0.4em 0 0.6em; }
+  .warn-box { background: var(--warn-bg); border-left: 0.4vw solid var(--warn-line); padding: 0.6em 1.1em; font-size: 1.3vw; max-width: 52ch; margin: 0.4em 0; }
+
   .divider { background: var(--accent-dark); color: white; }
   .divider .kicker { color: #cfe6ee; }
-  .divider h1 { color: white; font-size: 3.4rem; }
-  .divider .sub { color: #cfe6ee; font-size: 1.4rem; }
+  .divider h1 { color: white; font-size: 4.1vw; }
+  .divider .sub { color: #cfe6ee; font-size: 1.7vw; }
   .title-slide { background: var(--accent-dark); color: white; }
   .title-slide .kicker { color: #cfe6ee; }
-  .title-slide h1 { color: white; font-size: 3.3rem; max-width: 26ch; }
-  .title-slide .sub { color: #dff1f6; font-size: 1.35rem; max-width: 52ch; }
-  .card-row { display: flex; gap: 1.2rem; flex-wrap: wrap; margin: 0.8rem 0 1rem; }
-  .card { border: 2px solid var(--accent); background: var(--accent-bg); border-radius: 10px; padding: 0.8rem 1.2rem; font-size: 1.4rem; color: var(--accent-dark); font-weight: bold; min-width: 6rem; text-align: center; }
+  .title-slide h1 { color: white; font-size: 3.7vw; max-width: 26ch; }
+  .title-slide .sub { color: #dff1f6; font-size: 1.55vw; max-width: 54ch; }
+
+  .card-row { display: flex; gap: 1em; flex-wrap: wrap; margin: 0.5em 0 0.6em; }
+  .card { border: 2px solid var(--accent); background: var(--accent-bg); border-radius: 10px; padding: 0.5em 1em; font-size: 1.5vw; color: var(--accent-dark); font-weight: bold; min-width: 4em; text-align: center; }
+
+  .svg-wrap { margin: 0.4em 0 0.4em; }
+  .svg-wrap svg { display: block; width: 100%; height: auto; max-width: 58vw; }
+
   #chrome { position: fixed; left: 0; right: 0; bottom: 0; height: 4.5vh; min-height: 42px; background: var(--ink); color: #cfd6de; display: flex; align-items: center; justify-content: space-between; padding: 0 1.2rem; font-size: 0.95rem; z-index: 10; }
   #chrome .left, #chrome .right { display: flex; align-items: center; gap: 0.7rem; }
   #chrome button, #chrome select { background: #2a3444; color: #eef2f6; border: 1px solid #3d4a5e; border-radius: 5px; padding: 0.3rem 0.7rem; font-size: 0.95rem; cursor: pointer; }
   #chrome button:hover { background: #3d4a5e; }
   #daytag { background: var(--accent); color: white; font-weight: bold; padding: 0.25rem 0.7rem; border-radius: 4px; font-size: 0.9rem; letter-spacing: 0.04em; }
+
   @media print {
+    html, body { background: var(--paper); }
     #chrome { display: none; }
-    #deck { position: static; height: auto; overflow: visible; }
+    #stage-wrap { position: static; display: block; background: var(--paper); overflow: visible; }
+    #deck { position: static; width: auto; height: auto; max-height: none; overflow: visible; box-shadow: none; }
     .slide { display: flex !important; position: relative; page-break-after: always; height: 100vh; }
   }
 </style>
 </head>
 <body>
 
+<div id="stage-wrap">
 <div id="deck">
 
   <section class="slide title-slide" data-day="0" data-title="Title">
-    <p class="kicker">Seminar III &middot; Unit 03 &middot; Foundations</p>
+    <p class="kicker">Seminar III &middot; Week 4 &middot; Foundations</p>
     <h1>Fractions &amp; Decimals</h1>
-    <p class="sub">Learn &rarr; Practice &rarr; Check &rarr; Analyze &rarr; Retry &rarr; Apply</p>
-    <p class="sub">Two teaching sessions this week (fractions, then decimals) plus an apply/retry day &mdash; not five separate full lessons.</p>
+    <p class="sub">Two ways to write the exact same amount. Once you can move between them, a lot of math gets easier.</p>
   </section>
 
   <!-- SESSION A: FRACTIONS -->
@@ -77,54 +88,109 @@
 
   <section class="slide" data-day="1" data-title="Fraction meaning">
     <p class="kicker">What Is a Fraction?</p>
-    <h2 class="prompt">A fraction is also a division.</h2>
-    <div class="chip-row"><span class="chip">numerator</span><span class="chip">denominator</span><span class="chip">on a number line</span><span class="chip">equivalent fractions</span></div>
-    <div class="note">Show visuals before procedures &mdash; fraction bars and number lines, not just the algorithm.</div>
+    <h2 class="prompt">Look at 3/4.</h2>
+    <p class="body">The bottom number, 4, is the <strong>denominator</strong> &mdash; how many equal parts one whole has been divided into. The top number, 3, is the <strong>numerator</strong> &mdash; how many of those parts you have. A fraction also means division: 3/4 also means 3&divide;4, which is 0.75.</p>
   </section>
 
-  <section class="slide" data-day="1" data-title="Larger denominator misconception">
-    <p class="kicker">Common Misconception</p>
-    <h2 class="prompt">Is 1/8 greater than 1/4, because 8 &gt; 4?</h2>
-    <p class="say">No &mdash; more pieces means each piece is smaller.</p>
-    <div class="note">1/8 &lt; 1/4. Use benchmark fractions and a visual to make this concrete.</div>
+  <section class="slide" data-day="1" data-title="Fractions on a number line">
+    <p class="kicker">Fractions Are Points, Not Just Pieces</p>
+    <h2 class="prompt">Fractions don't have to be less than 1.</h2>
+    <div class="svg-wrap">
+      <svg viewBox="0 0 900 130" role="img" aria-label="Number line from zero to two showing one half and three halves">
+        <g font-family="Verdana, Arial, sans-serif">
+          <line x1="60" y1="70" x2="840" y2="70" stroke="#1a2230" stroke-width="3"/>
+          <line x1="60" y1="60" x2="60" y2="80" stroke="#1a2230" stroke-width="2"/>
+          <line x1="450" y1="60" x2="450" y2="80" stroke="#1a2230" stroke-width="2"/>
+          <line x1="840" y1="60" x2="840" y2="80" stroke="#1a2230" stroke-width="2"/>
+          <text x="60" y="105" text-anchor="middle" font-size="20" fill="#1a2230">0</text>
+          <text x="450" y="105" text-anchor="middle" font-size="20" fill="#1a2230">1</text>
+          <text x="840" y="105" text-anchor="middle" font-size="20" fill="#1a2230">2</text>
+          <circle cx="255" cy="70" r="9" fill="#1f6f8b"/>
+          <text x="255" y="35" text-anchor="middle" font-size="20" font-weight="bold" fill="#1f6f8b">1/2</text>
+          <circle cx="645" cy="70" r="9" fill="#a12f4f"/>
+          <text x="645" y="35" text-anchor="middle" font-size="20" font-weight="bold" fill="#a12f4f">3/2</text>
+        </g>
+      </svg>
+    </div>
+    <p class="body">One half sits exactly halfway between 0 and 1. Three halves is greater than 1 &mdash; it sits halfway between 1 and 2.</p>
   </section>
 
-  <section class="slide" data-day="1" data-title="Simplifying misconception">
-    <p class="kicker">Common Misconception</p>
-    <h2 class="prompt">Does simplifying make a fraction smaller?</h2>
-    <div class="problem-box">6/8 = 3/4</div>
-    <div class="note">The representation changes. The quantity doesn't.</div>
+  <section class="slide" data-day="1" data-title="Equivalent fractions">
+    <p class="kicker">Equivalent Fractions</p>
+    <h2 class="prompt">Same amount, different name.</h2>
+    <div class="svg-wrap">
+      <svg viewBox="0 0 700 190" role="img" aria-label="Three equal-length bars showing one half, two fourths, and three sixths all shaded the same amount">
+        <g font-family="Verdana, Arial, sans-serif" font-size="18">
+          <!-- 1/2 -->
+          <rect x="0" y="10" width="300" height="34" fill="#eaf3f6" stroke="#1a2230"/>
+          <rect x="0" y="10" width="150" height="34" fill="#1f6f8b"/>
+          <line x1="150" y1="10" x2="150" y2="44" stroke="#1a2230"/>
+          <text x="320" y="33" fill="#144d61" font-weight="bold">= 1/2</text>
+          <!-- 2/4 -->
+          <rect x="0" y="78" width="300" height="34" fill="#eaf3f6" stroke="#1a2230"/>
+          <rect x="0" y="78" width="150" height="34" fill="#1f6f8b"/>
+          <line x1="75" y1="78" x2="75" y2="112" stroke="#1a2230"/>
+          <line x1="150" y1="78" x2="150" y2="112" stroke="#1a2230"/>
+          <line x1="225" y1="78" x2="225" y2="112" stroke="#1a2230"/>
+          <text x="320" y="101" fill="#144d61" font-weight="bold">= 2/4</text>
+          <!-- 3/6 -->
+          <rect x="0" y="146" width="300" height="34" fill="#eaf3f6" stroke="#1a2230"/>
+          <rect x="0" y="146" width="150" height="34" fill="#1f6f8b"/>
+          <line x1="50" y1="146" x2="50" y2="180" stroke="#1a2230"/>
+          <line x1="100" y1="146" x2="100" y2="180" stroke="#1a2230"/>
+          <line x1="150" y1="146" x2="150" y2="180" stroke="#1a2230"/>
+          <line x1="200" y1="146" x2="200" y2="180" stroke="#1a2230"/>
+          <line x1="250" y1="146" x2="250" y2="180" stroke="#1a2230"/>
+          <text x="320" y="169" fill="#144d61" font-weight="bold">= 3/6</text>
+        </g>
+      </svg>
+    </div>
+    <p class="body">Multiply the numerator and denominator by the same nonzero number and the value doesn't change &mdash; the shaded amount is identical in all three bars.</p>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Simplifying">
+    <p class="kicker">Simplifying Fractions</p>
+    <h2 class="prompt">12/18 simplifies to 2/3.</h2>
+    <p class="body">Both numbers divide evenly by 6: 12&divide;6=2, 18&divide;6=3. The way it's written changed. The quantity did not.</p>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Comparing fractions">
+    <p class="kicker">Which Fraction Is Bigger?</p>
+    <div class="svg-wrap">
+      <svg viewBox="0 0 700 130" role="img" aria-label="Two equal-length bars comparing one fourth shaded and one eighth shaded, showing one fourth is the larger piece">
+        <g font-family="Verdana, Arial, sans-serif" font-size="18">
+          <rect x="0" y="10" width="300" height="34" fill="#eaf3f6" stroke="#1a2230"/>
+          <rect x="0" y="10" width="75" height="34" fill="#2f7a4f"/>
+          <line x1="75" y1="10" x2="75" y2="44" stroke="#1a2230"/>
+          <line x1="150" y1="10" x2="150" y2="44" stroke="#1a2230"/>
+          <line x1="225" y1="10" x2="225" y2="44" stroke="#1a2230"/>
+          <text x="320" y="33" fill="#2f7a4f" font-weight="bold">1/4</text>
+          <rect x="0" y="78" width="300" height="34" fill="#eaf3f6" stroke="#1a2230"/>
+          <rect x="0" y="78" width="37.5" height="34" fill="#b3541e"/>
+          <g stroke="#1a2230"><line x1="37.5" y1="78" x2="37.5" y2="112"/><line x1="75" y1="78" x2="75" y2="112"/><line x1="112.5" y1="78" x2="112.5" y2="112"/><line x1="150" y1="78" x2="150" y2="112"/><line x1="187.5" y1="78" x2="187.5" y2="112"/><line x1="225" y1="78" x2="225" y2="112"/><line x1="262.5" y1="78" x2="262.5" y2="112"/></g>
+          <text x="320" y="101" fill="#b3541e" font-weight="bold">1/8</text>
+        </g>
+      </svg>
+    </div>
+    <p class="body">More pieces means smaller pieces &mdash; 1/8 is <strong>less than</strong> 1/4, even though 8 is a bigger number than 4. When denominators match, just compare numerators. When they don't, convert to decimals or use a benchmark like 1/2.</p>
   </section>
 
   <section class="slide" data-day="1" data-title="Adding fractions">
     <p class="kicker">Adding Fractions</p>
     <h2 class="prompt">Same-size pieces first.</h2>
-    <div class="warn-box">Wrong: 1/2 + 1/3 = 2/5. The pieces must be rewritten with a common denominator first.</div>
-    <div class="note">Like denominators: add numerators directly. Unlike denominators: find a common denominator first.</div>
+    <div class="warn-box">1/2 + 1/3 &ne; 2/5. The pieces have to be rewritten with a common denominator before you can add them.</div>
+    <p class="body">Like denominators: add numerators directly, 1/5+2/5=3/5. Unlike denominators: find a common denominator first, 1/2+1/4 &rarr; 2/4+1/4=3/4.</p>
   </section>
 
-  <section class="slide" data-day="1" data-title="Multiplying fractions">
-    <p class="kicker">Multiplying Fractions</p>
-    <h2 class="prompt">No common denominator needed.</h2>
-    <div class="problem-box">2/3 &times; 3/5 &nbsp;&rarr;&nbsp; multiply numerators, multiply denominators</div>
-    <div class="note">A common misconception is hunting for a common denominator here &mdash; that's an addition rule, not a multiplication one.</div>
-  </section>
-
-  <section class="slide" data-day="1" data-title="Dividing fractions">
-    <p class="kicker">Dividing Fractions</p>
-    <h2 class="prompt">"Keep, change, flip" &mdash; but ask why first.</h2>
-    <div class="note">Before the shortcut, ask: what does this division actually mean? Watch for flipping the wrong fraction or flipping both.</div>
-  </section>
-
-  <section class="slide" data-day="1" data-title="Improper fractions">
-    <p class="kicker">Common Misconception</p>
-    <h2 class="prompt">Must a fraction be less than 1?</h2>
-    <div class="chip-row"><span class="chip">5/4</span><span class="chip">7/3</span><span class="chip">10/5</span></div>
-    <div class="note">No &mdash; improper fractions are legitimate values, not "wrong" answers to fix.</div>
+  <section class="slide" data-day="1" data-title="Multiplying and dividing fractions">
+    <p class="kicker">Multiplying &amp; Dividing Fractions</p>
+    <h2 class="prompt">Multiplying means "part of a part."</h2>
+    <p class="body">1/2 &times; 3/4 means half of three fourths &mdash; multiply straight across: 1&times;3=3, 2&times;4=8, so <strong>3/8</strong>. No common denominator needed; that rule is only for addition and subtraction.</p>
+    <p class="body">Dividing asks a different question: 3/4 &divide; 1/2 asks how many halves fit into 3/4 &mdash; the answer is 1&frac12;. Shortcut: keep the first fraction, flip the second, multiply.</p>
   </section>
 
   <section class="slide" data-day="1" data-title="Session A exit ticket">
-    <p class="kicker">Exit Ticket &mdash; Session A</p>
+    <p class="kicker">Before We Move On</p>
     <ol class="points">
       <li>Simplify a fraction</li>
       <li>Compare two fractions</li>
@@ -139,39 +205,36 @@
     <p class="sub">Decimal place value and operations &middot; fractions and decimals as the same number, different form</p>
   </section>
 
-  <section class="slide" data-day="2" data-title="Decimal digits misconception">
-    <p class="kicker">Common Misconception</p>
-    <h2 class="prompt">Is 0.475 greater than 0.8, because 475 &gt; 8?</h2>
-    <p class="say">No &mdash; place value decides, not digit count.</p>
-    <div class="note">0.800 &gt; 0.475. Line up decimal points to compare.</div>
+  <section class="slide" data-day="2" data-title="Understanding decimals">
+    <p class="kicker">Understanding Decimals</p>
+    <h2 class="prompt">Every digit after the decimal point has a specific place value.</h2>
+    <p class="body">In 4.583, the 5 is tenths, the 8 is hundredths, the 3 is thousandths &mdash; that 8 represents 0.08, not just "the number 8." Adding zeros doesn't change the value: 0.5 = 0.50 = 0.500.</p>
+    <div class="warn-box">Is 0.58 greater than 0.6, because 58 looks bigger than 6? No &mdash; rewrite with matching digits: 0.60 vs 0.58. Place value decides, not digit count.</div>
   </section>
 
-  <section class="slide" data-day="2" data-title="Decimal placement misconception">
-    <p class="kicker">Common Misconception</p>
-    <h2 class="prompt">Right digits, wrong decimal placement.</h2>
-    <div class="problem-box">2.4 &times; 3 &mdash; a student answers 72</div>
-    <div class="note">Estimate first: 2 &times; 3 &asymp; 6. An answer of 72 should immediately look wrong.</div>
+  <section class="slide" data-day="2" data-title="Decimal operations">
+    <p class="kicker">Decimal Operations</p>
+    <p class="body">Adding or subtracting: line up the decimal points so you're combining digits with the same place value.</p>
+    <div class="warn-box">Multiplying, especially with a calculator: always estimate first. 4.9 &times; 3.1 should land close to 5&times;3=15. If your calculator shows 151.9, something went wrong &mdash; probably a decimal point in the wrong place.</div>
   </section>
 
-  <section class="slide" data-day="2" data-title="Same number different form">
-    <p class="kicker">Activity &mdash; Same Number, Different Form</p>
-    <h2 class="prompt">Match the equivalent cards.</h2>
-    <div class="card-row">
-      <span class="card">1/2</span><span class="card">0.5</span><span class="card">5/10</span>
+  <section class="slide" data-day="2" data-title="Fractions and decimals connected">
+    <p class="kicker">Fractions and Decimals Are Connected</p>
+    <p class="body">Since a fraction means division, convert a fraction to a decimal by dividing: 3/4 = 3&divide;4 = 0.75. Going the other way, a decimal becomes a fraction using its place value: 0.6 = six tenths = 6/10 = 3/5.</p>
+    <div class="chip-row">
+      <span class="chip">1/2 = 0.5</span><span class="chip">1/4 = 0.25</span><span class="chip">3/4 = 0.75</span>
+      <span class="chip">1/5 = 0.2</span><span class="chip">2/5 = 0.4</span><span class="chip">1/10 = 0.1</span>
     </div>
-    <div class="card-row">
-      <span class="card">3/4</span><span class="card">0.75</span><span class="card">75/100</span>
-    </div>
+    <p class="body">These benchmarks come up constantly &mdash; they're worth knowing cold. We'll use them again next week for percent.</p>
   </section>
 
-  <section class="slide" data-day="2" data-title="Choosing a representation">
-    <p class="kicker">Which Form Is Most Useful?</p>
-    <h2 class="prompt">Fraction, decimal, or percent &mdash; it depends on the context.</h2>
-    <div class="chip-row"><span class="chip">recipes</span><span class="chip">money</span><span class="chip">measurement</span><span class="chip">calculator comparisons</span></div>
+  <section class="slide" data-day="2" data-title="Which form should I use">
+    <p class="kicker">Which Form Should I Use?</p>
+    <p class="body">Money is almost always a decimal: $2.75, not $2&frac34;. Recipes usually use fractions: 3/4 cup, not 0.75 cup. When comparing two values, decimals can make it easier: converting 7/8 to 0.875 makes it immediately clear that 7/8 &gt; 0.82.</p>
   </section>
 
   <section class="slide" data-day="2" data-title="Session B exit ticket">
-    <p class="kicker">Exit Ticket &mdash; Session B</p>
+    <p class="kicker">Before We Move On</p>
     <ol class="points">
       <li>Convert one fraction to a decimal</li>
       <li>Convert one decimal to a fraction</li>
@@ -182,25 +245,26 @@
   <!-- LIGHT APPLY DAY -->
   <section class="slide divider" data-day="3" data-title="Apply day divider">
     <p class="kicker">Apply, Analyze, Retry</p>
-    <h1>Mixed Practice &amp; Unit 03 Check</h1>
-    <p class="sub">Independent work, not new instruction.</p>
+    <h1>Mixed Practice &amp; Week 4 Check</h1>
   </section>
 
   <section class="slide" data-day="3" data-title="Apply day flow">
+    <p class="kicker">Today's Plan</p>
     <ul class="points">
       <li>Mixed retrieval: fraction meaning, comparison, operations, decimal operations, conversions, reasonableness</li>
-      <li>Students classify missed items by error category, then retry after feedback</li>
-      <li>Unit 03 check, then reflection: one strength, one developing skill, one error pattern, one strategy for next week</li>
+      <li>Classify anything you miss by error type, then retry after feedback</li>
+      <li>Week 4 check, then reflection: one strength, one developing skill, one error pattern, one strategy for next week</li>
     </ul>
   </section>
 
   <!-- CLOSING -->
   <section class="slide divider" data-day="4" data-title="Closing / transition">
-    <p class="kicker">Transition to Unit 04</p>
+    <p class="kicker">Transition to Week 5</p>
     <h1>Percent</h1>
     <p class="sub">Fraction &harr; Decimal &harr; Percent, e.g. 1/2 = 0.5 = 50%. Applied to discounts, tips, tax, wages, and grades.</p>
   </section>
 
+</div>
 </div>
 
 <div id="chrome">
