@@ -1,0 +1,1951 @@
+# Seminar III — Lesson 6: Variables & Expressions
+
+**Quarter:** 1
+**Week:** 7
+**Dates:** October 5–9, 2026
+**Quarter Theme:** Foundations
+**Academic Focus:** Variables, constants, algebraic expressions, substitution, like terms, and the distributive property
+**Recurring Routine:** Learn → Practice → Check → Analyze → Retry → Apply
+
+---
+
+# 1. Week Purpose
+
+Units 2 through 5 focused on numbers that were fully known. Lesson 6 introduces the idea of a quantity that is unknown, changeable, or general.
+
+The major shift this week is symbolic:
+
+> A letter can represent a number.
+
+Students will learn to read, build, evaluate, and simplify algebraic expressions. This is the entry point into all of algebra, and students should leave the week comfortable translating between words and symbols in both directions.
+
+The purpose of Lesson 6 is not to make students fast at manipulating symbols without understanding. Students should be able to:
+
+1. explain what a variable represents in a given situation;
+2. distinguish a variable from a constant;
+3. read an algebraic expression and explain what it means;
+4. substitute a specific value for a variable and evaluate the expression;
+5. combine like terms;
+6. apply the distributive property;
+7. translate between a verbal description and an algebraic expression.
+
+The major question for the week is:
+
+> **What does this symbol represent, and how does its value change the result?**
+
+---
+
+# 2. Learning Targets
+
+By the end of Lesson 6, students should be able to:
+
+1. define variable and constant, and identify each in an expression;
+2. identify a coefficient and a term;
+3. read an algebraic expression in words;
+4. translate a verbal description into an algebraic expression;
+5. substitute a given value into an expression and evaluate it;
+6. identify like terms;
+7. combine like terms to simplify an expression;
+8. apply the distributive property to expand an expression;
+9. apply the distributive property in combination with combining like terms;
+10. explain why an expression is not the same as an equation.
+
+---
+
+# 3. Prerequisite Knowledge
+
+Students may have previously encountered all of this content.
+
+Do not assume they currently remember it.
+
+Likely prerequisite skills include:
+
+- order of operations (Lesson 2);
+- multiplying and dividing signed numbers (Lesson 2);
+- multiplying whole numbers and decimals (Units 2–3);
+- interpreting a rate as a coefficient-like comparison (Lesson 5).
+
+Lesson 2 order-of-operations mastery is especially important, since evaluating expressions depends directly on it.
+
+---
+
+# 4. Essential Questions
+
+Students should encounter these questions throughout the week.
+
+## Variables and Constants
+
+- What does this letter represent in this situation?
+- Is this value fixed, or can it change?
+
+## Expressions
+
+- What does this expression mean in words?
+- What operations does this expression describe?
+- Is this an expression or an equation? How do I know?
+
+## Substitution
+
+- What value am I replacing the variable with?
+- Did I substitute into every occurrence of the variable?
+
+## Simplifying
+
+- Which terms can be combined?
+- Did I multiply every term inside the grouping symbol?
+
+---
+
+# 5. Vocabulary
+
+Students should understand and use the following vocabulary.
+
+## Variable
+
+A symbol, usually a letter, representing a value that is unknown or that can change.
+
+Example:
+
+`x`, `n`, `t`
+
+---
+
+## Constant
+
+A fixed value that does not change.
+
+Example:
+
+In `3x + 7`, the number `7` is a constant.
+
+---
+
+## Coefficient
+
+A number multiplied by a variable.
+
+Example:
+
+In `3x`, `3` is the coefficient of `x`.
+
+---
+
+## Term
+
+A single number, variable, or the product of numbers and variables, separated from other terms by addition or subtraction.
+
+Example:
+
+`3x + 7` has two terms: `3x` and `7`.
+
+---
+
+## Expression
+
+A mathematical phrase made of numbers, variables, and operations that represents a value.
+
+An expression does not state that two quantities are equal.
+
+Example:
+
+`4x - 9`
+
+---
+
+## Equation
+
+A statement that two expressions are equal, connected by an equal sign.
+
+Example:
+
+`4x - 9 = 11`
+
+Equations are the focus of Lesson 7. Lesson 6 focuses on expressions only.
+
+---
+
+## Evaluate
+
+To find the numerical value of an expression after substituting given values for the variables.
+
+---
+
+## Substitute
+
+To replace a variable with a given numerical value.
+
+---
+
+## Like Terms
+
+Terms that contain the same variable raised to the same power.
+
+Example:
+
+`5x` and `2x` are like terms. `5x` and `2x²` are not.
+
+---
+
+## Distributive Property
+
+A property stating that a factor outside a grouping symbol multiplies every term inside it.
+
+Example:
+
+`3(x + 4) = 3x + 12`
+
+---
+
+# 6. What Is a Variable?
+
+A variable is a symbol, most often a letter, that stands in for a number.
+
+A variable can represent:
+
+- an unknown value to be found;
+- a value that changes depending on the situation;
+- a general value used to describe a pattern or rule.
+
+Example:
+
+A pay stub might describe earnings as:
+
+`15h`
+
+where `h` represents the number of hours worked. The value of `h` changes from week to week, but the relationship, earnings equal `15` times hours, stays the same.
+
+---
+
+# 7. Variable vs. Constant
+
+A **variable** can take on different values.
+
+A **constant** always has the same value.
+
+Example:
+
+`3x + 7`
+
+`x` is a variable. Its value is not fixed.
+
+`7` is a constant. Its value never changes in this expression.
+
+`3` is a coefficient, a number that multiplies the variable.
+
+---
+
+# 8. What Is an Expression?
+
+An expression is a mathematical phrase that represents a value.
+
+Examples:
+
+`x + 4`
+
+`3x - 2`
+
+`2(x + 5)`
+
+An expression does **not** contain an equal sign and does **not** claim that two quantities are equal. It simply represents a value that depends on the variable.
+
+---
+
+# 9. Expressions Are Not Equations
+
+Students frequently confuse expressions and equations.
+
+`3x + 7` is an expression. It represents a value.
+
+`3x + 7 = 22` is an equation. It states that the expression equals a specific number.
+
+An expression can be **evaluated** for a given value of the variable.
+
+An equation can be **solved** to find the value of the variable that makes it true.
+
+Lesson 6 works only with expressions. Solving equations begins in Lesson 7.
+
+---
+
+# 10. Reading an Expression in Words
+
+Students should be able to translate an expression into a verbal description, and a verbal description into an expression.
+
+Example:
+
+`4x + 9`
+
+can be read as:
+
+> "Nine more than four times a number."
+
+Example:
+
+`2(x - 3)`
+
+can be read as:
+
+> "Two times the difference of a number and three."
+
+---
+
+# 11. Translating Words Into Expressions
+
+Common phrases and their operations:
+
+## Addition
+
+"more than," "increased by," "sum," "total," "added to"
+
+## Subtraction
+
+"less than," "decreased by," "difference," "fewer than," "subtracted from"
+
+## Multiplication
+
+"times," "product," "of," "twice," "multiplied by"
+
+## Division
+
+"divided by," "quotient," "per," "split into"
+
+Students should be warned that "less than" and "subtracted from" reverse the order of the terms.
+
+Example:
+
+"Five less than a number" is written:
+
+`x - 5`
+
+not:
+
+`5 - x`
+
+---
+
+# 12. Common Translation Pitfall
+
+"Five less than a number" and "five minus a number" describe different expressions.
+
+`x - 5` means "five less than x."
+
+`5 - x` means "five minus x," or "a number less than five."
+
+Students should slow down and identify which quantity comes first in the actual subtraction.
+
+---
+
+# 13. Substitution
+
+Substitution replaces a variable with a specific numerical value.
+
+Example:
+
+If:
+
+`x = 4`
+
+then:
+
+`3x + 2`
+
+becomes:
+
+`3(4) + 2`
+
+`12 + 2`
+
+`14`
+
+---
+
+# 14. Substitution With Order of Operations
+
+Substitution must be followed by the Lesson 2 order of operations.
+
+Example:
+
+Evaluate `2x² + 5` when `x = 3`.
+
+`2(3)² + 5`
+
+`2(9) + 5`
+
+`18 + 5`
+
+`23`
+
+Exponents are evaluated before multiplication.
+
+---
+
+# 15. Substitution With Negative Values
+
+Substituting a negative value requires careful use of parentheses.
+
+Example:
+
+Evaluate `4x - 6` when `x = -3`.
+
+`4(-3) - 6`
+
+`-12 - 6`
+
+`-18`
+
+Students should place the substituted value in parentheses to avoid sign errors.
+
+---
+
+# 16. Substitution With More Than One Variable
+
+Some expressions contain more than one variable.
+
+Example:
+
+Evaluate `3a + 2b` when `a = 5` and `b = -4`.
+
+`3(5) + 2(-4)`
+
+`15 + (-8)`
+
+`7`
+
+Every occurrence of each variable must be replaced.
+
+---
+
+# 17. Like Terms
+
+Like terms contain the same variable raised to the same power.
+
+Examples of like terms:
+
+`4x` and `9x`
+
+`7y²` and `2y²`
+
+Examples that are **not** like terms:
+
+`4x` and `4x²` (different powers)
+
+`3x` and `3y` (different variables)
+
+---
+
+# 18. Combining Like Terms
+
+To combine like terms, add or subtract their coefficients. The variable part stays the same.
+
+Example:
+
+`5x + 3x`
+
+`(5 + 3)x`
+
+`8x`
+
+---
+
+# 19. Combining Like Terms With Subtraction
+
+Example:
+
+`9y - 4y`
+
+`(9 - 4)y`
+
+`5y`
+
+---
+
+# 20. Combining Like Terms With Multiple Groups
+
+Example:
+
+`4x + 3 + 2x - 5`
+
+Group like terms:
+
+`(4x + 2x) + (3 - 5)`
+
+`6x + (-2)`
+
+`6x - 2`
+
+---
+
+# 21. Combining Like Terms With Two Variables
+
+Example:
+
+`3a + 5b - a + 2b`
+
+Group like terms:
+
+`(3a - a) + (5b + 2b)`
+
+`2a + 7b`
+
+`2a` and `7b` are not like terms, so the expression cannot be simplified further.
+
+---
+
+# 22. The Distributive Property
+
+The distributive property states that a factor outside a grouping symbol multiplies every term inside it.
+
+Example:
+
+`3(x + 4)`
+
+means:
+
+`3(x) + 3(4)`
+
+`3x + 12`
+
+---
+
+# 23. Distributive Property With Subtraction
+
+Example:
+
+`5(x - 2)`
+
+`5(x) - 5(2)`
+
+`5x - 10`
+
+---
+
+# 24. Distributive Property With a Negative Factor
+
+Example:
+
+`-2(x + 6)`
+
+`-2(x) + (-2)(6)`
+
+`-2x - 12`
+
+Students should pay close attention to sign changes when the outside factor is negative.
+
+---
+
+# 25. Common Distributive Property Error
+
+Incorrect:
+
+`3(x + 4) = 3x + 4`
+
+Correct:
+
+`3(x + 4) = 3x + 12`
+
+The `3` must multiply **both** terms inside the parentheses, not only the variable term.
+
+---
+
+# 26. Distributive Property Followed by Combining Like Terms
+
+Many expressions require both skills together.
+
+Example:
+
+`4(x + 3) + 2x`
+
+Distribute:
+
+`4x + 12 + 2x`
+
+Combine like terms:
+
+`6x + 12`
+
+---
+
+# 27. A Longer Combined Example
+
+Example:
+
+`2(3x - 1) - 4(x - 5)`
+
+Distribute both groups:
+
+`6x - 2 - 4x + 20`
+
+Combine like terms:
+
+`(6x - 4x) + (-2 + 20)`
+
+`2x + 18`
+
+Students should distribute the negative sign in front of `-4(x - 5)` carefully, since it changes the sign of both terms inside.
+
+---
+
+# 28. Building Expressions From Real Situations
+
+Example:
+
+A rental company charges a flat fee of `$25` plus `$8` per hour.
+
+Total cost for `h` hours:
+
+`25 + 8h`
+
+Example:
+
+A phone plan costs `$40` per month plus `$0.10` per text message beyond a limit.
+
+Total cost for `t` extra texts:
+
+`40 + 0.10t`
+
+These examples connect Lesson 5's rate reasoning directly to Lesson 6's expressions: the coefficient of the variable is often a rate.
+
+---
+
+# 29. Evaluating a Real-Situation Expression
+
+Using the rental example:
+
+`25 + 8h`
+
+Find the cost for `6` hours.
+
+`25 + 8(6)`
+
+`25 + 48`
+
+`73`
+
+**Answer: $73**
+
+---
+
+# 30. Reasonableness With Expressions
+
+Students should continue applying the Lesson 2 reasonableness habit.
+
+## Size
+
+Is the evaluated result a realistic size for the situation?
+
+## Sign
+
+Should the result be positive or negative?
+
+## Substitution Check
+
+Was the given value substituted into every occurrence of the variable?
+
+## Order of Operations Check
+
+Were operations completed in the correct order after substitution?
+
+---
+
+# 31. Reasonableness Example
+
+A student evaluates `25 + 8h` for `h = 6` and gets `198`.
+
+This should look unreasonable. A quick estimate, `25 + 8(6) ≈ 25 + 50 = 75`, shows the result should be close to `75`, not `198`. The likely cause is multiplying `8` by something other than `6`, or adding before multiplying.
+
+---
+
+# 32. Calculator Use
+
+Calculators are useful for:
+
+- evaluating expressions with larger or decimal values;
+- checking substitution and arithmetic.
+
+Calculators cannot determine:
+
+- what a variable represents;
+- whether an expression was translated correctly from words;
+- whether like terms were correctly identified;
+- whether the distributive property was applied to every term.
+
+---
+
+# 33. Common Misconception 1 — Variables Always Represent Unknowns to Solve For
+
+Incorrect idea:
+
+> A variable always means "find this missing number."
+
+Correct:
+
+A variable can represent an unknown to solve for, but it can also represent a quantity that changes, such as hours worked or number of items purchased. Not every expression needs to be solved.
+
+---
+
+# 34. Common Misconception 2 — "Less Than" Keeps the Same Order
+
+Incorrect idea:
+
+> "Five less than a number" translates to `5 - x`.
+
+Correct:
+
+"Five less than a number" translates to `x - 5`. The phrase "less than" reverses the order of the subtraction.
+
+---
+
+# 35. Common Misconception 3 — Coefficients and Constants Are the Same
+
+Incorrect idea:
+
+> Every number in an expression is a "coefficient."
+
+Correct:
+
+A coefficient multiplies a variable. A constant stands alone with no variable attached. In `3x + 7`, `3` is a coefficient and `7` is a constant.
+
+---
+
+# 36. Common Misconception 4 — Any Two Terms Can Be Combined
+
+Incorrect idea:
+
+> `4x + 3x²` can be combined into `7x²` or `7x`.
+
+Correct:
+
+Terms can only be combined if they have the same variable raised to the same power. `4x` and `3x²` are not like terms and cannot be combined.
+
+---
+
+# 37. Common Misconception 5 — Distributing to Only One Term
+
+Incorrect idea:
+
+> `3(x + 4) = 3x + 4`
+
+Correct:
+
+The outside factor multiplies every term inside the grouping symbol: `3(x + 4) = 3x + 12`.
+
+---
+
+# 38. Common Misconception 6 — Negative Sign Does Not Distribute
+
+Incorrect idea:
+
+> `-2(x + 6) = -2x + 6`
+
+Correct:
+
+The negative sign is part of the factor being distributed and must multiply every term inside: `-2(x + 6) = -2x - 12`.
+
+---
+
+# 39. Common Misconception 7 — An Expression Can Be "Solved"
+
+Incorrect idea:
+
+> `3x + 7` can be solved for `x`.
+
+Correct:
+
+An expression without an equal sign cannot be solved because there is nothing stating what it is equal to. It can be simplified or evaluated for a given value of `x`, but not solved.
+
+---
+
+# 40. Common Misconception 8 — Substitution Only Applies Once
+
+Incorrect idea:
+
+> In `3x + 2x`, only one `x` needs to be replaced during substitution.
+
+Correct:
+
+Every occurrence of the variable must be replaced with the given value.
+
+---
+
+# 41. Common Misconception 9 — Order of Operations Does Not Apply After Substitution
+
+Incorrect idea:
+
+> Once numbers are substituted in, they can be combined in any order.
+
+Correct:
+
+Order of operations still applies after substitution. Exponents, multiplication, and division are still evaluated before addition and subtraction unless grouping symbols say otherwise.
+
+---
+
+# 42. Common Misconception 10 — Calculator Trust
+
+Incorrect idea:
+
+> A calculator result for an evaluated expression is automatically correct.
+
+Correct:
+
+A calculator only evaluates what was entered. It cannot confirm that the correct value was substituted for the correct variable or that the expression was built correctly from a word problem.
+
+---
+
+# 43. Error Analysis Connections
+
+Lesson 6 should deliberately revisit all five Lesson 1 error categories.
+
+## Knowledge Error
+
+Example:
+
+> "I don't remember what a coefficient is."
+
+### Response
+
+Review the vocabulary and definitions.
+
+---
+
+## Process Error
+
+Example:
+
+A student distributes correctly but combines unlike terms afterward.
+
+### Response
+
+Review which terms qualify as like terms and retry.
+
+---
+
+## Execution Error
+
+Example:
+
+A student sets up substitution correctly but makes an arithmetic mistake evaluating the exponent.
+
+### Response
+
+Check the calculation step by step.
+
+---
+
+## Comprehension Error
+
+Example:
+
+A student translates "five less than a number" as `5 - x` instead of `x - 5`.
+
+### Response
+
+Reread the phrase and identify which quantity is being reduced.
+
+---
+
+## Strategy Error
+
+Example:
+
+A student evaluates an expression by substituting first without simplifying, creating unnecessary extra steps, when distributing first would have been faster.
+
+### Response
+
+Consider whether simplifying before or after substitution is more efficient.
+
+---
+
+# 44. Instructional Sequence
+
+Lesson 6 is a full five-day instructional week.
+
+---
+
+# 45. Day 1 — Variables, Constants, and Expressions
+
+## Opening Retrieval
+
+Briefly retrieve Lesson 5:
+
+1. What does a rate compare?
+2. How do you calculate a unit rate?
+
+## Teach
+
+Introduce or review:
+
+- variable;
+- constant;
+- coefficient;
+- term;
+- expression vs. equation;
+- reading expressions in words;
+- translating words into expressions.
+
+## Teacher Modeling
+
+Model translating several real-situation descriptions into expressions, including the rental and phone-plan examples.
+
+## Guided Practice
+
+Approximately **6–8 questions**.
+
+## Independent Practice
+
+Approximately **8–10 questions**.
+
+## Exit Ticket
+
+3 questions:
+
+1. identify the coefficient, variable, and constant in an expression;
+2. translate a phrase into an expression;
+3. explain the difference between an expression and an equation.
+
+---
+
+# 46. Day 2 — Substitution and Evaluating Expressions
+
+## Retrieval
+
+2–3 questions from Day 1.
+
+## Teach
+
+Introduce or review:
+
+- substitution;
+- evaluating with order of operations;
+- substitution with negative values;
+- substitution with more than one variable.
+
+## Guided Practice
+
+Approximately **8 questions**.
+
+## Independent Practice
+
+Approximately **10–12 questions**.
+
+## Error Analysis
+
+Students inspect at least 2 incorrect substitution examples.
+
+For each:
+
+1. What did the student do?
+2. Where did the work go wrong?
+3. Which Lesson 1 error category best fits?
+4. What should the student do next?
+5. What is the correct solution?
+
+## Exit Ticket
+
+3 questions:
+
+- substitute and evaluate with a positive value;
+- substitute and evaluate with a negative value;
+- substitute and evaluate an expression with two variables.
+
+---
+
+# 47. Day 3 — Like Terms and Combining Terms
+
+## Retrieval
+
+3 previous questions.
+
+## Teach
+
+Introduce or reinforce:
+
+- identifying like terms;
+- combining like terms with addition;
+- combining like terms with subtraction;
+- combining like terms across more than two terms;
+- combining like terms with two variables.
+
+## Guided Practice
+
+Approximately **8 questions**.
+
+## Independent Practice
+
+Approximately **10 questions**.
+
+## Exit Ticket
+
+3 questions:
+
+- identify whether two terms are like terms;
+- combine like terms in a simple expression;
+- combine like terms in an expression with two variables.
+
+---
+
+# 48. Day 4 — The Distributive Property
+
+## Retrieval
+
+3–4 mixed questions.
+
+## Teach
+
+Introduce or reinforce:
+
+- the distributive property;
+- distributing with subtraction;
+- distributing with a negative factor;
+- distributing followed by combining like terms.
+
+## Activity — Spot the Error
+
+Students receive several incorrectly distributed expressions and identify what went wrong in each.
+
+## Guided Practice
+
+Approximately **8 questions**.
+
+## Independent Practice
+
+Approximately **10 questions**.
+
+## Exit Ticket
+
+Students distribute and simplify one expression involving a negative factor.
+
+---
+
+# 49. Day 5 — Apply, Analyze, Retry
+
+## Retrieval
+
+4–5 mixed questions covering variables, substitution, like terms, and distribution.
+
+## Mixed Practice
+
+Students complete questions involving:
+
+- translating expressions;
+- substitution and evaluation;
+- combining like terms;
+- the distributive property;
+- combined distribute-and-simplify problems.
+
+## Error Analysis
+
+Students classify missed questions where sufficient evidence exists.
+
+## Retry
+
+Students retry selected questions after:
+
+- reviewing an example;
+- receiving feedback;
+- identifying the error;
+- selecting a next step.
+
+## Lesson 6 Check
+
+Complete the Lesson 6 understanding/mastery check.
+
+## Reflection
+
+Students identify:
+
+- one strength;
+- one skill still developing;
+- one error they made;
+- what they did after recognizing it.
+
+---
+
+# 50. Student Instructional PDF
+
+## Proposed Title
+
+**Seminar III: Letters That Stand for Numbers**
+
+The document should function as both instruction and a later reference.
+
+---
+
+# 51. PDF Section 1 — What Is a Variable?
+
+Introduce variables and constants using real-situation examples.
+
+---
+
+# 52. PDF Section 2 — Reading and Writing Expressions
+
+Teach translating between words and expressions in both directions.
+
+Include the "less than" order-reversal warning.
+
+---
+
+# 53. PDF Section 3 — Substituting Into an Expression
+
+Teach substitution with positive values, negative values, and multiple variables.
+
+Emphasize order of operations after substitution.
+
+---
+
+# 54. PDF Section 4 — Like Terms
+
+Teach identifying and combining like terms.
+
+Include a comparison of like-terms examples and non-examples.
+
+---
+
+# 55. PDF Section 5 — The Distributive Property
+
+Teach distributing with positive and negative factors.
+
+Include the common error of distributing to only one term.
+
+---
+
+# 56. PDF Section 6 — Putting It Together
+
+Provide combined distribute-and-simplify examples.
+
+---
+
+# 57. PDF Section 7 — Expressions in Real Life
+
+Show wage, rental, and subscription-style expressions.
+
+---
+
+# 58. PDF Section 8 — Does My Answer Make Sense?
+
+Provide the Lesson 6 checklist.
+
+## Check:
+
+**Size → Sign → Substitution → Order of Operations**
+
+---
+
+# 59. PDF Section 9 — Error Detective
+
+Provide 3–5 short error-analysis examples.
+
+Connect them to:
+
+- Knowledge;
+- Process;
+- Execution;
+- Comprehension;
+- Strategy.
+
+---
+
+# 60. PDF Section 10 — Quick Reference
+
+The final reference page should include:
+
+## Variable
+
+**A symbol representing an unknown or changing value**
+
+## Constant
+
+**A fixed value**
+
+## Coefficient
+
+**A number multiplied by a variable**
+
+## Like Terms
+
+**Same variable, same power**
+
+## Distributive Property
+
+**Multiply the outside factor by every term inside**
+
+## Check Your Answer
+
+**Size → Sign → Substitution → Order of Operations**
+
+---
+
+# 61. Question Design Philosophy
+
+Questions should not consist entirely of direct calculations.
+
+Lesson 6 questions should measure four increasingly complex forms of understanding.
+
+---
+
+# 62. Level 1 — Recognize
+
+Can the student recognize the concept?
+
+Examples:
+
+- identify a variable, constant, or coefficient;
+- identify like terms;
+- identify an expression versus an equation.
+
+---
+
+# 63. Level 2 — Execute
+
+Can the student perform the skill?
+
+Examples:
+
+- substitute and evaluate;
+- combine like terms;
+- apply the distributive property.
+
+---
+
+# 64. Level 3 — Apply
+
+Can the student recognize and use the skill in context?
+
+Examples:
+
+- translate a real situation into an expression;
+- evaluate an expression representing a real cost;
+- build an expression from a verbal description.
+
+---
+
+# 65. Level 4 — Reason
+
+Can the student evaluate or explain a result?
+
+Examples:
+
+- determine whether an evaluated result is reasonable;
+- identify why a distributed expression is incorrect;
+- explain why two terms cannot be combined;
+- choose an efficient order for simplifying and substituting.
+
+---
+
+# 66. Lesson 6 Question Blueprint
+
+Before writing the final question bank, create questions according to this blueprint.
+
+| Skill | Recognize | Execute | Apply | Reason | Total |
+|---|---:|---:|---:|---:|---:|
+| Variable/constant/coefficient identification | 3 | 1 | 2 | 1 | 7 |
+| Translating words to expressions | 2 | 2 | 5 | 2 | 11 |
+| Substitution and evaluating | 1 | 6 | 4 | 2 | 13 |
+| Identifying like terms | 3 | 2 | 1 | 1 | 7 |
+| Combining like terms | 1 | 6 | 3 | 2 | 12 |
+| Distributive property | 1 | 6 | 3 | 2 | 12 |
+| Distribute + combine like terms | 1 | 5 | 4 | 3 | 13 |
+| Reasonableness | 1 | 1 | 3 | 5 | 10 |
+
+**Target reusable bank:** approximately 85 questions.
+
+These questions do **not** all need to be assigned during Lesson 6.
+
+The bank supports:
+
+- guided instruction;
+- independent practice;
+- retrieval;
+- differentiation;
+- exit tickets;
+- assessment;
+- reassessment;
+- later spiral review.
+
+---
+
+# 67. Assigned Question Volume
+
+Students should not complete every bank question during the week.
+
+Recommended student-facing volume:
+
+## Guided Practice
+
+Approximately **22 questions**
+
+Many are completed together.
+
+## Independent Practice
+
+Approximately **28 questions**
+
+Distributed throughout the week.
+
+## Retrieval
+
+Approximately **10 questions**
+
+Distributed across later days.
+
+## Exit Tickets
+
+Approximately **12 questions**
+
+## Week Check
+
+Approximately **15 questions**
+
+Some questions can overlap with instructional activities.
+
+Target independent student workload should remain manageable.
+
+---
+
+# 68. Lesson 6 Check Blueprint
+
+Recommended length:
+
+**15 questions**
+
+| Skill | Questions |
+|---|---:|
+| Variable/constant/coefficient | 1 |
+| Translating words to expressions | 2 |
+| Substitution and evaluating | 3 |
+| Identifying like terms | 1 |
+| Combining like terms | 3 |
+| Distributive property | 3 |
+| Reasonableness / error analysis | 2 |
+
+---
+
+# 69. Assessment Difficulty
+
+Approximately:
+
+## 5 Level 1–2 Questions
+
+Direct recognition or execution.
+
+## 6 Level 2–3 Questions
+
+Execution and application.
+
+## 4 Level 3–4 Questions
+
+Application and reasoning.
+
+The assessment should allow students to demonstrate foundational competence without making every question ACT-style.
+
+---
+
+# 70. Sample Assessment Question 1 — Identify Parts of an Expression
+
+In the expression `6x + 11`, what is the coefficient of `x`?
+
+A. `x`
+B. `6`
+C. `11`
+D. `17`
+
+**Answer: B**
+
+---
+
+# 71. Sample Assessment Question 2 — Translate to an Expression
+
+Which expression represents "seven less than three times a number"?
+
+A. `3x - 7`
+B. `7 - 3x`
+C. `3(x - 7)`
+D. `7x - 3`
+
+**Answer: A**
+
+**Likely Misconception:** Reversing the order in a "less than" phrase
+
+---
+
+# 72. Sample Assessment Question 3 — Expression vs. Equation
+
+Which of the following is an expression, not an equation?
+
+A. `5x + 2 = 17`
+B. `x = 9`
+C. `4x - 6`
+D. `3x = 21`
+
+**Answer: C**
+
+---
+
+# 73. Sample Assessment Question 4 — Substitution
+
+Evaluate `4x + 9` when `x = 6`.
+
+A. `13`
+B. `33`
+C. `39`
+D. `60`
+
+**Answer: B**
+
+---
+
+# 74. Sample Assessment Question 5 — Substitution With Negative Value
+
+Evaluate `5x - 3` when `x = -2`.
+
+A. `-13`
+B. `-7`
+C. `7`
+D. `13`
+
+**Answer: A**
+
+---
+
+# 75. Sample Assessment Question 6 — Substitution With Exponent
+
+Evaluate `2x² + 1` when `x = 4`.
+
+A. `9`
+B. `17`
+C. `33`
+D. `65`
+
+**Answer: C**
+
+**Likely Misconception:** Multiplying `2 × 4` before squaring
+
+---
+
+# 76. Sample Assessment Question 7 — Identify Like Terms
+
+Which pair are like terms?
+
+A. `4x` and `4x²`
+B. `3x` and `3y`
+C. `7y` and `2y`
+D. `5x` and `5`
+
+**Answer: C**
+
+---
+
+# 77. Sample Assessment Question 8 — Combine Like Terms
+
+Simplify:
+
+`8x + 3 - 2x + 5`
+
+A. `6x + 8`
+B. `10x + 8`
+C. `6x - 2`
+D. `10x - 2`
+
+**Answer: A**
+
+---
+
+# 78. Sample Assessment Question 9 — Distributive Property
+
+Expand:
+
+`4(x + 5)`
+
+A. `4x + 5`
+B. `4x + 9`
+C. `4x + 20`
+D. `x + 20`
+
+**Answer: C**
+
+**Likely Misconception:** Distributing to only the variable term
+
+---
+
+# 79. Sample Assessment Question 10 — Distributive Property With Negative Factor
+
+Expand:
+
+`-3(x - 4)`
+
+A. `-3x - 12`
+B. `-3x + 12`
+C. `-3x - 4`
+D. `3x - 12`
+
+**Answer: B**
+
+**Likely Misconception:** Not distributing the negative sign to both terms
+
+---
+
+# 80. Sample Assessment Question 11 — Distribute and Combine
+
+Simplify:
+
+`2(x + 3) + 4x`
+
+A. `6x + 3`
+B. `6x + 6`
+C. `6x + 7`
+D. `8x + 3`
+
+**Answer: B**
+
+---
+
+# 81. Sample Assessment Question 12 — Application (Wages)
+
+A worker's weekly pay can be modeled by `12h + 50`, where `h` is hours worked and `50` is a fixed bonus.
+
+What is the worker's pay for `20` hours?
+
+A. `$62`
+B. `$240`
+C. `$290`
+D. `$1,240`
+
+**Answer: C**
+
+---
+
+# 82. Sample Assessment Question 13 — Application (Build an Expression)
+
+A rideshare company charges a `$3` base fee plus `$2` per mile.
+
+Which expression represents the total cost for `m` miles?
+
+A. `3m + 2`
+B. `2m + 3`
+C. `5m`
+D. `3 - 2m`
+
+**Answer: B**
+
+---
+
+# 83. Sample Assessment Question 14 — Reasonableness
+
+A student evaluates `10h + 20` for `h = 3` and gets `230`.
+
+Which statement is BEST?
+
+A. The answer is reasonable because multiplication always creates large results.
+B. The answer is unreasonable because `10(3) + 20` should equal `50`, not `230`.
+C. The answer is unreasonable because the expression must equal exactly `30`.
+D. There is no way to evaluate the answer without a calculator.
+
+**Answer: B**
+
+---
+
+# 84. Sample Assessment Question 15 — Error Analysis
+
+A student simplifies `5(x + 2) - 3x` as follows:
+
+`5x + 2 - 3x`
+
+`2x + 2`
+
+What most likely happened?
+
+A. Knowledge error
+B. Process error
+C. Comprehension error
+D. Strategy error
+
+**Answer: B**
+
+The student understood that distribution and combining like terms were needed but did not multiply `5` by the constant term `2` correctly, applying the process incorrectly.
+
+---
+
+# 85. ACT-Style Transfer Questions
+
+The reusable bank should include approximately **8–10 ACT-style transfer questions**.
+
+These should not dominate instruction.
+
+ACT-style questions should:
+
+- place familiar substitution or simplifying skills in less familiar presentations;
+- include plausible distractors matching common sign or distribution errors;
+- occasionally require translating a word problem into an expression before evaluating;
+- require students to identify relevant information;
+- occasionally include unnecessary information.
+
+---
+
+# 86. ACT-Style Transfer Example
+
+A cell phone plan costs `$35` per month plus `$0.05` for each text message sent beyond the plan's limit.
+
+Which expression represents the monthly cost if a customer sends `t` texts beyond the limit?
+
+A. `35 + 0.05t`
+B. `35t + 0.05`
+C. `0.05 + 35t`
+D. `35 - 0.05t`
+
+**Answer: A**
+
+---
+
+# 87. ACT-Style Strategy
+
+When students encounter an unfamiliar-looking expression question, return to the Lesson 1 routine.
+
+## STOP
+
+What information does the problem give me?
+
+## FIND
+
+What is the expression supposed to represent?
+
+## CONNECT
+
+Is this a translation, substitution, or simplifying task?
+
+## TRY
+
+Build, substitute, or simplify carefully, one step at a time.
+
+## CHECK
+
+Is the result the right size and sign for the situation?
+
+---
+
+# 88. Real-Life Application Contexts
+
+Prioritize contexts students can plausibly encounter.
+
+Use:
+
+- hourly wages with a bonus or base pay;
+- rideshare or delivery pricing;
+- phone or subscription plans with overage fees;
+- rental fees with a flat charge plus a per-unit charge;
+- simple business costs (materials plus labor).
+
+Avoid forcing artificial "real-world" contexts onto questions where a direct mathematical problem would be clearer.
+
+---
+
+# 89. Retrieval From Lesson 5
+
+High-priority Lesson 5 retrieval skills:
+
+1. calculating a unit rate;
+2. recognizing a rate as a coefficient-like comparison;
+3. reasonableness with rates.
+
+Approximately **2–3 Lesson 5 questions** should appear in Lesson 6 retrieval sets, since the wage and pricing expressions this week build directly on rate reasoning.
+
+---
+
+# 90. Retrieval From Units 2–4
+
+Continue lightly retrieving:
+
+1. order of operations;
+2. signed number operations;
+3. estimation and reasonableness.
+
+Approximately **2 questions** from Units 2–4 should appear across Lesson 6 retrieval sets.
+
+---
+
+# 91. Differentiation — Students Requiring Support
+
+Provide:
+
+- labeled diagrams identifying variable, coefficient, constant, and term;
+- substitution templates with blanks to fill in;
+- color-coded like-terms practice;
+- worked examples for the distributive property;
+- smaller numerical values;
+- partially completed examples;
+- opportunities to explain reasoning verbally.
+
+Support should help students access the same concepts rather than permanently lower expectations.
+
+---
+
+# 92. Differentiation — Students Ready for Extension
+
+Provide:
+
+- multi-step distribute-and-combine expressions;
+- expressions with two or more variables;
+- translating more complex verbal descriptions;
+- error analysis;
+- expressions built from multi-part real situations;
+- ACT-style transfer;
+- questions requiring explanation.
+
+Extension should emphasize reasoning rather than simply using larger numbers.
+
+---
+
+# 93. Student Reflection
+
+Students answer:
+
+1. Which Lesson 6 skill feels strongest?
+2. Which skill still needs practice?
+3. Describe one mistake you made this week.
+4. Which error category best describes it?
+5. What did you do after recognizing the error?
+6. Give one example of how you translated a real situation into an expression.
+7. What is one thing you should check before trusting a distributed expression?
+8. How confident are you with variables and expressions now?
+
+Use a 1–5 confidence scale.
+
+---
+
+# 94. Data to Collect
+
+Where technically feasible, Lesson 6 results should track:
+
+- overall accuracy;
+- accuracy by skill;
+- accuracy by question level;
+- direct vs. applied performance;
+- reasonableness performance;
+- error-analysis performance;
+- retrieval performance on Units 2–5 content;
+- student confidence;
+- retry performance.
+
+---
+
+# 95. Useful Comparison — Simplify vs. Evaluate
+
+Ask:
+
+> Can the student distinguish between simplifying an expression (combining like terms, distributing) and evaluating an expression (substituting a specific value)?
+
+Students sometimes conflate the two skills, attempting to "solve" an expression that has no equal sign.
+
+---
+
+# 96. Useful Comparison — Translation vs. Calculation
+
+Ask:
+
+> Can the student correctly build an expression from a word problem, even if a later calculation mistake occurs?
+
+A correct translation with an arithmetic slip is a different instructional problem than an incorrect translation with perfect arithmetic.
+
+---
+
+# 97. Useful Comparison — Procedure vs. Meaning
+
+Ask:
+
+> Can the student explain what the variable in a given expression represents, not just manipulate the symbols?
+
+A student who can distribute and combine terms but cannot explain what `h` means in `12h + 50` has a procedural skill without full conceptual understanding.
+
+---
+
+# 98. Materials to Build
+
+## Student Materials
+
+- [ ] Lesson 6 HTML instructional document
+- [ ] Lesson 6 PDF
+- [ ] guided practice
+- [ ] independent practice
+- [ ] variable/constant/coefficient reference
+- [ ] translation practice (words to expressions)
+- [ ] like-terms sorting activity
+- [ ] distributive property practice
+- [ ] error-analysis activity
+- [ ] Lesson 6 check
+- [ ] Lesson 6 reflection
+
+## Teacher Materials
+
+- [ ] Lesson 6 presentation
+- [ ] teacher worked-example notes
+- [ ] practice answer keys
+- [ ] Lesson 6 check answer key
+- [ ] question metadata
+- [ ] question bank
+- [ ] retrieval set for future weeks
+
+---
+
+# 99. Question Assets to Build
+
+Target reusable bank:
+
+**Approximately 85 questions**
+
+Approximate composition:
+
+- 20 direct skill questions (identification, substitution, like terms, distribution);
+- 20 applied/translation questions;
+- 15 reasoning/reasonableness questions;
+- 8–10 ACT-style transfer questions;
+- 10 error-analysis questions;
+- 10 retrieval/retry variants;
+- remaining items for alternate forms and differentiation.
+
+Every question does not need to be unique in mathematical structure.
+
+Parallel versions are desirable.
+
+Example:
+
+`4(x + 3) + 2x`
+
+and
+
+`3(x + 5) + 4x`
+
+can measure the same underlying skill.
+
+---
+
+# 100. Question Metadata
+
+Each bank question should eventually include:
+
+```text
+Question ID
+Quarter
+Week
+Domain
+Skill
+Subskill
+Difficulty
+Question Type
+Context
+Calculator Appropriate
+Correct Answer
+Distractor Rationale
+Likely Misconception
+Likely Error Type
+ACT-Style
+Retrieval Eligible
+```
+
+For multiple-choice questions, distractors should be intentional whenever possible.
+
+They should correspond to plausible mistakes rather than random numbers.
+
+---
+
+# 101. Example Question Metadata
+
+```text
+Question ID: Q1-W7-DP-06
+Quarter: 1
+Week: 7
+Domain: Variables & Expressions
+Skill: Distributive Property
+Subskill: Distributing a negative factor
+Difficulty: Level 2
+Question Type: Multiple Choice
+Context: Direct
+Calculator Appropriate: No
+Correct Answer: -3x + 12
+Distractor Rationale:
+  -3x - 12 = failing to distribute the negative sign to the second term
+Likely Misconception: Negative sign does not distribute to both terms
+Likely Error Type: Process
+ACT-Style: No
+Retrieval Eligible: Yes
+```
+
+This structure should make later question-bank generation and analysis easier.
+
+---
+
+# 102. Lesson 6 Completion Criteria
+
+A student has successfully completed the week when they have:
+
+- completed the core instructional material;
+- practiced identifying variables, constants, coefficients, and terms;
+- practiced translating between words and expressions;
+- substituted and evaluated expressions, including with negative values;
+- identified and combined like terms;
+- applied the distributive property;
+- analyzed at least one incorrect response;
+- retried work after feedback;
+- completed the Lesson 6 check;
+- completed the Lesson 6 reflection.
+
+---
+
+# 103. Quarter-Long Skills Reinforced This Week
+
+Lesson 6 should continue reinforcing the larger Seminar III academic habits.
+
+Students should practice:
+
+## Reading Before Solving
+
+Understand what an expression represents before evaluating or simplifying it.
+
+## Selecting a Strategy
+
+Decide whether to distribute first, substitute first, or combine like terms first, based on the expression.
+
+## Showing Enough Work to Diagnose Errors
+
+Students should record each simplification step, not just a final answer, so errors can be found.
+
+## Checking
+
+Estimate before trusting an evaluated result.
+
+## Learning From Errors
+
+Identify what happened and choose an appropriate response.
+
+## Retrying
+
+Use feedback to attempt the skill again.
+
+---
+
+# 104. Transition to Lesson 7
+
+Lesson 6 develops the ability to build, evaluate, and simplify expressions.
+
+Lesson 7 introduces the equal sign as a formal claim:
+
+# Equations
+
+Students will work with:
+
+- equality;
+- one-step equations;
+- two-step equations;
+- inverse operations;
+- checking solutions;
+- interpreting equations in context.
+
+Lesson 7 should continue retrieving Lesson 6 skills, especially:
+
+- combining like terms;
+- the distributive property;
+- substitution, which becomes the method for checking a solution.
+
+The major Lesson 7 question becomes:
+
+> **What value makes both sides of this equation equal?**
+
+The academic cycle remains:
+
+> **Learn → Practice → Check → Analyze → Retry → Apply**

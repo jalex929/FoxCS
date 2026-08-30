@@ -1,0 +1,293 @@
+<!-- Instructor-only presentation deck for Seminar III Lesson 8 (Quarter 1 Consolidation).
+     Built from courses/seminar-iii/week-09-plan's Instructional Sequence (Section 26-31,
+     Day 1-5). Unlike a normal content week, Lesson 8 introduces no new skill -- it is a
+     review/retrieval week across Weeks 3-8, so slides are framed around retrieval prompts,
+     the Quarter 1 Skill Map, and the error-self-identification framework rather than new
+     teaching content. Same self-contained single-file pattern, styling, and keyboard/click
+     navigation as week-02/03/04-presentation.html. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lesson 8 Presentation: Quarter 1 Consolidation</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  #deck { position: relative; height: 100vh; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; background: var(--paper); padding: 6vh 8vw 9vh; }
+  .slide.active { display: flex; }
+  .kicker { font-size: 1.05rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6rem; }
+  h1 { font-size: 3rem; line-height: 1.15; margin: 0 0 1rem; color: var(--ink); text-align: left; max-width: 24ch; }
+  h2.prompt { font-size: 2.1rem; line-height: 1.3; margin: 0.4rem 0 1.2rem; color: var(--accent-dark); text-align: left; max-width: 30ch; }
+  .say { font-size: 1.7rem; color: var(--ink); border-left: 6px solid var(--accent); padding: 0.3rem 0 0.3rem 1.2rem; margin: 0.6rem 0 1.4rem; max-width: 32ch; font-style: italic; }
+  ul.points, ol.points { font-size: 1.5rem; line-height: 1.55; margin: 0.5rem 0 1rem; padding-left: 1.4rem; max-width: 46ch; }
+  ul.points li, ol.points li { margin-bottom: 0.3rem; }
+  .sub { font-size: 1.3rem; color: var(--muted); max-width: 48ch; margin: 0.2rem 0 0.8rem; }
+  .note { position: absolute; left: 8vw; right: 8vw; bottom: 5vh; font-size: 1.05rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 0.6rem; max-width: 76ch; }
+  .note strong { color: var(--accent-dark); }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.8rem 0 1.2rem; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.3rem 0.9rem; font-size: 1.15rem; font-weight: bold; }
+  .problem-box { background: var(--floor); border: 1px solid var(--line); border-left: 6px solid var(--accent); padding: 1.2rem 1.5rem; font-size: 1.5rem; max-width: 54ch; margin: 0.5rem 0 1rem; }
+  .warn-box { background: var(--warn-bg); border-left: 6px solid var(--warn-line); padding: 0.9rem 1.3rem; font-size: 1.3rem; max-width: 52ch; margin: 0.6rem 0; }
+  table.glance { border-collapse: collapse; font-size: 1.2rem; max-width: 64ch; }
+  table.glance th, table.glance td { border: 1px solid var(--line); padding: 0.4rem 0.8rem; text-align: left; }
+  table.glance th { background: var(--accent-bg); color: var(--accent-dark); }
+  .divider { background: var(--accent-dark); color: white; }
+  .divider .kicker { color: #cfe6ee; }
+  .divider h1 { color: white; font-size: 3.4rem; }
+  .divider .sub { color: #cfe6ee; font-size: 1.4rem; }
+  .title-slide { background: var(--accent-dark); color: white; }
+  .title-slide .kicker { color: #cfe6ee; }
+  .title-slide h1 { color: white; font-size: 3.3rem; max-width: 26ch; }
+  .title-slide .sub { color: #dff1f6; font-size: 1.35rem; max-width: 52ch; }
+  .card-row { display: flex; gap: 1.2rem; flex-wrap: wrap; margin: 0.8rem 0 1rem; }
+  .card { border: 2px solid var(--accent); background: var(--accent-bg); border-radius: 10px; padding: 0.8rem 1.2rem; font-size: 1.4rem; color: var(--accent-dark); font-weight: bold; min-width: 6rem; text-align: center; }
+  #chrome { position: fixed; left: 0; right: 0; bottom: 0; height: 4.5vh; min-height: 42px; background: var(--ink); color: #cfd6de; display: flex; align-items: center; justify-content: space-between; padding: 0 1.2rem; font-size: 0.95rem; z-index: 10; }
+  #chrome .left, #chrome .right { display: flex; align-items: center; gap: 0.7rem; }
+  #chrome button, #chrome select { background: #2a3444; color: #eef2f6; border: 1px solid #3d4a5e; border-radius: 5px; padding: 0.3rem 0.7rem; font-size: 0.95rem; cursor: pointer; }
+  #chrome button:hover { background: #3d4a5e; }
+  #daytag { background: var(--accent); color: white; font-weight: bold; padding: 0.25rem 0.7rem; border-radius: 4px; font-size: 0.9rem; letter-spacing: 0.04em; }
+  @media print {
+    #chrome { display: none; }
+    #deck { position: static; height: auto; overflow: visible; }
+    .slide { display: flex !important; position: relative; page-break-after: always; height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <section class="slide title-slide" data-day="0" data-title="Title">
+    <p class="kicker">Seminar III &middot; Lesson 8 &middot; Foundations</p>
+    <h1>Quarter 1 Consolidation</h1>
+    <p class="sub">Learn &rarr; Practice &rarr; Check &rarr; Analyze &rarr; Retry &rarr; Apply</p>
+    <p class="sub">No new skill this week. Students look back across all six Quarter 1 skills at once.</p>
+  </section>
+
+  <section class="slide divider" data-day="1" data-title="Day 1 divider">
+    <p class="kicker">Day 1</p>
+    <h1>Retrieve: Numbers, Fractions &amp; Decimals</h1>
+    <p class="sub">Confidence rating on the Skill Map, retrieval practice, mixed application, exit ticket</p>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Skill Map intro">
+    <p class="kicker">Opening</p>
+    <h2 class="prompt">One connected system, not six separate reviews.</h2>
+    <table class="glance">
+      <tr><th>Week</th><th>Skill</th><th>Core Question</th></tr>
+      <tr><td>3</td><td>Numbers &amp; Operations</td><td>Does my answer make sense?</td></tr>
+      <tr><td>4</td><td>Fractions &amp; Decimals</td><td>Which form should I use?</td></tr>
+      <tr><td>5</td><td>Percent</td><td>What is this a percent of?</td></tr>
+      <tr><td>6</td><td>Ratios, Rates &amp; Proportions</td><td>What two quantities am I comparing?</td></tr>
+      <tr><td>7</td><td>Variables &amp; Expressions</td><td>What does this symbol represent?</td></tr>
+      <tr><td>8</td><td>Equations</td><td>What value makes both sides equal?</td></tr>
+    </table>
+    <div class="note">Before any retrieval begins, have students rate their own confidence in each skill, 1 to 5.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Retrieval Block 1">
+    <p class="kicker">Retrieval Block 1</p>
+    <h2 class="prompt">Numbers, Fractions &amp; Decimals</h2>
+    <div class="problem-box">Evaluate: &minus;6 + 4 &times; 3</div>
+    <div class="note">8 to 10 retrieval questions total for this block, spanning direct calculation and reasonableness.</div>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Mixed application Day 1">
+    <p class="kicker">Mixed Application</p>
+    <h2 class="prompt">2 to 3 problems combining numbers, fractions, and decimals in one scenario, unlabeled.</h2>
+  </section>
+
+  <section class="slide" data-day="1" data-title="Day 1 exit ticket">
+    <p class="kicker">Exit Ticket: Day 1</p>
+    <h2 class="prompt">One skill from this block you feel confident in. One you want to review before Day 4.</h2>
+  </section>
+
+  <section class="slide divider" data-day="2" data-title="Day 2 divider">
+    <p class="kicker">Day 2</p>
+    <h1>Retrieve: Percent, Ratios, Rates &amp; Proportions</h1>
+    <p class="sub">Retrieval practice, mixed application, error pattern check-in, exit ticket</p>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Retrieval Block 2">
+    <p class="kicker">Retrieval Block 2</p>
+    <h2 class="prompt">Percent, Ratios, Rates &amp; Proportions</h2>
+    <div class="problem-box">A worker earns $104 for 8 hours. What is the unit rate?</div>
+    <div class="note">8 to 10 retrieval questions total for this block.</div>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Error pattern check-in Day 2">
+    <p class="kicker">Error Pattern Check-In</p>
+    <h2 class="prompt">Review 2 to 3 of your own error-analysis records from Weeks 5 to 6. Which error category shows up most?</h2>
+  </section>
+
+  <section class="slide" data-day="2" data-title="Day 2 exit ticket">
+    <p class="kicker">Exit Ticket: Day 2</p>
+    <h2 class="prompt">One skill from this block you feel confident in. One you want to review before Day 4.</h2>
+  </section>
+
+  <section class="slide divider" data-day="3" data-title="Day 3 divider">
+    <p class="kicker">Day 3</p>
+    <h1>Retrieve: Variables, Expressions &amp; Equations</h1>
+    <p class="sub">Retrieval practice, mixed application, error pattern check-in, exit ticket</p>
+  </section>
+
+  <section class="slide" data-day="3" data-title="Retrieval Block 3">
+    <p class="kicker">Retrieval Block 3</p>
+    <h2 class="prompt">Variables, Expressions &amp; Equations</h2>
+    <div class="problem-box">Solve: 2x + 7 = 19</div>
+    <div class="note">8 to 10 retrieval questions total for this block.</div>
+  </section>
+
+  <section class="slide" data-day="3" data-title="Recognizing a skill without being told">
+    <p class="kicker">The Real Shift This Week</p>
+    <h2 class="prompt">Mixed problems don't announce which unit they belong to.</h2>
+    <div class="problem-box">A recipe calls for 3 eggs for every 2 cups of flour. If a baker uses 9 eggs, how many cups of flour are needed?</div>
+    <div class="note">This is the same recognition skill required on the ACT and in Lesson 5, now without the scaffolding of a single-topic week.</div>
+  </section>
+
+  <section class="slide" data-day="3" data-title="Day 3 exit ticket">
+    <p class="kicker">Exit Ticket: Day 3</p>
+    <h2 class="prompt">One skill from this block you feel confident in. One you want to review before Day 4.</h2>
+  </section>
+
+  <section class="slide divider" data-day="4" data-title="Day 4 divider">
+    <p class="kicker">Day 4</p>
+    <h1>Quarter 1 Growth Check</h1>
+    <p class="sub">28 to 32 questions &middot; 45 to 55 minutes &middot; direct comparison to the Lesson 1 baseline</p>
+  </section>
+
+  <section class="slide" data-day="4" data-title="Before the assessment">
+    <p class="kicker">Before Students Begin</p>
+    <h2 class="prompt">Remind Them</h2>
+    <ul class="points">
+      <li>This measures growth across the whole quarter, not just this week.</li>
+      <li>Some questions will not announce which skill they require.</li>
+      <li>Attempting unfamiliar-looking questions still gives useful information.</li>
+      <li>Use the Lesson 1 routine throughout: STOP, FIND, CONNECT, TRY, CHECK.</li>
+    </ul>
+  </section>
+
+  <section class="slide" data-day="4" data-title="After the assessment">
+    <p class="kicker">If Time Remains</p>
+    <h2 class="prompt">Initial Reaction</h2>
+    <ul class="points">
+      <li>Which questions felt most familiar?</li>
+      <li>Which questions felt hardest to identify, not just hardest to solve?</li>
+    </ul>
+  </section>
+
+  <section class="slide divider" data-day="5" data-title="Day 5 divider">
+    <p class="kicker">Day 5</p>
+    <h1>Analyze Results, Set a Quarter 2 Goal</h1>
+    <p class="sub">Mini-lesson, Quarter 1 Reflection, teacher conferences, study hall</p>
+  </section>
+
+  <section class="slide" data-day="5" data-title="Five error types recap">
+    <p class="kicker">Mini-Lesson</p>
+    <h1>Five Error Types, One Quarter of Evidence</h1>
+    <table class="glance">
+      <tr><th>Type</th><th>Main Question</th></tr>
+      <tr><td>Knowledge</td><td>Did the same "I don't remember this" error appear in more than one week?</td></tr>
+      <tr><td>Process</td><td>Did errors happen most in multi-step procedures?</td></tr>
+      <tr><td>Execution</td><td>Did errors happen most through small arithmetic or sign mistakes?</td></tr>
+      <tr><td>Comprehension</td><td>Did errors happen most from misreading the question?</td></tr>
+      <tr><td>Strategy</td><td>Did errors happen most from an inefficient approach?</td></tr>
+    </table>
+    <div class="note">Students should use real evidence from Weeks 2 through 8, not a guess.</div>
+  </section>
+
+  <section class="slide" data-day="5" data-title="Strength developing priority recap">
+    <p class="kicker">Reporting Language</p>
+    <h1>Strength, Developing, Priority</h1>
+    <div class="card-row">
+      <div class="card">Current Strengths</div>
+      <div class="card">Developing Skills</div>
+      <div class="card">Priority Skills</div>
+    </div>
+    <div class="note">Not "you scored 21 out of 31." Include any measurable growth since the Lesson 1 baseline where a comparable question exists.</div>
+  </section>
+
+  <section class="slide" data-day="5" data-title="Teacher role Day 5">
+    <p class="kicker">Teacher Role</p>
+    <h2 class="prompt">Circulate. Connect specific missed questions to specific error types.</h2>
+    <div class="warn-box">Watch for students defaulting every miss to "I'm bad at math" instead of naming the actual error category.</div>
+  </section>
+
+  <section class="slide divider" data-day="6" data-title="Closing / transition">
+    <p class="kicker">Transition to Lesson 9</p>
+    <h1>Inequalities &amp; Constraints</h1>
+    <p class="sub">Quarter 2, Mathematical Reasoning, begins here. Solving an inequality uses the same inverse-operation logic as Lesson 7's equations, with one new rule: the inequality symbol reverses when both sides are multiplied or divided by a negative number.</p>
+  </section>
+
+</div>
+
+<div id="chrome">
+  <div class="left">
+    <button onclick="go(-1)">&larr; Prev</button>
+    <button onclick="go(1)">Next &rarr;</button>
+    <span id="daytag">Day 0</span>
+  </div>
+  <div class="right">
+    <select id="jump" onchange="jumpTo(this.value)"></select>
+    <span id="counter">1 / 1</span>
+    <button onclick="document.documentElement.requestFullscreen && document.documentElement.requestFullscreen()">Fullscreen</button>
+  </div>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var current = 0;
+  var dayNames = {0:'Title',1:'Day 1',2:'Day 2',3:'Day 3',4:'Day 4',5:'Day 5',6:'Closing'};
+
+  function render() {
+    slides.forEach(function(s, i) { s.classList.toggle('active', i === current); });
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+    var day = slides[current].getAttribute('data-day');
+    document.getElementById('daytag').textContent = dayNames[day] || ('Day ' + day);
+    document.getElementById('jump').value = current;
+  }
+
+  function go(delta) {
+    current = Math.max(0, Math.min(slides.length - 1, current + delta));
+    render();
+  }
+
+  function jumpTo(i) {
+    current = parseInt(i, 10);
+    render();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { go(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+    else if (e.key === 'Home') { current = 0; render(); }
+    else if (e.key === 'End') { current = slides.length - 1; render(); }
+  });
+
+  document.getElementById('deck').addEventListener('click', function(e) {
+    if (e.target.closest('a')) return;
+    var rect = deck.getBoundingClientRect();
+    if (e.clientX - rect.left > rect.width / 2) go(1); else go(-1);
+  });
+
+  var jumpSelect = document.getElementById('jump');
+  slides.forEach(function(s, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    var day = s.getAttribute('data-day');
+    var title = s.getAttribute('data-title') || ('Slide ' + (i + 1));
+    opt.textContent = (i + 1) + '. [' + (dayNames[day] || day) + '] ' + title;
+    jumpSelect.appendChild(opt);
+  });
+
+  render();
+</script>
+
+</body>
+</html>

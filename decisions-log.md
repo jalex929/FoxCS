@@ -4,6 +4,27 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-30 (later still) — Seminar III renamed Unit N → Lesson N; orientation content unnumbered
+
+**Context:** After consolidating Lesson 1 (then still called "Unit 01"), Jay revisited the earlier-deferred Unit-to-Lesson rename, specifically asking about the orientation content (old "Unit 00"). Confirmed with Jay: orientation gets pulled out of the numbered sequence entirely as **"Orientation"** rather than "Lesson 0" (avoids the confusing off-by-one where "Unit 01" was actually the *second* week) — matching how Python keeps its own onboarding *inside* its Unit numbering was explicitly not followed here, since Jay said this scheme is Seminar III-specific. Also confirmed the letter-suffix rule: a lesson combining academic-skills and postsecondary content in the same week gets split as "Lesson NA"/"Lesson NB"; a lesson with only one gets a bare number, no letter.
+
+**Decided:** Because orientation is pulled out of the sequence rather than shifted, this rename needed **no renumbering arithmetic** — "Unit NN" simply becomes "Lesson N" everywhere except Unit 00, which becomes "Orientation". Applied:
+
+- **Moodle (all 39 sections + every resource/h5pactivity name in the course, not just the 9 with content):** `07-infrastructure/moodle-scripts/rename-units-to-lessons.php` — regex-transforms "Unit 00: X" → "Orientation: X", "Unit NN: X" → "Lesson N: X" (drops leading zero), "Unit 00 X" → "Orientation X", "Unit NN X" → "Lesson N X", and the "01.N --" item-prefix convention → "N.M --". Section **numbers** unchanged (section 1 = Orientation, section 2 = Lesson 1, etc.) — only display names moved, so no content had to be relocated between sections, same low-risk pattern as the 2026-08-29 Week→Unit rename. One item needed a manual follow-up fix (a mid-string "Unit 01" the front-anchored regex didn't catch).
+- **Repo files:** every `unit-NN-*` file (plan docs, `instructional-content/`, `printable-sheets/`, `teacher-materials/`) renamed to `lesson-N-*` (no leading zero); `unit-00-*` → `orientation-*`. 41 files renamed via `git mv`.
+- **In-file text:** every literal "Unit 0N" / "Unit N" string across both course-plan source docs, all lesson-plan files, and all HTML content converted to "Lesson N" (or "Orientation" for 00) via a single regex pass — 44 files, ~450 replacements total.
+- **`populate-seminar3-resources.php`** updated to match `lesson-N-*`/`orientation-*` filenames going forward, computing section number from the parsed lesson number (or 1 for orientation) rather than a fixed `unitnum + 1` pattern keyed to two-digit unit numbers.
+- **`07-infrastructure/moodle-scripts/h5p-builder/`** scripts and README renamed (`unit01_*` → `lesson1_*`) and their internal "Unit 01" strings updated to match, for consistency with anything that re-runs them later.
+- Root `CLAUDE.md`'s course table entry for Seminar III rewritten to describe the new Lesson/Orientation model and current build status, replacing a stale 2026-08-29 description.
+
+**Deliberately not touched:** `courses/python/`'s own `Unit NN` numbering (unaffected, Jay confirmed this is Seminar III-specific) and historical `decisions-log.md`/`worklog.md` entries describing what was true under the old naming at the time.
+
+**Not yet done:** the actual A/B letter-suffix split doesn't apply anywhere yet, since no Quarter 1 lesson currently combines academic and postsecondary content in the same week (per the real course plan, Q1 postsecondary work is light and not weekly). Also not touched: a handful of internal H5P content `title` fields baked into already-uploaded package JSON (e.g. an H5P activity's own on-page header) still say "Unit 01" in a few places — cosmetic, lower-visibility than the Moodle activity-list name that's now correct everywhere, flagged rather than chased down this pass.
+
+**Supersedes:** the 2026-08-29 Week→Unit renumbering's naming (not its section-number/no-content-relocation mechanism, which this reused directly).
+
+---
+
 ## 2026-08-30 (later) — Unit 01 consolidated from 16 to 12 activities
 
 **Context:** Jay flagged that 16 separate items in one Moodle section felt sprawling, and asked whether "1 week = 1 unit" was the right model going forward, floating a Unit-to-Lesson rename with A/B letter suffixes for academic vs. postsecondary content. Scoped down to just the activity-count problem first (his call, explicitly deferring the rename) since the rename would touch ~40 sections and 30+ filenames for a naming question, while the sprawl was a real, separately-fixable problem.

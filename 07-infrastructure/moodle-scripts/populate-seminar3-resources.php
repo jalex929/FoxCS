@@ -1,10 +1,12 @@
 <?php
 // One-off setup script: uploads Seminar III's existing HTML content
 // (teacher-materials, instructional-content, printable-sheets) as File
-// resources into the matching unit section of the foxcs-seminar3 course.
-// Filenames use "unit-NN-..." (NN = unit number, 00-38); Moodle section
-// number = unit number + 1 (section 1 holds Unit 00, etc. -- see
-// rename-seminar3-sections.php).
+// resources into the matching lesson section of the foxcs-seminar3 course.
+// Filenames use "lesson-N-..." (N = 1-38, no leading zero) or "orientation-..."
+// (the unnumbered intro content) -- see decisions-log.md's 2026-08-30
+// Unit->Lesson rename entry. Moodle section number = lesson number + 1
+// (section 1 = Orientation, section 2 = Lesson 1, etc. -- unchanged from the
+// old Unit convention, only the label changed).
 //
 // Teacher-materials (decks, answer keys) are created HIDDEN (visible=0) so
 // only teacher/manager roles can see them -- students should never see the
@@ -26,13 +28,27 @@ require_once($CFG->dirroot . '/course/modlib.php');
 
 $srcroot = '/tmp/seminar-iii-src';
 
+// Filenames are "lesson-N-*" (N = 1-38, no leading zero) or "orientation-*"
+// (the unnumbered intro content, section 1) -- see decisions-log.md's
+// 2026-08-30 Unit->Lesson rename entry. Section number = lesson number + 1
+// (section 1 = Orientation, section 2 = Lesson 1, etc.) -- unchanged from
+// the old Unit convention, only the label changed.
 $sources = [
-    // [subdir, glob pattern, hidden?, human label prefix]
-    ['teacher-materials', '/^unit-(\d{2})-presentation\.html$/', true, 'Unit %02d Presentation (Teacher)'],
-    ['teacher-materials', '/^unit-(\d{2})-answer-keys\.html$/', true, 'Unit %02d Answer Keys (Teacher)'],
-    ['instructional-content', '/^unit-(\d{2})-(.+)\.html$/', false, null], // label built from slug
-    ['printable-sheets', '/^unit-(\d{2})-(.+)\.html$/', false, null],
+    // [subdir, glob pattern, hidden?, human label prefix (%s = "Lesson N" or "Orientation")]
+    ['teacher-materials', '/^(lesson-\d+|orientation)-presentation\.html$/', true, '%s Presentation (Teacher)'],
+    ['teacher-materials', '/^(lesson-\d+|orientation)-answer-keys\.html$/', true, '%s Answer Keys (Teacher)'],
+    ['instructional-content', '/^(lesson-\d+|orientation)-(.+)\.html$/', false, null], // label built from slug
+    ['printable-sheets', '/^(lesson-\d+|orientation)-(.+)\.html$/', false, null],
 ];
+
+function lesson_prefix_to_label_and_section($prefix) {
+    // "lesson-3" -> ["Lesson 3", section 4]; "orientation" -> ["Orientation", section 1]
+    if ($prefix === 'orientation') {
+        return ['Orientation', 1];
+    }
+    $n = (int) substr($prefix, strlen('lesson-'));
+    return ["Lesson $n", $n + 1];
+}
 
 $course = $DB->get_record('course', ['shortname' => 'foxcs-seminar3'], '*', MUST_EXIST);
 $coursecontext = context_course::instance($course->id);
@@ -57,19 +73,18 @@ foreach ($sources as [$subdir, $pattern, $hidden, $labeltemplate]) {
         if (!preg_match($pattern, $filename, $m)) {
             continue;
         }
-        $unitnum = (int) $m[1];
-        $sectionnum = $unitnum + 1; // Section 1 = Unit 00, section 2 = Unit 01, etc.
+        [$label, $sectionnum] = lesson_prefix_to_label_and_section($m[1]);
         $section = $DB->get_record('course_sections', ['course' => $course->id, 'section' => $sectionnum]);
         if (!$section) {
-            echo "No section $sectionnum (Unit $unitnum) for $filename, skipping\n";
+            echo "No section $sectionnum ($label) for $filename, skipping\n";
             continue;
         }
 
         if ($labeltemplate) {
-            $name = sprintf($labeltemplate, $unitnum);
+            $name = sprintf($labeltemplate, $label);
         } else {
             $slug = $m[2];
-            $name = sprintf('Unit %02d ', $unitnum) . slug_to_title($slug);
+            $name = "$label " . slug_to_title($slug);
         }
 
         // Skip if a resource with this exact name already exists in this section.

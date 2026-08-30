@@ -310,8 +310,12 @@ Wrote `07-infrastructure/h5p-content-type-guide.md` — what's installed (~140 l
 
 **NTC Hosting has a "Moodle Admin" folder already provisioned** — Jay found and downloaded `foxcs.online.zip` (142MB, likely the deployed Moodle codebase) and `moodledata.zip` (348 bytes, empty except for a `moodledata/foxcs.online/` skeleton, dated 2026-08-28) from the panel, saved to the SY27 Drive folder. Confirms the domain is already attached as a hosted/addon domain in the panel, ahead of registration finishing — the "attach the domain" step may already be done. Panel type still not identified (Jay wasn't sure what it's called). Domain still shows "Pending Registration" as of this check.
 
+**Seminar III renamed Unit N -> Lesson N; orientation content is now unnumbered "Orientation."** Jay reopened the earlier-deferred rename, confirmed the scheme (Orientation unnumbered, not "Lesson 0"; letter suffixes A/B only when a lesson combines academic + postsecondary content, not needed anywhere yet). Applied everywhere: all 39 Moodle sections + every resource/activity name, all 41 repo files renamed `unit-NN-*` -> `lesson-N-*`/`orientation-*`, ~450 in-file text replacements across 44 files, `populate-seminar3-resources.php` and the h5p-builder scripts updated to match going forward. Full detail in `decisions-log.md`. Python's own Unit numbering is unaffected -- Jay confirmed this is Seminar III-specific.
+
+**Domain registration is in manual review**, per an email Jay received from NTC/the registrar -- explains why it's taking longer than a typical few-hour `.online` registration. No action possible until that clears.
+
 **Next up:**
 1. Finish the NTC Hosting DNS/production setup once the domain registration clears (items 5-6 above, still accurate) — likely less work than expected given the panel already has a Moodle skeleton provisioned.
-2. Rebuild Unit 02's checks/practice as interactive H5P (item 3 above still applies to Unit 02).
-3. Decide whether/when to revisit the Unit->Lesson rename (deferred, not rejected).
-4. Items 6-9 above are all still accurate and untouched.
+2. Rebuild Lesson 2's checks/practice as interactive H5P (item 3 above still applies, now under the new naming).
+3. Fill the missing-content gaps for Lessons 3/5/6/7 (item 7 above, now under the new naming).
+4. Items 8-9 above are all still accurate and untouched.

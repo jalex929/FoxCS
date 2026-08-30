@@ -1,0 +1,123 @@
+<!-- Student-facing document for Seminar III Lesson 8, styled HTML rendered to PDF (see
+     02-authoring-system/tools/html-to-pdf/). Per week-09-plan section 32, this document is
+     retrospective rather than instructional -- a personal record students fill in, not new
+     teaching content. Composed from week-09-plan sections 5 (skill map), 15 (baseline
+     comparison/reporting language), 33 (PDF sections), and 34 (reflection prompts). Same
+     template/palette as week-02 through 08, with printable fill-in areas added for the
+     reflection sections. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Quarter 1 Skill Story</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
+  body { display: flex; justify-content: center; }
+  main { max-width: 720px; width: 100%; background: var(--paper); padding: 4rem 3.5rem 5rem; }
+  .kicker { font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: bold; margin: 0 0 0.6rem; text-align: left; }
+  h1 { font-size: 2.4rem; line-height: 1.2; margin: 0 0 1.2rem; color: var(--ink); text-align: left; }
+  h2 { font-size: 1.6rem; margin: 2.6rem 0 1rem; color: var(--accent-dark); text-align: left; border-bottom: 3px solid var(--accent); padding-bottom: 0.4rem; }
+  p { font-size: 1.05rem; line-height: 1.65; margin: 0 0 1rem; text-align: left; }
+  .lede { font-size: 1.2rem; line-height: 1.6; color: var(--ink); }
+  table.skillmap { border-collapse: collapse; width: 100%; margin: 1rem 0 1.6rem; font-size: 0.92rem; }
+  table.skillmap th, table.skillmap td { border: 1px solid var(--line); padding: 0.5rem 0.7rem; text-align: left; }
+  table.skillmap th { background: var(--accent-bg); color: var(--accent-dark); }
+  .fill-prompt { font-size: 1.02rem; font-weight: bold; color: var(--accent-dark); margin: 1rem 0 0.4rem; }
+  .fill-line { border-bottom: 1.5px solid var(--line); height: 1.7rem; margin-bottom: 0.9rem; }
+  .results-grid { display: flex; flex-direction: column; gap: 0.7rem; margin: 1.2rem 0 1.6rem; }
+  .results-card { border: 1px solid var(--line); border-radius: 6px; padding: 0.8rem 1.1rem; }
+  .results-card .name { font-weight: bold; color: var(--accent-dark); font-size: 1.02rem; margin-bottom: 0.2rem; }
+  .results-card .detail { font-size: 0.96rem; color: var(--ink); }
+  table.tally { border-collapse: collapse; width: 100%; margin: 1rem 0 1.6rem; font-size: 0.98rem; }
+  table.tally th, table.tally td { border: 1px solid var(--line); padding: 0.6rem 0.9rem; text-align: left; }
+  table.tally th { background: var(--accent-bg); color: var(--accent-dark); }
+  table.tally td.tally-box { height: 2.2rem; }
+  .example-box { background: var(--floor); border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.2rem 0 1.6rem; font-size: 0.98rem; line-height: 1.5; }
+  .closing { margin-top: 3rem; border: 3px solid var(--accent-dark); border-radius: 10px; padding: 1.8rem 2rem; background: var(--accent-bg); page-break-inside: avoid; }
+  .closing h2 { border: none; margin-top: 0; color: var(--accent-dark); }
+  .closing .row { font-size: 0.98rem; line-height: 1.6; margin-bottom: 0.5rem; }
+  .closing .row b { color: var(--accent-dark); }
+  @media print { body { background: var(--paper); } main { padding: 0.4in 0.5in; max-width: none; } }
+</style>
+</head>
+<body>
+<main>
+
+  <p class="kicker">Seminar III &middot; Lesson 8 &middot; Quarter 1 Consolidation</p>
+  <h1>My Quarter 1 Skill Story</h1>
+  <p class="lede">This page isn't new content &mdash; it's your own record of the quarter. Fill it in honestly. What have you learned about how <em>you</em> learn?</p>
+
+  <h2>The Quarter 1 Skill Map</h2>
+  <table class="skillmap">
+    <tr><th>Week</th><th>Skill</th><th>Core Question</th></tr>
+    <tr><td>3</td><td>Numbers &amp; Operations</td><td>Does my answer make sense?</td></tr>
+    <tr><td>4</td><td>Fractions &amp; Decimals</td><td>Which form should I use?</td></tr>
+    <tr><td>5</td><td>Percent</td><td>What is this a percent of?</td></tr>
+    <tr><td>6</td><td>Ratios, Rates &amp; Proportions</td><td>What two quantities am I comparing?</td></tr>
+    <tr><td>7</td><td>Variables &amp; Expressions</td><td>What does this symbol represent?</td></tr>
+    <tr><td>8</td><td>Equations</td><td>What value makes both sides equal?</td></tr>
+  </table>
+  <p>Each skill built on the one before it. This week's Growth Check tests all six together &mdash; without telling you in advance which skill each question needs.</p>
+  <div class="example-box"><b>Recognizing a skill without being told:</b> &ldquo;A recipe calls for 3 eggs for every 2 cups of flour. A baker uses 9 eggs. How many cups of flour are needed?&rdquo; This never announces &ldquo;ratio problem&rdquo; &mdash; that recognition is part of the skill.</div>
+
+  <h2>What I Knew in Lesson 1 vs. What I Know Now</h2>
+  <p>Some skills (numbers, basic fractions) can be compared directly to your Lesson 1 baseline. Percent, ratios, expressions, and equations weren't tested then &mdash; those count as new mastery, not growth from a prior score.</p>
+  <div class="fill-prompt">A skill I can compare directly to my baseline:</div>
+  <div class="fill-line"></div>
+  <div class="fill-prompt">What changed between then and now:</div>
+  <div class="fill-line"></div>
+
+  <h2>Reading My Results</h2>
+  <p>Not just a score. Your Growth Check results use the same three categories from Lesson 1:</p>
+  <div class="results-grid">
+    <div class="results-card"><div class="name">Current strengths</div><div class="detail">Skills you now demonstrate consistently, including any growth since Lesson 1.</div></div>
+    <div class="results-card"><div class="name">Developing skills</div><div class="detail">Skills you partially demonstrate.</div></div>
+    <div class="results-card"><div class="name">Priority skills</div><div class="detail">Skills that need continued instruction or review heading into Quarter 2.</div></div>
+  </div>
+
+  <h2>My Error Pattern</h2>
+  <p>Look back through your exit tickets, checks, and error-analysis work from Weeks 2&ndash;8. Tally how often each error type shows up.</p>
+  <table class="tally">
+    <tr><th>Error Type</th><th>Tally</th></tr>
+    <tr><td>Knowledge</td><td class="tally-box"></td></tr>
+    <tr><td>Process</td><td class="tally-box"></td></tr>
+    <tr><td>Execution</td><td class="tally-box"></td></tr>
+    <tr><td>Comprehension</td><td class="tally-box"></td></tr>
+    <tr><td>Strategy</td><td class="tally-box"></td></tr>
+  </table>
+
+  <h2>My Quarter 1 Story</h2>
+  <div class="fill-prompt">My strongest skill, and my evidence:</div>
+  <div class="fill-line"></div>
+  <div class="fill-line"></div>
+  <div class="fill-prompt">A developing skill, and my evidence:</div>
+  <div class="fill-line"></div>
+  <div class="fill-line"></div>
+  <div class="fill-prompt">A priority skill, and my evidence:</div>
+  <div class="fill-line"></div>
+  <div class="fill-line"></div>
+  <div class="fill-prompt">My most frequent error type across the quarter, and my evidence:</div>
+  <div class="fill-line"></div>
+  <div class="fill-line"></div>
+
+  <h2>My Goal for Quarter 2</h2>
+  <div class="fill-prompt">One specific, actionable goal:</div>
+  <div class="fill-line"></div>
+  <div class="fill-prompt">One strategy I'll use to work toward it:</div>
+  <div class="fill-line"></div>
+
+  <div class="closing">
+    <h2>Carry This Into Quarter 2</h2>
+    <div class="row"><b>STOP</b> &rarr; <b>FIND</b> &rarr; <b>CONNECT</b> &rarr; <b>TRY</b> &rarr; <b>CHECK</b></div>
+    <div class="row"><b>Knowledge</b> &rarr; <b>Process</b> &rarr; <b>Execution</b> &rarr; <b>Comprehension</b> &rarr; <b>Strategy</b></div>
+    <div class="row" style="margin-top:0.8rem;">Quarter 2 (Mathematical Reasoning) opens with <strong>Inequalities &amp; Constraints</strong> &mdash; the same equation-solving logic from Lesson 7, plus one new rule: the inequality symbol flips when you multiply or divide both sides by a negative.</div>
+  </div>
+
+</main>
+</body>
+</html>
