@@ -11,7 +11,7 @@ def block_text(html):
         "useSeparator": "auto",
     }
 
-def block_multichoice(question, answers):
+def block_multichoice(question, answers, title):
     # answers: list of (text_html, correct_bool, feedback_html)
     return {
         "content": {
@@ -46,7 +46,7 @@ def block_multichoice(question, answers):
                 "confirmRetry": {"header": "Retry ?", "body": "Are you sure?", "cancelLabel": "Cancel", "confirmLabel": "Confirm"},
             },
             "subContentId": str(uuid.uuid4()),
-            "metadata": {"contentType": "Multiple Choice", "license": "U", "title": "Untitled Multiple Choice"},
+            "metadata": {"contentType": "Multiple Choice", "license": "U", "title": title},
         },
         "useSeparator": "auto",
     }
@@ -80,7 +80,7 @@ def block_dialogcards(title, dialogs):
         "useSeparator": "auto",
     }
 
-def block_essay(task_desc, placeholder):
+def block_essay(task_desc, placeholder, title):
     return {
         "content": {
             "library": "H5P.Essay 1.5",
@@ -100,26 +100,29 @@ def block_essay(task_desc, placeholder):
                 "ariaShowSolution": "Show the solution.", "ariaRetry": "Retry.",
             },
             "subContentId": str(uuid.uuid4()),
-            "metadata": {"contentType": "Essay", "license": "U", "title": "Untitled Essay"},
+            "metadata": {"contentType": "Essay", "license": "U", "title": title},
         },
         "useSeparator": "auto",
     }
 
-def make_column(blocks):
+def make_column(blocks, title):
     return {
         "library": "H5P.Column 1.22",
         "params": {"content": blocks},
         "subContentId": str(uuid.uuid4()),
-        "metadata": {"contentType": "Column", "license": "U", "title": "Column"},
+        "metadata": {"contentType": "Column", "license": "U", "title": title},
     }
 
-def chapter(blocks):
+def chapter(blocks, title):
     # NOTE: no "chapter" wrapper key -- H5P's validateGroup() auto-flattens a
     # group with exactly one field (here, "chapters"'s single "chapter" field),
     # so the list item must be the bare Column library object directly.
     # Confirmed by reading h5p.classes.php's validateGroup() after a silent
-    # content-stripping bug, not guessed.
-    return make_column(blocks)
+    # content-stripping bug, not guessed. The title is what shows in the
+    # book's table of contents / chapter nav -- give every chapter a real
+    # one, "Column" is H5P's own generic class-name fallback and looks
+    # broken to a viewer (Jay flagged this directly, 2026-08-30).
+    return make_column(blocks, title)
 
 
 # ---- Chapter 1: Instruction ----
@@ -133,6 +136,7 @@ ch1 = chapter([
             ("<div>a list of ingredients or tools</div>", False, "<div>Look again at the recipe example above. Think about the one thing a recipe and a program both actually are, structurally.</div>"),
             ("<div>a finished result, like a meal or a working app</div>", False, "<div>Look again at the recipe example above. Think about the one thing a recipe and a program both actually are, structurally.</div>"),
         ],
+        "Quick Check: What Is a Program?",
     ),
     block_text("<h2>Computers Are Very Literal</h2><p>This matters because computers are extremely literal. A computer does not guess what you probably meant. It does exactly what the instructions say, no more, no less. That's not a limitation to work around, it's the whole reason programs are useful. If a computer improvised, you couldn't trust it to do the same thing twice.</p><p><strong>Real-World Example: a vending machine is a program too.</strong> A vending machine takes your money, checks whether you inserted enough, then either releases the item or shows an error. Every one of those checks and decisions was written ahead of time by a programmer as an exact instruction: &quot;if the amount inserted is less than the price, do not release the item.&quot; The machine isn't deciding anything in the moment. It's following instructions someone else already wrote, the same way a program running on any computer does.</p>"),
     block_multichoice(
@@ -143,10 +147,11 @@ ch1 = chapter([
             ("<div>An automatic correction of the mistake</div>", False, "<div>Remember the vending machine example: the machine doesn't decide anything on its own.</div>"),
             ("<div>Nothing, because the computer will notice the mistake and stop on its own</div>", False, "<div>Remember the vending machine example: the machine doesn't decide anything on its own.</div>"),
         ],
+        "Quick Check: Computers Are Literal",
     ),
     block_text("<h2>Where Python Fits In</h2><p><strong>Python</strong> is a programming language: a tool humans use to write instructions in a form a computer can actually carry out. There are many programming languages, the same way there are many spoken languages. They're different ways of writing the same kind of thing: precise, step-by-step instructions.</p><p><strong>Game Connection: every game you've ever played is a program.</strong> A game is a (very large) set of instructions: when the player presses this button, move the character that direction; when health reaches zero, show the game-over screen. Nothing in a game happens by magic or by the game &quot;wanting&quot; something to happen. Somewhere, a programmer wrote the exact instruction for it. This whole course is about learning to write those instructions yourself, starting from the smallest possible piece.</p>"),
     block_text("<h2>Key Terms</h2><p><strong>program:</strong> A set of step-by-step instructions a computer follows, in order. Think of it like a recipe.</p><p><strong>instruction:</strong> A single step in a program that tells the computer exactly what to do. Think of it like one line in a recipe.</p><p><strong>programmer:</strong> A person who writes the instructions that make up a program. Think of it like the person who writes a recipe.</p><p><strong>Python:</strong> A programming language, a tool for writing instructions in a form a computer can carry out. The one this course uses.</p>"),
-])
+], "Instruction")
 
 # ---- Chapter 2: Flashcards ----
 ch2 = chapter([
@@ -157,7 +162,7 @@ ch2 = chapter([
         ("programmer", "A person who writes the instructions that make up a program."),
         ("Python", "A programming language: a tool for writing instructions in a form a computer can carry out. The one this course uses."),
     ]),
-])
+], "Flashcards")
 
 # ---- Chapter 3: Vocab Quiz ----
 ch3 = chapter([
@@ -172,7 +177,7 @@ ch3 = chapter([
                     block_multichoice(f"<p>Which term matches: &quot;{d}&quot;</p>", [
                         (f"<div>{t}</div>", t == correct_term, "<div>Check the definitions again.</div>" if t != correct_term else "<div>Correct!</div>")
                         for t in ["program", "instruction", "programmer", "Python"]
-                    ])["content"]
+                    ], f"Vocab: {correct_term}")["content"]
                     for (correct_term, d) in [
                         ("program", "A set of step-by-step instructions a computer follows, in order."),
                         ("instruction", "A single step in a program that tells the computer exactly what to do."),
@@ -203,47 +208,47 @@ ch3 = chapter([
         },
         "useSeparator": "auto",
     },
-])
+], "Vocab Quiz")
 
 # ---- Chapter 4: Practice ----
 practice_qs = [
-    ("<p>Which of these best describes what a program is?</p>", [
+    ("Practice: What Is a Program?", "<p>Which of these best describes what a program is?</p>", [
         ("<div>A set of step-by-step instructions a computer follows in order</div>", True, "<div>Right! A program is a set of exact, ordered instructions a computer follows.</div>"),
         ("<div>A device that thinks for itself</div>", False, "<div>Not quite. A computer doesn't think for itself. It follows instructions someone else wrote.</div>"),
         ("<div>Any file stored on a computer</div>", False, "<div>Not quite. Some files (like a photo) aren't programs. A program specifically runs instructions.</div>"),
         ("<div>A description of what a computer looks like</div>", False, "<div>Not quite. That describes hardware, not what a program actually does.</div>"),
     ]),
-    ("<p>The person who writes the instructions that make up a program is called a ______.</p>", [
+    ("Practice: The Programmer", "<p>The person who writes the instructions that make up a program is called a ______.</p>", [
         ("<div>programmer</div>", True, "<div>Right!</div>"),
         ("<div>user</div>", False, "<div>A user runs a program. The person who writes it is the programmer.</div>"),
         ("<div>computer</div>", False, "<div>The computer follows the instructions, it doesn't write them.</div>"),
         ("<div>operator</div>", False, "<div>Look again at this lesson's Key Terms.</div>"),
     ]),
-    ("<p>A single step in a program that tells the computer exactly what to do is called an ______.</p>", [
+    ("Practice: An Instruction", "<p>A single step in a program that tells the computer exactly what to do is called an ______.</p>", [
         ("<div>instruction</div>", True, "<div>Right!</div>"),
         ("<div>output</div>", False, "<div>Output is what a program displays. Look again at this lesson's Key Terms.</div>"),
         ("<div>error</div>", False, "<div>An error means something went wrong, not a normal step.</div>"),
         ("<div>program</div>", False, "<div>A program is the whole set of steps. This question asks about just one step.</div>"),
     ]),
-    ("<p>When a computer runs a program, it ___.</p>", [
+    ("Practice: How Programs Run", "<p>When a computer runs a program, it ___.</p>", [
         ("<div>follows the instructions exactly as written</div>", True, "<div>Right! The computer follows the instructions exactly as written, every time.</div>"),
         ("<div>thinks about what the programmer probably meant</div>", False, "<div>Remember: computers are very literal. Re-read that section above.</div>"),
         ("<div>randomly chooses what to do next</div>", False, "<div>Remember: computers are very literal. Re-read that section above.</div>"),
         ("<div>asks the programmer for help</div>", False, "<div>Remember: computers are very literal. Re-read that section above.</div>"),
     ]),
-    ("<p>A vending machine's program includes this instruction: &quot;If the amount inserted is less than the price, do not release the item.&quot; A student inserts less than the price. What will the machine do?</p>", [
+    ("Practice: The Vending Machine", "<p>A vending machine's program includes this instruction: &quot;If the amount inserted is less than the price, do not release the item.&quot; A student inserts less than the price. What will the machine do?</p>", [
         ("<div>Follow its instructions and not release the item</div>", True, "<div>Right! The machine just follows its instructions, exactly as written.</div>"),
         ("<div>Release the item anyway, since it can tell what the student wants</div>", False, "<div>The machine can't tell what anyone &quot;wants.&quot; It only follows its instructions.</div>"),
         ("<div>Guess how much more money is needed and release the item halfway</div>", False, "<div>The machine can't tell what anyone &quot;wants.&quot; It only follows its instructions.</div>"),
         ("<div>Ignore the instruction if it seems unfair</div>", False, "<div>The machine can't tell what anyone &quot;wants.&quot; It only follows its instructions.</div>"),
     ]),
-    ("<p>Python is an example of a programming ______.</p>", [
+    ("Practice: Programming Languages", "<p>Python is an example of a programming ______.</p>", [
         ("<div>language</div>", True, "<div>Right!</div>"),
         ("<div>computer</div>", False, "<div>Python isn't a computer, it's a tool for writing instructions.</div>"),
         ("<div>program</div>", False, "<div>Python isn't itself a program, it's the language programs get written in.</div>"),
         ("<div>company</div>", False, "<div>Look again at this lesson's Key Terms.</div>"),
     ]),
-    ("<p>Which of these is the best reason a printed book is not a computer program?</p>", [
+    ("Practice: Not a Program", "<p>Which of these is the best reason a printed book is not a computer program?</p>", [
         ("<div>A book doesn't run or follow instructions on a computer</div>", True, "<div>Right! A program is something a computer runs. A book isn't run by anything.</div>"),
         ("<div>A book is too long to be a program</div>", False, "<div>Length has nothing to do with whether something is a program.</div>"),
         ("<div>A book doesn't have page numbers</div>", False, "<div>Length has nothing to do with whether something is a program.</div>"),
@@ -259,7 +264,7 @@ ch4 = chapter([
             "params": {
                 "introPage": {"showIntroPage": False, "startButtonText": "Start", "introduction": ""},
                 "progressType": "dots", "passPercentage": 70,
-                "questions": [block_multichoice(q, a)["content"] for (q, a) in practice_qs],
+                "questions": [block_multichoice(q, a, t)["content"] for (t, q, a) in practice_qs],
                 "texts": {
                     "prevButton": "Previous question", "previous": "Previous", "nextButton": "Next question",
                     "next": "Next", "finishButton": "Finish", "submitButton": "Submit",
@@ -283,7 +288,7 @@ ch4 = chapter([
         },
         "useSeparator": "auto",
     },
-])
+], "Practice")
 
 # ---- Chapter 5: Project ----
 ch5 = chapter([
@@ -291,13 +296,14 @@ ch5 = chapter([
     block_essay(
         "<p>Write your numbered instruction list here (at least 5 steps, including one &quot;if this, then that&quot; check). Name your system in your first line.</p>",
         "Type your numbered instructions here.",
+        "Design a Program: Your Instructions",
     ),
-])
+], "Project")
 
 # ---- Chapter 6: What's Next ----
 ch6 = chapter([
     block_text("<h2>What's Next</h2><p>Nice work finishing this lesson's reading and practice. Two more things to do, outside this book:</p><p><strong>Mastery Check:</strong> a short password-gated check your teacher will unlock, with your answers written in a paired file. Ask your teacher for the current password.</p><p><strong>Feedback:</strong> a quick 2-3 minute form about how this lesson went for you.</p>"),
-])
+], "What's Next")
 
 content = {
     "showCoverPage": False,

@@ -359,9 +359,13 @@ Jay asked to start building out Game I (Python), picking Units 00 and 01. **Unit
 
 **Jay's subitem-click "blank page" report is still not independently diagnosed** — checked Moodle's embed iframe code for sandbox restrictions (none found), but couldn't fully test without a real browser. Becomes moot for 01.1 if the Interactive Book pilot gets adopted.
 
+**Interactive Book pilot: title/labeling pass, 2026-08-30 (same day).** Jay's real feedback after reviewing: every chapter showed as "Column" (H5P's own generic class-name fallback), every question showed "Untitled Multiple Choice", and a position counter read "Column 6/7" instead of something meaningful -- all traced to one root cause: every block in the pilot script had a copy-pasted generic placeholder title instead of a real one. Fixed by threading a required `title` parameter through every `block_*()` helper and `chapter()`, giving all 6 chapters and all 15 sub-content pieces (2 quick-checks, 4 vocab questions, 7 practice questions, 1 flashcard deck, 1 essay) real descriptive titles adapted from their actual content. Verified directly against the DB-stored `jsoncontent` (not the escaped embed-page blob, which gave false negatives on a naive grep check) -- confirmed zero generic titles remain anywhere in the tree. Re-uploaded as cmid 104.
+
+**Jay also reported the book's top content gets cut off when clicking a nav item.** Checked what's checkable without a browser (no iframe sandbox restriction found, same as the earlier subitem-click report) -- likely an iframe-resize-vs-scroll-position interaction (H5P's content height changes on internal chapter navigation, but the parent Moodle page doesn't necessarily re-scroll to keep the new content's top in view), a known class of issue with resizable iframes, not something traceable to the content itself. Not fixed, needs the Playwright pass to actually see it happen.
+
 **Next up (Python):**
-1. **Jay's review of the Interactive Book pilot vs. the HTML-file version** — decides whether to port Lessons 01.2-01.6 to the same format. This is the big fork in the road right now.
+1. **Jay's review of the polished Interactive Book pilot vs. the HTML-file version** — decides whether to port Lessons 01.2-01.6 to the same format. This is the big fork in the road right now.
 2. Get Jay's call on 01.1's project step (HTML-file version).
-3. The Playwright verification checklist above, once Jay's on his desktop — now also covers reviewing the Moodle copies (both versions) and the subitem-click symptom.
+3. The Playwright verification checklist above, once Jay's on his desktop — now also covers reviewing the Moodle copies (both versions), the subitem-click symptom, and the cut-off-top-on-nav-click symptom.
 4. Em-dash sweep beyond Unit 01 — Unit 00's shared onboarding content and the rest of FoxCS haven't been checked.
 5. Units 00 (now resolved) and 02-20 are still the real remaining Python scope — only Unit 01 has content, in the repo or in Moodle.
