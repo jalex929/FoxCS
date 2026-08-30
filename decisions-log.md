@@ -4,6 +4,28 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-30 — Unit 01's ACT Math Baseline built (Day 3-5 gap closed); reusable question-to-H5P builder script added
+
+**Context:** Jay confirmed Unit 01 (Aug 31-Sep 4) is a fully academic week with no postsecondary content this cycle, then asked to build whatever was left. A readiness check against the live Moodle dev instance found Days 1-2 fully built (10 interactive H5P activities) but Day 3 (the ACT Math Baseline) completely missing, with Days 4-5 blocked on it — the same gap flagged and never picked up in yesterday's worklog.
+
+**Decided/built:**
+
+- **24-question ACT Math Baseline**, matching `unit-01-plan`'s domain/difficulty distribution exactly (Numbers & Operations 4, Fractions & Decimals 4, Percent 3, Ratios/Rates/Proportions 3, Variables & Expressions 3, Equations 3, Mixed Application 4; difficulty 8 Level A / 10 Level B / 6 Level C). Built as `H5P.QuestionSet` (matching the existing Check's pattern), uploaded as `01.13 -- ACT Math Baseline`.
+- **A pre-baseline "Quick Reference" reminder card** (`01.12`), per Jay's direction: the baseline tests skills (order of operations, signed numbers, fraction operations, percent, proportions, equation-solving) that Unit 01 itself doesn't teach — those come in Units 02-08. A full re-teach would defeat the diagnostic's purpose (seeing what students currently know), so this is deliberately rules/reminders only, no worked practice.
+- **Day 4/5 reflection activities** (`01.14` baseline reflection, `01.15` final "Build Your Starting Strategy" reflection) as `H5P.Column` + `H5P.Essay` activities, covering `unit-01-plan` sections 27-29 (confidence check-in, Strength/Developing/Priority self-identification) and section 30's Day 5 structure.
+- **Teacher-only answer key/skill map** (`courses/seminar-iii/teacher-materials/unit-01-baseline-answer-key.html`, uploaded hidden): full metadata table (domain/skill/difficulty/correct answer/expected strategy/likely misconception/likely error type) for all 24 questions, discussion prompts, and a results-summary language template.
+- **A "Week at a Glance" pacing calendar** (`courses/seminar-iii/printable-sheets/unit-01-week-at-a-glance.html`), per Jay's request for a dual-purpose doc: student-facing day-by-day overview and a teacher pacing map naming the exact Moodle activity due each day. Uploaded visible, placed first in the section.
+- **Reusable question-data-to-.h5p builder** (`07-infrastructure/moodle-scripts/h5p-builder/`) — the tool flagged as a queued task in yesterday's worklog and never built. Two functions (`build()` for QuestionSet+MultiChoice, `build_column()` for Column+AdvancedText+Essay) reverse-engineered directly from the existing Check/Guided-Practice content's stored `jsoncontent`, not guessed from general H5P knowledge.
+- **Verification method note:** direct DB inspection of `mdl_h5p.jsoncontent` only works after an activity has been viewed at least once through the player (Moodle processes H5P packages lazily on first view) — the authenticated-curl-against-the-embed-page method remains necessary, and from this droplet requires a `Host: localhost:8080` header override since `$CFG->wwwroot` includes the SSH-tunnel port and nothing actually listens on 8080 locally.
+
+**Side effect caught and fixed:** re-running `populate-seminar3-resources.php` (to pick up the new week-at-a-glance sheet) re-uploaded three already-superseded static resources as fresh duplicates, because their Moodle names had since been changed by `sequence-unit01.php` (the script's duplicate-check compares against the *original* generated name). The four new duplicates were found and hidden, not deleted. **Known gotcha for future re-runs:** re-run this script only for genuinely new source files, or expect to clean up duplicates of anything already renamed.
+
+**Not yet done:** rotating the dev-instance admin password again (still the same preview password set 2026-08-29/30); migrating any of Unit 01 to NTC Hosting once that's live.
+
+**Supersedes:** nothing — closes the specific Day 3-5 gap flagged in `worklog.md`'s 2026-08-29 "Next up" list.
+
+---
+
 ## 2026-08-29 (later) — Seminar III renumbered Week N → Unit (N-1), decoupled from the calendar for self-paced work
 
 **Context:** Jay asked to scope Unit 00 (orientation)/Unit 01/Unit 02 content, introducing "Week 0" as the intro week distinct from the existing "Week 1: Welcome to Seminar III." Asked directly whether this meant a real renumbering or just conversational shorthand — Jay's answer: shift to identifying by **unit number**, not week-of-year, specifically so the numbering doesn't have to keep changing as self-paced student progress diverges from a fixed calendar. Confirmed this applies to Seminar III only — Python already uses `Unit NN`, Game II/Web Dev have no numbering yet (no course-plan for either).

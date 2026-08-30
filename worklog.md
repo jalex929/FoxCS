@@ -297,3 +297,16 @@ Wrote `07-infrastructure/h5p-content-type-guide.md` — what's installed (~140 l
 7. **Fill the printable-sheets/instructional-content gaps** for Units 01, 05, 07 (nothing built yet) and Unit 06 (missing 3 of 4 printable sheets) — each new file also needs a re-run of `populate-seminar3-resources.php` to land in Moodle.
 8. **Game II and Web Dev have no course-plan.md or content at all** — both are still pure skeletons in the repo (per `CLAUDE.md`'s course table) and in Moodle (single default section, nothing uploaded). Scoping either one is a real content-authoring task, not a Moodle-setup task.
 9. **Python has 20 of 21 units with no content** — only Unit 01 (6 lessons) exists; the Moodle course shell's sections are correctly named for all 21 but 20 of them are empty.
+
+## Where things stand as of 2026-08-30
+
+**`foxcs.online` registration is in progress, not yet live.** Payment cleared (confirmed via NTC billing: charged, next renewal Oct 28), but the domain still shows "Pending Registration" in the NTC client area and fails RDAP/DNS lookups — normal for a `.online` TLD, typically clears within a few hours. Once it flips to Active: verify DNS, log into the actual hosting control panel (not yet identified — cPanel/DirectAdmin/custom, Jay hasn't logged in yet) to attach the domain, check the real PHP/MySQL specs, and move to installing Moodle 5.2.2 there.
+
+**Desktop/droplet git divergence found and reconciled.** A separate desktop session had pushed 3 unmerged commits (old Week-N-naming decks + a `student-materials/` folder) independently of this droplet's Unit-renumbering work. Merged per Jay's direction: desktop's redesigned decks (Units 01-04) and desktop's instructional content (all units) won; this droplet's own Units 05-08 decks stayed (already live in Moodle, never redesigned). Full detail in `decisions-log.md`'s 2026-08-30 merge entry. **Established going forward: commit and push routinely**, don't let droplet and desktop diverge like this again.
+
+**Unit 01's Day 3-5 gap (item 3 above) is now closed.** The 24-question ACT Math Baseline, a pre-baseline rules-reference card, both Day 4/5 reflections, a teacher-only answer key/skill map, and a student+teacher "Week at a Glance" pacing sheet are all built and live in Moodle (`01.12` through `01.15`, plus the pacing sheet at the top of the section). Item 1 above (reusable question-to-.h5p script) is also now done — `07-infrastructure/moodle-scripts/h5p-builder/`. Full detail in `decisions-log.md`'s matching entry.
+
+**Next up:**
+1. Finish the NTC Hosting DNS/production setup once the domain registration clears (items 5-6 above, still accurate).
+2. Rebuild Unit 02's checks/practice as interactive H5P (item 3 above still applies to Unit 02).
+3. Items 6-9 above are all still accurate and untouched.
