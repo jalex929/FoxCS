@@ -1,5 +1,5 @@
 <!-- Rebuilt 2026-08-20 to match lesson_01_04_printing_output's current pattern (see
-     02-authoring-system/mvp-unit-folder-structure.md) — this lesson (01.1, What
+     02-authoring-system/mvp-unit-folder-structure.md). This lesson (01.1, What
      Programs Do) previously used an older, weaker format with no table of
      contents, no telemetry, no _completed-suffix save convention, and a
      multi-variant base64-obfuscated mastery check. This is a real table of
@@ -9,30 +9,37 @@
 
      "Check My Progress" uses the File System Access API's showDirectoryPicker()
      to let a student point at their own copy of this lesson folder and see
-     which files have already been saved with a _completed suffix —
-     03_vocab_quiz.html, 04_practice.html, 05_mastery_check.html, and
-     07_feedback.html all adopt that convention. Read-only: it only checks for
+     which files have already been saved with a _completed suffix:
+     03_vocab_quiz.html, 04_practice.html, 07_mastery_check.html, and
+     09_feedback.html all adopt that convention. Read-only: it only checks for
      the presence of specific filenames, never opens or modifies anything.
 
-     This lesson has no example .py, application .py, or project step — 01.1 is
-     entirely conceptual (no real Python syntax is taught until Lesson 01.3), so
-     those numbered slots are simply skipped rather than left as empty/invented
-     busywork. 06_mastery_check.py is a plain comment-stubbed file (per
-     mastery-check-standards.md, a .py file is fine even for a no-code lesson —
-     the student writes prose answers in comments, same mechanism VS Code
-     already uses everywhere else) — it's saved directly in VS Code (Ctrl+S)
-     with a fixed filename.
+     This lesson still has no example .py or application .py. 01.1 is
+     entirely conceptual (no real Python syntax is taught until Lesson 01.3),
+     so those numbered slots are skipped. A project step (05_project.html /
+     06_project.py) WAS added 2026-08-30, reversing this file's earlier
+     2026-08-20 note that called the missing project step deliberate. Jay's
+     direction was to bring 01.1 to full parity with the lesson_01_04
+     reference pattern, project included. Since real Python syntax isn't
+     taught yet, the project asks students to write a program as a numbered,
+     plain-English instruction list (pseudocode) instead of code, see
+     05_project.html for the task. 08_mastery_check.py is a plain
+     comment-stubbed file (per mastery-check-standards.md, a .py file is fine
+     even for a no-code lesson, the student writes prose answers in
+     comments, same mechanism VS Code already uses everywhere else). It's
+     saved directly in VS Code (Ctrl+S) with a fixed filename.
 
-     06_mastery_check.py IS tracked here, though, same exception as
+     08_mastery_check.py IS tracked here, though, same exception as
      lesson_01_04's 10_mastery_check.py (added 2026-08-20 per Jay, see
-     mvp-unit-folder-structure.md): 05_mastery_check.html's own instructions
+     mvp-unit-folder-structure.md): 07_mastery_check.html's own instructions
      tell the student to do a one-time manual "Save As" to
-     06_mastery_check_completed.py once all four questions are answered.
+     08_mastery_check_completed.py once all four questions are answered.
 
      Part numbering (1.1.N, per mvp-unit-folder-structure.md's "Part Numbering"
      section): 1.1.1 instruction, 1.1.2 flashcards, 1.1.3 vocab quiz, 1.1.4
-     practice, 1.1.5a/1.1.5b mastery check (paired HTML+PY, one conceptual
-     step), 1.1.6 feedback. -->
+     practice, 1.1.5a/1.1.5b project (paired HTML+PY, added 2026-08-30),
+     1.1.6a/1.1.6b mastery check (paired HTML+PY, one conceptual step),
+     1.1.7 feedback. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,10 +82,7 @@
   .unit-menu-toggle:hover { background: #f4f6f9; }
   .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
   .unit-menu-section { margin-top: 0.9rem; }
-  .unit-menu-section:first-child { margin-top: 0.6rem; }
   .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
-  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
-  .unit-menu-section > a:hover { background: #eef4fb; }
   .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
   .lesson-entry { margin: 0.15rem 0; }
   .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
@@ -103,7 +107,6 @@
   <nav class="unit-menu-panel">
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
-
       <details class="lesson-entry" open>
         <summary>01.1 What Programs Do</summary>
         <div class="lesson-steps">
@@ -112,11 +115,13 @@
           <a href="02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="flashcards"></span></a>
           <a href="03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
           <a href="04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
-          <a href="05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
-          <a href="07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+          <a href="05_project.html">Project Instructions</a>
+          <a href="06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.2 Input-Process-Output</summary>
         <div class="lesson-steps">
@@ -126,33 +131,34 @@
           <a href="../lesson_01_02_input_process_output/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_02_input_process_output/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
           <a href="../lesson_01_02_input_process_output/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="../lesson_01_02_input_process_output/06_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_02_input_process_output/08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.3 Writing Your First Program</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_03_writing_your_first_program/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="flashcards"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/06_project.html">Project Instructions</a>
-          <a href="../lesson_01_03_writing_your_first_program/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
-          <a href="../lesson_01_03_writing_your_first_program/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/07_project.html">Project Instructions</a>
+          <a href="../lesson_01_03_writing_your_first_program/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.4 Printing Output</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="flashcards"></span></a>
           <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
@@ -160,26 +166,26 @@
           <a href="../lesson_01_04_printing_output/07_project.html">Project Instructions</a>
           <a href="../lesson_01_04_printing_output/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_04_printing_output/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.5 Comments and Documentation</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_05_comments_and_documentation/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="flashcards"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/06_project.html">Project Instructions</a>
           <a href="../lesson_01_05_comments_and_documentation/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/09_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.6 Common Syntax Mistakes</summary>
         <div class="lesson-steps">
@@ -191,6 +197,7 @@
           <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
           <a href="../lesson_01_06_common_syntax_mistakes/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
         </div>
       </details>
@@ -201,11 +208,11 @@
 </div>
 
 
-<h1>1.1 What Programs Do — Table of Contents</h1>
-<div class="intro">Every file in this lesson, in order. Click any filename to open it directly — you don't have to go through them one at a time. If you're picking up where you left off, use "Check My Progress" below first to see what you've already turned in.</div>
+<h1>1.1 What Programs Do: Table of Contents</h1>
+<div class="intro">Every file in this lesson, in order. Click any filename to open it directly. You don't have to go through them one at a time. If you're picking up where you left off, use "Check My Progress" below first to see what you've already turned in.</div>
 
 <div class="progress-panel">
-  <p><strong>Check My Progress</strong> looks in your lesson folder for files you've already saved and marks them done below. It only checks filenames — it doesn't open or change anything.</p>
+  <p><strong>Check My Progress</strong> looks in your lesson folder for files you've already saved and marks them done below. It only checks filenames. It doesn't open or change anything.</p>
   <button class="check-progress-btn" onclick="checkProgress()">Check My Progress</button>
   <div class="progress-status" id="progressStatus"></div>
 </div>
@@ -217,7 +224,7 @@
     <div class="toc-num">1.1.1</div>
     <div class="toc-body">
       <div class="toc-filename"><span class="toc-type">Instruction</span> <a href="01_instruction.html">01_instruction.html</a></div>
-      <div class="toc-desc">The lesson itself — reading and quick-checks built in. Start here. No coding yet.</div>
+      <div class="toc-desc">The lesson itself: reading and quick-checks built in. Start here. No coding yet.</div>
     </div>
   </div>
 
@@ -243,7 +250,7 @@
     <div class="toc-num">1.1.4</div>
     <div class="toc-body">
       <div class="toc-filename"><span class="toc-type">Practice</span> <a href="04_practice.html">04_practice.html</a></div>
-      <div class="toc-desc">Practice with immediate feedback — 8 questions. Save when you're done.</div>
+      <div class="toc-desc">Practice with immediate feedback: 8 questions. Save when you're done.</div>
     </div>
     <div class="status-badge pending">Not yet</div>
   </div>
@@ -251,25 +258,43 @@
   <div class="toc-row" id="row-05">
     <div class="toc-num">1.1.5a</div>
     <div class="toc-body">
-      <div class="toc-filename"><span class="toc-type">Mastery Check</span> <a href="05_mastery_check.html">05_mastery_check.html</a></div>
-      <div class="toc-desc">Password-gated mastery check questions. Click "Mark Complete &amp; Save" once you've answered them in 06_mastery_check.py.</div>
+      <div class="toc-filename"><span class="toc-type">Project Instructions</span> <a href="05_project.html">05_project.html</a></div>
+      <div class="toc-desc">Design a program (as a plain-English instruction list) for a real-world system of your choice. Tiered bonus XP available.</div>
     </div>
-    <div class="status-badge pending">Not yet</div>
+    <div class="status-badge untracked">Not saved</div>
   </div>
 
   <div class="toc-row" id="row-06">
     <div class="toc-num">1.1.5b</div>
     <div class="toc-body">
-      <div class="toc-filename"><span class="toc-type">Mastery Check</span> 06_mastery_check.py</div>
-      <div class="toc-desc">Your mastery check answers, written in VS Code. Once you've answered all four, use "Save As" to save it as 06_mastery_check_completed.py.</div>
+      <div class="toc-filename"><span class="toc-type">Project</span> 06_project.py</div>
+      <div class="toc-desc">Write your project in VS Code. Save with Ctrl+S when done.</div>
+    </div>
+    <div class="status-badge untracked">Can't auto-check</div>
+  </div>
+
+  <div class="toc-row" id="row-07">
+    <div class="toc-num">1.1.6a</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Mastery Check</span> <a href="07_mastery_check.html">07_mastery_check.html</a></div>
+      <div class="toc-desc">Password-gated mastery check questions. Click "Mark Complete &amp; Save" once you've answered them in 08_mastery_check.py.</div>
     </div>
     <div class="status-badge pending">Not yet</div>
   </div>
 
-  <div class="toc-row" id="row-07">
-    <div class="toc-num">1.1.6</div>
+  <div class="toc-row" id="row-08">
+    <div class="toc-num">1.1.6b</div>
     <div class="toc-body">
-      <div class="toc-filename"><span class="toc-type">Feedback</span> <a href="07_feedback.html">07_feedback.html</a></div>
+      <div class="toc-filename"><span class="toc-type">Mastery Check</span> 08_mastery_check.py</div>
+      <div class="toc-desc">Your mastery check answers, written in VS Code. Once you've answered all four, use "Save As" to save it as 08_mastery_check_completed.py.</div>
+    </div>
+    <div class="status-badge pending">Not yet</div>
+  </div>
+
+  <div class="toc-row" id="row-09">
+    <div class="toc-num">1.1.7</div>
+    <div class="toc-body">
+      <div class="toc-filename"><span class="toc-type">Feedback</span> <a href="09_feedback.html">09_feedback.html</a></div>
       <div class="toc-desc">Quick feedback about this lesson. 2-3 minutes.</div>
     </div>
     <div class="status-badge pending">Not yet</div>
@@ -277,20 +302,20 @@
 
 </div>
 
-<p style="margin-top: 1.6rem; font-size: 0.88rem; color: #555;"><span class="save-reminder">Remember:</span> each page you save is its own step — save it there before moving to the next one, not all at the end.</p>
+<p style="margin-top: 1.6rem; font-size: 0.88rem; color: #555;"><span class="save-reminder">Remember:</span> each page you save is its own step. Save it there before moving to the next one, not all at the end.</p>
 
 <script>
 // Known filenames that indicate a step was saved/completed, keyed by the
 // row they belong to. HTML pages add the _completed suffix automatically;
 // row-06 is the one exception, a manual one-time "Save As" per
-// 05_mastery_check.html's own instructions — see header comment.
+// 07_mastery_check.html's own instructions: see header comment.
 const COMPLETED_TARGETS = {
   'row-02': '02_flashcards_completed.html',
   'row-03': '03_vocab_quiz_completed.html',
   'row-04': '04_practice_completed.html',
-  'row-05': '05_mastery_check_completed.html',
-  'row-06': '06_mastery_check_completed.py',
-  'row-07': '07_feedback_completed.html'
+  'row-07': '07_mastery_check_completed.html',
+  'row-08': '08_mastery_check_completed.py',
+  'row-09': '09_feedback_completed.html'
 };
 
 async function checkProgress() {
@@ -313,14 +338,14 @@ async function checkProgress() {
     return;
   }
 
-  // Sanity check — make sure this looks like the right lesson folder before
+  // Sanity check: make sure this looks like the right lesson folder before
   // reporting anything, so a wrong folder doesn't just show everything as
   // "not yet" and look like lost work.
   try {
     await dirHandle.getFileHandle('01_instruction.html');
   } catch (err) {
     statusEl.className = 'progress-status error';
-    statusEl.textContent = 'That doesn\'t look like this lesson\'s folder — pick the folder that has 01_instruction.html in it.';
+    statusEl.textContent = 'That doesn\'t look like this lesson\'s folder. Pick the folder that has 01_instruction.html in it.';
     return;
   }
 
@@ -349,7 +374,7 @@ async function checkProgress() {
     }
   }
 
-  statusEl.textContent = 'Checked ' + dirHandle.name + ' — ' + doneCount + ' of ' + total + ' files done.';
+  statusEl.textContent = 'Checked ' + dirHandle.name + ': ' + doneCount + ' of ' + total + ' files done.';
 }
 </script>
 

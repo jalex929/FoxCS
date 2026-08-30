@@ -321,3 +321,19 @@ Wrote `07-infrastructure/h5p-content-type-guide.md` — what's installed (~140 l
 2. Rebuild Lesson 2's checks/practice as interactive H5P (item 3 above still applies, now under the new naming).
 3. Fill the missing-content gaps for Lessons 3/5/6/7 (item 7 above, now under the new naming).
 4. Items 8-9 above are all still accurate and untouched.
+
+## Python: Unit 01 brought to full consistency, 2026-08-30
+
+Jay asked to start building out Game I (Python), picking Units 00 and 01. **Unit 00 turned out to already be done** (shared cross-course onboarding content, built 2026-08-18) — just needed `course-plan.md`'s stale pointer fixed. **Unit 01's "5 lessons not yet rebuilt" claim was also stale** — real gaps were much narrower: 3 missing interactive drills (categorization in 01.2/01.6, sequencing in 01.3), a missing `application.py` in 01.3, and (contested, see below) a missing project step in 01.1. Full detail in `decisions-log.md`.
+
+**Bigger finding: ~475 em-dashes across the whole unit**, a real standing-rule violation nobody had caught. Fixed via a mix of forks and direct edits (two forks died mid-task to a session usage limit, finished by hand). Also changed the documented title-format convention (`N.N.N — Type` → `N.N.N Type`, no dash) to match, everywhere.
+
+**Nested collapsible nav menu, which Jay asked about directly, turned out to already exist** (3-level `<details>` nesting) but is copy-pasted into all 47 HTML files with no shared source — the parallel lesson rebuilds caused real drift here (stale cross-lesson links, one lesson's copy dropped the other 5 entirely). Fixed with a new sync script, `02-authoring-system/tools/sync_unit01_nav_menu.py`; every link verified against the real filesystem afterward. This architecture is now documented in `mvp-unit-folder-structure.md` so future multi-lesson passes budget a sync step.
+
+**Still open:** Jay hasn't confirmed whether 01.1 should keep its new pseudocode project step (reverses a deliberate 2026-08-20 "conceptual only, no project" decision the rebuild directive didn't know about) or revert to conceptual-only.
+
+**Next up (Python):**
+1. Get Jay's call on 01.1's project step, then commit and push the whole Unit 01 pass.
+2. A real browser (Playwright) verification pass — one fork couldn't get it running and fell back to syntax-check + manual trace, weaker than this repo's usual standard.
+3. Em-dash sweep beyond Unit 01 — Unit 00's shared onboarding content and the rest of FoxCS haven't been checked.
+4. Units 00 (now resolved) and 02-20 are still the real remaining Python scope — only Unit 01 has content.

@@ -1,9 +1,9 @@
-# 1.1.5b — Mastery Check: What Programs Do
+# 1.1.6b Mastery Check: What Programs Do
 #
-# Answer all four questions below, as comments (no code to write yet — this
+# Answer all four questions below, as comments (no code to write yet, this
 # lesson is entirely conceptual). No renaming needed. Just save this file.
-# Unlock/completion times save automatically in 05_mastery_check.html itself
-# — nothing to copy here.
+# Unlock/completion times save automatically in 07_mastery_check.html itself.
+# Nothing to copy here.
 
 
 # 1. Explain, in your own words, what a program is. Use an example from
@@ -11,7 +11,7 @@
 
 
 # 2. Describe at least one specific instruction you think must exist
-#    somewhere inside a vending machine's program (see 05_mastery_check.html
+#    somewhere inside a vending machine's program (see 07_mastery_check.html
 #    for the full scenario):
 
 

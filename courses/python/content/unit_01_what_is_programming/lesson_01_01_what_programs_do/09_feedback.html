@@ -1,14 +1,19 @@
-<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
-     Rebuilt 2026-08-30 to match lesson_01_04_printing_output's engine -
-     term-check list now covers all 5 terms (SyntaxError, NameError, EOL,
-     syntax, parenthesis), save-in-place with _completed suffix. -->
+<!-- Rebuilt 2026-08-20 to match lesson_01_04_printing_output's 11_feedback.html
+     pattern (see 02-authoring-system/mvp-unit-folder-structure.md's
+     "Feedback" section and feedback-collection.md's question bank): click
+     1-5 ratings, typed short answers, save-in-place with a _completed
+     suffix. Term checklist lists this lesson's 4 real terms directly rather
+     than asking students to recall them from memory (same fix
+     lesson_01_04_printing_output/11_feedback.html made 2026-08-11, which avoids
+     idioms like "fuzzy" and avoids recall-dependency on a feedback question
+     that isn't testing recall). -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>1.6.7 Feedback: FoxCS: Python</title>
+<title>1.1.7 Feedback: FoxCS: Python</title>
 <style>
-  body { font-family: Georgia, 'Times New Roman', serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
   h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
   .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
   .q-block { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
@@ -17,15 +22,15 @@
   .scale-label { font-size: 0.8rem; color: #555; }
   button.scale-btn { width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 2px solid #ccd3dd; background: white; cursor: pointer; font-family: Verdana, Arial, sans-serif; font-weight: bold; }
   button.scale-btn.selected { border-color: #1a5aa8; background: #1a5aa8; color: white; }
+  textarea.answer-space { width: 100%; min-height: 4em; font-family: Georgia, serif; font-size: 1rem; padding: 0.5rem; box-sizing: border-box; border: 1px solid #ccd3dd; border-radius: 4px; }
   .followup { margin-top: 0.8rem; }
   .followup-label { font-size: 0.88rem; color: #444; margin-bottom: 0.4rem; }
-  textarea.answer-space { width: 100%; min-height: 4em; font-family: Georgia, serif; font-size: 1rem; padding: 0.5rem; box-sizing: border-box; border: 1px solid #ccd3dd; border-radius: 4px; }
   .term-check-row { display: flex; align-items: flex-start; gap: 0.6rem; margin: 0.5rem 0; }
   .term-check-row input[type="checkbox"] { margin-top: 0.25rem; flex-shrink: 0; width: 1.05rem; height: 1.05rem; }
   .term-check-row label code { font-family: Consolas, monospace; background: #eef1f5; padding: 0.1rem 0.3rem; border-radius: 3px; }
-  .save-row { text-align: center; margin-top: 1.6rem; }
-  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
-  button.save-btn:hover { background: #5c2c00; }
+  .save-row { text-align: center; margin-top: 1.5rem; }
+  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #9a5a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+  button.save-btn:hover { background: #7a4800; }
   .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
   .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
   .page-nav-note { color: #555; margin-bottom: 0.6rem; }
@@ -65,19 +70,19 @@
   <nav class="unit-menu-panel">
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
-      <details class="lesson-entry">
+      <details class="lesson-entry" open>
         <summary>01.1 What Programs Do</summary>
         <div class="lesson-steps">
-          <a href="../lesson_01_01_what_programs_do/00_table_of_contents.html">Table of Contents</a>
-          <a href="../lesson_01_01_what_programs_do/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="flashcards"></span></a>
-          <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
-          <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
-          <a href="../lesson_01_01_what_programs_do/05_project.html">Project Instructions</a>
-          <a href="../lesson_01_01_what_programs_do/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
-          <a href="../lesson_01_01_what_programs_do/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_01_what_programs_do/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
-          <a href="../lesson_01_01_what_programs_do/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+          <a href="00_table_of_contents.html">Table of Contents</a>
+          <a href="01_instruction.html">Instruction</a>
+          <a href="02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="flashcards"></span></a>
+          <a href="03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
+          <a href="04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
+          <a href="05_project.html">Project Instructions</a>
+          <a href="06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="09_feedback.html" class="current">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
         </div>
       </details>
       <details class="lesson-entry">
@@ -144,19 +149,19 @@
           <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
         </div>
       </details>
-      <details class="lesson-entry" open>
+      <details class="lesson-entry">
         <summary>01.6 Common Syntax Mistakes</summary>
         <div class="lesson-steps">
-          <a href="00_table_of_contents.html">Table of Contents</a>
-          <a href="01_instruction.html">Instruction</a>
-          <a href="02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="flashcards"></span></a>
-          <a href="03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="vocab_quiz"></span></a>
-          <a href="04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="practice"></span></a>
-          <a href="05_project.html">Project Instructions</a>
-          <a href="06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
-          <a href="07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
-          <a href="08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
-          <a href="09_feedback.html" class="current">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/00_table_of_contents.html">Table of Contents</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/01_instruction.html">Instruction</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="flashcards"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="vocab_quiz"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="practice"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_06_common_syntax_mistakes/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
         </div>
       </details>
       <a href="../project/unit_01_project_instructions.html">Unit Project</a>
@@ -166,7 +171,7 @@
 </div>
 
 
-<h1>1.6.7 - Feedback</h1>
+<h1>1.1.7 Feedback</h1>
 <div class="intro">2-3 minutes. This is about the lesson, not about grading you. Your honest answers help decide what changes for next time.</div>
 
 <div class="q-block">
@@ -217,13 +222,12 @@
 </div>
 
 <div class="q-block">
-  <div class="q-prompt">4. This lesson taught 5 words. Check any that you still find hard to explain in your own words.</div>
-  <div class="term-check-row"><input type="checkbox" id="term-syntaxerror"><label for="term-syntaxerror"><code>SyntaxError</code> - an error from breaking one of Python's grammar rules</label></div>
-  <div class="term-check-row"><input type="checkbox" id="term-nameerror"><label for="term-nameerror"><code>NameError</code> - an error from Python looking for something by name and not finding it</label></div>
-  <div class="term-check-row"><input type="checkbox" id="term-eol"><label for="term-eol"><code>EOL</code> - "End Of Line," appears when Python hits the end of a line unexpectedly</label></div>
-  <div class="term-check-row"><input type="checkbox" id="term-syntax"><label for="term-syntax"><code>syntax</code> - the grammar rules for writing valid code</label></div>
-  <div class="term-check-row"><input type="checkbox" id="term-parenthesis"><label for="term-parenthesis"><code>parenthesis</code> - the ( or ) symbol used to call a function</label></div>
-  <div class="term-check-row"><input type="checkbox" id="term-none"><label for="term-none">None - I can explain all 5 words</label></div>
+  <div class="q-prompt">4. This lesson taught 4 words. Check any that you still find hard to explain in your own words.</div>
+  <div class="term-check-row"><input type="checkbox" id="term-program"><label for="term-program"><code>program</code>: a set of step-by-step instructions a computer follows</label></div>
+  <div class="term-check-row"><input type="checkbox" id="term-instruction"><label for="term-instruction"><code>instruction</code>: a single step in a program</label></div>
+  <div class="term-check-row"><input type="checkbox" id="term-programmer"><label for="term-programmer"><code>programmer</code>: a person who writes a program's instructions</label></div>
+  <div class="term-check-row"><input type="checkbox" id="term-python"><label for="term-python"><code>Python</code>: the programming language this course uses</label></div>
+  <div class="term-check-row"><input type="checkbox" id="term-none"><label for="term-none">None. I can explain all 4 words</label></div>
 </div>
 
 <div class="q-block">
@@ -242,11 +246,11 @@
 </div>
 
 <div class="page-nav">
-  <div class="page-nav-note">Save above before you leave - this is the last step in this lesson.</div>
+  <div class="page-nav-note">Save above before you leave. This is the last step in this lesson.</div>
   <div class="page-nav-links">
     <a href="07_mastery_check.html" class="page-nav-prev">← Back: Mastery Check</a>
     <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
-    <a href="../project/unit_01_project_instructions.html" class="page-nav-next">Next: Unit Project →</a>
+    <a href="../lesson_01_02_input_process_output/01_instruction.html" class="page-nav-next">Next: Lesson 01.2 →</a>
   </div>
 </div>
 
@@ -260,7 +264,8 @@ document.querySelectorAll('.scale-row').forEach(row => {
   });
 });
 
-const termIds = ['term-syntaxerror', 'term-nameerror', 'term-eol', 'term-syntax', 'term-parenthesis'];
+// "None of these" is mutually exclusive with the individual term checkboxes.
+const termIds = ['term-program', 'term-instruction', 'term-programmer', 'term-python'];
 const noneBox = document.getElementById('term-none');
 noneBox.addEventListener('change', () => {
   if (noneBox.checked) termIds.forEach(id => { document.getElementById(id).checked = false; });
@@ -289,8 +294,8 @@ function markStepDone(stepKey) {
   var STORAGE_KEY = 'foxcs_python_unit01_progress';
   var done = {};
   try { done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { done = {}; }
-  if (!done['lesson_01_06_common_syntax_mistakes']) done['lesson_01_06_common_syntax_mistakes'] = {};
-  done['lesson_01_06_common_syntax_mistakes'][stepKey] = true;
+  if (!done['lesson_01_01_what_programs_do']) done['lesson_01_01_what_programs_do'] = {};
+  done['lesson_01_01_what_programs_do'][stepKey] = true;
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch (e) {}
   if (window.renderDoneChips) window.renderDoneChips();
 }

@@ -1,8 +1,8 @@
-# 1.3.7b - Mastery Check: Writing Your First Program
+# 1.3.8b - Mastery Check: Writing Your First Program
 #
 # Answer all three questions below, as comments. Once done, use File > Save
-# As to save this as 09_mastery_check_completed.py. Unlock/completion times
-# save automatically in 08_mastery_check.html itself -- nothing to copy here.
+# As to save this as 10_mastery_check_completed.py. Unlock/completion times
+# save automatically in 09_mastery_check.html itself -- nothing to copy here.
 
 
 # 1. Predict exactly what this program displays, in order:

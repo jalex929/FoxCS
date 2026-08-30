@@ -1,49 +1,66 @@
-<!-- Built 2026-08-21 to match lesson_01_01_what_programs_do's
-     practice pattern — auto-checked drills, hidden foxcs-telemetry event log
-     (drill_attempt events), Save button using showSaveFilePicker with a
-     _completed suffix, not gated on a perfect score. -->
+<!-- Plain styling on purpose. See unit_01_overview.html's header comment.
+     Rebuilt 2026-08-30 to add the table-of-contents/part-number/footer-nav
+     shell from lesson_01_04_printing_output. The 8 existing drills and their
+     telemetry/save engine already matched that lesson's pattern closely and
+     are preserved as-is. Added Drill 9: a Categorization drag-into-bins
+     drill sorting broken code into SyntaxError vs. NameError, per
+     mvp-unit-folder-structure.md's "Interactive Drill Types" table, which
+     flagged 01.6 as the natural fit for this drill type - proven first in
+     component-library/index.html #8, built here for real with lesson
+     content (fresh code lines, not reused from Drills 1-8). -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>1.6.4 Practice: FoxCS: Python</title>
 <style>
-  body { font-family: Georgia, 'Times New Roman', serif; max-width: 780px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; }
-  h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
-  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.2rem; font-size: 0.95rem; font-family: Georgia, serif; }
-  .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-size: 0.9rem; }
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
+  .drill { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 1.2rem 1.4rem; margin: 1.2rem 0; }
+  .drill-type { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .drill-prompt { font-weight: bold; margin-bottom: 0.9rem; }
+  .drill-prompt pre, .drill code.code-block { display: block; margin: 0.5rem 0; }
+  select.drill-select, input.drill-input { font-family: Consolas, monospace; font-size: 1rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .check-options { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.9rem; font-family: Consolas, monospace; }
+  .check-options label { display: flex; align-items: center; gap: 0.5rem; }
+  button.check-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
+  button.check-btn:hover { background: #12467f; }
+  button.reset-btn { font-family: Verdana, Arial, sans-serif; background: none; color: #445; border: 1px solid #ccd3dd; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-left: 0.5rem; }
+  .feedback { margin-top: 0.8rem; padding: 0.6rem 0.9rem; border-radius: 5px; display: none; font-size: 0.95rem; }
+  .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+
+  /* Drill 9 - Categorization (drag into labeled bins) */
+  .cat-items { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1rem; }
+  .cat-item { font-family: Consolas, monospace; background: #1e2430; color: #e6e9ef; padding: 0.5rem 0.9rem; border-radius: 6px; cursor: grab; border: 2px solid transparent; user-select: none; }
+  .cat-item:active { cursor: grabbing; }
+  .cat-item.placed-correct { display: none; }
+  .cat-bins { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .cat-bin { flex: 1; min-width: 220px; background: #f4f6f9; border: 2px dashed #9ab6d8; border-radius: 8px; padding: 0.8rem; min-height: 4.5rem; }
+  .cat-bin.dragover { background: #eaf1fb; border-color: #1a5aa8; }
+  .cat-bin-label { font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a3a5c; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .cat-bin .cat-item { display: inline-block; margin: 0.2rem; background: #2f7a2f; cursor: default; }
+
+  .save-row { text-align: center; margin-top: 1.6rem; }
+  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+  button.save-btn:hover { background: #5c2c00; }
+  .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+
+  .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
   .page-nav-note { color: #555; margin-bottom: 0.6rem; }
   .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
   .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
   .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
   .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
   .page-nav-toc:hover { background: #eef1f5; }
-  .drill { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 1.2rem 1.4rem; margin: 1.2rem 0; }
-  .drill-type { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
-  .drill-prompt { font-weight: bold; margin-bottom: 0.9rem; }
-  .drill-prompt pre, .drill code.code-block { display: block; margin: 0.5rem 0; }
-  select.drill-select, input.drill-input { font-family: Consolas, monospace; font-size: 1rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
-  .check-options label { display: block; margin: 0.4rem 0; cursor: pointer; font-family: Georgia, serif; }
-  .check-options input { margin-right: 0.5rem; }
-  button.check-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
-  button.check-btn:hover { background: #12467f; }
-  .feedback { margin-top: 0.8rem; padding: 0.6rem 0.9rem; border-radius: 5px; display: none; font-size: 0.95rem; }
-  .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
-  .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
-  .save-row { text-align: center; margin: 2rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid #dde3ea; }
-  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
-  button.save-btn:hover { background: #5c2c00; }
-  .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
   .unit-menu-wrap { position: sticky; top: 0; z-index: 20; background: #fff; border: 1px solid #dde3ea; border-radius: 0 0 8px 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
   .unit-menu-toggle { cursor: pointer; padding: 0.7rem 1.3rem; font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a5aa8; font-size: 0.92rem; list-style: none; user-select: none; }
   .unit-menu-toggle::-webkit-details-marker { display: none; }
   .unit-menu-toggle:hover { background: #f4f6f9; }
   .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
   .unit-menu-section { margin-top: 0.9rem; }
-  .unit-menu-section:first-child { margin-top: 0.6rem; }
   .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
-  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
-  .unit-menu-section > a:hover { background: #eef4fb; }
   .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
   .lesson-entry { margin: 0.15rem 0; }
   .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
@@ -68,53 +85,58 @@
   <nav class="unit-menu-panel">
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
-
       <details class="lesson-entry">
         <summary>01.1 What Programs Do</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_01_what_programs_do/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_01_what_programs_do/01_instruction.html">Instruction</a>
           <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="flashcards"></span></a>
           <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
-          <a href="../lesson_01_01_what_programs_do/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_01_what_programs_do/07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+          <a href="../lesson_01_01_what_programs_do/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_01_what_programs_do/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_01_what_programs_do/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_01_what_programs_do/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_01_what_programs_do/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.2 Input-Process-Output</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_02_input_process_output/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_02_input_process_output/01_instruction.html">Instruction</a>
           <a href="../lesson_01_02_input_process_output/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="flashcards"></span></a>
           <a href="../lesson_01_02_input_process_output/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_02_input_process_output/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
           <a href="../lesson_01_02_input_process_output/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="../lesson_01_02_input_process_output/06_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_02_input_process_output/08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.3 Writing Your First Program</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_03_writing_your_first_program/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="flashcards"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/06_project.html">Project Instructions</a>
-          <a href="../lesson_01_03_writing_your_first_program/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
-          <a href="../lesson_01_03_writing_your_first_program/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/07_project.html">Project Instructions</a>
+          <a href="../lesson_01_03_writing_your_first_program/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.4 Printing Output</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="flashcards"></span></a>
           <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
@@ -122,28 +144,30 @@
           <a href="../lesson_01_04_printing_output/07_project.html">Project Instructions</a>
           <a href="../lesson_01_04_printing_output/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_04_printing_output/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.5 Comments and Documentation</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_05_comments_and_documentation/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="flashcards"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/06_project.html">Project Instructions</a>
           <a href="../lesson_01_05_comments_and_documentation/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/09_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry" open>
         <summary>01.6 Common Syntax Mistakes</summary>
         <div class="lesson-steps">
+          <a href="00_table_of_contents.html">Table of Contents</a>
           <a href="01_instruction.html">Instruction</a>
           <a href="02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="flashcards"></span></a>
           <a href="03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="vocab_quiz"></span></a>
@@ -151,19 +175,19 @@
           <a href="05_project.html">Project Instructions</a>
           <a href="06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
         </div>
       </details>
-
       <a href="../project/unit_01_project_instructions.html">Unit Project</a>
     </div>
   </nav>
 </details>
 </div>
 
-<h1>1.6.4 — Practice</h1>
-<div class="intro">Some questions ask you to name which error a broken line would raise. Others ask you to fix the line yourself. <strong>This page is saved and submitted.</strong></div>
 
+<h1>1.6.4 - Practice</h1>
+<div class="intro">Some questions ask you to name which error a broken line would raise. Others ask you to fix the line yourself. <strong>This page is saved and submitted.</strong></div>
 
 <div class="drill" id="drill1">
   <div class="drill-type">Choose the Best Answer</div>
@@ -258,6 +282,26 @@
   <div class="feedback" id="d8-feedback"></div>
 </div>
 
+<!-- Drill 9: Categorization - drag each broken line into the error type it raises -->
+<div class="drill" id="drill9">
+  <div class="drill-type">Sort Into Bins</div>
+  <div class="drill-prompt">Drag each broken line into the bin for the error it would raise: <code>SyntaxError</code> or <code>NameError</code>.</div>
+  <div class="cat-items" id="cat-items">
+    <div class="cat-item" id="cat-item-1" draggable="true" data-answer="syntax">print("Level Up</div>
+    <div class="cat-item" id="cat-item-2" draggable="true" data-answer="name">print(Coins)</div>
+    <div class="cat-item" id="cat-item-3" draggable="true" data-answer="syntax">print "Victory"</div>
+    <div class="cat-item" id="cat-item-4" draggable="true" data-answer="name">Print("Paused")</div>
+  </div>
+  <div class="cat-bins">
+    <div class="cat-bin" id="cat-bin-syntax" data-accepts="syntax">
+      <div class="cat-bin-label">SyntaxError</div>
+    </div>
+    <div class="cat-bin" id="cat-bin-name" data-accepts="name">
+      <div class="cat-bin-label">NameError</div>
+    </div>
+  </div>
+  <div class="feedback" id="cat-feedback" style="display:block; background:#eef1f5; color:#445; margin-top:0.8rem;">0 of 4 sorted</div>
+</div>
 
 <div class="save-row">
   <button class="save-btn" onclick="saveWork()">Save My Practice</button>
@@ -285,7 +329,6 @@ function logDrillAttempt(drillId, correct, extra) {
   }, extra || {}));
   hasUnsavedWork = true;
 }
-
 window.addEventListener('beforeunload', (e) => {
   if (hasUnsavedWork) { e.preventDefault(); e.returnValue = ''; }
 });
@@ -302,16 +345,6 @@ function writeTelemetryToDom() {
 }
 writeTelemetryToDom();
 
-function checkTyped(inputId, feedbackId, acceptable, correctMsg, incorrectMsg, drillId) {
-  const val = document.getElementById(inputId).value.trim().toLowerCase();
-  const fb = document.getElementById(feedbackId);
-  const isCorrect = acceptable.includes(val);
-  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
-  fb.textContent = isCorrect ? correctMsg : incorrectMsg;
-  logDrillAttempt(drillId, isCorrect, { typed: val });
-  writeTelemetryToDom();
-}
-
 function checkDrill1() {
   const val = document.getElementById('d1-select').value;
   const fb = document.getElementById('d1-feedback');
@@ -321,6 +354,16 @@ function checkDrill1() {
   else { fb.textContent = 'This line is grammatically valid Python. Python just cannot find anything named Hello. That is a NameError, not a SyntaxError.'; }
   if (!val) { fb.textContent = 'Pick an option first.'; return; }
   logDrillAttempt('drill1', correct, { selected: val });
+  writeTelemetryToDom();
+}
+
+function checkTyped(inputId, feedbackId, acceptable, correctMsg, incorrectMsg, drillId) {
+  const val = document.getElementById(inputId).value.trim().toLowerCase();
+  const fb = document.getElementById(feedbackId);
+  const isCorrect = acceptable.includes(val);
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+  fb.textContent = isCorrect ? correctMsg : incorrectMsg;
+  logDrillAttempt(drillId, isCorrect);
   writeTelemetryToDom();
 }
 
@@ -398,6 +441,48 @@ function checkDrill8() {
   logDrillAttempt('drill8', correct, { selected: val });
   writeTelemetryToDom();
 }
+
+// ---- Drill 9: Categorization ----
+let cat9SortedCount = 0;
+document.querySelectorAll('#drill9 .cat-item').forEach(item => {
+  item.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', item.id));
+});
+document.querySelectorAll('#drill9 .cat-bin').forEach(bin => {
+  bin.addEventListener('dragover', e => { e.preventDefault(); bin.classList.add('dragover'); });
+  bin.addEventListener('dragleave', () => bin.classList.remove('dragover'));
+  bin.addEventListener('drop', e => {
+    e.preventDefault();
+    bin.classList.remove('dragover');
+    const itemId = e.dataTransfer.getData('text/plain');
+    const item = document.getElementById(itemId);
+    const fb = document.getElementById('cat-feedback');
+    if (!item || item.classList.contains('placed-correct')) return;
+    if (item.dataset.answer === bin.dataset.accepts) {
+      item.classList.add('placed-correct');
+      bin.appendChild(item);
+      cat9SortedCount++;
+      logDrillAttempt('drill9', true, { item: itemId });
+      writeTelemetryToDom();
+      if (cat9SortedCount === 4) {
+        fb.className = 'feedback correct';
+        fb.textContent = 'All sorted! print("Level Up and print "Victory" both break Python\'s grammar rules (a missing quote, missing parentheses) before the line can even run - SyntaxError. print(Coins) and Print("Paused") are both grammatically valid lines that reference something Python cannot find - NameError.';
+      } else {
+        fb.className = 'feedback';
+        fb.style.display = 'block';
+        fb.style.background = '#eef1f5';
+        fb.style.color = '#445';
+        fb.textContent = cat9SortedCount + ' of 4 sorted';
+      }
+    } else {
+      item.style.outline = '3px solid #b02a2a';
+      setTimeout(() => { item.style.outline = ''; }, 400);
+      logDrillAttempt('drill9', false, { item: itemId });
+      writeTelemetryToDom();
+      fb.className = 'feedback incorrect';
+      fb.textContent = 'Not quite - check whether that line breaks Python\'s grammar outright, or is grammatically fine but references something that does not exist.';
+    }
+  });
+});
 
 function markStepDone(stepKey) {
   var STORAGE_KEY = 'foxcs_python_unit01_progress';

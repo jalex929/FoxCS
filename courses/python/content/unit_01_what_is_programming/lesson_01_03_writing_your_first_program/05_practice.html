@@ -1,5 +1,5 @@
 <!-- Built 2026-08-21 to match lesson_01_01_what_programs_do's
-     practice pattern — auto-checked drills, hidden foxcs-telemetry event log
+     practice pattern: auto-checked drills, hidden foxcs-telemetry event log
      (drill_attempt events), Save button using showSaveFilePicker with a
      _completed suffix, not gated on a perfect score. -->
 <!DOCTYPE html>
@@ -30,6 +30,18 @@
   .feedback { margin-top: 0.8rem; padding: 0.6rem 0.9rem; border-radius: 5px; display: none; font-size: 0.95rem; }
   .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
   .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+  .seq-list { list-style: none; margin: 0 0 0.9rem; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .seq-item { display: flex; align-items: center; gap: 0.7rem; background: #1e2430; color: #e6e9ef; font-family: Consolas, monospace; padding: 0.6rem 0.8rem; border-radius: 6px; }
+  .seq-item.correct { outline: 2px solid #2f7a2f; }
+  .seq-item.incorrect { outline: 2px solid #b02a2a; }
+  .seq-pos { font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #9fc4ec; min-width: 1.4rem; }
+  .seq-text { flex: 1; }
+  .seq-btns { display: flex; gap: 0.3rem; }
+  button.seq-btn { font-family: Verdana, Arial, sans-serif; background: #2f3a4f; color: #e6e9ef; border: none; width: 1.9rem; height: 1.9rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+  button.seq-btn:hover:not(:disabled) { background: #3d4a63; }
+  button.seq-btn:disabled { opacity: 0.35; cursor: default; }
+  button.reset-btn { font-family: Verdana, Arial, sans-serif; background: none; color: #445; border: 1px solid #ccd3dd; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-left: 0.5rem; }
+  button.reset-btn:hover { background: #eef1f5; }
   .save-row { text-align: center; margin: 2rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid #dde3ea; }
   button.save-btn { font-family: Verdana, Arial, sans-serif; background: #7a3a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
   button.save-btn:hover { background: #5c2c00; }
@@ -40,10 +52,7 @@
   .unit-menu-toggle:hover { background: #f4f6f9; }
   .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
   .unit-menu-section { margin-top: 0.9rem; }
-  .unit-menu-section:first-child { margin-top: 0.6rem; }
   .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
-  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
-  .unit-menu-section > a:hover { background: #eef4fb; }
   .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
   .lesson-entry { margin: 0.15rem 0; }
   .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
@@ -68,53 +77,58 @@
   <nav class="unit-menu-panel">
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
-
       <details class="lesson-entry">
         <summary>01.1 What Programs Do</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_01_what_programs_do/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_01_what_programs_do/01_instruction.html">Instruction</a>
           <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="flashcards"></span></a>
           <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
-          <a href="../lesson_01_01_what_programs_do/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_01_what_programs_do/07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+          <a href="../lesson_01_01_what_programs_do/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_01_what_programs_do/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_01_what_programs_do/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_01_what_programs_do/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_01_what_programs_do/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.2 Input-Process-Output</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_02_input_process_output/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_02_input_process_output/01_instruction.html">Instruction</a>
           <a href="../lesson_01_02_input_process_output/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="flashcards"></span></a>
           <a href="../lesson_01_02_input_process_output/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_02_input_process_output/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
           <a href="../lesson_01_02_input_process_output/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="../lesson_01_02_input_process_output/06_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_02_input_process_output/08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry" open>
         <summary>01.3 Writing Your First Program</summary>
         <div class="lesson-steps">
+          <a href="00_table_of_contents.html">Table of Contents</a>
           <a href="01_instruction.html">Instruction</a>
-          <a href="02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="flashcards"></span></a>
           <a href="04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
           <a href="05_practice.html" class="current">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
-          <a href="06_project.html">Project Instructions</a>
-          <a href="07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
-          <a href="08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
-          <a href="10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+          <a href="06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="07_project.html">Project Instructions</a>
+          <a href="08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.4 Printing Output</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="flashcards"></span></a>
           <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
@@ -122,28 +136,30 @@
           <a href="../lesson_01_04_printing_output/07_project.html">Project Instructions</a>
           <a href="../lesson_01_04_printing_output/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_04_printing_output/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.5 Comments and Documentation</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_05_comments_and_documentation/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="flashcards"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/06_project.html">Project Instructions</a>
           <a href="../lesson_01_05_comments_and_documentation/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/09_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.6 Common Syntax Mistakes</summary>
         <div class="lesson-steps">
+          <a href="../lesson_01_06_common_syntax_mistakes/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_06_common_syntax_mistakes/01_instruction.html">Instruction</a>
           <a href="../lesson_01_06_common_syntax_mistakes/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="flashcards"></span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="vocab_quiz"></span></a>
@@ -151,18 +167,18 @@
           <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
           <a href="../lesson_01_06_common_syntax_mistakes/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
         </div>
       </details>
-
       <a href="../project/unit_01_project_instructions.html">Unit Project</a>
     </div>
   </nav>
 </details>
 </div>
 
-<h1>1.3.5 — Practice</h1>
-<div class="intro">Quick practice with immediate feedback, 8 questions. <strong>This page is saved and submitted</strong> — your exact path through it is what this records.</div>
+<h1>1.3.5 Practice</h1>
+<div class="intro">Quick practice with immediate feedback, 9 questions. <strong>This page is saved and submitted</strong>: your exact path through it is what this records.</div>
 
 
 <div class="drill" id="drill1">
@@ -256,6 +272,14 @@ print("Line 3")</pre></div>
   <div class="feedback" id="d8-feedback"></div>
 </div>
 
+<div class="drill" id="drill9">
+  <div class="drill-type">Put It In Order</div>
+  <div class="drill-prompt">These four print() lines are scrambled. Use the ▲▼ buttons to put them in the order a real game's startup sequence would need to make sense, then click Check.</div>
+  <ol class="seq-list" id="d9-list"></ol>
+  <button class="check-btn" onclick="checkDrill9()">Check</button>
+  <button class="reset-btn" onclick="resetDrill9()">Shuffle Again</button>
+  <div class="feedback" id="d9-feedback"></div>
+</div>
 
 <div class="save-row">
   <button class="save-btn" onclick="saveWork()">Save My Practice</button>
@@ -267,7 +291,7 @@ print("Line 3")</pre></div>
   <div class="page-nav-links">
     <a href="04_vocab_quiz.html" class="page-nav-prev">← Back: Vocab Quiz</a>
     <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
-    <a href="06_project.html" class="page-nav-next">Next: Project Instructions →</a>
+    <a href="06_application.py" class="page-nav-next">Next: 06_application.py →</a>
   </div>
 </div>
 
@@ -384,6 +408,78 @@ function checkDrill8() {
   logDrillAttempt('drill8', correct, { selected: val });
   writeTelemetryToDom();
 }
+
+// ---- Drill 9: sequencing (reorder scrambled lines), added to bring this
+// lesson's practice up to the mvp-unit-folder-structure.md Sequencing drill
+// type -- this lesson is the intended first real deployment since it's
+// literally about execution order. Real reorder-in-place UI (ordinal
+// position label + ▲▼ move buttons), not a multiple-choice proxy. ----
+const d9Target = [
+  'print("Loading assets...")',
+  'print("Connecting to server...")',
+  'print("Initializing player...")',
+  'print("Ready to play!")'
+];
+let d9Order = [];
+
+function d9Shuffle() {
+  d9Order = d9Target.map((_, i) => i);
+  do {
+    for (let i = d9Order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [d9Order[i], d9Order[j]] = [d9Order[j], d9Order[i]];
+    }
+  } while (d9Order.every((v, i) => v === i)); // never start already-solved
+}
+
+function d9Render() {
+  const list = document.getElementById('d9-list');
+  list.innerHTML = '';
+  d9Order.forEach((itemIdx, pos) => {
+    const li = document.createElement('li');
+    li.className = 'seq-item';
+    li.innerHTML =
+      '<span class="seq-pos">' + (pos + 1) + '</span>' +
+      '<span class="seq-text">' + d9Target[itemIdx].replace(/</g, '&lt;') + '</span>' +
+      '<span class="seq-btns">' +
+      '<button type="button" class="seq-btn" ' + (pos === 0 ? 'disabled' : '') + ' onclick="d9Move(' + pos + ',-1)">▲</button>' +
+      '<button type="button" class="seq-btn" ' + (pos === d9Order.length - 1 ? 'disabled' : '') + ' onclick="d9Move(' + pos + ',1)">▼</button>' +
+      '</span>';
+    list.appendChild(li);
+  });
+}
+
+function d9Move(pos, dir) {
+  const target = pos + dir;
+  if (target < 0 || target >= d9Order.length) return;
+  [d9Order[pos], d9Order[target]] = [d9Order[target], d9Order[pos]];
+  document.getElementById('d9-feedback').className = 'feedback';
+  d9Render();
+}
+
+function checkDrill9() {
+  const fb = document.getElementById('d9-feedback');
+  const correct = d9Order.every((v, i) => v === i);
+  document.querySelectorAll('#d9-list .seq-item').forEach((li, i) => {
+    li.classList.remove('correct', 'incorrect');
+    li.classList.add(d9Order[i] === i ? 'correct' : 'incorrect');
+  });
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  fb.textContent = correct
+    ? 'Right! Load assets first, then connect to the server, then set up the player, then tell the player it\'s ready. Green rows are correctly placed.'
+    : 'Not quite yet. Green rows are already in the right spot; red rows still need to move. Think about which step genuinely has to happen before another one makes sense.';
+  logDrillAttempt('drill9', correct, { order: d9Order.slice() });
+  writeTelemetryToDom();
+}
+
+function resetDrill9() {
+  d9Shuffle();
+  document.getElementById('d9-feedback').className = 'feedback';
+  d9Render();
+}
+
+d9Shuffle();
+d9Render();
 
 function markStepDone(stepKey) {
   var STORAGE_KEY = 'foxcs_python_unit01_progress';

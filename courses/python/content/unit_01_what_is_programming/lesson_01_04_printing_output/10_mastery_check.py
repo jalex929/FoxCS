@@ -1,8 +1,8 @@
-# 1.4.8b — Mastery Check: Printing Output
+# 1.4.8b Mastery Check: Printing Output
 #
 # Answer all four questions below. No renaming needed. Just save this file.
 # (Unlock/completion times save automatically in 09_mastery_check.html itself
-# now — nothing to copy here. Fixed 2026-08-11: this comment was still
+# now. Nothing to copy here. Fixed 2026-08-11: this comment was still
 # describing the older mechanism, replaced 2026-08-07.)
 
 

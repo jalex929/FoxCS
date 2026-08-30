@@ -4,6 +4,30 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-30 (yet later) — Python Unit 01 brought to full consistency; nav-menu sync tooling built
+
+**Context:** Jay asked to start building out FoxCS: Python (Game I), picking Unit 00 (Course Onboarding) and Unit 01 first. Investigation found Unit 00 was a false alarm: it's already fully built as shared cross-course content (`shared/unit_00_onboarding_level1/`, done 2026-08-18) — only `course-plan.md`'s stale pointer needed fixing. The real work was Unit 01, which `mvp-unit-folder-structure.md` and `unit-01-content-inventory.md` both (incorrectly) claimed was "not yet rebuilt to the current pattern" for 5 of its 6 lessons.
+
+**Decided/built:**
+
+- **Dispatched 5 parallel background agents**, one per lesson (01.1, 01.2, 01.3, 01.5, 01.6), each told to treat `lesson_01_04_printing_output/` (the reference implementation) as a literal template and read the existing lesson content before rewriting anything.
+- **Finding that changed the whole scope:** every single fork independently discovered its assigned lesson was already rebuilt to the modern pattern in earlier sessions (mostly 2026-08-20/21) — the "not yet rebuilt" docs were simply stale. What was real and still missing, matched to `mvp-unit-folder-structure.md`'s own explicit component recommendations:
+  - **01.2**: the Categorization drag-and-drop drill (Input/Process/Output sorting), flagged since 2026-08-06 as intended for this lesson and never built. Added as a new drill; a real scoring bug (re-counting already-correct items) was caught and fixed during the build.
+  - **01.3**: the Sequencing drill (reordering scrambled `print()` lines), same story, plus a missing `06_application.py` hands-on step. Both added; two real pre-existing bugs (a stale prev-link, a wrong filename in mastery-check save instructions) caught and fixed.
+  - **01.6**: the Categorization drill (SyntaxError vs. NameError sorting), same story.
+  - **01.1**: no drill gap, but a missing project step — which turned out to be a *deliberate* 2026-08-20 decision (01.1 is purely conceptual, no code yet, so a project didn't apply), not an oversight. The fork's directive didn't know this and built one anyway (a pseudocode/plain-English "design a program" project), explicitly flagged as a reversal needing Jay's confirmation — **still open, not yet resolved.**
+  - **01.5**: no structural gaps at all, existing content was already excellent.
+- **Repo-wide em-dash violation found and fixed**, ~475 instances across every lesson in the unit except 01.6 (which a fork had already cleaned during its own build) — a real, previously-unflagged breach of Jay's standing no-em-dash rule, missed by every prior session that touched this content. Fixed via a mix of targeted forks (contextual replacement: period-split, colon, comma depending on grammatical role, never blind hyphen substitution) and direct fixes after two of five forks hit a session usage limit mid-task. Pure dev/internal comments (`<!-- -->` author notes, JS/CSS `//`/`/* */` comments never rendered to a student) were deliberately left alone as out of scope, consistent with what the first fork to hit this (01.5's) had already treated as the right line to draw.
+- **Changed the documented title-format convention repo-wide**: `N.N.N — Type: Subtitle` → `N.N.N Type: Subtitle` (dropped the em-dash separator; the colon already does the job). Applied to every lesson and to `mvp-unit-folder-structure.md`'s own documented examples.
+- **Built and verified a nested, collapsible unit-wide nav menu** (per Jay's direct request) — turned out to already exist (`<details>`/`<summary>`, 3 levels: unit toggle → per-lesson collapse → file links), but copy-pasted inline into all 47 HTML files with no shared source. The parallel lesson rebuilds caused real drift (stale file lists in sibling lessons' copies; one rebuild dropped the other 5 lessons from its copy entirely). Fixed with a new script, `02-authoring-system/tools/sync_unit01_nav_menu.py`, that regenerates the menu from one source-of-truth file list and syncs it identically everywhere — verified every resulting link resolves to a real file. This copy-paste architecture and the sync tool are now documented in `mvp-unit-folder-structure.md`'s new "Unit-Wide Nav Menu" section so it isn't rediscovered the hard way again.
+- Marked all 6 lessons 🔍 reviewed (not just ✅ drafted) in `course-plan.md`, and corrected the stale "not yet rebuilt"/"no content" claims in `mvp-unit-folder-structure.md` and `unit-01-content-inventory.md`.
+
+**Not yet done:** Jay's confirmation on 01.1's project-step reversal (see above). Verifying any of this in a real browser (one fork flagged it couldn't get Playwright running and relied on syntax-check + manual trace instead — weaker evidence than this repo's usual authenticated-browser-click-through standard). A repo-wide em-dash sweep beyond Unit 01 (Unit 00's shared onboarding content, and anywhere else in FoxCS, haven't been checked).
+
+**Supersedes:** the "5 lessons not yet rebuilt" and "no drill gap filled" claims in `mvp-unit-folder-structure.md`'s 2026-08-06 note and `unit-01-content-inventory.md`.
+
+---
+
 ## 2026-08-30 (later still) — Seminar III renamed Unit N → Lesson N; orientation content unnumbered
 
 **Context:** After consolidating Lesson 1 (then still called "Unit 01"), Jay revisited the earlier-deferred Unit-to-Lesson rename, specifically asking about the orientation content (old "Unit 00"). Confirmed with Jay: orientation gets pulled out of the numbered sequence entirely as **"Orientation"** rather than "Lesson 0" (avoids the confusing off-by-one where "Unit 01" was actually the *second* week) — matching how Python keeps its own onboarding *inside* its Unit numbering was explicitly not followed here, since Jay said this scheme is Seminar III-specific. Also confirmed the letter-suffix rule: a lesson combining academic-skills and postsecondary content in the same week gets split as "Lesson NA"/"Lesson NB"; a lesson with only one gets a bare number, no letter.

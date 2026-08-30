@@ -1,4 +1,4 @@
-# 1.2.5b — Mastery Check: Input-Process-Output
+# 1.2.5b Mastery Check: Input-Process-Output
 #
 # Answer all three questions below, as comments (no code to write yet).
 # Once done, use File > Save As to save this as

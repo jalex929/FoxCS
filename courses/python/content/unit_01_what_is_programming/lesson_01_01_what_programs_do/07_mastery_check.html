@@ -1,54 +1,56 @@
-<!-- Rebuilt 2026-08-20 to match lesson_01_04_printing_output's 11_feedback.html
-     pattern (see 02-authoring-system/mvp-unit-folder-structure.md's
-     "Feedback" section and feedback-collection.md's question bank) — click
-     1-5 ratings, typed short answers, save-in-place with a _completed
-     suffix. Term checklist lists this lesson's 4 real terms directly rather
-     than asking students to recall them from memory (same fix
-     lesson_01_04_printing_output/11_feedback.html made 2026-08-11 — avoids
-     idioms like "fuzzy" and avoids recall-dependency on a feedback question
-     that isn't testing recall). -->
+<!-- Rebuilt 2026-08-20 to match lesson_01_04_printing_output's mastery-check
+     pattern (see 02-authoring-system/mvp-unit-folder-structure.md's "Mastery
+     Checks" section): password-gated prompt sheet only, plain readable text
+     once unlocked, no base64 obfuscation (that mechanism was retired
+     2026-08-06 once answer content moved off this page entirely, nothing
+     left here to obfuscate). Answers go in the paired 08_mastery_check.py,
+     saved normally in VS Code. unlocked_at / completed_at timestamps write
+     automatically into hidden fields; nothing for the student to transcribe.
+
+     Single password, not the old multi-variant (A/B/C) design. Matches
+     lesson_01_04_printing_output's current standard pattern. Multi-variant
+     is still available per mastery-check-standards.md if a future need
+     justifies the extra authoring effort; not built here since it wasn't
+     requested and 01.4's own reference implementation doesn't use it either. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>1.1.6 Feedback: FoxCS: Python</title>
+<title>1.1.6a Mastery Check: FoxCS: Python</title>
 <style>
-  body { font-family: Georgia, 'Times New Roman', serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; }
   h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
-  .intro { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.95rem; }
-  .q-block { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
-  .q-prompt { font-weight: bold; margin-bottom: 0.7rem; }
-  .scale-row { display: flex; gap: 0.5rem; align-items: center; }
-  .scale-label { font-size: 0.8rem; color: #555; }
-  button.scale-btn { width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 2px solid #ccd3dd; background: white; cursor: pointer; font-family: Verdana, Arial, sans-serif; font-weight: bold; }
-  button.scale-btn.selected { border-color: #1a5aa8; background: #1a5aa8; color: white; }
-  textarea.answer-space { width: 100%; min-height: 4em; font-family: Georgia, serif; font-size: 1rem; padding: 0.5rem; box-sizing: border-box; border: 1px solid #ccd3dd; border-radius: 4px; }
-  .followup { margin-top: 0.8rem; }
-  .followup-label { font-size: 0.88rem; color: #444; margin-bottom: 0.4rem; }
-  .term-check-row { display: flex; align-items: flex-start; gap: 0.6rem; margin: 0.5rem 0; }
-  .term-check-row input[type="checkbox"] { margin-top: 0.25rem; flex-shrink: 0; width: 1.05rem; height: 1.05rem; }
-  .term-check-row label code { font-family: Consolas, monospace; background: #eef1f5; padding: 0.1rem 0.3rem; border-radius: 3px; }
-  .save-row { text-align: center; margin-top: 1.5rem; }
-  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #9a5a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
-  button.save-btn:hover { background: #7a4800; }
-  .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
-  .page-nav { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .q { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 1rem 1.2rem; margin: 1.2rem 0; }
+  pre { background: #eef1f5; padding: 0.6rem 0.9rem; border-radius: 3px; font-family: Consolas, monospace; overflow-x: auto; }
+  #lock { background: #f4f6f9; border: 2px solid #1a5aa8; border-radius: 8px; padding: 1.5rem; text-align: center; }
+  #lock input { font-size: 1.1rem; padding: 0.4rem 0.6rem; margin-right: 0.5rem; text-transform: uppercase; }
+  #lock button, .next-link { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; }
+  #lock button:hover { background: #12467f; }
+  #pwError { color: #b02a2a; display: none; margin-top: 0.6rem; }
+  #mcContent { display: none; }
+  .save-reminder { font-weight: bold; color: #7a3a00; margin-top: 1.5rem; }
+  .next-box { background: #f9e1ad; border: 1px solid #9a5a00; padding: 1rem 1.2rem; border-radius: 6px; margin-top: 1.5rem; }
+  .next-box p { margin: 0; }
+  .next-link { margin-top: 0.5rem; }
+  .complete-box { background: #f4f6f9; border: 2px solid #1a5aa8; border-radius: 8px; padding: 1rem 1.2rem; margin-top: 1.5rem; text-align: center; }
+  .complete-box button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.6rem 1.3rem; border-radius: 5px; cursor: pointer; font-weight: bold; }
+  .complete-box button:hover { background: #12467f; }
+  .complete-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+  .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
   .page-nav-note { color: #555; margin-bottom: 0.6rem; }
   .page-nav-links { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
   .page-nav-prev, .page-nav-next { font-weight: bold; color: #1a5aa8; text-decoration: none; }
   .page-nav-prev:hover, .page-nav-next:hover { text-decoration: underline; }
   .page-nav-toc { color: #445; text-decoration: none; font-size: 0.85rem; border: 1px solid #ccd3dd; padding: 0.3rem 0.8rem; border-radius: 5px; }
   .page-nav-toc:hover { background: #eef1f5; }
+
   .unit-menu-wrap { position: sticky; top: 0; z-index: 20; background: #fff; border: 1px solid #dde3ea; border-radius: 0 0 8px 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
   .unit-menu-toggle { cursor: pointer; padding: 0.7rem 1.3rem; font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a5aa8; font-size: 0.92rem; list-style: none; user-select: none; }
   .unit-menu-toggle::-webkit-details-marker { display: none; }
   .unit-menu-toggle:hover { background: #f4f6f9; }
   .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
   .unit-menu-section { margin-top: 0.9rem; }
-  .unit-menu-section:first-child { margin-top: 0.6rem; }
   .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
-  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
-  .unit-menu-section > a:hover { background: #eef4fb; }
   .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
   .lesson-entry { margin: 0.15rem 0; }
   .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
@@ -73,7 +75,6 @@
   <nav class="unit-menu-panel">
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
-
       <details class="lesson-entry" open>
         <summary>01.1 What Programs Do</summary>
         <div class="lesson-steps">
@@ -82,11 +83,13 @@
           <a href="02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="flashcards"></span></a>
           <a href="03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
           <a href="04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
-          <a href="05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
-          <a href="07_feedback.html" class="current">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+          <a href="05_project.html">Project Instructions</a>
+          <a href="06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="07_mastery_check.html" class="current">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.2 Input-Process-Output</summary>
         <div class="lesson-steps">
@@ -96,33 +99,34 @@
           <a href="../lesson_01_02_input_process_output/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_02_input_process_output/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
           <a href="../lesson_01_02_input_process_output/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="../lesson_01_02_input_process_output/06_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_02_input_process_output/08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.3 Writing Your First Program</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_03_writing_your_first_program/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="flashcards"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/06_project.html">Project Instructions</a>
-          <a href="../lesson_01_03_writing_your_first_program/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
-          <a href="../lesson_01_03_writing_your_first_program/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/07_project.html">Project Instructions</a>
+          <a href="../lesson_01_03_writing_your_first_program/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.4 Printing Output</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_04_printing_output/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_04_printing_output/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_04_printing_output/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="flashcards"></span></a>
           <a href="../lesson_01_04_printing_output/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_04_printing_output/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
@@ -130,26 +134,26 @@
           <a href="../lesson_01_04_printing_output/07_project.html">Project Instructions</a>
           <a href="../lesson_01_04_printing_output/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_04_printing_output/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_04_printing_output/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.5 Comments and Documentation</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_05_comments_and_documentation/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="flashcards"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/06_project.html">Project Instructions</a>
           <a href="../lesson_01_05_comments_and_documentation/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/09_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.6 Common Syntax Mistakes</summary>
         <div class="lesson-steps">
@@ -161,6 +165,7 @@
           <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
           <a href="../lesson_01_06_common_syntax_mistakes/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
         </div>
       </details>
@@ -170,125 +175,82 @@
 </details>
 </div>
 
+<h1>1.1.6a Mastery Check: What Programs Do</h1>
 
-<h1>1.1.6 — Feedback</h1>
-<div class="intro">2-3 minutes. This is about the lesson, not about grading you. Your honest answers help decide what changes for next time.</div>
-
-<div class="q-block">
-  <div class="q-prompt">1. How clear was it what you were being asked to do in this lesson?</div>
-  <div class="scale-row" data-question="q1">
-    <span class="scale-label">Confusing</span>
-    <button class="scale-btn" data-value="1">1</button>
-    <button class="scale-btn" data-value="2">2</button>
-    <button class="scale-btn" data-value="3">3</button>
-    <button class="scale-btn" data-value="4">4</button>
-    <button class="scale-btn" data-value="5">5</button>
-    <span class="scale-label">Totally clear</span>
-  </div>
-  <div class="followup">
-    <div class="followup-label">If any part was unclear, describe what it was. (Leave blank if nothing was unclear.)</div>
-    <textarea class="answer-space" id="q1-followup"></textarea>
-  </div>
+<div id="lock">
+  <p>Ask your teacher for this mastery check's password.</p>
+  <input type="text" id="pwInput" placeholder="Password" maxlength="6">
+  <button onclick="checkPassword()">Unlock</button>
+  <p id="pwError">That's not the right password. Check with your teacher and try again.</p>
 </div>
 
-<div class="q-block">
-  <div class="q-prompt">2. How difficult was this lesson for you?</div>
-  <div class="scale-row" data-question="q2">
-    <span class="scale-label">Too easy</span>
-    <button class="scale-btn" data-value="1">1</button>
-    <button class="scale-btn" data-value="2">2</button>
-    <button class="scale-btn" data-value="3">3</button>
-    <button class="scale-btn" data-value="4">4</button>
-    <button class="scale-btn" data-value="5">5</button>
-    <span class="scale-label">Too difficult</span>
-  </div>
-  <div class="followup">
-    <div class="followup-label">What part of this lesson was the most difficult for you? (Leave blank if nothing felt difficult.)</div>
-    <textarea class="answer-space" id="q2-followup"></textarea>
-  </div>
+<div id="mcContent">
+
+<p>Answer all four questions in <code>08_mastery_check.py</code>. This page has the questions; your answers go in that file. Nothing to copy from this page: when you're done, come back here and click "Mark Complete &amp; Save" below.</p>
+
+<p><strong>Once you've answered all four, save that file one more time as <code>08_mastery_check_completed.py</code></strong>. In VS Code, use File → Save As (not just Ctrl+S), keep everything the same, and change only the filename to add <code>_completed</code> before <code>.py</code>. This is how the Table of Contents page knows you finished, the same way it already knows for the other pages here.</p>
+
+<div class="q">
+<strong>1.</strong> Explain, in your own words, what a program is. Use an example from everyday life that is <em>not</em> a video game and <em>not</em> a calculator app.
 </div>
 
-<div class="q-block">
-  <div class="q-prompt">3. How interesting did this lesson feel to you?</div>
-  <div class="scale-row" data-question="q3">
-    <span class="scale-label">Not interesting</span>
-    <button class="scale-btn" data-value="1">1</button>
-    <button class="scale-btn" data-value="2">2</button>
-    <button class="scale-btn" data-value="3">3</button>
-    <button class="scale-btn" data-value="4">4</button>
-    <button class="scale-btn" data-value="5">5</button>
-    <span class="scale-label">Very interesting</span>
-  </div>
+<div class="q">
+<strong>2.</strong> A vending machine takes your money, checks whether you inserted enough, and then either gives you the item or shows an error. Describe at least one specific instruction you think must exist somewhere inside the vending machine's program for this to work.
 </div>
 
-<div class="q-block">
-  <div class="q-prompt">4. This lesson taught 4 words. Check any that you still find hard to explain in your own words.</div>
-  <div class="term-check-row"><input type="checkbox" id="term-program"><label for="term-program"><code>program</code> — a set of step-by-step instructions a computer follows</label></div>
-  <div class="term-check-row"><input type="checkbox" id="term-instruction"><label for="term-instruction"><code>instruction</code> — a single step in a program</label></div>
-  <div class="term-check-row"><input type="checkbox" id="term-programmer"><label for="term-programmer"><code>programmer</code> — a person who writes a program's instructions</label></div>
-  <div class="term-check-row"><input type="checkbox" id="term-python"><label for="term-python"><code>Python</code> — the programming language this course uses</label></div>
-  <div class="term-check-row"><input type="checkbox" id="term-none"><label for="term-none">None — I can explain all 4 words</label></div>
+<div class="q">
+<strong>3.</strong> A friend tells you, "Computers are smart. They figure things out on their own." Based on what you learned in this lesson, do you agree or disagree? Explain your answer using the word <em>instruction</em>.
 </div>
 
-<div class="q-block">
-  <div class="q-prompt">5. What part of this lesson felt the most rewarding, or helped you learn the most? Give a specific example.</div>
-  <textarea class="answer-space" id="q5"></textarea>
+<div class="q">
+<strong>4.</strong> Explain what a programming language like Python is for, and why a programmer needs one to make a computer do something.
 </div>
 
-<div class="q-block">
-  <div class="q-prompt">6. If something in this lesson was difficult to understand on your own, were you able to get help? What helped, or what would have made it easier to get help?</div>
-  <textarea class="answer-space" id="q6"></textarea>
+<p class="save-reminder">Save your answers as <code>08_mastery_check_completed.py</code> once you've answered all four (File → Save As, not Ctrl+S).</p>
+
+<div class="complete-box">
+  Done answering? Click below. It's how this page records that you finished, no copying required.
+  <div><button onclick="markComplete()">Mark Complete &amp; Save</button></div>
+  <div class="complete-status" id="completeStatus"></div>
 </div>
 
-<div class="save-row">
-  <button class="save-btn" onclick="saveWork()">Save My Feedback</button>
-  <div class="save-status" id="saveStatus"></div>
+<div class="next-box">
+  <p><strong>Up next:</strong> <code>08_mastery_check.py</code> to write your answers, then <code>09_feedback.html</code> to close out the lesson.</p>
+</div>
 </div>
 
+<!-- Outside #mcContent on purpose: Back/TOC should work even before the
+     page is unlocked, not just once the password is entered. -->
 <div class="page-nav">
-  <div class="page-nav-note">Save above before you leave — this is the last step in this lesson.</div>
+  <div class="page-nav-note">Click "Mark Complete &amp; Save" above once <code>08_mastery_check.py</code> is done, before you leave this page.</div>
   <div class="page-nav-links">
-    <a href="05_mastery_check.html" class="page-nav-prev">← Back: Mastery Check</a>
+    <a href="06_project.py" class="page-nav-prev">← Back: Project</a>
     <a href="00_table_of_contents.html" class="page-nav-toc">Table of Contents</a>
-    <a href="../lesson_01_02_input_process_output/01_instruction.html" class="page-nav-next">Next: Lesson 01.2 →</a>
+    <a href="08_mastery_check.py" class="page-nav-next">Next: 08_mastery_check.py →</a>
   </div>
 </div>
+
+<span id="unlockTime" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;" aria-hidden="true"></span>
+<span id="completeTime" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;" aria-hidden="true"></span>
 
 <script>
-document.querySelectorAll('.scale-row').forEach(row => {
-  row.querySelectorAll('.scale-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      row.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-    });
-  });
-});
+const PASSWORD = "T4WPR8"; // CHANGE ME before distributing. 6-character alphanumeric.
+let mcFileHandle = null;
 
-// "None of these" is mutually exclusive with the individual term checkboxes.
-const termIds = ['term-program', 'term-instruction', 'term-programmer', 'term-python'];
-const noneBox = document.getElementById('term-none');
-noneBox.addEventListener('change', () => {
-  if (noneBox.checked) termIds.forEach(id => { document.getElementById(id).checked = false; });
-});
-termIds.forEach(id => {
-  document.getElementById(id).addEventListener('change', (e) => {
-    if (e.target.checked) noneBox.checked = false;
-  });
-});
-
-let savedFileHandle = null;
-
-function currentFileName() {
-  const parts = location.pathname.split('/');
-  const original = decodeURIComponent(parts[parts.length - 1]) || '07_feedback.html';
-  if (original.includes('_completed')) return original;
-  return original.replace(/\.html$/, '_completed.html');
+function checkPassword() {
+  const val = document.getElementById('pwInput').value.trim().toUpperCase();
+  if (val === PASSWORD) {
+    document.getElementById('lock').style.display = 'none';
+    document.getElementById('mcContent').style.display = 'block';
+    document.getElementById('unlockTime').textContent = 'unlocked_at:' + new Date().toISOString();
+  } else {
+    document.getElementById('pwError').style.display = 'block';
+  }
 }
 
-function syncFormStateToDom() {
-  document.querySelectorAll('textarea').forEach(t => { t.textContent = t.value; });
-  document.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.toggleAttribute('checked', cb.checked); });
-}
+document.getElementById('pwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
 
 function markStepDone(stepKey) {
   var STORAGE_KEY = 'foxcs_python_unit01_progress';
@@ -300,34 +262,34 @@ function markStepDone(stepKey) {
   if (window.renderDoneChips) window.renderDoneChips();
 }
 
-async function saveWork() {
-  syncFormStateToDom();
-  markStepDone('feedback');
+async function markComplete() {
+  document.getElementById('completeTime').textContent = 'completed_at:' + new Date().toISOString();
+  markStepDone('mastery_check');
+  const statusEl = document.getElementById('completeStatus');
   const htmlContent = '<!DOCTYPE html>' + document.documentElement.outerHTML;
-  const statusEl = document.getElementById('saveStatus');
 
-  if (savedFileHandle) {
+  if (mcFileHandle) {
     try {
-      const writable = await savedFileHandle.createWritable();
+      const writable = await mcFileHandle.createWritable();
       await writable.write(htmlContent);
       await writable.close();
-      statusEl.textContent = 'Saved. Thanks for the feedback!';
+      statusEl.textContent = 'Saved.';
       return;
     } catch (err) {
-      savedFileHandle = null;
+      mcFileHandle = null;
     }
   }
 
   if ('showSaveFilePicker' in window) {
     try {
-      savedFileHandle = await window.showSaveFilePicker({
+      mcFileHandle = await window.showSaveFilePicker({
         suggestedName: currentFileName(),
         types: [{ description: 'HTML file', accept: {'text/html': ['.html']} }]
       });
-      const writable = await savedFileHandle.createWritable();
+      const writable = await mcFileHandle.createWritable();
       await writable.write(htmlContent);
       await writable.close();
-      statusEl.textContent = 'Saved. Thanks for the feedback!';
+      statusEl.textContent = 'Saved.';
       return;
     } catch (err) {
       if (err.name === 'AbortError') return;
@@ -342,6 +304,13 @@ async function saveWork() {
   a.click();
   document.body.removeChild(a);
   statusEl.textContent = 'Downloaded a copy (your browser doesn\'t support saving in place).';
+}
+
+function currentFileName() {
+  const parts = location.pathname.split('/');
+  const original = decodeURIComponent(parts[parts.length - 1]) || '07_mastery_check.html';
+  if (original.includes('_completed')) return original;
+  return original.replace(/\.html$/, '_completed.html');
 }
 </script>
 

@@ -1,5 +1,5 @@
 <!-- Plain styling on purpose. See unit_01_overview.html's header comment.
-     Colors corrected 2026-08-06 per 02-authoring-system/design-system.md — see that
+     Colors corrected 2026-08-06 per 02-authoring-system/design-system.md, see that
      file before changing any color here. -->
 <!DOCTYPE html>
 <html lang="en">
@@ -20,24 +20,24 @@
   .term-example strong { color: #1a5aa8; }
   .term-analogy { margin-top: 0.4rem; font-size: 0.92rem; color: #445; font-style: italic; }
   .term-analogy strong { color: #4a3aa7; font-style: normal; }
-  /* Concept cards — added/formalized 2026-08-11 per Jay, replacing the
+  /* Concept cards, added/formalized 2026-08-11 per Jay, replacing the
      one-off .mistake/.game-tie-in styles with a single reusable family.
      Standing rule: a card is for content with a real, recurring PURPOSE
      (a common mistake, a tie to game design, a real-world parallel, a pro
-     tip, a debugging tip) — not a decorative wrapper for an ordinary aside.
+     tip, a debugging tip), not a decorative wrapper for an ordinary aside.
      Content that's just supplementary explanation (like "Why parentheses?"
      below) stays plain article prose, no card. This also fixes a real
      design-system.md Tone Note violation the old .mistake red styling had:
      red is reserved for academic-integrity warnings, not common-mistakes
-     content — every variant below uses a neutral or on-brand color, never
+     content: every variant below uses a neutral or on-brand color, never
      red/alarm. Only 2 of the 5 defined variants are used in this specific
-     lesson (mistake, game) — real-world/pro-tip/debug exist ready for
+     lesson (mistake, game); real-world/pro-tip/debug exist ready for
      lessons where that content type actually appears. */
   /* Restyled 2026-08-12 per Jay: these should read as cards, not feedback
-     boxes — rounded on all four corners, a full even border instead of a
+     boxes: rounded on all four corners, a full even border instead of a
      colored left accent bar (the accent-bar look reads as an alert/callout,
      which is exactly the feedback-box association these are meant to avoid),
-     and deliberately flat/static — no hover state, no shadow, no cursor
+     and deliberately flat/static: no hover state, no shadow, no cursor
      change, since these aren't clickable. The color-coded label/icon is
      still what distinguishes each type; the card shape itself stays neutral. */
   .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
@@ -66,13 +66,13 @@
   .diff-added { color: #a33; font-weight: bold; background: #fbdede; border-radius: 3px; padding: 0 0.15rem; }
   .fixed-note { font-size: 0.85rem; color: #555; }
   .article-lead { font-weight: bold; }
-  /* Guided practice, embedded in the instructional flow — added 2026-08-11
+  /* Guided practice, embedded in the instructional flow, added 2026-08-11
      per Jay: this page should work as interactive guided notes, not pure
      reading, with a quick formative check right after new content before
      moving on. Distinct from 05_practice.html's independent practice
      (which comes after this whole page) and 06_application.py (which comes
-     after that) — guided here, independent there, applied last. Plain
-     styling on purpose, matching the "box needs a purpose" rule — this is a
+     after that): guided here, independent there, applied last. Plain
+     styling on purpose, matching the "box needs a purpose" rule: this is a
      real distinct purpose (a formative check), so it gets its own light
      treatment, not the heavy .concept-card family. */
   .quick-check { border: 1px solid #ccd3dd; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
@@ -85,9 +85,9 @@
   .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
   .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
 
-  /* Code Hotspot + Step-through — added 2026-08-12 per Jay: content where a
+  /* Code Hotspot + Step-through, added 2026-08-12 per Jay: content where a
      student can step through a code block AND see, token by token including
-     punctuation like ( ) and :, what each piece does — not just read a static
+     punctuation like ( ) and :, what each piece does, not just read a static
      paragraph walking through it once. Same interaction pattern as
      component-library/index.html's #17 (Code Hotspot) and #14 (Code Execution
      Stepper), merged into one component here rather than kept as two separate
@@ -117,11 +117,11 @@
   .handoff p:first-child { margin-top: 0; }
   .save-reminder { font-weight: bold; color: #7a3a00; }
   ol.steps li { margin: 0.5rem 0; }
-  /* Footer page nav — added 2026-08-11 per Jay: every numbered page should
+  /* Footer page nav, added 2026-08-11 per Jay: every numbered page should
      end with a simple way to move to the next one, plus a reminder of
-     whether there's anything to save first. Deliberately plain — one line,
-     no box — so it doesn't compete with .handoff above it. */
-  /* Back/TOC/Next footer — revised 2026-08-11 per Jay: anticipate all three
+     whether there's anything to save first. Deliberately plain: one line,
+     no box, so it doesn't compete with .handoff above it. */
+  /* Back/TOC/Next footer, revised 2026-08-11 per Jay: anticipate all three
      places a student might need to go next (back to the page before, back
      to the table of contents, or forward), not just a single "Next" link. */
   .page-nav { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid #dde3ea; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
@@ -137,10 +137,7 @@
   .unit-menu-toggle:hover { background: #f4f6f9; }
   .unit-menu-panel { padding: 0.3rem 1.3rem 1.1rem; max-height: 60vh; overflow-y: auto; border-top: 1px solid #eef1f5; font-family: Verdana, Arial, sans-serif; }
   .unit-menu-section { margin-top: 0.9rem; }
-  .unit-menu-section:first-child { margin-top: 0.6rem; }
   .unit-menu-section-label { font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.3rem; }
-  .unit-menu-section > a { display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.9rem; border-radius: 4px; }
-  .unit-menu-section > a:hover { background: #eef4fb; }
   .unit-menu-panel a.current { font-weight: bold; color: #1a5aa8; background: #dceafc; border-radius: 4px; }
   .lesson-entry { margin: 0.15rem 0; }
   .lesson-entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.5rem; padding: 0.32rem 0.2rem; border-radius: 4px; font-size: 0.9rem; color: #1a1a1a; }
@@ -165,7 +162,6 @@
   <nav class="unit-menu-panel">
     <div class="unit-menu-section">
       <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>
-
       <details class="lesson-entry">
         <summary>01.1 What Programs Do</summary>
         <div class="lesson-steps">
@@ -174,11 +170,13 @@
           <a href="../lesson_01_01_what_programs_do/02_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="flashcards"></span></a>
           <a href="../lesson_01_01_what_programs_do/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_01_what_programs_do/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="practice"></span></a>
-          <a href="../lesson_01_01_what_programs_do/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_01_what_programs_do/07_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
+          <a href="../lesson_01_01_what_programs_do/05_project.html">Project Instructions</a>
+          <a href="../lesson_01_01_what_programs_do/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_01_what_programs_do/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_01_what_programs_do/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_01_what_programs_do/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_01_what_programs_do" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.2 Input-Process-Output</summary>
         <div class="lesson-steps">
@@ -188,33 +186,34 @@
           <a href="../lesson_01_02_input_process_output/03_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_02_input_process_output/04_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="practice"></span></a>
           <a href="../lesson_01_02_input_process_output/05_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">open in VS Code</span></a>
+          <a href="../lesson_01_02_input_process_output/06_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_02_input_process_output/07_journal.txt">Journal <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_02_input_process_output/08_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_02_input_process_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.3 Writing Your First Program</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_03_writing_your_first_program/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_03_writing_your_first_program/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_03_writing_your_first_program/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="flashcards"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_03_writing_your_first_program/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="practice"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/06_project.html">Project Instructions</a>
-          <a href="../lesson_01_03_writing_your_first_program/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
-          <a href="../lesson_01_03_writing_your_first_program/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
-          <a href="../lesson_01_03_writing_your_first_program/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/06_application.py">Application <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/07_project.html">Project Instructions</a>
+          <a href="../lesson_01_03_writing_your_first_program/08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_03_writing_your_first_program/10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
+          <a href="../lesson_01_03_writing_your_first_program/11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_03_writing_your_first_program" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry" open>
         <summary>01.4 Printing Output</summary>
         <div class="lesson-steps">
           <a href="00_table_of_contents.html">Table of Contents</a>
           <a href="01_instruction.html" class="current">Instruction</a>
-          <a href="02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="flashcards"></span></a>
           <a href="04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="vocab_quiz"></span></a>
           <a href="05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="practice"></span></a>
@@ -222,26 +221,26 @@
           <a href="07_project.html">Project Instructions</a>
           <a href="08_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="09_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="mastery_check"></span></a>
+          <a href="10_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="11_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_04_printing_output" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.5 Comments and Documentation</summary>
         <div class="lesson-steps">
           <a href="../lesson_01_05_comments_and_documentation/00_table_of_contents.html">Table of Contents</a>
           <a href="../lesson_01_05_comments_and_documentation/01_instruction.html">Instruction</a>
-          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">view only</span></a>
+          <a href="../lesson_01_05_comments_and_documentation/02_example_01.py">Example <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/03_flashcards.html">Flashcards<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="flashcards"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/04_vocab_quiz.html">Vocab Quiz<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="vocab_quiz"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/05_practice.html">Practice<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="practice"></span></a>
           <a href="../lesson_01_05_comments_and_documentation/06_project.html">Project Instructions</a>
           <a href="../lesson_01_05_comments_and_documentation/07_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/08_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_05_comments_and_documentation/09_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_05_comments_and_documentation/10_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_05_comments_and_documentation" data-step="feedback"></span></a>
         </div>
       </details>
-
       <details class="lesson-entry">
         <summary>01.6 Common Syntax Mistakes</summary>
         <div class="lesson-steps">
@@ -253,6 +252,7 @@
           <a href="../lesson_01_06_common_syntax_mistakes/05_project.html">Project Instructions</a>
           <a href="../lesson_01_06_common_syntax_mistakes/06_project.py">Project <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/07_mastery_check.html">Mastery Check<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="mastery_check"></span></a>
+          <a href="../lesson_01_06_common_syntax_mistakes/08_mastery_check.py">Mastery Check Answers <span class="step-untracked">can't auto-check</span></a>
           <a href="../lesson_01_06_common_syntax_mistakes/09_feedback.html">Feedback<span class="done-chip" data-lesson="lesson_01_06_common_syntax_mistakes" data-step="feedback"></span></a>
         </div>
       </details>
@@ -263,7 +263,7 @@
 </div>
 
 
-<h1>1.4.1 — Instruction: Printing Output</h1>
+<h1>1.4.1 Instruction: Printing Output</h1>
 
 <div class="objectives">
 <strong>Learning objectives:</strong>
@@ -319,7 +319,7 @@
 <div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="16.5" r="0.75" fill="currentColor" stroke="none"/></svg>Common Mistake</div>
 <div class="concept-card-title">Forgetting to close the quote</div>
 <pre>print("Hello, Python!)</pre>
-<p>Python will show something like <code>SyntaxError: EOL while scanning string literal</code>. <strong>EOL</strong> means "End Of Line". Python reached the end of the line while still looking for the closing quote — notice the <code>)</code> is right there, but it doesn't help, because it landed inside the never-closed string instead of ending the function call.</p>
+<p>Python will show something like <code>SyntaxError: EOL while scanning string literal</code>. <strong>EOL</strong> means "End Of Line". Python reached the end of the line while still looking for the closing quote. Notice the <code>)</code> is right there, but it doesn't help, because it landed inside the never-closed string instead of ending the function call.</p>
 <p class="predict-note">Before you click reveal: what one character would fix this line? Picture it in place, then check yourself.</p>
 <button class="reveal-btn" onclick="toggleFix('fix1')">Click to see the fixed version</button>
 <div class="fixed-version" id="fix1">
@@ -348,7 +348,7 @@
 <div class="concept-card-title">This is your first real usability idea, not just a syntax rule</div>
 <p><code>print()</code> is your program's simplest form of feedback to whoever is using it, the same role a game's UI plays when it tells a player "Enemy defeated!" or "Not enough gold."</p>
 <p>A program that prints <code>1</code> when something fails and <code>0</code> when it succeeds is technically giving output, but it's terrible output. Nobody looking at the screen can tell what happened without memorizing a code.</p>
-<p>Specific, readable output is better than vague output. For example: if a player tries to buy something they can't afford, a message like <code>"Not enough gold. You need 20 more."</code> tells them exactly what happened and what to do next. A message like <code>"Error 402"</code> or nothing at all tells them nothing — they'd have to already know what that code means, or guess.</p>
+<p>Specific, readable output is better than vague output. For example: if a player tries to buy something they can't afford, a message like <code>"Not enough gold. You need 20 more."</code> tells them exactly what happened and what to do next. A message like <code>"Error 402"</code> or nothing at all tells them nothing. They'd have to already know what that code means, or guess.</p>
 <p>You'll come back to this idea properly once you've learned enough Python to actually handle errors gracefully (Unit 14). For now, just notice that the words you choose inside <code>print()</code> already matter.</p>
 </div>
 
@@ -356,7 +356,7 @@
 <p>You haven't learned <code>if</code> statements yet, that's Unit 05, but here's a short preview since this lesson's practice includes one. An <code>if</code> statement lets a program make a decision: if some condition is true, run the indented line(s) below it; if it's not true, skip them.</p>
 <pre>if health &lt;= 0:
     print("Game Over")</pre>
-<p>The colon <code>:</code> ends the <code>if</code> line. The indented <code>print(...)</code> line only runs when <code>health &lt;= 0</code> is true, that's how Python knows it belongs to the <code>if</code> instead of being just the next unrelated line. You'll practice building exactly this pattern in this lesson's practice — all the teaching for it is right here, so if the item is confusing, this is what to re-read.</p>
+<p>The colon <code>:</code> ends the <code>if</code> line. The indented <code>print(...)</code> line only runs when <code>health &lt;= 0</code> is true, that's how Python knows it belongs to the <code>if</code> instead of being just the next unrelated line. You'll practice building exactly this pattern in this lesson's practice. All the teaching for it is right here, so if the item is confusing, this is what to re-read.</p>
 
 <h2>Key Terms</h2>
 <div class="term-list">
@@ -397,8 +397,8 @@
   <li><strong>02_example_01.py</strong>. Open it in VS Code and run it, so you've seen real output before predicting it.</li>
   <li><strong>03_flashcards.html</strong> (optional warm-up). <a href="03_flashcards.html">Open the flashcards</a>. A few cards have a "Show Example" button once flipped, since this is where real syntax starts.</li>
   <li><strong>04_vocab_quiz.html</strong>. <a href="04_vocab_quiz.html">Open the vocab quiz</a>. Match each term to its definition, get all five right to earn XP. Studying the flashcards first will make this fast.</li>
-  <li><strong>05_practice.html</strong>. <a href="05_practice.html">Open Practice</a>. Typically 8-15 questions with immediate feedback — save this one too, it records your own path through the material.</li>
-  <li><strong>06_application.py</strong>. Open it in VS Code and write real print() statements of your own — this is where you apply what the drills built.</li>
+  <li><strong>05_practice.html</strong>. <a href="05_practice.html">Open Practice</a>. Typically 8-15 questions with immediate feedback. Save this one too, it records your own path through the material.</li>
+  <li><strong>06_application.py</strong>. Open it in VS Code and write real print() statements of your own. This is where you apply what the drills built.</li>
   <li><strong>07_project.html</strong>. <a href="07_project.html">Open the project</a>, a short applied task with bonus-XP tiers, before the mastery check.</li>
   <li><strong>08_project.py</strong>. Where you'll actually write the project.</li>
   <li><strong>09_mastery_check.html</strong>. <a href="09_mastery_check.html">Open the mastery check</a>. You'll need a password from your teacher.</li>
@@ -412,7 +412,7 @@
 </div>
 
 <div class="page-nav">
-  <div class="page-nav-note">Nothing to save on this page — it's reading only.</div>
+  <div class="page-nav-note">Nothing to save on this page. It's reading only.</div>
   <div class="page-nav-links">
     <a href="00_table_of_contents.html" class="page-nav-prev">← Table of Contents</a>
     <a href="03_flashcards.html" class="page-nav-next">Next: Flashcards →</a>
@@ -420,7 +420,7 @@
 </div>
 
 <script>
-// "Click to see the fixed version" reveal — added 2026-08-10. Purely a
+// "Click to see the fixed version" reveal, added 2026-08-10. Purely a
 // read/reveal toggle, nothing saved or graded, so no telemetry hook needed
 // (unlike the interactive drills in 05_practice.html).
 function toggleFix(id) {
@@ -428,7 +428,7 @@ function toggleFix(id) {
   el.classList.toggle('visible');
 }
 
-// Guided-practice quick check, added 2026-08-11 — same "nothing saved,
+// Guided-practice quick check, added 2026-08-11: same "nothing saved,
 // nothing graded" status as the reveal above. This is formative, meant to
 // catch a misread of the Anatomy section before moving on, not evidence.
 function checkQc1() {
@@ -436,9 +436,9 @@ function checkQc1() {
   const fb = document.getElementById('qc1-feedback');
   fb.className = 'feedback ' + (val === 'b' ? 'correct' : 'incorrect');
   if (val === 'b') {
-    fb.textContent = 'Right! print "Hello" has the word print and a quoted string, but no parentheses — that\'s exactly Mistake 2 below.';
+    fb.textContent = 'Right! print "Hello" has the word print and a quoted string, but no parentheses. That\'s exactly Mistake 2 below.';
   } else if (val === 'a' || val === 'c') {
-    fb.textContent = 'Look again — that part is actually there. Check each of the three required parts against the line one at a time.';
+    fb.textContent = 'Look again, that part is actually there. Check each of the three required parts against the line one at a time.';
   } else {
     fb.textContent = 'Pick an option first.';
   }

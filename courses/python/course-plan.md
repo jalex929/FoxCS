@@ -20,7 +20,7 @@ This file is the master checklist. Check off lessons as their `content/` markdow
 
 ## Unit 00: Course Onboarding
 
-**Revised 2026-08-17 — no longer authored standalone here.** Game I does not have its own Unit 00 anymore. It shares one onboarding unit with Game II and Web II — see `../../00-project-overview/shared-unit-00-onboarding.md`. Game I students see that doc's **Level 1** edition: Python pathway only, MDA framework kept as core content (not a tagged callout, since Game I is single-pathway), same lesson spine (Welcome, How Learning Works, Using Your Tools, Troubleshooting Is Learning, Computational Thinking, How Problem-Solving Works, Getting Unstuck). GMetrix's Domain 1/Lesson 1 tie-in (Python Introduction, Installing Python) and the original 50-75 word MDA journal prompt both carry over into that shared doc's Level 1 edition — not duplicated here. **Physically not yet built** — the shared doc is an outline only as of 2026-08-17, same status this section was already in.
+**Revised 2026-08-17, built 2026-08-18.** Game I does not have its own Unit 00 anymore. It shares one onboarding unit with Game II and Web II — design doc at `../../00-project-overview/shared-unit-00-onboarding.md`. Game I students see the **Level 1** edition, real built HTML at **`../../shared/unit_00_onboarding_level1/`** (`unit_00_overview.html`, 8 lessons `lesson_00_01_welcome/` through `lesson_00_08_academic_integrity/`, plus `kickoff/`): Python pathway only, MDA framework kept as core content (not a tagged callout, since Game I is single-pathway), same lesson spine (Welcome, How Learning Works, Using Your Tools, Troubleshooting Is Learning, Computational Thinking, How Problem-Solving Works, Getting Unstuck, Academic Integrity). GMetrix's Domain 1/Lesson 1 tie-in (Python Introduction, Installing Python) and the original 50-75 word MDA journal prompt both carry over into that shared doc's Level 1 edition — not duplicated here.
 
 Unit 01 below is Game I's real first authored unit.
 
@@ -28,12 +28,12 @@ Unit 01 below is Game I's real first authored unit.
 *GMetrix tie-in: none. The workbook has no conceptual "what is a program" content beyond installation, which is already placed under Unit 00.*
 *Game/UX tie-in: Input-Process-Output (01.2) is the basic model behind every interactive system, including a game loop (player input → game logic → screen output). Printing output (01.4) is a game's simplest form of feedback to the player. First usability idea: clear, friendly output beats terse or cryptic output.*
 *Journal (50-100 words): Every game takes input from a player and gives output back. Describe the Input-Process-Output loop for a game you know, using specific examples.*
-- [x] 01.1 What Programs Do ✅ drafted 2026-08-04 . `courses/python/content/unit_01_what_is_programming/lesson_01_01_what_programs_do/`
-- [x] 01.2 Input-Process-Output ✅ drafted 2026-08-04 . `courses/python/content/unit_01_what_is_programming/lesson_01_02_input_process_output/`
-- [x] 01.3 Writing Your First Program ✅ drafted 2026-08-04 . `courses/python/content/unit_01_what_is_programming/lesson_01_03_writing_your_first_program/`
-- [x] 01.4 Printing Output ✅ drafted 2026-08-04 . `courses/python/content/unit_01_what_is_programming/lesson_01_04_printing_output/`
-- [x] 01.5 Comments and Documentation ✅ drafted 2026-08-04 . `courses/python/content/unit_01_what_is_programming/lesson_01_05_comments_and_documentation/`
-- [x] 01.6 Common Syntax Mistakes ✅ drafted 2026-08-04 . `courses/python/content/unit_01_what_is_programming/lesson_01_06_common_syntax_mistakes/`
+- [x] 01.1 What Programs Do 🔍 reviewed 2026-08-30 (added a project step, see decisions-log.md) . `courses/python/content/unit_01_what_is_programming/lesson_01_01_what_programs_do/`
+- [x] 01.2 Input-Process-Output 🔍 reviewed 2026-08-30 (added the categorization drill) . `courses/python/content/unit_01_what_is_programming/lesson_01_02_input_process_output/`
+- [x] 01.3 Writing Your First Program 🔍 reviewed 2026-08-30 (added the sequencing drill + application.py) . `courses/python/content/unit_01_what_is_programming/lesson_01_03_writing_your_first_program/`
+- [x] 01.4 Printing Output 🔍 reviewed 2026-08-30 (reference implementation, em-dash cleanup only) . `courses/python/content/unit_01_what_is_programming/lesson_01_04_printing_output/`
+- [x] 01.5 Comments and Documentation 🔍 reviewed 2026-08-30 (em-dash cleanup only, structure was already current) . `courses/python/content/unit_01_what_is_programming/lesson_01_05_comments_and_documentation/`
+- [x] 01.6 Common Syntax Mistakes 🔍 reviewed 2026-08-30 (added the categorization drill) . `courses/python/content/unit_01_what_is_programming/lesson_01_06_common_syntax_mistakes/`
 - [x] 01 Project: Interactive Greeting ✅ drafted 2026-08-04. Scoped to print()/comments only (input()/variables aren't taught until Units 02-03); see `project/unit_01_project_instructions.html`
 
 ## Unit 02: Variables & Data
