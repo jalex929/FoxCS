@@ -136,7 +136,7 @@ ch1 = chapter([
             ("<div>a list of ingredients or tools</div>", False, "<div>Look again at the recipe example above. Think about the one thing a recipe and a program both actually are, structurally.</div>"),
             ("<div>a finished result, like a meal or a working app</div>", False, "<div>Look again at the recipe example above. Think about the one thing a recipe and a program both actually are, structurally.</div>"),
         ],
-        "Quick Check: What Is a Program?",
+        "Question 1",
     ),
     block_text("<h2>Computers Are Very Literal</h2><p>This matters because computers are extremely literal. A computer does not guess what you probably meant. It does exactly what the instructions say, no more, no less. That's not a limitation to work around, it's the whole reason programs are useful. If a computer improvised, you couldn't trust it to do the same thing twice.</p><p><strong>Real-World Example: a vending machine is a program too.</strong> A vending machine takes your money, checks whether you inserted enough, then either releases the item or shows an error. Every one of those checks and decisions was written ahead of time by a programmer as an exact instruction: &quot;<strong>if</strong> the amount inserted is less than the price, <strong>then</strong> do not release the item.&quot; The machine isn't deciding anything in the moment. It's following instructions someone else already wrote, the same way a program running on any computer does.</p>"),
     block_multichoice(
@@ -147,7 +147,7 @@ ch1 = chapter([
             ("<div>An automatic correction of the mistake</div>", False, "<div>Remember the vending machine example: the machine doesn't decide anything on its own.</div>"),
             ("<div>Nothing, because the computer will notice the mistake and stop on its own</div>", False, "<div>Remember the vending machine example: the machine doesn't decide anything on its own.</div>"),
         ],
-        "Quick Check: Computers Are Literal",
+        "Question 2",
     ),
     block_text("<h2>Where Python Fits In</h2><p><strong>Python</strong> is a programming language: a tool humans use to write instructions in a form a computer can actually carry out. There are many programming languages, the same way there are many spoken languages. They're different ways of writing the same kind of thing: precise, step-by-step instructions.</p><p><strong>Game Connection: every game you've ever played is a program.</strong> A game is a (very large) set of instructions: when the player presses this button, move the character that direction; when health reaches zero, show the game-over screen. Nothing in a game happens by magic or by the game &quot;wanting&quot; something to happen. Somewhere, a programmer wrote the exact instruction for it. This whole course is about learning to write those instructions yourself, starting from the smallest possible piece.</p>"),
     block_text("<h2>Key Terms</h2><p><strong>program:</strong> A set of step-by-step instructions a computer follows, in order. Think of it like a recipe.</p><p><strong>instruction:</strong> A single step in a program that tells the computer exactly what to do. Think of it like one line in a recipe.</p><p><strong>programmer:</strong> A person who writes the instructions that make up a program. Think of it like the person who writes a recipe.</p><p><strong>Python:</strong> A programming language, a tool for writing instructions in a form a computer can carry out. The one this course uses.</p>"),
@@ -177,13 +177,13 @@ ch3 = chapter([
                     block_multichoice(f"<p>Which term matches: &quot;{d}&quot;</p>", [
                         (f"<div>{t}</div>", t == correct_term, "<div>Check the definitions again.</div>" if t != correct_term else "<div>Correct!</div>")
                         for t in ["program", "instruction", "programmer", "Python"]
-                    ], f"Vocab: {correct_term}")["content"]
-                    for (correct_term, d) in [
+                    ], f"Question {i}")["content"]
+                    for i, (correct_term, d) in enumerate([
                         ("program", "A set of step-by-step instructions a computer follows, in order."),
                         ("instruction", "A single step in a program that tells the computer exactly what to do."),
                         ("programmer", "A person who writes the instructions that make up a program."),
                         ("Python", "A programming language, a tool for writing instructions in a form a computer can carry out."),
-                    ]
+                    ], 1)
                 ],
                 "texts": {
                     "prevButton": "Previous question", "previous": "Previous", "nextButton": "Next question",
@@ -276,7 +276,7 @@ ch4 = chapter([
             "params": {
                 "introPage": {"showIntroPage": False, "startButtonText": "Start", "introduction": ""},
                 "progressType": "dots", "passPercentage": 70,
-                "questions": [block_multichoice(q, a, t)["content"] for (t, q, a) in practice_qs],
+                "questions": [block_multichoice(q, a, f"Question {i}")["content"] for i, (t, q, a) in enumerate(practice_qs, 1)],
                 "texts": {
                     "prevButton": "Previous question", "previous": "Previous", "nextButton": "Next question",
                     "next": "Next", "finishButton": "Finish", "submitButton": "Submit",
@@ -337,22 +337,22 @@ ch6 = chapter([
     block_essay(
         "<p>1. Explain, in your own words, what a program is. Use an example from everyday life that is <em>not</em> a video game and <em>not</em> a calculator app.</p>",
         "Type your answer here.",
-        "Mastery Check: What Is a Program?",
+        "Question 1",
     ),
     block_essay(
         "<p>2. A vending machine takes your money, checks whether you inserted enough, and then either gives you the item or shows an error. Describe at least one specific instruction you think must exist somewhere inside the vending machine's program for this to work.</p>",
         "Type your answer here.",
-        "Mastery Check: The Vending Machine's Instructions",
+        "Question 2",
     ),
     block_essay(
         "<p>3. A friend tells you, &quot;Computers are smart. They figure things out on their own.&quot; Based on what you learned in this lesson, do you agree or disagree? Explain your answer using the word <em>instruction</em>.</p>",
         "Type your answer here.",
-        "Mastery Check: Are Computers Smart?",
+        "Question 3",
     ),
     block_essay(
         "<p>4. Explain what a programming language like Python is for, and why a programmer needs one to make a computer do something.</p>",
         "Type your answer here.",
-        "Mastery Check: What Python Is For",
+        "Question 4",
     ),
 ], "Mastery Check")
 
@@ -362,27 +362,27 @@ ch7 = chapter([
     block_essay(
         "<p>1. How clear was it what you were being asked to do in this lesson? Rate 1-5 (1 = confusing, 5 = totally clear), then explain. If any part was unclear, describe what it was.</p>",
         "Type your rating and answer here.",
-        "Feedback: Clarity",
+        "Question 1",
     ),
     block_essay(
         "<p>2. How difficult was this lesson for you? Rate 1-5 (1 = too easy, 5 = too difficult), then explain. What part felt the most difficult, if any?</p>",
         "Type your rating and answer here.",
-        "Feedback: Difficulty",
+        "Question 2",
     ),
     block_essay(
         "<p>3. How interesting did this lesson feel to you? Rate 1-5 (1 = not interesting, 5 = very interesting).</p>",
         "Type your rating here.",
-        "Feedback: Interest",
+        "Question 3",
     ),
     block_essay(
         "<p>4. This lesson taught 4 words: <code>program</code>, <code>instruction</code>, <code>programmer</code>, <code>Python</code>. Name any that you still find hard to explain in your own words, or write &quot;none&quot; if you can explain all 4.</p>",
         "Type your answer here.",
-        "Feedback: Which Terms Are Still Hard?",
+        "Question 4",
     ),
     block_essay(
         "<p>5. What part of this lesson felt the most rewarding, or helped you learn the most? Give a specific example.</p>",
         "Type your answer here.",
-        "Feedback: What Helped Most",
+        "Question 5",
     ),
 ], "Feedback")
 

@@ -379,6 +379,8 @@ Re-uploaded as cmid 105. Verified via DB: counter label set, all 4 fixes' conten
 
 Now 7 chapters, 10 Essay questions, 15 MultiChoice questions, 1 Dialogcards deck, zero validity errors, zero em-dashes. Re-uploaded as cmid 107.
 
+**Interactive Book pilot: simplified individual question titles, 2026-08-30 (same day, yet later).** Jay's feedback: descriptive per-question titles ("Quick Check: What Is a Program?", "Vocab: program", "Practice: The Programmer", etc.) were more than needed -- simpler to just call them "Question 1", "Question 2" within each chapter. Applied everywhere individual question-type items appear (2 Quick Checks in Instruction, 4 Vocab Quiz questions, 9 Practice questions, 4 Mastery Check questions, 5 Feedback questions) -- chapter-level titles (Instruction, Flashcards, Vocab Quiz, etc.) and the two singular items (the Flashcards deck, the Project essay) kept their real names, since "Question 1" only reads as simpler when there's more than one in the same list. Re-uploaded as cmid 108, verified via DB.
+
 **Next up (Python):**
 1. **Jay's review of the now-complete Interactive Book pilot vs. the HTML-file version**, including trying the fullscreen button for the nav-loss issue and weighing the lost password-gate/timestamp mechanism on Mastery Check — decides whether to port Lessons 01.2-01.6 to the same format. This is the big fork in the road right now.
 2. Get Jay's call on 01.1's project step (HTML-file version).
