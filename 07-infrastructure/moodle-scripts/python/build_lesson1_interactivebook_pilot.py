@@ -254,6 +254,18 @@ practice_qs = [
         ("<div>A book doesn't have page numbers</div>", False, "<div>Length has nothing to do with whether something is a program.</div>"),
         ("<div>A book was written by an author, not a programmer</div>", False, "<div>The real reason is about what a book actually does (or doesn't do), not who wrote it.</div>"),
     ]),
+    ("Practice: The Game Connection", "<p>In a video game, a player's health reaches zero and a &quot;Game Over&quot; screen appears. Who decided that this exact thing should happen?</p>", [
+        ("<div>A programmer wrote that exact instruction ahead of time</div>", True, "<div>Right! Nothing in a game happens by magic or by the game &quot;wanting&quot; something. A programmer wrote the instruction for it, the same way the vending machine's instructions were written ahead of time.</div>"),
+        ("<div>The game decides on its own, in the moment</div>", False, "<div>Games don't decide anything on their own. Re-read the Game Connection section above.</div>"),
+        ("<div>The player caused it by losing</div>", False, "<div>Losing triggers the instruction, but a programmer is the one who wrote what happens when it's triggered.</div>"),
+        ("<div>It happens automatically, without anyone writing it</div>", False, "<div>Nothing in a program happens without someone writing the instruction for it first.</div>"),
+    ]),
+    ("Practice: Applying What You Know", "<p>A classmate says, &quot;A recipe and a computer program aren't really that similar, a recipe is just words on paper.&quot; What's the best response, based on this lesson?</p>", [
+        ("<div>They're similar in the way that matters: both are exact, ordered steps that produce the same result every time they're followed.</div>", True, "<div>Right! The comparison isn't about paper vs. computer, it's about the structure: exact, ordered steps.</div>"),
+        ("<div>Your classmate is right, they have nothing in common.</div>", False, "<div>Think back to the very first section of this lesson. What did it say a recipe and a program actually share?</div>"),
+        ("<div>They're similar because both take a long time to make.</div>", False, "<div>Time has nothing to do with why a recipe and a program were compared in this lesson.</div>"),
+        ("<div>They're similar because both are written by professionals.</div>", False, "<div>Who wrote them isn't the point of the comparison in this lesson.</div>"),
+    ]),
 ]
 
 ch4 = chapter([
@@ -292,9 +304,11 @@ ch4 = chapter([
 
 # ---- Chapter 5: Project ----
 ch5 = chapter([
-    block_text("<h2>Project: Design a Program</h2><p>A short applied task. You haven't learned real Python syntax yet (that starts in Lesson 01.3), so this project applies this lesson's big idea directly: a program is an exact, ordered set of instructions. You'll write that set of instructions yourself, in plain English, for a system of your choice.</p><p>Pick <strong>one</strong> real-world system that runs on a program, other than the vending machine from this lesson (an ATM, a microwave, a traffic light, an alarm clock, or a simple game mechanic like a jump button are all good choices). Write out the exact, numbered instructions a computer would need to follow to run it.</p><p><strong>Requirements:</strong> name your system in one sentence; write at least 5 numbered instructions, each exact enough that someone unfamiliar with your system could follow it without guessing; include at least one instruction that checks something and behaves differently depending on the answer (an &quot;if this, then that&quot; moment); no vague steps like &quot;do the right thing.&quot;</p>"),
+    block_text("<h2>Project: Design a Program</h2><p>A short applied task. You haven't learned real Python syntax yet (that starts in Lesson 01.3), so this project applies this lesson's big idea directly: a program is an exact, ordered set of instructions. You'll write that set of instructions yourself, in plain English, for a system of your choice.</p><p>Pick <strong>one</strong> real-world system that runs on a program, other than the vending machine from this lesson (an ATM, a microwave, a traffic light, an alarm clock, or a simple game mechanic like a jump button are all good choices). Write out the exact, numbered instructions a computer would need to follow to run it.</p>"),
+    block_text("<h2>How to Write an &quot;If This, Then That&quot; Instruction</h2><p>Some instructions only happen when something is true. These are called <strong>conditional instructions</strong>, and they all follow the same simple pattern:</p><p style=\"text-align:center;\"><strong>If</strong> [something is true], <strong>then</strong> [do this].</p><p>First you name the exact thing being checked (the &quot;if&quot; part). Then you say exactly what happens as a result (the &quot;then&quot; part). The vending machine example from earlier in this lesson uses this pattern: &quot;If the amount inserted is less than the price, then do not release the item.&quot;</p><p>Here's one more example, for a different system, an alarm clock: &quot;If the current time matches the alarm time, then sound the alarm.&quot; Notice both examples name one specific thing to check, then one specific thing that happens. Your project needs at least one instruction shaped exactly like this, for whatever system you choose.</p>"),
+    block_text("<h2>Requirements</h2><ul><li>Name the system you chose in one sentence. It cannot be the vending machine from this lesson.</li><li>Write at least 5 numbered instructions, each exact enough that someone unfamiliar with your system could follow it without guessing.</li><li>Include at least one &quot;if this, then that&quot; instruction (see above), naming one specific thing to check and one specific thing that happens as a result.</li><li>No vague steps like &quot;do the right thing&quot; or &quot;handle it&quot;. Every instruction says exactly what happens.</li></ul>"),
     block_essay(
-        "<p>Write your numbered instruction list here (at least 5 steps, including one &quot;if this, then that&quot; check). Name your system in your first line.</p>",
+        "<p>Write your numbered instruction list here (at least 5 steps, including one &quot;if this, then that&quot; instruction). Name your system in your first line.</p>",
         "Type your numbered instructions here.",
         "Design a Program: Your Instructions",
     ),
@@ -308,6 +322,12 @@ ch6 = chapter([
 content = {
     "showCoverPage": False,
     "chapters": [ch1, ch2, ch3, ch4, ch5, ch6],
+    # "page" is the counter-label word shown with the chapter position (e.g.
+    # "X of Y" / "X/Y" depending on theme). Left at its H5P default ("Page")
+    # this duplicated each chapter's own on-page title in the counter, which
+    # Jay flagged as confusing (2026-08-30) -- a distinct, generic label reads
+    # more clearly than the chapter's own name repeated back at it.
+    "page": "Learning Activities",
     "behaviour": {
         "baseColor": "#1a5aa8",
         "defaultTableOfContents": True,
