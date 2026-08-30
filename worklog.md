@@ -351,8 +351,10 @@ Jay asked to start building out Game I (Python), picking Units 00 and 01. **Unit
 
 **Lower priority, but worth a skim:** the ~475 em-dash fixes across 01.1-01.5 were mostly mechanical (period-split/colon/comma substitutions) — read through a page or two per lesson to confirm nothing reads awkwardly after the edit, especially in `05_practice.html`'s drill feedback strings (lesson_01_04) where several fixes landed inside JS template strings.
 
+**Unit 01's content is now also viewable in Moodle** (`foxcs-python`, section 2), since Jay had no way to open local files from this droplet session before reaching his desktop. Overview page + all 6 lessons (each one Moodle resource, multi-file, with `00_table_of_contents.html` as the entry point) + the unit project pair, 9 resources total. **One real, permanent limitation**: the nav menu's links to *other* lessons don't work from inside Moodle (they'd silently show the wrong lesson's content, not a clean 404, so they were stripped from the Moodle copies specifically) — within-lesson navigation works fine, but moving between lessons in Moodle means going back to the section list. Full detail in `decisions-log.md`; scripts and reasoning in `07-infrastructure/moodle-scripts/python/README.md`. Access: same SSH tunnel as Seminar III (`ssh -L 8080:localhost:80 foxcs-droplet`, browse `http://localhost:8080`), admin login `FoxCS2026Admin!`.
+
 **Next up (Python):**
 1. Get Jay's call on 01.1's project step.
-2. The Playwright verification checklist above, once Jay's on his desktop.
+2. The Playwright verification checklist above, once Jay's on his desktop — now also covers reviewing the Moodle copies, not just the repo files.
 3. Em-dash sweep beyond Unit 01 — Unit 00's shared onboarding content and the rest of FoxCS haven't been checked.
-4. Units 00 (now resolved) and 02-20 are still the real remaining Python scope — only Unit 01 has content.
+4. Units 00 (now resolved) and 02-20 are still the real remaining Python scope — only Unit 01 has content, in the repo or in Moodle.

@@ -4,6 +4,24 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-08-30 (yet later still) — Python Unit 01 content uploaded to Moodle, as a review channel
+
+**Context:** Jay tried to review Unit 01's content but has no way to open local HTML files from this droplet session (not on his desktop yet). He'd apparently looked at the `foxcs-python` Moodle shell (built 2026-08-29 as an empty structural skeleton) and found "Unit 1 empty" — accurate for Moodle specifically, even though the repo's Unit 01 content is fully built. Asked directly whether to keep Python's Moodle shell empty (repo-only review, wait for desktop) or upload the built content there now; chose to upload.
+
+**Decided:** Moodle becomes an additional review/preview channel for Python content, not a replacement for the Google Classroom MVP delivery model (unchanged, still paused-for-Moodle per root `CLAUDE.md`'s Status section).
+
+**Real technical problem solved:** Python's lesson folders are ~8-12 numbered files linked by real relative paths, including a nav menu that also links to every *other* lesson in the unit. Uploading each file as its own Moodle resource (Seminar III's pattern) would create 60+ items for just Unit 01 — the exact sprawl problem fixed for Seminar III's Lesson 1 earlier the same day. Instead, built a multi-file-per-resource approach: each lesson uploads as **one** Moodle resource containing all its files, with `00_table_of_contents.html` set as the main/entry file via `file_set_sortorder()` (confirmed by reading Moodle's own `mod/resource/locallib.php`, not guessed) — sibling files in the same resource resolve correctly since Moodle serves them from one shared file area.
+
+**Real limitation found and handled, not glossed over:** a cross-lesson link (`../lesson_01_02.../...`) doesn't 404 in this setup — it silently resolves back into the *same* resource's own file area, so a student clicking "jump to Lesson 01.2" from inside 01.1 would silently stay on 01.1 with no visible error. Confirmed by testing the actual `pluginfile.php` URL, not assumed. Fixed by staging a Moodle-specific copy (`07-infrastructure/moodle-scripts/python/stage_unit01_for_moodle.py`) that strips cross-lesson menu entries before upload — **the real repo files are untouched**, since the un-stripped version is correct for their actual Google Classroom delivery context. Within-lesson navigation (flashcards, quiz, practice, project, mastery check) still works perfectly; moving between lessons in the Moodle copy requires going back to the course's section list.
+
+**Built and live:** `foxcs-python` section 2 (Unit 01) now has an overview page, all 6 lessons, and the unit-level project pair, 9 resources total, all verified via authenticated fetch (correct title, correct main file, same-lesson sibling navigation confirmed working). Full scripts and reasoning: `07-infrastructure/moodle-scripts/python/README.md`.
+
+**Found, not touched:** a pre-existing stray resource ("Lesson 1 Presentation (Teacher)") sitting in `foxcs-python` section 1 (Orientation) — doesn't match Python's naming convention at all (uses Seminar III's "Lesson N" pattern), likely a leftover test artifact from 2026-08-29's course-shell build. Harmless, unrelated to this section's work, left alone rather than guessed at.
+
+**Not yet done:** Units 00, 02-20 have no content to upload yet. No real-browser (Playwright) verification of any of this — see `worklog.md`'s checklist, same gap as the rest of today's Python work.
+
+---
+
 ## 2026-08-30 (yet later) — Python Unit 01 brought to full consistency; nav-menu sync tooling built
 
 **Context:** Jay asked to start building out FoxCS: Python (Game I), picking Unit 00 (Course Onboarding) and Unit 01 first. Investigation found Unit 00 was a false alarm: it's already fully built as shared cross-course content (`shared/unit_00_onboarding_level1/`, done 2026-08-18) — only `course-plan.md`'s stale pointer needed fixing. The real work was Unit 01, which `mvp-unit-folder-structure.md` and `unit-01-content-inventory.md` both (incorrectly) claimed was "not yet rebuilt to the current pattern" for 5 of its 6 lessons.
