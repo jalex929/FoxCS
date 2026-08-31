@@ -94,12 +94,12 @@ QUESTIONS = [
     # Q3 -- the former standalone "sequence a real-world problem" activity,
     # now folded in as one question in this set, per Jay directly.
     mc_with_tip(
-        "<p>A recipe says: take 2 cups of flour, add 3 cups for every batch you're doubling, then split the total evenly into 4 containers. If you're making 2 batches, how much flour goes in each container?</p>",
+        "<p>A recipe calls for 4 cups of flour per batch. You're making 2 batches, and you want to split all of the flour evenly between 4 storage containers. How much flour goes in each container?</p>",
         [
-            ("2 cups", True, "Right! Total flour: 2 + (3 &times; 2) = 8 cups. Split into 4 containers: 8 &divide; 4 = 2 cups each."),
-            ("1.25 cups", False, "Check the order: figure out the total flour first, using the doubling instruction, before splitting it up."),
-            ("5 cups", False, "This skips the split-into-4-containers step -- reread the whole problem before calculating."),
+            ("2 cups", True, "Right! Total flour: 4 &times; 2 = 8 cups. Split into 4 containers: 8 &divide; 4 = 2 cups each."),
+            ("4 cups", False, "This is the flour for one batch, not the total split across all 4 containers -- find the total first, then divide."),
             ("8 cups", False, "This is the total flour before splitting it into containers -- the question asks for the amount per container."),
+            ("1 cup", False, "Check both steps separately: total flour first (batches &times; cups per batch), then divide by the number of containers."),
         ],
     ),
     # Q4 -- harder, exponents mixed in
