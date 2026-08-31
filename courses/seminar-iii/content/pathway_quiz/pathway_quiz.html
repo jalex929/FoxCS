@@ -1,0 +1,199 @@
+<!-- Seminar III postsecondary-pathway placement quiz (Workforce Readiness / College Prep /
+     Dual Enrollment). Self-scoring, client-side only -- no server round-trip, no grade
+     recorded, a starting-point suggestion only. Per Jay 2026-08-31: Dual Enrollment can be
+     the headline result, but is always shown paired with College Prep as a required backup,
+     since Dual Enrollment doesn't run the whole period every day. Keep "ACT" framing light
+     per courses/seminar-iii/CLAUDE.md's explicit guidance -- this quiz doesn't mention it. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pathway Placement Quiz: Seminar III</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  .question { border: 1px solid #dde3ea; border-radius: 8px; padding: 1rem 1.3rem; margin: 1.2rem 0; }
+  .question-num { font-family: Verdana, Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.4rem; }
+  .question-text { font-weight: bold; margin: 0 0 0.7rem; }
+  .option-row { display: block; margin: 0.5rem 0; cursor: pointer; }
+  .option-row input { margin-right: 0.6rem; }
+  button.quiz-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; margin-top: 1rem; }
+  button.quiz-btn:hover:not(:disabled) { background: #12447f; }
+  button.quiz-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .quiz-progress { font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; color: #556; margin-top: 0.6rem; }
+  .result-box { display: none; border-radius: 10px; padding: 1.4rem 1.6rem; margin: 1.6rem 0; border: 2px solid; }
+  .result-box.workforce { background: #eef8f2; border-color: #1f7a4f; }
+  .result-box.collegeprep { background: #eef4fb; border-color: #1a5aa8; }
+  .result-box.dual { background: #f4f2fb; border-color: #4a3aa7; }
+  .result-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.4rem; }
+  .result-title { font-family: Verdana, Arial, sans-serif; font-size: 1.4rem; margin: 0 0 0.6rem; }
+  .backup-note { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 0.9rem 1.1rem; margin-top: 1rem; }
+  .backup-note-label { font-family: Verdana, Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #7a4800; margin-bottom: 0.4rem; }
+  .result-bars { font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; margin-top: 1rem; }
+  .result-bar-row { display: flex; align-items: center; gap: 0.6rem; margin: 0.3rem 0; }
+  .result-bar-label { width: 150px; flex-shrink: 0; }
+  .result-bar-track { flex: 1; background: #e3e8ee; border-radius: 4px; height: 10px; overflow: hidden; }
+  .result-bar-fill { height: 100%; border-radius: 4px; }
+  .result-bar-fill.workforce { background: #1f7a4f; }
+  .result-bar-fill.collegeprep { background: #1a5aa8; }
+  .result-bar-fill.dual { background: #4a3aa7; }
+  .reminder-box { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .reminder-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #7a4800; margin-bottom: 0.5rem; }
+  .retake-link { font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .retake-link a { color: #1a5aa8; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<span class="question-num">Choosing Your Path</span>
+<h1>Pathway Placement Quiz</h1>
+
+<div class="objectives">
+<strong>What this is:</strong> 8 quick questions about your plans after high school. At the end you'll get a suggested starting pathway — <strong>Workforce Readiness</strong>, <strong>College Prep</strong>, or <strong>Dual Enrollment</strong>. This is a starting point, not a locked-in decision — you can revisit it with your teacher any time this year.
+</div>
+
+<form id="quizForm">
+
+<div class="question" data-q="1">
+<div class="question-num">Question 1 of 8</div>
+<div class="question-text">What's your honest first thought about the year right after you graduate?</div>
+<label class="option-row"><input type="radio" name="q1" value="workforce">Start working, or start a trade/certificate program.</label>
+<label class="option-row"><input type="radio" name="q1" value="collegeprep">Go to a 4-year or 2-year college.</label>
+<label class="option-row"><input type="radio" name="q1" value="dual">Start earning real college credit before I even graduate.</label>
+</div>
+
+<div class="question" data-q="2">
+<div class="question-num">Question 2 of 8</div>
+<div class="question-text">Which sounds more useful to actually practice this year?</div>
+<label class="option-row"><input type="radio" name="q2" value="workforce">Resumes, job applications, and interviews.</label>
+<label class="option-row"><input type="radio" name="q2" value="collegeprep">College applications and admissions essays.</label>
+<label class="option-row"><input type="radio" name="q2" value="dual">Handling an actual college-level course while still in high school.</label>
+</div>
+
+<div class="question" data-q="3">
+<div class="question-num">Question 3 of 8</div>
+<div class="question-text">How do you feel about spending 4 more years in school after this one?</div>
+<label class="option-row"><input type="radio" name="q3" value="workforce">I'd rather not — I want to be earning sooner.</label>
+<label class="option-row"><input type="radio" name="q3" value="collegeprep">I'm fine with it if it gets me where I want to go.</label>
+<label class="option-row"><input type="radio" name="q3" value="dual">I'd rather get a head start on it now if I can.</label>
+</div>
+
+<div class="question" data-q="4">
+<div class="question-num">Question 4 of 8</div>
+<div class="question-text">Which is closest to true for you right now?</div>
+<label class="option-row"><input type="radio" name="q4" value="collegeprep">I don't know my exact career yet, but I want to keep my options open through college.</label>
+<label class="option-row"><input type="radio" name="q4" value="workforce">I have a pretty clear idea of the job or trade I want, and it doesn't require a 4-year degree.</label>
+<label class="option-row"><input type="radio" name="q4" value="dual">College is already part of my plan, and I don't want to wait until after graduation to start.</label>
+</div>
+
+<div class="question" data-q="5">
+<div class="question-num">Question 5 of 8</div>
+<div class="question-text">Be honest — how does your current class schedule/workload feel most days?</div>
+<label class="option-row"><input type="radio" name="q5" value="dual">Manageable enough that I could take on something extra and more independent.</label>
+<label class="option-row"><input type="radio" name="q5" value="collegeprep">About right — I want to build up to more, not add extra right now.</label>
+<label class="option-row"><input type="radio" name="q5" value="workforce">Full already — I'd rather build skills I can use soon than add more coursework.</label>
+</div>
+
+<div class="question" data-q="6">
+<div class="question-num">Question 6 of 8</div>
+<div class="question-text">Which would you rather actually practice building this year?</div>
+<label class="option-row"><input type="radio" name="q6" value="workforce">A resume and real workplace communication skills.</label>
+<label class="option-row"><input type="radio" name="q6" value="collegeprep">A strong college application and a sense of which schools fit me.</label>
+<label class="option-row"><input type="radio" name="q6" value="dual">The independence a real college class requires.</label>
+</div>
+
+<div class="question" data-q="7">
+<div class="question-num">Question 7 of 8</div>
+<div class="question-text">Money-wise, what matters most to you right now?</div>
+<label class="option-row"><input type="radio" name="q7" value="workforce">Earning a paycheck as soon as possible.</label>
+<label class="option-row"><input type="radio" name="q7" value="collegeprep">Finding ways to pay for college (aid, scholarships) when the time comes.</label>
+<label class="option-row"><input type="radio" name="q7" value="dual">Saving money on college by earning some credit for free or low-cost now.</label>
+</div>
+
+<div class="question" data-q="8">
+<div class="question-num">Question 8 of 8</div>
+<div class="question-text">Last one — which sentence sounds the most like you?</div>
+<label class="option-row"><input type="radio" name="q8" value="collegeprep">"I want help figuring out where I fit — I'm not 100% sure yet."</label>
+<label class="option-row"><input type="radio" name="q8" value="workforce">"I already know what I want to do, and it's not a 4-year degree."</label>
+<label class="option-row"><input type="radio" name="q8" value="dual">"I already know college is happening — I just want to get ahead on it."</label>
+</div>
+
+<div class="quiz-progress" id="quizProgress">0 of 8 answered</div>
+<button type="button" class="quiz-btn" id="quizSubmitBtn" onclick="showResult()" disabled>See My Result</button>
+</form>
+
+<div class="result-box workforce" id="resultWorkforce">
+<div class="result-label">Your Suggested Starting Pathway</div>
+<div class="result-title" style="color:#1f5c47;">Workforce Readiness</div>
+<p>You're leaning toward moving directly into work, a trade, or a certificate program after graduation — not a 4-year college track. This pathway focuses on real job-readiness: resumes, applications, interviews, and workplace communication.</p>
+</div>
+<div class="result-box collegeprep" id="resultCollegeprep">
+<div class="result-label">Your Suggested Starting Pathway</div>
+<div class="result-title" style="color:#1a5aa8;">College Prep</div>
+<p>You're leaning toward college after graduation, whether or not you know your exact major or school yet. This pathway focuses on getting you ready for admissions: applications, essays, and figuring out which schools actually fit you.</p>
+</div>
+<div class="result-box dual" id="resultDual">
+<div class="result-label">Your Suggested Starting Pathway</div>
+<div class="result-title" style="color:#4a3aa7;">Dual Enrollment</div>
+<p>You're leaning toward getting a real head start on college credit while you're still in high school. This is the most independent, self-paced option, and it's a great fit if you already know college is part of your plan.</p>
+<div class="backup-note">
+<div class="backup-note-label">Important: Pair This With College Prep</div>
+<p>Dual Enrollment doesn't meet the whole period every day, so anyone choosing it also needs <strong>College Prep as a backup</strong> for the rest of that time. Think of your real pathway as "Dual Enrollment + College Prep," not Dual Enrollment on its own.</p>
+</div>
+</div>
+
+<div id="resultBars" class="result-bars" style="display:none;">
+  <div class="result-bar-row"><div class="result-bar-label">Workforce Readiness</div><div class="result-bar-track"><div class="result-bar-fill workforce" id="barWorkforce"></div></div></div>
+  <div class="result-bar-row"><div class="result-bar-label">College Prep</div><div class="result-bar-track"><div class="result-bar-fill collegeprep" id="barCollegeprep"></div></div></div>
+  <div class="result-bar-row"><div class="result-bar-label">Dual Enrollment</div><div class="result-bar-track"><div class="result-bar-fill dual" id="barDual"></div></div></div>
+</div>
+
+<div class="reminder-box" id="reminderBox" style="display:none;">
+<div class="reminder-label">Before You Decide</div>
+<p>This is a starting point, not a locked-in decision — your pathway can be revisited with your teacher any time this year as your plans get clearer.</p>
+<p><strong>Next step:</strong> go to the <strong>"Choose Your Pathway"</strong> activity right below this one in the course to officially let your teacher know which pathway you're starting with (or that you're still undecided).</p>
+</div>
+
+<div class="retake-link" id="retakeLink" style="display:none;">
+<a onclick="location.reload()">↺ Retake the quiz</a>
+</div>
+
+<script>
+const TOTAL_QUESTIONS = 8;
+function countAnswered() {
+  let n = 0;
+  for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+    if (document.querySelector('input[name="q' + i + '"]:checked')) n++;
+  }
+  return n;
+}
+document.getElementById('quizForm').addEventListener('change', function() {
+  const answered = countAnswered();
+  document.getElementById('quizProgress').textContent = answered + ' of ' + TOTAL_QUESTIONS + ' answered';
+  document.getElementById('quizSubmitBtn').disabled = answered < TOTAL_QUESTIONS;
+});
+function showResult() {
+  const scores = {workforce: 0, collegeprep: 0, dual: 0};
+  for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+    const checked = document.querySelector('input[name="q' + i + '"]:checked');
+    if (checked) scores[checked.value]++;
+  }
+  const max = Math.max(scores.workforce, scores.collegeprep, scores.dual);
+  document.getElementById('quizForm').style.display = 'none';
+  if (scores.workforce === max) document.getElementById('resultWorkforce').style.display = 'block';
+  if (scores.collegeprep === max) document.getElementById('resultCollegeprep').style.display = 'block';
+  if (scores.dual === max) document.getElementById('resultDual').style.display = 'block';
+  document.getElementById('barWorkforce').style.width = (scores.workforce / TOTAL_QUESTIONS * 100) + '%';
+  document.getElementById('barCollegeprep').style.width = (scores.collegeprep / TOTAL_QUESTIONS * 100) + '%';
+  document.getElementById('barDual').style.width = (scores.dual / TOTAL_QUESTIONS * 100) + '%';
+  document.getElementById('resultBars').style.display = 'block';
+  document.getElementById('reminderBox').style.display = 'block';
+  document.getElementById('retakeLink').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>

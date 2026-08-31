@@ -199,6 +199,12 @@ Jay asked to make Moodle content as accessible as possible once real students ar
 
 Full detail in `07-infrastructure/moodle-course-shells.md`'s new "Access-ease pass" section.
 
+## HIGH PRIORITY — flagged 2026-08-31, not started
+
+**Need a Moodle-zip-based grading script, separate from and in addition to `05-grader/feedback-and-grading-spec.md`'s judgment/rubric guidance.** Jay's plan: download the export zip Moodle produces (e.g. an assignment's "Download all submissions," and/or a quiz/gradebook export) and place it somewhere in Google Drive the droplet can reach, rather than relying on the school-machine folder-download flow `05-grader/school-side/auto_grade.py` was originally built against (that script assumes Classroom-style codename-swapped folders with `_completed`-suffixed HTML + `foxcs-telemetry` JSON — see `05-grader/README.md`'s two-tier architecture). Since submissions are now real, live on Moodle (`mod_assign` file uploads, `mod_quiz` attempts) rather than Classroom folders, the ingest side of the grader needs to be rebuilt/extended around Moodle's actual export zip structure before the existing spec/script can be applied to real student work.
+
+**Not started — open questions for whenever this is picked back up:** what Moodle's export zip actually contains/is named per activity type (assignment submission zip vs. quiz/gradebook CSV export), whether one combined zip per Unit or per-activity exports is the right unit, how the Drive-to-droplet path is meant to work (a synced folder? manual upload the droplet reads from?), and whether `auto_grade.py`'s existing telemetry-parsing logic can be reused as-is once file paths point at Moodle's zip contents instead of a Classroom download, or needs real rework.
+
 ## Bug reported by Jay, 2026-08-29 — deck slide overflow in Moodle's embedded viewer
 
 **Some presentation decks have text running off the slide when viewed embedded in Moodle**, and the embedded viewer itself has overflow/layout problems that don't look right, at least at laptop screen sizes. Not diagnosed yet — could be the decks' own fixed-viewport CSS (`vh`/`vw` units sized for the 16:9 PDF render, not for however Moodle's embed iframe/pane actually sizes itself) clashing with a smaller or differently-proportioned embedded viewport, or something in how Moodle's `RESOURCELIB_DISPLAY_EMBED` frames the content. Needs an actual laptop-sized viewport to reproduce and fix properly, not just a code read.
@@ -439,3 +445,27 @@ Now 7 chapters, 10 Essay questions, 15 MultiChoice questions, 1 Dialogcards deck
 **Not yet mapped:** which of tonight's specific activities correspond to which existing XP category (Vocab Quiz = 5, Journal Entry = scales with word count, Mastery Check = 20, etc.) — some, like the pathway-placement personality quizzes and the Choose Your Pathway self-report question, don't cleanly match any existing category and would need a real decision, not an assumption.
 
 **Next steps, whenever this gets picked up:** (1) decide whether Moodle-native XP tracking reads from `mdl_h5p_xapi_results`/the gradebook directly, or some other mechanism; (2) map each tonight-built activity to an XP category or decide it earns none (matching the existing "no XP for passive content" rule); (3) design the aggregation/lookup step fresh for this data source rather than assuming `auto_grade.py`'s existing pipeline extends cleanly.
+
+## 2026-08-31 (later) — Content-authoring pipeline gap analysis + 5 recommendations implemented, first two real adaptive clusters built
+
+Jay asked for a comparison of FoxCS's authoring pipeline against `jalex929/python-app` (temporarily made public, cloned, re-privated) to find why content needs too much manual correction on the first pass. Full detail in `decisions-log.md`'s matching 2026-08-31 entry — summary here for quick scanning:
+
+**Wrote `02-authoring-system/pipeline-comparison-python-app-2026-08-31.md`**: core finding is FoxCS already has the right content-quality philosophy (ported from python-app previously), missing piece is enforcement — no automated check ties a documented rule to something that actually verifies it. Grounded in two real incidents found *this session*: a stale codename-format doc, and a worklog entry describing an already-fixed bug as still-broken.
+
+**5 recommendations, all implemented via parallel/sequenced subagents:** source-of-truth doc list in `CLAUDE.md`, "last verified" freshness markers, `02-authoring-system/doc-health.md`, an explicit AI-content-validation rule in `authoring-workflow.md`, and new automated checkers (`02-authoring-system/tools/`: a Moodle `mod_lesson` ladder-wiring validator, plus shuffle-persistence/save-serialization/eliminable-distractor checks against the existing Python static HTML — all run for real, results are clean or correctly flagged).
+
+**Reconciled two separate, real doc contradictions about the adaptive-ladder mechanism** (both found and fixed live, not before this session): `adaptive-practice-model.md` still assumed Moodle was paused (it resumed 2026-08-28); a later `decisions-log.md` entry separately claimed H5P BranchingScenario was current, contradicting the earlier 2026-07-24 decision for Moodle's native Lesson activity. Checked the live DB directly — neither was actually built yet. Jay confirmed the deciding factor (server-side saved responses in Moodle itself, no local save, student review required) and `mod_lesson` is now the settled, single mechanism. Pool size settled at Core 1/Reinforce 1-2/Extend 1-2. Added Jay's two new authoring rules (Reinforce decomposes, Extend adds context not scaffolding) and a CS-pathway-vs-Seminar-III density rule to `objectives-and-skills-proficiency.md`.
+
+**Built the first two real Reinforce/Core/Extend clusters, both DB-verified and checker-clean:**
+- Python: `01.1 What Programs Do (Practice)` (cmid=188, `foxcs-python` Section 2), skill `explains_computer_literalness`, grounded in the actual live Instruction content rather than a schema placeholder.
+- Seminar III: `1.10 -- Order of Operations: Extra Practice` (cmid=191, `foxcs-seminar3` Section 2), replacing/extending the previously-flagged fixed-progression "Order of Operations Practice" activity with real branching.
+
+Both required a mid-build correction on Moodle information architecture (no true nested folders — verified and matched each course's existing Section=Unit/Lesson + prefixed-activity-name convention directly against the live DB rather than guessing).
+
+**Wrote `02-authoring-system/adaptive-ladder-runbook.md`** — practical "build the next cluster" guide (settled design, IA convention per course, required Lesson settings with source-line justification, checker usage, reference script) so Jay can keep authoring tonight without re-deriving this session's work.
+
+**Caught and fixed a real PII leak before it reached git**: an earlier edit this session had put a real student email address into two committed-tracked markdown files. Redacted via a pre-commit grep sweep before anything was staged.
+
+**Known open item, not fixed:** Moodle's Lesson activity leaks a page's title into the browser tab even with sidebar nav hidden — a real, minor tension with "never show students Reinforce/Core/Extend," needs a tier-neutral page-naming convention next time a cluster is built.
+
+**Not started:** clusters for Game II/Web Dev/Software Dev (no content exists yet in any of them — the bigger gap there is content itself, unchanged by tonight); retrofitting tonight's Python cluster's page names if a tier-neutral convention gets adopted.

@@ -1,5 +1,7 @@
 # Codename Policy
 
+**Last verified against the live roster on 2026-08-31.**
+
 Status: **locked 2026-08-30** for the real 2026-27 roster — the `PY1-A-ALPHA01` format below was provisional and never actually used to generate a real roster. It's superseded by the format Jay specified directly when asking for the first real 35-per-class codename batch (see `decisions-log.md`, 2026-08-30 entry, and `06-data-and-spreadsheets/roster-schema.md` for the real generated roster).
 
 ## Purpose
@@ -8,13 +10,16 @@ Remove student PII from any external/AI-assisted tooling (grader, similarity ana
 
 ## Format
 
+**Corrected 2026-08-31 against the live roster — the format below was never actually implemented as originally written; this documents what's real.**
+
 ```
-G1-1-NOVA
+S5-NOVA
 ```
 
-- `G1` — course code, chosen so the class's own name is directly readable (`G1` = Game I, `G2` = Game II, `W2` = Web II, `S3` = Seminar III). One letter + the course's own numeral, not an arbitrary abbreviation, per Jay's explicit requirement that the class be visually identifiable at a glance — this matters because Game II and Web II share the same room and period, and students may choose either pathway regardless of which course they're actually enrolled/graded under.
-- `1` — class period (1st, 4th, 5th, 7th, 8th — whichever period that specific section meets).
+- Single letter + period digit, fused with no separator (`S5`, not `S3-5`): `G` = Game I or Game II, `S` = Seminar III, `W` = Web II. The letter identifies the *subject family*, not a specific course version — Game I and Game II both use `G`, disambiguated only by the period digit that follows (`G1`/`G8` = Game I's two periods, `G7` = Game II's period, `W7` = Web II's period, `S4`/`S5` = Seminar III's two periods). This only works because no two classes sharing a letter ever meet the same period — if Game I and Game II ever shared a period, their codes would collide. The originally documented `G1-1-NOVA` (course code, dash, period, dash, word) was never built; the real generation script fused course-letter and period into one token and dropped the course-version digit entirely.
 - `NOVA` — one word from a shared Space & Astronomy theme word list (non-animal, real astronomy vocabulary, "fun but not goofy" per Jay's standing preference — see `decisions-log.md`'s earlier band-vocabulary-style entries for the same tone bar). 40 words cover each class (35 active seats + 5 reserve slots for transfers) with no repeats; see `06-data-and-spreadsheets/roster-schema.md` for the full word list and generation notes if a class ever needs more.
+
+**Known anomaly, unresolved:** one row in the live roster (`G21-ANDROMEDA`, "Game II" / "1st period") doesn't match this scheme or the old one, and "Game II, 1st period" isn't one of the 6 official classes in `06-data-and-spreadsheets/roster-schema.md`. Needs Jay to confirm whether this is a real section that's missing from the class list, or a data-entry error to fix.
 
 Codenames are assigned once at the start of the year and stay stable across all assignments and both delivery surfaces (Moodle account username *and* the folder/file name students use in VS Code — same codename, both places). **Word-to-student mapping isn't alphabetized yet** — the word list is generated in a fixed order; Jay assigns word #1 to the alphabetically-first real student on each class roster once he has it, same principle the old `ALPHA01` suffix was going for, just reusable across classes without collision since the course-period prefix already guarantees global uniqueness.
 

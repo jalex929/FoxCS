@@ -1,5 +1,7 @@
 # Roster Schema
 
+**Last verified against the live roster on 2026-08-31.**
+
 **First real roster generated 2026-08-30**, per Jay's direct request for 35 codenames per class period across 6 real class periods, with the class visually identifiable from the codename itself. Lives as a Google Sheet in Jay's own Drive (`jafox7@cps.edu`, `SY27` folder), titled "FoxCS Private Roster 2026-27 (Codenames — DO NOT SHARE)" — not committed to this git repo, since it's the one place real student names will eventually land (see `01-privacy-and-governance/data-boundaries.md`'s Two Sheets, Never Merged rule). This file documents the schema and the codename generation itself, which is safe to keep in the repo since it contains no real student data yet.
 
 **Revised twice same day, both times per Jay:** (1) column order changed so `first_name`/`last_name`/`student_email` lead, letting Jay paste a raw CPS roster export directly into the first 3 columns per class block, with `class_period`/`course` pre-filled by Claude Code since the block structure already encodes it; (2) each class extended from 35 to 40 rows (35 `active` + 5 `reserve`), so a mid-year transfer has a ready-made unassigned codename instead of requiring the whole scheme to be regenerated.
@@ -19,14 +21,18 @@
 
 ## The 6 Classes and Their Course Codes
 
-| Class | Course code | Period | Codename prefix |
-|---|---|---|---|
-| Game I, 1st period | `G1` | 1st | `G1-1-` |
-| Game I, 8th period | `G1` | 8th | `G1-8-` |
-| Seminar III, 4th period | `S3` | 4th | `S3-4-` |
-| Seminar III, 5th period | `S3` | 5th | `S3-5-` |
-| Game II, 7th period | `G2` | 7th | `G2-7-` |
-| Web II, 7th period | `W2` | 7th | `W2-7-` |
+**Corrected 2026-08-31 against the live roster** — the `Codename prefix` column below was the original design and was never actually implemented; see `01-privacy-and-governance/codename-policy.md`'s 2026-08-31 correction for why. The real prefixes are shown in the last column.
+
+| Class | Course code | Period | Codename prefix (as designed, unused) | Codename prefix (actual, live) |
+|---|---|---|---|---|
+| Game I, 1st period | `G1` | 1st | `G1-1-` | `G1-` |
+| Game I, 8th period | `G1` | 8th | `G1-8-` | `G8-` |
+| Seminar III, 4th period | `S3` | 4th | `S3-4-` | `S4-` |
+| Seminar III, 5th period | `S3` | 5th | `S3-5-` | `S5-` |
+| Game II, 7th period | `G2` | 7th | `G2-7-` | `G7-` |
+| Web II, 7th period | `W2` | 7th | `W2-7-` | `W7-` |
+
+The actual scheme fuses a single subject-family letter (`G`=Game, `S`=Seminar, `W`=Web — Game I and Game II share `G`) directly with the period digit, dropping the course-version digit. This works only because no two classes sharing a letter ever meet at the same period. **One unexplained row exists outside this table**: `G21-ANDROMEDA`, listed as "Game II, 1st period" — not one of the 6 official classes above. Needs Jay to confirm whether this is a real, missing 7th class or a data-entry error.
 
 **Game II and Web II share the same room and period (7th)**, and students may pursue either pathway regardless of which course they're actually enrolled/graded under — the codename encodes *enrolled course*, not chosen pathway, since that's what determines which gradebook a student actually shows up in. This was Jay's explicit reason for wanting the class visually identifiable from the codename itself.
 
@@ -40,7 +46,7 @@ ORBIT, STARDUST, ROCKET, ASTRO, ASTRAL, SATURN, MARS, VENUS, PLUTO, CERES,
 ANDROMEDA, ROVER, LAUNCH, GRAVITY, HORIZON
 
 Reserve (roster_position 36-40):
-URANUS, NEPTUNE, LYRA, CYGNUS, ARIES
+VESTA, NEPTUNE, LYRA, CYGNUS, ARIES
 ```
 
 Same 40 words are reused across all 6 classes — safe, since the course-period prefix already guarantees global uniqueness (e.g. `G1-1-NOVA` and `S3-4-NOVA` are different students, never confused). **If a class's 5 reserve slots ever run out too**, this list needs more words or a numeric suffix (`NOVA01`/`NOVA02`) — not designed yet, since it wasn't needed for this first generation.
@@ -57,6 +63,7 @@ Per Jay directly: *"general passwords for them (perhaps some fruit and a number 
 
 ## Open Items
 
-- Real student names/emails need to come from Jay (or a CPS roster export) before the private roster is actually usable for grading — right now every identity column is blank by design.
-- The `forcepasswordchange` pairing above isn't wired into whatever script bulk-creates the 240 Moodle accounts (that script doesn't exist yet either — see `07-infrastructure/moodle-scripts/create-foxcs-test-student.php` for the single-account pattern it would need to generalize from).
+**Updated 2026-08-31 — the two items below describing an unbuilt account-creation script are stale.** Real names/emails have been added for most seats, and `07-infrastructure/moodle-scripts/bulk-create-student-accounts.php` exists and has been run. See `07-infrastructure/onboarding-new-students.md` for the current process for filling a remaining unfilled seat or activating a reserve slot, and for the still-open `try`/`catch` gap in that script.
+
 - Word-list exhaustion plan (a class needing more than 5 reserve slots) isn't designed.
+- A handful of `active` seats still have no real student assigned (blank name/email) — see `07-infrastructure/onboarding-new-students.md`'s Case A for what to do when one gets filled.

@@ -1,0 +1,200 @@
+<!-- Level 2 pathway-placement interest quiz (Web Dev / Game Design/Unity / Software Dev).
+     Self-scoring, client-side only -- no server round-trip, no grade recorded, purely a
+     starting-point suggestion. Deliberately reinforces (per game2-web2-same-period /
+     decisions-log framing): pathway choice isn't tied to which course (Game II vs Web II)
+     a student is enrolled in, and the result is a suggestion, not a locked-in decision. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pathway Placement Quiz: FoxCS</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  .question { border: 1px solid #dde3ea; border-radius: 8px; padding: 1rem 1.3rem; margin: 1.2rem 0; }
+  .question-num { font-family: Verdana, Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.4rem; }
+  .question-text { font-weight: bold; margin: 0 0 0.7rem; }
+  .option-row { display: block; margin: 0.5rem 0; cursor: pointer; }
+  .option-row input { margin-right: 0.6rem; }
+  button.quiz-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; margin-top: 1rem; }
+  button.quiz-btn:hover:not(:disabled) { background: #12447f; }
+  button.quiz-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .quiz-progress { font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; color: #556; margin-top: 0.6rem; }
+  .result-box { display: none; border-radius: 10px; padding: 1.4rem 1.6rem; margin: 1.6rem 0; border: 2px solid; }
+  .result-box.web { background: #eef4fb; border-color: #1a5aa8; }
+  .result-box.unity { background: #f4f2fb; border-color: #4a3aa7; }
+  .result-box.softwaredev { background: #eef8f2; border-color: #1f7a4f; }
+  .result-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.4rem; }
+  .result-title { font-family: Verdana, Arial, sans-serif; font-size: 1.4rem; margin: 0 0 0.6rem; }
+  .result-bars { font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; margin-top: 1rem; }
+  .result-bar-row { display: flex; align-items: center; gap: 0.6rem; margin: 0.3rem 0; }
+  .result-bar-label { width: 130px; flex-shrink: 0; }
+  .result-bar-track { flex: 1; background: #e3e8ee; border-radius: 4px; height: 10px; overflow: hidden; }
+  .result-bar-fill { height: 100%; border-radius: 4px; }
+  .result-bar-fill.web { background: #1a5aa8; }
+  .result-bar-fill.unity { background: #4a3aa7; }
+  .result-bar-fill.softwaredev { background: #1f7a4f; }
+  .reminder-box { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .reminder-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #7a4800; margin-bottom: 0.5rem; }
+  .retake-link { font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .retake-link a { color: #1a5aa8; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<span class="question-num">Choosing Your Pathway</span>
+<h1>Pathway Placement Quiz</h1>
+
+<div class="objectives">
+<strong>What this is:</strong> 9 quick questions about how you like to build, think, and work. At the end you'll get a suggested starting pathway — <strong>Web Dev</strong>, <strong>Game Design/Unity</strong>, or <strong>Software Dev</strong>. This is a starting point, not a locked-in decision, and it has nothing to do with which course you're enrolled in.
+</div>
+
+<form id="quizForm">
+
+<div class="question" data-q="1">
+<div class="question-num">Question 1 of 9</div>
+<div class="question-text">You're put in charge of planning a class party. What do you actually focus on?</div>
+<label class="option-row"><input type="radio" name="q1" value="unity">Making sure it's actually fun once people show up — vibe over logistics.</label>
+<label class="option-row"><input type="radio" name="q1" value="web">Making sure everyone knows what's happening and can actually find the info.</label>
+<label class="option-row"><input type="radio" name="q1" value="softwaredev">Working out the exact schedule and budget so nothing goes wrong.</label>
+</div>
+
+<div class="question" data-q="2">
+<div class="question-num">Question 2 of 9</div>
+<div class="question-text">Pick a superpower.</div>
+<label class="option-row"><input type="radio" name="q2" value="unity">Making anyone feel a specific emotion on command.</label>
+<label class="option-row"><input type="radio" name="q2" value="web">Instantly knowing exactly what someone else needs.</label>
+<label class="option-row"><input type="radio" name="q2" value="softwaredev">Seeing exactly how any machine works just by looking at it.</label>
+</div>
+
+<div class="question" data-q="3">
+<div class="question-num">Question 3 of 9</div>
+<div class="question-text">A group project partner keeps changing their mind about the plan, again and again. How do you actually feel about it?</div>
+<label class="option-row"><input type="radio" name="q3" value="unity">Kind of into it, honestly — I like when things evolve as you go.</label>
+<label class="option-row"><input type="radio" name="q3" value="web">A little frustrated — I'd rather lock in what actually works and stick with it.</label>
+<label class="option-row"><input type="radio" name="q3" value="softwaredev">Fine, as long as we're still being logical about why we're changing it.</label>
+</div>
+
+<div class="question" data-q="4">
+<div class="question-num">Question 4 of 9</div>
+<div class="question-text">Which weekend sounds the best to you?</div>
+<label class="option-row"><input type="radio" name="q4" value="softwaredev">Taking apart an old gadget just to see how it's actually built.</label>
+<label class="option-row"><input type="radio" name="q4" value="unity">Running a tabletop game for your friends.</label>
+<label class="option-row"><input type="radio" name="q4" value="web">Redesigning your room so it's actually more livable.</label>
+</div>
+
+<div class="question" data-q="5">
+<div class="question-num">Question 5 of 9</div>
+<div class="question-text">Which compliment would mean the most to you?</div>
+<label class="option-row"><input type="radio" name="q5" value="unity">"I lost total track of time doing that."</label>
+<label class="option-row"><input type="radio" name="q5" value="web">"Oh wow, that was actually really easy to figure out."</label>
+<label class="option-row"><input type="radio" name="q5" value="softwaredev">"That's really smart — how'd you even think of that?"</label>
+</div>
+
+<div class="question" data-q="6">
+<div class="question-num">Question 6 of 9</div>
+<div class="question-text">How do you feel about a totally blank page, with basically zero instructions for what to do with it?</div>
+<label class="option-row"><input type="radio" name="q6" value="unity">Honestly kind of exciting.</label>
+<label class="option-row"><input type="radio" name="q6" value="web">I'd rather have some structure to build from.</label>
+<label class="option-row"><input type="radio" name="q6" value="softwaredev">Fine, as long as I get to figure out the rules myself.</label>
+</div>
+
+<div class="question" data-q="7">
+<div class="question-num">Question 7 of 9</div>
+<div class="question-text">Which of these would bug you more?</div>
+<label class="option-row"><input type="radio" name="q7" value="unity">A movie that's technically well-made but just boring.</label>
+<label class="option-row"><input type="radio" name="q7" value="web">A genuinely great product that's actually hard to use.</label>
+<label class="option-row"><input type="radio" name="q7" value="softwaredev">Something that works 9 times out of 10, then randomly breaks.</label>
+</div>
+
+<div class="question" data-q="8">
+<div class="question-num">Question 8 of 9</div>
+<div class="question-text">A year from now, which of these would you be proudest of building?</div>
+<label class="option-row"><input type="radio" name="q8" value="web">Something a total stranger could pick up and use with zero help.</label>
+<label class="option-row"><input type="radio" name="q8" value="unity">Something that made someone else feel a real emotion.</label>
+<label class="option-row"><input type="radio" name="q8" value="softwaredev">Something that solves a problem in a genuinely clever way.</label>
+</div>
+
+<div class="question" data-q="9">
+<div class="question-num">Question 9 of 9</div>
+<div class="question-text">Last one — pick the sentence that sounds the most like you:</div>
+<label class="option-row"><input type="radio" name="q9" value="softwaredev">"I want to know exactly why this works, not just that it does."</label>
+<label class="option-row"><input type="radio" name="q9" value="web">"I want this to just work for whoever ends up using it."</label>
+<label class="option-row"><input type="radio" name="q9" value="unity">"I want people to actually feel something when they experience this."</label>
+</div>
+
+<div class="quiz-progress" id="quizProgress">0 of 9 answered</div>
+<button type="button" class="quiz-btn" id="quizSubmitBtn" onclick="showResult()" disabled>See My Result</button>
+</form>
+
+<div class="result-box" id="resultWeb">
+<div class="result-label">Your Suggested Starting Pathway</div>
+<div class="result-title" style="color:#1a5aa8;">Web Dev</div>
+<p>You lean toward building things other people actually use — real websites and web apps with HTML, CSS, and JavaScript, judged by whether a real person can understand and use them. That's usability, and it's the core of this pathway.</p>
+</div>
+<div class="result-box" id="resultUnity">
+<div class="result-label">Your Suggested Starting Pathway</div>
+<div class="result-title" style="color:#4a3aa7;">Game Design/Unity</div>
+<p>You lean toward building things people play and feel something from — real games in Unity and C#, judged by whether they're actually fun. You'll start with game design basics and MakeCode Arcade before moving into Unity and, eventually, 3D.</p>
+</div>
+<div class="result-box" id="resultSoftwaredev">
+<div class="result-label">Your Suggested Starting Pathway</div>
+<div class="result-title" style="color:#1f5c3d;">Software Dev</div>
+<p>You lean toward the "why" behind the code more than any one finished product — real programming depth, building on Web Dev's foundation and eventually adding a second language (Java). This pathway is for anyone who wants to keep going deeper into software as its own field.</p>
+</div>
+
+<div id="resultBars" class="result-bars" style="display:none;">
+  <div class="result-bar-row"><div class="result-bar-label">Web Dev</div><div class="result-bar-track"><div class="result-bar-fill web" id="barWeb"></div></div></div>
+  <div class="result-bar-row"><div class="result-bar-label">Game Design/Unity</div><div class="result-bar-track"><div class="result-bar-fill unity" id="barUnity"></div></div></div>
+  <div class="result-bar-row"><div class="result-bar-label">Software Dev</div><div class="result-bar-track"><div class="result-bar-fill softwaredev" id="barSoftwaredev"></div></div></div>
+</div>
+
+<div class="reminder-box" id="reminderBox" style="display:none;">
+<div class="reminder-label">Before You Decide</div>
+<p>This is a starting point, not a locked-in decision — you can still choose differently, split your time across more than one pathway, or change your mind later. It also has nothing to do with which course (Game II or Web II) you're actually enrolled in: everyone in the room gets to pick whichever pathway actually excites them.</p>
+<p><strong>Next step:</strong> go to the <strong>"Choose Your Pathway"</strong> activity right below this one in the course to officially let your teacher know which pathway you're starting with (or that you're still undecided).</p>
+</div>
+
+<div class="retake-link" id="retakeLink" style="display:none;">
+<a onclick="location.reload()">↺ Retake the quiz</a>
+</div>
+
+<script>
+const TOTAL_QUESTIONS = 9;
+function countAnswered() {
+  let n = 0;
+  for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+    if (document.querySelector('input[name="q' + i + '"]:checked')) n++;
+  }
+  return n;
+}
+document.getElementById('quizForm').addEventListener('change', function() {
+  const answered = countAnswered();
+  document.getElementById('quizProgress').textContent = answered + ' of ' + TOTAL_QUESTIONS + ' answered';
+  document.getElementById('quizSubmitBtn').disabled = answered < TOTAL_QUESTIONS;
+});
+function showResult() {
+  const scores = {web: 0, unity: 0, softwaredev: 0};
+  for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+    const checked = document.querySelector('input[name="q' + i + '"]:checked');
+    if (checked) scores[checked.value]++;
+  }
+  const max = Math.max(scores.web, scores.unity, scores.softwaredev);
+  document.getElementById('quizForm').style.display = 'none';
+  if (scores.web === max) document.getElementById('resultWeb').style.display = 'block';
+  if (scores.unity === max) document.getElementById('resultUnity').style.display = 'block';
+  if (scores.softwaredev === max) document.getElementById('resultSoftwaredev').style.display = 'block';
+  document.getElementById('barWeb').style.width = (scores.web / TOTAL_QUESTIONS * 100) + '%';
+  document.getElementById('barUnity').style.width = (scores.unity / TOTAL_QUESTIONS * 100) + '%';
+  document.getElementById('barSoftwaredev').style.width = (scores.softwaredev / TOTAL_QUESTIONS * 100) + '%';
+  document.getElementById('resultBars').style.display = 'block';
+  document.getElementById('reminderBox').style.display = 'block';
+  document.getElementById('retakeLink').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>

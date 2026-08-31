@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Building school-year course content. **Moodle is the live, real delivery platform (resumed 2026-08-30 — the 2026-08-04 pause below is over).** Moodle runs on Jay's own DigitalOcean droplet, publicly reachable at `https://foxcs.online` with real Let's Encrypt SSL. Each lesson is 4 Moodle modules: (1) Instruction — H5P Interactive Book, (2) Practice — H5P BranchingScenario (light adaptive remediation), (3) Project — native Moodle Assignment (rubric, starter-file zip download, real file-upload submission), (4) Mastery Check + Feedback — one native, password-gated Moodle Quiz (3-attempt cap, averaged not highest). See Status and Two-Surface Delivery Model below — that section is the active design again, not paused-for-reference. **FoxCS** is the umbrella for multiple courses; everything platform-agnostic and course-agnostic (privacy/governance, authoring schema, grading pipeline, spreadsheet dashboard) lives at this level. Course-specific scope and content live under `courses/<course>/`.
+Building school-year course content. **Moodle is the live, real delivery platform (resumed 2026-08-30 — the 2026-08-04 pause below is over).** Moodle runs on Jay's own DigitalOcean droplet, publicly reachable at `https://foxcs.online` with real Let's Encrypt SSL. Each lesson is 4 Moodle modules: (1) Instruction — H5P Interactive Book, (2) Practice — Moodle Lesson activity (native `mod_lesson` Core/Reinforce/Extend branching ladder, save+score built in), (3) Project — native Moodle Assignment (rubric, starter-file zip download, real file-upload submission), (4) Mastery Check + Feedback — one native, password-gated Moodle Quiz (3-attempt cap, averaged not highest). See Status and Two-Surface Delivery Model below — that section is the active design again, not paused-for-reference. **FoxCS** is the umbrella for multiple courses; everything platform-agnostic and course-agnostic (privacy/governance, authoring schema, grading pipeline, spreadsheet dashboard) lives at this level. Course-specific scope and content live under `courses/<course>/`.
 
 See `decisions-log.md` for how this structure evolved and why. See `open-questions.md` for everything still unresolved.
 
@@ -60,7 +60,7 @@ A lesson should deliberately span a range of DOK levels using *both* surfaces, n
 
 | Decision | Choice | Why |
 |---|---|---|
-| Moodle role | **Live, resumed 2026-08-28.** Conceptual + applied layer for the 4-module lesson: Instruction (H5P Interactive Book), Practice (H5P BranchingScenario), Project (native Assignment), Mastery Check + Feedback (native Quiz). `https://foxcs.online` verified pointed at the `foxcs-droplet` instance with real SSL 2026-08-30; whether a distinct final production host is still planned beyond this droplet is unconfirmed. | See Two-Surface Delivery Model above and `decisions-log.md`, 2026-08-04, 2026-08-28, 2026-08-30 |
+| Moodle role | **Live, resumed 2026-08-28.** Conceptual + applied layer for the 4-module lesson: Instruction (H5P Interactive Book), Practice (Moodle Lesson activity — native Core/Reinforce/Extend branching ladder, save+score built in), Project (native Assignment), Mastery Check + Feedback (native Quiz). `https://foxcs.online` verified pointed at the `foxcs-droplet` instance with real SSL 2026-08-30; whether a distinct final production host is still planned beyond this droplet is unconfirmed. | See Two-Surface Delivery Model above and `decisions-log.md`, 2026-08-04, 2026-08-28, 2026-08-30 |
 | VS Code role | Still the editor for Project code work (students write/save `.py` files locally, then upload as a zip/folder to the Moodle Assignment). | — |
 | **Submissions** | **Moodle**, native to each module — `mod_assign` file upload for Projects, `mod_quiz` for Mastery Check. | Reversed back after the brief 2026-08-04 Classroom detour. See `decisions-log.md`. |
 | Student accounts | Pseudonymous (codename) accounts on Moodle; same codename used for VS Code folder/file naming | One identifier across both surfaces. See `01-privacy-and-governance/codename-policy.md`. **Codename separation alone does not confirm SOPPA compliance — verify with district data privacy officer before real student data is involved.** |
@@ -146,6 +146,20 @@ FoxCS/
       course-plan.md                        Full 21-unit/lesson checklist (source: adaptive-python curriculum, called Modules there)
       content/                              Lesson records go here, one file per lesson, per lesson-template.md
 ```
+
+## Source of Truth for Content Authoring
+
+**Added 2026-08-31**, per `02-authoring-system/pipeline-comparison-python-app-2026-08-31.md` (comparison against the commercial python-app pipeline). These are the docs that actually govern content authoring right now:
+
+- `02-authoring-system/content-authoring-standards.md`
+- `02-authoring-system/lesson-quality-standards.md`
+- `02-authoring-system/lesson-schema.md`
+- `02-authoring-system/authoring-workflow.md`
+- `02-authoring-system/content-voice-and-tone.md`
+- `02-authoring-system/mastery-check-standards.md`
+- `02-authoring-system/objectives-and-skills-proficiency.md`
+
+All other docs must align to them. When in doubt, these win. See `02-authoring-system/doc-health.md` for review status on the rest of `02-authoring-system/`.
 
 ## Open Questions
 

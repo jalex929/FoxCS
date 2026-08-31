@@ -80,6 +80,7 @@ The full process for taking one lesson from "just an entry in `course-plan.md`" 
 56. Test alternate valid solutions, incomplete solutions, and common incorrect solutions.
 57. Test missing-file and malformed-folder behavior (what does the grader do when a student submits wrong)?
 58. Test the lesson on a school-like machine: no command line, no package installs, matches the available Python/VS Code configuration.
+58a. AI-generated content is not done at the point of generation — it must pass steps 51-58 above before it can be marked drafted (✅) in `course-plan.md`'s status legend, let alone reviewed/final (🔍).
 
 ## Phase 8 — Pilot and Revise
 

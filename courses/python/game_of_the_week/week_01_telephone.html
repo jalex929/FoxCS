@@ -1,0 +1,116 @@
+<!-- Game of the Week, Lesson 1: Telephone -- How to Play / Explanation only.
+     Real content built from game_of_the_week_calendar_2026-27.md's Week 1
+     row (Aug 24-28, Focus: "Information transfer, breakdown points").
+     Titled "Lesson 1" not "Week 1" per Jay's decision (delivered in week 2
+     of the school year, so the "Week 1" framing would be confusing).
+     Structure and glossary-term hover/click card copied directly from
+     _TEMPLATE_reference.html. Shared across Game I, Game II, and Web Dev
+     (course scope resolved 2026-08-31 -- see README.md's "Not yet done"
+     section, previously unresolved).
+
+     Reflect section moved OUT of this page 2026-08-31, per Jay's standing
+     rule that reflections must be submittable without a local save --
+     the client-side showSaveFilePicker mechanism this page originally used
+     (carried over from _TEMPLATE_reference.html's now-superseded
+     distribution model) has no server-side submission at all. The 3
+     reflection questions now live as their own H5P.Column activity
+     ("Lesson 1: Telephone — Reflection", built via
+     07-infrastructure/moodle-scripts/python/build_gotw_week01_reflection.py,
+     block_essay per h5p_book_builder.py), deployed alongside this resource
+     in the same Moodle section. This page is How to Play + What This Game
+     Is Actually Doing only. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Game of the Week — Lesson 1: Telephone</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  h2 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; margin-top: 2rem; }
+  .howto { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.9rem 1.3rem; margin: 1rem 0; }
+  .explain { background: #c5c0e3; padding: 1rem 1.3rem; border-radius: 8px; margin: 1rem 0; }
+  .explain h3 { margin-top: 0; font-family: Verdana, Arial, sans-serif; color: #1a1a1a; font-size: 1.05rem; }
+  .vocab-term { font-weight: bold; color: #1a3a5c; }
+  .next-step { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; font-family: Verdana, Arial, sans-serif; font-size: 0.92rem; }
+
+  /* Glossary term hover/click card — see component-library #13 */
+  .glossary-term { text-decoration: underline dotted #1a5aa8; text-decoration-thickness: 2px; text-underline-offset: 3px; color: #1a3a5c; font-weight: bold; cursor: help; }
+  .glossary-term:focus-visible { outline: 2px solid #1a5aa8; outline-offset: 2px; border-radius: 2px; }
+  .glossary-card { position: absolute; max-width: 260px; background: #1a5aa8; color: white; font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; padding: 0.6rem 0.8rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.25); z-index: 50; display: none; line-height: 1.4; }
+  .glossary-card.visible { display: block; }
+  .glossary-card .glossary-card-term { display: block; font-weight: bold; margin-bottom: 0.25rem; }
+</style>
+</head>
+<body>
+
+<h1>Game of the Week — Lesson 1: Telephone</h1>
+
+<h2>How to Play</h2>
+<div class="howto">
+  Sit in a line or circle. Your teacher whispers a short message to the first person. That person whispers exactly what they heard to the next person, and so on down the line — no repeating, no asking to check. The last person says out loud what they heard. Then compare it to the original message.
+</div>
+
+<h2>What This Game Is Actually Doing</h2>
+<div class="explain">
+  <h3>Every step is a chance for the message to change</h3>
+  <p>Telephone is really a game about <span class="glossary-term" data-term="information transfer" tabindex="0" role="button" aria-haspopup="true">information transfer</span> — passing something from one person (or one part of a system) to the next. In games, that happens constantly: a player's button press has to "transfer" into the game doing the right thing, and one player's move has to transfer into what the next player sees and reacts to.</p>
+  <p>The message almost never survives the whole line unchanged, and that's the real lesson. Each whisper is a <span class="glossary-term" data-term="breakdown point" tabindex="0" role="button" aria-haspopup="true">breakdown point</span> — a specific place where the message can get lost, misheard, or changed a little before it moves on. One small breakdown near the start of the line usually causes a much bigger difference by the end. Designers have to think hard about where a game's own breakdown points are, since players will find them.</p>
+</div>
+
+<div class="next-step"><strong>Next step:</strong> open "Lesson 1: Telephone — Reflection" in this same section to answer 3 short questions about today's game. Your answers save automatically there — nothing to download or save yourself.</div>
+
+<div class="glossary-card" id="glossary-card" role="tooltip">
+  <span class="glossary-card-term"></span>
+  <span class="glossary-card-def"></span>
+</div>
+
+<script>
+// ---- Glossary term hover/click card — see component-library #13 ----
+const glossaryDefs = {
+  'information transfer': 'How something (a message, an input, a move) gets passed from one person or one part of a system to another. Every step it passes through is a chance for it to change.',
+  'breakdown point': 'A specific place where information transfer can go wrong — get lost, misheard, or changed — before it reaches the next step.'
+};
+let glossaryPinnedTerm = null;
+function glossaryShow(el, term) {
+  const card = document.getElementById('glossary-card');
+  card.querySelector('.glossary-card-term').textContent = term;
+  card.querySelector('.glossary-card-def').textContent = glossaryDefs[term.toLowerCase()] || '';
+  card.classList.add('visible');
+  const rect = el.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  let left = rect.left + window.scrollX;
+  const maxLeft = window.scrollX + document.documentElement.clientWidth - cardRect.width - 8;
+  if (left > maxLeft) left = Math.max(window.scrollX + 8, maxLeft);
+  let top = rect.bottom + window.scrollY + 6;
+  const viewportBottom = window.scrollY + window.innerHeight;
+  if (top + cardRect.height > viewportBottom) {
+    top = rect.top + window.scrollY - cardRect.height - 6;
+  }
+  card.style.left = left + 'px';
+  card.style.top = top + 'px';
+}
+function glossaryHide() { document.getElementById('glossary-card').classList.remove('visible'); }
+document.querySelectorAll('.glossary-term').forEach(el => {
+  const term = el.dataset.term;
+  el.addEventListener('mouseenter', () => { if (!glossaryPinnedTerm) glossaryShow(el, term); });
+  el.addEventListener('mouseleave', () => { if (!glossaryPinnedTerm) glossaryHide(); });
+  el.addEventListener('click', () => {
+    if (glossaryPinnedTerm === term) { glossaryPinnedTerm = null; glossaryHide(); }
+    else { glossaryPinnedTerm = term; glossaryShow(el, term); }
+  });
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+    else if (e.key === 'Escape' && glossaryPinnedTerm === term) { glossaryPinnedTerm = null; glossaryHide(); }
+  });
+});
+document.addEventListener('click', e => {
+  if (glossaryPinnedTerm && !e.target.closest('.glossary-term') && !e.target.closest('.glossary-card')) {
+    glossaryPinnedTerm = null;
+    glossaryHide();
+  }
+});
+</script>
+
+</body>
+</html>
