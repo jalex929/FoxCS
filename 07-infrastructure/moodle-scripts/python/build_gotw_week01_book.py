@@ -23,8 +23,25 @@ this whole file by hand for em dashes -- there should be none.
 
 Deploys as one new h5pactivity, replacing cmid 184 (the first version of
 this book, built before the em-dash/game-examples revision).
+
+Overcooked promotional image added 2026-08-31 per Jay's request for a real
+visual, not just a text description -- students likely haven't seen the
+game. Source: Steam's own official store header image for Overcooked
+(https://store.steampowered.com/app/448510/Overcooked/), fetched from
+Steam's public CDN (cdn.akamai.steamstatic.com), saved locally at
+assets/overcooked_header.jpg. Used here for identification/commentary in a
+non-commercial classroom lesson, which Jay confirmed is the intended use
+and fits standard fair-use practice for a single small promotional image.
+Embedded as a base64 data URI (encoded at build time from the local file)
+rather than hotlinking, so the lesson doesn't depend on an external image
+host staying up.
 """
+import base64, os
 from h5p_book_builder import block_text, block_essay, chapter, build_and_zip
+
+ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets")
+with open(os.path.join(ASSETS_DIR, "overcooked_header.jpg"), "rb") as f:
+    OVERCOOKED_IMG_B64 = base64.b64encode(f.read()).decode("ascii")
 
 # ---- Page 1: How to Play ----
 ch1 = chapter([
@@ -57,6 +74,9 @@ ch2 = chapter([
         "One player has to tell the other \"chop the onions, I've got the pan,\" out loud, over the sound of the "
         "game and everyone yelling. That's information transfer too, just between two people instead of two "
         "computers.</p>"
+        f"<p><img src=\"data:image/jpeg;base64,{OVERCOOKED_IMG_B64}\" alt=\"Overcooked video game key art, showing "
+        "two cartoon chefs cooking together in a chaotic kitchen\" style=\"max-width:100%;border-radius:8px;\">"
+        "<br><em style=\"font-size:0.85em;color:#555;\">Overcooked (Ghost Town Games / Team17)</em></p>"
 
         "<h3>What Is a Breakdown Point?</h3>"
         "<p>A <strong>breakdown point</strong> is one specific step in that chain where the transfer can actually "
