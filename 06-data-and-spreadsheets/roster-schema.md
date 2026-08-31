@@ -32,7 +32,7 @@
 | Game II, 7th period | `G2` | 7th | `G2-7-` | `G7-` |
 | Web II, 7th period | `W2` | 7th | `W2-7-` | `W7-` |
 
-The actual scheme fuses a single subject-family letter (`G`=Game, `S`=Seminar, `W`=Web — Game I and Game II share `G`) directly with the period digit, dropping the course-version digit. This works only because no two classes sharing a letter ever meet at the same period. **One unexplained row exists outside this table**: `G21-ANDROMEDA`, listed as "Game II, 1st period" — not one of the 6 official classes above. Needs Jay to confirm whether this is a real, missing 7th class or a data-entry error.
+The actual scheme fuses a single subject-family letter (`G`=Game, `S`=Seminar, `W`=Web — Game I and Game II share `G`) directly with the period digit, dropping the course-version digit. This works only because no two classes sharing a letter ever meet at the same period. **`G21-ANDROMEDA` resolved, 2026-08-31, per Jay:** a real, intentional special case, not a data-entry error — a solo student in 1st period enrolled in Game II, who also serves as the teacher's assistant in the room. Not one of the 6 standard class blocks above, but a legitimate 7th seat. Keep as-is; her account should stay enrolled and valid in both `foxcs-gotw` and `foxcs-onboarding-l2`.
 
 **Game II and Web II share the same room and period (7th)**, and students may pursue either pathway regardless of which course they're actually enrolled/graded under — the codename encodes *enrolled course*, not chosen pathway, since that's what determines which gradebook a student actually shows up in. This was Jay's explicit reason for wanting the class visually identifiable from the codename itself.
 
