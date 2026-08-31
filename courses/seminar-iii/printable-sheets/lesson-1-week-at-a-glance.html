@@ -20,6 +20,10 @@
   .banner p { margin: 0.5rem 0 0; font-size: 0.95rem; color: #dcecf1; }
   .day { padding: 1.2rem 2rem; border-bottom: 1px solid var(--line); break-inside: avoid; page-break-inside: avoid; display: grid; grid-template-columns: 90px 1fr; gap: 1rem; }
   .day .label { font-weight: bold; color: var(--accent-dark); font-size: 1.05rem; }
+  .day .date { display: block; font-weight: normal; color: var(--muted); font-size: 0.78rem; margin-top: 0.15rem; }
+  .due-badge { display: inline-block; background: #fdf3ec; border: 1px solid #d98a3d; color: #7a4413; border-radius: 999px; padding: 0.15rem 0.65rem; font-size: 0.78rem; font-weight: bold; margin: 0.3rem 0 0.2rem; }
+  .pacing-note { background: var(--accent-bg); border-left: 4px solid var(--accent); padding: 0.9rem 1.3rem; margin: 0; font-size: 0.92rem; line-height: 1.55; }
+  .pacing-note strong { color: var(--accent-dark); }
   .day h2 { font-size: 1.1rem; margin: 0 0 0.3rem; color: var(--accent-dark); }
   .day p { font-size: 0.92rem; line-height: 1.5; margin: 0 0 0.5rem; }
   .chip-row { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.3rem 0; }
@@ -36,58 +40,68 @@
     <p>This week you'll learn a problem-solving routine and an error-analysis system, then use both on an ACT Math baseline &mdash; a starting point, not a grade.</p>
   </div>
 
+  <div class="pacing-note">
+    <strong>If you finish a day's content early,</strong> you're welcome to use the remaining time as study hall &mdash; work on something for another class, and check in with your teacher if you need help with it. But don't rush to be done. Work through each day's content thoughtfully, not quickly &mdash; finishing first isn't the goal.
+  </div>
+
   <div class="day">
-    <div class="label">Day 1</div>
+    <div class="label">Day 1<span class="date">Mon, Aug 31</span></div>
     <div>
       <h2>How Do We Solve Problems?</h2>
       <p>Learn the five-question routine (STOP &rarr; FIND &rarr; CONNECT &rarr; TRY &rarr; CHECK) and practice using it on both math and non-math situations.</p>
       <div class="chip-row"><span class="chip">01.1 Solving Problems</span><span class="chip">01.2 Sequence the Five-Question Routine</span></div>
+      <div class="due-badge">Due by end of class, Mon Aug 31</div>
     </div>
   </div>
 
   <div class="day">
-    <div class="label">Day 2</div>
+    <div class="label">Day 2<span class="date">Tue, Sep 1</span></div>
     <div>
       <h2>Why Did I Get It Wrong?</h2>
       <p>Learn the five error types (Knowledge, Process, Execution, Comprehension, Strategy) and practice classifying and solving with them.</p>
       <div class="chip-row"><span class="chip">01.3 Error Types</span><span class="chip">01.4 Sequence the Order of Operations Steps</span><span class="chip">01.5 Sequence a Real-World Problem</span><span class="chip">01.6 Guided Practice</span><span class="chip">01.7 Guided Practice: Classify the Error</span></div>
+      <div class="due-badge">Due by end of class, Tue Sep 1</div>
     </div>
   </div>
 
   <div class="day">
-    <div class="label">Day 2&ndash;3</div>
+    <div class="label">Day 2&ndash;3<span class="date">Tue&ndash;Wed, Sep 1&ndash;2</span></div>
     <div>
       <h2>Independent Practice &amp; Check</h2>
       <p>Apply both tools independently, then complete the Lesson 1 understanding check before starting the baseline.</p>
       <div class="chip-row"><span class="chip">01.8 Independent Practice</span><span class="chip">01.9 Independent Practice: Classify the Error</span><span class="chip">01.10 Quick Reference</span><span class="chip">01.11 Check</span></div>
+      <div class="due-badge">Due by start of class, Wed Sep 2</div>
     </div>
   </div>
 
   <div class="day">
-    <div class="label">Day 3</div>
+    <div class="label">Day 3<span class="date">Wed, Sep 2</span></div>
     <div>
       <h2>ACT Math Baseline</h2>
       <p>A 24-question diagnostic covering the math you'll build on all of Quarter 1. Skim the quick reference first if any rules feel rusty &mdash; then do your best. This finds your starting point; it isn't graded on correctness.</p>
       <div class="chip-row"><span class="chip">01.12 Baseline Quick Reference</span><span class="chip">01.13 ACT Math Baseline</span></div>
+      <div class="due-badge">Due by end of class, Wed Sep 2</div>
       <p class="note">Target time: 30&ndash;40 minutes. Not a race &mdash; think each question through.</p>
     </div>
   </div>
 
   <div class="day">
-    <div class="label">Day 4</div>
+    <div class="label">Day 4<span class="date">Thu, Sep 3</span></div>
     <div>
       <h2>What Does My Baseline Tell Me?</h2>
       <p>Review your results in terms of Current Strengths, Developing Skills, and Priority Skills &mdash; not just a score.</p>
       <div class="chip-row"><span class="chip">01.14 Baseline Reflection</span></div>
+      <div class="due-badge">Due by end of class, Thu Sep 3</div>
     </div>
   </div>
 
   <div class="day">
-    <div class="label">Day 5</div>
+    <div class="label">Day 5<span class="date">Fri, Sep 4</span></div>
     <div>
       <h2>Build Your Starting Strategy</h2>
       <p>Set your Quarter 1 starting point: one strength, one priority, one strategy for getting unstuck, and one checking habit.</p>
       <div class="chip-row"><span class="chip">01.15 Reflection: Build Your Starting Strategy</span></div>
+      <div class="due-badge">Due by end of class, Fri Sep 4 &mdash; end of Lesson 1</div>
       <p class="note">Remaining time: Study Hall / catch-up on any incomplete Lesson 1 work.</p>
     </div>
   </div>

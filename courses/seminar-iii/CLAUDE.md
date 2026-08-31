@@ -26,6 +26,23 @@ Real structural mismatches with the rest of FoxCS, not yet reconciled — read b
 - **Submission/grading model unclear.** The course reads as largely in-class (study hall, paper practice, Albert.io, guided notes) rather than submitted coding artifacts — whether the codename-privacy/Classroom-submission/AI-grading pipeline (`../../01-privacy-and-governance/`, `../../05-grader/`) applies here at all, partially, or not is undecided.
 - **No pillar maps to a certification.** The other three courses anchor to Certiport/Unity credentials; Seminar III's "credential" is ACT performance plus a postsecondary plan — different enough that the certification-framing sections in the other courses' `CLAUDE.md`s don't have an equivalent here yet.
 
+## Week at a Glance: Standing Requirement (added 2026-08-30)
+
+Every `printable-sheets/lesson-N-week-at-a-glance.html` must do two things, not just one — confirmed against Lesson 1's page, which had the first but not the second until Jay flagged it:
+
+1. **Show students how the week's content will be covered** — the existing day-by-day breakdown (what's taught each day, which Moodle activities go with it) already does this.
+2. **Show due dates for parts of the content** — each day's block needs its own real calendar date (not just "Day 1"/"Day 2") and an explicit due-date badge (e.g., "Due by end of class, Wed Sep 2"), not just one due date for the whole week. Students should be able to tell, at a glance, when each piece is actually due, not just when it's taught.
+
+Real calendar dates are already in use in this file (the banner's "August 31 – September 4, 2026"), so per-day dates follow the same precedent — don't treat this as violating root `CLAUDE.md`'s no-hardcoded-SY26-27-dates caution, that caution was about *not yet knowing* Quarter 1's real dates, which is resolved here.
+
+Lessons 2-8 don't have a week-at-a-glance page yet (only Lesson 1's exists) — apply this same two-part standard whenever each one gets built, not just to Lesson 1's retrofit.
+
+## Pacing Philosophy: Less Self-Paced Than the CS Courses (added 2026-08-30)
+
+Per Jay directly: Seminar III is **less self-paced** than the CS courses (which lean on the Reinforce/Core/Extend ladder and independent-exploration pacing for Game II/Web II). Seminar III's day-by-day structure and per-day due dates (see Week at a Glance above) are the real pacing mechanism, not a suggestion.
+
+If a student finishes a day's content early, they're welcome to use the remaining time as study hall — working on something for another class, checking in with the teacher if they need help with it. **But this should never read as an invitation to rush.** The explicit framing, every week: work through the content thoughtfully, not quickly — finishing first isn't the goal. This belongs in every week-at-a-glance page (see the standing requirement above), not just stated once.
+
 ## Open Questions
 
 - Does Seminar III get its own parallel authoring system (lesson architecture, error taxonomy, templates) inside this folder, or does FoxCS's shared `02-authoring-system/` get extended to cover both shapes? Not decided — likely needs Jay's read on how much cross-course consistency he actually wants.
