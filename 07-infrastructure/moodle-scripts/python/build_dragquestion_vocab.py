@@ -53,27 +53,35 @@ for i, (term, definition) in enumerate(TERMS):
 
 content = {
     "question": {
+        # Verified 2026-08-30 against the real installed H5P.DragQuestion 1.15
+        # semantics.json (mdl_h5p_libraries.semantics), not guessed -- "settings"
+        # accepts ONLY "background" and "size". Every field previously stuffed
+        # in here (enableRetry, showScorePoints, scoreShow, etc.) doesn't belong
+        # in this group at all -- that structural mismatch is what made the
+        # first version of this file render as an empty task in Moodle.
         "settings": {
             "background": None,
             "size": {"width": 620, "height": (row_height + row_gap) * len(TERMS) + 20},
-            "singlePoint": False,
-            "postUserStatistics": True,
-            "enableRetry": True,
-            "enableSolutionsButton": False,
-            "enableCheckButton": True,
-            "preventResize": False,
-            "displaySolutionsRequiresInput": True,
-            "showScorePoints": True,
-            "goodScoreFeedback": True,
-            "scoreShow": "Check",
-            "dropZoneHighlighting": "dragging",
-            "autoAlignSpacing": 2,
-            "applyPenalties": True,
         },
         "task": {"elements": elements, "dropZones": dropzones},
     },
     "overallFeedback": [{"from": 0, "to": 100, "feedback": "You matched @score of @total!"}],
-    "behaviour": {"enableRetry": True},
+    # The real "behaviour" group (not "settings") is where these actually live.
+    # Note: this content type has no enableSolutionsButton field at all --
+    # DragQuestion has no reveal-the-answer button to disable in the first place.
+    "behaviour": {
+        "enableRetry": True,
+        "enableCheckButton": True,
+        "singlePoint": False,
+        "applyPenalties": True,
+        "enableScoreExplanation": True,
+        "dropZoneHighlighting": "dragging",
+        "autoAlignSpacing": 2,
+        "enableFullScreen": False,
+        "showScorePoints": True,
+        "showTitle": True,
+        "dragHandleVisibility": True,
+    },
 }
 
 h5p_manifest = {

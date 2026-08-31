@@ -43,6 +43,27 @@ Per Jay directly: Seminar III is **less self-paced** than the CS courses (which 
 
 If a student finishes a day's content early, they're welcome to use the remaining time as study hall — working on something for another class, checking in with the teacher if they need help with it. **But this should never read as an invitation to rush.** The explicit framing, every week: work through the content thoughtfully, not quickly — finishing first isn't the goal. This belongs in every week-at-a-glance page (see the standing requirement above), not just stated once.
 
+## Live Content Audit and Fixes (2026-08-30)
+
+An audit of the live `foxcs-seminar3` Lesson 1 section found real problems, now partly fixed:
+
+- **All 8 graded H5P activities had `enableSolutionsButton: true`** (students could reveal the correct answer with a click) — this directly violated the standing rule enforced everywhere in the Python course. Fixed across all 8 (36 total instances) via `07-infrastructure/moodle-scripts/patch_disable_show_solution.py`.
+- **A deeper answer-leak, found separately by Jay reviewing 1.3 Error Types live:** every wrong-answer feedback ended with "Try: review the [Correct Category] definition again" — literally naming the correct answer in the hint. 90 instances across 4 activities (1.3, 1.6, 1.7, 1.9), fixed via `07-infrastructure/moodle-scripts/patch_remove_answer_leak.py` with a generic, non-revealing redirect. **Any future Seminar III question feedback needs a human (or a careful review pass) checking specifically for this pattern — "explain why this is wrong" easily slides into "name what's actually right" without meaning to.**
+- **Two teacher-only files were live and visible to students**: "Lesson 4 Presentation (Teacher)" and "Lesson 1 Answer Keys (Teacher)" — not just present-but-hidden, actually `visible=1`. Hidden immediately. **Not fully resolved** — 10 more teacher-only files (presentations, answer keys) still sit inside the student-facing course section, currently hidden but architecturally exposed to the same mistake happening again. These should move to a properly role-restricted area, not just stay hidden-by-flag inside the student section.
+- **Real duplicate/superseded content**: two generations of the same lessons existed side by side (an early build superseded by a "-merged" rebuild), plus duplicate plain-resource versions of H5P activities. Partly cleaned up during the fixes above; a full consolidation pass (see below) is still the real fix.
+
+## Content Redesign, Lesson 1 (2026-08-30)
+
+Per Jay directly:
+
+- **1.2 "Sequence the Five-Question Routine" removed outright** — not replaced, just cut.
+- **1.4 and 1.5 merged and rebuilt** as "1.4 -- Order of Operations Practice": 5 fixed-difficulty-progression questions (two simple with process-guidance tips, one real-world application — the former standalone 1.5 activity, now folded in here — two harder multi-step problems). Built in `07-infrastructure/moodle-scripts/build_ooo_practice.py`, using H5P MultiChoice's native "tip" feature (shown on request, before checking, never revealing the answer) for the simpler questions' "how to approach this without being told the answer" guidance.
+- **This is NOT true adaptive branching.** Jay asked for genuinely reactive difficulty (harder/easier based on live answers), and a fixed 5-question progression doesn't do that — flagged honestly rather than dressed up as adaptive. FoxCS's own established tool for real per-answer branching is Moodle's native **Lesson activity** (`mod_lesson`), not a fixed H5P question set — see `02-authoring-system/objectives-and-skills-proficiency.md`'s Reinforce/Core/Extend Ladder section. Building a real `mod_lesson`-based adaptive version of this practice is a genuine next task, not done here.
+
+## H5P Content-Type Lesson Learned (2026-08-30)
+
+Hand-authoring H5P content JSON blind (without a real semantics.json reference or visual testing) is unreliable — a first attempt at H5P.DragQuestion for a drag-and-drop vocab quiz rendered completely empty in production because several fields were nested under the wrong parent group (`settings` vs the real `behaviour` group). Confirmed by extracting the actual installed `mdl_h5p_libraries.semantics` field for the content type in question (MySQL CLI batch-mode output escapes real backslashes as `\\` and real newlines as `\n` — un-escape backslashes first, then newlines, or the JSON won't parse). **Before hand-authoring any new H5P content type not already proven working in this repo, pull and check its real semantics.json first**, and visually verify the result in a real browser (Claude-in-Chrome / Playwright are both available) rather than trusting that valid-looking JSON actually renders.
+
 ## Open Questions
 
 - Does Seminar III get its own parallel authoring system (lesson architecture, error taxonomy, templates) inside this folder, or does FoxCS's shared `02-authoring-system/` get extended to cover both shapes? Not decided — likely needs Jay's read on how much cross-course consistency he actually wants.

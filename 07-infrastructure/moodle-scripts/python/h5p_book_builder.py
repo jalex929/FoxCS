@@ -137,6 +137,32 @@ def block_questionset(questions, title, pass_percentage=70):
     }
 
 
+def block_essay(task_desc, placeholder, title):
+    return {
+        "content": {
+            "library": "H5P.Essay 1.5",
+            "params": {
+                "taskDescription": task_desc,
+                "placeholderText": placeholder,
+                "solution": {"introduction": "", "sample": ""},
+                "keywords": [],
+                "overallFeedback": [{"from": 0, "to": 100}],
+                "behaviour": {"inputFieldSize": "10", "enableRetry": False, "ignoreScoring": True, "pointsHost": 1, "linebreakReplacement": " "},
+                "checkAnswer": "Check", "submitAnswer": "Submit", "tryAgain": "Retry",
+                "showSolution": "Show sample solution", "feedbackHeader": "Feedback",
+                "solutionTitle": "Sample Solution", "remainingChars": "Remaining characters: @chars",
+                "notEnoughChars": "You must enter at least @chars characters!", "messageSave": "saved",
+                "ariaYourResult": "You got @score out of @total points",
+                "ariaNavigatedToSolution": "Navigated to solution.", "ariaCheck": "Check.",
+                "ariaShowSolution": "Show the solution.", "ariaRetry": "Retry.",
+            },
+            "subContentId": str(uuid.uuid4()),
+            "metadata": {"contentType": "Essay", "license": "U", "title": title},
+        },
+        "useSeparator": "auto",
+    }
+
+
 def make_column(blocks, title):
     return {
         "library": "H5P.Column 1.22",
