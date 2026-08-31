@@ -1,10 +1,10 @@
 <?php
-// Creates an h5pactivity Instruction module in foxcs-python, from a
-// hand-built .h5p package (H5P.InteractiveBook + dependencies already
-// installed server-side). Generalized 2026-08-30 from
-// ../create-h5p-pilot.php so every lesson's trimmed Instruction-only book
-// (see h5p_book_builder.py) can be deployed the same way, not just 01.1.
-// Run: sudo -u www-data php create-h5p-instruction.php <section-num> "<name>" /path/to/package.h5p
+// Creates an h5pactivity module in any foxcs-% course, from a hand-built
+// .h5p package (dependencies already installed server-side). Generalized
+// 2026-08-30 from ../create-h5p-pilot.php so any lesson's H5P content --
+// Instruction books, standalone activities like the drag-and-drop vocab
+// quiz -- can be deployed the same way to any course, not just foxcs-python.
+// Run: sudo -u www-data php create-h5p-instruction.php <course-shortname> <section-num> "<name>" /path/to/package.h5p
 
 define('CLI_SCRIPT', true);
 require('/var/www/moodle/config.php');
@@ -13,13 +13,13 @@ require_once($CFG->dirroot . '/course/modlib.php');
 
 \core\cron::setup_user();
 
-[, $sectionnum, $name, $packagepath] = $argv + [null, null, null, null];
-if (!$sectionnum || !$name || !$packagepath || !file_exists($packagepath)) {
-    fwrite(STDERR, "Usage: create-h5p-instruction.php <section-num> \"<name>\" /path/to/package.h5p\n");
+[, $shortname, $sectionnum, $name, $packagepath] = $argv + [null, null, null, null, null];
+if (!$shortname || !$sectionnum || !$name || !$packagepath || !file_exists($packagepath)) {
+    fwrite(STDERR, "Usage: create-h5p-instruction.php <course-shortname> <section-num> \"<name>\" /path/to/package.h5p\n");
     exit(1);
 }
 
-$course = $DB->get_record('course', ['shortname' => 'foxcs-python'], '*', MUST_EXIST);
+$course = $DB->get_record('course', ['shortname' => $shortname], '*', MUST_EXIST);
 $usercontext = context_user::instance($USER->id);
 $fs = get_file_storage();
 
