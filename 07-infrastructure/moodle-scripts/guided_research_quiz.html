@@ -1,0 +1,233 @@
+<!-- Onboarding Lesson 1 "Explore & Envision" guided-research activity. Matches the
+     existing Pathway Placement Quiz pattern (pathway_quiz.html): one self-contained
+     HTML page, category chosen up front reveals only that category's questions,
+     ends in a single synthesized results page (not per-question inline feedback). -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Guided Research: FoxCS</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 760px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.65; color: #1a1a1a; }
+  h1, h2, h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  h1 { border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  .objectives { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.8rem 1.2rem; }
+  .category-row { display: flex; gap: 0.8rem; margin: 1.2rem 0; flex-wrap: wrap; }
+  .category-btn { flex: 1; min-width: 150px; font-family: Verdana, Arial, sans-serif; background: #eef4fb; border: 2px solid #1a5aa8; color: #12447f; padding: 1rem; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; text-align: center; }
+  .category-btn:hover { background: #dcebfa; }
+  .category-btn.selected { background: #1a5aa8; color: white; }
+  .question { display: none; border: 1px solid #dde3ea; border-radius: 8px; padding: 1rem 1.3rem; margin: 1.2rem 0; }
+  .question.active { display: block; }
+  .question-num { font-family: Verdana, Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.4rem; }
+  .question-text { font-weight: bold; margin: 0 0 0.7rem; }
+  .option-row { display: block; margin: 0.5rem 0; cursor: pointer; }
+  .option-row input { margin-right: 0.6rem; }
+  button.quiz-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; margin-top: 1rem; }
+  button.quiz-btn:hover:not(:disabled) { background: #12447f; }
+  button.quiz-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .quiz-progress { font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; color: #556; margin-top: 0.6rem; }
+  #questionsArea { display: none; }
+  .result-box { display: none; border-radius: 10px; padding: 1.4rem 1.6rem; margin: 1.6rem 0; border: 2px solid #1a5aa8; background: #eef4fb; }
+  .result-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.4rem; color: #1a5aa8; }
+  .result-title { font-family: Verdana, Arial, sans-serif; font-size: 1.4rem; margin: 0 0 0.6rem; color: #12447f; }
+  .search-terms { background: white; border: 1px solid #dde3ea; border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; }
+  .search-terms h3 { font-size: 0.95rem; margin: 0 0 0.6rem; }
+  .search-terms ul { margin: 0; padding-left: 1.3rem; }
+  .search-terms li { margin: 0.3rem 0; }
+  .reminder-box { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
+  .reminder-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #7a4800; margin-bottom: 0.5rem; }
+  .retake-link { font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
+  .retake-link a { color: #1a5aa8; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<span class="question-num">Before You Build Your Vision Board</span>
+<h1>Guided Research</h1>
+
+<div class="objectives">
+<strong>What this is:</strong> a few quick questions to help you figure out what to actually search for. Pick a category, answer a couple of questions about it, and you'll get a short results page with real search terms and things to look for.
+</div>
+
+<div id="categoryArea">
+<p><strong>Right now, which are you most drawn to?</strong> Think about what you actually spend time on and enjoy, not what you think you "should" pick.</p>
+<div class="category-row">
+  <div class="category-btn" data-cat="app" onclick="chooseCategory('app')">An app or piece of software</div>
+  <div class="category-btn" data-cat="website" onclick="chooseCategory('website')">A website</div>
+  <div class="category-btn" data-cat="game" onclick="chooseCategory('game')">A game</div>
+</div>
+</div>
+
+<div id="questionsArea">
+
+<div class="question" data-cat="app" data-q="1">
+<div class="question-num">Apps &amp; Software &middot; Question 1</div>
+<div class="question-text">When you think of an app you love using, what stands out most?</div>
+<label class="option-row"><input type="radio" name="app_q1" value="simple">It's simple, fast, and easy to use.</label>
+<label class="option-row"><input type="radio" name="app_q1" value="visual">It looks great, strong visual style.</label>
+<label class="option-row"><input type="radio" name="app_q1" value="playful">It has fun animations or interactive touches.</label>
+<label class="option-row"><input type="radio" name="app_q1" value="focused">It just does one thing really, really well.</label>
+</div>
+
+<div class="question" data-cat="app" data-q="2">
+<div class="question-num">Apps &amp; Software &middot; Question 2</div>
+<div class="question-text">Think about how an app makes you <em>feel</em> when you use it. Which matters most to you?</div>
+<label class="option-row"><input type="radio" name="app_q2" value="trust">Trustworthy and professional.</label>
+<label class="option-row"><input type="radio" name="app_q2" value="fun">Fun and playful.</label>
+<label class="option-row"><input type="radio" name="app_q2" value="calm">Calm and focused.</label>
+<label class="option-row"><input type="radio" name="app_q2" value="fast">Fast and efficient.</label>
+</div>
+
+<div class="question" data-cat="website" data-q="1">
+<div class="question-num">Websites &middot; Question 1</div>
+<div class="question-text">When you think of a website you love, what stands out most?</div>
+<label class="option-row"><input type="radio" name="website_q1" value="nav">It's easy to navigate, I can find things fast.</label>
+<label class="option-row"><input type="radio" name="website_q1" value="visual">Bold visual style, graphics, or typography.</label>
+<label class="option-row"><input type="radio" name="website_q1" value="interactive">Interactive touches, like animations or scroll effects.</label>
+<label class="option-row"><input type="radio" name="website_q1" value="content">The content itself is genuinely useful or well-written.</label>
+</div>
+
+<div class="question" data-cat="website" data-q="2">
+<div class="question-num">Websites &middot; Question 2</div>
+<div class="question-text">What kind of website design do you gravitate toward?</div>
+<label class="option-row"><input type="radio" name="website_q2" value="minimal">Minimal and modern.</label>
+<label class="option-row"><input type="radio" name="website_q2" value="bold">Bold and colorful, even maximalist.</label>
+<label class="option-row"><input type="radio" name="website_q2" value="retro">Retro or nostalgic.</label>
+<label class="option-row"><input type="radio" name="website_q2" value="dark">Dark mode and moody.</label>
+</div>
+
+<div class="question" data-cat="game" data-q="1">
+<div class="question-num">Games &middot; Question 1</div>
+<div class="question-text">When you think of a game you love, what stands out most?</div>
+<label class="option-row"><input type="radio" name="game_q1" value="art">The art style or visual world.</label>
+<label class="option-row"><input type="radio" name="game_q1" value="story">The story or characters.</label>
+<label class="option-row"><input type="radio" name="game_q1" value="mechanics">How it feels to actually play, the controls and systems.</label>
+<label class="option-row"><input type="radio" name="game_q1" value="hud">The HUD and interface, how health, maps, or inventory show up on screen.</label>
+<label class="option-row"><input type="radio" name="game_q1" value="social">Playing with or against other people.</label>
+</div>
+
+<div class="question" data-cat="game" data-q="2">
+<div class="question-num">Games &middot; Question 2</div>
+<div class="question-text">What mood or vibe draws you into a game?</div>
+<label class="option-row"><input type="radio" name="game_q2" value="cozy">Cozy and relaxing.</label>
+<label class="option-row"><input type="radio" name="game_q2" value="intense">Intense and high-stakes.</label>
+<label class="option-row"><input type="radio" name="game_q2" value="funny">Funny and lighthearted.</label>
+<label class="option-row"><input type="radio" name="game_q2" value="atmospheric">Mysterious and atmospheric.</label>
+</div>
+
+<div class="quiz-progress" id="quizProgress">0 of 2 answered</div>
+<button type="button" class="quiz-btn" id="quizSubmitBtn" onclick="showResult()" disabled>See My Results</button>
+</div>
+
+<div class="result-box" id="resultBox">
+<div class="result-label">What to Search For</div>
+<div class="result-title" id="resultTitle"></div>
+<p id="resultSummary"></p>
+<div class="search-terms">
+<h3>Try searching for:</h3>
+<ul id="resultTermsList"></ul>
+</div>
+</div>
+
+<div class="reminder-box" id="reminderBox" style="display:none;">
+<div class="reminder-label">Next Step</div>
+<p>Head to the <strong>Vision Board</strong> assignment next. Start collecting real examples, screenshots, links, or clear descriptions, that show these qualities. Aim for at least 4&ndash;6 examples. If something outside your main category catches your eye too, include it, following genuine interest matters more than staying inside one lane.</p>
+</div>
+
+<div class="retake-link" id="retakeLink" style="display:none;">
+<a onclick="location.reload()">&#8634; Start over</a>
+</div>
+
+<script>
+const CATEGORY_LABELS = { app: 'Apps & Software', website: 'Websites', game: 'Games' };
+
+const SEARCH_TERMS = {
+  app: {
+    simple: 'clean app UI examples, minimalist app design',
+    visual: 'app UI design trends, app color palette inspiration',
+    playful: 'app microinteractions, gamified app design',
+    focused: 'best utility app design, focused productivity app UI',
+    trust: 'professional app design examples, trustworthy UI patterns',
+    fun: 'playful app design, fun UI animations',
+    calm: 'calm app design, minimal focus app UI',
+    fast: 'fast UI patterns, efficient app workflows'
+  },
+  website: {
+    nav: 'clean website navigation examples, website UX design',
+    visual: 'bold website typography, website visual design inspiration',
+    interactive: 'website scroll animation examples, interactive website design',
+    content: 'content-first website design, great website copywriting',
+    minimal: 'minimalist website design examples',
+    bold: 'maximalist website design examples',
+    retro: 'retro website design, Y2K web design',
+    dark: 'dark mode website design examples'
+  },
+  game: {
+    art: 'game art style examples, concept art for your favorite genre',
+    story: 'best game narrative design, game character design',
+    mechanics: 'game mechanics breakdown, game feel design',
+    hud: 'game HUD design examples, game UI design breakdown',
+    social: 'multiplayer game design examples, social game features',
+    cozy: 'cozy game aesthetic examples',
+    intense: 'intense game design examples',
+    funny: 'lighthearted game design examples',
+    atmospheric: 'atmospheric game design examples'
+  }
+};
+
+let currentCategory = null;
+
+function chooseCategory(cat) {
+  currentCategory = cat;
+  document.querySelectorAll('.category-btn').forEach(function(btn) {
+    btn.classList.toggle('selected', btn.getAttribute('data-cat') === cat);
+  });
+  document.querySelectorAll('.question').forEach(function(q) {
+    q.classList.toggle('active', q.getAttribute('data-cat') === cat);
+  });
+  document.getElementById('questionsArea').style.display = 'block';
+  updateProgress();
+  document.getElementById('questionsArea').scrollIntoView({ behavior: 'smooth' });
+}
+
+function updateProgress() {
+  if (!currentCategory) return;
+  const q1 = document.querySelector('input[name="' + currentCategory + '_q1"]:checked');
+  const q2 = document.querySelector('input[name="' + currentCategory + '_q2"]:checked');
+  const answered = (q1 ? 1 : 0) + (q2 ? 1 : 0);
+  document.getElementById('quizProgress').textContent = answered + ' of 2 answered';
+  document.getElementById('quizSubmitBtn').disabled = answered < 2;
+}
+
+document.getElementById('questionsArea').addEventListener('change', updateProgress);
+
+function showResult() {
+  const q1 = document.querySelector('input[name="' + currentCategory + '_q1"]:checked');
+  const q2 = document.querySelector('input[name="' + currentCategory + '_q2"]:checked');
+  if (!q1 || !q2) return;
+
+  document.getElementById('categoryArea').style.display = 'none';
+  document.getElementById('questionsArea').style.display = 'none';
+
+  document.getElementById('resultTitle').textContent = CATEGORY_LABELS[currentCategory];
+  document.getElementById('resultSummary').textContent =
+    "Based on what you picked, here's where to start looking for real examples for your Vision Board.";
+
+  const terms = SEARCH_TERMS[currentCategory];
+  const list = document.getElementById('resultTermsList');
+  list.innerHTML = '';
+  [terms[q1.value], terms[q2.value]].forEach(function(t) {
+    const li = document.createElement('li');
+    li.textContent = t;
+    list.appendChild(li);
+  });
+
+  document.getElementById('resultBox').style.display = 'block';
+  document.getElementById('reminderBox').style.display = 'block';
+  document.getElementById('retakeLink').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
