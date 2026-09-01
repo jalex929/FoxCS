@@ -1,7 +1,10 @@
 <!-- Onboarding Lesson 1 "Explore & Envision" guided-research activity. Matches the
      existing Pathway Placement Quiz pattern (pathway_quiz.html): one self-contained
-     HTML page, category chosen up front reveals only that category's questions,
-     ends in a single synthesized results page (not per-question inline feedback). -->
+     HTML page, category chosen up front reveals only that category's questions, ends
+     in a single synthesized results page organized into themed sections (Visual Style,
+     Interaction & Feel, Mood & Tone, Functionality) instead of a flat list -- these
+     themes are meant to map directly onto how students should structure their Vision
+     Board presentation slides. 8 questions per category, 2 per theme. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +19,10 @@
   .category-btn { flex: 1; min-width: 150px; font-family: Verdana, Arial, sans-serif; background: #eef4fb; border: 2px solid #1a5aa8; color: #12447f; padding: 1rem; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; text-align: center; }
   .category-btn:hover { background: #dcebfa; }
   .category-btn.selected { background: #1a5aa8; color: white; }
-  .question { display: none; border: 1px solid #dde3ea; border-radius: 8px; padding: 1rem 1.3rem; margin: 1.2rem 0; }
+  .theme-heading { display: none; font-family: Verdana, Arial, sans-serif; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin: 1.6rem 0 0.4rem; border-top: 2px solid #dde3ea; padding-top: 1.2rem; }
+  .theme-heading.active { display: block; }
+  .theme-heading:first-of-type { border-top: none; padding-top: 0; }
+  .question { display: none; border: 1px solid #dde3ea; border-radius: 8px; padding: 1rem 1.3rem; margin: 0.8rem 0; }
   .question.active { display: block; }
   .question-num { font-family: Verdana, Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.4rem; }
   .question-text { font-weight: bold; margin: 0 0 0.7rem; }
@@ -30,10 +36,12 @@
   .result-box { display: none; border-radius: 10px; padding: 1.4rem 1.6rem; margin: 1.6rem 0; border: 2px solid #1a5aa8; background: #eef4fb; }
   .result-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.4rem; color: #1a5aa8; }
   .result-title { font-family: Verdana, Arial, sans-serif; font-size: 1.4rem; margin: 0 0 0.6rem; color: #12447f; }
-  .search-terms { background: white; border: 1px solid #dde3ea; border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; }
-  .search-terms h3 { font-size: 0.95rem; margin: 0 0 0.6rem; }
-  .search-terms ul { margin: 0; padding-left: 1.3rem; }
-  .search-terms li { margin: 0.3rem 0; }
+  .result-theme { background: white; border: 1px solid #dde3ea; border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; }
+  .result-theme h3 { font-size: 0.95rem; margin: 0 0 0.5rem; color: #12447f; }
+  .result-theme p.theme-note { margin: 0 0 0.5rem; font-size: 0.92rem; }
+  .result-theme ul { margin: 0; padding-left: 1.3rem; }
+  .result-theme li { margin: 0.3rem 0; }
+  .presentation-tip { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 0.9rem 1.1rem; margin: 1.2rem 0 1.6rem; font-size: 0.92rem; }
   .reminder-box { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 1rem 1.2rem; margin: 1.4rem 0; }
   .reminder-label { font-family: Verdana, Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #7a4800; margin-bottom: 0.5rem; }
   .retake-link { font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; }
@@ -46,7 +54,7 @@
 <h1>Guided Research</h1>
 
 <div class="objectives">
-<strong>What this is:</strong> a few quick questions to help you figure out what to actually search for. Pick a category, answer a couple of questions about it, and you'll get a short results page with real search terms and things to look for.
+<strong>What this is:</strong> 8 quick questions to help you figure out what to actually search for. Pick a category, answer questions across four themes, visual style, interaction &amp; feel, mood &amp; tone, and functionality, and you'll get a results page organized the same way. Those four themes are a good structure for your Vision Board presentation too.
 </div>
 
 <div id="categoryArea">
@@ -60,73 +68,265 @@
 
 <div id="questionsArea">
 
+<!-- ===== APP: Visual Style ===== -->
+<div class="theme-heading" data-cat="app" data-theme="visual">Theme: Visual Style</div>
 <div class="question" data-cat="app" data-q="1">
-<div class="question-num">Apps &amp; Software &middot; Question 1</div>
-<div class="question-text">When you think of an app you love using, what stands out most?</div>
-<label class="option-row"><input type="radio" name="app_q1" value="simple">It's simple, fast, and easy to use.</label>
-<label class="option-row"><input type="radio" name="app_q1" value="visual">It looks great, strong visual style.</label>
-<label class="option-row"><input type="radio" name="app_q1" value="playful">It has fun animations or interactive touches.</label>
-<label class="option-row"><input type="radio" name="app_q1" value="focused">It just does one thing really, really well.</label>
+<div class="question-num">Apps &middot; Question 1</div>
+<div class="question-text">What visual style pulls you in?</div>
+<label class="option-row"><input type="radio" name="app_q1" value="bold">Bold and colorful.</label>
+<label class="option-row"><input type="radio" name="app_q1" value="minimal">Minimal and clean.</label>
+<label class="option-row"><input type="radio" name="app_q1" value="dark">Dark mode, moody.</label>
+<label class="option-row"><input type="radio" name="app_q1" value="playful">Playful and cartoonish.</label>
 </div>
-
 <div class="question" data-cat="app" data-q="2">
-<div class="question-num">Apps &amp; Software &middot; Question 2</div>
-<div class="question-text">Think about how an app makes you <em>feel</em> when you use it. Which matters most to you?</div>
-<label class="option-row"><input type="radio" name="app_q2" value="trust">Trustworthy and professional.</label>
-<label class="option-row"><input type="radio" name="app_q2" value="fun">Fun and playful.</label>
-<label class="option-row"><input type="radio" name="app_q2" value="calm">Calm and focused.</label>
-<label class="option-row"><input type="radio" name="app_q2" value="fast">Fast and efficient.</label>
+<div class="question-num">Apps &middot; Question 2</div>
+<div class="question-text">Which app icon style do you like best?</div>
+<label class="option-row"><input type="radio" name="app_q2" value="flat">Simple and flat.</label>
+<label class="option-row"><input type="radio" name="app_q2" value="gradient">Gradient or glossy.</label>
+<label class="option-row"><input type="radio" name="app_q2" value="illustrated">Illustrated and detailed.</label>
+<label class="option-row"><input type="radio" name="app_q2" value="mono">Monochrome, one color.</label>
 </div>
 
+<!-- ===== APP: Interaction & Feel ===== -->
+<div class="theme-heading" data-cat="app" data-theme="interaction">Theme: Interaction &amp; Feel</div>
+<div class="question" data-cat="app" data-q="3">
+<div class="question-num">Apps &middot; Question 3</div>
+<div class="question-text">What matters more when you tap or click something?</div>
+<label class="option-row"><input type="radio" name="app_q3" value="instant">It responds instantly.</label>
+<label class="option-row"><input type="radio" name="app_q3" value="animated">A satisfying animation plays.</label>
+<label class="option-row"><input type="radio" name="app_q3" value="clear">Clear feedback that it worked.</label>
+<label class="option-row"><input type="radio" name="app_q3" value="none">Honestly, doesn't matter much.</label>
+</div>
+<div class="question" data-cat="app" data-q="4">
+<div class="question-num">Apps &middot; Question 4</div>
+<div class="question-text">How do you feel about swipe gestures and motion in an app?</div>
+<label class="option-row"><input type="radio" name="app_q4" value="love">Love them, makes it feel alive.</label>
+<label class="option-row"><input type="radio" name="app_q4" value="simple">Prefer simple taps, no extra motion.</label>
+<label class="option-row"><input type="radio" name="app_q4" value="depends">Depends on the app.</label>
+<label class="option-row"><input type="radio" name="app_q4" value="notice">Don't really notice either way.</label>
+</div>
+
+<!-- ===== APP: Mood & Tone ===== -->
+<div class="theme-heading" data-cat="app" data-theme="mood">Theme: Mood &amp; Tone</div>
+<div class="question" data-cat="app" data-q="5">
+<div class="question-num">Apps &middot; Question 5</div>
+<div class="question-text">Think about how an app makes you feel when you use it. Which matters most?</div>
+<label class="option-row"><input type="radio" name="app_q5" value="trust">Trustworthy and professional.</label>
+<label class="option-row"><input type="radio" name="app_q5" value="fun">Fun and playful.</label>
+<label class="option-row"><input type="radio" name="app_q5" value="calm">Calm and focused.</label>
+<label class="option-row"><input type="radio" name="app_q5" value="fast">Fast and efficient.</label>
+</div>
+<div class="question" data-cat="app" data-q="6">
+<div class="question-num">Apps &middot; Question 6</div>
+<div class="question-text">Which app "personality" appeals to you most?</div>
+<label class="option-row"><input type="radio" name="app_q6" value="assistant">A friendly assistant.</label>
+<label class="option-row"><input type="radio" name="app_q6" value="tool">A sleek, no-nonsense tool.</label>
+<label class="option-row"><input type="radio" name="app_q6" value="companion">A playful companion.</label>
+<label class="option-row"><input type="radio" name="app_q6" value="utility">A serious utility, all business.</label>
+</div>
+
+<!-- ===== APP: Functionality ===== -->
+<div class="theme-heading" data-cat="app" data-theme="function">Theme: Functionality</div>
+<div class="question" data-cat="app" data-q="7">
+<div class="question-num">Apps &middot; Question 7</div>
+<div class="question-text">When you think of an app you love using, what stands out most?</div>
+<label class="option-row"><input type="radio" name="app_q7" value="simple">It's simple, fast, and easy to use.</label>
+<label class="option-row"><input type="radio" name="app_q7" value="focused">It just does one thing really well.</label>
+<label class="option-row"><input type="radio" name="app_q7" value="featured">It's packed with useful features.</label>
+<label class="option-row"><input type="radio" name="app_q7" value="personal">It lets you personalize a lot.</label>
+</div>
+<div class="question" data-cat="app" data-q="8">
+<div class="question-num">Apps &middot; Question 8</div>
+<div class="question-text">How do you feel about apps with lots of settings and options?</div>
+<label class="option-row"><input type="radio" name="app_q8" value="customize">Love having full control to customize.</label>
+<label class="option-row"><input type="radio" name="app_q8" value="justworks">Prefer it to just work with no setup.</label>
+<label class="option-row"><input type="radio" name="app_q8" value="some">Like having some control.</label>
+<label class="option-row"><input type="radio" name="app_q8" value="overwhelmed">Too many options feels overwhelming.</label>
+</div>
+
+<!-- ===== WEBSITE: Visual Style ===== -->
+<div class="theme-heading" data-cat="website" data-theme="visual">Theme: Visual Style</div>
 <div class="question" data-cat="website" data-q="1">
 <div class="question-num">Websites &middot; Question 1</div>
-<div class="question-text">When you think of a website you love, what stands out most?</div>
-<label class="option-row"><input type="radio" name="website_q1" value="nav">It's easy to navigate, I can find things fast.</label>
-<label class="option-row"><input type="radio" name="website_q1" value="visual">Bold visual style, graphics, or typography.</label>
-<label class="option-row"><input type="radio" name="website_q1" value="interactive">Interactive touches, like animations or scroll effects.</label>
-<label class="option-row"><input type="radio" name="website_q1" value="content">The content itself is genuinely useful or well-written.</label>
+<div class="question-text">What visual style stands out to you?</div>
+<label class="option-row"><input type="radio" name="website_q1" value="bold">Bold typography and graphics.</label>
+<label class="option-row"><input type="radio" name="website_q1" value="minimal">Minimal and clean.</label>
+<label class="option-row"><input type="radio" name="website_q1" value="retro">Retro or nostalgic.</label>
+<label class="option-row"><input type="radio" name="website_q1" value="dark">Dark mode, moody.</label>
 </div>
-
 <div class="question" data-cat="website" data-q="2">
 <div class="question-num">Websites &middot; Question 2</div>
-<div class="question-text">What kind of website design do you gravitate toward?</div>
-<label class="option-row"><input type="radio" name="website_q2" value="minimal">Minimal and modern.</label>
-<label class="option-row"><input type="radio" name="website_q2" value="bold">Bold and colorful, even maximalist.</label>
-<label class="option-row"><input type="radio" name="website_q2" value="retro">Retro or nostalgic.</label>
-<label class="option-row"><input type="radio" name="website_q2" value="dark">Dark mode and moody.</label>
+<div class="question-text">Which color approach do you like most?</div>
+<label class="option-row"><input type="radio" name="website_q2" value="bright">Bright and colorful.</label>
+<label class="option-row"><input type="radio" name="website_q2" value="mono">Black and white with one accent color.</label>
+<label class="option-row"><input type="radio" name="website_q2" value="pastel">Soft, pastel tones.</label>
+<label class="option-row"><input type="radio" name="website_q2" value="contrast">High contrast and bold.</label>
 </div>
 
+<!-- ===== WEBSITE: Interaction & Feel ===== -->
+<div class="theme-heading" data-cat="website" data-theme="interaction">Theme: Interaction &amp; Feel</div>
+<div class="question" data-cat="website" data-q="3">
+<div class="question-num">Websites &middot; Question 3</div>
+<div class="question-text">What kind of interactive touches do you like on a website?</div>
+<label class="option-row"><input type="radio" name="website_q3" value="scroll">Scroll animations.</label>
+<label class="option-row"><input type="radio" name="website_q3" value="hover">Hover effects.</label>
+<label class="option-row"><input type="radio" name="website_q3" value="none">None, just fast loading.</label>
+<label class="option-row"><input type="radio" name="website_q3" value="content">Interactivity in the content itself, like tools or calculators.</label>
+</div>
+<div class="question" data-cat="website" data-q="4">
+<div class="question-num">Websites &middot; Question 4</div>
+<div class="question-text">How do you feel about video or motion on a website?</div>
+<label class="option-row"><input type="radio" name="website_q4" value="love">Love it, makes the site feel alive.</label>
+<label class="option-row"><input type="radio" name="website_q4" value="distracting">Can be distracting.</label>
+<label class="option-row"><input type="radio" name="website_q4" value="depends">Depends on the site.</label>
+<label class="option-row"><input type="radio" name="website_q4" value="notice">Don't really notice.</label>
+</div>
+
+<!-- ===== WEBSITE: Mood & Tone ===== -->
+<div class="theme-heading" data-cat="website" data-theme="mood">Theme: Mood &amp; Tone</div>
+<div class="question" data-cat="website" data-q="5">
+<div class="question-num">Websites &middot; Question 5</div>
+<div class="question-text">What mood should a website have?</div>
+<label class="option-row"><input type="radio" name="website_q5" value="trust">Professional and trustworthy.</label>
+<label class="option-row"><input type="radio" name="website_q5" value="fun">Fun and playful.</label>
+<label class="option-row"><input type="radio" name="website_q5" value="calm">Calm and minimal.</label>
+<label class="option-row"><input type="radio" name="website_q5" value="edgy">Edgy and bold.</label>
+</div>
+<div class="question" data-cat="website" data-q="6">
+<div class="question-num">Websites &middot; Question 6</div>
+<div class="question-text">Which website "voice" do you like?</div>
+<label class="option-row"><input type="radio" name="website_q6" value="casual">Friendly and casual.</label>
+<label class="option-row"><input type="radio" name="website_q6" value="formal">Formal and informative.</label>
+<label class="option-row"><input type="radio" name="website_q6" value="witty">Witty and fun.</label>
+<label class="option-row"><input type="radio" name="website_q6" value="direct">Straightforward, no fluff.</label>
+</div>
+
+<!-- ===== WEBSITE: Functionality ===== -->
+<div class="theme-heading" data-cat="website" data-theme="function">Theme: Functionality</div>
+<div class="question" data-cat="website" data-q="7">
+<div class="question-num">Websites &middot; Question 7</div>
+<div class="question-text">When you think of a website you love, what stands out most?</div>
+<label class="option-row"><input type="radio" name="website_q7" value="nav">It's easy to navigate, I can find things fast.</label>
+<label class="option-row"><input type="radio" name="website_q7" value="content">The content itself is genuinely useful.</label>
+<label class="option-row"><input type="radio" name="website_q7" value="visual">The visual style.</label>
+<label class="option-row"><input type="radio" name="website_q7" value="interactive">How interactive it is.</label>
+</div>
+<div class="question" data-cat="website" data-q="8">
+<div class="question-num">Websites &middot; Question 8</div>
+<div class="question-text">How do you feel about lots of menus and options on a site?</div>
+<label class="option-row"><input type="radio" name="website_q8" value="everything">Like having everything accessible.</label>
+<label class="option-row"><input type="radio" name="website_q8" value="simple">Prefer super simple navigation.</label>
+<label class="option-row"><input type="radio" name="website_q8" value="depends">Depends on the site.</label>
+<label class="option-row"><input type="radio" name="website_q8" value="notice">Don't really think about it.</label>
+</div>
+
+<!-- ===== GAME: Visual Style ===== -->
+<div class="theme-heading" data-cat="game" data-theme="visual">Theme: Visual Style</div>
 <div class="question" data-cat="game" data-q="1">
 <div class="question-num">Games &middot; Question 1</div>
-<div class="question-text">When you think of a game you love, what stands out most?</div>
-<label class="option-row"><input type="radio" name="game_q1" value="art">The art style or visual world.</label>
-<label class="option-row"><input type="radio" name="game_q1" value="story">The story or characters.</label>
-<label class="option-row"><input type="radio" name="game_q1" value="mechanics">How it feels to actually play, the controls and systems.</label>
-<label class="option-row"><input type="radio" name="game_q1" value="hud">The HUD and interface, how health, maps, or inventory show up on screen.</label>
-<label class="option-row"><input type="radio" name="game_q1" value="social">Playing with or against other people.</label>
+<div class="question-text">What stands out about a game's look?</div>
+<label class="option-row"><input type="radio" name="game_q1" value="art">The overall art style and visual world.</label>
+<label class="option-row"><input type="radio" name="game_q1" value="character">Character design.</label>
+<label class="option-row"><input type="radio" name="game_q1" value="environment">Environment and world design.</label>
+<label class="option-row"><input type="radio" name="game_q1" value="palette">The color palette.</label>
 </div>
-
 <div class="question" data-cat="game" data-q="2">
 <div class="question-num">Games &middot; Question 2</div>
-<div class="question-text">What mood or vibe draws you into a game?</div>
-<label class="option-row"><input type="radio" name="game_q2" value="cozy">Cozy and relaxing.</label>
-<label class="option-row"><input type="radio" name="game_q2" value="intense">Intense and high-stakes.</label>
-<label class="option-row"><input type="radio" name="game_q2" value="funny">Funny and lighthearted.</label>
-<label class="option-row"><input type="radio" name="game_q2" value="atmospheric">Mysterious and atmospheric.</label>
+<div class="question-text">Which art style appeals to you most?</div>
+<label class="option-row"><input type="radio" name="game_q2" value="realistic">Realistic.</label>
+<label class="option-row"><input type="radio" name="game_q2" value="stylized">Cartoonish or stylized.</label>
+<label class="option-row"><input type="radio" name="game_q2" value="pixel">Pixel art or retro.</label>
+<label class="option-row"><input type="radio" name="game_q2" value="gritty">Dark and gritty.</label>
 </div>
 
-<div class="quiz-progress" id="quizProgress">0 of 2 answered</div>
+<!-- ===== GAME: Interaction & Feel ===== -->
+<div class="theme-heading" data-cat="game" data-theme="interaction">Theme: Interaction &amp; Feel</div>
+<div class="question" data-cat="game" data-q="3">
+<div class="question-num">Games &middot; Question 3</div>
+<div class="question-text">What matters most in how a game feels to play?</div>
+<label class="option-row"><input type="radio" name="game_q3" value="controls">Tight, responsive controls.</label>
+<label class="option-row"><input type="radio" name="game_q3" value="combat">Combat systems.</label>
+<label class="option-row"><input type="radio" name="game_q3" value="exploration">Exploration.</label>
+<label class="option-row"><input type="radio" name="game_q3" value="puzzle">Puzzle-solving.</label>
+</div>
+<div class="question" data-cat="game" data-q="4">
+<div class="question-num">Games &middot; Question 4</div>
+<div class="question-text">Which pacing do you prefer?</div>
+<label class="option-row"><input type="radio" name="game_q4" value="fast">Fast and action-packed.</label>
+<label class="option-row"><input type="radio" name="game_q4" value="slow">Slow and exploratory.</label>
+<label class="option-row"><input type="radio" name="game_q4" value="rhythm">Rhythm-based.</label>
+<label class="option-row"><input type="radio" name="game_q4" value="turnbased">Turn-based or strategic.</label>
+</div>
+
+<!-- ===== GAME: Mood & Tone ===== -->
+<div class="theme-heading" data-cat="game" data-theme="mood">Theme: Mood &amp; Tone</div>
+<div class="question" data-cat="game" data-q="5">
+<div class="question-num">Games &middot; Question 5</div>
+<div class="question-text">What mood or vibe draws you into a game?</div>
+<label class="option-row"><input type="radio" name="game_q5" value="cozy">Cozy and relaxing.</label>
+<label class="option-row"><input type="radio" name="game_q5" value="intense">Intense and high-stakes.</label>
+<label class="option-row"><input type="radio" name="game_q5" value="funny">Funny and lighthearted.</label>
+<label class="option-row"><input type="radio" name="game_q5" value="atmospheric">Mysterious and atmospheric.</label>
+</div>
+<div class="question" data-cat="game" data-q="6">
+<div class="question-num">Games &middot; Question 6</div>
+<div class="question-text">Which story tone appeals to you?</div>
+<label class="option-row"><input type="radio" name="game_q6" value="epic">Epic and dramatic.</label>
+<label class="option-row"><input type="radio" name="game_q6" value="silly">Silly and lighthearted.</label>
+<label class="option-row"><input type="radio" name="game_q6" value="dark">Dark and serious.</label>
+<label class="option-row"><input type="radio" name="game_q6" value="mysterious">Mysterious and thought-provoking.</label>
+</div>
+
+<!-- ===== GAME: Functionality (HUD/Systems) ===== -->
+<div class="theme-heading" data-cat="game" data-theme="function">Theme: Functionality</div>
+<div class="question" data-cat="game" data-q="7">
+<div class="question-num">Games &middot; Question 7</div>
+<div class="question-text">What stands out about a game's interface?</div>
+<label class="option-row"><input type="radio" name="game_q7" value="hud">The HUD, how health, maps, or ammo show up on screen.</label>
+<label class="option-row"><input type="radio" name="game_q7" value="menus">Clean, easy-to-use menus.</label>
+<label class="option-row"><input type="radio" name="game_q7" value="inventory">Inventory or crafting systems.</label>
+<label class="option-row"><input type="radio" name="game_q7" value="map">Map and navigation tools.</label>
+</div>
+<div class="question" data-cat="game" data-q="8">
+<div class="question-num">Games &middot; Question 8</div>
+<div class="question-text">How do you feel about complex game systems, like crafting or skill trees?</div>
+<label class="option-row"><input type="radio" name="game_q8" value="deep">Love deep, complex systems.</label>
+<label class="option-row"><input type="radio" name="game_q8" value="simple">Prefer simple and streamlined.</label>
+<label class="option-row"><input type="radio" name="game_q8" value="some">Like a moderate amount.</label>
+<label class="option-row"><input type="radio" name="game_q8" value="dontcare">Don't care either way.</label>
+</div>
+
+<div class="quiz-progress" id="quizProgress">0 of 8 answered</div>
 <button type="button" class="quiz-btn" id="quizSubmitBtn" onclick="showResult()" disabled>See My Results</button>
 </div>
 
 <div class="result-box" id="resultBox">
 <div class="result-label">What to Search For</div>
 <div class="result-title" id="resultTitle"></div>
-<p id="resultSummary"></p>
-<div class="search-terms">
-<h3>Try searching for:</h3>
-<ul id="resultTermsList"></ul>
+<p>Your results are organized into four themes. Each one is a real angle to cover on your Vision Board, not just a search list.</p>
+
+<div class="result-theme">
+<h3>Visual Style</h3>
+<p class="theme-note">What it looks like: colors, art, imagery.</p>
+<ul id="termsVisual"></ul>
 </div>
+<div class="result-theme">
+<h3>Interaction &amp; Feel</h3>
+<p class="theme-note">How it behaves and responds when you use it.</p>
+<ul id="termsInteraction"></ul>
+</div>
+<div class="result-theme">
+<h3>Mood &amp; Tone</h3>
+<p class="theme-note">The emotional quality it gives off.</p>
+<ul id="termsMood"></ul>
+</div>
+<div class="result-theme">
+<h3>Functionality</h3>
+<p class="theme-note">How it's organized and what it actually does well.</p>
+<ul id="termsFunction"></ul>
+</div>
+
+<div class="presentation-tip"><strong>For your presentation:</strong> these four themes, Visual Style, Interaction &amp; Feel, Mood &amp; Tone, and Functionality, are a good way to organize what you say about each example on your Vision Board. You don't have to cover all four for every slide, but touching on more than one makes your reasoning a lot stronger than just "I like it."</div>
 </div>
 
 <div class="reminder-box" id="reminderBox" style="display:none;">
@@ -143,37 +343,39 @@ const CATEGORY_LABELS = { app: 'Apps & Software', website: 'Websites', game: 'Ga
 
 const SEARCH_TERMS = {
   app: {
-    simple: 'clean app UI examples, minimalist app design',
-    visual: 'app UI design trends, app color palette inspiration',
-    playful: 'app microinteractions, gamified app design',
-    focused: 'best utility app design, focused productivity app UI',
-    trust: 'professional app design examples, trustworthy UI patterns',
-    fun: 'playful app design, fun UI animations',
-    calm: 'calm app design, minimal focus app UI',
-    fast: 'fast UI patterns, efficient app workflows'
+    bold: 'app UI design trends, bold app color palettes', minimal: 'clean minimalist app UI examples', dark: 'dark mode app design examples', playful: 'playful cartoonish app design',
+    flat: 'flat app icon design examples', gradient: 'gradient glossy app icon design', illustrated: 'illustrated app icon sets', mono: 'monochrome app icon design',
+    instant: 'app microinteractions, instant feedback UI', animated: 'app UI animation examples', clear: 'UI feedback pattern examples', none: 'simple static app UI examples',
+    love: 'app gesture animation examples', simple: 'minimal tap-based app UI', depends: 'app interaction design breakdown', notice: 'subtle app UI motion examples',
+    trust: 'professional trustworthy app design', fun: 'fun playful app design', calm: 'calm focused app UI design', fast: 'fast efficient app UI patterns',
+    assistant: 'friendly assistant app design', tool: 'sleek utility app UI', companion: 'playful app character design', utility: 'no-nonsense utility app UI',
+    focused: 'focused single-purpose app design', featured: 'feature-rich app UI examples', personal: 'customizable app UI examples',
+    customize: 'app personalization UI examples', justworks: 'zero-setup app design examples', some: 'balanced app settings UI', overwhelmed: 'simplified app settings design'
   },
   website: {
-    nav: 'clean website navigation examples, website UX design',
-    visual: 'bold website typography, website visual design inspiration',
-    interactive: 'website scroll animation examples, interactive website design',
-    content: 'content-first website design, great website copywriting',
-    minimal: 'minimalist website design examples',
-    bold: 'maximalist website design examples',
-    retro: 'retro website design, Y2K web design',
-    dark: 'dark mode website design examples'
+    bold: 'bold website typography examples', minimal: 'minimalist website design examples', retro: 'retro Y2K website design', dark: 'dark mode website design examples',
+    bright: 'bright colorful website design', mono: 'black white accent color website design', pastel: 'pastel website color palettes', contrast: 'high contrast bold website design',
+    scroll: 'website scroll animation examples', hover: 'website hover effect examples', content: 'interactive website tool examples',
+    love: 'website motion design examples', distracting: 'balanced website motion design', depends: 'website interactivity breakdown', notice: 'subtle website motion examples',
+    trust: 'professional trustworthy website design', fun: 'fun playful website design', calm: 'calm minimal website design', edgy: 'bold edgy website design',
+    casual: 'friendly casual website copywriting', formal: 'formal informative website design', witty: 'witty website copywriting examples', direct: 'straightforward website content design',
+    nav: 'clean website navigation examples', visual: 'website visual design inspiration', interactive: 'interactive website design examples',
+    everything: 'comprehensive website navigation examples', simple: 'simple website navigation design', notice2: 'website navigation UX breakdown'
   },
   game: {
-    art: 'game art style examples, concept art for your favorite genre',
-    story: 'best game narrative design, game character design',
-    mechanics: 'game mechanics breakdown, game feel design',
-    hud: 'game HUD design examples, game UI design breakdown',
-    social: 'multiplayer game design examples, social game features',
-    cozy: 'cozy game aesthetic examples',
-    intense: 'intense game design examples',
-    funny: 'lighthearted game design examples',
-    atmospheric: 'atmospheric game design examples'
+    art: 'game art style examples', character: 'game character design examples', environment: 'game environment design examples', palette: 'game color palette examples',
+    realistic: 'realistic game art examples', stylized: 'stylized cartoon game art', pixel: 'pixel art game design examples', gritty: 'dark gritty game art style',
+    controls: 'game feel and control design', combat: 'game combat system design', exploration: 'exploration game design examples', puzzle: 'puzzle game design examples',
+    fast: 'fast-paced action game design', slow: 'exploratory game pacing examples', rhythm: 'rhythm game design examples', turnbased: 'turn-based strategy game design',
+    cozy: 'cozy game aesthetic examples', intense: 'intense game design examples', funny: 'lighthearted game design examples', atmospheric: 'atmospheric game design examples',
+    epic: 'epic game narrative design', silly: 'lighthearted game story examples', dark: 'dark serious game narrative design', mysterious: 'mysterious game narrative design',
+    hud: 'game HUD design examples', menus: 'game menu UI design examples', inventory: 'game inventory UI design', map: 'game map UI design examples',
+    deep: 'deep game system design examples', simple: 'streamlined game system design', some: 'balanced game system design', dontcare: 'game systems design breakdown'
   }
 };
+
+const THEME_QUESTIONS = { visual: ['q1', 'q2'], interaction: ['q3', 'q4'], mood: ['q5', 'q6'], function: ['q7', 'q8'] };
+const TOTAL_QUESTIONS = 8;
 
 let currentCategory = null;
 
@@ -185,6 +387,9 @@ function chooseCategory(cat) {
   document.querySelectorAll('.question').forEach(function(q) {
     q.classList.toggle('active', q.getAttribute('data-cat') === cat);
   });
+  document.querySelectorAll('.theme-heading').forEach(function(h) {
+    h.classList.toggle('active', h.getAttribute('data-cat') === cat);
+  });
   document.getElementById('questionsArea').style.display = 'block';
   updateProgress();
   document.getElementById('questionsArea').scrollIntoView({ behavior: 'smooth' });
@@ -192,34 +397,42 @@ function chooseCategory(cat) {
 
 function updateProgress() {
   if (!currentCategory) return;
-  const q1 = document.querySelector('input[name="' + currentCategory + '_q1"]:checked');
-  const q2 = document.querySelector('input[name="' + currentCategory + '_q2"]:checked');
-  const answered = (q1 ? 1 : 0) + (q2 ? 1 : 0);
-  document.getElementById('quizProgress').textContent = answered + ' of 2 answered';
-  document.getElementById('quizSubmitBtn').disabled = answered < 2;
+  let answered = 0;
+  for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+    if (document.querySelector('input[name="' + currentCategory + '_q' + i + '"]:checked')) answered++;
+  }
+  document.getElementById('quizProgress').textContent = answered + ' of ' + TOTAL_QUESTIONS + ' answered';
+  document.getElementById('quizSubmitBtn').disabled = answered < TOTAL_QUESTIONS;
 }
 
 document.getElementById('questionsArea').addEventListener('change', updateProgress);
 
 function showResult() {
-  const q1 = document.querySelector('input[name="' + currentCategory + '_q1"]:checked');
-  const q2 = document.querySelector('input[name="' + currentCategory + '_q2"]:checked');
-  if (!q1 || !q2) return;
+  const terms = SEARCH_TERMS[currentCategory];
+  const answers = {};
+  for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+    const checked = document.querySelector('input[name="' + currentCategory + '_q' + i + '"]:checked');
+    if (!checked) return;
+    answers['q' + i] = checked.value;
+  }
 
   document.getElementById('categoryArea').style.display = 'none';
   document.getElementById('questionsArea').style.display = 'none';
-
   document.getElementById('resultTitle').textContent = CATEGORY_LABELS[currentCategory];
-  document.getElementById('resultSummary').textContent =
-    "Based on what you picked, here's where to start looking for real examples for your Vision Board.";
 
-  const terms = SEARCH_TERMS[currentCategory];
-  const list = document.getElementById('resultTermsList');
-  list.innerHTML = '';
-  [terms[q1.value], terms[q2.value]].forEach(function(t) {
-    const li = document.createElement('li');
-    li.textContent = t;
-    list.appendChild(li);
+  Object.keys(THEME_QUESTIONS).forEach(function(theme) {
+    const listId = 'terms' + theme.charAt(0).toUpperCase() + theme.slice(1);
+    const list = document.getElementById(listId);
+    list.innerHTML = '';
+    THEME_QUESTIONS[theme].forEach(function(qkey) {
+      const value = answers[qkey];
+      const term = terms[value];
+      if (term) {
+        const li = document.createElement('li');
+        li.textContent = term;
+        list.appendChild(li);
+      }
+    });
   });
 
   document.getElementById('resultBox').style.display = 'block';

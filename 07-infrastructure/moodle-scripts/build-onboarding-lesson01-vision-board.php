@@ -251,26 +251,37 @@ $vbinfo->visible = 1;
 $vbinfo->name = '1.2 Vision Board';
 $vbinfo->introeditor = [
     'text' => <<<'HTML'
-<p>Build a Google Slides vision board of real examples, apps, websites, or games, that show the qualities you identified in the Guided Research activity. This is about noticing your own taste, not picking a pathway yet.</p>
+<p>Build a Google Slides vision board, a real, dense visual collage of things that draw you in: games, apps, websites, software, whatever genuinely interests you. This is about exploring broadly and starting to notice your own taste, not picking a pathway yet.</p>
 
 <p><strong>You'll be sharing this with the class</strong>, so treat it like a real presentation, not a private notes doc.</p>
 
 <h3>What to Include</h3>
 <ul>
 <li><strong>Cover slide:</strong> your name/codename and a title.</li>
-<li><strong>One example per slide, at least 4&ndash;6 total.</strong> For each example include:
-  <ul>
-    <li>A large, prominent screenshot or image, this should be the main thing on the slide, not an afterthought.</li>
-    <li>Its name</li>
-    <li>A few short bullet points (not a paragraph) on what specifically draws you to it: visual style, color, layout, interactivity, mechanics, mood, functionality, whatever actually applies. "I like it" is not enough, say what you like and why, just keep it tight.</li>
-  </ul>
-</li>
+<li><strong>At least 30 images, total, arranged as collages.</strong> Think mood board, not a slideshow: several images per page, grouped however makes sense to you. This is NOT one-image-per-slide. Pull from art styles in games, UI styling in apps and websites, and anything else that genuinely pulls you in.</li>
+<li><strong>At least 10 color schemes or palettes</strong> you're drawn to, on their own page(s), separate from and not counted in the 30 images above. These can be palettes you find, screenshots that show a color scheme clearly, or swatches you put together yourself.</li>
 <li><strong>Closing slide, "What I Want to Learn More About":</strong> 2&ndash;3 things you noticed yourself gravitating toward that you'd like to research or learn more about.</li>
 </ul>
 
-<p><strong>Visuals first, text second.</strong> The image should dominate each slide, keep on-slide text short and scannable. If you have more to say than fits in a few bullets, use the slide's speaker notes, not the slide itself.</p>
+<h3>The Only Text Rule: Theme Labels Only</h3>
+<p>Don't caption individual images. The <strong>only</strong> text allowed on a collage page is one short label naming the theme of that whole page, think of it like a section heading, not a description of each picture. A few examples of real theme labels:</p>
+<ul>
+<li>"Cozy Game Aesthetics"</li>
+<li>"Minimalist App UI"</li>
+<li>"Bold Website Typography"</li>
+<li>"Color Palettes I Love"</li>
+<li>"Game HUD Designs"</li>
+<li>"Dark Mode Everything"</li>
+</ul>
+<p>You'll do the deeper thinking about what specifically draws you to each theme in the Reflection assignment right after this. This assignment is about the visuals themselves.</p>
 
-<p>Go deep, not just wide. A slide with real, specific detail is worth more than five slides of one-line captions. Use as many slides as you actually need, more than 4&ndash;6 examples is great if you have more to say.</p>
+<p><strong>Go deep and wide.</strong> The point is real exploration, actually diving into art styles, UI styling, and color to start understanding what you're drawn to, not landing on a few safe picks. 30 images and 10 color schemes are minimums, not targets, use as many slides and as many images as you actually want.</p>
+
+<p><strong>Every image needs to actually be visible.</strong> Someone in the back of the room should be able to tell what each picture is. If a page is so packed that the images shrink down to nothing, split it into more pages. More slides is always fine.</p>
+
+<p><strong>This can keep growing.</strong> You don't have to be "done" forever, you can keep adding to this vision board over time as you find more things that interest you.</p>
+
+<p><strong>Visuals first, always.</strong> Images should completely dominate every page.</p>
 
 <h3>How to Submit</h3>
 <ol>
