@@ -107,5 +107,42 @@
 </div>
 
 </div>
-<div class="foxcs-continue-note">Once you've looked through all four tabs, click Continue below for a couple of quick questions.</div>
+<div class="foxcs-continue-note" id="foxcs-continue-note">Once you've looked through all four tabs, click Continue below for a couple of quick questions.</div>
 </div>
+
+<script>
+(function() {
+  function init() {
+    var tabIds = ['foxcs-t1', 'foxcs-t2', 'foxcs-t3', 'foxcs-t4'];
+    var visited = new Set(['foxcs-t1']); // first tab is pre-checked on load
+    var btn = document.getElementById('id_submitbutton');
+    var note = document.getElementById('foxcs-continue-note');
+    if (!btn) return; // button lives outside our content and may not exist yet
+    function updateState() {
+      var remaining = tabIds.length - visited.size;
+      if (remaining <= 0) {
+        btn.style.display = '';
+        if (note) note.textContent = "All four tabs viewed. Click Continue below for a couple of quick questions.";
+      } else {
+        btn.style.display = 'none';
+        if (note) note.textContent = "View all four tabs above to continue (" + remaining + " more to go).";
+      }
+    }
+    tabIds.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('change', function() {
+          if (el.checked) { visited.add(id); updateState(); }
+        });
+      }
+    });
+    updateState();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  window.addEventListener('load', init); // safety net in case the button loads even later
+})();
+</script>
