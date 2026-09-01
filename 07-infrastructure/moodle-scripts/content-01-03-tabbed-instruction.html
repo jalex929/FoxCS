@@ -1,0 +1,119 @@
+<div class="foxcs-tabset">
+<style>
+.foxcs-tabset { border:1px solid #dee2e6; border-radius:10px; overflow:hidden; box-shadow:0 1px 2px rgba(16,24,32,0.06); margin-bottom:1rem; }
+.foxcs-tabset input[type="radio"], .foxcs-tabset input[type="checkbox"] { position:absolute; opacity:0; pointer-events:none; }
+.foxcs-tab-labels { display:flex; flex-wrap:wrap; background:#f8f9fa; border-bottom:1px solid #dee2e6; margin:0; }
+.foxcs-tab-labels label { padding:0.8rem 1.05rem; font-size:0.88rem; font-weight:600; color:#6a737b; cursor:pointer; border-bottom:3px solid transparent; transition:color .15s ease,border-color .15s ease,background .15s ease; }
+.foxcs-tab-labels label:hover { color:#0f6cbf; background:#eaf3fb; }
+.foxcs-tab-panel { display:none; padding:1.5rem 1.6rem 1.7rem; }
+.foxcs-tab-panel h2 { font-size:1.1rem; margin:0 0 0.8rem; }
+.foxcs-tab-panel p { margin:0 0 0.8rem; }
+.foxcs-tab-panel p:last-child { margin-bottom:0; }
+#foxcs-t1:checked ~ .foxcs-tab-labels label[for="foxcs-t1"],
+#foxcs-t2:checked ~ .foxcs-tab-labels label[for="foxcs-t2"],
+#foxcs-t3:checked ~ .foxcs-tab-labels label[for="foxcs-t3"],
+#foxcs-t4:checked ~ .foxcs-tab-labels label[for="foxcs-t4"] { color:#0f6cbf; border-bottom-color:#0f6cbf; background:#fff; }
+#foxcs-t1:checked ~ .foxcs-tab-panels .foxcs-panel-1,
+#foxcs-t2:checked ~ .foxcs-tab-panels .foxcs-panel-2,
+#foxcs-t3:checked ~ .foxcs-tab-panels .foxcs-panel-3,
+#foxcs-t4:checked ~ .foxcs-tab-panels .foxcs-panel-4 { display:block; }
+.foxcs-continue-note { font-size:0.85rem; color:#6a737b; padding:0 1.6rem 1rem; }
+.foxcs-code-block { background:#1e1e1e; color:#d4d4d4; font-family:'Consolas','Monaco',monospace; font-size:0.92rem; padding:0.9rem 1.1rem; border-radius:8px; margin:0.8rem 0; line-height:1.5; overflow-x:auto; }
+.foxcs-code-block .foxcs-comment { color:#6a9955; }
+.foxcs-code-block .foxcs-string { color:#ce9178; }
+.foxcs-code-block .foxcs-kw { color:#569cd6; }
+.foxcs-env-diagram { display:flex; gap:0; text-align:center; font-family:inherit; margin:1rem 0; border-radius:8px; overflow:hidden; }
+.foxcs-env-diagram div { flex:1; padding:0.9rem 0.6rem; font-weight:bold; font-size:0.85rem; }
+.foxcs-env-diagram .foxcs-primary { background:#bbd4f2; color:#1a3a5c; }
+.foxcs-env-diagram .foxcs-backup { background:#f9e1ad; color:#7a3a00; }
+.foxcs-flashcard-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:0.8rem; }
+.foxcs-flip-card { perspective:1200px; }
+.foxcs-flip-card-inner { position:relative; display:block; min-height:130px; cursor:pointer; transform-style:preserve-3d; transition:transform .5s cubic-bezier(.4,.2,.2,1); }
+.foxcs-flip-toggle:checked + .foxcs-flip-card-inner { transform:rotateY(180deg); }
+.foxcs-flip-card-front, .foxcs-flip-card-back { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:8px; padding:1rem; display:flex; align-items:center; justify-content:center; text-align:center; font-size:0.9rem; }
+.foxcs-flip-card-front { background:#eaf3fb; border:2px solid #0f6cbf; font-weight:700; font-size:1.05rem; color:#0a5493; }
+.foxcs-flip-card-back { background:#0f6cbf; color:#fff; transform:rotateY(180deg); line-height:1.4; }
+</style>
+
+<input type="radio" name="foxcstabs" id="foxcs-t1" checked>
+<input type="radio" name="foxcstabs" id="foxcs-t2">
+<input type="radio" name="foxcstabs" id="foxcs-t3">
+<input type="radio" name="foxcstabs" id="foxcs-t4">
+
+<div class="foxcs-tab-labels">
+<label for="foxcs-t1">Writing a Real Program</label>
+<label for="foxcs-t2">Your Environment: VS Code</label>
+<label for="foxcs-t3">Chromebook Backup</label>
+<label for="foxcs-t4">Key Terms</label>
+</div>
+
+<div class="foxcs-tab-panels">
+
+<div class="foxcs-tab-panel foxcs-panel-1">
+<h2>From Talking About Programs to Writing One</h2>
+<p>In 01.1 and 01.2 you talked <strong>about</strong> programs: what they are, how computers follow instructions literally, the Input-Process-Output pattern. Today that changes. You're going to write a real program, a real file on a real computer, and run it.</p>
+<p>A program is just a plain text file containing <strong>statements</strong>: individual instructions, written in a language Python understands, that get carried out one at a time, top to bottom, in the exact order you wrote them. That "order matters" idea from 01.1 wasn't just a warm-up. It's literally how your file will run.</p>
+<div class="foxcs-code-block"><span class="foxcs-comment"># this is a real Python statement</span><br><span class="foxcs-kw">print</span>(<span class="foxcs-string">"Hello, world!"</span>)</div>
+<p>That single line is a complete, real program. Python reads it, runs it, and <code>Hello, world!</code> appears. You'll write your own version of this in the Coding Exercise that follows this lesson.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-2">
+<h2>Your Primary Tool: VS Code</h2>
+<p>VS Code is where you'll write and run Python all year. The pieces you need right now:</p>
+<ul>
+<li><strong>A file with a <code>.py</code> extension</strong> &mdash; this tells VS Code (and Python) that the file contains Python code.</li>
+<li><strong>The editor pane</strong> &mdash; where you actually type your code.</li>
+<li><strong>The Run button</strong> (the &#9654; triangle in the top-right of the editor) &mdash; runs your file from top to bottom.</li>
+<li><strong>The terminal / output panel</strong> &mdash; opens automatically when you run your file, showing exactly what your program printed.</li>
+</ul>
+<p>Save your file before you run it. If VS Code doesn't seem to be running your latest changes, that's almost always the reason.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-3">
+<h2>On a Chromebook? This Is Your Backup, Not Your First Choice</h2>
+<div class="foxcs-env-diagram">
+<div class="foxcs-primary">VS CODE<br><small>use this whenever it's available</small></div>
+<div class="foxcs-backup">CODEHS SANDBOX<br><small>backup only &mdash; Chromebooks / no VS Code</small></div>
+</div>
+<p>Before you reach for the backup, check: open the Start Menu or Apps list on whatever computer you're using and look for VS Code. If it's there, use it, that's your real tool for the rest of the year.</p>
+<p><strong>Only use the CodeHS sandbox if you're on a Chromebook, or on a computer that genuinely does not have VS Code installed.</strong> It's a real, working way to write and run Python in a browser, and it's totally fine to use when you need it, but it's not where you'll be doing your work all year. A full step-by-step guide with screenshots is linked right after this lesson.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-4">
+<h2>Key Terms</h2>
+<p>Click a card to flip it.</p>
+<div class="foxcs-flashcard-grid">
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc1" class="foxcs-flip-toggle">
+<label for="foxcs-fc1" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">program</div>
+<div class="foxcs-flip-card-back">A real file containing statements a computer can run, in order, from top to bottom.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc2" class="foxcs-flip-toggle">
+<label for="foxcs-fc2" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">statement</div>
+<div class="foxcs-flip-card-back">One complete instruction in a program. Each line of real code you write is usually one statement.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc3" class="foxcs-flip-toggle">
+<label for="foxcs-fc3" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">run / execute</div>
+<div class="foxcs-flip-card-back">To have the computer actually carry out a program's statements, instead of just looking at the code.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc4" class="foxcs-flip-toggle">
+<label for="foxcs-fc4" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">syntax</div>
+<div class="foxcs-flip-card-back">The exact spelling, punctuation, and structure a language requires. Get the syntax wrong and the program won't run at all.</div>
+</label>
+</div>
+</div>
+</div>
+
+</div>
+<div class="foxcs-continue-note">Once you've looked through all four tabs, click Continue below for a couple of quick questions.</div>
+</div>
