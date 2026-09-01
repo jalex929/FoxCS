@@ -166,8 +166,12 @@ echo "Pages: Tab={$tabpageid} QCA={$qcaid} QCB={$qcbid} VocabQuiz={$vocabquizid}
 foxcs_insert_answer($DB, $lessonid, $tabpageid, 'Continue', null, $qcaid, 0);
 
 // --- Quick Check A: correct=Process ---
+// NOTE 2026-09-01: original distractors literally said "That's the X stage, not this
+// one" IN THE ANSWER TEXT ITSELF (not just feedback) -- self-eliminating and leading,
+// caught by Jay live. Rewritten to plain, non-revealing option text; the "why it's
+// wrong" explanation still lives in the feedback only.
 foxcs_insert_answer($DB, $lessonid, $qcaid,
-    "That's the Input stage, not this one.",
+    "The room's current temperature being checked",
     "Look again -- the room's current temperature being checked IS an input, but \"deciding whether to turn the heater on or off\" is a separate step that happens after that input is received.",
     $qcbid, 0);
 foxcs_insert_answer($DB, $lessonid, $qcaid,
@@ -175,7 +179,7 @@ foxcs_insert_answer($DB, $lessonid, $qcaid,
     "Right! Checking the temperature against your setting and deciding what to do next is the actual \"thinking\" work happening between what came in and what happens next. That's Process.",
     $qcbid, 1);
 foxcs_insert_answer($DB, $lessonid, $qcaid,
-    "That's the Output stage, not this one.",
+    'The heater actually turning on or off',
     "The heater actually turning on or off would be the Output. \"Deciding\" is the step that happens right before that, not the result itself.",
     $qcbid, 0);
 foxcs_insert_answer($DB, $lessonid, $qcaid,
@@ -189,11 +193,11 @@ foxcs_insert_answer($DB, $lessonid, $qcbid,
     "Right! The microphone picking up your voice is data coming INTO the program from outside itself -- that's Input.",
     $vocabquizid, 1);
 foxcs_insert_answer($DB, $lessonid, $qcbid,
-    "That's the Process stage, not this one.",
+    'Process',
     "The microphone picking up your voice hasn't been acted on yet -- nothing has been decided or worked out. That happens at the next stage, not this one.",
     $vocabquizid, 0);
 foxcs_insert_answer($DB, $lessonid, $qcbid,
-    "That's the Output stage, not this one.",
+    'The lights actually turning on',
     "Output is what the smart speaker delivers back, like the lights actually turning on. Picking up your voice happens before any of that.",
     $vocabquizid, 0);
 foxcs_insert_answer($DB, $lessonid, $qcbid,
