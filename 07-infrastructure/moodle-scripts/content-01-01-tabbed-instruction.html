@@ -1,0 +1,123 @@
+<div class="foxcs-tabset">
+<style>
+.foxcs-tabset { border:1px solid #dee2e6; border-radius:10px; overflow:hidden; box-shadow:0 1px 2px rgba(16,24,32,0.06); margin-bottom:1rem; }
+.foxcs-tabset input[type="radio"], .foxcs-tabset input[type="checkbox"] { position:absolute; opacity:0; pointer-events:none; }
+.foxcs-tab-labels { display:flex; flex-wrap:wrap; background:#f8f9fa; border-bottom:1px solid #dee2e6; margin:0; }
+.foxcs-tab-labels label { padding:0.8rem 1.05rem; font-size:0.88rem; font-weight:600; color:#6a737b; cursor:pointer; border-bottom:3px solid transparent; transition:color .15s ease,border-color .15s ease,background .15s ease; }
+.foxcs-tab-labels label:hover { color:#0f6cbf; background:#eaf3fb; }
+.foxcs-tab-panel { display:none; padding:1.5rem 1.6rem 1.7rem; }
+.foxcs-tab-panel h2 { font-size:1.1rem; margin:0 0 0.8rem; }
+.foxcs-tab-panel p { margin:0 0 0.8rem; }
+.foxcs-tab-panel p:last-child { margin-bottom:0; }
+.foxcs-tab-panel ol { padding-left:1.3rem; margin:0 0 0.8rem; }
+.foxcs-tab-panel .foxcs-step { margin:0 0 0.6rem; }
+#foxcs-t1:checked ~ .foxcs-tab-labels label[for="foxcs-t1"],
+#foxcs-t2:checked ~ .foxcs-tab-labels label[for="foxcs-t2"],
+#foxcs-t3:checked ~ .foxcs-tab-labels label[for="foxcs-t3"],
+#foxcs-t4:checked ~ .foxcs-tab-labels label[for="foxcs-t4"],
+#foxcs-t5:checked ~ .foxcs-tab-labels label[for="foxcs-t5"] { color:#0f6cbf; border-bottom-color:#0f6cbf; background:#fff; }
+#foxcs-t1:checked ~ .foxcs-tab-panels .foxcs-panel-1,
+#foxcs-t2:checked ~ .foxcs-tab-panels .foxcs-panel-2,
+#foxcs-t3:checked ~ .foxcs-tab-panels .foxcs-panel-3,
+#foxcs-t4:checked ~ .foxcs-tab-panels .foxcs-panel-4,
+#foxcs-t5:checked ~ .foxcs-tab-panels .foxcs-panel-5 { display:block; }
+.foxcs-continue-row { display:flex; justify-content:flex-end; padding:0 1.6rem 1.5rem; }
+.foxcs-continue-note { font-size:0.85rem; color:#6a737b; padding:0 1.6rem 1rem; }
+.foxcs-flashcard-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:0.8rem; }
+.foxcs-flip-card { perspective:1200px; }
+.foxcs-flip-card-inner { position:relative; display:block; min-height:130px; cursor:pointer; transform-style:preserve-3d; transition:transform .5s cubic-bezier(.4,.2,.2,1); }
+.foxcs-flip-toggle:checked + .foxcs-flip-card-inner { transform:rotateY(180deg); }
+.foxcs-flip-card-front, .foxcs-flip-card-back { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:8px; padding:1rem; display:flex; align-items:center; justify-content:center; text-align:center; font-size:0.9rem; }
+.foxcs-flip-card-front { background:#eaf3fb; border:2px solid #0f6cbf; font-weight:700; font-size:1.05rem; color:#0a5493; }
+.foxcs-flip-card-back { background:#0f6cbf; color:#fff; transform:rotateY(180deg); line-height:1.4; }
+</style>
+
+<input type="radio" name="foxcstabs" id="foxcs-t1" checked>
+<input type="radio" name="foxcstabs" id="foxcs-t2">
+<input type="radio" name="foxcstabs" id="foxcs-t3">
+<input type="radio" name="foxcstabs" id="foxcs-t4">
+<input type="radio" name="foxcstabs" id="foxcs-t5">
+
+<div class="foxcs-tab-labels">
+<label for="foxcs-t1">What Is a Program</label>
+<label for="foxcs-t2">Computers Are Literal</label>
+<label for="foxcs-t3">Guided Example</label>
+<label for="foxcs-t4">Where Python Fits In</label>
+<label for="foxcs-t5">Key Terms</label>
+</div>
+
+<div class="foxcs-tab-panels">
+
+<div class="foxcs-tab-panel foxcs-panel-1">
+<h2>What Is a Program?</h2>
+<p>A <strong>program</strong> is a set of step-by-step instructions that a computer follows, exactly, in order. That's the whole idea. Everything else you learn this year is really just learning more powerful ways to write those instructions.</p>
+<p>Think about a recipe. A recipe doesn't just say "make dinner." It breaks the task into exact steps: preheat the oven, chop the onion, add two cups of water. A cook who has never seen the dish before can still follow it, step by step, and produce the same result every time. A program does the same thing for a computer: it breaks a task into exact steps the computer can follow without needing to understand why, only what.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-2">
+<h2>Computers Are Very Literal</h2>
+<p>This matters because computers are extremely literal. A computer does not guess what you probably meant. It does exactly what the instructions say, no more, no less. That's not a limitation to work around, it's the whole reason programs are useful. If a computer improvised, you couldn't trust it to do the same thing twice.</p>
+<p><strong>Real-World Example: a vending machine is a program too.</strong> A vending machine takes your money, checks whether you inserted enough, then either releases the item or shows an error. Every one of those checks and decisions was written ahead of time by a programmer as an exact instruction: "<strong>if</strong> the amount inserted is less than the price, <strong>then</strong> do not release the item." The machine isn't deciding anything in the moment. It's following instructions someone else already wrote, the same way a program running on any computer does.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-3">
+<h2>Let's Walk Through an Example Together</h2>
+<p>Here's a short list of instructions, the kind a computer would run one at a time, in order:</p>
+<ol>
+<li>Set <code>score</code> to 0.</li>
+<li>Add 5 to <code>score</code>.</li>
+<li>Add 5 to <code>score</code> again.</li>
+<li>Display <code>score</code>.</li>
+</ol>
+<p>Let's trace through it exactly the way a computer would, one instruction at a time:</p>
+<p class="foxcs-step"><strong>Step 1:</strong> <code>score</code> starts at 0. Nothing tricky yet, this is just the starting point.</p>
+<p class="foxcs-step"><strong>Step 2:</strong> The instruction says add 5 to <code>score</code>. It doesn't matter what <code>score</code> "should" be or what you're picturing in your head, the computer only looks at what <code>score</code> actually is right now (0) and adds 5 to it. <code>score</code> is now 5.</p>
+<p class="foxcs-step"><strong>Step 3:</strong> Same move again. <code>score</code> is 5, add 5, <code>score</code> is now 10.</p>
+<p class="foxcs-step"><strong>Step 4:</strong> Display <code>score</code>. The computer shows <strong>10</strong>, because that's what <code>score</code> actually holds at this exact point, not because 10 is a "nice round number" or because that's obviously what a programmer would want.</p>
+<p>Notice what made this easy to trace: at every single step, we only used the instruction that was actually written, and only the value <code>score</code> actually held at that moment, never what we assumed or expected. That's the whole skill: read the instruction exactly as written, apply it to exactly what's true right now, one step at a time. It feels slow at first. It's also exactly how you'll debug real code later this year when something isn't doing what you expected.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-4">
+<h2>Where Python Fits In</h2>
+<p><strong>Python</strong> is a programming language: a tool humans use to write instructions in a form a computer can actually carry out. There are many programming languages, the same way there are many spoken languages. They're different ways of writing the same kind of thing: precise, step-by-step instructions.</p>
+<p><strong>Game Connection: every game you've ever played is a program.</strong> A game is a (very large) set of instructions: when the player presses this button, move the character that direction; when health reaches zero, show the game-over screen. Nothing in a game happens by magic or by the game "wanting" something to happen. Somewhere, a programmer wrote the exact instruction for it. This whole course is about learning to write those instructions yourself, starting from the smallest possible piece.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-5">
+<h2>Key Terms</h2>
+<p>Click a card to flip it.</p>
+<div class="foxcs-flashcard-grid">
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc1" class="foxcs-flip-toggle">
+<label for="foxcs-fc1" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">program</div>
+<div class="foxcs-flip-card-back">A set of step-by-step instructions a computer follows, in order. Think of it like a recipe.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc2" class="foxcs-flip-toggle">
+<label for="foxcs-fc2" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">instruction</div>
+<div class="foxcs-flip-card-back">A single step in a program that tells the computer exactly what to do. Think of it like one line in a recipe.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc3" class="foxcs-flip-toggle">
+<label for="foxcs-fc3" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">programmer</div>
+<div class="foxcs-flip-card-back">A person who writes the instructions that make up a program. Think of it like the person who writes a recipe.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc4" class="foxcs-flip-toggle">
+<label for="foxcs-fc4" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">Python</div>
+<div class="foxcs-flip-card-back">A programming language, a tool for writing instructions in a form a computer can carry out. The one this course uses.</div>
+</label>
+</div>
+</div>
+</div>
+
+</div>
+<div class="foxcs-continue-note">Once you've looked through all five tabs, click Continue below for a couple of quick questions.</div>
+</div>

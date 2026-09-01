@@ -1,0 +1,594 @@
+<title>Tabbed Instruction Mockup</title>
+<style>
+  :root {
+    --page-bg: #ffffff;
+    --frame-bg: #ffffff;
+    --annotation-bg: #fdf6ec;
+    --annotation-border: #e0a84a;
+    --annotation-text: #6b4a12;
+    --text: #1d2125;
+    --muted: #6a737b;
+    --heading: #1d2125;
+    --primary: #0f6cbf;
+    --primary-hover: #0a5493;
+    --primary-tint: #eaf3fb;
+    --border: #dee2e6;
+    --border-strong: #c8cdd2;
+    --surface: #f8f9fa;
+    --info-bg: #d9f1f1;
+    --info-border: #a9d8d8;
+    --info-text: #205050;
+    --card-bg: #ffffff;
+    --code-bg: #f1f3f5;
+    --correct-badge-bg: #e3f3e3;
+    --correct-badge-text: #245c24;
+    --separate-badge-bg: #fbe8d6;
+    --separate-badge-text: #8a4b12;
+    --shadow: 0 1px 2px rgba(16, 24, 32, 0.06), 0 1px 1px rgba(16, 24, 32, 0.04);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--page-bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 1.75rem 1.5rem 4rem;
+  }
+
+  /* ---- Annotation chrome: clearly NOT part of the real Moodle page ---- */
+  .annotation {
+    background: var(--annotation-bg);
+    border: 1px solid var(--annotation-border);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.75rem;
+    font-size: 0.88rem;
+    color: var(--annotation-text);
+  }
+  .annotation strong { color: #4d3308; }
+  .annotation-label {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--annotation-border);
+    color: #4d3308;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ---- Simulated Moodle frame ---- */
+  .breadcrumb {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+  }
+  .breadcrumb a { color: var(--primary); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .lesson-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin: 0 0 1.1rem;
+    color: var(--heading);
+  }
+  .lesson-title .icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    background: var(--primary-tint);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .tabnav-row {
+    display: flex;
+    gap: 1.4rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+  }
+  .tabnav-row span {
+    padding-bottom: 0.6rem;
+    color: var(--muted);
+  }
+  .tabnav-row span.current {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+    font-weight: 600;
+  }
+
+  .intro-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.92rem;
+    color: var(--text);
+  }
+  .intro-box p { margin: 0.3rem 0; }
+
+  /* ---- Tab widget (pure CSS, radio-driven, no JS) ---- */
+  .tabset {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 1.75rem;
+  }
+  .tabset input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+
+  .tab-labels {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-labels label {
+    padding: 0.85rem 1.15rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    user-select: none;
+  }
+  .tab-labels label:hover { color: var(--primary); background: var(--primary-tint); }
+
+  .tab-panels { position: relative; }
+  .tab-panel {
+    display: none;
+    padding: 1.6rem 1.75rem 1.9rem;
+    animation: fade 0.18s ease;
+  }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+  .tab-panel h2 {
+    font-size: 1.15rem;
+    margin: 0 0 0.85rem;
+    color: var(--heading);
+  }
+  .tab-panel p { margin: 0 0 0.85rem; }
+  .tab-panel p:last-child { margin-bottom: 0; }
+  .tab-panel code {
+    background: var(--code-bg);
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    font-size: 0.9em;
+  }
+  .tab-panel ol { padding-left: 1.3rem; margin: 0 0 0.85rem; }
+  .tab-panel ol li { margin-bottom: 0.3rem; }
+  .tab-panel .step { margin: 0 0 0.7rem; }
+
+  .tab-progress {
+    display: flex;
+    gap: 0.3rem;
+    padding: 0 1.75rem 1.4rem;
+  }
+  .tab-progress .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border-strong);
+  }
+
+  #t1:checked ~ .tab-labels label[for="t1"],
+  #t2:checked ~ .tab-labels label[for="t2"],
+  #t3:checked ~ .tab-labels label[for="t3"],
+  #t4:checked ~ .tab-labels label[for="t4"],
+  #t5:checked ~ .tab-labels label[for="t5"] {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+    background: var(--card-bg);
+  }
+  #t1:checked ~ .tab-panels .panel-1,
+  #t2:checked ~ .tab-panels .panel-2,
+  #t3:checked ~ .tab-panels .panel-3,
+  #t4:checked ~ .tab-panels .panel-4,
+  #t5:checked ~ .tab-panels .panel-5 { display: block; }
+
+  .continue-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 1.75rem 1.6rem;
+  }
+  .continue-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.55rem 1.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: default;
+  }
+
+  /* ---- Quick Check section: deliberately NOT inside the tab card ---- */
+  .separate-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--separate-badge-bg);
+    color: var(--separate-badge-text);
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    margin-bottom: 0.9rem;
+  }
+
+  .qc-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.1rem;
+  }
+  .qc-card h3 {
+    font-size: 1rem;
+    margin: 0 0 0.9rem;
+    color: var(--heading);
+  }
+  .qc-options { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0; }
+  .qc-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+  .qc-option .radio {
+    width: 15px; height: 15px; border-radius: 50%;
+    border: 2px solid var(--border-strong);
+    flex-shrink: 0; margin-top: 0.15rem;
+  }
+  .qc-option.correct { border-color: #8fc98f; background: var(--correct-badge-bg); }
+  .qc-option.correct .radio { border-color: #3f8a3f; background: #3f8a3f; }
+  .qc-correct-tag {
+    margin-left: auto;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--correct-badge-text);
+    background: var(--correct-badge-bg);
+    padding: 0.1rem 0.5rem;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  /* ---- Flashcards (pure CSS checkbox-flip, no JS) ---- */
+  .flashcard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1rem;
+    margin-top: 0.9rem;
+  }
+  .flip-card { perspective: 1200px; }
+  .flip-toggle { position: absolute; opacity: 0; pointer-events: none; }
+  .flip-card-inner {
+    position: relative;
+    display: block;
+    min-height: 130px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+  .flip-toggle:checked + .flip-card-inner { transform: rotateY(180deg); }
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  .flip-card-front {
+    background: var(--primary-tint);
+    border: 2px solid var(--primary);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--primary-hover);
+  }
+  .flip-card-back {
+    background: var(--primary);
+    color: #fff;
+    transform: rotateY(180deg);
+    line-height: 1.4;
+  }
+
+  /* ---- Vocab quiz (native Lesson Matching page mock) ---- */
+  .match-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .match-row:last-of-type { border-bottom: none; }
+  .match-term {
+    font-weight: 600;
+    width: 130px;
+    flex-shrink: 0;
+    font-size: 0.92rem;
+  }
+  .match-select {
+    flex: 1;
+    max-width: 420px;
+    font-size: 0.88rem;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 5px;
+    background: #fff;
+    color: var(--text);
+  }
+  .qc-submit {
+    margin-top: 1.1rem;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.55rem 1.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: default;
+  }
+
+  .closing-note {
+    margin-top: 2.5rem;
+  }
+  .closing-note h2 {
+    font-size: 1.05rem;
+    margin: 0 0 0.7rem;
+    color: #4d3308;
+  }
+  .closing-note .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.9rem;
+    margin-top: 0.9rem;
+  }
+  .why-card {
+    background: #fff;
+    border: 1px solid var(--annotation-border);
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    font-size: 0.85rem;
+    color: var(--text);
+  }
+  .why-card h4 {
+    margin: 0 0 0.4rem;
+    font-size: 0.85rem;
+    color: #4d3308;
+  }
+</style>
+
+<div class="page">
+
+  <div class="annotation">
+    <div class="annotation-label">Mockup — nothing deployed</div>
+    <p><strong>What this is:</strong> a static preview of 01.1's Instruction content (currently 7 separate Continue-linked pages on live cmid 193) collapsed into one page with tabs. Every word of content below is the real, already-live text &mdash; nothing here is placeholder. <strong>cmid 193 has not been touched.</strong></p>
+    <p>The tab shell is pure CSS (radio-input driven) &mdash; no JavaScript, so it won't run into Moodle's script-stripping on lesson page content.</p>
+  </div>
+
+  <div class="breadcrumb">
+    <a href="#">foxcs-python</a> / <a href="#">Unit 01: What Is Programming?</a> / 01.1 What Programs Do
+  </div>
+
+  <h1 class="lesson-title"><span class="icon">&#10227;</span> 01.1 What Programs Do</h1>
+
+  <div class="intro-box">
+    <p>Work through this at your own pace. A couple of quick questions are mixed in along the way, just to check your understanding as you go (they don't affect whether you move forward). Everything saves automatically.</p>
+  </div>
+
+  <div class="tabset">
+    <input type="radio" name="tabs" id="t1" checked>
+    <input type="radio" name="tabs" id="t2">
+    <input type="radio" name="tabs" id="t3">
+    <input type="radio" name="tabs" id="t4">
+    <input type="radio" name="tabs" id="t5">
+
+    <div class="tab-labels">
+      <label for="t1">What Is a Program</label>
+      <label for="t2">Computers Are Literal</label>
+      <label for="t3">Guided Example</label>
+      <label for="t4">Where Python Fits In</label>
+      <label for="t5">Key Terms</label>
+    </div>
+
+    <div class="tab-panels">
+      <div class="tab-panel panel-1">
+        <h2>What Is a Program?</h2>
+        <p>A <strong>program</strong> is a set of step-by-step instructions that a computer follows, exactly, in order. That's the whole idea. Everything else you learn this year is really just learning more powerful ways to write those instructions.</p>
+        <p>Think about a recipe. A recipe doesn't just say "make dinner." It breaks the task into exact steps: preheat the oven, chop the onion, add two cups of water. A cook who has never seen the dish before can still follow it, step by step, and produce the same result every time. A program does the same thing for a computer: it breaks a task into exact steps the computer can follow without needing to understand why, only what.</p>
+      </div>
+
+      <div class="tab-panel panel-2">
+        <h2>Computers Are Very Literal</h2>
+        <p>This matters because computers are extremely literal. A computer does not guess what you probably meant. It does exactly what the instructions say, no more, no less. That's not a limitation to work around, it's the whole reason programs are useful. If a computer improvised, you couldn't trust it to do the same thing twice.</p>
+        <p><strong>Real-World Example: a vending machine is a program too.</strong> A vending machine takes your money, checks whether you inserted enough, then either releases the item or shows an error. Every one of those checks and decisions was written ahead of time by a programmer as an exact instruction: "<strong>if</strong> the amount inserted is less than the price, <strong>then</strong> do not release the item." The machine isn't deciding anything in the moment. It's following instructions someone else already wrote, the same way a program running on any computer does.</p>
+      </div>
+
+      <div class="tab-panel panel-3">
+        <h2>Let's Walk Through an Example Together</h2>
+        <p>Here's a short list of instructions, the kind a computer would run one at a time, in order:</p>
+        <ol>
+          <li>Set <code>score</code> to 0.</li>
+          <li>Add 5 to <code>score</code>.</li>
+          <li>Add 5 to <code>score</code> again.</li>
+          <li>Display <code>score</code>.</li>
+        </ol>
+        <p>Let's trace through it exactly the way a computer would, one instruction at a time:</p>
+        <p class="step"><strong>Step 1:</strong> <code>score</code> starts at 0. Nothing tricky yet, this is just the starting point.</p>
+        <p class="step"><strong>Step 2:</strong> The instruction says add 5 to <code>score</code>. It doesn't matter what <code>score</code> "should" be or what you're picturing in your head, the computer only looks at what <code>score</code> actually is right now (0) and adds 5 to it. <code>score</code> is now 5.</p>
+        <p class="step"><strong>Step 3:</strong> Same move again. <code>score</code> is 5, add 5, <code>score</code> is now 10.</p>
+        <p class="step"><strong>Step 4:</strong> Display <code>score</code>. The computer shows <strong>10</strong>, because that's what <code>score</code> actually holds at this exact point, not because 10 is a "nice round number" or because that's obviously what a programmer would want.</p>
+        <p>Notice what made this easy to trace: at every single step, we only used the instruction that was actually written, and only the value <code>score</code> actually held at that moment, never what we assumed or expected. That's the whole skill: read the instruction exactly as written, apply it to exactly what's true right now, one step at a time.</p>
+      </div>
+
+      <div class="tab-panel panel-4">
+        <h2>Where Python Fits In</h2>
+        <p><strong>Python</strong> is a programming language: a tool humans use to write instructions in a form a computer can actually carry out. There are many programming languages, the same way there are many spoken languages. They're different ways of writing the same kind of thing: precise, step-by-step instructions.</p>
+        <p><strong>Game Connection: every game you've ever played is a program.</strong> A game is a (very large) set of instructions: when the player presses this button, move the character that direction; when health reaches zero, show the game-over screen. Nothing in a game happens by magic or by the game "wanting" something to happen. Somewhere, a programmer wrote the exact instruction for it. This whole course is about learning to write those instructions yourself, starting from the smallest possible piece.</p>
+      </div>
+
+      <div class="tab-panel panel-5">
+        <h2>Key Terms</h2>
+        <p>Click a card to flip it.</p>
+        <div class="flashcard-grid">
+          <div class="flip-card">
+            <input type="checkbox" id="fc1" class="flip-toggle">
+            <label for="fc1" class="flip-card-inner">
+              <div class="flip-card-front">program</div>
+              <div class="flip-card-back">A set of step-by-step instructions a computer follows, in order. Think of it like a recipe.</div>
+            </label>
+          </div>
+          <div class="flip-card">
+            <input type="checkbox" id="fc2" class="flip-toggle">
+            <label for="fc2" class="flip-card-inner">
+              <div class="flip-card-front">instruction</div>
+              <div class="flip-card-back">A single step in a program that tells the computer exactly what to do. Think of it like one line in a recipe.</div>
+            </label>
+          </div>
+          <div class="flip-card">
+            <input type="checkbox" id="fc3" class="flip-toggle">
+            <label for="fc3" class="flip-card-inner">
+              <div class="flip-card-front">programmer</div>
+              <div class="flip-card-back">A person who writes the instructions that make up a program. Think of it like the person who writes a recipe.</div>
+            </label>
+          </div>
+          <div class="flip-card">
+            <input type="checkbox" id="fc4" class="flip-toggle">
+            <label for="fc4" class="flip-card-inner">
+              <div class="flip-card-front">Python</div>
+              <div class="flip-card-back">A programming language, a tool for writing instructions in a form a computer can carry out. The one this course uses.</div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-progress">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
+
+    <div class="continue-row">
+      <button class="continue-btn" type="button">Continue to Quick Checks &rarr;</button>
+    </div>
+  </div>
+
+  <div class="separate-badge">&#9679; Separate scored page &mdash; not a tab</div>
+
+  <div class="qc-card">
+    <h3>01.1 Quick Check A</h3>
+    <p>A recipe and a computer program are similar because they are both&hellip;</p>
+    <div class="qc-options">
+      <div class="qc-option correct"><span class="radio"></span> a set of exact, ordered steps <span class="qc-correct-tag">Correct</span></div>
+      <div class="qc-option"><span class="radio"></span> something only an expert can understand</div>
+      <div class="qc-option"><span class="radio"></span> a list of ingredients or tools</div>
+      <div class="qc-option"><span class="radio"></span> a finished result, like a meal or a working app</div>
+    </div>
+  </div>
+
+  <div class="qc-card">
+    <h3>01.1 Quick Check B</h3>
+    <p>A program's instructions say to add two numbers, but the programmer wrote the wrong numbers by mistake. What will the computer display when the program runs?</p>
+    <div class="qc-options">
+      <div class="qc-option correct"><span class="radio"></span> The result of the instructions exactly as written, mistake included <span class="qc-correct-tag">Correct</span></div>
+      <div class="qc-option"><span class="radio"></span> The result the programmer actually meant to get</div>
+      <div class="qc-option"><span class="radio"></span> An automatic correction of the mistake</div>
+      <div class="qc-option"><span class="radio"></span> Nothing, because the computer will notice the mistake and stop on its own</div>
+    </div>
+  </div>
+
+  <div class="qc-card">
+    <h3>01.1 Vocab Quiz</h3>
+    <p>Match each term to its definition.</p>
+    <div class="match-row">
+      <span class="match-term">program</span>
+      <select class="match-select">
+        <option>Choose...</option>
+        <option selected>A set of step-by-step instructions a computer follows, in order.</option>
+        <option>A single step in a program that tells the computer exactly what to do.</option>
+        <option>A person who writes the instructions that make up a program.</option>
+        <option>A programming language, a tool for writing instructions in a form a computer can carry out.</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="match-term">instruction</span>
+      <select class="match-select">
+        <option>Choose...</option>
+        <option>A set of step-by-step instructions a computer follows, in order.</option>
+        <option selected>A single step in a program that tells the computer exactly what to do.</option>
+        <option>A person who writes the instructions that make up a program.</option>
+        <option>A programming language, a tool for writing instructions in a form a computer can carry out.</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="match-term">programmer</span>
+      <select class="match-select">
+        <option>Choose...</option>
+        <option>A set of step-by-step instructions a computer follows, in order.</option>
+        <option>A single step in a program that tells the computer exactly what to do.</option>
+        <option selected>A person who writes the instructions that make up a program.</option>
+        <option>A programming language, a tool for writing instructions in a form a computer can carry out.</option>
+      </select>
+    </div>
+    <div class="match-row">
+      <span class="match-term">Python</span>
+      <select class="match-select">
+        <option>Choose...</option>
+        <option>A set of step-by-step instructions a computer follows, in order.</option>
+        <option>A single step in a program that tells the computer exactly what to do.</option>
+        <option>A person who writes the instructions that make up a program.</option>
+        <option selected>A programming language, a tool for writing instructions in a form a computer can carry out.</option>
+      </select>
+    </div>
+    <button class="qc-submit" type="button">Submit</button>
+    <p style="margin-top:0.7rem; font-size:0.8rem; color:var(--muted);">Real native Lesson page type (<code>LESSON_PAGE_MATCHING</code>) &mdash; scores correct only if every row matches, same real tracking as the Quick Checks above. Not H5P.</p>
+  </div>
+
+  <div class="annotation closing-note">
+    <div class="annotation-label">Where the tab idea stops</div>
+    <p>You asked whether Practice and Project could join this same tabbed layout too. Both hit a real wall, not just a style preference:</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <h4>Practice can't tab</h4>
+        <p>Moodle's Lesson grading is bound to page-level navigation &mdash; one physical page, one submitted answer, one scored jump. Tabs are one page pretending to be several; Moodle can't attach real per-answer scoring/branching to a tab switch. And showing tab labels for Core/Reinforce/Extend would expose the ladder tiers to students, which the existing "not shown to students" rule rules out.</p>
+      </div>
+      <div class="why-card">
+        <h4>Project can't tab</h4>
+        <p>A Moodle Assignment (<code>mod_assign</code>) is its own module with its own file-upload/submission/grading machinery &mdash; it isn't renderable page content at all. The closest you could get is an iframe of the whole Assignment page inside a tab, which just nests one Moodle page inside another rather than truly consolidating anything.</p>
+      </div>
+    </div>
+    <p style="margin-top:0.9rem;">Instruction's five content pages are the real candidate for this pattern &mdash; that's what's mocked up above.</p>
+  </div>
+
+</div>
