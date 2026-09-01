@@ -1,0 +1,2281 @@
+{
+    "introPage": {
+        "showIntroPage": true,
+        "startButtonText": "Start Quiz",
+        "introduction": "<h2>Before You Begin: Quick Reference<\/h2><p>The baseline covers several kinds of problems. This isn't a lesson &mdash; it's a quick reminder of the rules, in case you've seen them before but they've gotten a little fuzzy. If a rule here is completely new to you, that's useful information too: it just means that skill is a good candidate for a Priority Skill once you see your results.<\/p><h3>Order of Operations<\/h3><p>Work in this order: <strong>Parentheses<\/strong> first, then <strong>Exponents<\/strong>, then <strong>Multiplication and Division<\/strong> (left to right), then <strong>Addition and Subtraction<\/strong> (left to right). Common mnemonic: <strong>PEMDAS<\/strong>.<\/p><h3>Signed (Positive\/Negative) Numbers<\/h3><p>Subtracting a negative number is the same as adding a positive number: 5 &minus; (&minus;3) = 5 + 3. When multiplying or dividing, same signs give a positive result; different signs give a negative result.<\/p><h3>Fractions<\/h3><p>To <strong>add or subtract<\/strong> fractions, first rewrite them with a common denominator. To <strong>multiply<\/strong> fractions, multiply straight across (numerator &times; numerator, denominator &times; denominator). To <strong>divide<\/strong> by a fraction, multiply by its reciprocal (flip the second fraction, then multiply).<\/p><h3>Percent<\/h3><p>To find a percent of a number, convert the percent to a decimal and multiply (30% of 150 = 0.30 &times; 150). To find a percent change, divide the amount of change by the <strong>original<\/strong> (starting) amount, not the new amount.<\/p><h3>Ratios, Rates &amp; Proportions<\/h3><p>A rate compares two different units (like miles per hour) by dividing. A proportion sets two ratios equal to each other; solve it by cross multiplying, then dividing.<\/p><h3>Variables &amp; Expressions<\/h3><p>To evaluate an expression, substitute the given value in for the variable, then follow order of operations. To combine like terms, add or subtract the coefficients of matching variable terms and the constant terms separately.<\/p><h3>Equations<\/h3><p>If there are parentheses, distribute first. Then undo addition or subtraction before undoing multiplication or division &mdash; work backward through the order of operations to isolate the variable.<\/p><h3>Remember<\/h3><p>This baseline is diagnostic, not a grade. If a question uses a rule you don't remember, do your best with what you do know, and move on. That's useful information too.<\/p><p>Unit 01 ACT Math Baseline. 24 questions. This is diagnostic, not a grade &mdash; do your best and try every question.<\/p>"
+    },
+    "progressType": "dots",
+    "passPercentage": 0,
+    "questions": [
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Evaluate: 9 &minus; 2 &times; 3 + 4<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>3<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This drops the final + 4 step. Try: after finding 9 &minus; 6, add the 4.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>25<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This solves left to right instead of doing the multiplication first. Try: 2 &times; 3 first.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>7<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>2 &times; 3 = 6, then 9 &minus; 6 + 4 = 7.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>&minus;5<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This adds 3 and 4 before multiplying, which changes the problem. Try: only 2 &times; 3 gets grouped.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "6a115ede-a5eb-4214-a638-5cfdc4045e41",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Evaluate: &minus;8 + 5 &minus; (&minus;3)<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>&minus;6<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Subtracting a negative 3 should become adding 3. Try: rewrite &minus;(&minus;3) as +3.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>0<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>&minus;8 + 5 + 3 = 0.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>&minus;16<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This treats every number as negative. Try: only the middle term is positive (+5).<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>10<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This drops the negative sign on the first number. Try: start at &minus;8, not 8.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "e82ca2a6-b950-46e1-8c0b-a2535df0c28e",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A submarine is at 120 feet below sea level. It rises 45 feet, then descends 60 feet. What is its new depth?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>75 feet below sea level<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This stops after the rise and skips the descent. Try: apply both moves in order.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>135 feet below sea level<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>&minus;120 + 45 &minus; 60 = &minus;135, so 135 feet below sea level.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>225 feet below sea level<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This treats the 45-foot rise as a drop instead of an increase. Try: rising means adding, not subtracting.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>105 feet above sea level<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This mixes up the direction of the starting depth. Try: 120 feet below sea level starts as &minus;120.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "10dff119-c249-466c-ad77-1582952bb741",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A reaction produces between 2.8 and 3.4 grams of product per trial, run over 12 trials. Which is the best estimate of the total grams produced?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>about 34 g<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This only uses the lowest possible amount per trial. Try: use a reasonable middle value, like 3 g.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>about 36 g<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Rounding to about 3 g per trial: 3 &times; 12 = 36 g.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>about 41 g<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This only uses the highest possible amount per trial. Try: a middle estimate is more reasonable than the maximum.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>about 7 g<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This estimates the range itself instead of the total. Try: multiply grams-per-trial by the number of trials.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "dec9ba22-8eb7-4a24-988b-d5f9315ac67f",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Write 3\/8 as a decimal.<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>0.35<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Check the division again: 3 &divide; 8, not a rounded guess.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>0.375<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>3 &divide; 8 = 0.375.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>0.38<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Close, but this rounds too early. Try: 3 &divide; 8 all the way out.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>2.67<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This divides 8 by 3 instead of 3 by 8. Try: numerator &divide; denominator, in that order.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "1c984abf-809d-43cc-91f2-0c73ed0221e1",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Compute: 2\/3 + 1\/4<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>3\/7<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This adds numerators and denominators separately. Try: find a common denominator first.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>11\/12<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>2\/3 = 8\/12 and 1\/4 = 3\/12, so 8\/12 + 3\/12 = 11\/12.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>11\/7<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>The numerator is right, but the denominator wasn't converted to a common denominator. Try: both fractions need the same bottom number.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>3\/4<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Check the common denominator step again &mdash; 3\/12 shouldn't simplify away like that.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "686fa8d3-c3be-4a73-be6e-6c8982d2afda",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Compute: 3\/5 &divide; 2\/3<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>2\/5<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This multiplies the fractions as given. Try: flip the second fraction first, then multiply.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>9\/10<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>3\/5 &divide; 2\/3 = 3\/5 &times; 3\/2 = 9\/10.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>10\/9<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This flips the first fraction instead of the second. Try: keep the first fraction as is, flip the one after the &divide; sign.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>3\/10<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Check which numbers get multiplied together after flipping the second fraction.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "605ff5cd-1786-454a-9f54-7b554befe621",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A recipe needs 2&frac14; cups of flour for one batch. A baker wants to make 1\/3 of a batch. How many cups of flour are needed?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>3\/4 cup<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>2&frac14; = 9\/4. 9\/4 &times; 1\/3 = 9\/12 = 3\/4 cup.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>2\/3 cup<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This only scales the whole-number part of 2&frac14;. Try: convert the full mixed number to a fraction first.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>6&frac34; cups<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This divides by 1\/3 instead of multiplying. Try: making a smaller portion means multiplying by a fraction less than 1.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>2 7\/12 cups<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This adds the fractions instead of multiplying. Try: a portion of a recipe is found by multiplying.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "0ea727f1-25bf-43e0-8d66-4495ba360af7",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>What is 30% of 150?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>15<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This finds 10% of 150 and stops. Try: 30% is three times that.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>45<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>0.30 &times; 150 = 45.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>120<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This subtracts 30 from 150 instead of finding 30% of 150.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>4.5<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>The decimal point is in the wrong place. Try: 30% = 0.30, not 0.03.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "4a0b8d8d-ca82-43d8-92d7-cdccbd6acc5f",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A shirt's price increased from $40 to $46. What was the percent increase?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>6%<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This treats the $6 change itself as the percent. Try: divide the change by the original price.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>13%<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This divides the change by the new price ($46) instead of the original price. Try: percent increase compares to where you started.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>15%<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Change = $6. 6 &divide; 40 = 0.15 = 15%.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>115%<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This finds the new price as a percent of the old price but forgets to subtract the original 100%.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "d01c1cce-9c4d-449c-8a61-309c3919b78e",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A jacket costs $60. It is discounted 20%, and then a 5% sales tax is applied to the discounted price. What is the final price?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>$48.00<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This applies the discount correctly but forgets the tax step. Try: apply 5% tax to the new $48 price.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>$48.60<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This applies the tax to the discount amount instead of the discounted price.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>$50.40<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>$60 &times; 0.80 = $48. $48 &times; 1.05 = $50.40.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>$51.00<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This combines 20% off and 5% tax into a single 15%-off calculation. Try: apply each percent as its own step.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "dcfc5cd7-2030-463b-8f44-a9deff565533",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A car travels 240 miles in 4 hours. What is its rate in miles per hour?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>40 mph<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Check the division again: 240 &divide; 4.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>60 mph<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>240 &divide; 4 = 60 miles per hour.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>244 mph<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This adds instead of dividing. Try: rate is distance &divide; time.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>960 mph<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This multiplies instead of dividing. Try: rate is distance &divide; time.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "f8b45497-93fe-4f6f-8801-31e17a20fbf7",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Solve for x: 3\/8 = x\/40<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>13.3<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This solves 40\/3 instead of setting up the cross-product correctly.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>15<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Cross multiply: 8x = 3 &times; 40 = 120, so x = 15.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>106.7<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>The cross-multiplication paired the wrong numbers. Try: multiply straight across the equals sign (3 &times; 40 and 8 &times; x).<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>32<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This subtracts instead of solving the proportion. Try: cross multiply first.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "4a613c56-c3bf-47b9-bb4d-efc0a58a5a73",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A recipe uses a ratio of 2 cups of rice to 3 cups of water. A cook wants to make a large batch using 9 cups of water. How many cups of rice are needed?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>4.5 cups<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This just halves 9 instead of using the 2:3 ratio. Try: set up 2\/3 = x\/9.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>6 cups<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>2\/3 = x\/9. Cross multiply: 3x = 18, so x = 6.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>11 cups<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This adds instead of scaling the ratio. Try: use a proportion, not addition.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>13.5 cups<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This uses the ratio flipped (water to rice instead of rice to water).<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "a556a4e8-987d-4593-99ef-1685d4491eee",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Evaluate 4x &minus; 7 when x = 5.<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>&minus;8<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This computes 4(5 &minus; 7) instead of (4 &times; 5) &minus; 7. Try: multiply first, then subtract.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>2<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This adds 4 and 5 instead of multiplying. Try: 4x means 4 &times; x.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>13<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>4(5) = 20, then 20 &minus; 7 = 13.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>27<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>The sign on 7 flipped. Try: the expression subtracts 7, it doesn't add it.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "a560e508-0f77-4238-aac0-140a2a888990",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Simplify: 5x + 3 &minus; 2x + 8<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>3x + 11<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>5x &minus; 2x = 3x. 3 + 8 = 11.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>7x + 11<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This adds the x-coefficients instead of subtracting. Try: 5x &minus; 2x, not 5x + 2x.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>3x &minus; 5<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>The sign on the constants flipped. Try: 3 + 8, not 3 &minus; 8.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>3x + 5<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Check the constant terms again: 3 and 8 should be added, not subtracted.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "59fbfe7d-fc7b-4eac-a8fc-c94edf4770ab",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Write an expression for &quot;7 less than three times a number n.&quot;<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>3n &minus; 7<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>&quot;7 less than&quot; means subtract 7 from three times n.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>7 &minus; 3n<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>&quot;7 less than X&quot; means X &minus; 7, not 7 &minus; X. Try: rewrite as &quot;three times n, minus 7.&quot;<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>3(n &minus; 7)<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This groups the subtraction with n itself. Try: only 7 is being subtracted, not 7 from n first.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>3n + 7<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>&quot;Less than&quot; means subtraction, not addition.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "4df0af8b-9940-40b1-89ac-a31a38c3ebf1",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Solve for x: 2x + 5 = 17<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>6<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>2x = 12, so x = 6.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>8.5<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This divides by 2 before subtracting the 5. Try: subtract 5 first, then divide.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>11<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This adds 5 instead of subtracting it. Try: undo the +5 by subtracting.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>24<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This multiplies instead of dividing at the last step.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "a1ad795b-ed38-4253-a106-4d83b5a5ec38",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>Solve for x: 3(x &minus; 4) = 18<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>2<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>The sign flipped during distribution. Try: 3 times &minus;4 is &minus;12, not +12.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>7.3<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This only distributes to the x, not the 4. Try: 3(x &minus; 4) = 3x &minus; 12.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>10<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>3x &minus; 12 = 18, so 3x = 30, and x = 10.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>30<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This finds 3x but forgets the final division by 3.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "5c86f3ca-155a-4694-ad96-255dad482537",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A rectangle's length is 3 more than twice its width. If the perimeter is 36, what is the width?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>5<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Let w = width, length = 2w + 3. Perimeter: 2(2w + 3 + w) = 6w + 6 = 36, so w = 5.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>6<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This ignores the &quot;+3&quot; in the length. Try: length = 2w + 3, not just 2w.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>11<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This sets up length + width = 36 instead of doubling for perimeter.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>13<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This finds the length, not the width the question asked for.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "1f8c8ea2-1958-466c-a056-7ef4e316da79",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A phone plan costs $25 per month plus $0.10 per text message sent. If a customer's bill was $37, how many text messages did they send?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>12<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This is the dollar amount above the base fee, not the number of texts. Try: divide that amount by $0.10.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>120<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>$37 &minus; $25 = $12. $12 &divide; $0.10 = 120 texts.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>250<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This divides the base fee by the rate instead of the amount above it.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>370<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This divides the whole bill by the rate without subtracting the $25 base fee first.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "97713bf0-af2e-4bfc-8d1c-24fae765c6c4",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A store buys a lamp for $40 and sells it for $54. What is the markup as a percent of the cost?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>14%<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This treats the $14 difference itself as the percent. Try: divide the change by the original cost.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>26%<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This divides by the selling price ($54) instead of the cost ($40).<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>35%<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Increase = $14. 14 &divide; 40 = 0.35 = 35%.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>135%<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This finds the selling price as a percent of the cost but forgets to subtract the original 100%.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "752e7e87-6801-4c50-b498-10ed1a685fe8",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A store's sales tripled from Monday to Tuesday, then dropped by half from Tuesday to Wednesday. If Wednesday's sales were $90, what were Monday's sales?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>$30<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This only undoes the tripling step. Try: first undo the drop-by-half to find Tuesday, then undo the tripling.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>$60<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Wednesday = Tuesday &divide; 2, so Tuesday = $180. Tuesday = 3 &times; Monday, so Monday = $60.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>$180<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This finds Tuesday's sales but stops before undoing the tripling to reach Monday.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>$270<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This triples Wednesday's sales directly, skipping the halving step entirely.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "b12e8cdb-389f-4825-81a9-6e2b756401af",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        },
+        {
+            "library": "H5P.MultiChoice 1.16",
+            "params": {
+                "question": "<p>A student estimates 19 &times; 21 by rounding both numbers to the nearest ten. What is the estimate?<\/p>",
+                "answers": [
+                    {
+                        "text": "<div>200<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>Check the rounding: 19 rounds to 20, not 10.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>399<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This is the exact product, not the rounded estimate the question asked for.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>400<\/div>",
+                        "correct": true,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>19 rounds to 20 and 21 rounds to 20. 20 &times; 20 = 400.<\/div>"
+                        }
+                    },
+                    {
+                        "text": "<div>1,600<\/div>",
+                        "correct": false,
+                        "tipsAndFeedback": {
+                            "chosenFeedback": "<div>This rounds to the nearest hundred instead of the nearest ten.<\/div>"
+                        }
+                    }
+                ],
+                "overallFeedback": [
+                    {
+                        "from": 0,
+                        "to": 100
+                    }
+                ],
+                "UI": {
+                    "checkAnswerButton": "Check",
+                    "submitAnswerButton": "Submit",
+                    "showSolutionButton": "Show solution",
+                    "tryAgainButton": "Retry",
+                    "tipsLabel": "Show tip",
+                    "scoreBarLabel": "You got :num out of :total points",
+                    "tipAvailable": "Tip available",
+                    "feedbackAvailable": "Feedback available",
+                    "readFeedback": "Read feedback",
+                    "wrongAnswer": "Wrong answer",
+                    "correctAnswer": "Correct answer",
+                    "shouldCheck": "Should have been checked",
+                    "shouldNotCheck": "Should not have been checked",
+                    "noInput": "Please answer before viewing the solution",
+                    "a11yCheck": "Check the answers. The responses will be marked as correct, incorrect, or unanswered.",
+                    "a11yShowSolution": "Show the solution. The task will be marked with its correct solution.",
+                    "a11yRetry": "Retry the task. Reset all responses and start the task over again."
+                },
+                "confirmCheck": {
+                    "header": "Finish ?",
+                    "body": "Are you sure you wish to finish ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Finish"
+                },
+                "confirmRetry": {
+                    "header": "Retry ?",
+                    "body": "Are you sure you wish to retry ?",
+                    "cancelLabel": "Cancel",
+                    "confirmLabel": "Confirm"
+                },
+                "behaviour": {
+                    "enableRetry": true,
+                    "enableSolutionsButton": true,
+                    "enableCheckButton": true,
+                    "type": "auto",
+                    "singlePoint": false,
+                    "randomAnswers": true,
+                    "showSolutionsRequiresInput": true,
+                    "confirmCheckDialog": false,
+                    "confirmRetryDialog": false,
+                    "autoCheck": false,
+                    "passPercentage": 100,
+                    "showScorePoints": true
+                }
+            },
+            "subContentId": "f5e2aeae-b193-466d-a438-977187251b4f",
+            "metadata": {
+                "contentType": "Multiple Choice",
+                "license": "U",
+                "title": "Untitled Multiple Choice"
+            }
+        }
+    ],
+    "texts": {
+        "prevButton": "Previous question",
+        "previous": "Previous",
+        "nextButton": "Next question",
+        "next": "Next",
+        "finishButton": "Finish",
+        "submitButton": "Submit",
+        "textualProgress": "Question: @current of @total questions",
+        "jumpToQuestion": "Question %d of %total",
+        "questionLabel": "Question",
+        "readSpeakerProgress": "Question @current of @total",
+        "unansweredText": "Unanswered",
+        "answeredText": "Answered",
+        "currentQuestionText": "Current question",
+        "navigationLabel": "Questions",
+        "questionSetInstruction": "Choose question to display"
+    },
+    "disableBackwardsNavigation": false,
+    "randomQuestions": false,
+    "endGame": {
+        "showResultPage": true,
+        "showSolutionButton": true,
+        "showRetryButton": true,
+        "noResultMessage": "Finished",
+        "message": "Your Results",
+        "amountCorrect": "You got @finals of @totals correct",
+        "scoreBarLabel": "You got @finals out of @totals points",
+        "scoreHeader": "Score",
+        "solutionButtonText": "Show solution",
+        "retryButtonText": "Retry",
+        "finishButtonText": "Finish",
+        "submitButtonText": "Submit",
+        "skipButtonText": "Skip video"
+    },
+    "title": "01.12 -- ACT Math Baseline",
+    "metadata": {
+        "title": "01.12 -- ACT Math Baseline"
+    }
+}
