@@ -158,6 +158,7 @@ FoxCS/
 - `02-authoring-system/content-voice-and-tone.md`
 - `02-authoring-system/mastery-check-standards.md`
 - `02-authoring-system/objectives-and-skills-proficiency.md`
+- `02-authoring-system/h5p-content-type-gotchas.md` — real H5P content-type bugs hit in production and the rule that prevents each; read before writing a new H5P block-builder helper
 
 All other docs must align to them. When in doubt, these win. See `02-authoring-system/doc-health.md` for review status on the rest of `02-authoring-system/`.
 

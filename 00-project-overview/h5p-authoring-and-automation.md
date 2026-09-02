@@ -1,3 +1,8 @@
+See `02-authoring-system/h5p-content-type-gotchas.md` for real, per-content-type bugs
+hit while automating this (Essay's `keywords` field shape, required enum fields, and
+why server-side validation alone doesn't catch a runtime JS crash) — read it before
+writing a new block-builder helper.
+
 # H5P Authoring: Can This Be Automated?
 
 Direct answer: **yes, largely.** An `.h5p` file is a zip archive containing JSON content data plus references to library code that's already installed on the Moodle server — you don't need to hand-build every activity in the H5P editor UI once you know a content type's schema.
