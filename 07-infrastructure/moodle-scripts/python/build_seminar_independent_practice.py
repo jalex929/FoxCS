@@ -7,8 +7,11 @@ from h5p_book_builder import block_text, block_essay, block_multichoice, make_co
 
 def essay_with_keyword(task, sample, keyword):
     block = block_essay(task, "Type your answer here. Work through all five questions in your response.", "Independent Practice")
-    block["content"]["params"]["solution"]["introduction"] = "<div>Here's one way to work through it:</div>"
-    block["content"]["params"]["solution"]["sample"] = sample
+    # Deliberately NOT setting solution.introduction/solution.sample -- see
+    # the matching comment in build_seminar_guided_practice.py. Populating it
+    # shows a student-facing "Show sample solution" button with no way to
+    # disable just the button while keeping the text, which conflicts with
+    # the no-solution-reveal policy already applied everywhere else.
     # feedbackIncludedWord/feedbackMissedWord are required select fields;
     # "" is not a valid option (valid: keyword/alternative/answer/none and
     # keyword/none respectively) -- empty string caused "Invalid selected

@@ -11,8 +11,16 @@ from h5p_book_builder import block_text, block_essay, block_multichoice, make_co
 
 def essay_with_keyword(task, sample, keyword):
     block = block_essay(task, "Type your answer here. Work through all five questions in your response.", "Guided Practice")
-    block["content"]["params"]["solution"]["introduction"] = "<div>Here's one way to work through it:</div>"
-    block["content"]["params"]["solution"]["sample"] = sample
+    # Deliberately NOT setting solution.introduction/solution.sample here.
+    # H5P.Essay's "Show sample solution" button is gated purely on
+    # solution.sample being non-empty (confirmed in the compiled runtime:
+    # handleButtons() does `if (this.params.solution.sample && !this.solution)
+    # this.showButton('show-solution')` -- no separate enable/disable flag
+    # exists). Populating it reveals the answer on demand, which conflicts
+    # with the same no-solution-reveal policy already applied to MultiChoice
+    # everywhere else in this content (enableSolutionsButton: False, see
+    # decisions-log). `sample` stays a parameter so call sites don't need to
+    # change, it's just unused now.
     # "groupy" is H5P.Essay's real (oddly-named) list-item field per its
     # installed semantics.json -- not an authoring error, do not strip it.
     # feedbackIncludedWord/feedbackMissedWord are required select fields;
