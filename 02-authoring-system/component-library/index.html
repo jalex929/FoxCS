@@ -67,6 +67,19 @@ Working demos of every interactive pattern available for lesson authoring. <stro
   <div class="where">Reference: <code>.../lesson_01_04_printing_output/05_practice.html</code> Drills 1 &amp; 5</div>
 </div>
 
+<h2>2b. Block Builder with Distractor Pieces (harder variant)</h2>
+<div class="component">
+  <span class="status status-new">New — demoed here first, not yet deployed in a real lesson</span>
+  <div class="desc">Added 2026-09 per Jay: a harder version of the block builder above, Duolingo-sentence-building style — the bank holds MORE pieces than the target line needs, so the student must also recognize and leave out the ones that don't belong, not just sequence the right ones. It's still a single correct/incorrect drill with exactly one anticipated right answer: Check compares the built line's text against one target string, the same exact-match logic as the plain Block Builder above. Distractor pieces are simply extra bank entries that never get used in a correct solution &mdash; no new grading logic, no partial credit, no separate distractor-detection step. <strong>Distractor-authoring rule:</strong> each distractor should be a genuine near-miss tied to a real misconception (here: a mismatched quote style, and a stray statement-terminator that doesn't exist in Python) rather than an unrelated random word &mdash; same "must not be guessable without engaging with the content" spirit as <code>content-authoring-standards.md</code>'s multiple-choice distractor rule, just applied to pieces instead of options. The bank's shuffle is checked by the same <code>check_shuffle_persistence.py</code> scanner as any other block-bank &mdash; a distractor bank is still just a block-bank with more entries, nothing about it needs a different check.</div>
+  <div class="drill-prompt" style="font-weight:bold; margin-bottom:0.6rem;">Build the line: print("Level up!")</div>
+  <div class="block-answer" id="dbb-answer"></div>
+  <div class="block-bank" id="dbb-bank"></div>
+  <button class="check-btn" onclick="dbbCheck()">Check</button>
+  <button class="reset-btn" onclick="dbbReset()">Reset</button>
+  <div class="feedback" id="dbb-feedback"></div>
+  <div class="where">Not yet built into a real lesson &mdash; a good fit for a Reinforce/Extend-lane variant of an existing 01.x block-builder drill once one needs a harder version.</div>
+</div>
+
 <h2>3. Multi-Line Block Builder (indentation-aware)</h2>
 <div class="component">
   <span class="status status-live">Live in 01.4 (bonus/preview only)</span>
@@ -412,6 +425,71 @@ function bbCheck() {
 }
 function bbReset() { bbInit(); document.getElementById('bb-feedback').className = 'feedback'; }
 bbInit();
+
+// ---- 2b. Block builder with distractor pieces ----
+// dbTarget defines the one correct answer, in order. dbDistractors are
+// extra pieces that appear in the bank but never belong in a correct
+// build -- each one is a genuine near-miss tied to a real misconception
+// (wrong quote style; a stray statement-terminator Python doesn't use),
+// not a random unrelated word. The bank holds target pieces + distractor
+// pieces together, each with a unique id so two pieces with identical
+// text (there are none here, but a real lesson might reuse a token) stay
+// individually placeable/removable. Checking still only compares the
+// built line's TEXT against dbTarget.join('') -- exactly the same
+// exact-match logic as the plain Block Builder above, so no new grading
+// logic is needed for the harder variant.
+const dbTarget = ['print', '(', '"Level up!"', ')'];
+const dbDistractors = ["'Level up!'", ';'];
+const dbBankItems = [
+  ...dbTarget.map((text, i) => ({ id: `t${i}`, text })),
+  ...dbDistractors.map((text, i) => ({ id: `d${i}`, text })),
+];
+let dbPlaced = []; // ordered list of dbBankItems ids the student has placed
+
+function dbbRender() {
+  const bank = document.getElementById('dbb-bank');
+  const answer = document.getElementById('dbb-answer');
+  bank.innerHTML = ''; answer.innerHTML = '';
+  dbBankItems.forEach(item => {
+    if (dbPlaced.includes(item.id)) return;
+    const btn = document.createElement('button');
+    btn.className = 'blk'; btn.textContent = item.text;
+    btn.onclick = () => { dbPlaced.push(item.id); dbbRender(); };
+    bank.appendChild(btn);
+  });
+  dbPlaced.forEach(id => {
+    const item = dbBankItems.find(b => b.id === id);
+    const btn = document.createElement('button');
+    btn.className = 'blk placed'; btn.textContent = item.text;
+    btn.onclick = () => { dbPlaced.splice(dbPlaced.indexOf(id), 1); dbbRender(); };
+    answer.appendChild(btn);
+  });
+}
+function dbbInit() {
+  dbPlaced = [];
+  const order = shuffle(dbBankItems.map((_, i) => i));
+  const bank = document.getElementById('dbb-bank');
+  bank.innerHTML = '';
+  order.forEach(i => {
+    const item = dbBankItems[i];
+    const btn = document.createElement('button');
+    btn.className = 'blk'; btn.textContent = item.text;
+    btn.onclick = () => { dbPlaced.push(item.id); dbbRender(); };
+    bank.appendChild(btn);
+  });
+  document.getElementById('dbb-answer').innerHTML = '';
+}
+function dbbCheck() {
+  const fb = document.getElementById('dbb-feedback');
+  const built = dbPlaced.map(id => dbBankItems.find(b => b.id === id).text).join('');
+  const ok = built === dbTarget.join('');
+  fb.className = 'feedback ' + (ok ? 'correct' : 'incorrect');
+  fb.textContent = ok
+    ? 'Right! print("Level up!") -- and you correctly left the extra pieces unused.'
+    : 'Not quite. Two of the bank pieces don\'t belong in this line at all -- check for a mismatched quote style and a symbol Python print() statements don\'t use.';
+}
+function dbbReset() { dbbInit(); document.getElementById('dbb-feedback').className = 'feedback'; }
+dbbInit();
 
 // ---- 3. Multi-line block builder ----
 const mlbbA = ['if', 'temperature < 32', ':'];

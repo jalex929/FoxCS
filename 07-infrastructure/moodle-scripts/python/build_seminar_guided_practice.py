@@ -9,21 +9,49 @@ JSON structure is rebuilt clean.
 import json, os, zipfile
 from h5p_book_builder import block_text, block_essay, block_multichoice, make_column
 
+SENTENCE_FRAME_PLACEHOLDER = (
+    "STOP: I know...\n"
+    "FIND: I'm solving for...\n"
+    "CONNECT: I'll use...\n"
+    "TRY: (show your work)\n"
+    "CHECK: ...so my answer makes sense because..."
+)
+
 def essay_with_keyword(task, sample, keyword):
-    block = block_essay(task, "Type your answer here. Work through all five questions in your response.", "Guided Practice")
-    block["content"]["params"]["solution"]["introduction"] = "<div>Here's one way to work through it:</div>"
-    block["content"]["params"]["solution"]["sample"] = sample
+    block = block_essay(task, SENTENCE_FRAME_PLACEHOLDER, "Guided Practice")
+    # Deliberately NOT setting solution.introduction/solution.sample here.
+    # H5P.Essay's "Show sample solution" button is gated purely on
+    # solution.sample being non-empty (confirmed in the compiled runtime:
+    # handleButtons() does `if (this.params.solution.sample && !this.solution)
+    # this.showButton('show-solution')` -- no separate enable/disable flag
+    # exists). Populating it reveals the answer on demand, which conflicts
+    # with the same no-solution-reveal policy already applied to MultiChoice
+    # everywhere else in this content (enableSolutionsButton: False, see
+    # decisions-log). `sample` stays a parameter so call sites don't need to
+    # change, it's just unused now.
     # "groupy" is H5P.Essay's real (oddly-named) list-item field per its
     # installed semantics.json -- not an authoring error, do not strip it.
     # feedbackIncludedWord/feedbackMissedWord are required select fields;
     # "" is not a valid option (valid: keyword/alternative/answer/none and
     # keyword/none respectively) -- empty string caused "Invalid selected
     # option in select" and crashed the whole H5P.Column silently.
+    #
+    # CORRECTED 2026-09-01: the "groupy" wrapper above was wrong -- confirmed
+    # by reading this instance's actual compiled H5P runtime JS (toPoints()
+    # in the cached H5P.Essay bundle), which reads keyword.options.occurrences
+    # directly with NO wrapper. The installed semantics.json names the list's
+    # "field" definition "groupy", but that's the editor schema's internal
+    # name for the field type, not a key that belongs in the stored content
+    # JSON. Wrapping in "groupy" passed CLI-level JSON/H5P-import validation
+    # but crashed the real player ("Cannot read properties of undefined
+    # (reading 'occurrences')"), taking down the whole Column with it -- an
+    # empty activity with no error shown to the student. Caught live in
+    # Chrome via console errors, not by any server-side check. This same
+    # unwrap was already identified once before in patch_fix_essay_groupy.py
+    # -- this rebuild had regressed it back in.
     block["content"]["params"]["keywords"] = [{
-        "groupy": {
-            "keyword": keyword, "alternatives": [],
-            "options": {"points": 1, "occurrences": 1, "caseSensitive": False, "feedbackIncludedWord": "none", "feedbackMissedWord": "none"},
-        }
+        "keyword": keyword, "alternatives": [],
+        "options": {"points": 1, "occurrences": 1, "caseSensitive": False, "feedbackIncludedWord": "none", "feedbackMissedWord": "none"},
     }]
     return block
 
@@ -46,7 +74,22 @@ def error_type_question(scenario, correct_type):
         answers.append((f"<div>{t}</div>", t == correct_type, fb))
     return block_multichoice(f"<p>{scenario} Which error type BEST describes this?</p>", answers, "Classify the Error")
 
+FIVE_QUESTION_REFERENCE = (
+    '<div style="border:2px solid #0f6cbf;border-radius:8px;padding:0.9rem 1.1rem;'
+    'background:#eaf3fb;margin-bottom:1rem;">'
+    '<h3 style="margin-top:0;">Reference: The Five-Question Routine</h3>'
+    '<p style="margin-bottom:0.5rem;">Keep this open while you work. You do not need to memorize it.</p>'
+    '<ol style="margin:0;padding-left:1.2rem;">'
+    '<li><strong>STOP</strong> &mdash; What do I know?</li>'
+    '<li><strong>FIND</strong> &mdash; What am I solving for?</li>'
+    '<li><strong>CONNECT</strong> &mdash; What tool fits?</li>'
+    '<li><strong>TRY</strong> &mdash; Do the math.</li>'
+    '<li><strong>CHECK</strong> &mdash; Does it make sense?</li>'
+    '</ol></div>'
+)
+
 blocks = [
+    block_text(FIVE_QUESTION_REFERENCE),
     block_text("<h2>Using the Five-Question Routine</h2><p>Work through the worked example below together first. Then type out your own answer to each problem, working through all five questions in your response.</p>"),
     block_text(
         "<div class='worked'><strong>Worked Example: Do I have enough time?</strong> You have 3 chores left, taking about 30, 45, and 20 minutes. Practice starts in 2 hours."

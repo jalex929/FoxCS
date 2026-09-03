@@ -1,0 +1,64 @@
+name: Authoring checks tests
+
+# Runs the test suites for the content-authoring "gotcha" checkers in
+# 02-authoring-system/tools/ (check_save_serialization.py,
+# check_shuffle_persistence.py, check_eliminable_distractors.py,
+# check_mastery_check_completeness.py, check_drill_feedback_completeness.py,
+# check-lesson-ladder-wiring.php) on every push/PR that touches them.
+# Mirrors grader-tests.yml's pattern: this tests the checkers' own detection
+# logic against synthetic fixtures, it never runs the checkers against real
+# student data (none of that lives in this repo) and the PHP checker's
+# live-Moodle-DB code path is skipped via LADDER_WIRING_SKIP_MOODLE_BOOTSTRAP,
+# so this needs no Moodle instance.
+#
+# The browser-verify job runs browser_verify_vocab_quiz_save.mjs -- a real
+# headless-Chromium (Playwright) end-to-end check that a student's typed
+# reflection actually survives Save on the real Lesson 01.4 vocab quiz, not
+# just a static-source pattern match. Only needs Chromium, no Moodle.
+
+on:
+  push:
+    paths:
+      - '02-authoring-system/tools/**'
+      - 'courses/python/content/**'
+      - 'courses/python/teacher-materials/**'
+      - '.github/workflows/authoring-checks-tests.yml'
+  pull_request:
+    paths:
+      - '02-authoring-system/tools/**'
+      - 'courses/python/content/**'
+      - 'courses/python/teacher-materials/**'
+
+jobs:
+  python-checkers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Run authoring-checker test suite
+        run: python -m unittest discover -s 02-authoring-system/tools/tests -p "test_*.py" -v
+
+  php-ladder-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run lesson-ladder wiring checker's test harness
+        run: php 02-authoring-system/tools/tests/test_check_lesson_ladder_wiring.php
+
+  browser-verify-save-flow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright + Chromium
+        working-directory: 02-authoring-system/tools
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: Verify Lesson 01.4 vocab quiz save flow in a real browser
+        working-directory: 02-authoring-system/tools
+        run: node browser_verify_vocab_quiz_save.mjs

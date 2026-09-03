@@ -5,21 +5,36 @@ package had the groupy-wrapper Essay bug). Content preserved from original.
 import json, os, zipfile
 from h5p_book_builder import block_text, block_essay, block_multichoice, make_column
 
+SENTENCE_FRAME_PLACEHOLDER = (
+    "STOP: I know...\n"
+    "FIND: I'm solving for...\n"
+    "CONNECT: I'll use...\n"
+    "TRY: (show your work)\n"
+    "CHECK: ...so my answer makes sense because..."
+)
+
 def essay_with_keyword(task, sample, keyword):
-    block = block_essay(task, "Type your answer here. Work through all five questions in your response.", "Independent Practice")
-    block["content"]["params"]["solution"]["introduction"] = "<div>Here's one way to work through it:</div>"
-    block["content"]["params"]["solution"]["sample"] = sample
-    # "groupy" is H5P.Essay's real (oddly-named) list-item field per its
-    # installed semantics.json -- not an authoring error, do not strip it.
+    block = block_essay(task, SENTENCE_FRAME_PLACEHOLDER, "Independent Practice")
+    # Deliberately NOT setting solution.introduction/solution.sample -- see
+    # the matching comment in build_seminar_guided_practice.py. Populating it
+    # shows a student-facing "Show sample solution" button with no way to
+    # disable just the button while keeping the text, which conflicts with
+    # the no-solution-reveal policy already applied everywhere else.
     # feedbackIncludedWord/feedbackMissedWord are required select fields;
     # "" is not a valid option (valid: keyword/alternative/answer/none and
     # keyword/none respectively) -- empty string caused "Invalid selected
     # option in select" and crashed the whole H5P.Column silently.
+    #
+    # CORRECTED 2026-09-01: do NOT wrap keywords entries in "groupy" -- that
+    # was wrong, confirmed by reading this instance's actual compiled H5P
+    # runtime JS (toPoints() in the cached H5P.Essay bundle), which reads
+    # keyword.options.occurrences directly with no wrapper. "groupy" is only
+    # the installed semantics.json's internal name for the list's field
+    # definition, not a key that belongs in stored content JSON. See the
+    # matching comment in build_seminar_guided_practice.py for the full story.
     block["content"]["params"]["keywords"] = [{
-        "groupy": {
-            "keyword": keyword, "alternatives": [],
-            "options": {"points": 1, "occurrences": 1, "caseSensitive": False, "feedbackIncludedWord": "none", "feedbackMissedWord": "none"},
-        }
+        "keyword": keyword, "alternatives": [],
+        "options": {"points": 1, "occurrences": 1, "caseSensitive": False, "feedbackIncludedWord": "none", "feedbackMissedWord": "none"},
     }]
     return block
 

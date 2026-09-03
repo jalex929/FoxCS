@@ -1,0 +1,111 @@
+<div class="foxcs-tabset">
+<style>
+.foxcs-tabset { border:1px solid #dee2e6; border-radius:10px; overflow:hidden; box-shadow:0 1px 2px rgba(16,24,32,0.06); margin-bottom:1rem; }
+.foxcs-tabset input[type="radio"], .foxcs-tabset input[type="checkbox"] { position:absolute; opacity:0; pointer-events:none; }
+.foxcs-tab-labels { display:flex; flex-wrap:wrap; background:#f8f9fa; border-bottom:1px solid #dee2e6; margin:0; }
+.foxcs-tab-labels label { padding:0.8rem 1.05rem; font-size:0.88rem; font-weight:600; color:#6a737b; cursor:pointer; border-bottom:3px solid transparent; transition:color .15s ease,border-color .15s ease,background .15s ease; }
+.foxcs-tab-labels label:hover { color:#0f6cbf; background:#eaf3fb; }
+.foxcs-tab-panel { display:none; padding:1.5rem 1.6rem 1.7rem; }
+.foxcs-tab-panel h2 { font-size:1.1rem; margin:0 0 0.8rem; }
+.foxcs-tab-panel p { margin:0 0 0.8rem; }
+.foxcs-tab-panel p:last-child { margin-bottom:0; }
+#foxcs-t1:checked ~ .foxcs-tab-labels label[for="foxcs-t1"],
+#foxcs-t2:checked ~ .foxcs-tab-labels label[for="foxcs-t2"],
+#foxcs-t3:checked ~ .foxcs-tab-labels label[for="foxcs-t3"],
+#foxcs-t4:checked ~ .foxcs-tab-labels label[for="foxcs-t4"] { color:#0f6cbf; border-bottom-color:#0f6cbf; background:#fff; }
+#foxcs-t1:checked ~ .foxcs-tab-panels .foxcs-panel-1,
+#foxcs-t2:checked ~ .foxcs-tab-panels .foxcs-panel-2,
+#foxcs-t3:checked ~ .foxcs-tab-panels .foxcs-panel-3,
+#foxcs-t4:checked ~ .foxcs-tab-panels .foxcs-panel-4 { display:block; }
+.foxcs-continue-note { font-size:0.85rem; color:#6a737b; padding:0 1.6rem 1rem; }
+.foxcs-ipo-diagram { display:flex; gap:0; text-align:center; font-family:inherit; margin:1rem 0; border-radius:8px; overflow:hidden; }
+.foxcs-ipo-diagram div { flex:1; padding:0.9rem 0.5rem; font-weight:bold; font-size:0.9rem; }
+.foxcs-ipo-diagram .foxcs-input { background:#bbd4f2; color:#1a3a5c; }
+.foxcs-ipo-diagram .foxcs-process { background:#f9e1ad; color:#7a3a00; }
+.foxcs-ipo-diagram .foxcs-output { background:#add7ad; color:#1a4a1a; }
+.foxcs-ipo-diagram .foxcs-arrow { flex:0 0 2rem; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#555; background:#f4f6f9; }
+.foxcs-flashcard-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:0.8rem; }
+.foxcs-flip-card { perspective:1200px; }
+.foxcs-flip-card-inner { position:relative; display:block; min-height:130px; cursor:pointer; transform-style:preserve-3d; transition:transform .5s cubic-bezier(.4,.2,.2,1); }
+.foxcs-flip-toggle:checked + .foxcs-flip-card-inner { transform:rotateY(180deg); }
+.foxcs-flip-card-front, .foxcs-flip-card-back { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:8px; padding:1rem; display:flex; align-items:center; justify-content:center; text-align:center; font-size:0.9rem; }
+.foxcs-flip-card-front { background:#eaf3fb; border:2px solid #0f6cbf; font-weight:700; font-size:1.05rem; color:#0a5493; }
+.foxcs-flip-card-back { background:#0f6cbf; color:#fff; transform:rotateY(180deg); line-height:1.4; }
+</style>
+
+<input type="radio" name="foxcstabs" id="foxcs-t1" checked>
+<input type="radio" name="foxcstabs" id="foxcs-t2">
+<input type="radio" name="foxcstabs" id="foxcs-t3">
+<input type="radio" name="foxcstabs" id="foxcs-t4">
+
+<div class="foxcs-tab-labels">
+<label for="foxcs-t1">What Is IPO</label>
+<label for="foxcs-t2">Real-World Example</label>
+<label for="foxcs-t3">Game Connection</label>
+<label for="foxcs-t4">Key Terms</label>
+</div>
+
+<div class="foxcs-tab-panels">
+
+<div class="foxcs-tab-panel foxcs-panel-1">
+<h2>Every Interactive Program Follows the Same Pattern</h2>
+<p>Almost everything a program does can be broken into three stages:</p>
+<div class="foxcs-ipo-diagram">
+<div class="foxcs-input">INPUT<br><small>receives data from outside</small></div>
+<div class="foxcs-arrow">&rarr;</div>
+<div class="foxcs-process">PROCESS<br><small>transforms or evaluates it</small></div>
+<div class="foxcs-arrow">&rarr;</div>
+<div class="foxcs-output">OUTPUT<br><small>delivers the result</small></div>
+</div>
+<p><strong>Input</strong> is anything the program receives from outside itself. Something a person types, a button press, a sensor reading. <strong>Process</strong> is the work the program does with that input. Calculating, comparing, deciding. <strong>Output</strong> is what the program delivers back. Text on a screen, a sound, a printed receipt.</p>
+<p>Here's a concrete example: a quiz app shows you a question (this already happened before your turn), you type an answer (<strong>input</strong>), the app checks your answer against the correct one (<strong>process</strong>), and it shows "Correct!" or "Try again." (<strong>output</strong>). Notice that the "work" (the actual checking) is the process stage. The question and the message are input and output. They're not the thinking part.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-2">
+<h2>Real-World Example: An Automatic Hand Dryer</h2>
+<p>A sensor detects that hands are underneath it (<strong>input</strong>). The dryer's circuit decides the fan should turn on because it detected something in range (<strong>process</strong>). The fan runs and warm air blows out (<strong>output</strong>). No person is deciding anything in the moment. The three stages just happen, one after another, exactly the way they were built to.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-3">
+<h2>Game Connection</h2>
+<p>This is the exact pattern behind every interactive game, not just quiz apps. You press a button (<strong>input</strong>) &rarr; the game figures out what that means given the current situation, like whether you're allowed to jump right now (<strong>process</strong>) &rarr; the game updates the screen to show your character jumping (<strong>output</strong>). A game that never took input would just be a video playing on a loop. A game that never processed anything would just repeat the same output no matter what you did. It's the combination of all three, running over and over, that makes something feel interactive. You'll see exactly how "running over and over" works when we get to loops in Unit 06. For now, just the three stages.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-4">
+<h2>Key Terms</h2>
+<p>Click a card to flip it.</p>
+<div class="foxcs-flashcard-grid">
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc1" class="foxcs-flip-toggle">
+<label for="foxcs-fc1" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">input</div>
+<div class="foxcs-flip-card-back">Data a program receives from outside itself. Example: typing your name into a sign-in kiosk.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc2" class="foxcs-flip-toggle">
+<label for="foxcs-fc2" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">process</div>
+<div class="foxcs-flip-card-back">The work a program does with input. Calculating, comparing, deciding.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc3" class="foxcs-flip-toggle">
+<label for="foxcs-fc3" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">output</div>
+<div class="foxcs-flip-card-back">What a program delivers back as a result. Text, sound, an image, anything the outside world can perceive.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc4" class="foxcs-flip-toggle">
+<label for="foxcs-fc4" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">system</div>
+<div class="foxcs-flip-card-back">Any program or machine considered as a whole, made of input/process/output working together.</div>
+</label>
+</div>
+</div>
+</div>
+
+</div>
+<div class="foxcs-continue-note">Once you've looked through all four tabs, click Continue below for a couple of quick questions.</div>
+</div>
