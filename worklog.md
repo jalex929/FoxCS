@@ -537,4 +537,6 @@ Now 7 chapters, 10 Essay questions, 15 MultiChoice questions, 1 Dialogcards deck
 
 **Not yet done / open:** whether 01.1-01.3's own `retake=0` should also change to match this new standard, or whether 01.4 is a deliberate one-off given it's mid-flight with live students right now and the earlier lessons aren't. Don't retrofit 01.1-01.3 without Jay confirming which it is.
 
+**Followed up same session:** Jay confirmed Coding Exercise and Feedback should go live too. Both flipped `visible=1`. **All 5 real 01.4 modules are now visible**: Instruction(212), Practice(213), Coding Exercise(215), Mastery Check(214), Feedback(218). Left cmid=101 (the old superseded MVP static-resource placeholder) hidden -- not real current content, intentionally not part of this.
+
 **Next up (Python):** run `build-lesson-01-04-practice-ladder.php`, then `check-lesson-ladder-wiring.php --cmid=<result> --pool-cap=2` (zero errors/warnings bar); build the Mastery Check quiz and the Coding Exercise assignment per the plan doc; resolve the two still-open decisions in that doc (Safe Exam Browser for 01.4, due dates for 01.2/01.3/01.4); run the full verification checklist at the bottom of the plan doc before calling 01.4 live.
