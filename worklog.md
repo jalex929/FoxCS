@@ -493,4 +493,21 @@ Now 7 chapters, 10 Essay questions, 15 MultiChoice questions, 1 Dialogcards deck
 - **Real decision made tonight, not deferred:** 01.4 gets its own per-lesson `01.4 Coding Exercise` Assignment, resolving the per-lesson-vs-per-unit inconsistency the build plan had flagged — 01.3's real precedent (its own per-lesson `assign`) and 01.4's own content (a complete standalone project, not a Unit-project pointer) both point the same direction.
 - **Stopped here for the night per Jay's direction** ("push your changes... so I can start there tomorrow") rather than continuing straight through to a fully live 01.4 — Practice/Mastery Check/Coding Exercise are the real remaining work, all spec'd in detail in the build plan doc, not just flagged as TODO.
 
+## 2026-09-03 (continued) — Lesson 01.4 build completed: Practice, Mastery Check, Coding Exercise, and a new Feedback activity
+
+**Full detail in `decisions-log.md`'s matching entry — read that first, this is the short version.** Before touching anything, verified live state hadn't drifted since last session (repo up to date with origin, cmid=212 still 6 pages/zero attempts) per this file's own standing "don't assume the gap was quiet" rule.
+
+- **Practice** (cmid=213): ran the already-staged `build-lesson-01-04-practice-ladder.php`, `check-lesson-ladder-wiring.php --cmid=213 --pool-cap=2` passed clean (0/0/0).
+- **Mastery Check** (cmid=214, hidden): build plan's "4 fixed essays" spec was stale — verified against `mdl_quiz_slots` that 01.1/01.3 actually use a password + random-draw-of-1-from-10-pool design since a 2026-09-01 redesign the plan doc never picked up. Confirmed with Jay this is the real standard; built 01.4 to match (`Lesson 01.4 Mastery Check - Task Pool`, 10 tasks: 4 ported + 6 new, 2 of the 6 filling a real gap — none of the original 4 tested the function/string/argument language objective). SEB skipped, due date deferred, both Jay's explicit calls.
+- **Coding Exercise** (cmid=215, hidden): mirrors cmid=206 (01.3) exactly — simple point grading, not a rubric; onlinetext + file submission; no feedback plugins enabled (matches 01.3's real config).
+- **New, prompted by Jay mid-session: Feedback/reflection** (cmid=218, hidden) — the first `mod_feedback` activity built for any lesson in this course. Ported `11_feedback.html`'s already-authored 6-question reflection (never built in Moodle for 01.1-01.3 either — real standing gap). Deliberately NOT folded into the Mastery Check pool: a pool question only reaches ~1 in 10 students per attempt, wrong mechanism for a reflection meant for everyone. Built via Moodle's own `feedback_get_item_class()->set_data()->save_item()` API, 8 items, all read back and verified against the DB.
+- Reordered Unit 01's section sequence: 212(Instruction)→213(Practice)→215(Coding Exercise)→214(Mastery Check)→218(Feedback), matching 01.1's completion-order convention. Left cmid=101 (01.4's old hidden MVP placeholder) alone — zero real student activity on it, but deletion wasn't asked for.
+- Caches purged after every direct-DB write, per this doc's own checklist.
+
+**Next up:**
+1. **Jay's review of all 3 hidden 01.4 modules** (Mastery Check, Coding Exercise, Feedback) before flipping them visible — same gate every prior lesson's pieces went through.
+2. **Port 01.1/01.2/01.3's own `NN_feedback.html` into `mod_feedback` too**, now that 01.4 proved the pattern — a real, not-yet-done follow-up, not just a nice-to-have.
+3. Click-through verification as `foxcstest` (tabs/routing/password gate/checkbox behavior) — not done this session, same gap the build plan's own checklist already flagged.
+4. 01.2's own Mastery Check/Coding Exercise status wasn't re-verified this session (only 01.1/01.3 were checked directly against `mdl_quiz_slots`) — worth confirming it matches the pool pattern too before treating "all of 01.1-01.4 are consistent" as settled.
+
 **Next up (Python):** run `build-lesson-01-04-practice-ladder.php`, then `check-lesson-ladder-wiring.php --cmid=<result> --pool-cap=2` (zero errors/warnings bar); build the Mastery Check quiz and the Coding Exercise assignment per the plan doc; resolve the two still-open decisions in that doc (Safe Exam Browser for 01.4, due dates for 01.2/01.3/01.4); run the full verification checklist at the bottom of the plan doc before calling 01.4 live.
