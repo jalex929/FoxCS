@@ -524,4 +524,17 @@ Now 7 chapters, 10 Essay questions, 15 MultiChoice questions, 1 Dialogcards deck
 
 **Bottom line for Jay: yes, all 3 save correctly and persist in the database exactly as typed.** No data-loss risk found for any of the three new 01.4 activities.
 
+## 2026-09-03 (continued yet again) — Urgent live fix: real students were blocked from re-entering 01.4 Instruction/Practice
+
+**Found while investigating, not from a report:** real students (13 real `g1-*` codenamed accounts, not test data) had already started working through 01.4 Instruction and Practice this morning (`lesson_timer` rows from 07:57-08:22) -- this lesson is genuinely live and in active use, not just under review. Jay reported "not allowed to retake the lesson" clicking into 01.4 Printing Output/Practice himself; both had `retake=0` (single-attempt-then-review-only), which is what was blocking re-entry once already gone through once. Jay confirmed: should be unlimited attempts, with credit tracked via completion.
+
+**Safety-checked first, not assumed clean:** confirmed via `logstore_standard_log` that zero real students touched cmid 214/215/218 during this session's earlier visibility-toggle testing window (07:40-08:00) -- every event in that window was `foxcstest` or my own cleanup. Real student activity on Instruction/Practice started at 07:57, after my test window's activity had already stopped. No real-student exposure to the still-in-review Mastery Check/Coding Exercise/Feedback happened.
+
+**Fixed:**
+- `retake=1` on both 01.4 Instruction (lessonid=11) and Practice (lessonid=12) -- unlimited attempts, matching what Jay wants going forward (this is a real departure from 01.1's original `retake=0`+review-mode decision, made deliberately at the time; not retrofitted onto 01.1 this session, just changed for 01.4 per today's explicit instruction).
+- Ran the completion finalize pass that was still outstanding for 01.4 (flagged in the 01.4 build plan, never done): `completion=2` + `completionendreached=1` on both; Instruction additionally gets `completionpassgrade=1` + grade_item `gradepass=50`, mirroring cmid=193's exact real settings. This was completely unset (`completion=0`) before now -- real students who already finished this morning should pick up completion credit once Moodle's completion check next runs for them.
+- Made 01.4 Mastery Check (cmid=214) **visible**, per Jay: the quiz password is the real access gate, module visibility doesn't need to double as one. Coding Exercise (215) and Feedback (218) intentionally left hidden -- Jay only named the Mastery Check; asked whether those two should go live too now that students are already mid-lesson.
+
+**Not yet done / open:** whether 01.1-01.3's own `retake=0` should also change to match this new standard, or whether 01.4 is a deliberate one-off given it's mid-flight with live students right now and the earlier lessons aren't. Don't retrofit 01.1-01.3 without Jay confirming which it is.
+
 **Next up (Python):** run `build-lesson-01-04-practice-ladder.php`, then `check-lesson-ladder-wiring.php --cmid=<result> --pool-cap=2` (zero errors/warnings bar); build the Mastery Check quiz and the Coding Exercise assignment per the plan doc; resolve the two still-open decisions in that doc (Safe Exam Browser for 01.4, due dates for 01.2/01.3/01.4); run the full verification checklist at the bottom of the plan doc before calling 01.4 live.
