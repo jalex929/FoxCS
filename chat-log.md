@@ -14,6 +14,14 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-09-04 (latest) — redirected to Unit 02, unleveraged docs surfaced
+
+**Context from Jay:** The DOK/rigor/typed-code example from his previous message was only an example, not a fixed checklist — the real point is that a lot of existing documentation in this repo hasn't actually been leveraged yet. Wants to shift focus to building a strong Unit 02 (confirmed: zero content exists there yet). Also resolved two open threads directly: 01.5/01.6 not having a Project module is fine (not every lesson needs one, especially given the new "many Coding Exercises, only one Project" cardinality rule), and by extension the whole "rework 01.5/01.6 now?" question is moot for that specific point.
+
+**Grounded, not just re-read:** cross-checked `adaptive-practice-model.md` and `browser-python-execution.md` against what's actually deployed in Unit 01 — confirmed neither has ever been built into a real lesson (still a flat drill list, no Pyodide "Run & Check" anywhere). Also found and resolved a genuinely stale doc while grounding this: `courses/python/CLAUDE.md` still said "no lesson content authored" and "Moodle is paused," both false since August. And closed a real dangling open question: the 2026-08-20 "assessment tier, name TBD" turned out to already be resolved in practice — it shipped as "Coding Exercise."
+
+**Next up, not yet decided:** which Unit 02 lesson is the pilot for the new adaptive-node/spiral-review/Game-UX/hint model, and whether Pyodide "Run & Check" ships in that pilot or gets a real Chromebook test first given its untested 6-10MB download cost. See `worklog.md`'s matching entry.
+
 ## 2026-09-04 (even later) — per-lesson module structure locked in
 
 **Context from Jay:** Specified the target module list directly: Instruction (bundling instruction/vocab flashcards/vocab quiz/other questions/adaptive practice, not password-gated), a separate Project module (instructions+submission combined), Mastery Check, and Coding Exercise as its own module "when relevant." Students should attach a `.py` file for submissions rather than pasting code. Mid-message, clarified the earlier tabbed-navigation thread: wants a per-lesson expandable top menu covering all of that lesson's own content (like the pre-08-30 flat-file lessons, minus the complicated nested cross-lesson part). Also noted directly: the 01.4–01.6 pattern built so far is "OKAY but... can be greatly improved."
