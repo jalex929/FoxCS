@@ -4,6 +4,24 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-09-04 (very latest) — Pyodide parked after a real live hang; Skulpt adopted and verified live; grading-flexibility gap surfaced
+
+**Context:** Following the same-day Pyodide cold-start finding (~10s in an isolated Playwright test), Jay asked to move toward something lighter and asked directly whether concurrent students would make server load worse. Answered: no — Pyodide/Skulpt execute entirely client-side in the student's own browser; the droplet only ever serves static files, so concurrency is a bandwidth question, not a compute one. Jay separately noted CodeHS (which the doc already names as a real, Chromebook-scale precedent) uses this same class of approach without issue.
+
+**Pyodide tested live, not just in isolation — found broken, not just slow.** Uploaded the real Pyodide demo to the sandbox course (cmid 236) for Jay to try on his own device. It hung for 2.5 minutes with no output and never completed, despite the page itself rendering quickly. Root cause not confirmed; two real, unconfirmed candidates: the original ~10s number was measured over zero-latency loopback and never tested real network transfer of the ~13MB payload, and the demo's own `loadPyodide()` call had no `.catch()`, so any rejection anywhere in that promise chain fails completely silently. Read Pyodide's own loader source to check one hypothesis (a wasm MIME-type mismatch via Moodle's `pluginfile.php` serving `.wasm` as `application/octet-stream`) — found the loader already has a proper try/catch fallback for that specific case, so it likely isn't the sole cause. **Parked, not deleted** (`pyodide-runtime/`, component-library #19, sandbox cmid 236 hidden not removed) — Jay wants to know if it can be fixed later, not written off permanently.
+
+**Skulpt adopted instead, verified twice, not just recommended.** Isolated Playwright test: ~330ms page load, ~18-70ms execution. Then actually deployed to the sandbox course (cmid 237) and driven live: ~350ms scaffolded check, ~160ms free-run, correct grading, zero errors, confirmed by Jay directly ("Skulpt does seem to work"). No WASM, no MIME-type requirements, no observed hangs.
+
+**Interaction model refined per Jay's direct clarification:** the primary pattern isn't free-form typing from scratch — it's a scaffold with one blank (or a short block to assemble) inside a larger pre-written program, with the *whole assembled program actually executed* and grading checking real output against a pre-determined expected result. Built as component-library #20 (scaffolded) and #21 (free-typing, kept for cases that genuinely want that instead).
+
+**Real UX bug found on review, fixed in both the library demo and the live sandbox page:** the blank input was too narrow (`width:14ch`), truncating its own placeholder text. Widened to `32ch`. Also, per Jay: the exercise only stated the target *output*, not what kind of thing actually belongs in the blank — instructions now state both explicitly.
+
+**Real gap surfaced, not yet built:** exact-output-match grading is right for a blank with one determinate answer, but wrong for a blank where any valid value should pass (e.g. "initialize `score` to any number") — that needs a variable-existence/type check instead, not implemented yet. Flagged in `browser-python-execution.md`'s Not Decided section, not solved here.
+
+**Supersedes:** the earlier same-day entry recommending Pyodide as a standalone-tested-first prototype — that recommendation is now itself superseded by this one. `browser-python-execution.md` updated directly rather than left stale.
+
+---
+
 ## 2026-09-04 (latest) — Pyodide "Run & Check" proven end-to-end; real cold-start cost is ~10s, not "a few seconds"
 
 **Context:** Jay wants higher-DOK practice with students typing more real code, and flagged that `browser-python-execution.md`'s Pyodide recommendation (design-only since 2026-08-11) was exactly the kind of already-written-but-unleveraged documentation worth acting on before Unit 02 gets built. Decided to test it standalone first, not build it directly into the Unit 02 pilot lesson, given it was untested against real browser/device behavior.

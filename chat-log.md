@@ -14,6 +14,14 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-09-04 (final) — Pyodide hung live, Skulpt adopted and confirmed working
+
+**Context from Jay:** Didn't think the droplet could handle Pyodide, asked to move to something lighter, then asked directly whether concurrent students would make it worse. Then asked to actually try Pyodide live in the sandbox before ruling it out ("let's see how bad it is"). While that was loading, reported real-time: 30 seconds nothing happening, then 60s, then confirmed at 2.5 minutes it had genuinely hung (page rendered fast, program never processed) — while also saying he still thinks Pyodide has potential and wants to know if it was actually broken, not just written off. Asked to try Skulpt the same way, live in the sandbox — confirmed directly, "Skulpt does seem to work." Then reviewed the scaffolded demo and flagged two real UX issues: the blank input was too narrow (truncated its own placeholder), and for a blank like this (one determinate answer, `score = 10`) the instructions needed to say exactly what to type, not just what output to aim for — also flagged the more general point that some blanks should accept any valid value, not just one exact answer.
+
+**Resolved this session:** clarified that Pyodide/Skulpt execution is 100% client-side — the droplet never runs any Python, so concurrent students affect bandwidth, not compute; the earlier "~10s" and the live hang were never a server-capacity problem. Pyodide parked (not deleted) after a real, unresolved hang in live conditions. Skulpt adopted, proven live on Moodle at real, fast speeds, and refined into the actual pattern Jay described (scaffolded blank, real execution, pre-determined check) rather than free-form typing. Both UX issues fixed in the live sandbox page and the component library. See `decisions-log.md` and `worklog.md`'s matching entries for the full detail.
+
+**Not yet done:** grading a blank where any valid value should pass (not just one exact answer) — needs a variable-inspection check, not built yet. Deploying any of this into Unit 02's actual pilot lesson (02.1) hasn't started.
+
 ## 2026-09-04 (very latest) — Pyodide tested, real numbers not great
 
 **Q (asked, answered):** "Which Unit 02 lesson pilots the new model?" → 02.1 Variables and Memory. "Ship Pyodide directly in the pilot, or test it standalone first?" → Test standalone first.

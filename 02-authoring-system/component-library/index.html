@@ -383,11 +383,11 @@ Working demos of every interactive pattern available for lesson authoring. <stro
   <div class="where">Not yet deployed — first real fit is any Quick Check/Mastery Check question whose options are full lines of code (e.g. "which of these actually runs without an error"), in place of the inline-code-in-a-button style used ad hoc in the 2026-09-04 sandbox completion prototype.</div>
 </div>
 
-<h2>19. Run &amp; Check (real Python, via Pyodide)</h2>
+<h2>19. Run &amp; Check (real Python, via Pyodide) — parked, see #20/#21</h2>
 <div class="component">
-  <span class="status status-new">New — real proof-of-concept, not yet deployed in a real lesson</span>
+  <span class="status" style="background:#f4e3d0; color:#6a4a1a;">Parked 2026-09-04 — real hang observed live on Moodle, root cause not confirmed</span>
   <div class="desc">
-    Per <code>../browser-python-execution.md</code>: students type real Python, run it, and get graded on the actual output — not a simulated drill. <strong>This loads the real, self-hosted Pyodide runtime</strong> (<code>../pyodide-runtime/</code>) the first time you click Run, so the load time you see is a genuine number, not a mock. Grading compares captured stdout against one expected string, same pattern <code>checkTyped()</code> already uses for typed-blank drills. Explicitly not yet deployed — this exists to get a real, honest read on load time and behavior before it becomes a real graded item type in any lesson.
+    Per <code>../browser-python-execution.md</code>: students type real Python, run it, and get graded on the actual output — not a simulated drill. <strong>This loads the real, self-hosted Pyodide runtime</strong> (<code>../pyodide-runtime/</code>) the first time you click Run. <strong>Not recommended for now</strong> — this demo measured ~10s cold-start via Playwright (already slow), but when actually deployed to the sandbox course and opened live, it hung for 2.5 minutes with no output and never completed, despite the page shell itself rendering quickly. Two real, unconfirmed candidates, not yet isolated: (1) the ~10s number was measured over zero-latency loopback and never actually tested real network transfer of the ~13MB payload; (2) this demo's own <code>loadPyodide()</code> call has no <code>.catch()</code> — any rejection anywhere in that promise chain (a stalled fetch, for instance) fails completely silently, leaving the button stuck on "Loading..." forever with no visible error. Kept here, not deleted, in case it's worth a properly instrumented retest later — see <code>../decisions-log.md</code>'s matching entry. <strong>Use #20/#21 (Skulpt) instead</strong> for now — verified working, both in an isolated test and live on Moodle.
   </div>
   <div class="ide-demo">
     <div class="ide-toolbar"><span class="ide-filename">practice.py</span></div>
@@ -403,7 +403,46 @@ print("Score:", score)</textarea>
   <div class="where">Not yet deployed — see <code>../pyodide-runtime/README.md</code> for the runtime itself and how a real lesson page would load it.</div>
 </div>
 
+<h2>20. Run &amp; Check — Scaffolded Fill-in-the-Blank (Skulpt)</h2>
+<div class="component">
+  <span class="status status-live">Verified working — isolated test and live on Moodle, 2026-09-04</span>
+  <div class="desc">
+    What Jay actually described wanting: students fill in a blank (or, just as easily, assemble a short block via the existing Block Builder mechanic) within a larger pre-written scaffold — not free-form typing from scratch. The <strong>whole assembled program actually runs</strong> via Skulpt, and grading checks the real captured output against one pre-determined expected string, not a text-match on the blank alone. Measured live on Moodle (not just here): ~350ms total, correct output, correct grading. See <code>../skulpt-runtime/README.md</code>.
+  </div>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span class="ide-filename">practice.py</span></div>
+    <div class="ide-code" style="font-family:Consolas,monospace; padding:1rem; white-space:pre;">name = "Ava"
+<input type="text" id="sk-blank" placeholder="score = 10" style="font-family:Consolas,monospace; background:#33415c; color:#fff; border:2px solid #5b9bd8; border-radius:4px; padding:0.1rem 0.4rem; width:32ch;">
+print("Player:", name)
+print("Score:", score)</div>
+  </div>
+  <div class="drill-prompt" style="margin-top:0.6rem;">Type a line of Python that creates a variable named <code>score</code> set to <code>10</code> (for example, <code>score = 10</code>) — the program should print <code>Player: Ava</code> then <code>Score: 10</code>.</div>
+  <button class="check-btn" id="sk-check-btn" onclick="skCheck()">Check</button>
+  <pre class="rc-output" id="sk-output" style="display:none;"></pre>
+  <div class="feedback" id="sk-feedback"></div>
+  <div class="where">Not yet deployed in a real lesson — this is the recommended pattern for Unit 02's Run &amp; Check items going forward.</div>
+</div>
+
+<h2>21. Run &amp; Check — Free Typing (Skulpt)</h2>
+<div class="component">
+  <span class="status status-live">Verified working — isolated test and live on Moodle, 2026-09-04</span>
+  <div class="desc">
+    Same mechanism as #20, no scaffold — a full free-typing editor for lessons/mastery checks that genuinely want an open-ended small program, not a fill-in-the-blank. Measured live on Moodle: ~160ms.
+  </div>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span class="ide-filename">practice.py</span></div>
+    <textarea id="sk-free-code" class="rc-editor" spellcheck="false" rows="4">for i in range(3):
+    print("Round", i + 1)
+print("Game over!")</textarea>
+  </div>
+  <button class="check-btn" id="sk-free-run-btn" onclick="skFreeRun()">Run</button>
+  <pre class="rc-output" id="sk-free-output" style="display:none;"></pre>
+  <div class="where">Not yet deployed in a real lesson.</div>
+</div>
+
 <script src="../pyodide-runtime/pyodide.js"></script>
+<script src="../skulpt-runtime/skulpt.min.js"></script>
+<script src="../skulpt-runtime/skulpt-stdlib.js"></script>
 <script src="../shared-styles/foxcs-theme-toggle.js"></script>
 <script>
 // ---- shared shuffle ----
@@ -1186,6 +1225,55 @@ async function rcRun() {
     ? 'Right — real Python ran and printed exactly what was expected.'
     : "Not quite — compare the output above against what's expected.";
   fb.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+}
+
+// ---- Run & Check via Skulpt (#20 scaffolded, #21 free-typing) ----
+function skBuiltinRead(x) {
+  if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) {
+    throw "File not found: '" + x + "'";
+  }
+  return Sk.builtinFiles["files"][x];
+}
+function skCheck() {
+  const out = document.getElementById('sk-output');
+  const fb = document.getElementById('sk-feedback');
+  const blank = document.getElementById('sk-blank').value;
+  const code = 'name = "Ava"\n' + blank + '\nprint("Player:", name)\nprint("Score:", score)';
+  out.style.display = 'block';
+  out.textContent = '';
+  fb.className = 'feedback';
+  let captured = [];
+  Sk.configure({ output: (t) => captured.push(t), read: skBuiltinRead });
+  Sk.misceval.asyncToPromise(function () {
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  }).then(
+    () => skFinish(captured),
+    (err) => { captured.push(String(err)); skFinish(captured); }
+  );
+}
+function skFinish(captured) {
+  const out = document.getElementById('sk-output');
+  const fb = document.getElementById('sk-feedback');
+  const result = captured.join('').trim();
+  out.textContent = result || '(no output)';
+  const isCorrect = result === 'Player: Ava\nScore: 10';
+  fb.textContent = isCorrect
+    ? 'Right — the program actually ran and printed exactly what was expected.'
+    : 'Not quite — the assembled program did not produce the expected output.';
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+}
+function skFreeRun() {
+  const out = document.getElementById('sk-free-output');
+  out.style.display = 'block';
+  out.textContent = '';
+  let captured = [];
+  Sk.configure({ output: (t) => captured.push(t), read: skBuiltinRead });
+  Sk.misceval.asyncToPromise(function () {
+    return Sk.importMainWithBody("<stdin>", false, document.getElementById('sk-free-code').value, true);
+  }).then(
+    () => { out.textContent = captured.join('').trim() || '(no output)'; },
+    (err) => { captured.push(String(err)); out.textContent = captured.join('').trim(); }
+  );
 }
 
 // ---- Code Block Multiple Choice (#18) ----
