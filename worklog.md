@@ -2,6 +2,17 @@
 
 Session-to-session continuity notes — what's mid-flight and what's next. Not append-only like `decisions-log.md`; update/trim this freely as work completes. See `decisions-log.md` for the permanent record of what was actually decided, and `open-questions.md` for longer-lived unresolved questions.
 
+## Where things stand as of 2026-09-04 (post-02.1-review) — two real reworks now queued against the just-built 02.1
+
+Jay reviewed the full 02.1 build (previous entry below) and gave two pieces of direct feedback, both written up as real decisions in `decisions-log.md`'s matching entries:
+
+1. **Drop the expandable jump menu, go linear.** `01_instruction.html`'s `.unit-menu-wrap` section needs to come out; sections should present in a fixed sequence instead. This is a standing model change, not 02.1-only — flag it for whoever next touches `courses/python/content/unit_01_what_is_programming/lesson_01_04_printing_output/01_instruction.html` too, since that live page uses the identical pattern and hasn't been touched here.
+2. **Rework Node 4 (`prints_variable_with_text`)** to teach and give real practice on both `+` concatenation and comma-separated `print()` args (currently commas-only), with items that surface the actual mechanism behind the difference (auto-conversion/auto-spacing vs. requiring `str(...)`) — not just two syntaxes to memorize. Mastery Check's items touching this skill need the same update. `.format()`/f-strings stay out, per the Unit 03 sequencing decision.
+
+**Also queued, broader than 02.1:** populate a real `skills:` YAML block (per `02-authoring-system/lesson-schema.md`'s existing, currently-unused-in-practice convention) in 02.1's `.md` content record, as the reference example for every future lesson. This is separate from the two content fixes above — it's a documentation/structure task, not a rebuild of what's already live in the sandbox.
+
+**Not yet done:** none of the three items above have been applied to the sandbox build yet — this entry records what's queued, not what's finished. Whether 01.4's live page also needs the menu removed is a real open question, not decided here (it's live student-facing content, not a sandbox draft).
+
 ## Where things stand as of 2026-09-04 (session resumed) — Unit 02 pilot lesson (02.1) built and live in the sandbox
 
 Full lesson built and deployed to `sandbox-adaptive-demo` (course id 9), all Playwright/DB-verified: Instruction cmid 238, Project cmid 239, Mastery Check cmid 240 (quiz id 11), Feedback cmid 241. Source: `courses/python/content/unit_02_variables_and_data/lesson_02_01_variables_and_memory/` (content + `teacher-materials/`), deploy scripts `07-infrastructure/moodle-scripts/create-sandbox-unit02-pilot-*.php`. See `decisions-log.md`'s matching entry for the full build record and real authoring decisions made along the way.

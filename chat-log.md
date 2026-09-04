@@ -14,6 +14,16 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-09-04 (post-02.1-review) — Jay reviewed 02.1, two real changes queued, workbook-grounded sequencing decision made
+
+**Context from Jay:** "the major change I would make it that we do not need to show the parts of the learn lesson in the menu." Also: wants concatenation taught earlier — "2.1 should [c]over concatenation (+) and comma-based but a later lesson should teach f-strings" — and to eventually have students default to (norm on) f-strings, but for now "really make sure they know" the difference between `+` and commas. Also asked to revisit the course map against the actual GMetrix/certification workbook before proceeding, and floated building out an explicit skills-per-lesson list (e.g. "concatenate with +," "concatenate with commas," "change a variable value") to drive real assessment design.
+
+**Q (asked, answered):** Two clarifying questions before touching anything, since both were standing-pattern changes, not 02.1-only tweaks. "What do you mean by not showing the parts in the menu — drop the menu and go linear, or keep a menu but hide the itemized part list?" → Drop the menu, go linear. "Where should f-strings actually land, and what does 'practice both' mean?" → 02.1 covers `+` and commas; f-strings land in a later lesson; get the basics right first, cross-checked against the workbook.
+
+**Resolved this session:** Checked the actual GMetrix workbook (`Python_v2_Student_Workbook.pdf` p.67, Objective 3.2.2) rather than assuming — confirmed it teaches commas → `.format()` → f-strings in that order on the same variables, explicitly naming f-strings as preferred since Python 3.6, and never shows `+` at all (a FoxCS-original addition). Wrote the resulting sequencing (02.1: `+` and commas; 03.3: deepen `+`; 03.4: f-strings, the real norming lesson; 03.5: `.format()`) into `course-plan.md`'s Unit 02/03 notes and `decisions-log.md`. Also decided to start populating `lesson-schema.md`'s existing (but so far unused) `skills:` block per lesson, starting with 02.1. See `worklog.md` for what's actually queued to execute against the sandbox build.
+
+**Not yet done:** none of this has been applied to 02.1's actual built content yet — menu removal, the Node 4 concatenation rework, and the `skills:` block are all still queued, not finished.
+
 ## 2026-09-04 (session resumed) — Unit 02 pilot lesson built full-scope in the sandbox, verified live
 
 **Context:** A prior session ended mid-flight right after the Skulpt/answer-leak-checker work above. Resumed by reviewing this log plus `decisions-log.md`/`worklog.md`, then asked Jay which of two open threads to pick up (variable-inspection grading, or starting the Unit 02 pilot lesson). Jay redirected: look at what's already in the sandbox course first, and do upcoming work there via subagents. A fork was dispatched to inspect the sandbox and build a first slice; mid-flight, Jay expanded scope directly to the fork: build the full 02.1 lesson, not just one skill node, across all 5 modules, still sandbox-only.

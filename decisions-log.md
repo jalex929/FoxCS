@@ -4,6 +4,30 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-09-04 (post-02.1-review) — Instruction module drops the expandable jump menu; goes back to a fixed linear flow
+
+**Context:** After reviewing the live sandbox build of 02.1 (entry below), Jay's direct feedback: "we do not need to show the parts of the learn lesson in the menu." Clarified via a direct question with concrete options — his answer: drop the menu entirely, go linear, the way the pre-08-30 flat-file lessons worked, not a trimmed/generic version of the menu.
+
+**Decided:** the Instruction module's self-contained tabbed HTML no longer gets an expandable top menu listing its own sections (`.unit-menu-wrap`/`<details>` jump-to-section nav). Students move through a lesson's sections in a fixed sequence instead — no exposed internal structure, no jumping ahead. This is a standing change to the per-lesson model, not a one-off for 02.1.
+
+**Supersedes:** the menu-navigation half of the 2026-09-04 "Per-lesson module structure settled" entry below (point 1: "a real per-lesson menu a student can expand to jump to any of that lesson's own sections"). Everything else in that entry (one bundled Instruction module, telemetry via `local_foxcstelemetry`, Project/Coding Exercise as genuinely separate modules, file-only `.py` submissions) is unchanged.
+
+**Real implication, not yet acted on:** Lesson 01.4's Instruction page (`courses/python/content/unit_01_what_is_programming/lesson_01_04_printing_output/01_instruction.html`) already uses this same expandable-menu pattern and is **live on the real course**, not a sandbox draft — the menu pattern predates the 2026-09-04 decision that formalized it, it wasn't introduced by that decision. Whether to rework 01.4's live page to match isn't decided here; flagging it rather than silently changing live student-facing content. See `worklog.md`.
+
+---
+
+## 2026-09-04 (post-02.1-review) — 02.1 teaches `+` concatenation alongside commas; f-strings/`.format()` stay in Unit 03, grounded in the actual workbook page
+
+**Context:** Same review pass. Jay: "2.1 should [c]over concatenation (+) and comma-based but a later lesson should teach f-strings... I want them to eventually norm on f-strings but for now they need to move toward knowing the differences between the two [+ and commas]. Let's really make sure they know that." Also asked to sanity-check this against the actual GMetrix workbook before committing to it, and to start building an explicit skills-per-lesson list so assessment can map directly to named skills.
+
+**Grounded in the real workbook, not assumed:** `Python_v2_Student_Workbook.pdf` p.67, Objective 3.2.2 "Print Formatted Text" (`322-format.py`), walks the *same* variables through three methods in a fixed order — comma-separated `print()` args, `.format()`, then an f-string — and explicitly quizzes "which method is the preferred way of formatting strings beginning with Python 3.6" (f-strings). Full-text search of the workbook (`concatenat`) returns zero hits — `+` concatenation is never shown in this project workbook at all. See `course-plan.md`'s Unit 03 note for the full grounding and the resulting Unit 02/03 sequencing this produced.
+
+**Decided:** 02.1's existing `prints_variable_with_text` skill node gets reworked to teach and give real practice on *both* `+` concatenation and comma-separated `print()` args, with the practice specifically built to surface the difference between them (commas auto-convert non-strings and auto-space; `+` requires every piece to already be a string, so a number needs `str(...)` first — that's the concrete mechanism behind "know the difference," not just two interchangeable syntaxes). `.format()` and f-strings are explicitly kept out of 02.1 — they land in 03.5 and 03.4 respectively, where 03.4 becomes the real "norming" lesson per the workbook's own "preferred since 3.6" framing.
+
+**Also decided — formalize a real skills-per-lesson list.** Jay wants an explicit, named list of the skills each lesson builds (his examples: "concatenate with +," "concatenate with commas," "change a variable value") so Mastery Check/rubric design can be checked against it directly, rather than skill names only existing implicitly as `skill_id` strings inside a lesson's own practice JS. `02-authoring-system/lesson-schema.md` already has a canonical `skills:` YAML block for exactly this (added 2026-07-24, tied to `objectives-and-skills-proficiency.md`, rubric criteria meant to reference a `skill_id`) — the actual gap is that lesson content records (the per-lesson `.md` file) haven't been populating it; 02.1's own record only describes its skill nodes in prose. Going forward, every lesson's canonical record should populate the real `skills:` block, starting with 02.1 as the reference example. See [[feedback_submission_rubric_requirement]]-style reasoning — this is the same "the autograder needs something structured to check against" motivation, applied to Practice/Mastery Check design instead of just submissions.
+
+---
+
 ## 2026-09-04 (session resumed) — Unit 02 pilot lesson (02.1 Variables and Memory) built full-scope and deployed live to the sandbox
 
 **Context:** Continuing directly from the session below. Jay directed that the pilot-lesson work happen in the sandbox course, backing up what's already there. Mid-build, Jay expanded scope: not one representative skill node, the full lesson across all 5 modules, still sandbox-only, still real-quality content he intends to actually review.
