@@ -10,7 +10,7 @@ See `../../CLAUDE.md` (parent `FoxCS/`) for platform-level decisions that apply 
 
 ## Status
 
-**Corrected 2026-09-04 — this section was stale since the 2026-08-04 MVP pivot and no longer matched reality.** Unit 01 (`content/unit_01_what_is_programming/`) is built and live on Moodle: Lessons 01.1–01.4 fully built across the 4-module-era pattern, 01.5–01.6 built under the newer tabbed-Lesson-plus-separate-Practice pattern (both now superseded by the 2026-09-04 5-module structure — see `../../decisions-log.md` and `../../worklog.md`). **Unit 02 (`content/unit_02_...`) has no content at all yet** — this is the next real build target, and the first unit to be authored under the new module structure from the start rather than retrofitted. See `../../worklog.md` for exactly what's mid-flight.
+**Corrected 2026-09-04 — this section was stale since the 2026-08-04 MVP pivot and no longer matched reality.** Unit 01 (`content/unit_01_what_is_programming/`) is built and live on Moodle: Lessons 01.1–01.4 fully built across the 4-module-era pattern, 01.5–01.6 built under the newer tabbed-Lesson-plus-separate-Practice pattern (both now superseded by the 2026-09-04 5-module structure — see `../../decisions-log.md` and `../../worklog.md`). **Unit 02 (`content/unit_02_...`) has one lesson drafted: 02.1 Variables and Memory** (built 2026-09-04, the first lesson authored under the new module structure from the start rather than retrofitted). Deployed to the sandbox course only (`sandbox-adaptive-demo`), not any real course, and not yet reviewed by Jay. Lessons 02.2 onward are still unbuilt. See `../../worklog.md` for exactly what's mid-flight.
 
 ## Content Model
 

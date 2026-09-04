@@ -4,6 +4,30 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-09-04 (session resumed) — Unit 02 pilot lesson (02.1 Variables and Memory) built full-scope and deployed live to the sandbox
+
+**Context:** Continuing directly from the session below. Jay directed that the pilot-lesson work happen in the sandbox course, backing up what's already there. Mid-build, Jay expanded scope: not one representative skill node, the full lesson across all 5 modules, still sandbox-only, still real-quality content he intends to actually review.
+
+**Skill-node breakdown decided (real authoring call, not previously settled):** `adaptive-practice-model.md`'s 5 candidate topics for this lesson (creating variables, naming rules, reassignment, data types, printing with text) became **4 full adaptive nodes** (`creates_variable`, `variable_naming_rules`, `reassigns_variable`, `prints_variable_with_text`) plus **one lighter, ungraded guided-practice quick-check** for data types. Reasoning: data types is DOK-1 recognition at this stage (full mastery is Units 2.2-2.6's job), which `adaptive-practice-model.md` itself says belongs in guided practice, not a scored node. Each of the 4 nodes got a real Core/Reinforce/Extend cluster at the settled pool size (1/1/1), all graded either by Skulpt exact-output-match or multiple choice, deliberately avoiding the not-yet-built variable-inspection grading mode by designing every item to have exactly one determinate right answer.
+
+**Coding Exercise judged not warranted for this lesson.** The Project module ("Character Status Tracker") already covers the lesson's one applied-coding task across all 4 skills at once. Per the settled cardinality rule ("only when a lesson actually has one"), a second, separate Coding Exercise would duplicate Project rather than add a genuinely distinct task.
+
+**Mastery Check built with deterministic auto-graded items, not essay questions.** `mastery-check-standards.md` explicitly prefers deterministic validation over manual grading; this lesson's content (predicting output, fixing a broken assignment, judging valid names) is a strong fit for Moodle's native shortanswer/multichoice types, unlike `build-lesson-01-06-mastery-check.php`'s essay-heavy precedent. 4 items, each synthesizing across more than one skill node rather than repeating a single Practice item verbatim. See `courses/python/content/unit_02_variables_and_data/lesson_02_01_variables_and_memory/teacher-materials/mastery_check_key.md`.
+
+**Project submission settings corrected per the same-day module-structure decision below, not left at the old default.** `assignsubmission_onlinetext_enabled = 0`, `assignsubmission_file_filetypes = '.py'` — confirmed via direct DB query after deploy, not just set-and-assumed.
+
+**Rubric written alongside the Project module, per the standing 2026-09-04 rule** (every gradable submission needs an internal checklist for the eventual autograder): `teacher-materials/rubric_project.md`.
+
+**Built and deployed to `sandbox-adaptive-demo` (course id 9), verified live, not just authored:**
+- Instruction, cmid 238 (`create-sandbox-unit02-pilot-instruction.php`) — Playwright-driven as `foxcstest`: all 4 nodes route correctly including a genuine wrong-answer path through node 3's Reinforce (`correct_recovered`), Skulpt executes real code and grades real output, progress note reaches "4 of 4," spiral review and completion banner fire, zero console/page errors. Confirmed in the DB, not just trusted the page: `mdl_course_modules_completion.completionstate = 1`, and `mdl_local_foxcstelemetry_log` holds 10 `drill_attempt` + 5 `lane_transition` + 1 `viewed` + 1 `lesson_complete` rows for that run, matching the exact interaction path driven.
+- Project, cmid 239 (`create-sandbox-unit02-pilot-project.php`) — DB-confirmed file-only/.py submission settings; page renders with the real instructions.
+- Mastery Check, cmid 240, quiz id 11 (`create-sandbox-unit02-pilot-mastery-check.php`) — 4 slots wired, `sumgrades` recomputed correctly, password-gated, page renders.
+- Feedback, cmid 241 (`create-sandbox-unit02-pilot-feedback.php`) — 8 items created (3 rated, 4 textarea, 1 checkbox), matching the 01.4-01.6 pattern exactly, vocab swapped to this lesson's 5 terms.
+
+**Not decided / not done:** none of this has been reviewed by Jay yet or moved beyond the sandbox course. Real classroom/Chromebook Skulpt testing still hasn't happened. Whether this 4-node density (16 Practice items, above the doc's "typical 8-15" but within its explicit "3-4 skills stays in budget" allowance) is the right target for every future Unit 02 lesson, or specific to this one, is not settled. See `worklog.md`'s matching entry for the open list.
+
+---
+
 ## 2026-09-04 (very latest) — Pyodide parked after a real live hang; Skulpt adopted and verified live; grading-flexibility gap surfaced
 
 **Context:** Following the same-day Pyodide cold-start finding (~10s in an isolated Playwright test), Jay asked to move toward something lighter and asked directly whether concurrent students would make server load worse. Answered: no — Pyodide/Skulpt execute entirely client-side in the student's own browser; the droplet only ever serves static files, so concurrency is a bandwidth question, not a compute one. Jay separately noted CodeHS (which the doc already names as a real, Chromebook-scale precedent) uses this same class of approach without issue.

@@ -2,6 +2,19 @@
 
 Session-to-session continuity notes — what's mid-flight and what's next. Not append-only like `decisions-log.md`; update/trim this freely as work completes. See `decisions-log.md` for the permanent record of what was actually decided, and `open-questions.md` for longer-lived unresolved questions.
 
+## Where things stand as of 2026-09-04 (session resumed) — Unit 02 pilot lesson (02.1) built and live in the sandbox
+
+Full lesson built and deployed to `sandbox-adaptive-demo` (course id 9), all Playwright/DB-verified: Instruction cmid 238, Project cmid 239, Mastery Check cmid 240 (quiz id 11), Feedback cmid 241. Source: `courses/python/content/unit_02_variables_and_data/lesson_02_01_variables_and_memory/` (content + `teacher-materials/`), deploy scripts `07-infrastructure/moodle-scripts/create-sandbox-unit02-pilot-*.php`. See `decisions-log.md`'s matching entry for the full build record and real authoring decisions made along the way.
+
+**Real open items before this is ready for Jay's review or a real Unit 02 rollout:**
+- Jay has not reviewed any of this yet. Treat as a draft candidate, not settled content.
+- Real classroom/Chromebook test of Skulpt still hasn't happened — only this droplet's numbers exist (see the Pyodide/Skulpt entry below).
+- The variable-inspection grading gap (open-ended blanks, "any value should pass") is still not built. This lesson deliberately routed around it by giving every item exactly one determinate right answer — worth revisiting once that grading mode exists, since some future lesson's content may not bend that way as easily.
+- Whether 4 nodes / 16 Practice items is the right density for every future Unit 02 lesson, or was specific to this one (richest early-unit spiral pool, GMetrix assignment-operator tie-in landing here), is not decided — check node count per lesson, not assumed from this one.
+- VS Code-side content was not built for this lesson (Project's file-upload Assignment covers the applied coding task instead) — confirm this is the intended shape going forward, not just this prototype's shortcut.
+- Mastery Check password (`U2P1LOT`) is a sandbox-only placeholder, not meant to carry over if this moves to a real course.
+- Whether 01.5/01.6 get reworked to this same shape, or stay grandfathered, is still the same open question as below — this lesson didn't resolve it, just built fresh under the new pattern since it had nothing to retrofit.
+
 ## Where things stand as of 2026-09-04 (later) — module structure settled, real rework implied for 01.5/01.6
 
 See `decisions-log.md`'s matching entry for the full reasoning. Short version: 5 modules per lesson now (Instruction bundle / Project / Coding Exercise / Mastery Check / Feedback), Instruction goes back to freely-navigable tabbed HTML instead of native `mod_lesson` pages, Project and Coding Exercise are genuinely separate, submissions become file-only `.py`.

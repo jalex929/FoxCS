@@ -41,7 +41,7 @@ Unit 01 below is Game I's real first authored unit.
 Also the home for Domain 1's Assignment Operator content. Lesson 6, Objective 1.3.1 (`131-assignment.py`, "Assignment Order") and its companion Lesson 8, Objective 1.4.1 (`141-assignment.py`, "Using Assignment Operators"). Assignment is what 02.1 Variables and Memory is about, so both short Domain 1 exercises land here rather than with the rest of the operators in Unit 05.*
 *Game/UX tie-in: Variables are game state. Score, health, lives, position, inventory count. Every data type this unit covers is a kind of information a real game has to track and remember between frames.*
 *Journal (50-100 words): List three pieces of information ("variables") a video game needs to keep track of while you play. Why does the game need to remember each one?*
-- [ ] 02.1 Variables and Memory
+- [x] 02.1 Variables and Memory 🔄 in progress (drafted 2026-09-04 as sandbox prototype, all 5 modules, not yet reviewed by Jay or moved beyond `sandbox-adaptive-demo`) . `courses/python/content/unit_02_variables_and_data/lesson_02_01_variables_and_memory/`
 - [ ] 02.2 Integers
 - [ ] 02.3 Floats
 - [ ] 02.4 Strings
