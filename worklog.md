@@ -6,10 +6,23 @@ Session-to-session continuity notes — what's mid-flight and what's next. Not a
 
 See `decisions-log.md`'s matching entry for the full reasoning. Short version: 5 modules per lesson now (Instruction bundle / Project / Coding Exercise / Mastery Check / Feedback), Instruction goes back to freely-navigable tabbed HTML instead of native `mod_lesson` pages, Project and Coding Exercise are genuinely separate, submissions become file-only `.py`.
 
-**Not decided yet — needs Jay's call before touching anything already live:**
-1. Whether 01.5 and 01.6 (currently: Instruction and Practice as two separate native Lesson activities, no Project module at all) get reworked to match now, or stay as a grandfathered exception while new lessons follow the new structure going forward.
+**Resolved same day:** 01.5 and 01.6 not having a Project module is fine, per Jay directly — not every lesson needs one, especially given the new cardinality rule (multiple Coding Exercises are fine, only one Project, and a lesson with enough Coding Exercises may reasonably skip Project entirely). No rework needed on that specific point.
+
+**Still not decided — needs Jay's call before touching anything already live:**
+1. Whether 01.5/01.6's Instruction+Practice split (two separate native Lesson activities) gets reworked into the new single tabbed-HTML Instruction bundle now, or stays as a grandfathered exception.
 2. Whether 01.4's already-built Coding Exercise (and any other already-built assignment module) gets its submission settings changed to file-only `.py`, or only new builds get the stricter setting.
-3. A real Project module has never been built for any Unit 01 lesson under this definition — first one needs to be authored from scratch (source: each lesson's `NN_project.html`/`NN_project.py`), not just re-labeled from existing content.
+
+**Redirected 2026-09-04 (later):** Jay's real priority is Unit 02 (`content/unit_02_.../` doesn't exist yet), built as the first unit under the new structure from the start, with real DOK/rigor gaps closed — not a Unit 01 retrofit. See the matching `chat-log.md` entry for the specifics and the pilot-lesson question still open.
+
+## Unleveraged documentation, surfaced 2026-09-04 — directly relevant to Unit 02
+
+Per Jay: a lot of already-written design docs in this repo haven't actually been built into real content yet. Grounded findings, not a restatement of the docs:
+
+- **`adaptive-practice-model.md`**: the real Reinforce/Core/Extend skill-node ladder (routing rules, pool sizes, telemetry schema) is fully designed and has been since 2026-08-11/31, but **no real lesson has ever been rebuilt to this model** — `05_practice.html`-style pages are still a flat drill list with a bare `drill_id`, no skill/lane concept, no spiral review, no Game Connection/UX items, no hint mechanism. All of that is documented, none of it is built.
+- **`browser-python-execution.md`**: recommends Pyodide (real CPython in-browser, self-hosted, no backend) for a genuinely higher-DOK "Run & Check" item — student types real code, runs it, actual stdout is graded. Explicitly the format that "directly answers the standing... DOK concern." **Never built.** This is the most direct lever for "students typing more code," but carries a real, untested cost (6-10MB one-time download, cold-start delay) that hasn't been checked against real school Chromebooks yet.
+- **The full DOK-rigor rewrite itself** is explicitly flagged inside `adaptive-practice-model.md` as separate, still-not-done work — the ladder/pool-size design doesn't by itself fix question quality.
+
+**Proposed for Unit 02:** since it has zero content yet, it's the clean place to build all of this correctly from the start rather than retrofitting Unit 01 — real adaptive skill nodes, spiral review pulling from all of Unit 01 (much richer pool than 01.4 had), Game Connection/UX items, hints, and a real decision on whether Pyodide "Run & Check" goes in now or waits for a Chromebook test first. Not yet decided: which Unit 02 lesson is the pilot (same "prove it on one reference lesson first" order every other pattern here has followed), and whether Pyodide ships in that pilot or gets tested separately first.
 
 ## Where things stand as of 2026-09-04 — completion/telemetry prototype proven in the sandbox
 
