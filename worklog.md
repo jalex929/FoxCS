@@ -2,6 +2,16 @@
 
 Session-to-session continuity notes — what's mid-flight and what's next. Not append-only like `decisions-log.md`; update/trim this freely as work completes. See `decisions-log.md` for the permanent record of what was actually decided, and `open-questions.md` for longer-lived unresolved questions.
 
+## Where things stand as of 2026-09-04 — completion/telemetry prototype proven in the sandbox
+
+See `decisions-log.md`'s matching 2026-09-04 entry for the full reasoning (SCORM vs. full-native-rebuild vs. this). Short version: the "01.3 can't be marked done" bug is a real ceiling in `mod_resource`, confirmed in Moodle's own source, not a config issue. Fixed with a small custom plugin (`local_foxcstelemetry`, source in `07-infrastructure/local-plugins/foxcstelemetry/`, deployed to `/var/www/moodle/public/local/foxcstelemetry/`) that logs telemetry and calls Moodle's own generic completion API — proven end-to-end against a real logged-in `foxcstest` session in `sandbox-adaptive-demo` (course id 9, cmid 235): telemetry row landed in `mdl_local_foxcstelemetry_log`, and `mdl_course_modules_completion` shows real completion, not just a JSON success response.
+
+**Next up, in rough order:**
+1. **Pick which real lesson gets this first** — not decided. Candidates: Python 01.1–01.3 (the lessons actually stuck at "can't mark done" today), or wire it into the 01.5/01.6 tabbed-Lesson-page pattern instead for finer telemetry on embedded interactions (that pattern's overall Lesson completion already works natively — see decisions-log — this would only add value for telemetry on custom JS *within* a Content page).
+2. **Decide the XP/grade path** — deliberately not built yet. Either push a score through the gradebook from `log.php` directly, or leave it to the autograder reading `mdl_local_foxcstelemetry_log` (matches the already-decided "autograder scans Moodle directly" priority) — not decided which.
+3. **Clean up the sandbox prototype** once Jay's reviewed it (cmid 235 in `sandbox-adaptive-demo`) — currently left live for him to look at, not meant to stay as permanent sandbox content.
+4. Resolve the still-open "correct the N mistakes" bug in `courses/python/content/unit_01_what_is_programming/lesson_01_06_common_syntax_mistakes/07_mastery_check.html` line 197 (`Print(Continue` — says "two mistakes," actually has three: capitalization, missing quotes, missing paren) — flagged, not fixed; needs Jay's call on which to treat as "the" two, or reword vague per the new `content-authoring-standards.md` rule.
+
 ## Where things stand as of 2026-08-06 (consolidated — see `decisions-log.md` for full entries on each)
 
 **Moodle is paused, not abandoned.** FoxCS pivoted to an MVP: self-contained unit folders, distributed and submitted through Google Classroom, carrying the same instructional logic (DOK spread, Reinforce/Core/Extend ladder, objectives) the Moodle plan was built around. `CLAUDE.md`, `02-authoring-system/mvp-unit-folder-structure.md`, and `courses/python/course-plan.md` all reflect this.
@@ -540,3 +550,38 @@ Now 7 chapters, 10 Essay questions, 15 MultiChoice questions, 1 Dialogcards deck
 **Followed up same session:** Jay confirmed Coding Exercise and Feedback should go live too. Both flipped `visible=1`. **All 5 real 01.4 modules are now visible**: Instruction(212), Practice(213), Coding Exercise(215), Mastery Check(214), Feedback(218). Left cmid=101 (the old superseded MVP static-resource placeholder) hidden -- not real current content, intentionally not part of this.
 
 **Next up (Python):** run `build-lesson-01-04-practice-ladder.php`, then `check-lesson-ladder-wiring.php --cmid=<result> --pool-cap=2` (zero errors/warnings bar); build the Mastery Check quiz and the Coding Exercise assignment per the plan doc; resolve the two still-open decisions in that doc (Safe Exam Browser for 01.4, due dates for 01.2/01.3/01.4); run the full verification checklist at the bottom of the plan doc before calling 01.4 live.
+
+## 2026-09-04 — Jay's 6-week absence confirmed; real ground-truth audit of Seminar III Lessons 2-8 (all hidden); autograder and rubric scope decided. No content work done tonight, this is a planning/logging session only, per Jay's explicit "don't do more work tonight" request.
+
+**Context:** Jay is out 2026-09-21 through 2026-10-30 (6 weeks) — confirmed against the real CPS district calendar (`starter context/EDUC_District_Calendar_...pdf`, previously only flagged as "still coming" in `open-questions.md`; that placeholder language should be reconciled/removed next time this file is touched for real). His last in-person week is 2026-09-14 to 2026-09-18. He technically returns 2026-11-02, but that's a CPS Parent-Teacher Conference day (non-attendance) and 2026-11-03 is a district holiday, so his real first day back is **Wednesday 2026-11-04**. Full detail saved to memory as `project_jay_absence_q1_pacing`.
+
+**The load-bearing fact: this absence covers the rest of Quarter 1.** Q1 progress reports go out 2026-09-24 (3 days into the absence) and Q1 itself closes 2026-10-23 (inside the absence window). A sub will be present the full 6 weeks and can grade manually, but will not adjust pacing or content — everything needs to run on its own via due dates/completion, not live intervention.
+
+**Real-DB ground-truth audit of `foxcs-seminar3` (course id 5), done because `CLAUDE.md`'s "Lessons 2/4/8 have full content" note turned out to describe repo files, not live Moodle state:**
+
+- **Lesson 1 (section 2)** is the only lesson genuinely live: real H5P/native-Lesson/Quiz activities (1.1-1.10), visible, working.
+- **Every single item in Lessons 2 through 8 (sections 3-9) is `visible=0`.** Nothing past Lesson 1 is actually showing for students right now, full stop — this is a much bigger gap than "some lessons are missing pieces."
+- What exists for 2-8 is flat static HTML file resources uploaded via `populate-seminar3-resources.php`, not interactive/gradeable Moodle activities — no completion tracking, no due dates wired in, nothing submittable, nothing to grade.
+- File-level gaps, confirmed directly against the DB and the repo:
+  - **Lessons 3, 5, 7**: only a presentation + the instructional page exist. No Quick Reference, Guided Practice, Independent Practice, Check, or teacher answer key for any of the three.
+  - **Lesson 6**: only a Quick Reference exists beyond the instructional page; no Guided/Independent Practice or Check.
+  - **Lessons 2 and 8**: full printable-sheet sets exist as repo files, but neither has a teacher answer key yet (Lesson 4's answer key does exist, Lesson 1's does too).
+  - A few resource names look like accidental duplicates worth a quick sanity check before building on top of them: Lesson 4 has both "Percent What Part Of The Whole" and "Percent" as separate resources; Lesson 6 has both "Letters That Stand For Numbers" and "Variables And Expressions"; Lesson 8 has three similarly-named resources ("My Quarter 1 Skill Story," "Quarter 1 Consolidation," "Quarter 1 Skill Story").
+
+**Decisions made with Jay tonight, ready to build against tomorrow:**
+
+- **Target bar for Lessons 2-8, Jay's own words:** he wants the lessons to *feel consistent* to a student, but is deliberately open on mechanism per lesson — an HTML embed of his existing adaptive content is fine, a real native Moodle Lesson is fine, a simplified version is fine too. **Don't force every lesson into the full Lesson-1-style H5P rebuild if a lighter, still-consistent mechanism gets it live faster.** Consistency of feel/structure across lessons is the actual bar, not uniformity of implementation technique.
+- **Parallel build approved**: Jay's fine running one agent per lesson (or per pair) simultaneously, same pattern as the Python Unit 01 rebuild (2026-08-30, see `decisions-log.md`) — but that build's own lesson (drift between forks, stale cross-references, an em-dash sweep needed afterward) applies here too: budget a real consolidation/consistency pass across all lessons once the parallel builds land, don't skip it.
+- **Autograder (`05-grader/`) is now a real near-term priority, not indefinitely deferred.** Jay wants to grade already-submitted work through it when he returns 2026-11-04, adapted to scan submissions directly out of Moodle (DB/API) rather than the original Classroom-download design — "if we are just scanning the submissions and generating feedback/assessing work then we should be good." He also wants an **effort-grade** option for interim credit on what's been completed so far, with adjustable points-possible per item, not just a strict rubric score.
+- **New standing rule, applies to every course going forward:** every student-facing gradable submission needs an internal rubric/checklist in `teacher-materials/`, even if it's just a plain list of what a correct/complete answer needs — saved as `feedback_submission_rubric_requirement` in memory. Lessons 2-8 currently have nothing submittable yet, so this rule has nothing to attach to there yet, but any new submittable item built for them needs one from the start.
+- **Build priority confirmed:** Jay is personally handling the Game II/Web Dev three-pathway build and Python himself. **Seminar III is the priority for this session/assistant to build** — he needs "the first quarter and some change" finished before 2026-09-21, i.e., a bit past the literal Q1 boundary (Lesson 8/9), not stopping exactly at it.
+- **Also wants some postsecondary project content folded into this window** — a real scope addition against the existing plan (postsecondary work was previously concentrated in Q4 per `01_SEMINAR_III_COURSE_PLAN`/[[project_seminar3_act_exam_pacing]]). Not yet scoped which pathway(s) or what the project(s) actually are — needs a real conversation with Jay before building, not a guess.
+
+**Explicitly not done tonight, picking up tomorrow (2026-09-05) per Jay's direct request to stop for the night:**
+
+1. Sanity-check the handful of duplicate-looking resource names above before treating any of them as safe to build on top of.
+2. Scope and confirm the postsecondary project content (which pathway, what the project actually is) with Jay directly.
+3. Decide, lesson by lesson, which mechanism (H5P/native-Lesson rebuild vs. HTML-embed-of-existing-adaptive-content vs. simplified) gets each of Lessons 2-8 to "live, consistent-feeling, has at least one real gradeable+rubric-backed item, has a real due date" fastest, then dispatch parallel builds against that plan.
+4. Fill the confirmed file-level gaps (Lessons 3/5/7 full printable sets; Lesson 6's missing Guided/Independent/Check; answer keys for Lessons 2 and 8) as part of whichever mechanism gets picked per lesson.
+5. Flip everything visible with real due dates once built and reviewed — don't leave it hidden the way 2-8 currently are.
+6. Start real scoping of the adapted `05-grader/` pipeline (Moodle-native submission scanning, effort-grade support, adjustable points-possible) — real build target for before 2026-11-04, not yet started.

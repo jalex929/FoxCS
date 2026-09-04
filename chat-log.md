@@ -14,6 +14,16 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-09-04 (later) — structure brainstorm, resolved to a prototype
+
+**Context from Jay:** Torn between the current lesson/practice structure and an earlier tabbed-page structure. Wants student work captured/saved, autograder-assigned points/XP, strong visual completion confirmation, and to keep the interactivity already rebuilt into the component library. Real pain point driving this: percentage-complete is broken and Lesson 01.3 can't be marked done. Also flagged a content bug: mastery-check prompts that name a specific error count ("correct the 2 mistakes") should either be verified correct or reworded vague — added as a standing rule in `content-authoring-standards.md`, with one live instance found but not yet fixed (see `worklog.md`).
+
+**Q (asked, answered):** "What's the actual top priority — save/completion accuracy, visual polish, or fastest build given the absence?" → Save student work + fix completion/gradebook accuracy, with a strong learner experience so students can focus on content. "Open to SCORM packaging?" → Not sure, wanted the tradeoffs walked through more first. "How much detail should be captured?" → Full interaction telemetry.
+
+**Q (asked, answered):** After a deeper, source-verified tradeoff walkthrough (SCORM vs. full native rebuild vs. a custom completion-API endpoint — see `decisions-log.md`'s 2026-09-04 entry), asked whether to prototype the custom-endpoint option on one lesson or keep discussing. → **Prototype it, in the test/sandbox course** (`sandbox-adaptive-demo`), not a live course.
+
+**Resolved this session:** built and verified end-to-end in the sandbox — see `decisions-log.md` and `worklog.md`'s matching 2026-09-04 entries. Next real decision (not yet made): which live lesson gets this first, and whether XP/grading gets pushed from this endpoint or left entirely to the autograder.
+
 ## 2026-09-04
 
 **Context from Jay:** Will be out Sept 21 – Oct 30 (6 weeks). Wants a running conversational log so nothing is lost if a session ends before he responds to something — separate from `worklog.md`'s technical state and `decisions-log.md`'s permanent decisions.
