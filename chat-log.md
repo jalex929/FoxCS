@@ -14,6 +14,14 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-09-04 (session pause) — VS Code intro flagged as thin; Jay pausing here, resume from worklog.md
+
+**Context from Jay:** Wants a strong VS Code intro (creating a new file via File > New Text File, downloading the Python extension, etc.) somewhere in the course. Checked: `shared/unit_00_onboarding_level1/lesson_00_03_using_your_tools/01_instruction.html` is the right home (it already exists for exactly this purpose) but is currently thin — assumes software isn't installed yet and gives only a generic "Open VS Code, Run it" checklist, no actual file-creation/extension-install walkthrough. Then asked to pause the session here, with worklog.md/chat-log.md updated so a new session can pick up cleanly.
+
+**Resolved this session:** Logged the VS Code gap with exact file path and specifics in `worklog.md`'s new "SESSION PAUSED HERE" section, which also lists everything else still open from today (flashcard bug, unplaced Unit 02 gotchas, 02.2-03.7 scoped-but-unbuilt, 04-06 still placeholder, the paused variable-inspection-grading fork, the unaudited `www-data` permissions bug). Nothing new was built this turn — this is a stopping point, not a completed task.
+
+**Not yet done:** the VS Code intro itself hasn't been touched. Next session should start by reading `worklog.md`'s "SESSION PAUSED HERE" section before doing anything else.
+
 ## 2026-09-04 (skills-map, continuing) — Extending the skills-map doc to Units 04-06, and a standing reminder to keep this log updated
 
 **Context from Jay:** After the Unit 02/03 content-scoping pass landed in the Google Doc and `decisions-log.md`, asked to continue mapping "the next 3 units" (Units 04-06), referencing `course-plan.md` as the source. Also flagged directly that this log itself needs to be kept current — a real process correction, since the previous turn updated `decisions-log.md`/`worklog.md` but skipped this file.

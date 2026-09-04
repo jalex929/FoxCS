@@ -2,6 +2,28 @@
 
 Session-to-session continuity notes — what's mid-flight and what's next. Not append-only like `decisions-log.md`; update/trim this freely as work completes. See `decisions-log.md` for the permanent record of what was actually decided, and `open-questions.md` for longer-lived unresolved questions.
 
+## SESSION PAUSED HERE (2026-09-04) — start the next session by reading this section first
+
+Jay asked to pause after flagging one more real gap. Nothing below this point has been started yet.
+
+**New gap, not yet built: Unit 00's VS Code intro is too thin.** `shared/unit_00_onboarding_level1/lesson_00_03_using_your_tools/01_instruction.html` (141 lines, Level 1/Game I only — see its own header comment) currently just says Python/VS Code "aren't installed yet" and gives a generic "Open VS Code... Run it" checklist once they are. It does not walk through the actual mechanics students need before Unit 01 project work starts:
+- Creating a new file (File > New Text File, or the New File icon/shortcut)
+- Saving it with a real `.py` extension
+- Installing the Python extension from VS Code's Extensions marketplace
+- Any other core VS Code mechanics worth covering at this stage (Jay said "etc." — use judgment on what else belongs here, but don't invent scope beyond basic file creation/extension setup without checking with him first)
+
+This is squarely Unit 00 Lesson 00.3's job (the lesson literally exists for this), not a new lesson. Rework/expand that one file. No decision yet on exact structure (step-by-step numbered list vs. screenshots vs. something else) — that's real authoring work for next session, not decided here.
+
+**Also still open from earlier this session (unchanged, see below for full detail):**
+- Flashcard bug (flips once, then disappears) — not fixed.
+- Two cross-cutting Unit 02 gotchas (quoted variable name becomes a string; case sensitivity) not yet placed in a specific lesson.
+- Units 02.2-03.7 have real content scope written up (skills-map Google Doc + `decisions-log.md`) but none of it is built yet.
+- Units 04-06 are placeholder-only in the skills-map doc, no detailed scoping yet.
+- The variable-inspection grading gap (open-ended Skulpt blanks) is still unbuilt — the fork working on it earlier this session paused itself before starting, to avoid colliding with the Unit 02 pilot build, and was never resumed.
+- Other `moodle-scripts/*.php` files likely share the `www-data`-can't-read-`/home/jay` permissions bug found and worked around (not fixed repo-wide) during the 02.1 rework.
+
+Current skills-map doc: https://docs.google.com/document/d/1XFegY3yzgYcG1ABDHw1qa7KR3_PaiUqUDO89vFMwDuI/edit ("Units 01-06 Skills Map").
+
 ## Bug, not yet fixed — flashcards disappear after flipping once (found 2026-09-04)
 
 The flashcard component used in 02.1's Instruction page flips correctly the first time, but the card then disappears/stays hidden until flipped again — reported by Jay while reviewing content scope, not yet triaged or reproduced in isolation. Likely a state/CSS issue in the flashcard pattern in `02-authoring-system/component-library/index.html` or wherever 02.1 embeds it. Fix this before 02.2+ reuses the same component.
