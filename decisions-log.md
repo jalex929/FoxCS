@@ -4,6 +4,27 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-09-04 (content-scoping) — Unit 01 locked; detailed content scope set for Unit 02 (02.2-02.7) and Unit 03, captured in a Google Doc
+
+**Context:** Jay gave a long, detailed content-scoping pass for Units 02.2-02.7 and 03.1-03.7, after confirming Unit 01 is locked in with no further changes planned. Rather than duplicate the full detail here, it's captured directly in the living skills-map Google Doc he asked for (`FoxCS Python — Units 01-03 Skills Map`, https://docs.google.com/document/d/10BO0ORoEG6fxi1s3I9LL0UZ0fw6K0CYwoBVGTfc5bzE/edit) — read that doc before authoring any of these lessons, don't rely on this summary alone.
+
+**The load-bearing specifics, so they survive even if the doc changes:**
+- 02.3 Floats must explicitly teach that `12.0` is a float despite having no visible fraction — the decimal point (syntax), not the value's appearance, determines the type. Also: int/float division behavior (int-by-int keeps `//` vs `/` distinct; int-by-float promotes to float).
+- 02.4 Strings must explicitly teach that quotes determine type regardless of content — `"5"` and `"True"` are strings, not a number or Boolean. Same mechanism as a quoted variable name (`"score"` vs `score`) becoming a string instead of a variable reference — a real gotcha flagged for 02.1/02.4, not yet placed in either lesson's built content.
+- 02.5 Booleans must explicitly teach Boolean capitalization (`True`/`False`, not `true`/`false`).
+- 02.6 Type Conversion should build `type()` fluency first (reading and interpreting real console output like `<class 'int'>`) before layering in `str()`/`int()`/`float()` conversion.
+- 02.7 Reading Code with Variables needs high example volume for variable-state tracing, real debugging practice, self-referential reassignment (`sum = sum + 2`), and should pull hands-on exercises from the GMetrix support files already sitting unused (`Python v2 Support Files/Domain 1/Student/`). Also introduces a real workflow skill: saving code to review later.
+- 03.1/03.2 (input/dynamic output) should tie into the Game/UX thread (input makes a game feel customized) and teach meticulous output formatting — Jay's own example: the space after the colon in `"Name:", name` so it reads `Name: Alex`, not `Name:Alex`.
+- 03.3 String Concatenation explicitly expands on 02.1, does not repeat it.
+- 03.4 F-Strings should explicitly teach the `f"...{var}..."` pattern as a memorizable shape, and tell students directly that repetition is what makes it click.
+- 03.5 String Format needs real practice exercises, challenge questions, and a format-spec lookup table explicitly framed as a reference, not something to memorize.
+- 03.6 Common String Methods is conceptually hard — prioritize vocabulary and mechanics (most methods return a new string rather than mutating in place) over syntax coverage.
+- 03.7 String Slicing: teach slicing as cutting *before* each index (`[0:3]` cuts before position 0 and before position 3), not landing on the start and stopping before the end — Jay's own reframing to make the two boundary numbers feel symmetric instead of mismatched. Must also cover reversing a string via slicing.
+
+**Also flagged, not yet fixed:** the flashcard component (used in 02.1) flips once correctly but then the card disappears until flipped again — a real UI bug, not yet triaged. See `worklog.md`.
+
+---
+
 ## 2026-09-04 (post-02.1-review, correction) — `+`/comma grounding is Jay's own prior teaching material, not a GMetrix claim; `Sample Content/` surfaced
 
 **Corrects** the "02.1 teaches `+` concatenation alongside commas" entry below, mid-execution. Jay's direct correction: "the exam will show them concatenation but the workbook does not emphasize it" — the earlier entry's grounding in `Python_v2_Student_Workbook.pdf` p.67 is still accurate as a description of that page (it does sequence commas -> `.format()` -> f-strings and never shows `+`), but citing it as *the reason* to teach `+` overclaimed what the certification workbook itself asks for. Checked the workbook's own Appendix (p.122): the real GMetrix objective 3.2.2 is titled "Print formatted text (string.format() method, f-String method)" — neither `+` nor comma-printing is named in the objective itself, though Domain 3 Lesson 3 as a whole maps to real certification exam questions (D3Q17-D3Q22).
