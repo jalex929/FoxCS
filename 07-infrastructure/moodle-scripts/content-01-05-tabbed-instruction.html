@@ -1,0 +1,119 @@
+<div class="foxcs-tabset">
+<style>
+.foxcs-tabset { border:1px solid #dee2e6; border-radius:10px; overflow:hidden; box-shadow:0 1px 2px rgba(16,24,32,0.06); margin-bottom:1rem; }
+.foxcs-tabset input[type="radio"], .foxcs-tabset input[type="checkbox"] { position:absolute; opacity:0; pointer-events:none; }
+.foxcs-tab-labels { display:flex; flex-wrap:wrap; background:#f8f9fa; border-bottom:1px solid #dee2e6; margin:0; }
+.foxcs-tab-labels label { padding:0.8rem 1.05rem; font-size:0.88rem; font-weight:600; color:#6a737b; cursor:pointer; border-bottom:3px solid transparent; transition:color .15s ease,border-color .15s ease,background .15s ease; }
+.foxcs-tab-labels label:hover { color:#0f6cbf; background:#eaf3fb; }
+.foxcs-tab-panel { display:none; padding:1.5rem 1.6rem 1.7rem; }
+.foxcs-tab-panel h2 { font-size:1.1rem; margin:0 0 0.8rem; }
+.foxcs-tab-panel p { margin:0 0 0.8rem; }
+.foxcs-tab-panel p:last-child { margin-bottom:0; }
+.foxcs-tab-panel pre { background:#eef1f5; padding:0.6rem 0.9rem; border-radius:3px; font-family:Consolas,monospace; overflow-x:auto; margin:0 0 0.8rem; }
+.foxcs-tab-panel code { background:#eef1f5; padding:0.1rem 0.35rem; border-radius:3px; font-family:Consolas,monospace; }
+#foxcs-t1:checked ~ .foxcs-tab-labels label[for="foxcs-t1"],
+#foxcs-t2:checked ~ .foxcs-tab-labels label[for="foxcs-t2"],
+#foxcs-t3:checked ~ .foxcs-tab-labels label[for="foxcs-t3"],
+#foxcs-t4:checked ~ .foxcs-tab-labels label[for="foxcs-t4"] { color:#0f6cbf; border-bottom-color:#0f6cbf; background:#fff; }
+#foxcs-t1:checked ~ .foxcs-tab-panels .foxcs-panel-1,
+#foxcs-t2:checked ~ .foxcs-tab-panels .foxcs-panel-2,
+#foxcs-t3:checked ~ .foxcs-tab-panels .foxcs-panel-3,
+#foxcs-t4:checked ~ .foxcs-tab-panels .foxcs-panel-4 { display:block; }
+.foxcs-continue-note { font-size:0.85rem; color:#6a737b; padding:0 1.6rem 1rem; }
+.foxcs-mistake-card { background:#f4f6f9; border:1px solid #d7dee8; border-radius:10px; padding:0.9rem 1.1rem; margin:0 0 1rem; }
+.foxcs-mistake-title { font-weight:bold; color:#4a5f7d; margin-bottom:0.5rem; }
+.foxcs-game-card { background:#f4f2fb; border:1px solid #ded7f5; border-radius:10px; padding:0.9rem 1.1rem; }
+.foxcs-realworld-card { background:#eef7f1; border:1px solid #cfe8d8; border-radius:10px; padding:0.9rem 1.1rem; }
+.foxcs-flashcard-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:0.8rem; }
+.foxcs-flip-card { perspective:1200px; }
+.foxcs-flip-card-inner { position:relative; display:block; min-height:150px; cursor:pointer; transform-style:preserve-3d; transition:transform .5s cubic-bezier(.4,.2,.2,1); }
+.foxcs-flip-toggle:checked + .foxcs-flip-card-inner { transform:rotateY(180deg); }
+.foxcs-flip-card-front, .foxcs-flip-card-back { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:8px; padding:1rem; display:flex; align-items:center; justify-content:center; text-align:center; font-size:0.88rem; }
+.foxcs-flip-card-front { background:#eaf3fb; border:2px solid #0f6cbf; font-weight:700; font-size:1.05rem; color:#0a5493; font-family:Consolas,monospace; }
+.foxcs-flip-card-back { background:#0f6cbf; color:#fff; line-height:1.4; transform:rotateY(180deg); }
+</style>
+
+<input type="radio" name="foxcstabs" id="foxcs-t1" checked>
+<input type="radio" name="foxcstabs" id="foxcs-t2">
+<input type="radio" name="foxcstabs" id="foxcs-t3">
+<input type="radio" name="foxcstabs" id="foxcs-t4">
+
+<div class="foxcs-tab-labels">
+<label for="foxcs-t1">What's a Comment?</label>
+<label for="foxcs-t2">Weak vs. Strong</label>
+<label for="foxcs-t3">Commenting Out</label>
+<label for="foxcs-t4">Key Terms</label>
+</div>
+
+<div class="foxcs-tab-panels">
+
+<div class="foxcs-tab-panel foxcs-panel-1">
+<h2>Leaving Notes for Humans, Not for Python</h2>
+<p>A <strong>comment</strong> is a line (or part of a line) that Python completely ignores when it runs your program. In Python, anything after a <code>#</code> on a line is a comment:</p>
+<pre># This program greets the player
+print("Hello!")
+# End of program</pre>
+<p>Run this, and you'll see only <code>Hello!</code>. Both comment lines produce no output at all, because Python skips them entirely. They're not for the computer. They're for <em>you</em>, and for anyone else who reads your code later.</p>
+<h2>Why Bother, If Python Ignores Them Anyway?</h2>
+<p>Because code gets hard to remember. Code that makes perfect sense while you're writing it can look like a mystery a week later, or to a classmate seeing it for the first time. A comment that explains why a piece of code exists (not just what it does, which the code already shows) saves real time and confusion later.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-2">
+<h2>Weak Comments Just Repeat the Code</h2>
+<pre># print the score
+print(score)</pre>
+<p>That adds nothing you couldn't already read. A strong comment adds something the code doesn't already say:</p>
+<pre># show the score after every round, per the game design doc
+print(score)</pre>
+<div class="foxcs-realworld-card">
+<strong>Real-World Example: Sticky notes on a recipe card.</strong>
+<p>Imagine a recipe card with a sticky note that says "double this for a crowd" next to a step. The sticky note isn't part of the recipe itself, a cook could ignore it and still make the dish. But it adds real, useful context for whoever reads the card next. That's exactly what a comment does for code.</p>
+</div>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-3">
+<h2>Comments Can Also "Turn Off" a Line Temporarily</h2>
+<p>Putting a <code>#</code> in front of a line of actual code stops that line from running, without deleting it. This is called <strong>commenting out</strong> a line, and it's a normal part of testing and debugging:</p>
+<pre># Display the welcome message
+print("Welcome")
+# Display the instructions
+# print("Press start")
+print("Ready to go")</pre>
+<p>This displays only <code>Welcome</code> and <code>Ready to go</code>. The commented-out <code>print("Press start")</code> never runs, even though it's valid Python code sitting right there in the file.</p>
+<div class="foxcs-game-card">
+<strong>Game Connection</strong>
+<p>Professional game studios have whole teams of programmers working on the same codebase at once. A comment like <code># TODO: rebalance this enemy's health before playtesting</code> or <code># this check exists because level 3 had a bug where the timer went negative</code> is exactly how one programmer leaves useful context for the next person who opens the file. Sometimes that "next person" is the same programmer, six months later, who has genuinely forgotten why they wrote something a certain way.</p>
+</div>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-4">
+<h2>Key Terms</h2>
+<p>Click a card to flip it.</p>
+<div class="foxcs-flashcard-grid">
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc1" class="foxcs-flip-toggle">
+<label for="foxcs-fc1" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">comment</div>
+<div class="foxcs-flip-card-back">A line (or part of a line) starting with # that Python ignores when running the program.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc2" class="foxcs-flip-toggle">
+<label for="foxcs-fc2" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">documentation</div>
+<div class="foxcs-flip-card-back">Written explanation of what code does and why. Comments are the simplest form of it.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc3" class="foxcs-flip-toggle">
+<label for="foxcs-fc3" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">commenting out</div>
+<div class="foxcs-flip-card-back">Disabling a line of real code temporarily by putting a # in front of it, without deleting it.</div>
+</label>
+</div>
+</div>
+</div>
+
+</div>
+<div class="foxcs-continue-note">Once you've looked through all four tabs, click Continue below for a couple of quick questions.</div>
+</div>

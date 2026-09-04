@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pyodide Try-It (Jay's own device test)</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; }
+  .note { background: #f4f6f9; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1.2rem; font-size: 0.95rem; }
+  textarea { width: 100%; box-sizing: border-box; font-family: Consolas, monospace; font-size: 0.95rem; background: #1e2430; color: #e6e9ef; border: none; border-radius: 8px; padding: 1rem; }
+  button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.95rem; margin-top: 0.7rem; }
+  button:disabled { opacity: 0.6; cursor: default; }
+  #timer { font-family: Verdana, Arial, sans-serif; font-size: 1.1rem; font-weight: bold; margin-top: 0.8rem; }
+  #output { background: #161b24; color: #9fe3ab; border-radius: 8px; padding: 0.9rem 1.1rem; margin-top: 0.9rem; font-family: Consolas, monospace; white-space: pre-wrap; min-height: 2rem; }
+</style>
+</head>
+<body>
+
+<h1>Pyodide Try-It</h1>
+<div class="note">This is the real, self-hosted Pyodide runtime (~13MB) that was measured at ~10 seconds cold-start on the droplet itself. Click Run and judge for yourself, on your own device/network, whether that feels acceptable for a real classroom activity. The timer below is real, not simulated.</div>
+
+<textarea id="code" rows="5" spellcheck="false">name = "Ava"
+score = 10
+print("Player:", name)
+print("Score:", score)</textarea>
+<br>
+<button id="run-btn" onclick="runIt()">Run</button>
+<div id="timer"></div>
+<pre id="output" style="display:none;"></pre>
+
+<script src="pyodide.js"></script>
+<script>
+let pyodideReady = null;
+function ensurePyodide() {
+  if (!pyodideReady) {
+    pyodideReady = loadPyodide({ indexURL: './' });
+  }
+  return pyodideReady;
+}
+async function runIt() {
+  const btn = document.getElementById('run-btn');
+  const timer = document.getElementById('timer');
+  const out = document.getElementById('output');
+  out.style.display = 'block';
+  out.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Loading Python runtime...';
+  const t0 = performance.now();
+  let ticker = setInterval(() => {
+    timer.textContent = ((performance.now() - t0) / 1000).toFixed(1) + 's elapsed...';
+  }, 100);
+  const py = await ensurePyodide();
+  clearInterval(ticker);
+  const totalMs = performance.now() - t0;
+  timer.textContent = 'Ready in ' + (totalMs / 1000).toFixed(1) + ' seconds.';
+  btn.disabled = false;
+  btn.textContent = 'Run';
+  let captured = [];
+  py.setStdout({ batched: (msg) => captured.push(msg) });
+  py.setStderr({ batched: (msg) => captured.push(msg) });
+  try {
+    py.runPython(document.getElementById('code').value);
+  } catch (e) {
+    captured.push(String(e.message || e));
+  }
+  out.textContent = captured.join('\n').trim() || '(no output)';
+}
+</script>
+
+</body>
+</html>

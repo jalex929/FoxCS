@@ -1,0 +1,126 @@
+<div class="foxcs-tabset">
+<style>
+.foxcs-tabset { border:1px solid #dee2e6; border-radius:10px; overflow:hidden; box-shadow:0 1px 2px rgba(16,24,32,0.06); margin-bottom:1rem; }
+.foxcs-tabset input[type="radio"], .foxcs-tabset input[type="checkbox"] { position:absolute; opacity:0; pointer-events:none; }
+.foxcs-tab-labels { display:flex; flex-wrap:wrap; background:#f8f9fa; border-bottom:1px solid #dee2e6; margin:0; }
+.foxcs-tab-labels label { padding:0.8rem 1.05rem; font-size:0.88rem; font-weight:600; color:#6a737b; cursor:pointer; border-bottom:3px solid transparent; transition:color .15s ease,border-color .15s ease,background .15s ease; }
+.foxcs-tab-labels label:hover { color:#0f6cbf; background:#eaf3fb; }
+.foxcs-tab-panel { display:none; padding:1.5rem 1.6rem 1.7rem; }
+.foxcs-tab-panel h2 { font-size:1.1rem; margin:0 0 0.8rem; }
+.foxcs-tab-panel p { margin:0 0 0.8rem; }
+.foxcs-tab-panel p:last-child { margin-bottom:0; }
+.foxcs-tab-panel pre { background:#eef1f5; padding:0.6rem 0.9rem; border-radius:3px; font-family:Consolas,monospace; overflow-x:auto; margin:0 0 0.8rem; }
+.foxcs-tab-panel code { background:#eef1f5; padding:0.1rem 0.35rem; border-radius:3px; font-family:Consolas,monospace; }
+.foxcs-tab-panel table { border-collapse:collapse; width:100%; margin:0 0 0.8rem; font-size:0.86rem; }
+.foxcs-tab-panel table th, .foxcs-tab-panel table td { border:1px solid #dee2e6; padding:0.45rem 0.6rem; text-align:left; vertical-align:top; }
+.foxcs-tab-panel table th { background:#f4f6f9; }
+#foxcs-t1:checked ~ .foxcs-tab-labels label[for="foxcs-t1"],
+#foxcs-t2:checked ~ .foxcs-tab-labels label[for="foxcs-t2"],
+#foxcs-t3:checked ~ .foxcs-tab-labels label[for="foxcs-t3"],
+#foxcs-t4:checked ~ .foxcs-tab-labels label[for="foxcs-t4"] { color:#0f6cbf; border-bottom-color:#0f6cbf; background:#fff; }
+#foxcs-t1:checked ~ .foxcs-tab-panels .foxcs-panel-1,
+#foxcs-t2:checked ~ .foxcs-tab-panels .foxcs-panel-2,
+#foxcs-t3:checked ~ .foxcs-tab-panels .foxcs-panel-3,
+#foxcs-t4:checked ~ .foxcs-tab-panels .foxcs-panel-4 { display:block; }
+.foxcs-continue-note { font-size:0.85rem; color:#6a737b; padding:0 1.6rem 1rem; }
+.foxcs-game-card { background:#f4f2fb; border:1px solid #ded7f5; border-radius:10px; padding:0.9rem 1.1rem; }
+.foxcs-flashcard-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:0.8rem; }
+.foxcs-flip-card { perspective:1200px; }
+.foxcs-flip-card-inner { position:relative; display:block; min-height:150px; cursor:pointer; transform-style:preserve-3d; transition:transform .5s cubic-bezier(.4,.2,.2,1); }
+.foxcs-flip-toggle:checked + .foxcs-flip-card-inner { transform:rotateY(180deg); }
+.foxcs-flip-card-front, .foxcs-flip-card-back { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:8px; padding:1rem; display:flex; align-items:center; justify-content:center; text-align:center; font-size:0.85rem; }
+.foxcs-flip-card-front { background:#eaf3fb; border:2px solid #0f6cbf; font-weight:700; font-size:1.0rem; color:#0a5493; font-family:Consolas,monospace; }
+.foxcs-flip-card-back { background:#0f6cbf; color:#fff; line-height:1.35; transform:rotateY(180deg); }
+</style>
+
+<input type="radio" name="foxcstabs" id="foxcs-t1" checked>
+<input type="radio" name="foxcstabs" id="foxcs-t2">
+<input type="radio" name="foxcstabs" id="foxcs-t3">
+<input type="radio" name="foxcstabs" id="foxcs-t4">
+
+<div class="foxcs-tab-labels">
+<label for="foxcs-t1">This Is a Review</label>
+<label for="foxcs-t2">The Big Four</label>
+<label for="foxcs-t3">How to Debug</label>
+<label for="foxcs-t4">Key Terms</label>
+</div>
+
+<div class="foxcs-tab-panels">
+
+<div class="foxcs-tab-panel foxcs-panel-1">
+<h2>This Lesson Is a Review, on Purpose</h2>
+<p>You've already met most of these mistakes in Lessons 01.3-01.5, one at a time. This lesson is where you get fast at recognizing all of them at once, in code you didn't write yourself, which is closer to what real debugging actually feels like.</p>
+<p>Notice something important as you go: two of these mistakes raise a <code>SyntaxError</code>, and two raise a <code>NameError</code>. That's worth understanding, not just memorizing.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-2">
+<h2>The Big Four, Side by Side</h2>
+<table>
+<tr><th>Mistake</th><th>Broken example</th><th>What Python says</th><th>Fix</th></tr>
+<tr><td>Missing closing quote</td><td><code>print("Hello)</code></td><td><code>SyntaxError: EOL while scanning string literal</code></td><td>Add the missing closing quote.</td></tr>
+<tr><td>Missing parentheses</td><td><code>print "Hello"</code></td><td><code>SyntaxError: Missing parentheses in call to 'print'</code></td><td>Wrap the argument in <code>()</code>.</td></tr>
+<tr><td>Wrong capitalization</td><td><code>Print("Hi")</code></td><td><code>NameError: name 'Print' is not defined</code></td><td><code>print</code> must be all lowercase. Python is case-sensitive.</td></tr>
+<tr><td>Missing quotes entirely</td><td><code>print(Hello)</code></td><td><code>NameError: name 'Hello' is not defined</code></td><td>Wrap the text in quotes so Python treats it as a string, not a variable name.</td></tr>
+</table>
+<p><code>Print</code> with a capital letter, or <code>Hello</code> with no quotes, both look to Python like the <em>name of a variable</em> that doesn't exist yet, not like a mistyped keyword or a piece of text. Python isn't confused about grammar in these two cases. It's looking for something by that exact name and not finding it.</p>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-3">
+<h2>How to Actually Debug One of These</h2>
+<ol>
+<li>Read the error message's <em>last line</em> first. It names the actual problem.</li>
+<li>Find the line number Python points to.</li>
+<li>Compare that line, character by character, against the rules: lowercase <code>print</code>, matching parentheses, matching quotes.</li>
+<li>Fix one thing, run again. If a new error appears, that's progress, not failure. You fixed the first problem and uncovered the next one.</li>
+</ol>
+<div class="foxcs-game-card">
+<strong>Game Connection</strong>
+<p>This is your first real taste of what Unit 13 will call "playtesting your own code" and what real game studios call QA (quality assurance): the deliberate, systematic process of finding what's broken before it reaches a player. Right now the "player" is just Python's error message, and the "bug" is a missing character. The habit you're building here (read the message, find the line, check it against the rule, fix one thing at a time) is the exact same habit a professional QA process runs at a much larger scale.</p>
+</div>
+</div>
+
+<div class="foxcs-tab-panel foxcs-panel-4">
+<h2>Key Terms</h2>
+<p>Click a card to flip it.</p>
+<div class="foxcs-flashcard-grid">
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc1" class="foxcs-flip-toggle">
+<label for="foxcs-fc1" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">SyntaxError</div>
+<div class="foxcs-flip-card-back">An error Python raises when code breaks its grammar rules.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc2" class="foxcs-flip-toggle">
+<label for="foxcs-fc2" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">NameError</div>
+<div class="foxcs-flip-card-back">An error Python raises when it looks for something by an exact name and can't find it.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc3" class="foxcs-flip-toggle">
+<label for="foxcs-fc3" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">EOL</div>
+<div class="foxcs-flip-card-back">"End Of Line". Appears in error messages when Python reaches the end of a line unexpectedly, often from a missing closing quote.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc4" class="foxcs-flip-toggle">
+<label for="foxcs-fc4" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">syntax</div>
+<div class="foxcs-flip-card-back">The grammar rules for writing valid code.</div>
+</label>
+</div>
+<div class="foxcs-flip-card">
+<input type="checkbox" id="foxcs-fc5" class="foxcs-flip-toggle">
+<label for="foxcs-fc5" class="foxcs-flip-card-inner">
+<div class="foxcs-flip-card-front">parenthesis</div>
+<div class="foxcs-flip-card-back">The ( or ) symbol used to call a function in Python.</div>
+</label>
+</div>
+</div>
+</div>
+
+</div>
+<div class="foxcs-continue-note">Once you've looked through all four tabs, click Continue below for a couple of quick questions.</div>
+</div>
