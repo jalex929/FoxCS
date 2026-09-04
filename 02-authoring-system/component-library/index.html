@@ -383,6 +383,27 @@ Working demos of every interactive pattern available for lesson authoring. <stro
   <div class="where">Not yet deployed — first real fit is any Quick Check/Mastery Check question whose options are full lines of code (e.g. "which of these actually runs without an error"), in place of the inline-code-in-a-button style used ad hoc in the 2026-09-04 sandbox completion prototype.</div>
 </div>
 
+<h2>19. Run &amp; Check (real Python, via Pyodide)</h2>
+<div class="component">
+  <span class="status status-new">New — real proof-of-concept, not yet deployed in a real lesson</span>
+  <div class="desc">
+    Per <code>../browser-python-execution.md</code>: students type real Python, run it, and get graded on the actual output — not a simulated drill. <strong>This loads the real, self-hosted Pyodide runtime</strong> (<code>../pyodide-runtime/</code>) the first time you click Run, so the load time you see is a genuine number, not a mock. Grading compares captured stdout against one expected string, same pattern <code>checkTyped()</code> already uses for typed-blank drills. Explicitly not yet deployed — this exists to get a real, honest read on load time and behavior before it becomes a real graded item type in any lesson.
+  </div>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span class="ide-filename">practice.py</span></div>
+    <textarea id="rc-code" class="rc-editor" spellcheck="false" rows="5">name = "Ava"
+score = 10
+print("Player:", name)
+print("Score:", score)</textarea>
+  </div>
+  <div class="drill-prompt" style="margin-top:0.6rem;">Expected output (two lines): <code>Player: Ava</code> then <code>Score: 10</code></div>
+  <button class="check-btn" id="rc-run-btn" onclick="rcRun()">Run</button>
+  <pre class="rc-output" id="rc-output" style="display:none;"></pre>
+  <div class="feedback" id="rc-feedback"></div>
+  <div class="where">Not yet deployed — see <code>../pyodide-runtime/README.md</code> for the runtime itself and how a real lesson page would load it.</div>
+</div>
+
+<script src="../pyodide-runtime/pyodide.js"></script>
 <script src="../shared-styles/foxcs-theme-toggle.js"></script>
 <script>
 // ---- shared shuffle ----
@@ -1120,6 +1141,52 @@ function hotspotStep(dir) {
   document.getElementById('hotspot-fwd').disabled = newIdx === hotspotOrder.length - 1;
 }
 document.getElementById('hotspot-back').disabled = true;
+
+// ---- Run & Check via Pyodide (#19) ----
+let rcPyodideReady = null;
+function rcEnsurePyodide() {
+  if (!rcPyodideReady) {
+    const btn = document.getElementById('rc-run-btn');
+    btn.disabled = true;
+    btn.textContent = 'Loading Python runtime...';
+    const t0 = performance.now();
+    rcPyodideReady = loadPyodide({ indexURL: '../pyodide-runtime/' }).then(py => {
+      const loadMs = Math.round(performance.now() - t0);
+      console.log('[rc] Pyodide load time (ms):', loadMs);
+      btn.dataset.loadMs = String(loadMs);
+      return py;
+    });
+  }
+  return rcPyodideReady;
+}
+async function rcRun() {
+  const btn = document.getElementById('rc-run-btn');
+  const out = document.getElementById('rc-output');
+  const fb = document.getElementById('rc-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  fb.className = 'feedback';
+  const py = await rcEnsurePyodide();
+  btn.disabled = false;
+  btn.textContent = 'Run';
+  let captured = [];
+  py.setStdout({ batched: (msg) => { captured.push(msg); } });
+  py.setStderr({ batched: (msg) => { captured.push(msg); } });
+  const code = document.getElementById('rc-code').value;
+  try {
+    py.runPython(code);
+  } catch (e) {
+    captured.push(String(e.message || e));
+  }
+  const result = captured.join('\n').trim();
+  out.textContent = result || '(no output)';
+  const expected = 'Player: Ava\nScore: 10';
+  const isCorrect = result === expected;
+  fb.textContent = isCorrect
+    ? 'Right — real Python ran and printed exactly what was expected.'
+    : "Not quite — compare the output above against what's expected.";
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+}
 
 // ---- Code Block Multiple Choice (#18) ----
 document.querySelectorAll('input[name="cc-demo"]').forEach(radio => {

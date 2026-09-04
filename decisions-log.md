@@ -4,6 +4,20 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-09-04 (latest) — Pyodide "Run & Check" proven end-to-end; real cold-start cost is ~10s, not "a few seconds"
+
+**Context:** Jay wants higher-DOK practice with students typing more real code, and flagged that `browser-python-execution.md`'s Pyodide recommendation (design-only since 2026-08-11) was exactly the kind of already-written-but-unleveraged documentation worth acting on before Unit 02 gets built. Decided to test it standalone first, not build it directly into the Unit 02 pilot lesson, given it was untested against real browser/device behavior.
+
+**Built:** self-hosted Pyodide runtime at `02-authoring-system/pyodide-runtime/` — the official `pyodide-core-314.0.6` release, trimmed to the 5 files a browser actually fetches at runtime (confirmed by grepping `pyodide.js`'s own asset references, not guessed), ~13MB on disk. Wired into a new component-library entry (#19, "Run & Check via Pyodide"): a real textarea for typed code, a Run button that lazy-loads the runtime, real captured stdout, and output-string grading, matching the design doc's own spec.
+
+**Verified, not just built:** ran it end-to-end with Playwright (already installed on this droplet) against a local server, not eyeballed in a screenshot. Real Python executed, real output captured and graded correctly, zero console or page errors.
+
+**Real finding — corrects the design doc's own assumption:** cold-start load was measured at **~10 seconds** on this droplet (1 vCPU, DigitalOcean's smallest tier), not the doc's original "a few seconds." A second run after reloading the same page in the same browser context (HTTP cache warm) was barely faster (~10s again) — meaning the cost is dominated by WASM compilation and interpreter bootstrap, not asset download, and recurs on every full page load, not only the first visit in a session. `browser-python-execution.md` updated with these real numbers.
+
+**Not decided:** whether ~10s per load (this droplet's number, likely a pessimistic ceiling vs. a real Chromebook, but not confirmed either way) is acceptable for a graded, timed classroom activity. A real school-device test is still needed before this goes into Unit 02's pilot lesson (02.1 Variables and Memory) or anywhere else graded.
+
+---
+
 ## 2026-09-04 (later) — Per-lesson module structure settled: 5 modules, Instruction goes back to freely-navigable custom HTML
 
 **Context:** Follow-on from the same day's completion/telemetry brainstorm. Jay's own framing: the 01.4–01.6 pattern built so far is "OKAY but... can be greatly improved." Specifically flagged: (1) the current split of Instruction and Practice into two separate native `mod_lesson` activities should collapse into one bundle; (2) Instruction's *internal* navigation should go back to something closer to the old flat-file lessons' menu — not the complicated nested cross-lesson version from before 2026-08-30, but a real per-lesson menu a student can expand to jump to any of that lesson's own sections, which native `mod_lesson`'s linear Continue-button flow doesn't support; (3) Project and Coding Exercise are genuinely separate modules, not two names for the same content (confirmed directly — the existing Coding Exercise build scripts' own comment, "same as every other lesson's tiered project," turns out to describe a coincidence of content reuse, not an intended equivalence); (4) students should be expected to attach a `.py` file for submissions, not paste code inline.

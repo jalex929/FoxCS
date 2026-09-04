@@ -14,6 +14,12 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-09-04 (very latest) — Pyodide tested, real numbers not great
+
+**Q (asked, answered):** "Which Unit 02 lesson pilots the new model?" → 02.1 Variables and Memory. "Ship Pyodide directly in the pilot, or test it standalone first?" → Test standalone first.
+
+**Resolved this session:** built and Playwright-tested the standalone Pyodide proof (component-library #19). It works — real code runs, real output grades correctly, no errors. But the real number isn't the doc's original guess: cold load measured ~10 seconds on this droplet, and reloading the page doesn't meaningfully help (cache doesn't offset the CPU-bound WASM bootstrap cost). Real open call, not resolved: is ~10 seconds per load acceptable for a graded classroom activity — needs an actual school Chromebook test before this goes anywhere near Unit 02's pilot lesson. See `decisions-log.md` and `worklog.md`'s matching entries.
+
 ## 2026-09-04 (latest) — redirected to Unit 02, unleveraged docs surfaced
 
 **Context from Jay:** The DOK/rigor/typed-code example from his previous message was only an example, not a fixed checklist — the real point is that a lot of existing documentation in this repo hasn't actually been leveraged yet. Wants to shift focus to building a strong Unit 02 (confirmed: zero content exists there yet). Also resolved two open threads directly: 01.5/01.6 not having a Project module is fine (not every lesson needs one, especially given the new "many Coding Exercises, only one Project" cardinality rule), and by extension the whole "rework 01.5/01.6 now?" question is moot for that specific point.

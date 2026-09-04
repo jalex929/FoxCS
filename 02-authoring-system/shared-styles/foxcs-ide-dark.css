@@ -48,3 +48,10 @@
 .hotspot-card { position: absolute; max-width: 280px; background: #161b24; color: #e6e9ef; font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid #33415c; box-shadow: 0 4px 14px rgba(0,0,0,0.45); z-index: 50; display: none; line-height: 1.4; }
 .hotspot-card.visible { display: block; }
 .hotspot-card .hotspot-card-term { display: block; font-weight: bold; margin-bottom: 0.25rem; color: #7fb0ff; font-family: Consolas, monospace; }
+
+/* ---- Run & Check via Pyodide (component-library #19) — real typed-code
+   input + real captured-stdout output, both dark-IDE-surface styled to
+   match the rest of this file. ---- */
+.rc-editor { width: 100%; box-sizing: border-box; background: #1e2430; color: #e6e9ef; border: none; padding: 1rem; font-family: Consolas, monospace; font-size: 0.9rem; line-height: 1.6; resize: vertical; }
+.rc-editor:focus { outline: 2px solid #5b9bd8; outline-offset: -2px; }
+.rc-output { background: #161b24; color: #9fe3ab; border-radius: 8px; padding: 0.9rem 1.1rem; margin-top: 0.7rem; font-family: Consolas, monospace; font-size: 0.88rem; white-space: pre-wrap; }
