@@ -4,6 +4,26 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-09-04 (later) — Per-lesson module structure settled: 5 modules, Instruction goes back to freely-navigable custom HTML
+
+**Context:** Follow-on from the same day's completion/telemetry brainstorm. Jay's own framing: the 01.4–01.6 pattern built so far is "OKAY but... can be greatly improved." Specifically flagged: (1) the current split of Instruction and Practice into two separate native `mod_lesson` activities should collapse into one bundle; (2) Instruction's *internal* navigation should go back to something closer to the old flat-file lessons' menu — not the complicated nested cross-lesson version from before 2026-08-30, but a real per-lesson menu a student can expand to jump to any of that lesson's own sections, which native `mod_lesson`'s linear Continue-button flow doesn't support; (3) Project and Coding Exercise are genuinely separate modules, not two names for the same content (confirmed directly — the existing Coding Exercise build scripts' own comment, "same as every other lesson's tiered project," turns out to describe a coincidence of content reuse, not an intended equivalence); (4) students should be expected to attach a `.py` file for submissions, not paste code inline.
+
+**Decided — the standing per-lesson module structure going forward (see `CLAUDE.md`'s Purpose section for the canonical copy):**
+
+1. **Instruction** (not password-gated) — bundles instruction content, vocab flashcards, vocab quiz/drag-drop matching + other quick-check questions, and the adaptive Reinforce/Core/Extend practice ladder into one module. Built as self-contained tabbed HTML with an expandable top menu covering all of that lesson's own sections (jump-to-any-section, not a nested cross-lesson menu, not a forced linear flow) — reverses the 01.5/01.6-era choice to build this as native `mod_lesson` pages. Completion/telemetry for this module's own interactions goes through `local_foxcstelemetry` (this same day's earlier "Option C" prototype, already proven end-to-end in the sandbox) rather than native Lesson-activity tracking.
+2. **Project** (native Assignment) — that lesson's own tiered-project instructions and its submission point, combined into one module. Not the same content as Coding Exercise.
+3. **Coding Exercise** (native Assignment, only when a lesson has one) — a separate, additional exercise, independent of Project.
+4. **Mastery Check** (native, password-gated Quiz) — unchanged.
+5. **Feedback** (native Feedback activity, student reflection) — kept as its own separate module. Jay had no strong preference and asked for a recommendation; recommended keeping it separate since it's already built that way for 01.4–01.6 and serves a genuinely different purpose (reflection, not assessment) from Mastery Check.
+
+**Submission settings, both Project and Coding Exercise:** file upload only (`assignsubmission_onlinetext_enabled = 0`), `assignsubmission_file_filetypes` restricted to `.py`. Currently both modules have online-text *and* unrestricted file upload enabled — this needs to change on every future build, and on 01.4–01.6's already-built Coding Exercise modules if Jay wants those brought in line too (not yet decided — see `worklog.md`).
+
+**Not yet done / real implications for what's already built:** 01.5 and 01.6 currently have Instruction and Practice as two separate native `mod_lesson` activities, and neither has a Project module at all (only Coding Exercise). Bringing them in line with this decision means: merging their Practice content into Instruction, rebuilding Instruction as tabbed HTML instead of native Lesson pages, and building a genuinely new Project module from each lesson's `NN_project.html`/`NN_project.py` source content. Whether to do this rework on 01.5/01.6 now or treat them as a grandfathered exception hasn't been decided — see `worklog.md`'s Next Up list.
+
+**Supersedes:** `CLAUDE.md`'s original "4 Moodle modules: Instruction (H5P Interactive Book) / Practice (native Lesson) / Project (native Assignment) / Mastery Check + Feedback (one combined Quiz)" description — a shape that, per this session's own review, was never actually built that way to begin with.
+
+---
+
 ## 2026-09-04 — Completion/telemetry gap fixed via a custom completion API endpoint ("Option C"), not SCORM or a native-activity rebuild; proven in the sandbox
 
 **Context:** Jay flagged the real, live symptom driving this: Python Lesson 01.3 can't be marked done, and course percentage-complete is meaningless right now. Brainstormed the underlying structural tension (custom tabbed HTML/component-library pages vs. native Moodle activities) before picking a fix. Priorities Jay set: fixing save/completion accuracy first, a learner experience where students "just focus on the content" (no added UI chrome), and full interaction telemetry (attempts, not just final state) as autograder input.

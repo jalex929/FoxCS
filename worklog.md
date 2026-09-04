@@ -2,6 +2,15 @@
 
 Session-to-session continuity notes — what's mid-flight and what's next. Not append-only like `decisions-log.md`; update/trim this freely as work completes. See `decisions-log.md` for the permanent record of what was actually decided, and `open-questions.md` for longer-lived unresolved questions.
 
+## Where things stand as of 2026-09-04 (later) — module structure settled, real rework implied for 01.5/01.6
+
+See `decisions-log.md`'s matching entry for the full reasoning. Short version: 5 modules per lesson now (Instruction bundle / Project / Coding Exercise / Mastery Check / Feedback), Instruction goes back to freely-navigable tabbed HTML instead of native `mod_lesson` pages, Project and Coding Exercise are genuinely separate, submissions become file-only `.py`.
+
+**Not decided yet — needs Jay's call before touching anything already live:**
+1. Whether 01.5 and 01.6 (currently: Instruction and Practice as two separate native Lesson activities, no Project module at all) get reworked to match now, or stay as a grandfathered exception while new lessons follow the new structure going forward.
+2. Whether 01.4's already-built Coding Exercise (and any other already-built assignment module) gets its submission settings changed to file-only `.py`, or only new builds get the stricter setting.
+3. A real Project module has never been built for any Unit 01 lesson under this definition — first one needs to be authored from scratch (source: each lesson's `NN_project.html`/`NN_project.py`), not just re-labeled from existing content.
+
 ## Where things stand as of 2026-09-04 — completion/telemetry prototype proven in the sandbox
 
 See `decisions-log.md`'s matching 2026-09-04 entry for the full reasoning (SCORM vs. full-native-rebuild vs. this). Short version: the "01.3 can't be marked done" bug is a real ceiling in `mod_resource`, confirmed in Moodle's own source, not a config issue. Fixed with a small custom plugin (`local_foxcstelemetry`, source in `07-infrastructure/local-plugins/foxcstelemetry/`, deployed to `/var/www/moodle/public/local/foxcstelemetry/`) that logs telemetry and calls Moodle's own generic completion API — proven end-to-end against a real logged-in `foxcstest` session in `sandbox-adaptive-demo` (course id 9, cmid 235): telemetry row landed in `mdl_local_foxcstelemetry_log`, and `mdl_course_modules_completion` shows real completion, not just a JSON success response.

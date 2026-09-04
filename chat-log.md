@@ -14,6 +14,14 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-09-04 (even later) — per-lesson module structure locked in
+
+**Context from Jay:** Specified the target module list directly: Instruction (bundling instruction/vocab flashcards/vocab quiz/other questions/adaptive practice, not password-gated), a separate Project module (instructions+submission combined), Mastery Check, and Coding Exercise as its own module "when relevant." Students should attach a `.py` file for submissions rather than pasting code. Mid-message, clarified the earlier tabbed-navigation thread: wants a per-lesson expandable top menu covering all of that lesson's own content (like the pre-08-30 flat-file lessons, minus the complicated nested cross-lesson part). Also noted directly: the 01.4–01.6 pattern built so far is "OKAY but... can be greatly improved."
+
+**Q (asked, answered):** Three clarifying questions before writing this into `CLAUDE.md`/`decisions-log.md`, since guessing wrong meant rebuilding across every future lesson. "Is Project the same content as the already-built Coding Exercise, renamed, or genuinely separate?" → Genuinely separate, both can exist in one lesson. "What happens to the separate Feedback module (not in your list)?" → No strong preference, asked for a recommendation — kept it separate (matches what's already built, distinct reflection-vs-assessment purpose). "How strict should the `.py`-attachment expectation be?" → File upload only, restricted to `.py`, no online-text fallback.
+
+**Resolved this session:** full 5-module structure written into `CLAUDE.md`'s Purpose section and `decisions-log.md`. Real open thread, not yet decided: whether already-built 01.5/01.6 (Instruction+Practice split across two native Lesson activities, no Project module at all) get reworked now to match, or stay a grandfathered exception — see `worklog.md`.
+
 ## 2026-09-04 (later) — structure brainstorm, resolved to a prototype
 
 **Context from Jay:** Torn between the current lesson/practice structure and an earlier tabbed-page structure. Wants student work captured/saved, autograder-assigned points/XP, strong visual completion confirmation, and to keep the interactivity already rebuilt into the component library. Real pain point driving this: percentage-complete is broken and Lesson 01.3 can't be marked done. Also flagged a content bug: mastery-check prompts that name a specific error count ("correct the 2 mistakes") should either be verified correct or reworded vague — added as a standing rule in `content-authoring-standards.md`, with one live instance found but not yet fixed (see `worklog.md`).
