@@ -14,6 +14,20 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-09-04 (skills-map, continuing) — Extending the skills-map doc to Units 04-06, and a standing reminder to keep this log updated
+
+**Context from Jay:** After the Unit 02/03 content-scoping pass landed in the Google Doc and `decisions-log.md`, asked to continue mapping "the next 3 units" (Units 04-06), referencing `course-plan.md` as the source. Also flagged directly that this log itself needs to be kept current — a real process correction, since the previous turn updated `decisions-log.md`/`worklog.md` but skipped this file.
+
+**Resolved this session:** Added Units 04 (Math for Programmers), 05 (Making Decisions), 06 (Loops & Repetition) to the skills-map Google Doc using `course-plan.md`'s existing lesson titles and GMetrix tie-ins, same placeholder pattern used for 02.2-03.7 (no detailed pedagogical scoping given yet for these three, unlike 02/03). Doc regenerated with a new link (https://docs.google.com/document/d/1XFegY3yzgYcG1ABDHw1qa7KR3_PaiUqUDO89vFMwDuI/edit), retitled "Units 01-06 Skills Map" — see `worklog.md` for the current link and what's still a placeholder.
+
+**Standing correction:** update `chat-log.md` continuously alongside `decisions-log.md`/`worklog.md`, per this file's own header instructions — don't skip it just because the other two logs got written.
+
+## 2026-09-04 (content-scoping) — Detailed Unit 02/03 content scope given, captured in the skills-map Google Doc
+
+**Context from Jay:** Confirmed Unit 01 is locked in, no further changes. Gave a long, detailed content-scoping pass for 02.2-02.7 and all of Unit 03: the `12.0`-is-a-float gotcha, quotes-make-a-string (`"5"`, `"True"`), Boolean capitalization, building real `type()` fluency before layering in conversion, heavy variable-state-tracing practice with `sum = sum + 2`-style reassignment, debugging practice pulled from the GMetrix workbook support files, saving code for later review, meticulous output formatting (the space-after-colon example), f-strings as a memorizable pattern that clicks with practice, a format-spec lookup table framed as reference (not memorization), and teaching slicing as "cuts before each index" rather than "starts on, ends before." Also reported a real bug: the flashcard component flips once, then the card disappears until flipped again.
+
+**Resolved this session:** All of the above written into the skills-map Google Doc (`FoxCS Python — Units 01-03 Skills Map`) with real skill bullets replacing the placeholders for 02.2-02.7/03.1-03.7, and the load-bearing specifics duplicated into `decisions-log.md` so they survive independently of the doc. Flashcard bug logged in `worklog.md`, not yet fixed. Two cross-cutting gotchas (quoted variable name becomes a string; case sensitivity) flagged as not yet placed in a specific lesson — real open call for Jay before 02.1 is revisited or 02.4 is authored.
+
 ## 2026-09-04 (post-02.1-review) — Jay reviewed 02.1, two real changes queued, workbook-grounded sequencing decision made
 
 **Context from Jay:** "the major change I would make it that we do not need to show the parts of the learn lesson in the menu." Also: wants concatenation taught earlier — "2.1 should [c]over concatenation (+) and comma-based but a later lesson should teach f-strings" — and to eventually have students default to (norm on) f-strings, but for now "really make sure they know" the difference between `+` and commas. Also asked to revisit the course map against the actual GMetrix/certification workbook before proceeding, and floated building out an explicit skills-per-lesson list (e.g. "concatenate with +," "concatenate with commas," "change a variable value") to drive real assessment design.
