@@ -182,3 +182,13 @@ select.sel, input.txt { font-family: Consolas, monospace; font-size: 1rem; paddi
 .glossary-card { position: absolute; max-width: 260px; background: var(--primary); color: white; font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; padding: 0.6rem 0.8rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35); z-index: 50; display: none; line-height: 1.4; }
 .glossary-card.visible { display: block; }
 .glossary-card .glossary-card-term { display: block; font-weight: bold; margin-bottom: 0.25rem; }
+
+/* ---- Code Block Multiple Choice (component-library #18) ---- */
+.code-choice-list { display: flex; flex-direction: column; gap: 0.6rem; margin: 0.9rem 0; }
+.code-choice-option { display: flex; align-items: center; gap: 0.9rem; padding: 0.6rem 0.9rem; border: 2px solid var(--border-strong); border-radius: 8px; cursor: pointer; background: var(--box-bg); }
+.code-choice-option:hover { border-color: var(--primary); }
+.code-choice-option input[type="radio"] { flex-shrink: 0; width: 1.2rem; height: 1.2rem; accent-color: var(--primary); margin: 0; }
+.code-choice-option pre { margin: 0; flex: 1; overflow-x: auto; }
+.code-choice-option.selected { border-color: var(--primary); background: var(--box-bg-2); }
+.code-choice-option.correct { background: var(--feedback-correct-bg); border-color: #2f7a2f; }
+.code-choice-option.incorrect { background: var(--feedback-incorrect-bg); border-color: var(--border-strong); }

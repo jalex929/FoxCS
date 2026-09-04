@@ -358,6 +358,31 @@ Working demos of every interactive pattern available for lesson authoring. <stro
   <div class="where">Not yet deployed — proposed for the first real appearance of any new-to-students keyword/syntax pattern, most obviously C#/Unity's access modifiers and return types once Game II exists, but the mechanism is language-agnostic (any code block, any set of hand-picked hotspot tokens).</div>
 </div>
 
+<h2>18. Code Block Multiple Choice</h2>
+<div class="component">
+  <span class="status status-new">New — demoed here first, not yet deployed in a real lesson</span>
+  <div class="desc">
+    Added 2026-09-04 per Jay: the standard treatment whenever a multiple-choice question's options <em>are</em> code, not short text. Each option is its own full <code>&lt;pre&gt;</code> block, stacked vertically, with a real radio input to the left of it rather than code crammed inline into a button label (the earlier ad hoc version of this, tried in the sandbox completion prototype, is the thing this pattern replaces). The whole row is one clickable label, so clicking anywhere on the code block selects it, not just the small radio circle. Selecting an option highlights it immediately (a lighter, non-graded "picked" state); the graded correct/incorrect color only applies after Check, same as every other component here.
+  </div>
+  <div class="code-choice-list" role="radiogroup" aria-label="Which line prints Score: 10?">
+    <label class="code-choice-option">
+      <input type="radio" name="cc-demo" value="a">
+      <pre>print(Score: 10)</pre>
+    </label>
+    <label class="code-choice-option">
+      <input type="radio" name="cc-demo" value="b">
+      <pre>print("Score: 10")</pre>
+    </label>
+    <label class="code-choice-option">
+      <input type="radio" name="cc-demo" value="c">
+      <pre>print "Score: 10"</pre>
+    </label>
+  </div>
+  <button class="check-btn" onclick="ccCheck()">Check</button>
+  <div class="feedback" id="cc-feedback"></div>
+  <div class="where">Not yet deployed — first real fit is any Quick Check/Mastery Check question whose options are full lines of code (e.g. "which of these actually runs without an error"), in place of the inline-code-in-a-button style used ad hoc in the 2026-09-04 sandbox completion prototype.</div>
+</div>
+
 <script src="../shared-styles/foxcs-theme-toggle.js"></script>
 <script>
 // ---- shared shuffle ----
@@ -1095,6 +1120,34 @@ function hotspotStep(dir) {
   document.getElementById('hotspot-fwd').disabled = newIdx === hotspotOrder.length - 1;
 }
 document.getElementById('hotspot-back').disabled = true;
+
+// ---- Code Block Multiple Choice (#18) ----
+document.querySelectorAll('input[name="cc-demo"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    document.querySelectorAll('.code-choice-option').forEach(opt => {
+      opt.classList.remove('selected', 'correct', 'incorrect');
+    });
+    radio.closest('.code-choice-option').classList.add('selected');
+    document.getElementById('cc-feedback').className = 'feedback';
+  });
+});
+function ccCheck() {
+  const picked = document.querySelector('input[name="cc-demo"]:checked');
+  const fb = document.getElementById('cc-feedback');
+  if (!picked) {
+    fb.textContent = 'Choose one of the code blocks first.';
+    fb.className = 'feedback incorrect';
+    return;
+  }
+  const option = picked.closest('.code-choice-option');
+  option.classList.remove('selected');
+  const isCorrect = picked.value === 'b';
+  option.classList.add(isCorrect ? 'correct' : 'incorrect');
+  fb.textContent = isCorrect
+    ? 'Right — the string is quoted, and print() only needs the one argument.'
+    : 'Not quite — check whether the text after print( is actually wrapped in quotes.';
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+}
 </script>
 
 </body>
