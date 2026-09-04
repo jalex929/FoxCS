@@ -37,19 +37,20 @@ What does this program print?
 
 **Targets:** `variable_naming_rules`
 
-## Item 4 (shortanswer) — predicts output of a multi-piece print
+## Item 4 (shortanswer) — fixes a concatenation TypeError
+
+**Updated 2026-09-04, post-02.1-review:** reworked from a comma-only print-prediction item, per the decision that 02.1's printing skill now covers both `+` and comma concatenation and Mastery Check should test the distinction, not commas alone. Uses `total` as the variable name (not `score`, which Practice's own items already use) so this is a real synthesis check, not a verbatim repeat of a Practice item. Verified live 2026-09-04 via a real quiz attempt as `foxcstest`: graded fraction 1.0 (`mdl_question_attempt_steps`, question id 107).
 
 **Prompt:**
 ```
-player = "Nia"
-room = "the vault"
-print(player, "entered", room)
+total = 12
+print("Total: " + total)
 ```
-What does this program print?
+This line is supposed to print `Total: 12`, using `+`, but it crashes. Write the corrected line.
 
-**Accepted answers:** `Nia entered the vault`
+**Accepted answers:** `print("Total: " + str(total))`, `print("Total: "+str(total))` (accept with or without the space around `+`; reject any version that doesn't wrap `total` in `str(...)`, and reject a comma-based rewrite — the item is specifically testing whether the student can fix `+`, not whether they know an alternative exists)
 
-**Targets:** `prints_variable_with_text`, `creates_variable`
+**Targets:** `concatenates_with_plus`, `creates_variable`
 
 ## Grading Notes
 

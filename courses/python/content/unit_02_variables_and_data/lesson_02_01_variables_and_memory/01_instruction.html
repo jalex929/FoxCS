@@ -34,6 +34,7 @@
   h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
   h2 { color: #2a3a52; margin-top: 2.2rem; }
   h3 { color: #2a3a52; margin-top: 1.6rem; }
+  h4 { color: #2a3a52; margin-top: 1.3rem; font-size: 1rem; }
   code { font-family: Consolas, monospace; background: #eef1f5; padding: 0.1rem 0.35rem; border-radius: 3px; }
   pre { background: #eef1f5; padding: 0.7rem 1rem; border-radius: 6px; font-family: Consolas, monospace; overflow-x: auto; }
   table.rules { border-collapse: collapse; margin: 0.8rem 0; width: 100%; }
@@ -41,15 +42,6 @@
   table.rules th { background: #f4f6f9; }
 
   .proto-banner { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.85rem; color: #7a4800; margin-bottom: 1.4rem; }
-
-  .unit-menu-wrap { position: sticky; top: 0; z-index: 20; background: #fff; border: 1px solid #dde3ea; border-radius: 0 0 8px 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-  .unit-menu-toggle { cursor: pointer; padding: 0.7rem 1.3rem; font-family: Verdana, Arial, sans-serif; font-weight: bold; color: #1a5aa8; font-size: 0.92rem; list-style: none; user-select: none; }
-  .unit-menu-toggle::-webkit-details-marker { display: none; }
-  .unit-menu-toggle:hover { background: #f4f6f9; }
-  .unit-menu-panel { padding: 0.3rem 1.3rem 1rem; font-family: Verdana, Arial, sans-serif; max-height: 60vh; overflow-y: auto; }
-  .unit-menu-panel a { display: block; padding: 0.3rem 0.2rem; color: #1a1a1a; text-decoration: none; font-size: 0.88rem; border-radius: 4px; }
-  .unit-menu-panel a:hover { background: #eef4fb; }
-  .unit-menu-panel .menu-sub { padding-left: 1rem; font-size: 0.84rem; color: #444; }
 
   .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
   .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
@@ -138,22 +130,6 @@
 
 <div class="proto-banner">Sandbox prototype -- the full Instruction module for Unit 02's pilot lesson (02.1 Variables and Memory), built to prove the new 5-module lesson pattern before a full Unit 02 rollout. Not live in any real course.</div>
 
-<div class="unit-menu-wrap">
-<details class="unit-menu" open>
-  <summary class="unit-menu-toggle">&#9776; 2.1 Variables and Memory</summary>
-  <nav class="unit-menu-panel">
-    <a href="#learn">Learn</a>
-    <a class="menu-sub" href="#learn-create">&ndash; Creating a Variable</a>
-    <a class="menu-sub" href="#learn-naming">&ndash; Naming Your Variables</a>
-    <a class="menu-sub" href="#learn-reassign">&ndash; Changing a Variable's Value</a>
-    <a class="menu-sub" href="#learn-print">&ndash; Printing Variables With Text</a>
-    <a class="menu-sub" href="#learn-types">&ndash; What Kind of Value?</a>
-    <a href="#terms">Key Terms</a>
-    <a href="#practice">Practice</a>
-  </nav>
-</details>
-</div>
-
 <h1>2.1 Variables and Memory</h1>
 <p>Every game has to remember things while it runs: how much health the player has left, what their score is, how many lives remain. A <strong>variable</strong> is how a Python program remembers something.</p>
 
@@ -203,10 +179,34 @@ print("Lives:", lives)</pre>
 <p>That prints <code>Lives: 3</code> and then <code>Lives: 2</code>. The second assignment did not create a second variable. It overwrote the first one.</p>
 
 <h3 id="learn-print">Printing Variables With Text</h3>
-<p><code>print()</code> can take more than one piece, separated by commas. Python automatically adds a space between each piece when it prints them.</p>
+<p>You can join a variable with other text in two ways: with commas inside <code>print()</code>, or with the <code>+</code> operator, called <strong>concatenation</strong>.</p>
+
+<p><strong>Commas Example (no conversion needed):</strong></p>
 <pre>player_name = "Rowan"
 print(player_name, "is standing in the armory")</pre>
-<p>That prints <code>Rowan is standing in the armory</code>. Mixing a variable with literal text like this is how most of a game's real on-screen text gets built.</p>
+<p>That prints <code>Rowan is standing in the armory</code>. Python adds a space between each piece automatically, and converts non-text values to text for you.</p>
+
+<p><strong>Concatenation (+) example:</strong></p>
+<pre>player_name = "Rowan"
+print(player_name + " is standing in the armory")</pre>
+<p>Same result: <code>Rowan is standing in the armory</code>. But <code>+</code> does not add spaces for you (you have to type them, inside the quotation marks), and every piece has to already be text.</p>
+
+<h4>Type Conversion</h4>
+<p>When you mix data types with <code>+</code> &mdash; joining text with a number, for example &mdash; you get an error.</p>
+
+<p><strong>Example Error:</strong></p>
+<pre>score = 25
+print("Your score is " + score)</pre>
+
+<p><strong>Result:</strong></p>
+<pre>TypeError: can only concatenate str (not "int") to str</pre>
+
+<p><strong>Fixed Version:</strong></p>
+<pre>score = 25
+print("Your score is " + str(score))</pre>
+
+<p><strong>Why?</strong> Python can only concatenate strings, so you must convert numbers using <code>str()</code> before combining them with text. A comma never runs into this: <code>print("Your score is", score)</code> works with no conversion needed, since a comma converts each piece for you.</p>
+<p>Both methods are correct Python, and you will see both used in real code. A third method, called an <strong>f-string</strong>, is coming in a later lesson &mdash; once you are comfortable with commas and <code>+</code>, f-strings are usually the one professional Python code reaches for first.</p>
 
 <h3 id="learn-types">What Kind of Value?</h3>
 <p>A variable can hold different kinds of values. Here are the three you will see most in this unit:</p>
@@ -281,7 +281,7 @@ print(player_name, "is standing in the armory")</pre>
 </div>
 
 <h2 id="practice">Practice</h2>
-<p>16 items across four short skill checks, then a couple of review questions and two open-ended questions. Work through them in order. Each skill check adjusts to how you're doing on it.</p>
+<p>18 items across four short skill checks, then a couple of review questions and two open-ended questions. Work through them in order. Each skill check adjusts to how you're doing on it.</p>
 <div class="progress-note" id="progress-note">0 of 4 skill checks complete.</div>
 
 <!-- ======================= NODE 1: creates_variable ======================= -->
@@ -462,21 +462,50 @@ room = "the armory"
 </div>
 <div class="review-note" id="n4-reinforce-exhausted" hidden>Every separate piece inside <code>print()</code> needs a comma between it and the next piece, and literal text needs its own quotation marks. Continue to the next item below.</div>
 
-<div class="drill" id="n4-extend" hidden>
-  <div class="drill-type">Build the Code</div>
-  <p>Fill in the blank with one <code>print()</code> call that prints exactly:</p>
-  <pre>Rowan has 2 lives and a score of 40</pre>
+<div class="drill" id="n4-extend-predict" hidden>
+  <div class="chip spiral">Debugging Practice</div>
+  <div class="drill-type">Multiple Choice</div>
+  <p>This code has a real bug in it:</p>
   <div class="ide-demo">
     <div class="ide-toolbar"><span>practice.py</span></div>
-    <div class="ide-code">player_name = "Rowan"
-lives = 2
-score = 40
-<input type="text" id="n4-extend-blank" class="scaffold-blank" data-expected='print(player_name, "has", lives, "lives and a score of", score)' placeholder="type your code here" style="width:52ch;"></div>
+    <div class="ide-code">score = 25
+print("Your score is " + score)</div>
+  </div>
+  <p>What do you think will actually happen when this runs?</p>
+  <label class="code-choice-option"><input type="radio" name="n4-extend-predict" value="a"><pre>It prints: Your score is 25</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-extend-predict" value="b"><pre>It crashes with a TypeError</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-extend-predict" value="c"><pre>It prints: Your score is  (with nothing after it)</pre></label>
+  <button class="check-btn" onclick="n4PredictCheck()">Check My Prediction</button>
+  <div class="feedback" id="n4-extend-predict-feedback"></div>
+</div>
+
+<div class="drill" id="n4-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Now fix it. Fill in the blank with a corrected version of the line, using <code>+</code>, that prints exactly:</p>
+  <pre>Your score is 25</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">score = 25
+<input type="text" id="n4-extend-blank" class="scaffold-blank" data-expected='print("Your score is " + str(score))' placeholder="type your code here" style="width:52ch;"></div>
   </div>
   <button class="check-btn" onclick="n4ExtendCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n4-extend-hint')">Need a hint?</button>
+  <div class="hint-box" id="n4-extend-hint">Python can only concatenate strings with <code>+</code>. <code>score</code> is a number, so wrap it in <code>str(...)</code> before joining it in.</div>
   <pre class="rc-output" id="n4-extend-output"></pre>
   <div class="feedback" id="n4-extend-feedback"></div>
 </div>
+
+<div class="drill" id="n4-contrast" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>A variable named <code>score</code> holds the number <code>25</code>. Which line will actually crash with a <code>TypeError</code> when it runs?</p>
+  <label class="code-choice-option"><input type="radio" name="n4-contrast" value="a"><pre>print("Score:", score)</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-contrast" value="b"><pre>print("Score: " + score)</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-contrast" value="c"><pre>print("Score: " + str(score))</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-contrast" value="d"><pre>print("Score:", str(score))</pre></label>
+  <button class="check-btn" onclick="n4ContrastCheck()">Check</button>
+  <div class="feedback" id="n4-contrast-feedback"></div>
+</div>
+<div class="review-note" id="n4-contrast-note" hidden>Option b crashes because <code>+</code> cannot join text with a number directly &mdash; only <code>str(score)</code> makes it text first (option c). A comma never has this problem, since Python converts each piece automatically, whether or not you wrap it in <code>str(...)</code> yourself (options a and d both work).</div>
 
 <!-- ======================= Spiral review ======================= -->
 <div class="node-heading"><strong>Review</strong></div>
@@ -810,10 +839,10 @@ function n4CoreCheck() {
     var correct = result === 'Rowan is standing in the armory';
     fb.textContent = correct ? 'Right. The program actually ran and printed exactly what was expected.' : 'Not quite. Compare the output above against the expected output.';
     fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
-    logEvent('drill_attempt', { skill_id: 'prints_variable_with_text', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n4Attempt.core }, false);
+    logEvent('drill_attempt', { skill_id: 'concatenates_with_commas', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n4Attempt.core }, false);
     if (correct) {
       logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'core', to: 'extend', reason: 'correct_advance' }, false);
-      document.getElementById('n4-extend').hidden = false;
+      document.getElementById('n4-extend-predict').hidden = false;
     } else if (n4Attempt.core === 1) {
       logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'core', to: 'reinforce', reason: 'incorrect' }, false);
       document.getElementById('n4-reinforce').hidden = false;
@@ -831,7 +860,7 @@ function n4ReinforceCheck() {
   var why = { a: 'A comma is missing between the two pieces.', c: 'Health: needs quotation marks around it, since it is literal text.', d: 'health is inside the quotation marks here, so it prints as the word health, not the number it holds.' };
   fb.textContent = correct ? 'Right. A comma separates the label text from the variable.' : 'Not quite. ' + (why[picked.value] || '');
   fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
-  logEvent('drill_attempt', { skill_id: 'prints_variable_with_text', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n4ReinforceAttempt }, false);
+  logEvent('drill_attempt', { skill_id: 'concatenates_with_commas', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n4ReinforceAttempt }, false);
   if (correct) {
     logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
     resolveNode('n4');
@@ -841,23 +870,50 @@ function n4ReinforceCheck() {
     resolveNode('n4');
   }
 }
+var n4PredictAttempt = 0;
+function n4PredictCheck() {
+  var picked = document.querySelector('input[name="n4-extend-predict"]:checked');
+  var fb = document.getElementById('n4-extend-predict-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n4PredictAttempt++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. score is a number, and + refuses to join text with a number directly. Python raises a TypeError: can only concatenate str (not "int") to str.' : 'Not quite. Try it below and see what actually happens, then come back to this if you want.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'concatenates_with_plus', item_id: 'predict_01', lane: 'extend', correct: correct, attempt_number: n4PredictAttempt }, false);
+  document.getElementById('n4-extend').hidden = false;
+}
 var n4ExtendAttempt = 0;
 function n4ExtendCheck() {
   n4ExtendAttempt++;
   var blank = document.getElementById('n4-extend-blank').value;
-  var code = 'player_name = "Rowan"\nlives = 2\nscore = 40\n' + blank;
+  var code = 'score = 25\n' + blank;
   var out = document.getElementById('n4-extend-output');
   var fb = document.getElementById('n4-extend-feedback');
   out.style.display = 'block';
   out.textContent = 'Running...';
   runSkulpt(code, function (result) {
     out.textContent = result || '(no output)';
-    var correct = result === 'Rowan has 2 lives and a score of 40';
-    fb.textContent = correct ? 'Right. Four pieces, each separated by a comma.' : 'Not quite. Compare the output above against the expected output.';
+    var correct = result === 'Your score is 25';
+    fb.textContent = correct ? 'Right. str(score) turns the number into text so + can join it in.' : 'Not quite. Compare the output above against the expected output.';
     fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
-    logEvent('drill_attempt', { skill_id: 'prints_variable_with_text', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n4ExtendAttempt }, false);
+    logEvent('drill_attempt', { skill_id: 'concatenates_with_plus', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n4ExtendAttempt }, false);
+    document.getElementById('n4-contrast').hidden = false;
     resolveNode('n4');
   });
+}
+var n4ContrastAttempt = 0;
+function n4ContrastCheck() {
+  var picked = document.querySelector('input[name="n4-contrast"]:checked');
+  var fb = document.getElementById('n4-contrast-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n4ContrastAttempt++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. + cannot join text and a number directly.' : 'Not quite. Think about which option combines + with a bare number, not wrapped in str(...).';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'concatenates_with_plus', item_id: 'contrast_01', lane: 'extend', correct: correct, attempt_number: n4ContrastAttempt }, false);
+  document.getElementById('n4-contrast-note').hidden = false;
 }
 
 /* ---------------- Spiral review ---------------- */

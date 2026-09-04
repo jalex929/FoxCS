@@ -4,6 +4,16 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-09-04 (post-02.1-review, correction) — `+`/comma grounding is Jay's own prior teaching material, not a GMetrix claim; `Sample Content/` surfaced
+
+**Corrects** the "02.1 teaches `+` concatenation alongside commas" entry below, mid-execution. Jay's direct correction: "the exam will show them concatenation but the workbook does not emphasize it" — the earlier entry's grounding in `Python_v2_Student_Workbook.pdf` p.67 is still accurate as a description of that page (it does sequence commas -> `.format()` -> f-strings and never shows `+`), but citing it as *the reason* to teach `+` overclaimed what the certification workbook itself asks for. Checked the workbook's own Appendix (p.122): the real GMetrix objective 3.2.2 is titled "Print formatted text (string.format() method, f-String method)" — neither `+` nor comma-printing is named in the objective itself, though Domain 3 Lesson 3 as a whole maps to real certification exam questions (D3Q17-D3Q22).
+
+**The real precedent, surfaced by Jay:** `Sample Content/` (repo root, sibling to `courses/`) — real prior lesson material predating this repo's authoring system, **not indexed anywhere in root `CLAUDE.md`'s Folder Structure section**. Specifically `previous lesson content/U1L3 Guided Notes_ Exploring Data Types.pdf` already teaches the exact `+`-vs-comma distinction (a "Concatenation (+) example:"/"Commas Example (no conversion needed):" side-by-side pair, a Type Conversion section with Example Error -> Result -> Fixed Version -> Why?, and a "Debugging Practice" predict-then-fix prompt using `score = 25; print("Your score is " + score)`), and `Unit 1 Exam_ Python Basics (V2) SY26.pdf`'s Question 2 tests the identical `+`-with-a-number bug in a real prior exam (`multiplier = level * bonus + 2; print("Your multiplier is: " + multiplier)`). Jay has taught and tested this exact concept before; the 02.1 rework (see `worklog.md`'s matching entry) was rebuilt to track that established pattern directly rather than the framing invented in the corrected entry below.
+
+**Net effect on the standing decision:** unchanged — `+` and commas still belong in 02.1, f-strings/`.format()` still deferred to Units 03.4/03.5. Only the *justification* changes: real prior-classroom precedent, not certification-exam coverage. `Sample Content/`'s absence from `CLAUDE.md` is flagged here, not resolved — auditing the rest of that folder against other lessons is a separate, larger task.
+
+---
+
 ## 2026-09-04 (post-02.1-review) — Instruction module drops the expandable jump menu; goes back to a fixed linear flow
 
 **Context:** After reviewing the live sandbox build of 02.1 (entry below), Jay's direct feedback: "we do not need to show the parts of the learn lesson in the menu." Clarified via a direct question with concrete options — his answer: drop the menu entirely, go linear, the way the pre-08-30 flat-file lessons worked, not a trimmed/generic version of the menu.

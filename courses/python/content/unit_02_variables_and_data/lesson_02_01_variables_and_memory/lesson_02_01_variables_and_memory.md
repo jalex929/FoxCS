@@ -4,6 +4,17 @@ unit_id: unit_02
 lesson_number: "02.1"
 title: Variables and Memory
 dok_levels_covered: [1, 2, 3]
+skills:              # populated 2026-09-04, post-02.1-review -- reference example for every future lesson, per lesson-schema.md's convention (previously unused in practice). skill_id values match the telemetry drill_attempt skill_id already emitted by 01_instruction.html's JS.
+  - skill_id: creates_variable
+    description: Creates a new variable with an assignment statement (name = value), with the value's type matching what the program needs.
+  - skill_id: variable_naming_rules
+    description: Judges whether a variable name is valid under Python's naming rules (start character, allowed characters, case sensitivity, reserved words) and applies snake_case.
+  - skill_id: reassigns_variable
+    description: Reassigns an existing variable to a new value and explains that the old value is not retained.
+  - skill_id: concatenates_with_commas
+    description: Combines a variable with literal text using comma-separated print() arguments, relying on Python's automatic spacing and type conversion.
+  - skill_id: concatenates_with_plus
+    description: Combines a variable with literal text using the + operator, including converting a non-string value with str(...) first to avoid a TypeError.
 ---
 
 # 2.1 Variables and Memory
@@ -20,6 +31,7 @@ Introduces variables as the mechanism a program uses to remember information whi
 - Apply Python's variable naming rules (start character, allowed characters, case sensitivity, reserved words, snake_case convention) to judge whether a name is valid.
 - Reassign an existing variable to a new value and explain that the old value is not retained.
 - Write a `print()` call that combines one or more variables with literal text, using commas.
+- Combine a variable with literal text using `+` concatenation, including converting a number with `str(...)` first, and explain why `+` needs that conversion when a comma does not.
 - Recognize integer, string, and boolean values by how they are written (quotes or their absence).
 
 ## Prerequisites
@@ -33,6 +45,7 @@ Introduces variables as the mechanism a program uses to remember information whi
 - value
 - snake_case
 - reassignment
+- concatenation
 
 ---
 
@@ -40,13 +53,15 @@ Introduces variables as the mechanism a program uses to remember information whi
 
 ### Instruction (`01_instruction.html`)
 
-Single self-contained page, expandable jump-to-section menu, not a forced linear flow. Bundles:
+Single self-contained page. **Revised 2026-09-04, post-02.1-review** — the expandable jump-to-section menu Jay reviewed was removed; sections now present in a fixed linear order (Learn, then Key Terms, then Practice), with no way to jump ahead. Bundles:
 
-- **Learn**: Creating a Variable, Naming Your Variables, Changing a Variable's Value, Printing Variables With Text, What Kind of Value? (light data-type intro, full treatment deferred to 2.2-2.6). One Game Connection card and one Usability Note card, both referenced later by Practice's Game Connection/UX items.
+- **Learn**: Creating a Variable, Naming Your Variables, Changing a Variable's Value, Printing Variables With Text, What Kind of Value? (light data-type intro, full treatment deferred to 2.2-2.6). "Printing Variables With Text" covers both comma-separated `print()` args and `+` concatenation, structured to match Jay's own prior teaching material almost verbatim — see the Real Authoring Decisions note below. One Game Connection card and one Usability Note card, both referenced later by Practice's Game Connection/UX items.
 - **Key Terms**: 3 flip flashcards (variable, assignment operator, value) + 2 ungraded quick-checks.
-- **Practice**: 4 real adaptive Reinforce/Core/Extend skill nodes (`creates_variable`, `variable_naming_rules`, `reassigns_variable`, `prints_variable_with_text`, pool size Core 1 / Reinforce 1 / Extend 1 each, per `objectives-and-skills-proficiency.md`), 2 spiral review items (pulled from Lesson 01.4 `uses_print` and Lesson 01.6 `diagnoses_syntax_error`), 1 Game Connection item, 1 Usability item. 16 items total, above the doc's "typical 8-15" ceiling but within its explicit "3-4 skills stays inside budget" allowance for a 4-node lesson.
+- **Practice**: 4 real adaptive Reinforce/Core/Extend skill nodes on-screen (`creates_variable`, `variable_naming_rules`, `reassigns_variable`, and a 4th "Skill Check" that now covers two skill_ids, `concatenates_with_commas` and `concatenates_with_plus` — see `skills:` in this file's frontmatter), 2 spiral review items (pulled from Lesson 01.4 `uses_print` and Lesson 01.6 `diagnoses_syntax_error`), 1 Game Connection item, 1 Usability item. 18 items total (up from 16 after the concatenation rework added a predict-then-fix debugging pair), above the doc's "typical 8-15" ceiling but within its explicit "3-4 skills stays inside budget" allowance for a 4-node lesson.
 
-**Real authoring decision, not previously settled:** `adaptive-practice-model.md` names 5 candidate topics for this lesson (creating variables, naming rules, reassignment, data types, printing with text). Data types is deliberately built as a lighter, ungraded guided-practice quick-check instead of a 5th full adaptive node, per that same doc's "DOK-1 pure recall belongs in guided practice, not a scored node" rule — full data-type mastery belongs to Units 2.2-2.6, not this lesson.
+**Real authoring decisions:** `adaptive-practice-model.md` names 5 candidate topics for this lesson (creating variables, naming rules, reassignment, data types, printing with text). Data types is deliberately built as a lighter, ungraded guided-practice quick-check instead of a 5th full adaptive node, per that same doc's "DOK-1 pure recall belongs in guided practice, not a scored node" rule — full data-type mastery belongs to Units 2.2-2.6, not this lesson.
+
+**Concatenation content, added 2026-09-04 post-review:** per Jay's direct correction, the `+`-vs-comma content is grounded in his own prior classroom material, not the GMetrix workbook (which never names `+` at all — see `../../../../decisions-log.md`'s matching entries). `Sample Content/previous lesson content/U1L3 Guided Notes_ Exploring Data Types.pdf` already teaches this exact distinction (a "Concatenation (+) example:"/"Commas Example (no conversion needed):" side-by-side pair, then a Type Conversion section with Example Error -> Result -> Fixed Version -> Why?, then a "Debugging Practice" predict-then-fix prompt using `score = 25; print("Your score is " + score)`), and `Sample Content/Unit 1 Exam_ Python Basics (V2) SY26.pdf`'s Question 2 tests the same `+`-with-a-number bug in a real prior exam. The Learn section and Node 4's new predict-then-fix pair (`n4-extend-predict` then `n4-extend`) both track that established pattern directly rather than inventing new framing, adapted to Skulpt's real execution instead of a static worksheet blank. **`Sample Content/` is real prior lesson material not yet indexed in root `CLAUDE.md`'s Folder Structure section** — flagging that gap here, not resolving it; it likely has more to offer future lessons than just this one node.
 
 Completion/telemetry via `local_foxcstelemetry` (Option C), not the DOM-blob save-in-place model — that model assumed no live backend; one exists now. Completion fires once all 4 nodes resolve and both spiral items are attempted.
 
@@ -60,7 +75,7 @@ Completion/telemetry via `local_foxcstelemetry` (Option C), not the DOM-blob sav
 
 ### Mastery Check
 
-4 items (FoxCS default 3-5), native Moodle Quiz, password-gated, 3 attempts averaged. All deterministic (2 shortanswer predict-output/fix-the-line, 1 multichoice naming judgment, 1 shortanswer predict-output), per `mastery-check-standards.md`'s preference for auto-gradable types over essay/manual grading. Each item targets more than one skill node (synthesis, not a verbatim repeat of a Practice item). Answer key: `teacher-materials/mastery_check_key.md`.
+4 items (FoxCS default 3-5), native Moodle Quiz, password-gated, 3 attempts averaged. All deterministic (2 shortanswer predict-output/fix-the-line, 1 multichoice naming judgment, 1 shortanswer fix-the-line), per `mastery-check-standards.md`'s preference for auto-gradable types over essay/manual grading. Each item targets more than one skill node (synthesis, not a verbatim repeat of a Practice item). **Item 4 reworked 2026-09-04, post-02.1-review** from a comma-only print-prediction item to a `+`-concatenation TypeError fix, matching the Instruction module's new scope; verified live via a real quiz attempt as `foxcstest` (graded fraction 1.0). Answer key: `teacher-materials/mastery_check_key.md`.
 
 ### Feedback
 
@@ -79,5 +94,7 @@ See `teacher-materials/rubric_project.md` for the Project rubric and `teacher-ma
 ## Next Steps
 
 - Mastery Check password needs to be generated fresh (not reused from another lesson) if this ever moves beyond the sandbox.
-- Deploy verification: see `../../../../worklog.md`'s matching 2026-09-04 entry for what was checked live (Playwright + direct DB query) vs. what still needs a real classroom test.
-- Not yet decided: whether this lesson's Instruction page should also get the native-Lesson-branching mechanism some earlier Unit 01 lessons used, or whether every future lesson standardizes on this tabbed/client-side-ladder shape. This prototype assumes the latter, per the 2026-09-04 module-structure decision, but that decision was made before this lesson existed to test it against.
+- Deploy verification: see `../../../../worklog.md`'s matching 2026-09-04 entries for what was checked live (Playwright + direct DB query for Instruction's completion/telemetry; a real graded quiz attempt for Mastery Check Item 4) vs. what still needs a real classroom test.
+- Jay has reviewed this once (2026-09-04) and requested the menu removal and concatenation rework applied in this pass. Not yet re-reviewed since those changes landed.
+- Lesson 01.4's Instruction page uses the same expandable-menu pattern this lesson just removed and is live on the real course, not a sandbox draft — whether to rework it too is still open, see `../../../../decisions-log.md`.
+- `Sample Content/` (real prior lesson material — guided notes, a mastery rubric, a unit exam, previous practice/mastery-check files) is not yet indexed anywhere in root `CLAUDE.md` and was only discovered mid-session; likely relevant to more lessons than just this one, not yet audited.
