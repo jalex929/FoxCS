@@ -4,7 +4,9 @@
 
 Building school-year course content. **Moodle is the live, real delivery platform (resumed 2026-08-30 — the 2026-08-04 pause below is over).** Moodle runs on Jay's own DigitalOcean droplet, publicly reachable at `https://foxcs.online` with real Let's Encrypt SSL. Each lesson is 4 Moodle modules: (1) Instruction — H5P Interactive Book, (2) Practice — Moodle Lesson activity (native `mod_lesson` Core/Reinforce/Extend branching ladder, save+score built in), (3) Project — native Moodle Assignment (rubric, starter-file zip download, real file-upload submission), (4) Mastery Check + Feedback — one native, password-gated Moodle Quiz (3-attempt cap, averaged not highest). See Status and Two-Surface Delivery Model below — that section is the active design again, not paused-for-reference. **FoxCS** is the umbrella for multiple courses; everything platform-agnostic and course-agnostic (privacy/governance, authoring schema, grading pipeline, spreadsheet dashboard) lives at this level. Course-specific scope and content live under `courses/<course>/`.
 
-See `decisions-log.md` for how this structure evolved and why. See `open-questions.md` for everything still unresolved.
+See `decisions-log.md` for how this structure evolved and why. See `open-questions.md` for everything still unresolved. See `chat-log.md` for a running conversational TLDR (not a transcript) of what Jay and Claude discuss session to session, including questions logged before Jay answers them — a backstop in case a session ends before he responds.
+
+**Update these logs continuously through a session, not just at the end.** A decision, a piece of mid-flight state, or a pending question that only exists in the conversation is lost if the session is interrupted before it's written down. As soon as something is decided, write it to `decisions-log.md`; as soon as technical state changes, update `worklog.md`; as soon as a question is asked (and again once it's answered), update `chat-log.md`.
 
 ## Courses
 
@@ -101,6 +103,7 @@ FoxCS/
   CLAUDE.md                                 This file
   decisions-log.md                          Append-only record of what changed and why
   open-questions.md                         Everything still unresolved
+  chat-log.md                               Running conversational TLDR — questions logged before/after Jay answers
   Python_v2_Student_Workbook.pdf            GMetrix/Certiport source material (licensed — see licensing-boundaries.md)
   Python v2 Support Files/                  GMetrix domain-organized .py support files (Domain 1-6)
   logos/                                    Waypoint brand exploration — logo images + waypoint_theme_typography_style_guide_full.md (source for 02-authoring-system/theme-system.md's Natural/Synthwave palettes)
