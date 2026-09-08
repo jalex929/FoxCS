@@ -40,9 +40,10 @@
   table.rules { border-collapse: collapse; margin: 0.8rem 0; width: 100%; }
   table.rules th, table.rules td { border: 1px solid #dde3ea; padding: 0.4rem 0.7rem; text-align: left; font-size: 0.92rem; }
   table.rules th { background: #f4f6f9; }
-  table.naming-rules { table-layout: fixed; }
-  table.naming-rules th:first-child, table.naming-rules td:first-child { width: 42%; }
-  table.naming-rules th:not(:first-child), table.naming-rules td:not(:first-child) { width: 29%; }
+  .table-scroll { overflow-x: auto; margin: 0.8rem 0; }
+  .table-scroll table.naming-rules { margin: 0; min-width: 460px; table-layout: fixed; }
+  table.naming-rules th:first-child, table.naming-rules td:first-child { width: 36%; }
+  table.naming-rules th:not(:first-child), table.naming-rules td:not(:first-child) { width: 32%; }
   table.naming-rules td code { white-space: nowrap; }
 
   .proto-banner { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.85rem; color: #7a4800; margin-bottom: 1.4rem; }
@@ -198,6 +199,7 @@ lives = 3</pre>
 
 <h3 id="learn-naming">Naming Your Variables</h3>
 <p>Python has real rules for what a variable name is allowed to be:</p>
+<div class="table-scroll">
 <table class="rules naming-rules">
 <tr><th>Rule</th><th>Valid</th><th>Invalid</th></tr>
 <tr><td>Must start with a letter or underscore, never a digit</td><td><code>score</code>, <code>_score</code></td><td><code>2score</code></td></tr>
@@ -205,6 +207,7 @@ lives = 3</pre>
 <tr><td>Case-sensitive: <code>Score</code> and <code>score</code> are two different variables</td><td><code>score</code></td><td>&mdash;</td></tr>
 <tr><td>Cannot be one of Python's reserved words</td><td><code>total</code></td><td><code>class</code>, <code>print</code></td></tr>
 </table>
+</div>
 <p>When a name needs more than one word, join the words with underscores. This style is called <strong>snake_case</strong>, and it is the standard way Python code names things.</p>
 <pre>is_game_over = True</pre>
 

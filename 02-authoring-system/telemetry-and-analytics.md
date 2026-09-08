@@ -60,6 +60,10 @@ This doc's Capture Mechanism/Pipeline sections below describe the original MVP d
 
 **Time-on-task report:** `local/foxcstelemetry/report.php?courseid=N` (teacher/admin only, `moodle/site:viewreports` capability) shows, per student per activity, first/last event timestamp, time-on-task (last minus first), event count, and completion status — the direct answer to "so I can see this for each student." Still an approximation, not a stopwatch: a student who opens a page and leaves without triggering any other logged event reads as 0 seconds, since there's no periodic heartbeat event yet, only on-interaction/on-complete events. Good enough for "did they engage, roughly how long," flagged as a real limitation in the report's own header comment.
 
+## Telemetry as an XP Input (added 2026-09-08)
+
+Per Jay: telemetry isn't just for analytics and reporting — it should generally feed **XP calculation**, not only completion/reporting. The concrete first case is quick-checks (see `mvp-unit-folder-structure.md`'s new "Quick-Check Reading Engagement XP" section): whether a student got one right first try, needed a reattempt, or skipped it should factor into the lesson's XP, the same way Vocab Quiz attempt data already does. The principle is meant to generalize beyond quick-checks — any logged `local_foxcstelemetry_log` event (`drill_attempt`, `lane_transition`, `quick_check`, `flashcard_flip`, `hint_reveal`, etc.) is a legitimate XP input going forward, not just a reporting/analytics data point. **Not yet built:** the actual XP-from-telemetry calculation — this is the design decision and the data source, recorded so it's not lost, not a finished pipeline. Whoever builds it next should design one shared mechanism rather than a one-off per feature (quick-checks, hints, drill attempts shouldn't each get their own bespoke XP formula).
+
 ## What This Answers, Directly
 
 - **Theme popularity / approach patterns** — aggregate `theme_change.to` and final `saves[].theme` across all students.

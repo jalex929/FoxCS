@@ -137,6 +137,14 @@ This is where flashcard-study effort actually earns XP — not the flashcards th
 
 See `courses/python/content/unit_01_what_is_programming/lesson_01_04_printing_output/04_vocab_quiz.html` for the reference implementation (5 terms, matching the same 5 flashcards in that lesson's `03_flashcards.html` — keep the term/definition pairs identical between a lesson's flashcards and its vocab quiz, don't let them drift).
 
+## Quick-Check Reading Engagement XP (added 2026-09-08)
+
+Per Jay, extending the same "attempt-logged, not just end-state" principle the Vocab Quiz section above already established: the inline reading-comprehension quick-checks threaded through a lesson's Learn section (see 02.1's `qc1`-`qc7` for the reference implementation) should also earn XP, not just exist as ungraded self-checks. **Whether a student got a quick-check right on the first try, needed a reattempt, or skipped it entirely should factor into XP earned for the lesson** — this is about rewarding genuine engagement with the reading, the same way Vocab Quiz rewards genuine flashcard study, not about penalizing a wrong first guess.
+
+- Every quick-check attempt is already logged via `local_foxcstelemetry` (`quick_check` event: `item_id`, `picked`, `correct`) as of 2026-09-08 — see `telemetry-and-analytics.md`'s Live Implementation section. Flashcard flips are logged too (`flashcard_flip`).
+- Extends `lesson-schema.md`'s `xp:` block with a `quick_check_engagement` value.
+- **Not yet built:** an actual XP calculation reading these events and awarding/displaying XP. Right now the events are logged but nothing computes XP from them — this section records the decision and the data source, not a finished feature. See `telemetry-and-analytics.md`'s new "Telemetry as an XP Input" note for the broader principle this extends to (not just quick-checks).
+
 ## Component Library
 
 **Added 2026-08-06 — start here before building any new interactive piece.** `02-authoring-system/component-library/index.html` is a real, self-contained HTML page — open it directly in a browser — cataloging every interactive pattern FoxCS has, each with a working, clickable demo using deliberately generic, non-curriculum content (fruits, sandwich-making steps) so nothing on that page is ever mistaken for real lesson material. Each entry names its status (live in a real lesson / demoed here first, not yet deployed / pattern documented, nothing deployed) and links to the real reference implementation where one exists.

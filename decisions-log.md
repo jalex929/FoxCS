@@ -4,6 +4,18 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-09-08 (later) — Naming-rules table actually fixed (visually verified with Playwright, not just re-guessed); quick-check telemetry now a general XP input
+
+**Context:** Jay reported the naming-rules table's column widths were "still" not right after the first fix attempt. Rather than guess again blindly, rendered the actual lesson file locally with Playwright (`02-authoring-system/tools/node_modules/playwright`) at several viewport widths.
+
+**Found:** the first fix (fixed-width columns + `white-space: nowrap`) worked fine down to ~500px, but at ~420px (a real possibility inside Moodle's course layout with its nav drawer open, not just a phone) the `nowrap` text had nowhere to go and **silently clipped** ("player scor|" cut off), which is arguably worse than the original wrap. Root cause of trying to fix this with pure percentage widths: there's no way to guarantee monospace code text fits at every possible container width without either wrapping or a scroll fallback.
+
+**Fixed properly:** wrapped the table in a `.table-scroll` div (`overflow-x: auto`) with `min-width: 460px` on the table itself. Above ~460px effective width the table displays fully with no scrolling needed (verified 900/600/500px screenshots); below that it scrolls horizontally instead of clipping. Tightened the column split from 42/29/29 to 36/32/32. Redeployed to the sandbox (cmid 238) and verified the live deployed content matches.
+
+**Also decided, per Jay mid-session:** quick-check correctness/reattempts (and telemetry generally) should factor into XP earned for a lesson, not just exist as ungraded self-checks or analytics. Documented in `mvp-unit-folder-structure.md`'s new "Quick-Check Reading Engagement XP" section (extending the existing Vocab Quiz XP pattern) and `telemetry-and-analytics.md`'s new "Telemetry as an XP Input" note (the general principle — any logged event is a legitimate XP input going forward, not just quick-checks). Added `quick_check_engagement` to `lesson-schema.md`'s `xp:` block. **Not built:** the actual XP-from-telemetry calculation — recorded as a real decision with its data source, not a finished feature. Flagged that whoever builds it should design one shared mechanism rather than a bespoke formula per feature.
+
+---
+
 ## 2026-09-08 (evening) — 02.0/02.1 pushed live for real students; full Unit 02 schedule surfaced from skills-map.md; adaptive question bank drafted to 2-per-tier; Unit 02 lock policy recorded
 
 **Context:** Jay set a real due date ("2.0 should be due tomorrow 9/8"), confirmed this Python class meets daily, said Unit 02 should "only span as long as it needs to" with due dates realistic for the *average* student (not the fastest or slowest), and named Unit 02 as the first unit to close and lock a week after its final due date. He also asked for a per-lesson markdown question-bank file with 2 questions per adaptive tier per skill, confirmed Mastery Checks should be drafted, and said the most urgent thing was getting 2.0 and 2.1 actually built — ahead of a separate ask to build Seminar III's Lesson 2 and a Game of the Week lesson for Wednesday.
