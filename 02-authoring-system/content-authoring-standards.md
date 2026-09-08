@@ -51,6 +51,9 @@ Added 2026-09-08, per Jay, prompted by the first real embedded video (02.1's Mos
 - **State the video's length up front**, next to the embed, so students can budget their time against it (also feeds due-date/pacing planning — see `course-plan.md`'s pacing notes).
 - **A video supplements, it doesn't replace, the written lesson content it's placed alongside** — per the "don't say the same thing twice in competing formats" rule above, the surrounding text shouldn't re-narrate what the video already covers, but the lesson still needs to stand on its own for a student who can't play audio/video at that moment.
 - **Attribute the creator/channel by name** next to the embed.
+- **Always include a plain hyperlink to the video on YouTube itself, as a backup**, next to the embed (added 2026-09-08, per Jay) — covers the embed failing to load, a school network blocking the iframe but not the site, or a student wanting to watch outside class.
+- **If the video demonstrates the plain Python interpreter/IDLE/a shell instead of an IDE**, add a short note that FoxCS students use VS Code instead, and should follow along by typing the same code into their own `.py` file rather than an interpreter session (added 2026-09-08, per Jay — most beginner Python tutorials on YouTube default to the interpreter, and FoxCS's own VS Code setup is covered in 02.0). Not every video needs this note — only ones that actually show interpreter/shell use.
+- **Preferred external channels for FoxCS-appropriate video length and tone (added 2026-09-08, per Jay):** Socratica (concise, explains supportively for a high-school audience), Corey Schafer, Programming with Mosh, and Visually Explained. Not an exclusive list — a good video from elsewhere is still fine — but a solid first place to check before searching further.
 
 ## Question & Activity Documentation Standards
 
