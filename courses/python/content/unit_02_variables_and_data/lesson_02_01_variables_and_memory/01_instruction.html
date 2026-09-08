@@ -40,6 +40,10 @@
   table.rules { border-collapse: collapse; margin: 0.8rem 0; width: 100%; }
   table.rules th, table.rules td { border: 1px solid #dde3ea; padding: 0.4rem 0.7rem; text-align: left; font-size: 0.92rem; }
   table.rules th { background: #f4f6f9; }
+  table.naming-rules { table-layout: fixed; }
+  table.naming-rules th:first-child, table.naming-rules td:first-child { width: 42%; }
+  table.naming-rules th:not(:first-child), table.naming-rules td:not(:first-child) { width: 29%; }
+  table.naming-rules td code { white-space: nowrap; }
 
   .proto-banner { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.85rem; color: #7a4800; margin-bottom: 1.4rem; }
 
@@ -69,7 +73,7 @@
   .card.flipped .card-inner { transform: rotateY(180deg); }
   .card-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 14px; padding: 1.3rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
   .card-front { background: #f4f6f9; border: 3px solid #1a5aa8; }
-  .card-back { background: #1a5aa8; color: white; text-align: left; align-items: flex-start; justify-content: center; }
+  .card-back { background: #1a5aa8; color: white; text-align: left; align-items: flex-start; justify-content: center; transform: rotateY(180deg); }
   .face-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: bold; opacity: 0.75; margin-bottom: 0.5rem; }
   .card-front .face-label { color: #1a5aa8; }
   .card-back .face-label { color: #eaf1fb; }
@@ -179,9 +183,22 @@ lives = 3</pre>
 <p>Printing <code>print("Health:", health)</code> instead adds a label the player can actually understand. Choosing what to show, and how to label it, is a real design decision, not just a syntax detail.</p>
 </div>
 
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">What does <code>lives = 3</code> actually do?</div>
+  <select id="qc4-select">
+    <option value="">Choose one...</option>
+    <option value="a">Checks whether lives is equal to 3</option>
+    <option value="b">Creates a variable named lives and stores 3 in it</option>
+    <option value="c">Prints the number 3</option>
+  </select>
+  <button onclick="qcCheck('qc4', 'b')">Check</button>
+  <div class="feedback" id="qc4-feedback"></div>
+</div>
+
 <h3 id="learn-naming">Naming Your Variables</h3>
 <p>Python has real rules for what a variable name is allowed to be:</p>
-<table class="rules">
+<table class="rules naming-rules">
 <tr><th>Rule</th><th>Valid</th><th>Invalid</th></tr>
 <tr><td>Must start with a letter or underscore, never a digit</td><td><code>score</code>, <code>_score</code></td><td><code>2score</code></td></tr>
 <tr><td>After that, only letters, digits, and underscores. No spaces.</td><td><code>player_score</code></td><td><code>player score</code></td></tr>
@@ -191,6 +208,19 @@ lives = 3</pre>
 <p>When a name needs more than one word, join the words with underscores. This style is called <strong>snake_case</strong>, and it is the standard way Python code names things.</p>
 <pre>is_game_over = True</pre>
 
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which of these breaks a Python naming rule?</div>
+  <select id="qc5-select">
+    <option value="">Choose one...</option>
+    <option value="a">player_2</option>
+    <option value="b">player two</option>
+    <option value="c">_player</option>
+  </select>
+  <button onclick="qcCheck('qc5', 'b')">Check</button>
+  <div class="feedback" id="qc5-feedback"></div>
+</div>
+
 <h3 id="learn-reassign">Changing a Variable's Value</h3>
 <p>A variable is not locked to the value it started with. Assigning to the same name again replaces the old value. Python does not keep the old value anywhere once it is replaced.</p>
 <pre>lives = 3
@@ -199,6 +229,19 @@ print("Lives:", lives)
 lives = 2
 print("Lives:", lives)</pre>
 <p>That prints <code>Lives: 3</code> and then <code>Lives: 2</code>. The second assignment did not create a second variable. It overwrote the first one.</p>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">After <code>lives = 3</code> and then <code>lives = 2</code>, how many variables named <code>lives</code> exist?</div>
+  <select id="qc6-select">
+    <option value="">Choose one...</option>
+    <option value="a">One</option>
+    <option value="b">Two</option>
+    <option value="c">It depends whether you print it</option>
+  </select>
+  <button onclick="qcCheck('qc6', 'a')">Check</button>
+  <div class="feedback" id="qc6-feedback"></div>
+</div>
 
 <h3 id="learn-print">Printing Variables With Text</h3>
 <p>You can join a variable with other text in two ways: with commas inside <code>print()</code>, or with the <code>+</code> operator, called <strong>concatenation</strong>.</p>
@@ -229,6 +272,19 @@ print("Your score is " + str(score))</pre>
 
 <p><strong>Why?</strong> Python can only concatenate strings, so you must convert numbers using <code>str()</code> before combining them with text. A comma never runs into this: <code>print("Your score is", score)</code> works with no conversion needed, since a comma converts each piece for you.</p>
 <p>Both methods are correct Python, and you will see both used in real code. A third method, called an <strong>f-string</strong>, is coming in a later lesson &mdash; once you are comfortable with commas and <code>+</code>, f-strings are usually the one professional Python code reaches for first.</p>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Why does <code>print("Score: " + score)</code> crash if <code>score</code> is a number?</div>
+  <select id="qc7-select">
+    <option value="">Choose one...</option>
+    <option value="a">+ can only join strings, and score isn't one yet</option>
+    <option value="b">print() cannot accept more than one thing</option>
+    <option value="c">The variable name needs to be capitalized</option>
+  </select>
+  <button onclick="qcCheck('qc7', 'a')">Check</button>
+  <div class="feedback" id="qc7-feedback"></div>
+</div>
 
 <h3 id="learn-types">What Kind of Value?</h3>
 <p>A variable can hold different kinds of values. Here are the three you will see most in this unit:</p>
@@ -982,12 +1038,15 @@ function renderCard() {
   document.getElementById('cardNum').textContent = cardIndex + 1;
   document.getElementById('cardTotal').textContent = CARDS.length;
 }
-function flipCard() { document.getElementById('card').classList.toggle('flipped'); }
+function flipCard() {
+  var flipped = document.getElementById('card').classList.toggle('flipped');
+  if (flipped) { logEvent('flashcard_flip', { term: CARDS[cardIndex].term }, false); }
+}
 function nextCard() { cardIndex = (cardIndex + 1) % CARDS.length; renderCard(); }
 function prevCard() { cardIndex = (cardIndex - 1 + CARDS.length) % CARDS.length; renderCard(); }
 renderCard();
 
-/* ---------------- Vocab quick checks (ungraded, untracked -- matches Unit 01 precedent) ---------------- */
+/* ---------------- Reading-comprehension quick checks (ungraded, but logged so engagement is visible in report.php) ---------------- */
 function qcCheck(id, expected) {
   var picked = document.getElementById(id + '-select').value;
   var fb = document.getElementById(id + '-feedback');
@@ -995,6 +1054,7 @@ function qcCheck(id, expected) {
   var correct = picked === expected;
   fb.textContent = correct ? 'Right.' : 'Not quite. Take another look above.';
   fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('quick_check', { item_id: id, picked: picked, correct: correct }, false);
 }
 </script>
 
