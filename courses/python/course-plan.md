@@ -4,6 +4,8 @@ Source: `adaptive-python`'s `Curriculum_Python Fundamentals.md` ("Python Fundame
 
 **Terminology note (2026-07-24):** FoxCS calls these **Units** (not "Modules") throughout this course, since it reads more naturally for a high school audience. This is a FoxCS-only naming choice and does not change anything in `adaptive-python`, which keeps calling them Modules. "Unit NN" in this file always corresponds 1:1 to "Module NN" in `Curriculum_Python Fundamentals.md`.
 
+**Skills map (added 2026-09-08):** `skills-map.md`, in this same folder, is the per-lesson skill/misconception/adaptive-question-target/mastery-check-coverage specification, imported from Jay's Google Doc "FoxCS Python — Course Unit Skills Map" (that Doc remains the live source of truth going forward; this file is a version-controlled snapshot to keep in sync with it). Check it before authoring any lesson's real content. Three lesson titles below (04.4, 04.8, 07.4) were corrected to match that Doc; every other title was checked against it and already matched exactly. **Still pending:** a promised `gmetrix-content-mapping.md` (what GMetrix content is assigned when) and `python-certification-workbook-map.md` (which workbook pages map to which unit, and what needs to be recreated/reassigned) haven't been uploaded yet — neither exists in this repo or Jay's Drive as of 2026-09-08. Once they land, re-check them against this file's GMetrix Domain Mapping section below and `skills-map.md`.
+
 GMetrix/Certiport tie-ins below are sourced from a full read-through of `Python_v2_Student_Workbook.pdf` (LearnKey "Python v2," aligned to the IT Specialist – Python exam. 82 numbered exercises across the 6 domains, each with its own Steps for Completion, project file(s), time estimate, and exam objective) plus the actual starter files in `Python v2 Support Files/Domain 1-6/Student/`. GMetrix content is licensed reference material, not something to copy wholesale. See `01-privacy-and-governance/licensing-boundaries.md` for the boundary (it must never reach the commercial `adaptive-python` app) and `02-authoring-system/vscode-content-conventions.md` for the `GMETRIX-` file-naming convention required whenever GMetrix material is adapted into a lesson.
 
 **One-domain-per-activity rule:** each GMetrix exercise in the workbook is small (most starter files are 2-16 lines; most exercises run 5-15 minutes) and scoped to exactly one domain. When a FoxCS unit's GMetrix tie-in below references more than one domain, that means two or more *separate* single-domain activities for that unit. Never blend files from two different `Domain N/Student/` folders into one activity or worksheet. A student working a GMetrix extra-credit activity should always be able to say "I'm in Domain N" without ambiguity. It's fine for the same domain to resurface in a unit much later in the year (e.g. Domain 3 shows up in Unit 03, then again in Unit 16). That's just two separate single-domain visits, not hopping, since they're far apart in time. What actually causes confusion, and what this mapping avoids, is mixing domains *within* one sitting.
@@ -43,6 +45,7 @@ Unit 01 below is Game I's real first authored unit.
 Also the home for Domain 1's Assignment Operator content. Lesson 6, Objective 1.3.1 (`131-assignment.py`, "Assignment Order") and its companion Lesson 8, Objective 1.4.1 (`141-assignment.py`, "Using Assignment Operators"). Assignment is what 02.1 Variables and Memory is about, so both short Domain 1 exercises land here rather than with the rest of the operators in Unit 05.*
 *Game/UX tie-in: Variables are game state. Score, health, lives, position, inventory count. Every data type this unit covers is a kind of information a real game has to track and remember between frames.*
 *Journal (50-100 words): List three pieces of information ("variables") a video game needs to keep track of while you play. Why does the game need to remember each one?*
+- [ ] 02.0 Getting Ready for Certification (Certiport/GMetrix account setup) — not a Variables & Data skill lesson; a one-time orientation step placed here per Jay 2026-09-08 (moved from the earlier "Unit 1" placement floated in `../../02-authoring-system/certiport-gmetrix-account-setup.md`). Students create their real Certiport and GMetrix accounts (same username/password across both, for memorability), then submit what they used via the class credential-tracking form: https://forms.gle/fQoEDsn3PGY8Sam17. See that doc for the full rationale and the private-Sheet destination for submitted credentials.
 - [x] 02.1 Variables and Memory 🔄 in progress (drafted 2026-09-04 as sandbox prototype, all 5 modules, not yet reviewed by Jay or moved beyond `sandbox-adaptive-demo`) . `courses/python/content/unit_02_variables_and_data/lesson_02_01_variables_and_memory/`. **Scope confirmed by Jay 2026-09-04: 02.1's "printing a variable with text" skill also teaches `+` string concatenation alongside the comma method already built, with explicit practice contrasting the two — not just commas alone.** `.format()` and f-strings stay out of 02.1, deferred to 03.5/03.4. See this unit's GMetrix note below and Unit 03's note for the full sequencing rationale and workbook grounding.
 - [ ] 02.2 Integers
 - [ ] 02.3 Floats
@@ -78,11 +81,11 @@ Also the home for Domain 1's Assignment Operator content. Lesson 6, Objective 1.
 - [ ] 04.1 Math in Programming
 - [ ] 04.2 Arithmetic Operators
 - [ ] 04.3 Order of Operations
-- [ ] 04.4 Integer vs Float Division
+- [ ] 04.4 Division and Floor Division
 - [ ] 04.5 Modulo and Remainders
 - [ ] 04.6 Percentages and Rates
 - [ ] 04.7 Formulas with Variables
-- [ ] 04.8 Rounding and Reasonableness
+- [ ] 04.8 Rounding, Floor, Ceiling, and Reasonableness
 - [ ] 04.9 Solving Real-World Problems
 - [ ] 04 Project: Tip, Tax, and Discount Calculator
 
@@ -125,7 +128,7 @@ Keep these as two clearly separate activities (Domain 1 operators, then Domain 2
 - [ ] 07.1 Why Functions Matter
 - [ ] 07.2 Defining Functions
 - [ ] 07.3 Calling Functions
-- [ ] 07.4 Parameters
+- [ ] 07.4 Parameters and Arguments
 - [ ] 07.5 Return Values
 - [ ] 07.6 Variable Scope
 - [ ] 07.7 Default Parameters
