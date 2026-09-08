@@ -85,12 +85,60 @@
 <ol class="steps">
   <li>Confirm both accounts (Certiport and GMetrix) actually log in successfully.</li>
   <li>Submit the form above with your real username/password for each.</li>
+  <li>Once you've done both, click the button below.</li>
   <li>Continue to Lesson 2.1: Variables and Memory.</li>
 </ol>
+
+<button class="form-btn" id="completeBtn" onclick="markDone()" style="border:none;cursor:pointer;">I've created both accounts and submitted the form</button>
+<div id="completeStatus" style="font-family:Verdana,Arial,sans-serif;font-size:0.85rem;color:#2f7a2f;margin-top:0.5rem;"></div>
 
 <div class="page-nav">
   <div class="page-nav-note">Didn't get an account to work, or something on the form didn't make sense? Tell your teacher before moving on, don't guess.</div>
 </div>
+
+<script>
+/* ---------------- Telemetry (local_foxcstelemetry, Option C) ---------------- */
+var CMID = "__CMID__"; // baked in by the deploy script's second phase
+var ENDPOINT = '/local/foxcstelemetry/log.php';
+var sesskey = null;
+function bootstrap(cb) {
+  fetch(ENDPOINT + '?action=bootstrap&cmid=' + CMID, { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { sesskey = data.sesskey; cb(); })
+    .catch(function () {});
+}
+function logEvent(eventtype, payload, complete) {
+  if (!sesskey) { bootstrap(function () { logEvent(eventtype, payload, complete); }); return; }
+  var body = new URLSearchParams();
+  body.set('action', 'log');
+  body.set('sesskey', sesskey);
+  body.set('cmid', CMID);
+  body.set('eventtype', eventtype);
+  body.set('payload', JSON.stringify(payload));
+  if (complete) body.set('complete', '1');
+  fetch(ENDPOINT, { method: 'POST', credentials: 'same-origin', body: body })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (complete) {
+        document.getElementById('completeStatus').textContent = data.completed
+          ? 'Marked complete. You can move on to 2.1.'
+          : 'Saved, but completion tracking did not confirm -- tell your teacher if this repeats.';
+      }
+    })
+    .catch(function () {
+      if (complete) document.getElementById('completeStatus').textContent = 'Could not save just now. Try again before moving on.';
+    });
+}
+bootstrap(function () { logEvent('viewed', { page: 'lesson_02_00/01_instruction' }, false); });
+/* Heartbeat every 30s while the tab is actually visible, so report.php's
+   time-on-task (last event minus first) reflects real time on the page,
+   not just the gap between two clicks. */
+setInterval(function () { if (!document.hidden) { logEvent('heartbeat', {}, false); } }, 30000);
+function markDone() {
+  document.getElementById('completeBtn').disabled = true;
+  logEvent('lesson_complete', {}, true);
+}
+</script>
 
 </body>
 </html>

@@ -43,6 +43,15 @@ Concrete, actionable rules for the content itself. Not app-UI accessibility (scr
 - **Vary problem context, not just difficulty.** When a lesson gives multiple practice items at the same DOK level, vary the scenario (not just the numbers). This is what builds transfer, not just repetition. A Reinforce/Core/Extend set that's the same problem with different variable names isn't doing this.
 - **Support multilingual learners.** Avoid overly academic phrasing and idioms that don't translate literally. This is a plain-writing constraint that helps everyone, not just multilingual students.
 
+## Embedded External Video Content
+
+Added 2026-09-08, per Jay, prompted by the first real embedded video (02.1's Mosh variables video). Applies whenever a lesson embeds a third-party video (YouTube or otherwise), not just this one instance.
+
+- **Tell students to use headphones at their station before the video, every time.** A standing classroom-logistics reminder, not optional flavor text — put it directly next to the embed, not buried in general orientation content.
+- **State the video's length up front**, next to the embed, so students can budget their time against it (also feeds due-date/pacing planning — see `course-plan.md`'s pacing notes).
+- **A video supplements, it doesn't replace, the written lesson content it's placed alongside** — per the "don't say the same thing twice in competing formats" rule above, the surrounding text shouldn't re-narrate what the video already covers, but the lesson still needs to stand on its own for a student who can't play audio/video at that moment.
+- **Attribute the creator/channel by name** next to the embed.
+
 ## Question & Activity Documentation Standards
 
 FoxCS doesn't need adaptive-python's full pipeline (multi-role sign-off, telemetry validation, staged rollback). There's no adaptive engine and no large content team. What's worth keeping, scaled down:

@@ -54,6 +54,12 @@ Every page that has *any* tracked interaction gets this block; a page with nothi
 
 Page-level fields (`opened_at`, `saves[]`) capture start/save timestamps directly — no separate event needed for those, since they're properties of the session itself rather than a discrete interaction.
 
+## Live Implementation (Option C, added 2026-09-04, report added 2026-09-08)
+
+This doc's Capture Mechanism/Pipeline sections below describe the original MVP design: telemetry as a JSON blob embedded in a student's saved file, extracted later during grading. That was superseded once Moodle resumed as the real backend (`local_foxcstelemetry`, `07-infrastructure/local-plugins/foxcstelemetry/` — see `adaptive-practice-model.md`'s 2026-08-31 status note and 02.1's own lesson file header for the fuller "Option C" reasoning). Custom lesson pages (tabbed HTML, not native Moodle Lesson/H5P) call `local/foxcstelemetry/log.php` directly from their own JS to log one row per interaction event (`userid`, `courseid`, `cmid`, `eventtype`, `payload`, `timecreated`) straight into `local_foxcstelemetry_log`, and to mark manual completion.
+
+**Time-on-task report:** `local/foxcstelemetry/report.php?courseid=N` (teacher/admin only, `moodle/site:viewreports` capability) shows, per student per activity, first/last event timestamp, time-on-task (last minus first), event count, and completion status — the direct answer to "so I can see this for each student." Still an approximation, not a stopwatch: a student who opens a page and leaves without triggering any other logged event reads as 0 seconds, since there's no periodic heartbeat event yet, only on-interaction/on-complete events. Good enough for "did they engage, roughly how long," flagged as a real limitation in the report's own header comment.
+
 ## What This Answers, Directly
 
 - **Theme popularity / approach patterns** — aggregate `theme_change.to` and final `saves[].theme` across all students.

@@ -2,6 +2,10 @@
 
 Session-to-session continuity notes — what's mid-flight and what's next. Not append-only like `decisions-log.md`; update/trim this freely as work completes. See `decisions-log.md` for the permanent record of what was actually decided, and `open-questions.md` for longer-lived unresolved questions.
 
+## Open follow-up (flagged 2026-09-08): Jay needs to update the Units 16-20 skills-map content
+
+`courses/python/skills-map.md` (imported from Jay's "FoxCS Python — Course Unit Skills Map" Google Doc, formerly named "FoxCS Python — Units 01-03 Skills Map" before Jay renamed/expanded it) carries full lesson-by-lesson detail (Skills, Conceptual Model, Common Misconceptions, Adaptive Question Targets, Coding Exercise, Mastery Check Coverage) through Unit 09, but only a lighter "Skills Review" pass (skills list + recommended categories, no full misconception/question-family breakdown) for Units 10-20. Jay said he'll need to go back and bring Units 16-20 up to the same full-detail standard as 01-09 in the live Doc. Re-import into `skills-map.md` once he's done — don't let this file drift stale against the Doc in the meantime.
+
 ## SESSION PAUSED HERE (2026-09-04) — start the next session by reading this section first
 
 Jay asked to pause after flagging one more real gap. Nothing below this point has been started yet.
