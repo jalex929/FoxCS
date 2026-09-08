@@ -1,0 +1,90 @@
+<!-- Lesson 2 week-at-a-glance / pacing calendar. Built 2026-09-08 against the real 3-day
+     calendar (Wed Sept 9 - Fri Sept 11) -- Tuesday Sept 8 is not a Lesson 2 day; see
+     lesson-2-plan's Compression Note. Matches lesson-1-week-at-a-glance.html's pattern:
+     dual purpose as a student-facing overview and a teacher pacing map, per-day due-date
+     badges, no-need-to-rush framing. Day 4 from the original 4-day plan has no new
+     instruction and is folded into the end of Day 3 here (Check + reflection). -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lesson 2 Week at a Glance</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --warn-bg: #fdf3ec; --warn-line: #d98a3d; --warn-ink: #7a4413;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  .page { max-width: 900px; margin: 0 auto; background: var(--paper); }
+  .banner { background: var(--accent-dark); color: white; padding: 1.6rem 2rem; }
+  .banner .kicker { font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: #cfe6ee; font-weight: bold; margin: 0 0 0.3rem; }
+  .banner h1 { font-size: 1.7rem; margin: 0; }
+  .banner p { margin: 0.5rem 0 0; font-size: 0.95rem; color: #dcecf1; }
+  .day { padding: 1.2rem 2rem; border-bottom: 1px solid var(--line); break-inside: avoid; page-break-inside: avoid; display: grid; grid-template-columns: 90px 1fr; gap: 1rem; }
+  .day .label { font-weight: bold; color: var(--accent-dark); font-size: 1.05rem; }
+  .day .date { display: block; font-weight: normal; color: var(--muted); font-size: 0.78rem; margin-top: 0.15rem; }
+  .due-badge { display: inline-block; background: #fdf3ec; border: 1px solid #d98a3d; color: #7a4413; border-radius: 999px; padding: 0.15rem 0.65rem; font-size: 0.78rem; font-weight: bold; margin: 0.3rem 0 0.2rem; }
+  .pacing-note { background: var(--accent-bg); border-left: 4px solid var(--accent); padding: 0.9rem 1.3rem; margin: 0; font-size: 0.92rem; line-height: 1.55; }
+  .pacing-note strong { color: var(--accent-dark); }
+  .day h2 { font-size: 1.1rem; margin: 0 0 0.3rem; color: var(--accent-dark); }
+  .day p { font-size: 0.92rem; line-height: 1.5; margin: 0 0 0.5rem; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.3rem 0; }
+  .chip { background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 999px; padding: 0.15rem 0.65rem; font-size: 0.82rem; font-weight: bold; }
+  .note { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-top: 0.3rem; }
+  .deadline-banner { background: var(--warn-bg); border: 2px solid var(--warn-line); color: var(--warn-ink); padding: 1rem 1.3rem; margin: 0; font-size: 1rem; line-height: 1.5; }
+  .deadline-banner strong { display: block; font-size: 1.1rem; margin-bottom: 0.3rem; }
+  @media print { body { background: white; } .page { max-width: none; } .day { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="banner">
+    <p class="kicker">Seminar III &middot; Lesson 2 &middot; September 9 &ndash; 11, 2026</p>
+    <h1>Week at a Glance: Numbers &amp; Operations</h1>
+    <p>Does my answer make sense? This lesson builds confidence with positive and negative numbers, choosing the right operation, order of operations, and checking whether a result is reasonable.</p>
+  </div>
+
+  <div class="deadline-banner">
+    <strong>All of Lesson 2 is due Friday, September 11 by 3:30 PM &mdash; end of the school day.</strong>
+    Use the days below as your pacing guide, not separate hard deadlines &mdash; what matters is that everything is done, thoughtfully, by Friday.
+  </div>
+
+  <div class="pacing-note">
+    <strong>If you finish a day's content early,</strong> you're welcome to use the remaining time as study hall &mdash; work on something for another class, and check in with your teacher if you need help with it. But don't rush to be done. Work through the content thoughtfully, not quickly &mdash; finishing first isn't the goal. Getting everything genuinely done by Friday is what matters.
+  </div>
+
+  <div class="day">
+    <div class="label">Day 1<span class="date">Wed, Sep 9</span></div>
+    <div>
+      <h2>Positive, Negative &amp; Absolute Value</h2>
+      <p>Learn what a positive or negative number means in context, compare and order numbers on a number line, and find absolute value (distance from zero, not "make it positive").</p>
+      <div class="chip-row"><span class="chip">Instruction: Numbers That Make Sense</span><span class="chip">Guided Practice</span></div>
+      <div class="due-badge">Due by end of class, Wed Sep 9</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="label">Day 2<span class="date">Thu, Sep 10</span></div>
+    <div>
+      <h2>Operations &amp; Order of Operations</h2>
+      <p>Add, subtract, multiply, and divide with negative numbers, choose the right operation for a situation, and apply order of operations &mdash; including where "multiplication before division" and "addition before subtraction" go wrong.</p>
+      <div class="chip-row"><span class="chip">Guided Practice</span><span class="chip">Independent Practice</span><span class="chip">Error Analysis</span></div>
+      <div class="due-badge">Due by end of class, Thu Sep 10</div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="label">Day 3<span class="date">Fri, Sep 11</span></div>
+    <div>
+      <h2>Estimate, Check, Reflect</h2>
+      <p>Use estimation to catch calculator-entry mistakes and eliminate unreasonable answers, apply the Operation &rarr; Size &rarr; Sign &rarr; Unit &rarr; Context checklist, then complete the Lesson 2 Check and a short reflection.</p>
+      <div class="chip-row"><span class="chip">Quick Reference</span><span class="chip">Lesson 2 Check</span><span class="chip">Reflection</span></div>
+      <div class="due-badge">Due by end of class, Fri Sep 11</div>
+      <p class="note">Missed any Check items? Retry happens after class in Moodle &mdash; review the feedback, then try a similar question.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
