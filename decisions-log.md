@@ -4,6 +4,23 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-09-08 (night) — 01.1 Mastery Check grading bug fixed (auto full credit); point-based scoring adopted for Python Unit 01 (/25) and Seminar Lesson 1 (/20)
+
+**Context:** Jay sensed 01.1 Mastery Check "was having trouble being saved" after seeing it blank for every Game I student in the new grade report, and confirmed students did take it — asked for automatic full credit.
+
+**Root cause found (not just papered over):** `mdl_quiz` for cmid=114 uses `shortanswer` questions (normally auto-gradable) but `preferredbehaviour = 'manualgraded'` — a leftover from an earlier version of the build script that used essay questions (which genuinely need manual grading) before the questions were swapped to shortanswer without updating the quiz behaviour to match. Result: 57 real "finished" attempts across 54 students, zero of them ever got a `sumgrades`/`finalgrade` computed. Not a missing-attempt problem.
+
+**Fixed:** ran `grade_item::update_final_grade()` for all 54 students with a real finished attempt, setting `finalgrade=100` (matches `quiz->grade=100`) and explicitly marking the grade `overridden` (protects it from being silently wiped if the quiz's own gradebook sync runs again later — the standard Moodle mechanism for exactly this situation). The 8 enrolled students who never attempted it were correctly left ungraded, not given unearned credit.
+
+**Also decided, per Jay:** move from Moodle's raw 0-100-per-item percentages to small additive point totals for both courses' Unit 1: **Python Unit 01 = 25 points, Seminar III Lesson 1 = 20 points.** No existing documented breakdown was found (checked `lesson-schema.md`, `skills-map.md`, course-plans — the only saved note, `[[feedback_lesson_point_scale]]`, was scoped to Seminar III specifically). Built new breakdowns from scratch, landing on/near the two targets:
+- **Python Unit 01 (25 pts):** Mastery Check 3 pts x 6 lessons (18) + Coding Exercise 1 pt x 4 lessons that have one, 01.3-01.6 (4) + Practice 0.5 pt x 6 lessons (3) = 25. Prorated by each item's existing Moodle percentage grade. Instruction/lesson-completion items are not separately points-bearing.
+- **Seminar III Lesson 1 (20 pts):** 2 pts x 7 practice/H5P activities (14) + 6 pts for the one multichoice quiz (6) = 20. All-or-nothing per activity (matches the existing completion-credit approach), not prorated within an activity.
+- Not yet written into `lesson-schema.md`/`feedback_lesson_point_scale.md` as a standing convention for future units — this session only applied it to the grade report for Unit 01/Lesson 1. Flagged as a follow-up if Jay wants it to generalize.
+
+**Grade report spreadsheet regenerated a second time** (now titled "...v3") to reflect both the grading fix and the new point columns; the original (pre-fix, percentage-only) version was trashed. No in-place cell-edit capability exists for an already-published Google Sheet via the tools available this session, so each correction required a full regenerate-and-reupload rather than a live edit — worth knowing before promising quick edits to this report in the future.
+
+---
+
 ## 2026-09-08 (later) — Naming-rules table actually fixed (visually verified with Playwright, not just re-guessed); quick-check telemetry now a general XP input
 
 **Context:** Jay reported the naming-rules table's column widths were "still" not right after the first fix attempt. Rather than guess again blindly, rendered the actual lesson file locally with Playwright (`02-authoring-system/tools/node_modules/playwright`) at several viewport widths.
