@@ -4,6 +4,29 @@ Append-only. Newest entries at the top. Each entry: what was decided, why, and w
 
 ---
 
+## 2026-09-08 (evening) — 02.0/02.1 pushed live for real students; full Unit 02 schedule surfaced from skills-map.md; adaptive question bank drafted to 2-per-tier; Unit 02 lock policy recorded
+
+**Context:** Jay set a real due date ("2.0 should be due tomorrow 9/8"), confirmed this Python class meets daily, said Unit 02 should "only span as long as it needs to" with due dates realistic for the *average* student (not the fastest or slowest), and named Unit 02 as the first unit to close and lock a week after its final due date. He also asked for a per-lesson markdown question-bank file with 2 questions per adaptive tier per skill, confirmed Mastery Checks should be drafted, and said the most urgent thing was getting 2.0 and 2.1 actually built — ahead of a separate ask to build Seminar III's Lesson 2 and a Game of the Week lesson for Wednesday.
+
+**Found, not assumed:** `skills-map.md` (the imported Google Doc) already contains a full "Recommended Deadline" for every 02.1-02.7 lesson plus the Unit 02 Adaptive Review, cumulative Mastery Check, Project window, and a `Unit 02 Lock: Monday, September 28` line — missed on first import, surfaced now into `course-plan.md` directly rather than left buried in that file's prose. The Sept 28 lock date is exactly one week after the doc's own "Recommended Unit 02 Completion" (Sept 21), confirming Jay's verbal policy statement matches what he'd already written. Also found the GMetrix calendar (`courses/python/game_of_the_week/game_of_the_week_calendar_2026-27.md`) independently confirms **September 7, 2026 is a school holiday** — resolves what looked like a date inconsistency in Jay's message (he was writing during the holiday, prepping for the first school day back).
+
+**Decided:**
+- 02.0 due date = Tuesday, Sept 8 (Jay's explicit date). 02.1 kept at its already-doc-planned Sept 8 date rather than shifting — both land the same day, matching "many days will have more than one lesson."
+- Also discovered `mastery_check_key.md` and `rubric_project.md` for 02.1 were already fully drafted and previously verified live (a real graded quiz attempt, question id 107) — the "make sure Mastery Checks are drafted" ask was already satisfied for 02.1; no new drafting needed there.
+- Drafted `lesson_02_01_variables_and_memory/teacher-materials/practice_question_bank.md`: full 2-per-tier (Reinforce/Core/Extend) adaptive question bank for all 4 of 02.1's live skill nodes (`creates_variable`, `variable_naming_rules`, `reassigns_variable`, `prints_variable_with_text`) — 12 new questions, each paired to a specific named misconception, grounded in `skills-map.md`'s own Adaptive Question Targets/Common Misconceptions for this lesson. Not yet wired into the live interactive JS (flagged as the next real coding step, not done tonight) — the live lesson currently still runs 1-of-each-tier, which is a complete, working lesson on its own.
+- Added an equivalent (much shorter) `practice_question_bank.md` for 02.0, explicitly marked not-applicable (orientation step, no assessed skill), so the convention exists uniformly rather than silently skipped for the one lesson it doesn't apply to.
+- **Deployed 02.0 live to `foxcs-python`** (cmid=244, real students, `completionexpected` = 2026-09-08 15:30 America/Chicago — the correct native Moodle mechanism for a due-date-like signal on a `mod_resource`, which has no native due-date field).
+- **Attempted to deploy all 4 of 02.1's modules live** (Instruction/Mastery Check/Project/Feedback, new live quiz password `FGV73Q`, item 4 built with its already-corrected concatenation-fix wording from the start) — **blocked by the session's own auto-mode permission classifier** before execution, flagged back to Jay rather than routed around. Scripts are written and saved (`07-infrastructure/moodle-scripts/deploy-live-unit02-01-all-modules.php`) and ready to run on explicit approval.
+
+**Not done tonight, explicitly deferred per Jay's own "most urgent" framing:**
+- Wiring the new 12 adaptive questions into 02.1's live interactive JS.
+- Technical implementation of the Sept 28 Unit 02 lock (nothing to lock yet beyond 02.0/02.1).
+- Seminar III Lesson 2 and the Game of the Week Wednesday ("Zip Zap Zop," Week 3 of the calendar) lesson — investigated Seminar III Lesson 2's real current state (see below) but did not build it; Game of the Week Week 3 not yet built either.
+
+**Seminar III Lesson 2 — investigation only, not built:** real substantive content exists in the repo (plan doc, instructional page, 4 printable sheets, teacher presentation) but **no answer key and no rubric exist anywhere**, and live Moodle (`foxcs-seminar3`, section 3) has only 6 flat `mod_resource` files, all `visible=0` — identical to the 2026-09-04 audit, nothing has changed. No duplicate-resource issue here (that was Lesson 4). Fastest path to live: write the missing answer key + rubric, convert "Lesson 2 Check" to a real gradeable/completion-tracked item, build the still-missing `lesson-2-week-at-a-glance.html` (a standing per-lesson requirement Lesson 2 doesn't have yet), then flip visible with real per-day due dates — Seminar III's own pacing model is day-by-day due dates, not the CS courses' more self-paced model.
+
+---
+
 ## 2026-09-08 (follow-up, same session) — `gmetrix-content-mapping.md` and `python-certification-workbook-map.md` landed; real cross-check found and fixed 2 GMetrix-mapping errors in `course-plan.md`
 
 **Context:** Directly continuing the entry below. Mid-task, Jay pushed both previously-missing files straight to GitHub (`7f20741` "Create python-certification-workbook-map.md", `f9a2e8a` "Update print statement from 'Hello' to 'Goodbye'" — that commit message is misleading; its actual content is the new `gmetrix-content-mapping.md`, 2974 lines). Pulled/rebased them in before finishing this task's push.
