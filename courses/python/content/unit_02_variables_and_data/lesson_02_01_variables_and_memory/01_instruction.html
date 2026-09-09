@@ -28,7 +28,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>2.1 Variables and Memory: FoxCS: Python (Sandbox Prototype)</title>
+<title>2.1 Variables and Memory: FoxCS: Python</title>
 <style>
   body { font-family: Verdana, Arial, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; line-height: 1.55; }
   h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
@@ -45,7 +45,6 @@
   table.naming-rules th, table.naming-rules td { width: 33.333%; }
   table.naming-rules td code { white-space: nowrap; }
 
-  .proto-banner { background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.85rem; color: #7a4800; margin-bottom: 1.4rem; }
 
   .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
   .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
@@ -121,6 +120,12 @@
   .review-note { padding: 0.7rem 1rem; background: #f4f6f9; border-radius: 6px; font-size: 0.9rem; color: #444; margin-top: 0.6rem; }
 
   .reflection textarea { width: 100%; box-sizing: border-box; font-family: Verdana, Arial, sans-serif; font-size: 0.92rem; padding: 0.6rem 0.8rem; border: 2px solid #ccd3dd; border-radius: 6px; min-height: 70px; }
+  .paste-note { font-size: 0.78rem; color: #888; font-style: italic; margin-top: 0.3rem; }
+  .reading-check { border: 2px solid #4a3aa7; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; background: #f7f5fc; }
+  .reading-check-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #4a3aa7; font-weight: bold; margin-bottom: 0.5rem; }
+  .reading-check-prompt { margin-bottom: 0.7rem; }
+  .reading-check textarea { width: 100%; box-sizing: border-box; font-family: Verdana, Arial, sans-serif; font-size: 0.92rem; padding: 0.6rem 0.8rem; border: 2px solid #ccd3dd; border-radius: 6px; min-height: 60px; }
+  .reading-check .check-btn { margin-top: 0.5rem; }
   .save-btn { background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; margin-top: 0.5rem; }
   .save-btn:hover { background: #12467f; }
   .save-status { font-size: 0.8rem; color: #2f7a2f; margin-left: 0.6rem; }
@@ -143,9 +148,8 @@
 </head>
 <body>
 
-<div class="proto-banner">Sandbox prototype -- the full Instruction module for Unit 02's pilot lesson (02.1 Variables and Memory), built to prove the new 5-module lesson pattern before a full Unit 02 rollout. Not live in any real course.</div>
-
 <h1>2.1 Variables and Memory</h1>
+<div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:#12467f;background:#eaf2fb;border:1px solid #bcd6f0;border-radius:6px;padding:0.6rem 0.9rem;margin:0.8rem 0 1.2rem;font-weight:bold;">All 2.1 content is due by 09/08/2026 and cannot be submitted late after 09/28/2026.</div>
 <p>Every game has to remember things while it runs: how much health the player has left, what their score is, how many lives remain. A <strong>variable</strong> is how a Python program remembers something.</p>
 
 <div class="video-card">
@@ -161,6 +165,7 @@
 
 <h2 id="learn">Learn</h2>
 
+<div id="learn-section-create">
 <h3 id="learn-create">Creating a Variable</h3>
 <p>You create a variable with an <strong>assignment statement</strong>: a name, an equals sign, and a value.</p>
 <pre>lives = 3</pre>
@@ -196,6 +201,17 @@ lives = 3</pre>
   <div class="feedback" id="qc4-feedback"></div>
 </div>
 
+<div class="reading-check" id="rc-create">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">In your own words, what does an assignment statement do? Use an example of your own, not <code>lives</code> or <code>score</code>.</div>
+  <textarea id="rc-create-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('create')">Continue</button>
+  <div class="feedback" id="rc-create-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-naming" hidden>
 <h3 id="learn-naming">Naming Your Variables</h3>
 <p>Python has real rules for what a variable name is allowed to be:</p>
 <div class="table-scroll">
@@ -223,6 +239,17 @@ lives = 3</pre>
   <div class="feedback" id="qc5-feedback"></div>
 </div>
 
+<div class="reading-check" id="rc-naming">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">Describe two of Python's variable naming rules in your own words, and give one example name that would break at least one of them.</div>
+  <textarea id="rc-naming-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('naming')">Continue</button>
+  <div class="feedback" id="rc-naming-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-reassign" hidden>
 <h3 id="learn-reassign">Changing a Variable's Value</h3>
 <p>A variable is not locked to the value it started with. Assigning to the same name again replaces the old value. Python does not keep the old value anywhere once it is replaced.</p>
 <pre>lives = 3
@@ -245,6 +272,17 @@ print("Lives:", lives)</pre>
   <div class="feedback" id="qc6-feedback"></div>
 </div>
 
+<div class="reading-check" id="rc-reassign">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">In your own words, explain what happens when you assign a new value to a variable that already exists. Does the old value stick around anywhere?</div>
+  <textarea id="rc-reassign-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('reassign')">Continue</button>
+  <div class="feedback" id="rc-reassign-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-print" hidden>
 <h3 id="learn-print">Printing Variables With Text</h3>
 <p>You can join a variable with other text in two ways: with commas inside <code>print()</code>, or with the <code>+</code> operator, called <strong>concatenation</strong>.</p>
 
@@ -288,6 +326,17 @@ print("Your score is " + str(score))</pre>
   <div class="feedback" id="qc7-feedback"></div>
 </div>
 
+<div class="reading-check" id="rc-print">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">In your own words, explain why <code>print("Score: " + score)</code> crashes when <code>score</code> is a number, and how you'd fix it.</div>
+  <textarea id="rc-print-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('print')">Continue</button>
+  <div class="feedback" id="rc-print-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-types" hidden>
 <h3 id="learn-types">What Kind of Value?</h3>
 <p>A variable can hold different kinds of values. Here are the three you will see most in this unit:</p>
 <table class="rules">
@@ -311,6 +360,17 @@ print("Your score is " + str(score))</pre>
   <div class="feedback" id="qc3-feedback"></div>
 </div>
 
+<div class="reading-check" id="rc-types">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">In your own words, explain how you can tell whether a value is a string, an integer, or a boolean just by looking at how it's written in code.</div>
+  <textarea id="rc-types-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('types')">Continue</button>
+  <div class="feedback" id="rc-types-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-terms" hidden>
 <h2 id="terms">Key Terms</h2>
 <p>Flip each card, then try the two quick checks below.</p>
 
@@ -360,6 +420,17 @@ print("Your score is " + str(score))</pre>
   <div class="feedback" id="qc2-feedback"></div>
 </div>
 
+<div class="reading-check" id="rc-terms">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">In your own words, explain the difference between a variable's name and its value, using an example of your own.</div>
+  <textarea id="rc-terms-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('terms')">Continue</button>
+  <div class="feedback" id="rc-terms-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-practice" hidden>
 <h2 id="practice">Practice</h2>
 <p>18 items across four short skill checks, then a couple of review questions and two open-ended questions. Work through them in order. Each skill check adjusts to how you're doing on it.</p>
 <div class="progress-note" id="progress-note">0 of 4 skill checks complete.</div>
@@ -617,19 +688,22 @@ print("Your score is " + score)</div>
 <div class="drill reflection" id="game-item" hidden>
   <div class="chip game">Game Connection</div>
   <p>A game keeps track of <code>health = 100</code> behind the scenes, but the player never sees the word <code>health</code> printed on screen. What does the game show the player instead, and why do you think it is shown that way instead of the raw variable name and number?</p>
-  <textarea id="game-response" placeholder="Type your answer here..."></textarea>
+  <textarea id="game-response" placeholder="Type your answer here..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here.</div>
   <br><button class="save-btn" onclick="saveReflection('game')">Save</button><span class="save-status" id="game-save-status"></span>
 </div>
 
 <div class="drill reflection" id="ux-item" hidden>
   <div class="chip usability">Usability</div>
   <p>Look back at the Usability Note near the top of this page. If your code only ran <code>print(health)</code> by itself, the player would just see <code>100</code>. Why might <code>print("Health:", health)</code> be a better choice for the player experience?</p>
-  <textarea id="ux-response" placeholder="Type your answer here..."></textarea>
+  <textarea id="ux-response" placeholder="Type your answer here..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here.</div>
   <br><button class="save-btn" onclick="saveReflection('ux')">Save</button><span class="save-status" id="ux-save-status"></span>
 </div>
 
 <div id="complete-banner">&#10003; Practice complete. Your work has been saved.</div>
 <div id="save-status-global"></div>
+</div>
 
 <script src="../../../../../02-authoring-system/skulpt-runtime/skulpt.min.js"></script>
 <script src="../../../../../02-authoring-system/skulpt-runtime/skulpt-stdlib.js"></script>
@@ -647,7 +721,27 @@ function bootstrap(cb) {
     .catch(function () { globalStatus.textContent = 'Could not reach the save endpoint.'; });
 }
 
+/* Second save location, added 2026-09-09 per Jay: the server log is the
+   real record, but it depends on network + a live enrollment/cmid check
+   that has broken silently before (see worklog.md's 2026-09-09 cmid=238
+   entry). This mirrors every event into this browser's own localStorage
+   too, so a genuine typed answer isn't gone the moment one save path fails
+   -- it's inspectable/recoverable client-side even if the server call
+   never lands. Best-effort only: wrapped in try/catch since localStorage
+   can throw (private browsing, storage disabled, quota) and that must
+   never block the real save attempt below it. */
+function localBackup(eventtype, payload, complete) {
+  try {
+    var key = 'foxcs_telemetry_backup_' + CMID;
+    var log = JSON.parse(localStorage.getItem(key) || '[]');
+    log.push({ eventtype: eventtype, payload: payload, complete: !!complete, ts: new Date().toISOString() });
+    if (log.length > 300) log = log.slice(log.length - 300);
+    localStorage.setItem(key, JSON.stringify(log));
+  } catch (e) { /* best-effort only, never block the real save */ }
+}
+
 function logEvent(eventtype, payload, complete) {
+  localBackup(eventtype, payload, complete);
   if (!sesskey) { bootstrap(function () { logEvent(eventtype, payload, complete); }); return; }
   var body = new URLSearchParams();
   body.set('action', 'log');
@@ -662,8 +756,26 @@ function logEvent(eventtype, payload, complete) {
       globalStatus.textContent = 'Saved ' + new Date().toLocaleTimeString() + '.';
       if (data.completed) document.getElementById('complete-banner').style.display = 'block';
     })
-    .catch(function () { globalStatus.textContent = 'Save failed. This will not block you from continuing.'; });
+    .catch(function () { globalStatus.textContent = 'Save failed, but your answer is also backed up in this browser. This will not block you from continuing.'; });
 }
+
+/* Per-field draft autosave, added 2026-09-09: restores in-progress typing
+   after an accidental reload/tab-close, independent of the Continue/Save
+   click below each field. Same best-effort try/catch discipline as
+   localBackup above -- never allowed to block real page behavior. */
+function wireDraftAutosave(id) {
+  try {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var key = 'foxcs_draft_' + CMID + '_' + id;
+    var saved = localStorage.getItem(key);
+    if (saved) el.value = saved;
+    el.addEventListener('input', function () {
+      try { localStorage.setItem(key, el.value); } catch (e) {}
+    });
+  } catch (e) { /* best-effort only */ }
+}
+['rc-create-response', 'rc-naming-response', 'rc-reassign-response', 'rc-print-response', 'rc-types-response', 'rc-terms-response', 'game-response', 'ux-response'].forEach(wireDraftAutosave);
 
 bootstrap(function () { logEvent('viewed', { page: 'lesson_02_01/01_instruction' }, false); });
 /* Heartbeat every 30s while the tab is actually visible, so report.php's
@@ -763,6 +875,11 @@ function n1ReinforceCheck() {
     resolveNode('n1');
   } else if (n1Attempt.reinforce === 1) {
     document.getElementById('n1-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'creates_variable', from: 'reinforce', to: 'reinforce', reason: 'retry_after_explanation' }, false);
+    document.querySelectorAll('#n1-reinforce .code-choice-option').forEach(function (el) { el.classList.remove('correct', 'incorrect'); });
+    document.querySelectorAll('input[name="n1-reinforce"]').forEach(function (el) { el.checked = false; });
+  } else if (n1Attempt.reinforce === 2) {
+    document.getElementById('n1-reinforce-exhausted').hidden = false;
     logEvent('lane_transition', { skill_id: 'creates_variable', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
     resolveNode('n1');
   }
@@ -820,6 +937,11 @@ function n2ReinforceCheck() {
     logEvent('lane_transition', { skill_id: 'variable_naming_rules', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
     resolveNode('n2');
   } else if (n2Attempt.reinforce === 1) {
+    document.getElementById('n2-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'variable_naming_rules', from: 'reinforce', to: 'reinforce', reason: 'retry_after_explanation' }, false);
+    document.querySelectorAll('#n2-reinforce .code-choice-option').forEach(function (el) { el.classList.remove('correct', 'incorrect'); });
+    document.querySelectorAll('input[name="n2-reinforce"]').forEach(function (el) { el.checked = false; });
+  } else if (n2Attempt.reinforce === 2) {
     document.getElementById('n2-reinforce-exhausted').hidden = false;
     logEvent('lane_transition', { skill_id: 'variable_naming_rules', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
     resolveNode('n2');
@@ -885,6 +1007,11 @@ function n3ReinforceCheck() {
     resolveNode('n3');
   } else if (n3Attempt.reinforce === 1) {
     document.getElementById('n3-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'reassigns_variable', from: 'reinforce', to: 'reinforce', reason: 'retry_after_explanation' }, false);
+    document.querySelectorAll('#n3-reinforce .code-choice-option').forEach(function (el) { el.classList.remove('correct', 'incorrect'); });
+    document.querySelectorAll('input[name="n3-reinforce"]').forEach(function (el) { el.checked = false; });
+  } else if (n3Attempt.reinforce === 2) {
+    document.getElementById('n3-reinforce-exhausted').hidden = false;
     logEvent('lane_transition', { skill_id: 'reassigns_variable', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
     resolveNode('n3');
   }
@@ -949,6 +1076,11 @@ function n4ReinforceCheck() {
     logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
     resolveNode('n4');
   } else if (n4ReinforceAttempt === 1) {
+    document.getElementById('n4-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'reinforce', to: 'reinforce', reason: 'retry_after_explanation' }, false);
+    document.querySelectorAll('#n4-reinforce .code-choice-option').forEach(function (el) { el.classList.remove('correct', 'incorrect'); });
+    document.querySelectorAll('input[name="n4-reinforce"]').forEach(function (el) { el.checked = false; });
+  } else if (n4ReinforceAttempt === 2) {
     document.getElementById('n4-reinforce-exhausted').hidden = false;
     logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
     resolveNode('n4');
@@ -1057,6 +1189,42 @@ function qcCheck(id, expected) {
   fb.textContent = correct ? 'Right.' : 'Not quite. Take another look above.';
   fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
   logEvent('quick_check', { item_id: id, picked: picked, correct: correct }, false);
+}
+
+/* ---------------- Reading-check gate (added 2026-09-09) ----------------
+   Learn section content is revealed one concept at a time. Each concept's
+   multiple-choice quick-check gives instant right/wrong feedback (unchanged,
+   not a completion gate); the typed reading-check right after it IS the
+   gate -- a low bar (must type a real answer, not a blank/one-word non-
+   attempt), not a correctness check, since grading free-text correctness in
+   real time isn't reliable. Genuine understanding still gets reviewed
+   downstream the same way reflections already are (see CLAUDE.md's Two-
+   Surface Delivery Model: "graded reflection, checked for genuine
+   completion, not just presence"). Paste is disabled on these fields so an
+   answer has to actually be typed. */
+var READING_CHECK_ORDER = ['create', 'naming', 'reassign', 'print', 'types', 'terms'];
+var READING_CHECK_MIN_CHARS = 15;
+
+function readingCheck(key) {
+  var ta = document.getElementById('rc-' + key + '-response');
+  var fb = document.getElementById('rc-' + key + '-feedback');
+  var text = ta.value.trim();
+  if (text.replace(/\s/g, '').length < READING_CHECK_MIN_CHARS) {
+    fb.textContent = 'Write a real sentence in your own words before continuing.';
+    fb.className = 'feedback incorrect';
+    return;
+  }
+  fb.textContent = 'Thanks -- continuing.';
+  fb.className = 'feedback correct';
+  logEvent('reading_check', { section: key, length: text.length }, false);
+
+  var idx = READING_CHECK_ORDER.indexOf(key);
+  var nextKey = READING_CHECK_ORDER[idx + 1];
+  var nextEl = nextKey ? document.getElementById('learn-section-' + nextKey) : document.getElementById('learn-section-practice');
+  if (nextEl) {
+    nextEl.hidden = false;
+    nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 </script>
 

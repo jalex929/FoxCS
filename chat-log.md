@@ -14,6 +14,20 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-09-08 (session, backfilled) — Interactivity policy set, then executed on Seminar III Lesson 2; one student account fixed
+
+**Context from Jay:** While reviewing recent work, flagged that Seminar III Lesson 2's Check listed multiple-choice answers as static text instead of letting students actually select one. Investigation traced this to the whole `printable-sheets/` HTML→PDF pipeline (no way to interact, only ever deployed as a flat PDF resource).
+
+**Resolved this session:** Jay: "we will not be giving printable sheets for the foreseeable future so let's assume if it is live content it has to be clickable/interactive." Confirmed scope twice more: applies to **all 4 FoxCS courses**, not just Seminar III, and is scoped by intent — view-only content can stay static, only response-eliciting content (questions, practice, checks) needs real interactivity. Jay's own read: probably not relevant to Game/Web content, though not formally audited. Written into `decisions-log.md` (3 entries) and root `CLAUDE.md`'s Hard Constraints.
+
+**Then executed directly** ("now make sure lesson 2 is updated in seminar so folks can complete everything assigned," due Fri Sept 11): Lesson 2's Check, Guided Practice, and Independent Practice rebuilt as real H5P interactive content; a Reflection activity built from scratch (didn't exist before, folding in the plan's separate "Error Analysis" requirement rather than building a 5th activity). All live and server-verified on the production course (cmids 254–257). Full detail in `worklog.md`'s matching entry.
+
+**Mid-task, unrelated:** Jay asked to add a student, codename `S4-MARS`, password `Kiwi778+`. Turned out the account already existed (pre-created, enrolled in Seminar III, never logged in) — password set and login verified.
+
+**Not yet done:** no visual/Playwright click-through of the new Lesson 2 interactive content — verification was server-side (curl) only, since no browser tool was available for that build pass. Worth a real walkthrough before Jay teaches from it live. The other 3 courses haven't been audited for the same static-list problem the new policy targets.
+
+---
+
 ## 2026-09-04 (session pause) — VS Code intro flagged as thin; Jay pausing here, resume from worklog.md
 
 **Context from Jay:** Wants a strong VS Code intro (creating a new file via File > New Text File, downloading the Python extension, etc.) somewhere in the course. Checked: `shared/unit_00_onboarding_level1/lesson_00_03_using_your_tools/01_instruction.html` is the right home (it already exists for exactly this purpose) but is currently thin — assumes software isn't installed yet and gives only a generic "Open VS Code, Run it" checklist, no actual file-creation/extension-install walkthrough. Then asked to pause the session here, with worklog.md/chat-log.md updated so a new session can pick up cleanly.
@@ -109,3 +123,39 @@ Newest entries at the top, grouped by day.
 **Q (asked, answered):** "How should conversation continuity be tracked, given sessions can get interrupted before Jay responds?" → Built `chat-log.md` (this file): a TLDR, not a transcript; questions logged before *and* after Jay answers; decisions still flow through to `decisions-log.md`/`worklog.md` as normal, this just backstops the conversational thread itself. `CLAUDE.md` updated to reference it and to call out committing to these logs regularly through a session, not just at the end.
 
 **Next up:** pick a build mechanism per Seminar III lesson (2–8) before dispatching parallel builds — carried over from earlier today's ground-truth audit, see `worklog.md`.
+
+## 2026-09-09 — VS Code Setup page picked back up after a session cutoff; log-reading-at-start made a standing rule
+
+**Context from Jay:** Asked earlier the same day for an in-depth, standalone "how to set up VS Code" reference for Python Unit 01 (or Unit 02), reusable later across the other CS courses — new-file creation both ways, one-time Python extension install, keyboard shortcuts, and an explicit reminder that this is only needed when a class desktop isn't available or a technical issue forces a Chromebook. That session got cut off mid-build (nav links hand-inserted into a scratch clone, but the actual content page never written, nothing committed). Jay: "sorry we got cut off... please let me know the status," then, once status was reconstructed (from raw session transcripts, not this repo's logs), "ok let's pick up that work and make the page."
+
+**Resolved this session:** page built and nav wired up for real, in `~/FoxCS` directly — see `decisions-log.md` and `worklog.md`'s matching 2026-09-09 entries for the how/why. Nothing committed yet.
+
+**Q (asked mid-session by Jay, resolved immediately):** "make sure it is documented in CLAUDE.md that whenever a session is initiated, Claude should check the chat log and decision/work logs before we begin work" → Added directly to `CLAUDE.md`'s logging paragraph, next to the existing "update continuously" rule. Root cause this fixes: the interrupted session never wrote anything to these logs (it never got far enough to), so the follow-up session had no durable record to read even though the rule existed to *write* to them — reading them proactively at session start is the missing half.
+
+**Next up:** decide with Jay which of the several currently-uncommitted change sets in `~/FoxCS` (this VS Code Setup work, Unit 02 lesson drafts, `course-plan.md` edits, these log updates) should actually be committed, and whether together or separately.
+
+## 2026-09-09 (continued, much later) — Unit 02 data-type lessons built and shipped live, real bugs caught and fixed, Game of the Week planned for next session
+
+**Context from Jay:** After the VS Code Setup work above, a long continuous push: fixed coding-exercise submission settings (file upload only, backup-link-only text, no raw code pasting) and asked for student-work backup/capture "as always" — surfaced that **no backup of the live Moodle DB existed at all**, built one (`/home/jay/moodle-backups/backup_moodle.sh`, nightly + manual-first-step-before-any-live-edit rule, now in `CLAUDE.md`). Then: "students have been trying to skip past a lot of the written content... they should not be able to paste in the text box" → built a sequential reading-check gate for Lesson 02.1's instruction content (typed "in your own words" checks, existing multiple-choice quick-checks kept as-is per Jay's explicit confirmation), paste-blocked, verified live via Playwright as `foxcstest` — which also caught a real bug (telemetry logging under the wrong course's cmid, and separately a missing Moodle "main file" designation that was silently serving the wrong file entirely).
+
+**Then a large content push, same session:** "we need to draft the rest of Unit 2... I need students to be able to access at least the different data types today." Built and shipped live: 02.2-02.5 Instruction pages (promoted from sandbox, each with a new SVG concept diagram and, on 02.2 only, a Domain 1 Pre-Assessment pointer) and one new GMetrix-grounded Coding Exercise per lesson (video + workbook fill-in-blanks embedded in a downloadable starter file + explicit submit instructions). Grounded directly in `python-certification-workbook-map.md`, the real workbook PDF, and the actual GMetrix starter files, not guessed.
+
+**Q (asked, answered) mid-build:** whether the new anti-skip check should gate instruction content or existing response fields → a new reading-check gate on instruction content, with paste blocked specifically on the "in your own words" fields. Whether the gate should be one checkpoint before Practice or one after each concept → **one after each concept**, stronger against skimming, more building.
+
+**Jay then caught a real string of bugs** in the same deploy: a "Sandbox prototype" banner and browser-tab title visible to real students on all 5 Unit 02 pages; a duplicate video embed on the Coding Exercises; Unit 02's modules deployed out of pedagogical order; and the pre-existing Unit 01 Reflection using one generic question instead of rating each real skill. All four fixed and verified. Built `check_live_publish_readiness.py` as a real automated gate (not just a documented reminder) and wrote the full "Publishing Live Content" checklist into `CLAUDE.md`, per Jay's direct instruction that this needs to be a repeatable, enforced procedure, not a one-off fix.
+
+**Then, Game of the Week:** confirmed Lesson 2 didn't exist, found the real distribution mechanism (a dedicated `foxcs-gotw` Moodle course) doesn't match what the repo's own README still describes (stale, pre-dates the real build). Jay set the pacing (skip Zip Zap Zop, Pass the Clap becomes Lesson 2 in Week 3's slot, resume normally from Week 4) and a new requirement (automatic Tuesday releases, which nothing in this Moodle instance does yet — real new infrastructure, not copy-paste).
+
+**Q (asked, deferred):** how many weeks ahead to build in this batch (just Lesson 2 / +3 more / rest of Q1) → Jay: "let's just plan in the docs and I will build in the next session." Full plan (numbering, the exact H5P build pattern to replicate from Lesson 1, the deploy script, the `core_availability` date-JSON approach for auto-release, the README fix needed) written into `worklog.md` for that session to pick up directly — batch size still open, ask again at that session's start.
+
+## 2026-09-09 (new session) — Game of the Week parked; Unit 02 Checkpoint built and deployed; two open flags resolved
+
+**Context:** Jay opened with: de-emphasize Game of the Week for now (will pick it back up later), finish building/organizing Python Unit 02 content, and explore/confirm nothing else is missing. Re-read all four logs plus both `CLAUDE.md` files first, per the standing rule, then surfaced the real Unit 02 gap list before touching anything.
+
+**Q (asked, answered):** two genuine open decisions before more building — how should Feedback activities work for 02.2-02.5 (per-lesson vs. combined), and where to focus this session's actual build work given everything still missing. → **Combined Feedback activity after 02.6** (not per-lesson). **Build focus: backfill missing 02.3/02.4/02.5 docs + build the Unit 02 Mixed Data-Type Checkpoint + resolve the assignment-operator placement conflict** (02.7, since nothing had started there yet) -- 02.6, 02.7's Code Stepper, Adaptive Review, Mastery Check, and Project explicitly left out of scope for this session.
+
+**Resolved this session:** both flags written into `course-plan.md`/`decisions-log.md`. Checkpoint built and deployed live (cmid=268) -- see `worklog.md`'s matching entry for the full build record, including a real `www-data`-can't-read-`/home/jay` permission bug hit and fixed mid-deploy. 02.3-02.5 doc backfill dispatched to a parallel fork within the same session; its own worklog entry has the details once it lands.
+
+**Next up:** review the Checkpoint and the backfilled docs once the fork reports back; pick a real video for the Checkpoint's "Review on 1.1" subtopic (not yet chosen, flagged not guessed); then 02.6 Type Conversion is next in the build queue per Jay's own prioritization, followed by 02.7's new Code Stepper component.
+
+**Session ending here at Jay's request** — nothing left mid-flight; everything above is either live-and-logged or planned-and-logged, not silently pending.

@@ -5,10 +5,10 @@ Tracks third-party instructional videos assigned to specific lessons, so the dec
 | Lesson | Video | Creator | Length | YouTube link | Status |
 |---|---|---|---|---|---|
 | 02.1 Variables and Memory | Python Variables — Python Tutorial for Beginners with Examples \| Mosh | Programming with Mosh | 6:35 | https://www.youtube.com/watch?v=cQT33yu9pY8 | **Live** — embedded in `content/unit_02_variables_and_data/lesson_02_01_variables_and_memory/01_instruction.html` |
-| 02.2 Integers | Python Tutorial for Beginners 3: Integers and Floats - Working with Numeric Data | Corey Schafer | not yet confirmed — check on YouTube before deploying | https://www.youtube.com/watch?v=khKv-8q7YmY | Assigned 2026-09-08, not yet embedded (02.2 not authored yet) |
-| 02.3 Floats | Python Integers vs Floats - Visually Explained | Visually Explained | not yet confirmed — check on YouTube before deploying | https://www.youtube.com/watch?v=1lGXcaK6vqs | Assigned 2026-09-08, not yet embedded (02.3 not authored yet) |
-| 02.4 Strings | Python Strings \|\| Python Tutorial \|\| Python Programming | Socratica | not yet confirmed — check on YouTube before deploying | https://www.youtube.com/watch?v=iAzShkKzpJo | Assigned 2026-09-08, not yet embedded (02.4 not authored yet) |
-| 02.5 Booleans | Python Booleans \|\| Python Tutorial \|\| Learn Python Programming | Socratica | 4:39 | https://www.youtube.com/watch?v=9OK32jb_TdI | Assigned 2026-09-08, not yet embedded (02.5 not authored yet) |
+| 02.2 Integers | Python Tutorial for Beginners 3: Integers and Floats - Working with Numeric Data | Corey Schafer | **still not independently confirmed** — title/creator verified live via YouTube oEmbed 2026-09-09, but automated length lookup failed (YouTube served a stripped page to this droplet's fetches); confirm the runtime by eye before a class watches it | https://www.youtube.com/watch?v=khKv-8q7YmY | **Live** 2026-09-09 — embedded in both the Instruction page (`content/unit_02_variables_and_data/lesson_02_02_integers/01_instruction.html`, real course cmid=259) and the new Coding Exercise (cmid=264) |
+| 02.3 Floats | Python Integers vs Floats - Visually Explained | Visually Explained | **still not independently confirmed**, same caveat as 02.2's row | https://www.youtube.com/watch?v=1lGXcaK6vqs | **Live** 2026-09-09 — Instruction cmid=260, Coding Exercise cmid=265 |
+| 02.4 Strings | Python Strings \|\| Python Tutorial \|\| Python Programming | Socratica | **still not independently confirmed**, same caveat as 02.2's row | https://www.youtube.com/watch?v=iAzShkKzpJo | **Live** 2026-09-09 — Instruction cmid=261, Coding Exercise cmid=266 |
+| 02.5 Booleans | Python Booleans \|\| Python Tutorial \|\| Learn Python Programming | Socratica | 4:39 (Jay-confirmed, used as-is) | https://www.youtube.com/watch?v=9OK32jb_TdI | **Live** 2026-09-09 — Instruction cmid=262, Coding Exercise cmid=267 |
 
 ## Why the Corey Schafer video landed on 02.2, not 02.3
 

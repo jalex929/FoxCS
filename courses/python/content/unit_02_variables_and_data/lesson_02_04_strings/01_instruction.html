@@ -1,0 +1,832 @@
+<!-- Sandbox prototype, 2026-09-08. Instruction module for 02.4 Strings, built
+     against skills-map.md's "02.4 Strings" section (5 skills:
+     identifies_string_type, recognizes_quotes_override_appearance,
+     distinguishes_string_from_variable, recognizes_numeric_looking_string,
+     recognizes_boolean_looking_string). Same pattern as 02.1-02.3 -- see
+     ../lesson_02_02_integers/01_instruction.html. GMetrix tie-in: Domain 1
+     Lesson 2 Objective 1.1.1 (111-str.py). Video: Socratica's "Python
+     Strings," per ../../../video-resources.md (length not yet independently
+     confirmed -- verify on YouTube before this goes live in any real
+     course). Deployed via
+     ../../../../../07-infrastructure/moodle-scripts/create-sandbox-unit02-04-strings-instruction.php. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>2.4 Strings: FoxCS: Python</title>
+<style>
+  body { font-family: Verdana, Arial, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; line-height: 1.55; }
+  h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  h2 { color: #2a3a52; margin-top: 2.2rem; }
+  h3 { color: #2a3a52; margin-top: 1.6rem; }
+  h4 { color: #2a3a52; margin-top: 1.3rem; font-size: 1rem; }
+  code { font-family: Consolas, monospace; background: #eef1f5; padding: 0.1rem 0.35rem; border-radius: 3px; }
+  pre { background: #eef1f5; padding: 0.7rem 1rem; border-radius: 6px; font-family: Consolas, monospace; overflow-x: auto; }
+  table.rules { border-collapse: collapse; margin: 0.8rem 0; width: 100%; }
+  table.rules th, table.rules td { border: 1px solid #dde3ea; padding: 0.4rem 0.7rem; text-align: left; font-size: 0.92rem; }
+  table.rules th { background: #f4f6f9; }
+
+  .micro-diagram { display: block; width: 100%; max-width: 460px; height: auto; margin: 1.4rem auto; }
+
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.game { background: #f4f2fb; border-color: #ded7f5; }
+  .concept-card.game .concept-card-label { color: #4a3aa7; }
+  .concept-card.usability { background: #e9f6f6; border-color: #bfe3e3; }
+  .concept-card.usability .concept-card-label { color: #0d6b6b; }
+
+  .quick-check { border: 1px solid #ccd3dd; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
+  .quick-check-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .quick-check-prompt { margin-bottom: 0.7rem; }
+  .quick-check select { font-family: Consolas, monospace; font-size: 0.95rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .quick-check button { background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 0.5rem; }
+  .quick-check button:hover { background: #12467f; }
+  .quick-check .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
+  .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+
+  .card-scene { perspective: 1400px; margin: 1rem 0; }
+  .card { position: relative; width: 100%; max-width: 420px; min-height: 160px; cursor: pointer; }
+  .card-inner { position: relative; width: 100%; height: 100%; min-height: 160px; transition: transform 0.5s cubic-bezier(0.4,0.2,0.2,1); transform-style: preserve-3d; }
+  .card.flipped .card-inner { transform: rotateY(180deg); }
+  .card-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 14px; padding: 1.3rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .card-front { background: #f4f6f9; border: 3px solid #1a5aa8; }
+  .card-back { background: #1a5aa8; color: white; text-align: left; align-items: flex-start; justify-content: center; transform: rotateY(180deg); }
+  .face-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: bold; opacity: 0.75; margin-bottom: 0.5rem; }
+  .card-front .face-label { color: #1a5aa8; }
+  .card-back .face-label { color: #eaf1fb; }
+  .term-text { font-size: 1.4rem; font-weight: bold; color: #1a3a5c; }
+  .def-text { font-size: 1rem; font-family: Georgia, serif; line-height: 1.5; }
+  .card-hint { color: #555; font-size: 0.82rem; margin-top: 0.5rem; }
+  .card-nav { display: flex; gap: 0.5rem; margin-top: 0.7rem; }
+  .card-nav button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.4rem 0.9rem; border-radius: 5px; cursor: pointer; font-size: 0.85rem; }
+  .card-nav button:hover { background: #12467f; }
+
+  .chip { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
+  .chip.spiral { background: #eef1f5; color: #4a5f7d; }
+  .chip.game { background: #f4f2fb; color: #4a3aa7; }
+  .chip.usability { background: #e9f6f6; color: #0d6b6b; }
+
+  .node-heading { margin-top: 2rem; padding-top: 0.6rem; border-top: 2px solid #dde3ea; }
+  .drill { border: 1px solid #d7dee8; border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .drill-type { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .drill[hidden] { display: none; }
+
+  .ide-demo { border-radius: 8px; overflow: hidden; margin: 0.8rem 0; background: #1e2430; }
+  .ide-toolbar { background: #161b24; padding: 0.35rem 0.9rem; font-family: Consolas, monospace; font-size: 0.8rem; color: #9fb3c8; }
+  .ide-code { color: #e6e9ef; font-family: Consolas, monospace; padding: 1rem; white-space: pre; font-size: 0.92rem; }
+  .scaffold-blank { font-family: Consolas, monospace; background: #33415c; color: #fff; border: 2px solid #5b9bd8; border-radius: 4px; padding: 0.1rem 0.4rem; width: 32ch; }
+  .rc-output { background: #14181f; color: #d7ffd7; font-family: Consolas, monospace; padding: 0.7rem 0.9rem; border-radius: 6px; margin-top: 0.6rem; white-space: pre-wrap; display: none; }
+
+  .code-choice-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 2px solid #d7dee8; border-radius: 8px; margin-bottom: 0.6rem; cursor: pointer; }
+  .code-choice-option:hover { border-color: #a9c2e0; }
+  .code-choice-option.selected { border-color: #1a5aa8; background: #eef4fb; }
+  .code-choice-option.correct { border-color: #2f8f4f; background: #e6f4ea; }
+  .code-choice-option.incorrect { border-color: #c0503a; background: #fbeae5; }
+  .code-choice-option input { margin-top: 0.5rem; }
+  .code-choice-option pre { margin: 0; background: transparent; padding: 0; flex: 1; }
+
+  .check-btn { background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 0.6rem; }
+  .check-btn:hover { background: #12467f; }
+  .feedback { margin-top: 0.7rem; font-weight: bold; min-height: 1.2em; }
+  .feedback.correct { color: #1a7f37; }
+  .feedback.incorrect { color: #b3261e; }
+
+  .hint-toggle { background: none; border: 1px solid #ccd3dd; color: #445; padding: 0.3rem 0.8rem; border-radius: 5px; cursor: pointer; font-size: 0.82rem; margin-top: 0.5rem; }
+  .hint-toggle:hover { background: #eef1f5; }
+  .hint-box { display: none; margin-top: 0.5rem; padding: 0.6rem 0.8rem; background: #fdf6e8; border-radius: 6px; font-size: 0.88rem; color: #7a4800; }
+
+  .review-note { padding: 0.7rem 1rem; background: #f4f6f9; border-radius: 6px; font-size: 0.9rem; color: #444; margin-top: 0.6rem; }
+
+  .video-card { border: 1px solid #d7dee8; border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1.4rem 0; background: #f9fafc; }
+  .video-card-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.7rem; }
+  .video-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .video-meta { font-size: 0.85rem; color: #445; margin-bottom: 0.7rem; }
+  .video-wrap { position: relative; width: 100%; padding-top: 56.25%; border-radius: 6px; overflow: hidden; background: #000; }
+  .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .headphones-note { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #7a4800; background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 6px; padding: 0.5rem 0.8rem; margin-top: 0.7rem; }
+  .headphones-note svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .video-backup-link { font-size: 0.82rem; margin-top: 0.6rem; }
+  .video-backup-link a { color: #1a5aa8; }
+
+  .progress-note { font-size: 0.85rem; color: #555; margin: 0.6rem 0 1.2rem; }
+  #complete-banner { display: none; margin-top: 1.6rem; padding: 0.9rem 1.1rem; border-radius: 10px; background: #e6f4ea; border: 1px solid #b7e0c3; color: #1a7f37; font-weight: bold; }
+  #save-status-global { font-size: 0.78rem; color: #6a737b; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+
+<h1>2.4 Strings</h1>
+<div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:#12467f;background:#eaf2fb;border:1px solid #bcd6f0;border-radius:6px;padding:0.6rem 0.9rem;margin:0.8rem 0 1.2rem;font-weight:bold;">All 2.4 content is due by 09/10/2026 and cannot be submitted late after 09/28/2026.</div>
+<p>A player's name, a room description, a menu item. Anything made of text is a <strong>string</strong> in Python. You've already used strings constantly since Lesson 1 -- this lesson makes what actually makes something a string precise.</p>
+
+<div class="video-card">
+<div class="video-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>Watch First</div>
+<div class="video-meta"><strong>Python Strings || Python Tutorial || Python Programming</strong>, by Socratica.</div>
+<div class="video-wrap">
+<iframe src="https://www.youtube.com/embed/iAzShkKzpJo" title="Python Strings || Python Tutorial || Python Programming | Socratica" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<div class="headphones-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>Use your headphones at your station for this video.</div>
+<div class="video-backup-link">Video not loading? Watch it directly on YouTube: <a href="https://www.youtube.com/watch?v=iAzShkKzpJo" target="_blank" rel="noopener">https://www.youtube.com/watch?v=iAzShkKzpJo</a></div>
+</div>
+<p>This video covers strings broadly. The rest of this lesson covers exactly what you're accountable for: recognizing a string, understanding that quotation marks decide the type no matter what's inside them, telling a variable apart from a quoted word that looks like it, and spotting numbers and booleans disguised as strings.</p>
+
+<h2 id="learn">Learn</h2>
+
+<h3 id="learn-what">What Is a String?</h3>
+<p>A string is text: letters, numbers, symbols, spaces -- anything -- wrapped in quotation marks.</p>
+<pre>player_name = "Rowan"
+room = "the armory"
+message = "You found 3 gold coins!"</pre>
+<p>Notice that last example: <code>"You found 3 gold coins!"</code> contains digits, but the whole thing is still one string, because the quotation marks wrap all of it.</p>
+
+<svg class="micro-diagram" viewBox="0 0 700 280" role="img" aria-label="A box labeled player_name with an arrow pointing into it, and the quoted text Rowan sitting inside the box.">
+  <text x="350" y="55" text-anchor="middle" font-family="Consolas, monospace" font-size="36" font-weight="bold" fill="#17365f">player_name</text>
+  <line x1="350" y1="72" x2="350" y2="105" stroke="#1457d9" stroke-width="3"/>
+  <polygon points="350,113 340,97 360,97" fill="#1457d9"/>
+  <rect x="230" y="115" width="240" height="130" rx="20" fill="#dce8f8" stroke="#3d73c7" stroke-width="3"/>
+  <text x="350" y="197" text-anchor="middle" font-family="Consolas, monospace" font-size="40" font-weight="bold" fill="#138a3d">"Rowan"</text>
+</svg>
+
+<div class="concept-card game">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><line x1="12" y1="10" x2="12" y2="17"/><path d="M7 17h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>Game Connection</div>
+<p>Every piece of text a player actually reads -- dialogue, item names, room descriptions, menu options -- is a string. If a player can read it on screen, it's almost certainly text under the hood.</p>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which of these is a string?</div>
+  <select id="qc1-select">
+    <option value="">Choose one...</option>
+    <option value="a">"Welcome, traveler!"</option>
+    <option value="b">5</option>
+    <option value="c">True</option>
+  </select>
+  <button onclick="qcCheck('qc1', 'a')">Check</button>
+  <div class="feedback" id="qc1-feedback"></div>
+</div>
+
+<h3 id="learn-quotes">Quotes Override Appearance</h3>
+<p>This is the single most important rule about strings: whatever is inside quotation marks is text, no matter what it looks like. Python doesn't check the contents to decide the type -- it just checks for the quotation marks.</p>
+<pre>score = 100      # an integer
+id_code = "100"  # a string -- looks numeric, is still text
+paused = True    # a boolean
+state = "True"   # a string -- looks like a boolean, is still text</pre>
+<p>Anything wrapped in quotes is a string. That includes numbers, the words <code>True</code>/<code>False</code>, even another variable's name spelled out. The quotes always win.</p>
+
+<div class="concept-card usability">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>Usability Note</div>
+<p>This is exactly why <code>player_id = "042"</code> from Lesson 2.2 works: even though it's all digits, wrapping it in quotes tells Python (and anyone reading the code) that this is an identifier to display, not a number to calculate with.</p>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">What type is <code>"42"</code> (with the quotation marks)?</div>
+  <select id="qc2-select">
+    <option value="">Choose one...</option>
+    <option value="a">Integer, since it's made of digits</option>
+    <option value="b">String, since it's inside quotation marks</option>
+  </select>
+  <button onclick="qcCheck('qc2', 'b')">Check</button>
+  <div class="feedback" id="qc2-feedback"></div>
+</div>
+
+<h3 id="learn-variable">A Variable Name vs. a Quoted Word</h3>
+<p><code>room</code> and <code>"room"</code> look almost the same, but they mean completely different things to Python.</p>
+<pre>room = "kitchen"
+print(room)     # kitchen -- prints the variable's stored value
+print("room")   # room -- prints the literal word, quotes and all removed</pre>
+<p>Without quotes, Python looks up a variable and uses whatever value it's holding. With quotes, Python just uses the text exactly as written -- it never looks anything up.</p>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt"><code>x = "score"</code> was created. What does <code>print(x)</code> actually print?</div>
+  <select id="qc3-select">
+    <option value="">Choose one...</option>
+    <option value="a">x</option>
+    <option value="b">score</option>
+    <option value="c">"score"</option>
+  </select>
+  <button onclick="qcCheck('qc3', 'b')">Check</button>
+  <div class="feedback" id="qc3-feedback"></div>
+</div>
+
+<h3 id="learn-disguised">Numbers and Booleans in Disguise</h3>
+<p>Watch out for values that look like a number or a boolean but are actually strings:</p>
+<pre>count = "5"      # looks like an integer -- it's a string
+flag = "True"    # looks like a boolean -- it's a string</pre>
+<p>These matter because a numeric-looking string does not do math the way you'd expect. <code>"5" + "5"</code> doesn't give you <code>10</code> -- it gives you <code>"55"</code>, since <code>+</code> on two strings joins them together instead of adding.</p>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">What does <code>print("5" + "5")</code> actually print?</div>
+  <select id="qc4-select">
+    <option value="">Choose one...</option>
+    <option value="a">10</option>
+    <option value="b">55</option>
+    <option value="c">It crashes</option>
+  </select>
+  <button onclick="qcCheck('qc4', 'b')">Check</button>
+  <div class="feedback" id="qc4-feedback"></div>
+</div>
+
+<h2 id="terms">Key Terms</h2>
+<p>Flip each card, then try the quick check below.</p>
+
+<div class="card-scene">
+  <div class="card" id="card" onclick="flipCard()">
+    <div class="card-inner" id="cardInner">
+      <div class="card-face card-front">
+        <div class="face-label">Term</div>
+        <div class="term-text" id="termText"></div>
+      </div>
+      <div class="card-face card-back">
+        <div class="face-label">Definition</div>
+        <div class="def-text" id="defText"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-hint">Click the card to flip it. (<span id="cardNum">1</span> of <span id="cardTotal"></span>)</div>
+<div class="card-nav">
+  <button onclick="prevCard()">&larr; Previous</button>
+  <button onclick="nextCard()">Next &rarr;</button>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">What decides whether a value is a string -- what it says, or how it's written?</div>
+  <select id="qc5-select">
+    <option value="">Choose one...</option>
+    <option value="a">What it says</option>
+    <option value="b">How it's written (quotation marks or not)</option>
+  </select>
+  <button onclick="qcCheck('qc5', 'b')">Check</button>
+  <div class="feedback" id="qc5-feedback"></div>
+</div>
+
+<h2 id="practice">Practice</h2>
+<p>Five short skill checks, one per skill. Work through them in order.</p>
+<div class="progress-note" id="progress-note">0 of 5 skill checks complete.</div>
+
+<!-- ======================= NODE 1: identifies_string_type ======================= -->
+<div class="node-heading"><strong>Skill Check 1 of 5</strong></div>
+<div class="drill" id="n1-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Player Name: Rowan</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n1-core-blank" class="scaffold-blank" data-expected='player_name = "Rowan"' placeholder="type your code here">
+print("Player Name:", player_name)</div>
+  </div>
+  <button class="check-btn" onclick="n1CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n1-hint')">Need a hint?</button>
+  <div class="hint-box" id="n1-hint">A string needs quotation marks around it.</div>
+  <pre class="rc-output" id="n1-core-output"></pre>
+  <div class="feedback" id="n1-core-feedback"></div>
+</div>
+
+<div class="drill" id="n1-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which of these is a string?</p>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="a"><pre>Rowan</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="b"><pre>"Rowan"</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="c"><pre>5</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="d"><pre>True</pre></label>
+  <button class="check-btn" onclick="n1ReinforceCheck()">Check</button>
+  <div class="feedback" id="n1-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n1-reinforce-exhausted" hidden>Option a with no quotation marks isn't valid Python on its own (it would look like a variable name). Quotation marks are what make text a string. Continue to the next item below.</div>
+
+<div class="drill" id="n1-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>&lt;class 'str'&gt;</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">greeting = "Hello"
+<input type="text" id="n1-extend-blank" class="scaffold-blank" data-expected="print(type(greeting))" placeholder="type your code here" style="width:36ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n1ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n1-extend-output"></pre>
+  <div class="feedback" id="n1-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 2: recognizes_quotes_override_appearance ======================= -->
+<div class="node-heading"><strong>Skill Check 2 of 5</strong></div>
+<div class="drill" id="n2-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>ID Code: 100</pre>
+  <p>The blank needs to create <code>id_code</code> as text on purpose, even though it's made of digits.</p>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n2-core-blank" class="scaffold-blank" data-expected='id_code = "100"' placeholder="type your code here">
+print("ID Code:", id_code)</div>
+  </div>
+  <button class="check-btn" onclick="n2CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n2-hint')">Need a hint?</button>
+  <div class="hint-box" id="n2-hint">Digits alone make an integer. Wrap them in quotation marks to make a string instead.</div>
+  <pre class="rc-output" id="n2-core-output"></pre>
+  <div class="feedback" id="n2-core-feedback"></div>
+</div>
+
+<div class="drill" id="n2-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p><code>"True"</code> is written with quotation marks. What type is it?</p>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="a"><pre>Boolean</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="b"><pre>String</pre></label>
+  <button class="check-btn" onclick="n2ReinforceCheck()">Check</button>
+  <div class="feedback" id="n2-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n2-reinforce-exhausted" hidden>The quotation marks make this a string, even though the word inside looks like a boolean. Continue to the next item below.</div>
+
+<div class="drill" id="n2-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>&lt;class 'str'&gt;</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">quantity = "42"
+<input type="text" id="n2-extend-blank" class="scaffold-blank" data-expected="print(type(quantity))" placeholder="type your code here" style="width:36ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n2ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n2-extend-output"></pre>
+  <div class="feedback" id="n2-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 3: distinguishes_string_from_variable ======================= -->
+<div class="node-heading"><strong>Skill Check 3 of 5</strong></div>
+<div class="drill" id="n3-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>cave</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">location = "cave"
+<input type="text" id="n3-core-blank" class="scaffold-blank" data-expected="print(location)" placeholder="type your code here" style="width:24ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n3CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n3-hint')">Need a hint?</button>
+  <div class="hint-box" id="n3-hint">No quotation marks around the variable name -- that tells Python to look up its stored value.</div>
+  <pre class="rc-output" id="n3-core-output"></pre>
+  <div class="feedback" id="n3-core-feedback"></div>
+</div>
+
+<div class="drill" id="n3-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p><code>x = "score"</code> was created. What does <code>print(x)</code> actually print?</p>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="a"><pre>x</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="b"><pre>score</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="c"><pre>"score"</pre></label>
+  <button class="check-btn" onclick="n3ReinforceCheck()">Check</button>
+  <div class="feedback" id="n3-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n3-reinforce-exhausted" hidden><code>print(x)</code>, with no quotes around x, looks up the variable and uses its stored value: score. Continue to the next item below.</div>
+
+<div class="drill" id="n3-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p><code>location = "cave"</code> already exists. Fill in the blank so the program prints exactly the word <strong>location</strong> itself, not the variable's stored value:</p>
+  <pre>location</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">location = "cave"
+<input type="text" id="n3-extend-blank" class="scaffold-blank" data-expected='print("location")' placeholder="type your code here" style="width:24ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n3ExtendCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n3-extend-hint')">Need a hint?</button>
+  <div class="hint-box" id="n3-extend-hint">To print the literal word, put quotation marks around it, so Python doesn't look it up as a variable.</div>
+  <pre class="rc-output" id="n3-extend-output"></pre>
+  <div class="feedback" id="n3-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 4: recognizes_numeric_looking_string ======================= -->
+<div class="node-heading"><strong>Skill Check 4 of 5</strong></div>
+<div class="drill" id="n4-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Zip Code: 60601</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n4-core-blank" class="scaffold-blank" data-expected='zip_code = "60601"' placeholder="type your code here">
+print("Zip Code:", zip_code)</div>
+  </div>
+  <button class="check-btn" onclick="n4CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n4-hint')">Need a hint?</button>
+  <div class="hint-box" id="n4-hint">A zip code is never used in math, so it belongs in quotation marks even though it's all digits.</div>
+  <pre class="rc-output" id="n4-core-output"></pre>
+  <div class="feedback" id="n4-core-feedback"></div>
+</div>
+
+<div class="drill" id="n4-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>Is <code>"100"</code> an integer or a string?</p>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="a"><pre>Integer</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="b"><pre>String</pre></label>
+  <button class="check-btn" onclick="n4ReinforceCheck()">Check</button>
+  <div class="feedback" id="n4-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n4-reinforce-exhausted" hidden>Quotation marks always win over appearance -- this is a string. Continue to the next item below.</div>
+
+<div class="drill" id="n4-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p><code>count = "5"</code> already exists. Fill in the blank so the program prints exactly:</p>
+  <pre>55</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">count = "5"
+<input type="text" id="n4-extend-blank" class="scaffold-blank" data-expected="print(count + count)" placeholder="type your code here" style="width:24ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n4ExtendCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n4-extend-hint')">Need a hint?</button>
+  <div class="hint-box" id="n4-extend-hint">count is a string, so + joins the text together instead of adding numbers.</div>
+  <pre class="rc-output" id="n4-extend-output"></pre>
+  <div class="feedback" id="n4-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 5: recognizes_boolean_looking_string ======================= -->
+<div class="node-heading"><strong>Skill Check 5 of 5</strong></div>
+<div class="drill" id="n5-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Status: True</pre>
+  <p>The blank needs to create <code>status</code> as a string that happens to say "True," not the real Python boolean.</p>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n5-core-blank" class="scaffold-blank" data-expected='status = "True"' placeholder="type your code here">
+print("Status:", status)</div>
+  </div>
+  <button class="check-btn" onclick="n5CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n5-hint')">Need a hint?</button>
+  <div class="hint-box" id="n5-hint">Wrap True in quotation marks to make it a string instead of the real boolean.</div>
+  <pre class="rc-output" id="n5-core-output"></pre>
+  <div class="feedback" id="n5-core-feedback"></div>
+</div>
+
+<div class="drill" id="n5-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which of these is the real Python boolean, not a string that looks like one?</p>
+  <label class="code-choice-option"><input type="radio" name="n5-reinforce" value="a"><pre>"True"</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n5-reinforce" value="b"><pre>True</pre></label>
+  <button class="check-btn" onclick="n5ReinforceCheck()">Check</button>
+  <div class="feedback" id="n5-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n5-reinforce-exhausted" hidden>Without quotation marks, True is the real Python boolean. With quotation marks, it's just a string that happens to say "True." Continue to the next item below.</div>
+
+<div class="drill" id="n5-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>&lt;class 'str'&gt;</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">door_locked = "False"
+<input type="text" id="n5-extend-blank" class="scaffold-blank" data-expected="print(type(door_locked))" placeholder="type your code here" style="width:36ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n5ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n5-extend-output"></pre>
+  <div class="feedback" id="n5-extend-feedback"></div>
+</div>
+
+<div id="complete-banner">&#10003; Practice complete. Your work has been saved.</div>
+<div id="save-status-global"></div>
+
+<script src="../../../../../02-authoring-system/skulpt-runtime/skulpt.min.js"></script>
+<script src="../../../../../02-authoring-system/skulpt-runtime/skulpt-stdlib.js"></script>
+<script>
+var CMID = "__CMID__";
+var ENDPOINT = '/local/foxcstelemetry/log.php';
+var sesskey = null;
+var globalStatus = document.getElementById('save-status-global');
+
+function bootstrap(cb) {
+  fetch(ENDPOINT + '?action=bootstrap&cmid=' + CMID, { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { sesskey = data.sesskey; cb(); })
+    .catch(function () { globalStatus.textContent = 'Could not reach the save endpoint.'; });
+}
+function logEvent(eventtype, payload, complete) {
+  if (!sesskey) { bootstrap(function () { logEvent(eventtype, payload, complete); }); return; }
+  var body = new URLSearchParams();
+  body.set('action', 'log');
+  body.set('sesskey', sesskey);
+  body.set('cmid', CMID);
+  body.set('eventtype', eventtype);
+  body.set('payload', JSON.stringify(payload));
+  if (complete) body.set('complete', '1');
+  fetch(ENDPOINT, { method: 'POST', credentials: 'same-origin', body: body })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      globalStatus.textContent = 'Saved ' + new Date().toLocaleTimeString() + '.';
+      if (data.completed) document.getElementById('complete-banner').style.display = 'block';
+    })
+    .catch(function () { globalStatus.textContent = 'Save failed. This will not block you from continuing.'; });
+}
+bootstrap(function () { logEvent('viewed', { page: 'lesson_02_04/01_instruction' }, false); });
+setInterval(function () { if (!document.hidden) { logEvent('heartbeat', {}, false); } }, 30000);
+
+var progress = { nodesResolved: { n1: false, n2: false, n3: false, n4: false, n5: false } };
+function nodesResolvedCount() { return Object.values(progress.nodesResolved).filter(Boolean).length; }
+function updateProgressNote() { document.getElementById('progress-note').textContent = nodesResolvedCount() + ' of 5 skill checks complete.'; }
+function maybeComplete() {
+  var all = progress.nodesResolved.n1 && progress.nodesResolved.n2 && progress.nodesResolved.n3 && progress.nodesResolved.n4 && progress.nodesResolved.n5;
+  if (all) logEvent('lesson_complete', { skill_ids: ['identifies_string_type', 'recognizes_quotes_override_appearance', 'distinguishes_string_from_variable', 'recognizes_numeric_looking_string', 'recognizes_boolean_looking_string'] }, true);
+}
+function resolveNode(n) {
+  if (progress.nodesResolved[n]) return;
+  progress.nodesResolved[n] = true;
+  updateProgressNote();
+  maybeComplete();
+}
+
+function skRead(x) {
+  if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) { throw "File not found: '" + x + "'"; }
+  return Sk.builtinFiles["files"][x];
+}
+function runSkulpt(code, onDone) {
+  var captured = [];
+  Sk.configure({ output: function (t) { captured.push(t); }, read: skRead });
+  Sk.misceval.asyncToPromise(function () { return Sk.importMainWithBody("<stdin>", false, code, true); }).then(
+    function () { onDone(captured.join('').trim()); },
+    function (err) { captured.push(String(err)); onDone(captured.join('').trim()); }
+  );
+}
+function toggleHint(id) {
+  var box = document.getElementById(id);
+  var show = box.style.display !== 'block';
+  box.style.display = show ? 'block' : 'none';
+  if (show) logEvent('hint_reveal', { hint_id: id }, false);
+}
+
+/* ================= NODE 1: identifies_string_type ================= */
+var n1Attempt = { core: 0, reinforce: 0 };
+function n1CoreCheck() {
+  n1Attempt.core++;
+  var blank = document.getElementById('n1-core-blank').value;
+  var code = blank + '\nprint("Player Name:", player_name)';
+  var out = document.getElementById('n1-core-output'); var fb = document.getElementById('n1-core-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Player Name: Rowan';
+    fb.textContent = correct ? 'Right. Quotation marks make Rowan a string.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'identifies_string_type', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n1Attempt.core }, false);
+    if (correct) { logEvent('lane_transition', { skill_id: 'identifies_string_type', from: 'core', to: 'extend', reason: 'correct_advance' }, false); document.getElementById('n1-extend').hidden = false; }
+    else if (n1Attempt.core === 1) { logEvent('lane_transition', { skill_id: 'identifies_string_type', from: 'core', to: 'reinforce', reason: 'incorrect' }, false); document.getElementById('n1-reinforce').hidden = false; }
+  });
+}
+function n1ReinforceCheck() {
+  var picked = document.querySelector('input[name="n1-reinforce"]:checked'); var fb = document.getElementById('n1-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n1Attempt.reinforce++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { a: 'With no quotation marks, this would actually be a variable name, not text.', c: 'No quotation marks -- this is an integer.', d: 'No quotation marks -- this is a boolean.' };
+  fb.textContent = correct ? 'Right. "Rowan" has quotation marks around it.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'identifies_string_type', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n1Attempt.reinforce }, false);
+  if (correct) { logEvent('lane_transition', { skill_id: 'identifies_string_type', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false); resolveNode('n1'); }
+  else if (n1Attempt.reinforce === 1) { document.getElementById('n1-reinforce-exhausted').hidden = false; logEvent('lane_transition', { skill_id: 'identifies_string_type', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false); resolveNode('n1'); }
+}
+var n1ExtendAttempt = 0;
+function n1ExtendCheck() {
+  n1ExtendAttempt++;
+  var blank = document.getElementById('n1-extend-blank').value;
+  var code = 'greeting = "Hello"\n' + blank;
+  var out = document.getElementById('n1-extend-output'); var fb = document.getElementById('n1-extend-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === "<class 'str'>";
+    fb.textContent = correct ? 'Right. type() confirms greeting is a string.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'identifies_string_type', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n1ExtendAttempt }, false);
+    resolveNode('n1');
+  });
+}
+
+/* ================= NODE 2: recognizes_quotes_override_appearance ================= */
+var n2Attempt = { core: 0 };
+function n2CoreCheck() {
+  n2Attempt.core++;
+  var blank = document.getElementById('n2-core-blank').value;
+  var code = blank + '\nprint("ID Code:", id_code)';
+  var out = document.getElementById('n2-core-output'); var fb = document.getElementById('n2-core-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'ID Code: 100';
+    fb.textContent = correct ? 'Right. Quotation marks around 100 make it text, on purpose.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'recognizes_quotes_override_appearance', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n2Attempt.core }, false);
+    if (correct) { logEvent('lane_transition', { skill_id: 'recognizes_quotes_override_appearance', from: 'core', to: 'extend', reason: 'correct_advance' }, false); document.getElementById('n2-extend').hidden = false; }
+    else if (n2Attempt.core === 1) { logEvent('lane_transition', { skill_id: 'recognizes_quotes_override_appearance', from: 'core', to: 'reinforce', reason: 'incorrect' }, false); document.getElementById('n2-reinforce').hidden = false; }
+  });
+}
+function n2ReinforceCheck() {
+  var picked = document.querySelector('input[name="n2-reinforce"]:checked'); var fb = document.getElementById('n2-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. The quotation marks make it a string, no matter what word is inside them.' : 'Not quite. Look for the quotation marks, not the word itself.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'recognizes_quotes_override_appearance', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: 1 }, false);
+  document.getElementById('n2-reinforce-exhausted').hidden = false;
+  logEvent('lane_transition', { skill_id: 'recognizes_quotes_override_appearance', from: 'reinforce', to: 'done', reason: correct ? 'correct_recovered' : 'lane_exhausted' }, false);
+  resolveNode('n2');
+}
+var n2ExtendAttempt = 0;
+function n2ExtendCheck() {
+  n2ExtendAttempt++;
+  var blank = document.getElementById('n2-extend-blank').value;
+  var code = 'quantity = "42"\n' + blank;
+  var out = document.getElementById('n2-extend-output'); var fb = document.getElementById('n2-extend-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === "<class 'str'>";
+    fb.textContent = correct ? 'Right. Even though quantity looks numeric, the quotes make it a string.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'recognizes_quotes_override_appearance', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n2ExtendAttempt }, false);
+    resolveNode('n2');
+  });
+}
+
+/* ================= NODE 3: distinguishes_string_from_variable ================= */
+var n3Attempt = { core: 0, reinforce: 0 };
+function n3CoreCheck() {
+  n3Attempt.core++;
+  var blank = document.getElementById('n3-core-blank').value;
+  var code = 'location = "cave"\n' + blank;
+  var out = document.getElementById('n3-core-output'); var fb = document.getElementById('n3-core-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'cave';
+    fb.textContent = correct ? 'Right. print(location) looks up the variable\'s stored value.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'distinguishes_string_from_variable', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n3Attempt.core }, false);
+    if (correct) { logEvent('lane_transition', { skill_id: 'distinguishes_string_from_variable', from: 'core', to: 'extend', reason: 'correct_advance' }, false); document.getElementById('n3-extend').hidden = false; }
+    else if (n3Attempt.core === 1) { logEvent('lane_transition', { skill_id: 'distinguishes_string_from_variable', from: 'core', to: 'reinforce', reason: 'incorrect' }, false); document.getElementById('n3-reinforce').hidden = false; }
+  });
+}
+function n3ReinforceCheck() {
+  var picked = document.querySelector('input[name="n3-reinforce"]:checked'); var fb = document.getElementById('n3-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n3Attempt.reinforce++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { a: 'x is the variable name, not what gets printed.', c: 'Quotation marks only show up if you literally print the quoted word "score".' };
+  fb.textContent = correct ? 'Right. No quotes around x means Python looks up its stored value.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'distinguishes_string_from_variable', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n3Attempt.reinforce }, false);
+  if (correct) { logEvent('lane_transition', { skill_id: 'distinguishes_string_from_variable', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false); resolveNode('n3'); }
+  else if (n3Attempt.reinforce === 1) { document.getElementById('n3-reinforce-exhausted').hidden = false; logEvent('lane_transition', { skill_id: 'distinguishes_string_from_variable', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false); resolveNode('n3'); }
+}
+var n3ExtendAttempt = 0;
+function n3ExtendCheck() {
+  n3ExtendAttempt++;
+  var blank = document.getElementById('n3-extend-blank').value;
+  var code = 'location = "cave"\n' + blank;
+  var out = document.getElementById('n3-extend-output'); var fb = document.getElementById('n3-extend-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'location';
+    fb.textContent = correct ? 'Right. Quoting "location" prints the literal word, ignoring the variable entirely.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'distinguishes_string_from_variable', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n3ExtendAttempt }, false);
+    resolveNode('n3');
+  });
+}
+
+/* ================= NODE 4: recognizes_numeric_looking_string ================= */
+var n4Attempt = { core: 0 };
+function n4CoreCheck() {
+  n4Attempt.core++;
+  var blank = document.getElementById('n4-core-blank').value;
+  var code = blank + '\nprint("Zip Code:", zip_code)';
+  var out = document.getElementById('n4-core-output'); var fb = document.getElementById('n4-core-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Zip Code: 60601';
+    fb.textContent = correct ? 'Right.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'recognizes_numeric_looking_string', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n4Attempt.core }, false);
+    if (correct) { logEvent('lane_transition', { skill_id: 'recognizes_numeric_looking_string', from: 'core', to: 'extend', reason: 'correct_advance' }, false); document.getElementById('n4-extend').hidden = false; }
+    else if (n4Attempt.core === 1) { logEvent('lane_transition', { skill_id: 'recognizes_numeric_looking_string', from: 'core', to: 'reinforce', reason: 'incorrect' }, false); document.getElementById('n4-reinforce').hidden = false; }
+  });
+}
+var n4ReinforceAttempt = 0;
+function n4ReinforceCheck() {
+  var picked = document.querySelector('input[name="n4-reinforce"]:checked'); var fb = document.getElementById('n4-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n4ReinforceAttempt++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. Quotation marks make it a string.' : 'Not quite. Check for quotation marks.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'recognizes_numeric_looking_string', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n4ReinforceAttempt }, false);
+  if (correct) { logEvent('lane_transition', { skill_id: 'recognizes_numeric_looking_string', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false); resolveNode('n4'); }
+  else if (n4ReinforceAttempt === 1) { document.getElementById('n4-reinforce-exhausted').hidden = false; logEvent('lane_transition', { skill_id: 'recognizes_numeric_looking_string', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false); resolveNode('n4'); }
+}
+var n4ExtendAttempt = 0;
+function n4ExtendCheck() {
+  n4ExtendAttempt++;
+  var blank = document.getElementById('n4-extend-blank').value;
+  var code = 'count = "5"\n' + blank;
+  var out = document.getElementById('n4-extend-output'); var fb = document.getElementById('n4-extend-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === '55';
+    fb.textContent = correct ? 'Right. + on two strings joins them together -- it does not add.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'recognizes_numeric_looking_string', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n4ExtendAttempt }, false);
+    resolveNode('n4');
+  });
+}
+
+/* ================= NODE 5: recognizes_boolean_looking_string ================= */
+var n5Attempt = { core: 0, reinforce: 0 };
+function n5CoreCheck() {
+  n5Attempt.core++;
+  var blank = document.getElementById('n5-core-blank').value;
+  var code = blank + '\nprint("Status:", status)';
+  var out = document.getElementById('n5-core-output'); var fb = document.getElementById('n5-core-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Status: True';
+    fb.textContent = correct ? 'Right.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'recognizes_boolean_looking_string', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n5Attempt.core }, false);
+    if (correct) { logEvent('lane_transition', { skill_id: 'recognizes_boolean_looking_string', from: 'core', to: 'extend', reason: 'correct_advance' }, false); document.getElementById('n5-extend').hidden = false; }
+    else if (n5Attempt.core === 1) { logEvent('lane_transition', { skill_id: 'recognizes_boolean_looking_string', from: 'core', to: 'reinforce', reason: 'incorrect' }, false); document.getElementById('n5-reinforce').hidden = false; }
+  });
+}
+function n5ReinforceCheck() {
+  var picked = document.querySelector('input[name="n5-reinforce"]:checked'); var fb = document.getElementById('n5-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n5Attempt.reinforce++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. No quotation marks -- that\'s the real boolean.' : 'Not quite. Look for which option has no quotation marks.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'recognizes_boolean_looking_string', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n5Attempt.reinforce }, false);
+  if (correct) { logEvent('lane_transition', { skill_id: 'recognizes_boolean_looking_string', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false); resolveNode('n5'); }
+  else if (n5Attempt.reinforce === 1) { document.getElementById('n5-reinforce-exhausted').hidden = false; logEvent('lane_transition', { skill_id: 'recognizes_boolean_looking_string', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false); resolveNode('n5'); }
+}
+var n5ExtendAttempt = 0;
+function n5ExtendCheck() {
+  n5ExtendAttempt++;
+  var blank = document.getElementById('n5-extend-blank').value;
+  var code = 'door_locked = "False"\n' + blank;
+  var out = document.getElementById('n5-extend-output'); var fb = document.getElementById('n5-extend-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === "<class 'str'>";
+    fb.textContent = correct ? 'Right. Even though it says False, the quotation marks make it a string.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'recognizes_boolean_looking_string', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n5ExtendAttempt }, false);
+    resolveNode('n5');
+  });
+}
+
+/* ---------------- Flashcards ---------------- */
+var CARDS = [
+  { term: 'string', def: 'Text wrapped in quotation marks: letters, digits, symbols, spaces -- anything, as long as it is quoted.' },
+  { term: 'quotes override appearance', def: 'Whatever is inside quotation marks is a string, no matter what it looks like -- even a number or True/False.' },
+  { term: 'variable vs. literal', def: 'name (no quotes) looks up a variable\'s value. "name" (quoted) is just the literal word, quotes removed.' }
+];
+var cardIndex = 0;
+function renderCard() {
+  document.getElementById('card').classList.remove('flipped');
+  document.getElementById('termText').textContent = CARDS[cardIndex].term;
+  document.getElementById('defText').textContent = CARDS[cardIndex].def;
+  document.getElementById('cardNum').textContent = cardIndex + 1;
+  document.getElementById('cardTotal').textContent = CARDS.length;
+}
+function flipCard() { var flipped = document.getElementById('card').classList.toggle('flipped'); if (flipped) { logEvent('flashcard_flip', { term: CARDS[cardIndex].term }, false); } }
+function nextCard() { cardIndex = (cardIndex + 1) % CARDS.length; renderCard(); }
+function prevCard() { cardIndex = (cardIndex - 1 + CARDS.length) % CARDS.length; renderCard(); }
+renderCard();
+
+function qcCheck(id, expected) {
+  var picked = document.getElementById(id + '-select').value;
+  var fb = document.getElementById(id + '-feedback');
+  if (!picked) { fb.textContent = 'Choose an answer first.'; fb.className = 'feedback incorrect'; return; }
+  var correct = picked === expected;
+  fb.textContent = correct ? 'Right.' : 'Not quite. Take another look above.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('quick_check', { id: id, correct: correct }, false);
+}
+</script>
+</body>
+</html>

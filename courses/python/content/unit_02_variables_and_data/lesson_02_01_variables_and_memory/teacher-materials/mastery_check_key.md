@@ -1,5 +1,7 @@
 # 2.1 Mastery Check Answer Key
 
+**Live status, 2026-09-09:** promoted from the sandbox pilot (course id=9, quizid=11, cmid=240) to the real `foxcs-python` course -- same 4 questions and answer variants, transcribed exactly, not rewritten. Live cmid=269, quizid=12, section 3 (Unit 02), positioned right after 02.1 Project (248) in the module sequence. Grade set to 10 points per `feedback_lesson_point_scale.md`'s standing scale (the sandbox pilot and Unit 01's live Mastery Checks used a 100-point convention that predates this rule). Password: `Mango47$`. Deployed as part of reinstating per-lesson Mastery Checks as the standard for Unit 02 -- see `decisions-log.md`'s 2026-09-09 entry. Not yet reviewed by Jay on the real course.
+
 4 items, native Moodle quiz (shortanswer + multichoice, deterministic auto-grading per `mastery-check-standards.md`'s "prefer deterministic validation" rule). 3 attempts, averaged. DOK 2-3, each item synthesizes across more than one of this lesson's 4 skill nodes rather than repeating a single Practice item verbatim.
 
 ## Item 1 (shortanswer) — predicts output of a reassignment

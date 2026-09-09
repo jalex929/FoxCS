@@ -20,7 +20,7 @@ This is a baseline pass, not a deep audit: files touched this session (2026-08-3
 | lesson-navigation-standards.md | | not yet audited | |
 | lesson-quality-standards.md | | not yet audited | Source of Truth doc — see CLAUDE.md |
 | lesson-schema.md | | not yet audited | Source of Truth doc — see CLAUDE.md |
-| mastery-check-standards.md | | not yet audited | Source of Truth doc — see CLAUDE.md |
+| mastery-check-standards.md | 2026-09-09 | stable | Source of Truth doc — see CLAUDE.md. Open item resolved (Moodle Quiz confirmed default, not VS Code); new standing rule added (no starter-file scaffolding for a VS Code Mastery Check item, per Jay's IntelliSense-autofill concern) |
 | moodle-lesson-ladder-setup.md | | not yet audited | paused, kept for reference |
 | moodle-quick-pilot-workflow.md | | not yet audited | paused, kept for reference |
 | mvp-unit-folder-structure.md | | not yet audited | |

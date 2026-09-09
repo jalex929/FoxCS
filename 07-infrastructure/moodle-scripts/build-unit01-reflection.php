@@ -106,10 +106,26 @@ foxcs_add_textarea($feedback, 'Unit 01 Journal',
     . 'Describe the Input-Process-Output loop for a game you know, using specific examples.',
     true);
 
-// 2. A light unit-level confidence check, distinct from any single lesson's own feedback.
-foxcs_add_rated($feedback, 'Unit confidence',
-    'Looking back across all of Unit 01 (01.1-01.6), how confident do you feel with what you\'ve learned so far?',
-    "1/1 - Not confident\n2/2\n3/3\n4/4\n5/5 - Very confident");
+// 2. Rate-each-skill confidence check, one item per actual Unit 01 lesson --
+//    NOT a single generic "how confident overall" question. Corrected
+//    2026-09-09 per feedback_skill_reflection_format.md's standing rule: a
+//    skill reflection must list the real skills and have students rate
+//    each one, since without a listed skill set students don't know what
+//    the target skills were and just guess. The original version of this
+//    script had one generic "Unit confidence" item here instead -- fixed
+//    live on cmid=229 and here, so a future rebuild starts correct.
+$unit01_lessons = [
+    '01.1 What Programs Do',
+    '01.2 Input-Process-Output',
+    '01.3 Writing Your First Program',
+    '01.4 Printing Output',
+    '01.5 Comments and Documentation',
+    '01.6 Common Syntax Mistakes',
+];
+foreach ($unit01_lessons as $lesson) {
+    foxcs_add_rated($feedback, "Confidence: {$lesson}", "How confident do you feel with {$lesson}?",
+        "1/1 - Not confident\n2/2\n3/3\n4/4\n5/5 - Very confident");
+}
 
 // 3. A forward-looking open reflection, tying the unit together.
 foxcs_add_textarea($feedback, 'What to remember',

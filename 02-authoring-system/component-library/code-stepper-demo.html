@@ -1,0 +1,243 @@
+<!-- Standalone extract of component-library/index.html's #14 "Code Execution
+     Stepper (simulated IDE)" — built 2026-09-09 so Jay can view/interact with
+     it live in the sandbox course instead of only in the local component
+     library file. Self-contained (CSS/JS inlined, no external stylesheet
+     links) so it survives being uploaded as a Moodle mod_resource on its own.
+     Same generic fruit-list demo content as the component library -- not yet
+     authored against any real lesson's content (02.7 Reading Code with
+     Variables is the flagged real use case, see decisions-log.md's 2026-09-09
+     "Code Stepper scoped to full capability, not deferred" entry). Nothing
+     here actually executes Python -- every step is hand-authored in advance. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tracing a Loop, Step by Step</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 780px; margin: 2rem auto; padding: 0 1.5rem; background: #f4f1ea; color: #24292f; }
+  h1 { font-size: 1.4rem; }
+  .desc { font-size: 0.95rem; color: #555; margin-bottom: 1rem; }
+  .desc code { background: #e9e5da; padding: 0.1rem 0.3rem; border-radius: 3px; font-family: Consolas, monospace; }
+
+  /* ---- Dark IDE surface, copied from shared-styles/foxcs-ide-dark.css ---- */
+  .ide-demo { background: #1e2430; border-radius: 8px; overflow: hidden; margin-top: 0.9rem; font-family: Consolas, monospace; }
+  .ide-toolbar { background: #161b24; padding: 0.55rem 0.9rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  .ide-filename { color: #9aa5b8; font-size: 0.82rem; }
+  .ide-controls { font-family: Verdana, Arial, sans-serif; font-size: 0.82rem; color: #cbd3e0; }
+  .ide-controls select { margin-left: 0.4rem; }
+  .ide-body { display: flex; flex-wrap: wrap; }
+  .ide-code { flex: 1 1 320px; padding: 1rem; color: #e6e9ef; font-size: 0.9rem; line-height: 1.75; min-width: 260px; }
+  .ide-code-line { display: flex; gap: 0.8rem; padding: 0.1rem 0.4rem; border-radius: 4px; white-space: pre; }
+  .ide-code-line.active { background: #33415c; box-shadow: inset 3px 0 0 #5b9bd8; }
+  .ide-line-num { color: #5c6579; user-select: none; min-width: 1.4em; text-align: right; }
+  .ide-side { flex: 0 0 220px; background: #161b24; padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+  .ide-panel-label { font-family: Verdana, Arial, sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: #9aa5b8; margin-bottom: 0.4rem; }
+  .ide-vars, .ide-output { font-size: 0.84rem; color: #e6e9ef; }
+  .ide-var-row { display: flex; justify-content: space-between; gap: 0.5rem; padding: 0.15rem 0; border-bottom: 1px solid #262d3d; }
+  .ide-output-line { padding: 0.1rem 0; }
+  .ide-note { font-family: Verdana, Arial, sans-serif; font-size: 0.82rem; color: #cbd3e0; background: #161b24; padding: 0.65rem 0.9rem; border-top: 1px solid #262d3d; min-height: 1.4em; }
+  .ide-transport { display: flex; align-items: center; gap: 0.6rem; background: #161b24; padding: 0.6rem 0.9rem; border-top: 1px solid #262d3d; flex-wrap: wrap; }
+  .ide-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.4rem 0.9rem; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
+  .ide-btn:hover:not(:disabled) { background: #12467f; }
+  .ide-btn:disabled { opacity: 0.4; cursor: default; }
+  .ide-speed-label { font-family: Verdana, Arial, sans-serif; font-size: 0.82rem; color: #cbd3e0; margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
+  .ide-speed-label input[type="range"] { accent-color: #5b9bd8; }
+  #ide-speed-value { min-width: 2.4em; display: inline-block; }
+  .ide-step-count { font-family: Verdana, Arial, sans-serif; font-size: 0.76rem; color: #7c8598; }
+  .tok-kw { color: #7fb0ff; }
+  .tok-str { color: #f0b866; }
+  .tok-num { color: #8fd19e; }
+  .tok-comment { color: #8a93a6; font-style: italic; }
+  .ide-caret { display: inline-block; width: 2px; height: 1em; background: #e6e9ef; vertical-align: middle; margin-left: 1px; animation: ideBlink 1s step-start infinite; }
+  @keyframes ideBlink { 50% { opacity: 0; } }
+  .ide-edit-demo { background: #1e2430; border-radius: 8px; padding: 1rem; margin-top: 1rem; }
+</style>
+</head>
+<body>
+
+<h1>Tracing a Loop, Step by Step</h1>
+<div class="desc">
+  Watch how this program runs one line at a time. The highlighted line is whatever's executing right now, and you can watch each variable's value and the printed output build up as you go. This isn't a live code runner -- it's a fixed walkthrough, so you can focus on <em>why</em> each step happens instead of waiting on real execution. Try a different list from the dropdown to see how the loop behaves when the list has more or fewer items. Play auto-advances through every step at the speed you choose; use the &#9664; &#9654; buttons to go one at a time.
+</div>
+
+<div class="ide-demo">
+  <div class="ide-toolbar">
+    <span class="ide-filename">fruit_loop.py</span>
+    <span class="ide-controls">Try a different list:
+      <select id="ide-select" class="sel">
+        <option value="3">3 fruits (default)</option>
+        <option value="1">1 fruit</option>
+        <option value="0">empty list</option>
+      </select>
+    </span>
+  </div>
+  <div class="ide-body">
+    <div class="ide-code" id="ide-code"></div>
+    <div class="ide-side">
+      <div>
+        <div class="ide-panel-label">Variables</div>
+        <div class="ide-vars" id="ide-vars"></div>
+      </div>
+      <div>
+        <div class="ide-panel-label">Output</div>
+        <div class="ide-output" id="ide-output"></div>
+      </div>
+    </div>
+  </div>
+  <div class="ide-note" id="ide-note"></div>
+  <div class="ide-transport">
+    <button class="ide-btn" id="ide-back" onclick="ideStep(-1)">&#9664; Step</button>
+    <button class="ide-btn" id="ide-play" onclick="idePlayToggle()">&#9654; Play</button>
+    <button class="ide-btn" id="ide-fwd" onclick="ideStep(1)">Step &#9654;</button>
+    <span class="ide-speed-label">Speed: <span id="ide-speed-value">1x</span>
+      <input type="range" id="ide-speed" min="0.25" max="2" step="0.25" value="1">
+    </span>
+    <span class="ide-step-count" id="ide-step-count"></span>
+  </div>
+</div>
+
+<div class="ide-edit-demo">
+  <div class="ide-panel-label" style="color:#9aa5b8;">Bonus: watching a fix get typed</div>
+  <div class="ide-code" id="ide-edit-code" style="padding:0.3rem 0;"></div>
+  <button class="ide-btn" onclick="ideEditPlay()">&#9654; Watch the Fix</button>
+</div>
+
+<script>
+function escapeHtml(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+const PY_KEYWORDS = ['if', 'elif', 'else', 'for', 'while', 'def', 'return', 'print', 'in', 'True', 'False', 'None', 'import', 'and', 'or', 'not', 'break', 'continue'];
+function highlightPython(line) {
+  let out = escapeHtml(line);
+  out = out.replace(/"([^"]*)"/g, '<span class="tok-str">"$1"</span>');
+  out = out.replace(/(#.*)$/, '<span class="tok-comment">$1</span>');
+  out = out.replace(/\b(\d+)\b/g, '<span class="tok-num">$1</span>');
+  PY_KEYWORDS.forEach(kw => {
+    out = out.replace(new RegExp('\\b' + kw + '\\b', 'g'), '<span class="tok-kw">' + kw + '</span>');
+  });
+  return out;
+}
+
+const ideTraces = {
+  '3': {
+    code: ['fruits = ["apple", "banana", "cherry"]', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
+    steps: [
+      { line: 0, vars: {fruits: '["apple", "banana", "cherry"]'}, output: [], note: 'Line 1 runs: fruits is created with 3 items.' },
+      { line: 1, vars: {fruits: '[...]', fruit: '"apple"'}, output: [], note: 'Line 2: the loop starts. fruit becomes "apple", the first item.' },
+      { line: 2, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'Line 3 runs and prints the message.' },
+      { line: 1, vars: {fruits: '[...]', fruit: '"banana"'}, output: ['I like apple'], note: 'Back to the top of the loop. fruit is now "banana".' },
+      { line: 2, vars: {fruits: '[...]', fruit: '"banana"'}, output: ['I like apple', 'I like banana'], note: 'Line 3 runs again.' },
+      { line: 1, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana'], note: 'Back to the top again. fruit is now "cherry".' },
+      { line: 2, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry'], note: 'Line 3 runs a third time.' },
+      { line: -1, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry'], note: 'No items left in fruits — the loop ends.' },
+      { line: 3, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry', 'Loop finished!'], note: 'The loop is completely done, so the program moves down to line 4 and keeps going — it doesn\'t stop just because the loop did.' }
+    ]
+  },
+  '1': {
+    code: ['fruits = ["apple"]', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
+    steps: [
+      { line: 0, vars: {fruits: '["apple"]'}, output: [], note: 'Line 1 runs: fruits has just 1 item this time.' },
+      { line: 1, vars: {fruits: '[...]', fruit: '"apple"'}, output: [], note: 'The loop starts. fruit becomes "apple".' },
+      { line: 2, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'Line 3 runs and prints the message.' },
+      { line: -1, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'No items left — the loop only ran once, because the list only had 1 item.' },
+      { line: 3, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple', 'Loop finished!'], note: 'The loop only ran once, but the program still continues on to line 4 afterward.' }
+    ]
+  },
+  '0': {
+    code: ['fruits = []', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
+    steps: [
+      { line: 0, vars: {fruits: '[]'}, output: [], note: 'Line 1 runs: fruits is empty.' },
+      { line: -1, vars: {fruits: '[]'}, output: [], note: 'The loop checks fruits and finds nothing to loop over — line 3 never runs at all. Worth remembering when debugging: an empty list means zero iterations, not an error.' },
+      { line: 3, vars: {fruits: '[]'}, output: ['Loop finished!'], note: 'This is the key idea: even though the loop body never ran once, the program doesn\'t stop — it skips straight down to line 4 and keeps going.' }
+    ]
+  }
+};
+let ideCurrentKey = '3';
+let ideStepIndex = 0;
+let idePlaying = false;
+let idePlayTimer = null;
+
+function ideRenderAll() {
+  const trace = ideTraces[ideCurrentKey];
+  const step = trace.steps[ideStepIndex];
+
+  document.getElementById('ide-code').innerHTML = trace.code.map((line, i) => {
+    const active = i === step.line ? ' active' : '';
+    return '<div class="ide-code-line' + active + '"><span class="ide-line-num">' + (i + 1) + '</span><span>' + highlightPython(line) + '</span></div>';
+  }).join('');
+
+  const entries = Object.entries(step.vars);
+  document.getElementById('ide-vars').innerHTML = entries.length
+    ? entries.map(([k, v]) => '<div class="ide-var-row"><span>' + k + '</span><span>' + v + '</span></div>').join('')
+    : '<div class="ide-var-row" style="opacity:0.6;">(none yet)</div>';
+
+  document.getElementById('ide-output').innerHTML = step.output.length
+    ? step.output.map(l => '<div class="ide-output-line">' + escapeHtml(l) + '</div>').join('')
+    : '<div class="ide-output-line" style="opacity:0.6;">(nothing printed yet)</div>';
+
+  document.getElementById('ide-note').textContent = step.note;
+  document.getElementById('ide-step-count').textContent = 'Step ' + (ideStepIndex + 1) + ' of ' + trace.steps.length;
+  document.getElementById('ide-back').disabled = ideStepIndex === 0;
+  document.getElementById('ide-fwd').disabled = ideStepIndex === trace.steps.length - 1;
+}
+const IDE_BASE_INTERVAL = 700; // ms at 1x
+function ideCurrentInterval() {
+  const mult = parseFloat(document.getElementById('ide-speed').value);
+  return IDE_BASE_INTERVAL / mult;
+}
+function ideStopPlaying() {
+  idePlaying = false;
+  clearInterval(idePlayTimer);
+  document.getElementById('ide-play').textContent = '▶ Play';
+}
+function ideStep(dir) {
+  const trace = ideTraces[ideCurrentKey];
+  const newIdx = ideStepIndex + dir;
+  if (newIdx < 0 || newIdx >= trace.steps.length) { ideStopPlaying(); return; }
+  ideStepIndex = newIdx;
+  ideRenderAll();
+}
+function ideAdvancePlay() {
+  const trace = ideTraces[ideCurrentKey];
+  if (ideStepIndex >= trace.steps.length - 1) { ideStopPlaying(); return; }
+  ideStepIndex++;
+  ideRenderAll();
+}
+function idePlayToggle() {
+  if (idePlaying) { ideStopPlaying(); return; }
+  idePlaying = true;
+  document.getElementById('ide-play').textContent = '⏸ Pause';
+  idePlayTimer = setInterval(ideAdvancePlay, ideCurrentInterval());
+}
+document.getElementById('ide-select').addEventListener('change', e => {
+  ideCurrentKey = e.target.value;
+  ideStepIndex = 0;
+  ideStopPlaying();
+  ideRenderAll();
+});
+document.getElementById('ide-speed').addEventListener('input', e => {
+  document.getElementById('ide-speed-value').textContent = parseFloat(e.target.value) + 'x';
+  if (idePlaying) {
+    clearInterval(idePlayTimer);
+    idePlayTimer = setInterval(ideAdvancePlay, ideCurrentInterval());
+  }
+});
+ideRenderAll();
+
+const ideEditFixed = 'print("I like " + fruit)';
+document.getElementById('ide-edit-code').innerHTML =
+  '<div class="ide-code-line"><span class="ide-line-num">3</span><span id="ide-edit-line">' + highlightPython('print("I like " + fruit') + '</span></div>';
+function ideEditPlay() {
+  const el = document.getElementById('ide-edit-line');
+  let i = 0;
+  function typeNext() {
+    el.innerHTML = highlightPython(ideEditFixed.slice(0, i)) + '<span class="ide-caret"></span>';
+    if (i < ideEditFixed.length) {
+      i++;
+      setTimeout(typeNext, 35 + Math.random() * 90);
+    }
+  }
+  typeNext();
+}
+</script>
+
+</body>
+</html>

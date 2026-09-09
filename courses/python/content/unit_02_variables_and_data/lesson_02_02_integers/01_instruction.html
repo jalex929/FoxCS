@@ -1,0 +1,948 @@
+<!-- Sandbox prototype, 2026-09-08. Instruction module for 02.2 Integers, built
+     against skills-map.md's "02.2 Integers" section (5 skills:
+     identifies_integer_type, distinguishes_integer_from_string,
+     recognizes_negative_integer, uses_integer_for_countable_quantity,
+     predicts_basic_integer_arithmetic). Structurally a direct copy of
+     02.1 Variables and Memory's proven pattern (same CSS, same
+     Learn -> Key Terms -> Practice shape, same Skulpt-checked Build-the-Code
+     + MC-reinforce + harder-extend drill engine, same local_foxcstelemetry
+     logging) -- see ../lesson_02_01_variables_and_memory/01_instruction.html
+     for the reference this was built from. GMetrix tie-in: Domain 1 Lesson 2
+     Objective 1.1.2 (111-str.py sibling, 112-numbers.py). Video: Corey
+     Schafer's "Python Tutorial for Beginners 3: Integers and Floats," per
+     ../../../video-resources.md (length not yet independently confirmed --
+     verify on YouTube before this goes live in any real course). Deployed
+     via ../../../../../07-infrastructure/moodle-scripts/create-sandbox-unit02-02-integers-instruction.php,
+     copied from 02.1's deploy script. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>2.2 Integers: FoxCS: Python</title>
+<style>
+  body { font-family: Verdana, Arial, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; line-height: 1.55; }
+  h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  h2 { color: #2a3a52; margin-top: 2.2rem; }
+  h3 { color: #2a3a52; margin-top: 1.6rem; }
+  h4 { color: #2a3a52; margin-top: 1.3rem; font-size: 1rem; }
+  code { font-family: Consolas, monospace; background: #eef1f5; padding: 0.1rem 0.35rem; border-radius: 3px; }
+  pre { background: #eef1f5; padding: 0.7rem 1rem; border-radius: 6px; font-family: Consolas, monospace; overflow-x: auto; }
+  table.rules { border-collapse: collapse; margin: 0.8rem 0; width: 100%; }
+  table.rules th, table.rules td { border: 1px solid #dde3ea; padding: 0.4rem 0.7rem; text-align: left; font-size: 0.92rem; }
+  table.rules th { background: #f4f6f9; }
+
+  .micro-diagram { display: block; width: 100%; max-width: 460px; height: auto; margin: 1.4rem auto; }
+
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.game { background: #f4f2fb; border-color: #ded7f5; }
+  .concept-card.game .concept-card-label { color: #4a3aa7; }
+  .concept-card.usability { background: #e9f6f6; border-color: #bfe3e3; }
+  .concept-card.usability .concept-card-label { color: #0d6b6b; }
+
+  .quick-check { border: 1px solid #ccd3dd; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
+  .quick-check-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .quick-check-prompt { margin-bottom: 0.7rem; }
+  .quick-check select { font-family: Consolas, monospace; font-size: 0.95rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .quick-check button { background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 0.5rem; }
+  .quick-check button:hover { background: #12467f; }
+  .quick-check .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
+  .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+
+  .card-scene { perspective: 1400px; margin: 1rem 0; }
+  .card { position: relative; width: 100%; max-width: 420px; min-height: 160px; cursor: pointer; }
+  .card-inner { position: relative; width: 100%; height: 100%; min-height: 160px; transition: transform 0.5s cubic-bezier(0.4,0.2,0.2,1); transform-style: preserve-3d; }
+  .card.flipped .card-inner { transform: rotateY(180deg); }
+  .card-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 14px; padding: 1.3rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .card-front { background: #f4f6f9; border: 3px solid #1a5aa8; }
+  .card-back { background: #1a5aa8; color: white; text-align: left; align-items: flex-start; justify-content: center; transform: rotateY(180deg); }
+  .face-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: bold; opacity: 0.75; margin-bottom: 0.5rem; }
+  .card-front .face-label { color: #1a5aa8; }
+  .card-back .face-label { color: #eaf1fb; }
+  .term-text { font-size: 1.4rem; font-weight: bold; color: #1a3a5c; }
+  .def-text { font-size: 1rem; font-family: Georgia, serif; line-height: 1.5; }
+  .card-hint { color: #555; font-size: 0.82rem; margin-top: 0.5rem; }
+  .card-nav { display: flex; gap: 0.5rem; margin-top: 0.7rem; }
+  .card-nav button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.4rem 0.9rem; border-radius: 5px; cursor: pointer; font-size: 0.85rem; }
+  .card-nav button:hover { background: #12467f; }
+
+  .chip { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
+  .chip.spiral { background: #eef1f5; color: #4a5f7d; }
+  .chip.game { background: #f4f2fb; color: #4a3aa7; }
+  .chip.usability { background: #e9f6f6; color: #0d6b6b; }
+
+  .node-heading { margin-top: 2rem; padding-top: 0.6rem; border-top: 2px solid #dde3ea; }
+  .drill { border: 1px solid #d7dee8; border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .drill-type { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .drill[hidden] { display: none; }
+
+  .ide-demo { border-radius: 8px; overflow: hidden; margin: 0.8rem 0; background: #1e2430; }
+  .ide-toolbar { background: #161b24; padding: 0.35rem 0.9rem; font-family: Consolas, monospace; font-size: 0.8rem; color: #9fb3c8; }
+  .ide-code { color: #e6e9ef; font-family: Consolas, monospace; padding: 1rem; white-space: pre; font-size: 0.92rem; }
+  .scaffold-blank { font-family: Consolas, monospace; background: #33415c; color: #fff; border: 2px solid #5b9bd8; border-radius: 4px; padding: 0.1rem 0.4rem; width: 32ch; }
+  .rc-output { background: #14181f; color: #d7ffd7; font-family: Consolas, monospace; padding: 0.7rem 0.9rem; border-radius: 6px; margin-top: 0.6rem; white-space: pre-wrap; display: none; }
+
+  .code-choice-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 2px solid #d7dee8; border-radius: 8px; margin-bottom: 0.6rem; cursor: pointer; }
+  .code-choice-option:hover { border-color: #a9c2e0; }
+  .code-choice-option.selected { border-color: #1a5aa8; background: #eef4fb; }
+  .code-choice-option.correct { border-color: #2f8f4f; background: #e6f4ea; }
+  .code-choice-option.incorrect { border-color: #c0503a; background: #fbeae5; }
+  .code-choice-option input { margin-top: 0.5rem; }
+  .code-choice-option pre { margin: 0; background: transparent; padding: 0; flex: 1; }
+
+  .check-btn { background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 0.6rem; }
+  .check-btn:hover { background: #12467f; }
+  .feedback { margin-top: 0.7rem; font-weight: bold; min-height: 1.2em; }
+  .feedback.correct { color: #1a7f37; }
+  .feedback.incorrect { color: #b3261e; }
+
+  .hint-toggle { background: none; border: 1px solid #ccd3dd; color: #445; padding: 0.3rem 0.8rem; border-radius: 5px; cursor: pointer; font-size: 0.82rem; margin-top: 0.5rem; }
+  .hint-toggle:hover { background: #eef1f5; }
+  .hint-box { display: none; margin-top: 0.5rem; padding: 0.6rem 0.8rem; background: #fdf6e8; border-radius: 6px; font-size: 0.88rem; color: #7a4800; }
+
+  .review-note { padding: 0.7rem 1rem; background: #f4f6f9; border-radius: 6px; font-size: 0.9rem; color: #444; margin-top: 0.6rem; }
+
+  .reflection textarea { width: 100%; box-sizing: border-box; font-family: Verdana, Arial, sans-serif; font-size: 0.92rem; padding: 0.6rem 0.8rem; border: 2px solid #ccd3dd; border-radius: 6px; min-height: 70px; }
+  .save-btn { background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; margin-top: 0.5rem; }
+  .save-btn:hover { background: #12467f; }
+  .save-status { font-size: 0.8rem; color: #2f7a2f; margin-left: 0.6rem; }
+
+  .video-card { border: 1px solid #d7dee8; border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1.4rem 0; background: #f9fafc; }
+  .video-card-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.7rem; }
+  .video-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .video-meta { font-size: 0.85rem; color: #445; margin-bottom: 0.7rem; }
+  .video-wrap { position: relative; width: 100%; padding-top: 56.25%; border-radius: 6px; overflow: hidden; background: #000; }
+  .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .headphones-note { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #7a4800; background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 6px; padding: 0.5rem 0.8rem; margin-top: 0.7rem; }
+  .headphones-note svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .video-backup-link { font-size: 0.82rem; margin-top: 0.6rem; }
+  .video-backup-link a { color: #1a5aa8; }
+
+  .progress-note { font-size: 0.85rem; color: #555; margin: 0.6rem 0 1.2rem; }
+  #complete-banner { display: none; margin-top: 1.6rem; padding: 0.9rem 1.1rem; border-radius: 10px; background: #e6f4ea; border: 1px solid #b7e0c3; color: #1a7f37; font-weight: bold; }
+  #save-status-global { font-size: 0.78rem; color: #6a737b; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+
+<h1>2.2 Integers</h1>
+<div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:#12467f;background:#eaf2fb;border:1px solid #bcd6f0;border-radius:6px;padding:0.6rem 0.9rem;margin:0.8rem 0 1.2rem;font-weight:bold;">All 2.2 content is due by 09/09/2026 and cannot be submitted late after 09/28/2026.</div>
+<p>Lives, level, enemies on screen, inventory count, points, number of students in a class. All of these are whole numbers you count, one at a time, with nothing in between. Python calls this kind of value an <strong>integer</strong>.</p>
+
+<div class="headphones-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><circle cx="12" cy="8" r="0.5" fill="currentColor"/></svg>Before you start this lesson: log into your GMetrix account and attempt the <strong>Domain 1 Pre-Assessment</strong>. This isn't graded on your score, it's just to show you what's coming up in this unit, so don't worry if you don't know an answer yet. That's expected.</div>
+
+<div class="video-card">
+<div class="video-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>Watch First</div>
+<div class="video-meta"><strong>Python Tutorial for Beginners 3: Integers and Floats - Working with Numeric Data</strong>, by Corey Schafer.</div>
+<div class="video-wrap">
+<iframe src="https://www.youtube.com/embed/khKv-8q7YmY" title="Python Tutorial for Beginners 3: Integers and Floats - Working with Numeric Data | Corey Schafer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<div class="headphones-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>Use your headphones at your station for this video.</div>
+<div class="video-backup-link">Video not loading? Watch it directly on YouTube: <a href="https://www.youtube.com/watch?v=khKv-8q7YmY" target="_blank" rel="noopener">https://www.youtube.com/watch?v=khKv-8q7YmY</a></div>
+</div>
+<p>This video covers integers alongside floats, which you'll meet properly in the next lesson. For now, focus on what it says about whole numbers specifically -- the rest of this lesson covers what you're accountable for here: recognizing integers, telling them apart from numbers written as text, and predicting simple integer arithmetic.</p>
+
+<h2 id="learn">Learn</h2>
+
+<h3 id="learn-what">What Is an Integer?</h3>
+<p>An integer is a whole number: no decimal point, no fraction. It can be positive, negative, or zero.</p>
+<pre>lives = 3
+enemies_remaining = 8
+temperature = -12
+gold = 0</pre>
+<p>You write an integer as plain digits, with no quotation marks. Quotation marks turn a number into a string instead -- you'll practice telling those apart later in this lesson.</p>
+
+<svg class="micro-diagram" viewBox="0 0 700 280" role="img" aria-label="A box labeled lives with an arrow pointing into it, and the whole number 3 sitting inside the box.">
+  <text x="350" y="55" text-anchor="middle" font-family="Consolas, monospace" font-size="36" font-weight="bold" fill="#17365f">lives</text>
+  <line x1="350" y1="72" x2="350" y2="105" stroke="#1457d9" stroke-width="3"/>
+  <polygon points="350,113 340,97 360,97" fill="#1457d9"/>
+  <rect x="230" y="115" width="240" height="130" rx="20" fill="#dce8f8" stroke="#3d73c7" stroke-width="3"/>
+  <text x="350" y="197" text-anchor="middle" font-family="Consolas, monospace" font-size="44" font-weight="bold" fill="#138a3d">3</text>
+</svg>
+
+<div class="concept-card game">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><line x1="12" y1="10" x2="12" y2="17"/><path d="M7 17h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>Game Connection</div>
+<p>Score, lives, level, and inventory count are almost always integers. A game never has "2.5 lives" or "half an enemy" left -- these are things you count one at a time, so an integer is the right tool for the job.</p>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which of these is written as an integer?</div>
+  <select id="qc1-select">
+    <option value="">Choose one...</option>
+    <option value="a">7</option>
+    <option value="b">&quot;7&quot;</option>
+    <option value="c">7.0</option>
+  </select>
+  <button onclick="qcCheck('qc1', 'a')">Check</button>
+  <div class="feedback" id="qc1-feedback"></div>
+</div>
+
+<h3 id="learn-negative">Negative Integers</h3>
+<p>A minus sign in front of a whole number makes it negative. Negative integers are still integers -- they're just below zero.</p>
+<pre>debt = -50
+altitude_below_sea_level = -200</pre>
+<p>Negative numbers show up more often than you might expect: a bank balance that's overdrawn, a temperature below freezing, or a score that went below zero after a penalty.</p>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Is <code>-9</code> an integer?</div>
+  <select id="qc2-select">
+    <option value="">Choose one...</option>
+    <option value="a">Yes -- it's still a whole number, just below zero</option>
+    <option value="b">No -- integers can't be negative</option>
+  </select>
+  <button onclick="qcCheck('qc2', 'a')">Check</button>
+  <div class="feedback" id="qc2-feedback"></div>
+</div>
+
+<h3 id="learn-string">Integers vs. Text That Looks Like a Number</h3>
+<p>Quotation marks change everything. <code>10</code> and <code>"10"</code> look almost identical on the page, but Python treats them completely differently.</p>
+<pre>score = 10        # an integer -- Python can do math with this
+player_id = "10"  # a string -- Python treats this as text, not a number</pre>
+<p>Mixing the two up causes real errors. If a value that should be a number ends up stored with quotation marks around it, math on it will fail.</p>
+
+<div class="concept-card usability">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>Usability Note</div>
+<p>Not everything that looks like a number should actually be stored as one. A player ID like <code>"042"</code> is usually kept as a string on purpose, even though it's made of digits -- nobody is going to add two player IDs together, and keeping the leading zero matters for display. Whether something is "a number" depends on whether your program needs to do math with it, not just what it looks like.</p>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which of these is a string, not an integer, even though it's made of digits?</div>
+  <select id="qc3-select">
+    <option value="">Choose one...</option>
+    <option value="a">42</option>
+    <option value="b">&quot;42&quot;</option>
+    <option value="c">-42</option>
+  </select>
+  <button onclick="qcCheck('qc3', 'b')">Check</button>
+  <div class="feedback" id="qc3-feedback"></div>
+</div>
+
+<h3 id="learn-arithmetic">Basic Integer Arithmetic</h3>
+<p>Python does math on integers the way you'd expect, with one rule worth knowing early: multiplication and division happen before addition and subtraction, unless you use parentheses.</p>
+<pre>print(4 + 3 * 2)   # 10, not 14 -- 3 * 2 happens first
+print((4 + 3) * 2) # 14 -- parentheses force the addition first</pre>
+<p>Reassignment (from Lesson 2.1) combines with arithmetic constantly -- a running total like a score or a health bar is usually just a variable being reassigned to itself, changed by some amount.</p>
+<pre>score = 5
+score = score + 10
+print("Score:", score)</pre>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">What does <code>print(2 + 3 * 4)</code> actually print?</div>
+  <select id="qc4-select">
+    <option value="">Choose one...</option>
+    <option value="a">20</option>
+    <option value="b">14</option>
+    <option value="c">24</option>
+  </select>
+  <button onclick="qcCheck('qc4', 'b')">Check</button>
+  <div class="feedback" id="qc4-feedback"></div>
+</div>
+
+<h2 id="terms">Key Terms</h2>
+<p>Flip each card, then try the quick check below.</p>
+
+<div class="card-scene">
+  <div class="card" id="card" onclick="flipCard()">
+    <div class="card-inner" id="cardInner">
+      <div class="card-face card-front">
+        <div class="face-label">Term</div>
+        <div class="term-text" id="termText"></div>
+      </div>
+      <div class="card-face card-back">
+        <div class="face-label">Definition</div>
+        <div class="def-text" id="defText"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-hint">Click the card to flip it. (<span id="cardNum">1</span> of <span id="cardTotal"></span>)</div>
+<div class="card-nav">
+  <button onclick="prevCard()">&larr; Previous</button>
+  <button onclick="nextCard()">Next &rarr;</button>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which term describes a whole number with no decimal point?</div>
+  <select id="qc5-select">
+    <option value="">Choose one...</option>
+    <option value="a">integer</option>
+    <option value="b">string</option>
+    <option value="c">boolean</option>
+  </select>
+  <button onclick="qcCheck('qc5', 'a')">Check</button>
+  <div class="feedback" id="qc5-feedback"></div>
+</div>
+
+<h2 id="practice">Practice</h2>
+<p>Five short skill checks, one per skill. Work through them in order. Each one adjusts to how you're doing on it.</p>
+<div class="progress-note" id="progress-note">0 of 5 skill checks complete.</div>
+
+<!-- ======================= NODE 1: identifies_integer_type ======================= -->
+<div class="node-heading"><strong>Skill Check 1 of 5</strong></div>
+<div class="drill" id="n1-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Enemies Remaining: 8</pre>
+  <p>The blank needs a line of code that creates a new variable named <code>enemies_remaining</code>, written as an integer.</p>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n1-core-blank" class="scaffold-blank" data-expected="enemies_remaining = 8" placeholder="type your code here">
+print("Enemies Remaining:", enemies_remaining)</div>
+  </div>
+  <button class="check-btn" onclick="n1CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n1-hint')">Need a hint?</button>
+  <div class="hint-box" id="n1-hint">An integer is written as plain digits, with no quotation marks and no decimal point.</div>
+  <pre class="rc-output" id="n1-core-output"></pre>
+  <div class="feedback" id="n1-core-feedback"></div>
+</div>
+
+<div class="drill" id="n1-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which of these is written as an integer?</p>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="a"><pre>7</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="b"><pre>"7"</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="c"><pre>7.0</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="d"><pre>True</pre></label>
+  <button class="check-btn" onclick="n1ReinforceCheck()">Check</button>
+  <div class="feedback" id="n1-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n1-reinforce-exhausted" hidden>An integer has no quotation marks (that would make it a string) and no decimal point (that would make it a float). Only plain digits, optionally with a minus sign. Continue to the next item below.</div>
+
+<div class="drill" id="n1-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>&lt;class 'int'&gt;</pre>
+  <p>Python's built-in <code>type()</code> function tells you what kind of value a variable holds. The blank needs a line of code that prints the type of <code>treasure</code>.</p>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">treasure = 250
+<input type="text" id="n1-extend-blank" class="scaffold-blank" data-expected="print(type(treasure))" placeholder="type your code here" style="width:36ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n1ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n1-extend-output"></pre>
+  <div class="feedback" id="n1-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 2: distinguishes_integer_from_string ======================= -->
+<div class="node-heading"><strong>Skill Check 2 of 5</strong></div>
+<div class="drill" id="n2-core">
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which value is a string, not an integer, even though it looks like a number?</p>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="a"><pre>10</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="b"><pre>"10"</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="c"><pre>-10</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="d"><pre>1000</pre></label>
+  <button class="check-btn" onclick="n2CoreCheck()">Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n2-hint')">Need a hint?</button>
+  <div class="hint-box" id="n2-hint">Look for the quotation marks. They're what actually determines the type here, not how many digits there are.</div>
+  <div class="feedback" id="n2-core-feedback"></div>
+</div>
+
+<div class="drill" id="n2-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>A variable is created with <code>points = "10"</code>. What will actually happen when the program runs <code>print(points + 5)</code>?</p>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="a"><pre>It prints 15</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="b"><pre>It crashes with a TypeError</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="c"><pre>It prints "105"</pre></label>
+  <button class="check-btn" onclick="n2ReinforceCheck()">Check</button>
+  <div class="feedback" id="n2-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n2-reinforce-exhausted" hidden><code>points</code> is a string, since it was created with quotation marks. Python cannot add a string and an integer together with <code>+</code>, so this crashes. You'll learn how to fix errors like this in Lesson 2.6, Type Conversion. Continue to the next item below.</div>
+
+<div class="drill" id="n2-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>A player ID should be stored as text, not a number, since nobody does math with it and the leading zero matters. Fill in the blank so the program prints exactly:</p>
+  <pre>Player ID: 042</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n2-extend-blank" class="scaffold-blank" data-expected='player_id = "042"' placeholder="type your code here">
+print("Player ID:", player_id)</div>
+  </div>
+  <button class="check-btn" onclick="n2ExtendCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n2-extend-hint')">Need a hint?</button>
+  <div class="hint-box" id="n2-extend-hint">This value needs to be a string on purpose, even though it's made of digits. Use quotation marks.</div>
+  <pre class="rc-output" id="n2-extend-output"></pre>
+  <div class="feedback" id="n2-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 3: recognizes_negative_integer ======================= -->
+<div class="node-heading"><strong>Skill Check 3 of 5</strong></div>
+<div class="drill" id="n3-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Temperature: -12</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n3-core-blank" class="scaffold-blank" data-expected="temperature = -12" placeholder="type your code here">
+print("Temperature:", temperature)</div>
+  </div>
+  <button class="check-btn" onclick="n3CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n3-hint')">Need a hint?</button>
+  <div class="hint-box" id="n3-hint">Put a minus sign directly in front of the digits, with no space.</div>
+  <pre class="rc-output" id="n3-core-output"></pre>
+  <div class="feedback" id="n3-core-feedback"></div>
+</div>
+
+<div class="drill" id="n3-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which of these is a negative integer?</p>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="a"><pre>-5</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="b"><pre>"-5"</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="c"><pre>-5.0</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="d"><pre>0</pre></label>
+  <button class="check-btn" onclick="n3ReinforceCheck()">Check</button>
+  <div class="feedback" id="n3-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n3-reinforce-exhausted" hidden>Option b is a string (quotation marks), option c is a float (decimal point), and option d isn't negative at all. Only option a is a plain, negative whole number. Continue to the next item below.</div>
+
+<div class="drill" id="n3-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>A bank balance starts at <code>100</code> and then a <code>150</code> charge is made. Fill in the blank so the program prints exactly:</p>
+  <pre>Balance: -50</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">balance = 100
+<input type="text" id="n3-extend-blank" class="scaffold-blank" data-expected="balance = balance - 150" placeholder="type your code here">
+print("Balance:", balance)</div>
+  </div>
+  <button class="check-btn" onclick="n3ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n3-extend-output"></pre>
+  <div class="feedback" id="n3-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 4: uses_integer_for_countable_quantity ======================= -->
+<div class="node-heading"><strong>Skill Check 4 of 5</strong></div>
+<div class="drill" id="n4-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Arrows Left: 6</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n4-core-blank" class="scaffold-blank" data-expected="arrows_left = 6" placeholder="type your code here">
+print("Arrows Left:", arrows_left)</div>
+  </div>
+  <button class="check-btn" onclick="n4CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n4-hint')">Need a hint?</button>
+  <div class="hint-box" id="n4-hint">Something you count one at a time, with no fractions, is an integer.</div>
+  <pre class="rc-output" id="n4-core-output"></pre>
+  <div class="feedback" id="n4-core-feedback"></div>
+</div>
+
+<div class="drill" id="n4-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which of these should be stored as an integer?</p>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="a"><pre>number of lives remaining</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="b"><pre>a player's name</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="c"><pre>whether the game is paused</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="d"><pre>exact height in meters (2.5)</pre></label>
+  <button class="check-btn" onclick="n4ReinforceCheck()">Check</button>
+  <div class="feedback" id="n4-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n4-reinforce-exhausted" hidden>A name is a string, a pause state is a boolean, and 2.5 meters needs a decimal point (a float, coming in Lesson 2.3). Only "number of lives remaining" is a plain count. Continue to the next item below.</div>
+
+<div class="drill" id="n4-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p><code>gold = 40</code> already exists. Fill in the blank so the program prints exactly:</p>
+  <pre>Total treasure: 55</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">gold = 40
+<input type="text" id="n4-extend-blank" class="scaffold-blank" data-expected="gems = 15" placeholder="type your code here">
+print("Total treasure:", gold + gems)</div>
+  </div>
+  <button class="check-btn" onclick="n4ExtendCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n4-extend-hint')">Need a hint?</button>
+  <div class="hint-box" id="n4-extend-hint">Create a second integer variable named <code>gems</code>, set so the two add up to 55.</div>
+  <pre class="rc-output" id="n4-extend-output"></pre>
+  <div class="feedback" id="n4-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 5: predicts_basic_integer_arithmetic ======================= -->
+<div class="node-heading"><strong>Skill Check 5 of 5</strong></div>
+<div class="drill" id="n5-core">
+  <div class="drill-type">Build the Code</div>
+  <p><code>hp = 20</code> already exists, and one line has already dropped it by 5. Fill in the blank so the program prints exactly:</p>
+  <pre>HP: 17</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">hp = 20
+hp = hp - 5
+<input type="text" id="n5-core-blank" class="scaffold-blank" data-expected="hp = hp + 2" placeholder="type your code here">
+print("HP:", hp)</div>
+  </div>
+  <button class="check-btn" onclick="n5CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n5-hint')">Need a hint?</button>
+  <div class="hint-box" id="n5-hint">After the first change, hp is 15. Work out how much it needs to go up by to reach 17, then reassign hp using that amount.</div>
+  <pre class="rc-output" id="n5-core-output"></pre>
+  <div class="feedback" id="n5-core-feedback"></div>
+</div>
+
+<div class="drill" id="n5-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>What does <code>print(4 + 3 * 2)</code> actually print?</p>
+  <label class="code-choice-option"><input type="radio" name="n5-reinforce" value="a"><pre>14</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n5-reinforce" value="b"><pre>10</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n5-reinforce" value="c"><pre>9</pre></label>
+  <button class="check-btn" onclick="n5ReinforceCheck()">Check</button>
+  <div class="feedback" id="n5-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n5-reinforce-exhausted" hidden>Multiplication happens before addition: <code>3 * 2</code> is 6 first, then <code>4 + 6</code> is 10. Continue to the next item below.</div>
+
+<div class="drill" id="n5-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Score: 11</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">score = 5
+score = score * 3
+<input type="text" id="n5-extend-blank" class="scaffold-blank" data-expected="score = score - 4" placeholder="type your code here">
+print("Score:", score)</div>
+  </div>
+  <button class="check-btn" onclick="n5ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n5-extend-output"></pre>
+  <div class="feedback" id="n5-extend-feedback"></div>
+</div>
+
+<div id="complete-banner">&#10003; Practice complete. Your work has been saved.</div>
+<div id="save-status-global"></div>
+
+<script src="../../../../../02-authoring-system/skulpt-runtime/skulpt.min.js"></script>
+<script src="../../../../../02-authoring-system/skulpt-runtime/skulpt-stdlib.js"></script>
+<script>
+/* ---------------- Telemetry (local_foxcstelemetry, Option C) ---------------- */
+var CMID = "__CMID__"; // baked in by the deploy script's second phase
+var ENDPOINT = '/local/foxcstelemetry/log.php';
+var sesskey = null;
+var globalStatus = document.getElementById('save-status-global');
+
+function bootstrap(cb) {
+  fetch(ENDPOINT + '?action=bootstrap&cmid=' + CMID, { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { sesskey = data.sesskey; cb(); })
+    .catch(function () { globalStatus.textContent = 'Could not reach the save endpoint.'; });
+}
+
+function logEvent(eventtype, payload, complete) {
+  if (!sesskey) { bootstrap(function () { logEvent(eventtype, payload, complete); }); return; }
+  var body = new URLSearchParams();
+  body.set('action', 'log');
+  body.set('sesskey', sesskey);
+  body.set('cmid', CMID);
+  body.set('eventtype', eventtype);
+  body.set('payload', JSON.stringify(payload));
+  if (complete) body.set('complete', '1');
+  fetch(ENDPOINT, { method: 'POST', credentials: 'same-origin', body: body })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      globalStatus.textContent = 'Saved ' + new Date().toLocaleTimeString() + '.';
+      if (data.completed) document.getElementById('complete-banner').style.display = 'block';
+    })
+    .catch(function () { globalStatus.textContent = 'Save failed. This will not block you from continuing.'; });
+}
+
+bootstrap(function () { logEvent('viewed', { page: 'lesson_02_02/01_instruction' }, false); });
+setInterval(function () { if (!document.hidden) { logEvent('heartbeat', {}, false); } }, 30000);
+
+/* ---------------- Progress tracking / completion ---------------- */
+var progress = { nodesResolved: { n1: false, n2: false, n3: false, n4: false, n5: false } };
+function nodesResolvedCount() {
+  return Object.values(progress.nodesResolved).filter(Boolean).length;
+}
+function updateProgressNote() {
+  document.getElementById('progress-note').textContent = nodesResolvedCount() + ' of 5 skill checks complete.';
+}
+function maybeComplete() {
+  var all = progress.nodesResolved.n1 && progress.nodesResolved.n2 && progress.nodesResolved.n3 && progress.nodesResolved.n4 && progress.nodesResolved.n5;
+  if (all) {
+    logEvent('lesson_complete', { skill_ids: ['identifies_integer_type', 'distinguishes_integer_from_string', 'recognizes_negative_integer', 'uses_integer_for_countable_quantity', 'predicts_basic_integer_arithmetic'] }, true);
+  }
+}
+function resolveNode(n) {
+  if (progress.nodesResolved[n]) return;
+  progress.nodesResolved[n] = true;
+  updateProgressNote();
+  maybeComplete();
+}
+
+/* ---------------- Skulpt setup ---------------- */
+function skRead(x) {
+  if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) {
+    throw "File not found: '" + x + "'";
+  }
+  return Sk.builtinFiles["files"][x];
+}
+function runSkulpt(code, onDone) {
+  var captured = [];
+  Sk.configure({ output: function (t) { captured.push(t); }, read: skRead });
+  Sk.misceval.asyncToPromise(function () {
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  }).then(
+    function () { onDone(captured.join('').trim()); },
+    function (err) { captured.push(String(err)); onDone(captured.join('').trim()); }
+  );
+}
+function toggleHint(id) {
+  var box = document.getElementById(id);
+  var show = box.style.display !== 'block';
+  box.style.display = show ? 'block' : 'none';
+  if (show) logEvent('hint_reveal', { hint_id: id }, false);
+}
+
+/* ================= NODE 1: identifies_integer_type ================= */
+var n1Attempt = { core: 0, reinforce: 0 };
+function n1CoreCheck() {
+  n1Attempt.core++;
+  var blank = document.getElementById('n1-core-blank').value;
+  var code = blank + '\nprint("Enemies Remaining:", enemies_remaining)';
+  var out = document.getElementById('n1-core-output');
+  var fb = document.getElementById('n1-core-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Enemies Remaining: 8';
+    fb.textContent = correct ? 'Right. Plain digits, no quotes, no decimal point -- that\'s an integer.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'identifies_integer_type', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n1Attempt.core }, false);
+    if (correct) {
+      logEvent('lane_transition', { skill_id: 'identifies_integer_type', from: 'core', to: 'extend', reason: 'correct_advance' }, false);
+      document.getElementById('n1-extend').hidden = false;
+    } else if (n1Attempt.core === 1) {
+      logEvent('lane_transition', { skill_id: 'identifies_integer_type', from: 'core', to: 'reinforce', reason: 'incorrect' }, false);
+      document.getElementById('n1-reinforce').hidden = false;
+    }
+  });
+}
+function n1ReinforceCheck() {
+  var picked = document.querySelector('input[name="n1-reinforce"]:checked');
+  var fb = document.getElementById('n1-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n1Attempt.reinforce++;
+  var correct = picked.value === 'a';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { b: 'Quotation marks make this a string, not an integer.', c: 'The decimal point makes this a float.', d: 'True is a boolean, not an integer, even though Python can do some math with it.' };
+  fb.textContent = correct ? 'Right. 7 is plain digits with nothing else attached.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'identifies_integer_type', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n1Attempt.reinforce }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'identifies_integer_type', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
+    resolveNode('n1');
+  } else if (n1Attempt.reinforce === 1) {
+    document.getElementById('n1-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'identifies_integer_type', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
+    resolveNode('n1');
+  }
+}
+var n1ExtendAttempt = 0;
+function n1ExtendCheck() {
+  n1ExtendAttempt++;
+  var blank = document.getElementById('n1-extend-blank').value;
+  var code = 'treasure = 250\n' + blank;
+  var out = document.getElementById('n1-extend-output');
+  var fb = document.getElementById('n1-extend-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === "<class 'int'>";
+    fb.textContent = correct ? 'Right. type() confirms treasure is an int.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'identifies_integer_type', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n1ExtendAttempt }, false);
+    resolveNode('n1');
+  });
+}
+
+/* ================= NODE 2: distinguishes_integer_from_string ================= */
+var n2Attempt = { reinforce: 0 };
+function n2CoreCheck() {
+  var picked = document.querySelector('input[name="n2-core"]:checked');
+  var fb = document.getElementById('n2-core-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. The quotation marks make "10" a string, no matter how many digits are inside them.' : 'Not quite. Look for the quotation marks.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'distinguishes_integer_from_string', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: 1 }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'distinguishes_integer_from_string', from: 'core', to: 'extend', reason: 'correct_advance' }, false);
+    document.getElementById('n2-extend').hidden = false;
+  } else {
+    logEvent('lane_transition', { skill_id: 'distinguishes_integer_from_string', from: 'core', to: 'reinforce', reason: 'incorrect' }, false);
+    document.getElementById('n2-reinforce').hidden = false;
+  }
+}
+function n2ReinforceCheck() {
+  var picked = document.querySelector('input[name="n2-reinforce"]:checked');
+  var fb = document.getElementById('n2-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n2Attempt.reinforce++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. points is a string, so + refuses to combine it with the integer 5.' : 'Not quite. Think about what type points actually is.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'distinguishes_integer_from_string', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n2Attempt.reinforce }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'distinguishes_integer_from_string', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
+    resolveNode('n2');
+  } else if (n2Attempt.reinforce === 1) {
+    document.getElementById('n2-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'distinguishes_integer_from_string', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
+    resolveNode('n2');
+  }
+}
+var n2ExtendAttempt = 0;
+function n2ExtendCheck() {
+  n2ExtendAttempt++;
+  var blank = document.getElementById('n2-extend-blank').value;
+  var code = blank + '\nprint("Player ID:", player_id)';
+  var out = document.getElementById('n2-extend-output');
+  var fb = document.getElementById('n2-extend-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Player ID: 042';
+    fb.textContent = correct ? 'Right. Even though it\'s all digits, this ID is stored as text on purpose.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'distinguishes_integer_from_string', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n2ExtendAttempt }, false);
+    resolveNode('n2');
+  });
+}
+
+/* ================= NODE 3: recognizes_negative_integer ================= */
+var n3Attempt = { core: 0, reinforce: 0 };
+function n3CoreCheck() {
+  n3Attempt.core++;
+  var blank = document.getElementById('n3-core-blank').value;
+  var code = blank + '\nprint("Temperature:", temperature)';
+  var out = document.getElementById('n3-core-output');
+  var fb = document.getElementById('n3-core-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Temperature: -12';
+    fb.textContent = correct ? 'Right. A minus sign directly in front of the digits makes it negative.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'recognizes_negative_integer', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n3Attempt.core }, false);
+    if (correct) {
+      logEvent('lane_transition', { skill_id: 'recognizes_negative_integer', from: 'core', to: 'extend', reason: 'correct_advance' }, false);
+      document.getElementById('n3-extend').hidden = false;
+    } else if (n3Attempt.core === 1) {
+      logEvent('lane_transition', { skill_id: 'recognizes_negative_integer', from: 'core', to: 'reinforce', reason: 'incorrect' }, false);
+      document.getElementById('n3-reinforce').hidden = false;
+    }
+  });
+}
+function n3ReinforceCheck() {
+  var picked = document.querySelector('input[name="n3-reinforce"]:checked');
+  var fb = document.getElementById('n3-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n3Attempt.reinforce++;
+  var correct = picked.value === 'a';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { b: 'Quotation marks make this a string.', c: 'The decimal point makes this a float.', d: 'Zero is not negative.' };
+  fb.textContent = correct ? 'Right. -5 is a plain, negative whole number.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'recognizes_negative_integer', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n3Attempt.reinforce }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'recognizes_negative_integer', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
+    resolveNode('n3');
+  } else if (n3Attempt.reinforce === 1) {
+    document.getElementById('n3-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'recognizes_negative_integer', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
+    resolveNode('n3');
+  }
+}
+var n3ExtendAttempt = 0;
+function n3ExtendCheck() {
+  n3ExtendAttempt++;
+  var blank = document.getElementById('n3-extend-blank').value;
+  var code = 'balance = 100\n' + blank + '\nprint("Balance:", balance)';
+  var out = document.getElementById('n3-extend-output');
+  var fb = document.getElementById('n3-extend-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Balance: -50';
+    fb.textContent = correct ? 'Right. Subtracting more than the balance holds crosses zero into negative territory.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'recognizes_negative_integer', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n3ExtendAttempt }, false);
+    resolveNode('n3');
+  });
+}
+
+/* ================= NODE 4: uses_integer_for_countable_quantity ================= */
+var n4Attempt = { core: 0 };
+function n4CoreCheck() {
+  n4Attempt.core++;
+  var blank = document.getElementById('n4-core-blank').value;
+  var code = blank + '\nprint("Arrows Left:", arrows_left)';
+  var out = document.getElementById('n4-core-output');
+  var fb = document.getElementById('n4-core-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Arrows Left: 6';
+    fb.textContent = correct ? 'Right. Arrow count is exactly the kind of thing integers are for.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'uses_integer_for_countable_quantity', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n4Attempt.core }, false);
+    if (correct) {
+      logEvent('lane_transition', { skill_id: 'uses_integer_for_countable_quantity', from: 'core', to: 'extend', reason: 'correct_advance' }, false);
+      document.getElementById('n4-extend').hidden = false;
+    } else if (n4Attempt.core === 1) {
+      logEvent('lane_transition', { skill_id: 'uses_integer_for_countable_quantity', from: 'core', to: 'reinforce', reason: 'incorrect' }, false);
+      document.getElementById('n4-reinforce').hidden = false;
+    }
+  });
+}
+var n4ReinforceAttempt = 0;
+function n4ReinforceCheck() {
+  var picked = document.querySelector('input[name="n4-reinforce"]:checked');
+  var fb = document.getElementById('n4-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n4ReinforceAttempt++;
+  var correct = picked.value === 'a';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { b: 'A name is text, so it needs a string.', c: 'A yes/no state like this needs a boolean, coming in Lesson 2.5.', d: 'A measurement with a decimal point needs a float, coming in Lesson 2.3.' };
+  fb.textContent = correct ? 'Right. A count of lives has no fractions and no text -- a plain integer.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'uses_integer_for_countable_quantity', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n4ReinforceAttempt }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'uses_integer_for_countable_quantity', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
+    resolveNode('n4');
+  } else if (n4ReinforceAttempt === 1) {
+    document.getElementById('n4-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'uses_integer_for_countable_quantity', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
+    resolveNode('n4');
+  }
+}
+var n4ExtendAttempt = 0;
+function n4ExtendCheck() {
+  n4ExtendAttempt++;
+  var blank = document.getElementById('n4-extend-blank').value;
+  var code = 'gold = 40\n' + blank + '\nprint("Total treasure:", gold + gems)';
+  var out = document.getElementById('n4-extend-output');
+  var fb = document.getElementById('n4-extend-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Total treasure: 55';
+    fb.textContent = correct ? 'Right. Two integers, added together with +, just like any other numbers.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'uses_integer_for_countable_quantity', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n4ExtendAttempt }, false);
+    resolveNode('n4');
+  });
+}
+
+/* ================= NODE 5: predicts_basic_integer_arithmetic ================= */
+var n5Attempt = { core: 0, reinforce: 0 };
+function n5CoreCheck() {
+  n5Attempt.core++;
+  var blank = document.getElementById('n5-core-blank').value;
+  var code = 'hp = 20\nhp = hp - 5\n' + blank + '\nprint("HP:", hp)';
+  var out = document.getElementById('n5-core-output');
+  var fb = document.getElementById('n5-core-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'HP: 17';
+    fb.textContent = correct ? 'Right. 20 - 5 = 15, then + 2 lands on 17.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'predicts_basic_integer_arithmetic', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n5Attempt.core }, false);
+    if (correct) {
+      logEvent('lane_transition', { skill_id: 'predicts_basic_integer_arithmetic', from: 'core', to: 'extend', reason: 'correct_advance' }, false);
+      document.getElementById('n5-extend').hidden = false;
+    } else if (n5Attempt.core === 1) {
+      logEvent('lane_transition', { skill_id: 'predicts_basic_integer_arithmetic', from: 'core', to: 'reinforce', reason: 'incorrect' }, false);
+      document.getElementById('n5-reinforce').hidden = false;
+    }
+  });
+}
+function n5ReinforceCheck() {
+  var picked = document.querySelector('input[name="n5-reinforce"]:checked');
+  var fb = document.getElementById('n5-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n5Attempt.reinforce++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. Multiplication happens before addition.' : 'Not quite. Work out which operation Python does first.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'predicts_basic_integer_arithmetic', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n5Attempt.reinforce }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'predicts_basic_integer_arithmetic', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
+    resolveNode('n5');
+  } else if (n5Attempt.reinforce === 1) {
+    document.getElementById('n5-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'predicts_basic_integer_arithmetic', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
+    resolveNode('n5');
+  }
+}
+var n5ExtendAttempt = 0;
+function n5ExtendCheck() {
+  n5ExtendAttempt++;
+  var blank = document.getElementById('n5-extend-blank').value;
+  var code = 'score = 5\nscore = score * 3\n' + blank + '\nprint("Score:", score)';
+  var out = document.getElementById('n5-extend-output');
+  var fb = document.getElementById('n5-extend-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Score: 11';
+    fb.textContent = correct ? 'Right. 5 * 3 = 15, then - 4 lands on 11.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'predicts_basic_integer_arithmetic', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n5ExtendAttempt }, false);
+    resolveNode('n5');
+  });
+}
+
+/* ---------------- Flashcards ---------------- */
+var CARDS = [
+  { term: 'integer', def: 'A whole number, with no decimal point. Can be positive, negative, or zero.' },
+  { term: 'negative integer', def: 'A whole number below zero, written with a minus sign directly in front of the digits, like -12.' },
+  { term: 'type()', def: "Python's built-in function that tells you what kind of value a variable holds, like <class 'int'>." }
+];
+var cardIndex = 0;
+function renderCard() {
+  document.getElementById('card').classList.remove('flipped');
+  document.getElementById('termText').textContent = CARDS[cardIndex].term;
+  document.getElementById('defText').textContent = CARDS[cardIndex].def;
+  document.getElementById('cardNum').textContent = cardIndex + 1;
+  document.getElementById('cardTotal').textContent = CARDS.length;
+}
+function flipCard() {
+  var flipped = document.getElementById('card').classList.toggle('flipped');
+  if (flipped) { logEvent('flashcard_flip', { term: CARDS[cardIndex].term }, false); }
+}
+function nextCard() { cardIndex = (cardIndex + 1) % CARDS.length; renderCard(); }
+function prevCard() { cardIndex = (cardIndex - 1 + CARDS.length) % CARDS.length; renderCard(); }
+renderCard();
+
+/* ---------------- Reading-comprehension quick checks (ungraded, but logged) ---------------- */
+function qcCheck(id, expected) {
+  var picked = document.getElementById(id + '-select').value;
+  var fb = document.getElementById(id + '-feedback');
+  if (!picked) { fb.textContent = 'Choose an answer first.'; fb.className = 'feedback incorrect'; return; }
+  var correct = picked === expected;
+  fb.textContent = correct ? 'Right.' : 'Not quite. Take another look above.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('quick_check', { id: id, correct: correct }, false);
+}
+</script>
+</body>
+</html>
