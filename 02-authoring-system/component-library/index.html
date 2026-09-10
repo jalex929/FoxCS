@@ -250,18 +250,18 @@ Working demos of every interactive pattern available for lesson authoring. <stro
 
 <h2>14. Code Execution Stepper (simulated IDE)</h2>
 <div class="component">
-  <span class="status status-new">New — demoed here first, not yet deployed in a real lesson</span>
-  <div class="desc">A simulated IDE view for walking through how code executes top to bottom — highlighting the current line, tracking variable state, and building up output one step at a time. <strong>Important: nothing here actually runs.</strong> Every step below is hand-authored in advance, same honesty as everywhere else in this library — this is closer to a comic strip of a program's execution than a real interpreter, which is exactly why the general "simulated IDE that matches typed code against accepted responses" idea got turned down (see <code>decisions-log.md</code>'s 2026-08-08 entry) while this got built instead. The dropdown lets a student pick a value and see one of a few <em>pre-written</em> outcomes that match it — a curated branch, not a live recalculation. Play/Pause auto-advances at the chosen speed; the ◀ ▶ buttons step one at a time. The separate demo below shows the other piece — an "edit" animation, typed at randomized human-ish speed rather than a robotic fixed interval, for showing a debugging fix in progress.</div>
+  <span class="status status-live">Full capability, 2026-09-10 — matches skills-map.md's Code Stepper spec through Learning Progression Stage 3; deployed as a standalone demo to the sandbox course (rebuild pending), not yet authored into a real lesson</span>
+  <div class="desc">A simulated IDE view for walking through how code executes top to bottom — highlighting the current line, tracking variable state, and building up output one step at a time. <strong>Important: nothing here actually runs.</strong> Every step below is hand-authored in advance, same honesty as everywhere else in this library — this is closer to a comic strip of a program's execution than a real interpreter, which is exactly why the general "simulated IDE that matches typed code against accepted responses" idea got turned down (see <code>decisions-log.md</code>'s 2026-08-08 entry) while this got built instead. The dropdown lets a student pick a value and see one of a few <em>pre-written</em> outcomes that match it — a curated branch, not a live recalculation. Play/Pause auto-advances at the chosen speed; the ◀ ▶ buttons step one at a time; Restart returns to the beginning. Switch between the two demo programs below to see a loop (Loop Movement badge when execution jumps back to the top) versus an if/elif/else (a live Condition panel, plus the skipped branches dimmed and the taken one badged). Turn on <strong>Predict before stepping</strong> to guess the next line before it's revealed — Learning Progression Stage 3 from <code>courses/python/skills-map.md</code>'s Code Stepper spec. Every play/pause/step/speed-change/restart/predict interaction is logged via <code>FoxCSTelemetry.log()</code> (component #16), the first component in this library actually wired into that mechanism. The separate demo below shows the other piece — an "edit" animation, typed at randomized human-ish speed rather than a robotic fixed interval, for showing a debugging fix in progress.</div>
 
   <div class="ide-demo">
+    <div class="ide-program-switch">
+      <button class="ide-tab active" id="ide-tab-loop" onclick="ideSwitchProgram('loop')">Program: Looping Over a List</button>
+      <button class="ide-tab" id="ide-tab-cond" onclick="ideSwitchProgram('cond')">Program: Choosing a Branch</button>
+    </div>
     <div class="ide-toolbar">
-      <span class="ide-filename">fruit_loop.py</span>
-      <span class="ide-controls">Try a different list:
-        <select id="ide-select" class="sel">
-          <option value="3">3 fruits (default)</option>
-          <option value="1">1 fruit</option>
-          <option value="0">empty list</option>
-        </select>
+      <span class="ide-filename" id="ide-filename">fruit_loop.py</span>
+      <span class="ide-controls"><span id="ide-variant-label">Try a different list:</span>
+        <select id="ide-select" class="sel"></select>
       </span>
     </div>
     <div class="ide-body">
@@ -271,6 +271,10 @@ Working demos of every interactive pattern available for lesson authoring. <stro
           <div class="ide-panel-label">Variables</div>
           <div class="ide-vars" id="ide-vars"></div>
         </div>
+        <div id="ide-cond-panel" style="display:none;">
+          <div class="ide-panel-label">Condition</div>
+          <div class="ide-cond" id="ide-cond"></div>
+        </div>
         <div>
           <div class="ide-panel-label">Output</div>
           <div class="ide-output" id="ide-output"></div>
@@ -278,10 +282,23 @@ Working demos of every interactive pattern available for lesson authoring. <stro
       </div>
     </div>
     <div class="ide-note" id="ide-note"></div>
+    <div class="ide-flow-badge" id="ide-flow-badge"></div>
+    <div class="ide-predict-row">
+      <label class="ide-predict-toggle-label">
+        <input type="checkbox" id="ide-predict-toggle"> 🔮 Predict before stepping
+      </label>
+    </div>
+    <div class="ide-predict-overlay" id="ide-predict-overlay" style="display:none;">
+      <div class="ide-predict-prompt">Before stepping, which line runs next?</div>
+      <div class="ide-predict-choices" id="ide-predict-choices"></div>
+      <div class="ide-predict-feedback" id="ide-predict-feedback"></div>
+      <button class="ide-btn" id="ide-predict-continue" style="display:none;" onclick="ideContinueAfterPredict()">Continue ▶</button>
+    </div>
     <div class="ide-transport">
       <button class="ide-btn" id="ide-back" onclick="ideStep(-1)">◀ Step</button>
-      <button class="ide-btn" id="ide-play" onclick="idePlayToggle()">▶ Play</button>
+      <button class="ide-btn ide-btn-play" id="ide-play" onclick="idePlayToggle()">▶ Play</button>
       <button class="ide-btn" id="ide-fwd" onclick="ideStep(1)">Step ▶</button>
+      <button class="ide-btn ide-btn-secondary ide-btn-restart" id="ide-restart" onclick="ideRestart()">↺ Restart</button>
       <span class="ide-speed-label">Speed: <span id="ide-speed-value">1x</span>
         <input type="range" id="ide-speed" min="0.25" max="2" step="0.25" value="1">
       </span>
@@ -295,7 +312,7 @@ Working demos of every interactive pattern available for lesson authoring. <stro
     <button class="ide-btn" onclick="ideEditPlay()">▶ Watch the Fix</button>
   </div>
 
-  <div class="where">Not yet deployed — proposed for any lesson introducing a new control-flow concept (loops, conditionals, functions) where seeing execution order visually would help.</div>
+  <div class="where">Standalone extract: <code>code-stepper-demo.html</code> (mirrors this section exactly, self-contained for Moodle upload — see its own header comment). Proposed for any lesson introducing a new control-flow concept (loops, conditionals, functions); the flagged real use case is 02.7 Reading Code with Variables (<code>courses/python/course-plan.md</code>).</div>
 </div>
 
 <h2>15. Theme System (4-theme link, reconciled at Save)</h2>
@@ -317,7 +334,7 @@ Working demos of every interactive pattern available for lesson authoring. <stro
     One hidden JSON blob per page (<code>&lt;script type="application/json" id="foxcs-telemetry"&gt;</code>), generalizing the mastery-check's hidden-timestamp trick (#12 above) into a full append-only event log: theme changes, code-stepper play/pause/step/speed changes, hints revealed, every drill attempt (skill, lane, correct/incorrect, attempt number), and full Core/Reinforce/Extend lane transitions with a reason — not just the endpoint. It's what makes "did this student start at 1x speed and slow down, or never touch it" and "did Reinforce actually recover the skill" answerable from the saved file itself. Full schema, event types, the first-cut "stuck" heuristic, and the ingestion pipeline (rides the not-yet-built codename-swap script into <code>06-data-and-spreadsheets/telemetry/</code>): <code>../telemetry-and-analytics.md</code>.
   </div>
   <div class="desc">Use the demo above: click through the theme selector and the Core/Reinforce/Extend arithmetic drill, then toggle "Show / hide" on its telemetry panel to watch <code>events</code> accumulate live. Real lesson pages never show this panel — it's a hidden field, surfaced here only so the mechanism can be reviewed.</div>
-  <div class="where">Reusable mechanism: <code>../shared-styles/foxcs-telemetry.js</code> (exposes <code>FoxCSTelemetry.log()</code> / <code>.recordSave()</code>). Not yet wired into any other component in this library (the stepper's own speed/play/step controls, drag-to-match, categorization, sequencing, etc. don't call it yet) — that's the natural next step once this mechanism itself is confirmed.</div>
+  <div class="where">Reusable mechanism: <code>../shared-styles/foxcs-telemetry.js</code> (exposes <code>FoxCSTelemetry.log()</code> / <code>.recordSave()</code>). <strong>Wired into the Code Stepper (#14) as of 2026-09-10</strong> — its play/pause/step/speed-change/restart/predict controls all call <code>FoxCSTelemetry.log()</code> now. Still not wired into drag-to-match, categorization, sequencing, etc. — those remain the natural next step.</div>
 </div>
 
 <h2>17. Code Hotspot (hover annotations + ordered step-through)</h2>
@@ -444,6 +461,7 @@ print("Game over!")</textarea>
 <script src="../skulpt-runtime/skulpt.min.js"></script>
 <script src="../skulpt-runtime/skulpt-stdlib.js"></script>
 <script src="../shared-styles/foxcs-theme-toggle.js"></script>
+<script src="../shared-styles/foxcs-telemetry.js"></script>
 <script>
 // ---- shared shuffle ----
 function shuffle(arr) {
@@ -975,54 +993,164 @@ function highlightPython(line) {
   return out;
 }
 
-// Each trace is fully hand-authored — this is the "curated branch" the desc
+// Full capability build, 2026-09-10 — see decisions-log.md's matching entry
+// and courses/python/skills-map.md's "Code Stepper" section for the spec
+// this closes out against: Restart control, predict-before-step (Learning
+// Progression Stage 3), telemetry wiring, and a second program demonstrating
+// Conditions/Branch Behavior/Loop Movement, not just the original loop case.
+// Each trace below is fully hand-authored — the "curated branch" the desc
 // text refers to, not live recalculation of arbitrary input.
-const ideTraces = {
-  '3': {
-    code: ['fruits = ["apple", "banana", "cherry"]', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
-    steps: [
-      { line: 0, vars: {fruits: '["apple", "banana", "cherry"]'}, output: [], note: 'Line 1 runs: fruits is created with 3 items.' },
-      { line: 1, vars: {fruits: '[...]', fruit: '"apple"'}, output: [], note: 'Line 2: the loop starts. fruit becomes "apple", the first item.' },
-      { line: 2, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'Line 3 runs and prints the message.' },
-      { line: 1, vars: {fruits: '[...]', fruit: '"banana"'}, output: ['I like apple'], note: 'Back to the top of the loop. fruit is now "banana".' },
-      { line: 2, vars: {fruits: '[...]', fruit: '"banana"'}, output: ['I like apple', 'I like banana'], note: 'Line 3 runs again.' },
-      { line: 1, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana'], note: 'Back to the top again. fruit is now "cherry".' },
-      { line: 2, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry'], note: 'Line 3 runs a third time.' },
-      { line: -1, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry'], note: 'No items left in fruits — the loop ends.' },
-      { line: 3, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry', 'Loop finished!'], note: 'The loop is completely done, so the program moves down to line 4 and keeps going — it doesn\'t stop just because the loop did.' }
-    ]
+function logTelemetry(type, fields) { if (window.FoxCSTelemetry) window.FoxCSTelemetry.log(type, fields); }
+
+const idePrograms = {
+  loop: {
+    filename: 'fruit_loop.py',
+    variantLabel: 'Try a different list:',
+    variantOptions: [
+      { value: '3', label: '3 fruits (default)' },
+      { value: '1', label: '1 fruit' },
+      { value: '0', label: 'empty list' }
+    ],
+    variants: {
+      '3': {
+        code: ['fruits = ["apple", "banana", "cherry"]', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
+        steps: [
+          { line: 0, vars: {fruits: '["apple", "banana", "cherry"]'}, output: [], note: 'Line 1 runs: fruits is created with 3 items.' },
+          { line: 1, vars: {fruits: '[...]', fruit: '"apple"'}, output: [], note: 'Line 2: the loop starts. fruit becomes "apple", the first item.' },
+          { line: 2, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'Line 3 runs and prints the message.' },
+          { line: 1, vars: {fruits: '[...]', fruit: '"banana"'}, output: ['I like apple'], loopBack: true, note: 'Back to the top of the loop. fruit is now "banana".' },
+          { line: 2, vars: {fruits: '[...]', fruit: '"banana"'}, output: ['I like apple', 'I like banana'], note: 'Line 3 runs again.' },
+          { line: 1, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana'], loopBack: true, note: 'Back to the top again. fruit is now "cherry".' },
+          { line: 2, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry'], note: 'Line 3 runs a third time.' },
+          { line: -1, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry'], note: 'No items left in fruits — the loop ends.' },
+          { line: 3, vars: {fruits: '[...]', fruit: '"cherry"'}, output: ['I like apple', 'I like banana', 'I like cherry', 'Loop finished!'], note: 'The loop is completely done, so the program moves down to line 4 and keeps going — it doesn\'t stop just because the loop did.' }
+        ]
+      },
+      '1': {
+        code: ['fruits = ["apple"]', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
+        steps: [
+          { line: 0, vars: {fruits: '["apple"]'}, output: [], note: 'Line 1 runs: fruits has just 1 item this time.' },
+          { line: 1, vars: {fruits: '[...]', fruit: '"apple"'}, output: [], note: 'The loop starts. fruit becomes "apple".' },
+          { line: 2, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'Line 3 runs and prints the message.' },
+          { line: -1, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'No items left — the loop only ran once, because the list only had 1 item.' },
+          { line: 3, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple', 'Loop finished!'], note: 'The loop only ran once, but the program still continues on to line 4 afterward.' }
+        ]
+      },
+      '0': {
+        code: ['fruits = []', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
+        steps: [
+          { line: 0, vars: {fruits: '[]'}, output: [], note: 'Line 1 runs: fruits is empty.' },
+          { line: -1, vars: {fruits: '[]'}, output: [], note: 'The loop checks fruits and finds nothing to loop over — line 3 never runs at all. Worth remembering when debugging: an empty list means zero iterations, not an error.' },
+          { line: 3, vars: {fruits: '[]'}, output: ['Loop finished!'], note: 'This is the key idea: even though the loop body never ran once, the program doesn\'t stop — it skips straight down to line 4 and keeps going.' }
+        ]
+      }
+    }
   },
-  '1': {
-    code: ['fruits = ["apple"]', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
-    steps: [
-      { line: 0, vars: {fruits: '["apple"]'}, output: [], note: 'Line 1 runs: fruits has just 1 item this time.' },
-      { line: 1, vars: {fruits: '[...]', fruit: '"apple"'}, output: [], note: 'The loop starts. fruit becomes "apple".' },
-      { line: 2, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'Line 3 runs and prints the message.' },
-      { line: -1, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple'], note: 'No items left — the loop only ran once, because the list only had 1 item.' },
-      { line: 3, vars: {fruits: '[...]', fruit: '"apple"'}, output: ['I like apple', 'Loop finished!'], note: 'The loop only ran once, but the program still continues on to line 4 afterward.' }
-    ]
-  },
-  '0': {
-    code: ['fruits = []', 'for fruit in fruits:', '    print("I like " + fruit)', 'print("Loop finished!")'],
-    steps: [
-      { line: 0, vars: {fruits: '[]'}, output: [], note: 'Line 1 runs: fruits is empty.' },
-      { line: -1, vars: {fruits: '[]'}, output: [], note: 'The loop checks fruits and finds nothing to loop over — line 3 never runs at all. Worth remembering when debugging: an empty list means zero iterations, not an error.' },
-      { line: 3, vars: {fruits: '[]'}, output: ['Loop finished!'], note: 'This is the key idea: even though the loop body never ran once, the program doesn\'t stop — it skips straight down to line 4 and keeps going.' }
-    ]
+  cond: {
+    filename: 'grade_lookup.py',
+    variantLabel: 'Try a different score:',
+    variantOptions: [
+      { value: 'A', label: 'Score 95 (A branch)' },
+      { value: 'B', label: 'Score 82 (B branch)' },
+      { value: 'C', label: 'Score 60 (else branch)' }
+    ],
+    variants: {
+      'A': {
+        code: ['score = 95', 'if score >= 90:', '    grade = "A"', 'elif score >= 80:', '    grade = "B"', 'else:', '    grade = "C"', 'print("Your grade is " + grade)'],
+        steps: [
+          { line: 0, vars: {score: '95'}, output: [], note: 'Line 1 runs: score is set to 95.' },
+          { line: 1, vars: {score: '95'}, output: [], cond: {expr: 'score >= 90', result: true}, branchTaken: 2, branchSkipped: [4, 6], note: 'Line 2 checks the first condition: is 95 >= 90? Yes — this branch runs immediately, and the rest of the chain (elif and else) is skipped entirely.' },
+          { line: 2, vars: {score: '95', grade: '"A"'}, output: [], note: 'Line 3 runs: grade is set to "A".' },
+          { line: 7, vars: {score: '95', grade: '"A"'}, output: ['Your grade is A'], note: 'Python skips straight past the elif and else and continues with line 8.' }
+        ]
+      },
+      'B': {
+        code: ['score = 82', 'if score >= 90:', '    grade = "A"', 'elif score >= 80:', '    grade = "B"', 'else:', '    grade = "C"', 'print("Your grade is " + grade)'],
+        steps: [
+          { line: 0, vars: {score: '82'}, output: [], note: 'Line 1 runs: score is set to 82.' },
+          { line: 1, vars: {score: '82'}, output: [], cond: {expr: 'score >= 90', result: false}, branchSkipped: [2], note: 'Line 2 checks the first condition: is 82 >= 90? No — so line 3 (the A branch) is skipped, and Python checks the next condition.' },
+          { line: 3, vars: {score: '82'}, output: [], cond: {expr: 'score >= 80', result: true}, branchTaken: 4, branchSkipped: [2, 6], note: 'Line 4 checks the next condition: is 82 >= 80? Yes — this branch runs, and the else branch (line 7) is skipped.' },
+          { line: 4, vars: {score: '82', grade: '"B"'}, output: [], note: 'Line 5 runs: grade is set to "B".' },
+          { line: 7, vars: {score: '82', grade: '"B"'}, output: ['Your grade is B'], note: 'Once a branch has run, Python skips the rest of the if/elif/else and continues with line 8.' }
+        ]
+      },
+      'C': {
+        code: ['score = 60', 'if score >= 90:', '    grade = "A"', 'elif score >= 80:', '    grade = "B"', 'else:', '    grade = "C"', 'print("Your grade is " + grade)'],
+        steps: [
+          { line: 0, vars: {score: '60'}, output: [], note: 'Line 1 runs: score is set to 60.' },
+          { line: 1, vars: {score: '60'}, output: [], cond: {expr: 'score >= 90', result: false}, branchSkipped: [2], note: 'Line 2: is 60 >= 90? No. Skip the A branch, check the next condition.' },
+          { line: 3, vars: {score: '60'}, output: [], cond: {expr: 'score >= 80', result: false}, branchSkipped: [4], note: 'Line 4: is 60 >= 80? Also no. Skip the B branch too — every condition has now failed.' },
+          { line: 5, vars: {score: '60'}, output: [], branchTaken: 6, note: 'Line 6\'s else has no condition of its own to check — it just catches every score that didn\'t match above, so its branch runs now.' },
+          { line: 6, vars: {score: '60', grade: '"C"'}, output: [], note: 'Line 7 runs: grade is set to "C".' },
+          { line: 7, vars: {score: '60', grade: '"C"'}, output: ['Your grade is C'], note: 'The if/elif/else is done, so the program continues with line 8.' }
+        ]
+      }
+    }
   }
 };
-let ideCurrentKey = '3';
+
+let ideCurrentProgram = 'loop';
+const ideVariantByProgram = { loop: '3', cond: 'B' };
 let ideStepIndex = 0;
 let idePlaying = false;
 let idePlayTimer = null;
+let idePredictMode = false;
+let idePendingNextLine = null;
+
+function currentTrace() {
+  const program = idePrograms[ideCurrentProgram];
+  return program.variants[ideVariantByProgram[ideCurrentProgram]];
+}
+
+function renderVariantSelect() {
+  const program = idePrograms[ideCurrentProgram];
+  const currentValue = ideVariantByProgram[ideCurrentProgram];
+  document.getElementById('ide-select').innerHTML = program.variantOptions.map(o =>
+    '<option value="' + o.value + '"' + (o.value === currentValue ? ' selected' : '') + '>' + o.label + '</option>'
+  ).join('');
+}
+
+function hidePredictOverlay() {
+  document.getElementById('ide-predict-overlay').style.display = 'none';
+}
+
+function ideSwitchProgram(key) {
+  if (key === ideCurrentProgram) return;
+  ideCurrentProgram = key;
+  ideStepIndex = 0;
+  ideStopPlaying();
+  hidePredictOverlay();
+  document.getElementById('ide-tab-loop').classList.toggle('active', key === 'loop');
+  document.getElementById('ide-tab-cond').classList.toggle('active', key === 'cond');
+  document.getElementById('ide-filename').textContent = idePrograms[key].filename;
+  document.getElementById('ide-variant-label').textContent = idePrograms[key].variantLabel;
+  document.getElementById('ide-cond-panel').style.display = key === 'cond' ? '' : 'none';
+  renderVariantSelect();
+  ideRenderAll();
+}
+
+function computeFlowBadge(program, step) {
+  if (program === 'loop') {
+    if (step.line === -1) return '⤫ Loop condition is now False — exiting the loop.';
+    if (step.loopBack) return '↻ Bottom of loop reached — jumping back to re-check the condition.';
+    return '';
+  }
+  if (program === 'cond' && step.branchTaken !== undefined) {
+    return step.cond
+      ? '✓ Condition True — this branch runs, the rest of the if/elif/else is skipped.'
+      : '→ No earlier condition matched — the else branch runs by default.';
+  }
+  return '';
+}
 
 function ideRenderAll() {
-  const trace = ideTraces[ideCurrentKey];
+  const trace = currentTrace();
   const step = trace.steps[ideStepIndex];
 
   document.getElementById('ide-code').innerHTML = trace.code.map((line, i) => {
     const active = i === step.line ? ' active' : '';
-    return '<div class="ide-code-line' + active + '"><span class="ide-line-num">' + (i + 1) + '</span><span>' + highlightPython(line) + '</span></div>';
+    const skipped = (step.branchSkipped || []).includes(i) ? ' skipped' : '';
+    return '<div class="ide-code-line' + active + skipped + '"><span class="ide-line-num">' + (i + 1) + '</span><span>' + highlightPython(line) + '</span></div>';
   }).join('');
 
   const entries = Object.entries(step.vars);
@@ -1030,11 +1158,23 @@ function ideRenderAll() {
     ? entries.map(([k, v]) => '<div class="ide-var-row"><span>' + k + '</span><span>' + v + '</span></div>').join('')
     : '<div class="ide-var-row" style="opacity:0.6;">(none yet)</div>';
 
+  if (ideCurrentProgram === 'cond') {
+    document.getElementById('ide-cond').innerHTML = step.cond
+      ? '<div class="ide-var-row"><span>' + escapeHtml(step.cond.expr) + '</span><span>' + (step.cond.result ? 'True' : 'False') + '</span></div>'
+      : '<div class="ide-var-row" style="opacity:0.6;">(no condition this step)</div>';
+  }
+
   document.getElementById('ide-output').innerHTML = step.output.length
     ? step.output.map(l => '<div class="ide-output-line">' + escapeHtml(l) + '</div>').join('')
     : '<div class="ide-output-line" style="opacity:0.6;">(nothing printed yet)</div>';
 
   document.getElementById('ide-note').textContent = step.note;
+
+  const badge = computeFlowBadge(ideCurrentProgram, step);
+  const badgeEl = document.getElementById('ide-flow-badge');
+  badgeEl.textContent = badge;
+  badgeEl.style.display = badge ? 'block' : 'none';
+
   document.getElementById('ide-step-count').textContent = 'Step ' + (ideStepIndex + 1) + ' of ' + trace.steps.length;
   document.getElementById('ide-back').disabled = ideStepIndex === 0;
   document.getElementById('ide-fwd').disabled = ideStepIndex === trace.steps.length - 1;
@@ -1049,38 +1189,94 @@ function ideStopPlaying() {
   clearInterval(idePlayTimer);
   document.getElementById('ide-play').textContent = '▶ Play';
 }
-function ideStep(dir) {
-  const trace = ideTraces[ideCurrentKey];
+function ideDoStep(dir) {
+  const trace = currentTrace();
   const newIdx = ideStepIndex + dir;
   if (newIdx < 0 || newIdx >= trace.steps.length) { ideStopPlaying(); return; }
   ideStepIndex = newIdx;
   ideRenderAll();
+  logTelemetry('stepper_step', {direction: dir === 1 ? 'forward' : 'back', index: ideStepIndex});
+}
+function ideStep(dir) {
+  if (dir === -1) { hidePredictOverlay(); ideDoStep(-1); return; }
+  const trace = currentTrace();
+  const nextIdx = ideStepIndex + 1;
+  if (nextIdx >= trace.steps.length) { ideStopPlaying(); return; }
+  if (idePredictMode) {
+    const nextStep = trace.steps[nextIdx];
+    if (nextStep.line !== -1) { ideOpenPredict(nextStep); return; }
+  }
+  ideDoStep(1);
 }
 function ideAdvancePlay() {
-  const trace = ideTraces[ideCurrentKey];
+  const trace = currentTrace();
   if (ideStepIndex >= trace.steps.length - 1) { ideStopPlaying(); return; }
   ideStepIndex++;
   ideRenderAll();
+  logTelemetry('stepper_step', {direction: 'forward', index: ideStepIndex});
 }
 function idePlayToggle() {
-  if (idePlaying) { ideStopPlaying(); return; }
+  if (idePlaying) { ideStopPlaying(); logTelemetry('stepper_pause', {}); return; }
   idePlaying = true;
   document.getElementById('ide-play').textContent = '⏸ Pause';
   idePlayTimer = setInterval(ideAdvancePlay, ideCurrentInterval());
+  logTelemetry('stepper_play', {});
+}
+function ideRestart() {
+  ideStopPlaying();
+  hidePredictOverlay();
+  ideStepIndex = 0;
+  ideRenderAll();
+  logTelemetry('stepper_restart', {});
+}
+function ideOpenPredict(nextStep) {
+  idePendingNextLine = nextStep.line;
+  const trace = currentTrace();
+  document.getElementById('ide-predict-choices').innerHTML = trace.code.map((line, i) =>
+    '<button class="ide-btn ide-predict-choice" onclick="ideSubmitPredictGuess(' + i + ')">Line ' + (i + 1) + '</button>'
+  ).join('');
+  document.getElementById('ide-predict-feedback').textContent = '';
+  document.getElementById('ide-predict-continue').style.display = 'none';
+  document.getElementById('ide-predict-overlay').style.display = 'block';
+}
+function ideSubmitPredictGuess(i) {
+  const correct = i === idePendingNextLine;
+  document.getElementById('ide-predict-feedback').textContent = correct
+    ? '✅ Correct — line ' + (i + 1) + ' runs next.'
+    : '❌ Not quite — line ' + (idePendingNextLine + 1) + ' actually runs next.';
+  document.querySelectorAll('.ide-predict-choice').forEach(b => b.disabled = true);
+  document.getElementById('ide-predict-continue').style.display = 'inline-block';
+  logTelemetry('stepper_predict', {guessed_line: i + 1, actual_line: idePendingNextLine + 1, correct: correct});
+}
+function ideContinueAfterPredict() {
+  hidePredictOverlay();
+  ideDoStep(1);
 }
 document.getElementById('ide-select').addEventListener('change', e => {
-  ideCurrentKey = e.target.value;
+  ideVariantByProgram[ideCurrentProgram] = e.target.value;
   ideStepIndex = 0;
   ideStopPlaying();
+  hidePredictOverlay();
   ideRenderAll();
 });
 document.getElementById('ide-speed').addEventListener('input', e => {
-  document.getElementById('ide-speed-value').textContent = parseFloat(e.target.value) + 'x';
+  const val = parseFloat(e.target.value);
+  document.getElementById('ide-speed-value').textContent = val + 'x';
   if (idePlaying) {
     clearInterval(idePlayTimer);
     idePlayTimer = setInterval(ideAdvancePlay, ideCurrentInterval());
   }
+  logTelemetry('stepper_speed_change', {value: val});
 });
+document.getElementById('ide-predict-toggle').addEventListener('change', e => {
+  idePredictMode = e.target.checked;
+  document.getElementById('ide-play').disabled = idePredictMode;
+  document.getElementById('ide-play').title = idePredictMode ? 'Play is disabled while Predict Mode is on' : '';
+  if (idePredictMode) ideStopPlaying();
+  hidePredictOverlay();
+});
+if (window.FoxCSTelemetry) window.FoxCSTelemetry.init('component-library-index-stepper-demo');
+renderVariantSelect();
 ideRenderAll();
 
 // ---- 14b. Edit/typing animation demo (randomized per-character speed) ----

@@ -159,3 +159,9 @@ Newest entries at the top, grouped by day.
 **Next up:** review the Checkpoint and the backfilled docs once the fork reports back; pick a real video for the Checkpoint's "Review on 1.1" subtopic (not yet chosen, flagged not guessed); then 02.6 Type Conversion is next in the build queue per Jay's own prioritization, followed by 02.7's new Code Stepper component.
 
 **Session ending here at Jay's request** — nothing left mid-flight; everything above is either live-and-logged or planned-and-logged, not silently pending.
+
+## 2026-09-10 — "Let's finish the code stepper"
+
+**Q (asked, answered):** which "code stepper" — the request was terse enough to need confirming. → Jay: "it's component #14."
+
+Brought component #14 (Code Execution Stepper) to full capability against the real spec in `courses/python/skills-map.md`: Restart button, predict-before-step (Learning Progression Stage 3), telemetry wiring (new `stepper_restart`/`stepper_predict` event types), and a second demo program (if/elif/else) so Conditions/Branch Behavior/Loop Movement all have real content, not just the original loop case. Full build record in `decisions-log.md`/`worklog.md`'s matching entries. **Not done:** redeploying the updated version to the live sandbox course (needs a Moodle backup first, and Jay's go-ahead since it's a live edit); the real 02.7 lesson still needs its own authored content built on top of this component.

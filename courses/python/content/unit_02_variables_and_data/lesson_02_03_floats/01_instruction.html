@@ -113,6 +113,7 @@
   .video-backup-link a { color: #1a5aa8; }
 
   .progress-note { font-size: 0.85rem; color: #555; margin: 0.6rem 0 1.2rem; }
+  .resume-badge { padding: 0.6rem 0.9rem; background: #e6f4ea; border: 1px solid #b7e0c3; border-radius: 6px; color: #1a7f37; font-weight: bold; font-size: 0.88rem; margin: 0.6rem 0 1rem; }
   #complete-banner { display: none; margin-top: 1.6rem; padding: 0.9rem 1.1rem; border-radius: 10px; background: #e6f4ea; border: 1px solid #b7e0c3; color: #1a7f37; font-weight: bold; }
   #save-status-global { font-size: 0.78rem; color: #6a737b; margin-top: 0.5rem; }
 </style>
@@ -268,6 +269,7 @@ print(lives + bonus)   # 3.5, not 3</pre>
 
 <!-- ======================= NODE 1: identifies_float_type ======================= -->
 <div class="node-heading"><strong>Skill Check 1 of 5</strong></div>
+<div class="resume-badge" id="n1-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
 <div class="drill" id="n1-core">
   <div class="drill-type">Build the Code</div>
   <p>Fill in the blank so the program prints exactly:</p>
@@ -312,6 +314,7 @@ print("Game Speed:", game_speed)</div>
 
 <!-- ======================= NODE 2: distinguishes_int_vs_float ======================= -->
 <div class="node-heading"><strong>Skill Check 2 of 5</strong></div>
+<div class="resume-badge" id="n2-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
 <div class="drill" id="n2-core">
   <div class="drill-type">Multiple Choice</div>
   <p>Which of these is a float, not an integer?</p>
@@ -353,6 +356,7 @@ print("Average Score:", average_score)</div>
 
 <!-- ======================= NODE 3: recognizes_float_disguised_as_whole ======================= -->
 <div class="node-heading"><strong>Skill Check 3 of 5</strong></div>
+<div class="resume-badge" id="n3-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
 <div class="drill" id="n3-core">
   <div class="drill-type">Build the Code</div>
   <p>Fill in the blank so the program prints exactly:</p>
@@ -395,6 +399,7 @@ print("Target:", target)</div>
 
 <!-- ======================= NODE 4: uses_float_for_decimal_quantity ======================= -->
 <div class="node-heading"><strong>Skill Check 4 of 5</strong></div>
+<div class="resume-badge" id="n4-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
 <div class="drill" id="n4-core">
   <div class="drill-type">Build the Code</div>
   <p>Fill in the blank so the program prints exactly:</p>
@@ -440,6 +445,7 @@ print("Total:", price + tax)</div>
 
 <!-- ======================= NODE 5: predicts_mixed_numeric_result ======================= -->
 <div class="node-heading"><strong>Skill Check 5 of 5</strong></div>
+<div class="resume-badge" id="n5-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
 <div class="drill" id="n5-core">
   <div class="drill-type">Build the Code</div>
   <p><code>lives = 3</code> and <code>bonus = 0.5</code> already exist. Fill in the blank so the program prints exactly:</p>
@@ -489,6 +495,7 @@ print("Adjusted:", adjusted)</div>
 
 <script src="../../../../../02-authoring-system/skulpt-runtime/skulpt.min.js"></script>
 <script src="../../../../../02-authoring-system/skulpt-runtime/skulpt-stdlib.js"></script>
+<script src="/local/foxcstelemetry/foxcs-progress.js"></script>
 <script>
 var CMID = "__CMID__";
 var ENDPOINT = '/local/foxcstelemetry/log.php';
@@ -528,11 +535,58 @@ function maybeComplete() {
   var all = progress.nodesResolved.n1 && progress.nodesResolved.n2 && progress.nodesResolved.n3 && progress.nodesResolved.n4 && progress.nodesResolved.n5;
   if (all) logEvent('lesson_complete', { skill_ids: ['identifies_float_type', 'distinguishes_int_vs_float', 'recognizes_float_disguised_as_whole', 'uses_float_for_decimal_quantity', 'predicts_mixed_numeric_result'] }, true);
 }
+/* ---------------- Resume: save/restore (added 2026-09-10) ----------------
+   Retrofit of the 02.1 reference implementation (see
+   ../lesson_02_01_variables_and_memory/01_instruction.html) -- this page has
+   no Learn-gate, so only per-node Practice resolution needs to survive a
+   closed tab. Every resolveNode() call now also calls saveProgress(), which
+   piggybacks on the existing logEvent()/localBackup() dual server+localStorage
+   write path (see ../../../../../07-infrastructure/local-plugins/
+   foxcstelemetry/foxcs-progress.js for the restore side). */
+var NODE_DRILL_IDS = {
+  n1: ['n1-core', 'n1-reinforce', 'n1-extend'],
+  n2: ['n2-core', 'n2-reinforce', 'n2-extend'],
+  n3: ['n3-core', 'n3-reinforce', 'n3-extend'],
+  n4: ['n4-core', 'n4-reinforce', 'n4-extend'],
+  n5: ['n5-core', 'n5-reinforce', 'n5-extend']
+};
+var NODE_REVIEW_NOTE_IDS = {
+  n1: ['n1-reinforce-exhausted'],
+  n2: ['n2-reinforce-exhausted'],
+  n3: ['n3-reinforce-exhausted'],
+  n4: ['n4-reinforce-exhausted'],
+  n5: ['n5-reinforce-exhausted']
+};
+function markNodeComplete(n) {
+  (NODE_DRILL_IDS[n] || []).forEach(function (id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+  (NODE_REVIEW_NOTE_IDS[n] || []).forEach(function (id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+  var badge = document.getElementById(n + '-resume-badge');
+  if (badge) badge.hidden = false;
+}
+function currentProgressState() { return { nodesResolved: progress.nodesResolved }; }
+function saveProgress() { logEvent('progress_state', currentProgressState(), false); }
+function applyProgressState(state) {
+  if (state.nodesResolved) {
+    Object.keys(state.nodesResolved).forEach(function (n) {
+      if (state.nodesResolved[n] && !progress.nodesResolved[n]) {
+        progress.nodesResolved[n] = true;
+        markNodeComplete(n);
+      }
+    });
+  }
+  updateProgressNote();
+  var status = document.getElementById('save-status-global');
+  if (status) status.textContent = 'Welcome back -- restored your progress from last time.';
+  maybeComplete();
+}
+FoxCSProgress.restore(ENDPOINT, CMID, applyProgressState);
+
 function resolveNode(n) {
   if (progress.nodesResolved[n]) return;
   progress.nodesResolved[n] = true;
   updateProgressNote();
   maybeComplete();
+  saveProgress();
 }
 
 function skRead(x) {

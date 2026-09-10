@@ -20,6 +20,18 @@
 //         (COMPLETION_TRACKING_MANUAL) to already be enabled on that module --
 //         this does not force an override, it acts the same as the student
 //         ticking Moodle's own manual-completion checkbox.
+//
+// GET  ?action=state&cmid=N
+//      -> {state: <payload object>|null}, the most recent 'progress_state'
+//         event this user logged for this cmid. Added 2026-09-10 so a
+//         bundled Instruction+Practice page can resume a student where they
+//         left off instead of forcing Learn + all Practice nodes to be
+//         finished in one sitting -- see decisions-log.md's matching entry.
+//         No new table: a page just logs its whole resumable-progress object
+//         as a normal 'progress_state' row via the existing log action, and
+//         this reads the latest one back. Same require_login()/enrollment
+//         check as every other action here, so a student can only ever read
+//         their own progress on a cmid they're actually enrolled in.
 
 define('AJAX_SCRIPT', true);
 require(__DIR__ . '/../../config.php');
@@ -38,6 +50,19 @@ if ($action === 'bootstrap') {
         'userid' => $USER->id,
         'cmid' => $cmid,
     ]);
+    exit;
+}
+
+if ($action === 'state') {
+    $rows = $DB->get_records_sql(
+        "SELECT id, payload FROM {local_foxcstelemetry_log}
+          WHERE userid = :userid AND cmid = :cmid AND eventtype = :eventtype
+          ORDER BY timecreated DESC, id DESC",
+        ['userid' => $USER->id, 'cmid' => $cmid, 'eventtype' => 'progress_state'],
+        0, 1
+    );
+    $row = reset($rows);
+    echo json_encode(['state' => $row ? json_decode($row->payload) : null]);
     exit;
 }
 

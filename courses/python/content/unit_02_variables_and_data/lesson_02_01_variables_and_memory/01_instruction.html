@@ -142,6 +142,7 @@
   .video-backup-link a { color: #1a5aa8; }
 
   .progress-note { font-size: 0.85rem; color: #555; margin: 0.6rem 0 1.2rem; }
+  .resume-badge { padding: 0.6rem 0.9rem; background: #e6f4ea; border: 1px solid #b7e0c3; border-radius: 6px; color: #1a7f37; font-weight: bold; font-size: 0.88rem; margin: 0.6rem 0 1rem; }
   #complete-banner { display: none; margin-top: 1.6rem; padding: 0.9rem 1.1rem; border-radius: 10px; background: #e6f4ea; border: 1px solid #b7e0c3; color: #1a7f37; font-weight: bold; }
   #save-status-global { font-size: 0.78rem; color: #6a737b; margin-top: 0.5rem; }
 </style>
@@ -437,6 +438,7 @@ print("Your score is " + str(score))</pre>
 
 <!-- ======================= NODE 1: creates_variable ======================= -->
 <div class="node-heading"><strong>Skill Check 1 of 4</strong></div>
+<div class="resume-badge" id="n1-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
 <div class="drill" id="n1-core">
   <div class="drill-type">Build the Code</div>
   <p>Fill in the blank so the program prints exactly:</p>
@@ -489,6 +491,7 @@ print("Difficulty:", difficulty)</div>
 
 <!-- ======================= NODE 2: variable_naming_rules ======================= -->
 <div class="node-heading"><strong>Skill Check 2 of 4</strong></div>
+<div class="resume-badge" id="n2-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
 <div class="drill" id="n2-core">
   <div class="drill-type">Multiple Choice</div>
   <p>Which of these is a valid Python variable name?</p>
@@ -531,6 +534,7 @@ print("Game Over:", is_game_over)</div>
 
 <!-- ======================= NODE 3: reassigns_variable ======================= -->
 <div class="node-heading"><strong>Skill Check 3 of 4</strong></div>
+<div class="resume-badge" id="n3-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
 <div class="drill" id="n3-core">
   <div class="drill-type">Build the Code</div>
   <p>The player just lost a life. Fill in the blank so the program prints exactly:</p>
@@ -584,6 +588,7 @@ print("Score:", score)</div>
 
 <!-- ======================= NODE 4: prints_variable_with_text ======================= -->
 <div class="node-heading"><strong>Skill Check 4 of 4</strong></div>
+<div class="resume-badge" id="n4-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
 <div class="drill" id="n4-core">
   <div class="drill-type">Build the Code</div>
   <p>Fill in the blank with one <code>print()</code> call that prints exactly:</p>
@@ -707,6 +712,7 @@ print("Your score is " + score)</div>
 
 <script src="../../../../../02-authoring-system/skulpt-runtime/skulpt.min.js"></script>
 <script src="../../../../../02-authoring-system/skulpt-runtime/skulpt-stdlib.js"></script>
+<script src="/local/foxcstelemetry/foxcs-progress.js"></script>
 <script>
 /* ---------------- Telemetry (local_foxcstelemetry, Option C) ---------------- */
 var CMID = "__CMID__"; // baked in by the deploy script's second phase
@@ -797,6 +803,80 @@ function maybeComplete() {
     logEvent('lesson_complete', { skill_ids: ['creates_variable', 'variable_naming_rules', 'reassigns_variable', 'prints_variable_with_text'] }, true);
   }
 }
+/* ---------------- Resume: save/restore (added 2026-09-10) ----------------
+   This page bundles Learn (gated section-by-section, see the reading-check
+   gate below) + Practice (4 adaptive skill nodes) into one long page with no
+   native Moodle save-state. Without this, a student who closed the tab
+   partway through had to redo every reading-check gate and every already-
+   resolved skill node from scratch on reopening. Every state-changing
+   interaction below (a reading check advancing, a node resolving, a spiral
+   item finishing) calls saveProgress(), which piggybacks on the existing
+   logEvent()/localBackup() dual server+localStorage write path (see
+   ../../../../../07-infrastructure/local-plugins/foxcstelemetry/
+   foxcs-progress.js for the restore side). */
+var NODE_DRILL_IDS = {
+  n1: ['n1-core', 'n1-reinforce', 'n1-extend'],
+  n2: ['n2-core', 'n2-reinforce', 'n2-extend'],
+  n3: ['n3-core', 'n3-reinforce', 'n3-extend'],
+  n4: ['n4-core', 'n4-reinforce', 'n4-extend-predict', 'n4-extend', 'n4-contrast']
+};
+var NODE_REVIEW_NOTE_IDS = {
+  n1: ['n1-reinforce-exhausted'],
+  n2: ['n2-reinforce-exhausted'],
+  n3: ['n3-reinforce-exhausted'],
+  n4: ['n4-reinforce-exhausted', 'n4-contrast-note']
+};
+function markNodeComplete(n) {
+  (NODE_DRILL_IDS[n] || []).forEach(function (id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+  (NODE_REVIEW_NOTE_IDS[n] || []).forEach(function (id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+  var badge = document.getElementById(n + '-resume-badge');
+  if (badge) badge.hidden = false;
+}
+function currentProgressState() {
+  return { learnIndex: learnFurthestIndex, nodesResolved: progress.nodesResolved, spiral1Done: progress.spiral1Done, spiral2Done: progress.spiral2Done };
+}
+function saveProgress() { logEvent('progress_state', currentProgressState(), false); }
+function applyProgressState(state) {
+  if (typeof state.learnIndex === 'number' && state.learnIndex >= 0) {
+    for (var i = 0; i <= state.learnIndex && i < READING_CHECK_ORDER.length; i++) {
+      var el = document.getElementById('learn-section-' + READING_CHECK_ORDER[i]);
+      if (el) el.hidden = false;
+    }
+    if (state.learnIndex >= READING_CHECK_ORDER.length - 1) {
+      var practiceEl = document.getElementById('learn-section-practice');
+      if (practiceEl) practiceEl.hidden = false;
+    }
+    learnFurthestIndex = Math.max(learnFurthestIndex, state.learnIndex);
+  }
+  if (state.nodesResolved) {
+    Object.keys(state.nodesResolved).forEach(function (n) {
+      if (state.nodesResolved[n] && !progress.nodesResolved[n]) {
+        progress.nodesResolved[n] = true;
+        markNodeComplete(n);
+      }
+    });
+  }
+  updateProgressNote();
+  if (nodesResolvedCount() === 4) {
+    document.getElementById('spiral-1').hidden = false;
+    document.getElementById('spiral-2').hidden = false;
+    document.getElementById('game-item').hidden = false;
+    document.getElementById('ux-item').hidden = false;
+  }
+  if (state.spiral1Done && !progress.spiral1Done) {
+    progress.spiral1Done = true;
+    document.getElementById('spiral-1').hidden = true;
+  }
+  if (state.spiral2Done && !progress.spiral2Done) {
+    progress.spiral2Done = true;
+    document.getElementById('spiral-2').hidden = true;
+  }
+  var status = document.getElementById('save-status-global');
+  if (status) status.textContent = 'Welcome back -- restored your progress from last time.';
+  maybeComplete();
+}
+FoxCSProgress.restore(ENDPOINT, CMID, applyProgressState);
+
 function resolveNode(n) {
   if (progress.nodesResolved[n]) return;
   progress.nodesResolved[n] = true;
@@ -808,6 +888,7 @@ function resolveNode(n) {
     document.getElementById('ux-item').hidden = false;
   }
   maybeComplete();
+  saveProgress();
 }
 
 /* ---------------- Skulpt setup ---------------- */
@@ -1147,6 +1228,7 @@ function spiralCheck(n) {
   logEvent('drill_attempt', { skill_id: spiralAnswers[n].skill, item_id: 'spiral_' + n, lane: 'spiral', correct: correct, attempt_number: spiralAttempts[n] }, false);
   if (n === 1) progress.spiral1Done = true; else progress.spiral2Done = true;
   maybeComplete();
+  saveProgress();
 }
 
 /* ---------------- Reflection (Game Connection / UX) ---------------- */
@@ -1204,6 +1286,7 @@ function qcCheck(id, expected) {
    answer has to actually be typed. */
 var READING_CHECK_ORDER = ['create', 'naming', 'reassign', 'print', 'types', 'terms'];
 var READING_CHECK_MIN_CHARS = 15;
+var learnFurthestIndex = -1; // furthest reading-check-gated Learn section reached; restored/saved for resume
 
 function readingCheck(key) {
   var ta = document.getElementById('rc-' + key + '-response');
@@ -1219,12 +1302,14 @@ function readingCheck(key) {
   logEvent('reading_check', { section: key, length: text.length }, false);
 
   var idx = READING_CHECK_ORDER.indexOf(key);
+  learnFurthestIndex = Math.max(learnFurthestIndex, idx);
   var nextKey = READING_CHECK_ORDER[idx + 1];
   var nextEl = nextKey ? document.getElementById('learn-section-' + nextKey) : document.getElementById('learn-section-practice');
   if (nextEl) {
     nextEl.hidden = false;
     nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+  saveProgress();
 }
 </script>
 
