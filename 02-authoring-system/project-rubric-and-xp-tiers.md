@@ -1,5 +1,7 @@
 # Project Rubric and XP Tiers
 
+**See `grade-point-scale.md` (2026-09-10) for how these four tier XP values now also drive the Project's actual Moodle grade** — nominal grade stays 25 (Skilled), and XP earned above that baseline converts to a small percent bonus (5 extra XP = +1%, capped at +4% by the Mythic ceiling). That doc also flags an unresolved tension with `05-grader/feedback-and-grading-spec.md` Section 15's older +1/+2 bonus mechanism — check both before grading a real Project submission.
+
 **Status: first real formalization of this pattern, 2026-08-30.** Two things existed only in conversation before this doc — the Starter/Skilled/Legendary/Mythic project-XP tier numbers, and the "how a student finds out what would move them up a tier" feedback pattern — neither had been written into a file. This doc reconciles them against `xp-and-incentives.md`'s existing Project XP rows (Required 25 / Bonus +10 / Bonus +15) and turns both into one buildable rubric shape, usable in Moodle's native Advanced Grading: Rubric on every Project Assignment. **Flagged for Jay to confirm:** the exact tier numbers below are this session's best reconstruction of "Starter/Skilled/Legendary/Mythic, Mythic ≈ +20 over baseline" from earlier conversation — check them against your own memory of that conversation before treating them as locked, since they were never persisted anywhere before now.
 
 ## Why One Rubric Shape, Reused Every Lesson

@@ -1,0 +1,328 @@
+<!-- Seminar III, Lesson 1 -- Guided Practice.
+     Rebuilt 2026-09-10 to replace the live H5P version (h5pactivity id=88,
+     cmid=210), whose H5P.Essay fields all had `enableRetry: false` -- once
+     a student clicked Submit, that field locked, the same trap as the
+     mod_lesson essay-lock bug documented for this same lesson, just in a
+     different content type. Real content (worked examples, all 3 essay
+     prompts, all 5 MultiChoice items) extracted directly from the live
+     h5pactivity's content.json, not re-invented. Real existing student
+     answers (30 students attempted) are carried over via a prefill
+     migration -- see 07-infrastructure/moodle-scripts/seminar3/migrate-
+     guided-practice-1-5-responses.php -- so nobody has to redo work.
+
+     Telemetry/save pattern matches FoxCS: Python's established
+     local_foxcstelemetry Option C (courses/python/content/.../lesson_02_01
+     .../01_instruction.html is the reference): bootstrap/logEvent/
+     localBackup, per-field draft autosave, a progress_state resume so a
+     returning student (or one with prefilled history) sees their answers
+     still there. Deliberately NO retry lock anywhere -- every field can be
+     revised freely up until the student leaves the page, matching how
+     mod_quiz's own deferred-feedback essay questions already behave safely
+     elsewhere in this course (1.9 ACT Math Diagnostic). -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lesson 1: Guided Practice</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5b6472; --accent: #1f6f8b; --accent-dark: #144d61;
+    --accent-bg: #eaf3f6; --line: #d7dde3; --paper: #ffffff; --floor: #f4f6f8;
+    --good: #2f7a4f; --bad: #a33;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--floor); color: var(--ink); font-family: Verdana, Arial, Helvetica, sans-serif; }
+  .page { max-width: 800px; margin: 0 auto; background: var(--paper); padding-bottom: 2rem; }
+  .banner { background: var(--accent-dark); color: white; padding: 2.2rem 2.5rem 1.6rem; }
+  .banner .kicker { font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: #cfe6ee; font-weight: bold; margin: 0 0 0.4rem; }
+  .banner h1 { font-size: 2rem; margin: 0 0 0.4rem; }
+  .banner p { margin: 0; color: #dff1f6; font-size: 1rem; }
+  section.block { padding: 1.5rem 2.5rem; border-bottom: 1px solid var(--line); }
+  section.block:last-of-type { border-bottom: none; }
+  h2 { font-size: 1.3rem; color: var(--accent-dark); margin: 0 0 0.8rem; }
+  .ref-box { border: 2px solid var(--accent); border-radius: 8px; padding: 0.9rem 1.1rem; background: var(--accent-bg); margin-bottom: 1rem; }
+  .ref-box h3 { margin-top: 0; color: var(--accent-dark); }
+  .worked { background: var(--accent-bg); border-left: 6px solid var(--accent); padding: 0.9rem 1.2rem; margin-bottom: 1rem; }
+  .worked .label { display: block; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: bold; color: var(--accent-dark); margin-bottom: 0.4rem; }
+  .worked ol { margin: 0.4rem 0 0; padding-left: 1.2rem; font-size: 0.95rem; line-height: 1.5; }
+  .item { border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1rem; background: #fbfcfd; }
+  .item .prompt { font-weight: bold; margin-bottom: 0.6rem; }
+  textarea.essay { width: 100%; min-height: 7em; font-family: Verdana, Arial, sans-serif; font-size: 0.95rem; padding: 0.6rem; border: 1px solid var(--line); border-radius: 5px; box-sizing: border-box; }
+  .placeholder-hint { font-size: 0.85rem; color: var(--muted); margin: 0.4rem 0 0.5rem; white-space: pre-line; }
+  .mc-choice { display: block; margin: 0.35rem 0; font-size: 0.95rem; }
+  .save-btn, .check-btn { font-family: Verdana, Arial, sans-serif; background: var(--accent); color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 0.4rem; }
+  .save-btn:hover, .check-btn:hover { background: var(--accent-dark); }
+  .feedback { margin-top: 0.5rem; font-size: 0.9rem; min-height: 1.2em; }
+  .feedback.correct { color: var(--good); }
+  .feedback.incorrect { color: var(--bad); }
+  .feedback.saved { color: var(--good); }
+  .resume-badge { display: inline-block; background: var(--accent-bg); color: var(--accent-dark); border: 1px solid var(--accent); border-radius: 5px; padding: 0.2rem 0.6rem; font-size: 0.85rem; margin-bottom: 0.5rem; }
+  #save-status-global { text-align: center; font-size: 0.9rem; color: var(--good); margin-top: 1.5rem; min-height: 1.2em; padding-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="banner">
+    <p class="kicker">Seminar III &middot; Lesson 1</p>
+    <h1>Guided Practice</h1>
+    <p>Work through the worked example in each section together first. Then try the remaining problems using the same steps. You can revise any answer below as many times as you want before moving on -- nothing locks.</p>
+  </div>
+
+  <section class="block">
+    <div class="ref-box">
+      <h3>Reference: The Five-Question Routine</h3>
+      <p style="margin-bottom:0.5rem;">Keep this open while you work. You do not need to memorize it.</p>
+      <ol style="margin:0;padding-left:1.2rem;">
+        <li><strong>STOP</strong> &mdash; What do I know?</li>
+        <li><strong>FIND</strong> &mdash; What am I solving for?</li>
+        <li><strong>CONNECT</strong> &mdash; What tool fits?</li>
+        <li><strong>TRY</strong> &mdash; Do the math.</li>
+        <li><strong>CHECK</strong> &mdash; Does it make sense?</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Using the Five-Question Routine</h2>
+    <p>Work through the worked example below together first. Then type out your own answer to each problem, working through all five questions in your response.</p>
+    <div class="worked">
+      <span class="label">Worked Example: Do I have enough time?</span>
+      <p style="margin:0 0 0.5rem;">You have 3 chores left, taking about 30, 45, and 20 minutes. Practice starts in 2 hours.</p>
+      <ol>
+        <li><strong>STOP: What information do I have?</strong> Three chores: 30, 45, 20 minutes. Two hours (120 minutes) until practice.</li>
+        <li><strong>FIND: What am I actually solving for?</strong> Whether the total chore time fits inside the available time.</li>
+        <li><strong>CONNECT: What tool applies?</strong> Addition, then comparison.</li>
+        <li><strong>TRY: Do the math.</strong> 30 + 45 + 20 = 95 minutes.</li>
+        <li><strong>CHECK: Does the answer make sense?</strong> 95 minutes is less than 120 minutes, so yes, there's enough time, with 25 minutes to spare.</li>
+      </ol>
+    </div>
+
+    <div class="item" id="e1">
+      <div class="resume-badge" id="e1-resume" style="display:none;">&#10003; You already have an answer saved here from before -- feel free to revise it.</div>
+      <div class="prompt">A school trip costs $18 per learner. 24 learners are going. The school has a $350 budget. Is the budget enough? Work through all five questions in your answer.</div>
+      <textarea class="essay" id="e1-answer" placeholder="STOP: I know...&#10;FIND: I'm solving for...&#10;CONNECT: I'll use...&#10;TRY: (show your work)&#10;CHECK: ...so my answer makes sense because..."></textarea>
+      <br><button class="save-btn" onclick="saveEssay('e1')">Save My Answer</button>
+      <div class="feedback" id="e1-feedback"></div>
+    </div>
+
+    <div class="item" id="e2">
+      <div class="resume-badge" id="e2-resume" style="display:none;">&#10003; You already have an answer saved here from before -- feel free to revise it.</div>
+      <div class="prompt">A recipe calls for 3/4 cup of sugar per batch. You want to make 2 batches. How much sugar do you need? Work through all five questions in your answer.</div>
+      <textarea class="essay" id="e2-answer" placeholder="STOP: I know...&#10;FIND: I'm solving for...&#10;CONNECT: I'll use...&#10;TRY: (show your work)&#10;CHECK: ...so my answer makes sense because..."></textarea>
+      <br><button class="save-btn" onclick="saveEssay('e2')">Save My Answer</button>
+      <div class="feedback" id="e2-feedback"></div>
+    </div>
+
+    <div class="item" id="e3">
+      <div class="resume-badge" id="e3-resume" style="display:none;">&#10003; You already have an answer saved here from before -- feel free to revise it.</div>
+      <div class="prompt">You need to be at work by 5:00 PM. It takes 25 minutes to get ready and 15 minutes to drive there. What time should you start getting ready? Work through all five questions in your answer.</div>
+      <textarea class="essay" id="e3-answer" placeholder="STOP: I know...&#10;FIND: I'm solving for...&#10;CONNECT: I'll use...&#10;TRY: (show your work)&#10;CHECK: ...so my answer makes sense because..."></textarea>
+      <br><button class="save-btn" onclick="saveEssay('e3')">Save My Answer</button>
+      <div class="feedback" id="e3-feedback"></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Classifying the Error</h2>
+    <div class="worked">
+      <span class="label">Worked Example</span>
+      <p style="margin:0 0 0.5rem;">A learner solves 9 &minus; 4 + 2 and answers 3, working it as: 4 + 2 = 6, then 9 &minus; 6 = 3.</p>
+      <ol>
+        <li>The learner added before subtracting, which changed the order of operations. Addition and subtraction have equal priority and should be done left to right: 9 - 4 = 5, then 5 + 2 = 7.</li>
+        <li>The idea (combine the numbers using the operations shown) wasn't wrong, but the order the steps were done in was wrong.</li>
+        <li>This is a <strong>Process Error</strong>: the right general idea, with the steps done out of order.</li>
+      </ol>
+    </div>
+    <p>Now practice identifying error types.</p>
+
+    <div class="item" id="m1">
+      <div class="prompt">A question asks how many more books Group A read than Group B. A learner reports the combined total read by both groups instead. Which error type BEST describes this?</div>
+      <label class="mc-choice"><input type="radio" name="m1" value="Knowledge"> Knowledge</label>
+      <label class="mc-choice"><input type="radio" name="m1" value="Process"> Process</label>
+      <label class="mc-choice"><input type="radio" name="m1" value="Execution"> Execution</label>
+      <label class="mc-choice"><input type="radio" name="m1" value="Comprehension"> Comprehension</label>
+      <label class="mc-choice"><input type="radio" name="m1" value="Strategy"> Strategy</label>
+      <button class="check-btn" onclick="checkMC('m1','Comprehension')">Check</button>
+      <div class="feedback" id="m1-feedback"></div>
+    </div>
+
+    <div class="item" id="m2">
+      <div class="prompt">Asked to find 10% of 150, a learner says, "I don't remember how to find a percent of a number." Which error type BEST describes this?</div>
+      <label class="mc-choice"><input type="radio" name="m2" value="Knowledge"> Knowledge</label>
+      <label class="mc-choice"><input type="radio" name="m2" value="Process"> Process</label>
+      <label class="mc-choice"><input type="radio" name="m2" value="Execution"> Execution</label>
+      <label class="mc-choice"><input type="radio" name="m2" value="Comprehension"> Comprehension</label>
+      <label class="mc-choice"><input type="radio" name="m2" value="Strategy"> Strategy</label>
+      <button class="check-btn" onclick="checkMC('m2','Knowledge')">Check</button>
+      <div class="feedback" id="m2-feedback"></div>
+    </div>
+
+    <div class="item" id="m3">
+      <div class="prompt">A learner correctly sets up 6 &times; 7, then writes the answer as 48. Which error type BEST describes this?</div>
+      <label class="mc-choice"><input type="radio" name="m3" value="Knowledge"> Knowledge</label>
+      <label class="mc-choice"><input type="radio" name="m3" value="Process"> Process</label>
+      <label class="mc-choice"><input type="radio" name="m3" value="Execution"> Execution</label>
+      <label class="mc-choice"><input type="radio" name="m3" value="Comprehension"> Comprehension</label>
+      <label class="mc-choice"><input type="radio" name="m3" value="Strategy"> Strategy</label>
+      <button class="check-btn" onclick="checkMC('m3','Execution')">Check</button>
+      <div class="feedback" id="m3-feedback"></div>
+    </div>
+
+    <div class="item" id="m4">
+      <div class="prompt">On a multiple-choice problem, a learner spends 8 minutes solving a complicated equation by hand when testing the four answer choices would take under a minute. Which error type BEST describes this?</div>
+      <label class="mc-choice"><input type="radio" name="m4" value="Knowledge"> Knowledge</label>
+      <label class="mc-choice"><input type="radio" name="m4" value="Process"> Process</label>
+      <label class="mc-choice"><input type="radio" name="m4" value="Execution"> Execution</label>
+      <label class="mc-choice"><input type="radio" name="m4" value="Comprehension"> Comprehension</label>
+      <label class="mc-choice"><input type="radio" name="m4" value="Strategy"> Strategy</label>
+      <button class="check-btn" onclick="checkMC('m4','Strategy')">Check</button>
+      <div class="feedback" id="m4-feedback"></div>
+    </div>
+
+    <div class="item" id="m5">
+      <div class="prompt">A learner adds &minus;6 + 9 and answers &minus;15. Which error type BEST describes this?</div>
+      <label class="mc-choice"><input type="radio" name="m5" value="Knowledge"> Knowledge</label>
+      <label class="mc-choice"><input type="radio" name="m5" value="Process"> Process</label>
+      <label class="mc-choice"><input type="radio" name="m5" value="Execution"> Execution</label>
+      <label class="mc-choice"><input type="radio" name="m5" value="Comprehension"> Comprehension</label>
+      <label class="mc-choice"><input type="radio" name="m5" value="Strategy"> Strategy</label>
+      <button class="check-btn" onclick="checkMC('m5','Knowledge')">Check</button>
+      <div class="feedback" id="m5-feedback"></div>
+    </div>
+  </section>
+
+  <div id="save-status-global"></div>
+</div>
+
+<script>
+var CMID = "__CMID__";
+var ENDPOINT = '/local/foxcstelemetry/log.php';
+var sesskey = null;
+var globalStatus = document.getElementById('save-status-global');
+
+var ESSAY_IDS = ['e1', 'e2', 'e3'];
+var MC_IDS = ['m1', 'm2', 'm3', 'm4', 'm5'];
+var mcAnswered = {};
+var mcSaved = {};
+
+function bootstrap(cb) {
+  fetch(ENDPOINT + '?action=bootstrap&cmid=' + CMID, { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { sesskey = data.sesskey; cb(); })
+    .catch(function () { globalStatus.textContent = 'Could not reach the save endpoint.'; });
+}
+
+function localBackup(eventtype, payload, complete) {
+  try {
+    var key = 'foxcs_telemetry_backup_' + CMID;
+    var log = JSON.parse(localStorage.getItem(key) || '[]');
+    log.push({ eventtype: eventtype, payload: payload, complete: !!complete, ts: new Date().toISOString() });
+    if (log.length > 300) log = log.slice(log.length - 300);
+    localStorage.setItem(key, JSON.stringify(log));
+  } catch (e) {}
+}
+
+function logEvent(eventtype, payload, complete) {
+  localBackup(eventtype, payload, complete);
+  if (!sesskey) { bootstrap(function () { logEvent(eventtype, payload, complete); }); return; }
+  var body = new URLSearchParams();
+  body.set('action', 'log');
+  body.set('sesskey', sesskey);
+  body.set('cmid', CMID);
+  body.set('eventtype', eventtype);
+  body.set('payload', JSON.stringify(payload));
+  if (complete) body.set('complete', '1');
+  fetch(ENDPOINT, { method: 'POST', credentials: 'same-origin', body: body })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { globalStatus.textContent = 'Saved ' + new Date().toLocaleTimeString() + '.'; })
+    .catch(function () { globalStatus.textContent = 'Save failed, but your answer is backed up in this browser.'; });
+}
+
+function currentState() {
+  var essay = {};
+  ESSAY_IDS.forEach(function (id) { essay[id] = document.getElementById(id + '-answer').value; });
+  return { essay: essay, mc: mcAnswered };
+}
+
+function saveProgress() {
+  logEvent('progress_state', currentState(), false);
+  maybeComplete();
+}
+
+function saveEssay(id) {
+  var val = document.getElementById(id + '-answer').value.trim();
+  var fb = document.getElementById(id + '-feedback');
+  if (!val) { fb.textContent = 'Write something before saving.'; fb.className = 'feedback incorrect'; return; }
+  fb.textContent = 'Saved.';
+  fb.className = 'feedback saved';
+  logEvent('drill_attempt', { item_id: id, response: val }, false);
+  saveProgress();
+}
+
+// No retry lock, deliberately: a student can check an MC item, change their
+// mind, and check again as many times as they want -- unlike the H5P
+// version this replaces, nothing here ever disables re-answering.
+function checkMC(id, correctValue) {
+  var selected = document.querySelector('input[name="' + id + '"]:checked');
+  var fb = document.getElementById(id + '-feedback');
+  if (!selected) { fb.textContent = 'Choose an answer first.'; fb.className = 'feedback incorrect'; return; }
+  var correct = selected.value === correctValue;
+  fb.textContent = correct ? 'Correct.' : 'Not quite -- look back at the worked example above and try again.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  mcAnswered[id] = selected.value;
+  mcSaved[id] = true;
+  logEvent('drill_attempt', { item_id: id, correct: correct, response: selected.value }, false);
+  saveProgress();
+}
+
+function wireDraftAutosave(id) {
+  var el = document.getElementById(id + '-answer');
+  var key = 'foxcs_draft_' + CMID + '_' + id;
+  var saved = localStorage.getItem(key);
+  if (saved && !el.value) el.value = saved;
+  el.addEventListener('input', function () {
+    try { localStorage.setItem(key, el.value); } catch (e) {}
+  });
+}
+ESSAY_IDS.forEach(wireDraftAutosave);
+
+function maybeComplete() {
+  var essayDone = ESSAY_IDS.every(function (id) { return document.getElementById(id + '-answer').value.trim().length > 0; });
+  var mcDone = MC_IDS.every(function (id) { return mcSaved[id]; });
+  if (essayDone && mcDone) {
+    logEvent('lesson_complete', { activity: 'lesson-1-guided-practice' }, true);
+  }
+}
+
+function applyState(state) {
+  if (!state) return;
+  if (state.essay) {
+    ESSAY_IDS.forEach(function (id) {
+      if (state.essay[id]) {
+        document.getElementById(id + '-answer').value = state.essay[id];
+        document.getElementById(id + '-resume').style.display = 'block';
+      }
+    });
+  }
+  if (state.mc) {
+    MC_IDS.forEach(function (id) {
+      if (state.mc[id]) {
+        var input = document.querySelector('input[name="' + id + '"][value="' + state.mc[id] + '"]');
+        if (input) { input.checked = true; mcAnswered[id] = state.mc[id]; mcSaved[id] = true; }
+      }
+    });
+  }
+}
+
+bootstrap(function () {
+  fetch(ENDPOINT + '?action=state&cmid=' + CMID, { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { applyState(data.state); })
+    .catch(function () {});
+  logEvent('viewed', { page: 'lesson-1-guided-practice' }, false);
+});
+setInterval(function () { if (!document.hidden) { logEvent('heartbeat', {}, false); } }, 30000);
+</script>
+
+</body>
+</html>

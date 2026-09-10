@@ -1005,3 +1005,54 @@ Jay asked to move Restart to the right of (or below) the step controls and deemp
 **Added:** `.ide-btn-play` (`#238636`, hover `#1f6f2c` -- a GitHub-style green chosen for dark-background contrast, no existing green precedent elsewhere in the IDE dark theme to match against) applied to the Play/Pause button's class list in both files, plus the shared `../shared-styles/foxcs-ide-dark.css` (which `index.html` loads) so both surfaces stay in sync the same way the rest of this component's CSS already does. Restart and the rest of the transport row untouched.
 
 **Not deployed live** -- same as the rest of today's Code Stepper work, this is a repo-source change only; the live sandbox (cmid=275) still serves the pre-this-change version until a redeploy is requested.
+
+## 2026-09-10 (continued) -- 02.6 Type Conversion resumed after a process kill; teacher-materials built, not yet deployed
+
+**Diagnosed first:** the process that had started 02.6 (right after the GOTW Lesson 2 work logged above) was killed by the OS mid-build. `01_instruction.html` (244 lines) and `coding-exercise/GMETRIX-121-conversion.py` were both on disk and structurally complete; `teacher-materials/` existed but was empty; nothing had reached any of the 3 logs yet. Verified nothing else was lost (`git status`, file mtimes) before touching anything.
+
+**Files added, all repo-only:**
+- `teacher-materials/coding_exercise_rubric.md` -- pass/fail grading checklist for the CE (`rating` converted via `int()` before math, `points` is real multiplication not string repetition, final `print()` doesn't crash, runs clean on 2+ inputs, no debug artifacts left in, filename convention). Grade value left unset pending a live check of 02.2-02.5's own CE `grade` field -- inferred as 2-5pt practice-tier per `feedback_lesson_point_scale.md`, not confirmed.
+- `teacher-materials/practice_question_bank.md` -- 2-per-tier bank, 8 skills. `p1`-`p6` (live) mapped to their skills; `uses_type_function` and `converts_to_float` (no live Practice item at all, Learn-section-only) each got a first drafted item; the other 4 skills got a `_02` item.
+- `lesson_02_06_type_conversion.md` -- lesson doc, same shape as 02.2's.
+- `course-plan.md`'s 02.6 line updated to reflect the real build state (was still marked "not built 2026-09-08").
+
+**Verification:** re-ran `check_live_publish_readiness.py` against the lesson folder -- clean, no sandbox language, no non-interactive response-eliciting blocks (same result as before the kill, confirming the interrupted write didn't leave anything malformed).
+
+**Not done:** 02.6 Mastery Check (next real gap -- 02.1-02.5 pattern is per-lesson, quiz, 4 synthesis items, grade=10); any live deploy (Instruction, Coding Exercise, or a future Mastery Check) -- needs `backup_moodle.sh` first and Jay's explicit go-ahead, same as every other live edit this week; 02.3-02.5's own missing `.md`/`practice_question_bank.md` backfill, flagged since 2026-09-08 as due before 02.6/02.7 and still outstanding.
+
+## 2026-09-10 (continued) -- Grade point scale settled: Instruction/Coding Exercise/Mastery Check/Project, new `grade-point-scale.md`
+
+**Files added/changed:**
+- `02-authoring-system/grade-point-scale.md` -- new standing doc, cross-course template. Instruction=5, Coding Exercise=10 (5 Checkpoint), Mastery Check=10, Project=25 nominal + XP-converted bonus (5 extra XP = +1%, capped +4% at Mythic).
+- `02-authoring-system/project-rubric-and-xp-tiers.md` -- added a pointer at the top to the new doc's grade mechanism.
+- `REPO_MAP.md` -- new Known Tensions entry (`grade-point-scale.md`'s XP-bonus mechanism vs. `feedback-and-grading-spec.md` Section 15's older +1/+2 Above-and-Beyond Bonus -- both would fire on the same signal, unresolved).
+
+**Design note for whoever implements the Moodle side:** Project's `grade` field should be set to a plain **25** (not 45, not 100) -- Legendary/Mythic do NOT get entered as literal rubric overflow inside Moodle. The XP-to-percent bonus (+2% Legendary, +4% Mythic) is a separate calculation applied on top, mechanism TBD (grade override on the item vs. a small dedicated bonus line-item -- pick one when actually building this, both would double-apply the bonus).
+
+**Not applied anywhere live.** Two retrofit questions still open (Unit 01 + 02.1 Project's `grade=100`: rescale or grandfather; Instruction's grade=5: retroactive to 02.1-02.5 or forward-only). See `decisions-log.md`'s matching entry for the full reasoning trail, including the discarded first-draft mechanism (rubric-overflow + natural aggregation) that Jay's explicit "keep totals small, cap the overage" correction replaced.
+
+## 2026-09-10 (continued) -- Grade point scale applied live
+
+**`backup_moodle.sh` run first** (verified via `backup.log`), then, all confirmed against the live DB directly rather than assumed:
+
+- `rescale-unit01-ce-and-02-1-project.php` run live: 01.3-01.6 Coding Exercise `grade=100->10` (assign ids 3-6, zero real grades existed), 2.1 Project `grade=100->25` (assign id=8, zero real grades, though 8+ real submissions are waiting to be graded).
+- 02.2-02.5 Coding Exercises + the Checkpoint were already correctly scaled (10/10/10/10/5) -- checked live, no action needed, the earlier "never confirmed" note was wrong.
+- **Unit 01's 6 Mastery Check quizzes NOT touched** -- real grades exist for up to 54 students, but `mdl_quiz_grades` (needed for Moodle's own regrade function to work correctly) is empty for 5 of 6 quizzes despite `mdl_grade_grades` having real data. Real mismatch, not understood yet, flagged rather than risking a bad regrade on live assessment history.
+- `create-instruction-grade-items.php` + a `log.php` extension (deployed to `/var/www/moodle/public/local/foxcstelemetry/log.php`) together build the Instruction completion-credit mechanism: 5 manual grade_items (max=5) for cmids 245/259/260/261/262, awarded in real time off the pre-existing `lesson_complete` telemetry event. `backfill-instruction-completion-grades.php` caught the 20 students who'd already completed these lessons before today -- verified live, all show 5.0/5.0.
+- `set-project-tier-grade.php` -- reusable tool, tier (starter/skilled/legendary/mythic) -> correct Moodle grade (15/25/25.5/26). Verified the math standalone. Not run against any real submission yet -- 02.1's Project has 8+ real ungraded submissions waiting on an actual holistic review pass, which is separate work.
+
+**Real open items:** Unit 01 MC quiz rescale (blocked on the cache mismatch above), the Section 15 vs. XP-bonus double-count tension, and actually grading 02.1's 8+ waiting Project submissions (tooling now exists, judgment pass doesn't).
+
+## 2026-09-10 (continued) -- Seminar III: mod_feedback partial-save + 1.5 Guided Practice essay-lock fix (reference build)
+
+**`add-pagebreak-lesson2-reflection.php`** -- Lesson 2 Reflection (`mod_feedback`, cmid=255, feedback id=6) split into 2 pages via Moodle's real `feedback_create_pagebreak()`/`feedback_move_item()` API: page 1 = the 5 skill ratings, page 2 = the open "Focus for next lesson" textarea. `feedback_valuetmp` now persists page 1 as soon as a student clicks Next. Real remaining gap, stated not hidden: this doesn't protect mid-typing on the final textarea page itself (no keystroke autosave the way `local_foxcstelemetry` gives Python) -- would need a full port to close that.
+
+**Essay-lock bug confirmed live**, not just historical: every `H5P.Essay` field on cmid 210/211/256/257 has `enableRetry:false`, locking on submit -- extracted real content.json from each package (found via `mdl_files`/`mdl_context`, unzipped from `moodledata/filedir`) to confirm and to source real question text for the rebuild.
+
+**1.5 Guided Practice (cmid=210 -> new cmid=277) rebuilt and deployed, first of 4:**
+- `courses/seminar-iii/content/lesson-1/guided-practice/01_guided_practice.html` -- self-contained HTML, Python's `local_foxcstelemetry` pattern, no retry lock, draft autosave, `progress_state` resume. `check_live_publish_readiness.py` clean, `node --check` clean.
+- `07-infrastructure/moodle-scripts/seminar3/rebuild-lesson1-guided-practice.php` -- new resource created (cmid=277), old h5pactivity hidden not deleted, correct section-sequence position (`beforemod=211`). Hit the known `/home/jay` (750) www-data-permission issue again -- staged via `/tmp/foxcs-deploy-stage`, same fix as before.
+- `migrate-guided-practice-1-5-responses.php` + `migrate-guided-practice-1-5-legacy-responses.php` -- carried all 30 students' real existing answers into the new page's resume mechanism (26 via current-generation subContentId match, 4 via a confirmed-safe position-based match against two older, orphaned content-package generations). Verified live: `mdl_local_foxcstelemetry_log` has 30/30 `progress_state` rows for cmid=277, spot-checked payload shape and content directly.
+- `backup_moodle.sh` run immediately before the deploy.
+
+**Not done:** same rebuild for cmid=211 (1.6 Independent Practice), 256 (Lesson 2 Independent Practice), 257 (Lesson 2 Guided Practice) -- pattern is now proven, not yet replicated. The stale "Lesson 1 Grade" completion-credit override (cmid=191, grade_item id=88) also not touched -- see decisions-log.md's matching entry for why it's now disconnected from the bug that originally justified it.

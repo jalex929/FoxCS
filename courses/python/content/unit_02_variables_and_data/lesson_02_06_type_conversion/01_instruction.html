@@ -1,0 +1,244 @@
+<!-- 02.6 Type Conversion -- Instruction.
+     Built from skills-map.md's "02.6 Type Conversion" section (8 skills,
+     Conceptual Bridge, 6-step Troubleshooting Routine, 6 Adaptive Question
+     Targets). Recommended deadline in skills-map.md is Mon Sept 14 (already
+     past by the time this was built 2026-09-10) -- flagging the date is
+     stale, not backfilling a fake earlier build date.
+
+     Troubleshooting Routine section is built around the REAL GMetrix file
+     (Python v2 Support Files/Domain 1/Student/121-conversion.py), also used
+     as this lesson's Coding Exercise starter file. That script does NOT
+     crash -- `rating` comes in as a string from input(), so `rating * 100`
+     is valid Python (string repetition) and the concatenation on the next
+     line also works, since `points` is already a string by then. The bug is
+     silent: it runs, but prints 100 repeated copies of whatever was typed
+     instead of doing arithmetic. This is deliberately used as the worked
+     example precisely because it does NOT throw an error -- the skill
+     `predicts_valid_conversion`/`predicts_invalid_conversion` needs students
+     to understand that "it ran without crashing" is not the same as "it did
+     what I meant," which a crash-only bug can't teach.
+
+     Telemetry/save pattern matches lesson_02_01's reference implementation
+     (local_foxcstelemetry Option C): bootstrap/logEvent/localBackup, plus
+     per-field draft autosave. No progress_state resume gate here -- this
+     page is short enough (Learn + Troubleshooting + Practice, no long
+     gated Learn sequence like 02.1) that a plain top-to-bottom scroll with
+     draft-autosaved practice answers is enough; nothing blocks re-reading
+     earlier sections if a student leaves and comes back. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>2.6 Type Conversion: Instruction</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 780px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  h2 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; margin-top: 2.2rem; }
+  h3 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; }
+  code, pre { font-family: Consolas, 'Courier New', monospace; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 0.9rem 1.1rem; border-radius: 6px; overflow-x: auto; }
+  code { background: #f0f0f0; padding: 0.1rem 0.35rem; border-radius: 3px; }
+  .bridge { background: #eef3fa; border-left: 4px solid #1a5aa8; padding: 0.9rem 1.3rem; margin: 1rem 0; }
+  .routine-step { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 0.8rem 1.1rem; margin: 0.6rem 0; }
+  .routine-step .num { display: inline-block; background: #1a5aa8; color: white; font-family: Verdana, Arial, sans-serif; font-weight: bold; width: 1.6rem; height: 1.6rem; text-align: center; border-radius: 50%; margin-right: 0.6rem; }
+  .practice { background: #f7f7f2; border: 1px solid #ddd; border-radius: 8px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .practice-prompt { font-weight: bold; margin-bottom: 0.6rem; }
+  select, input[type=text] { font-family: Georgia, serif; font-size: 1rem; padding: 0.4rem; border: 1px solid #ccd3dd; border-radius: 4px; }
+  .check-btn { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 0.5rem; }
+  .check-btn:hover { background: #134a8c; }
+  .feedback { margin-top: 0.6rem; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; min-height: 1.2em; }
+  .feedback.correct { color: #2f7a2f; }
+  .feedback.incorrect { color: #a33; }
+  #save-status-global { text-align: center; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; color: #2f7a2f; margin-top: 1.5rem; min-height: 1.2em; }
+</style>
+</head>
+<body>
+
+<h1>2.6 Type Conversion: Instruction</h1>
+
+<h2>Why This Matters</h2>
+<div class="bridge">
+  Conversion changes how Python should <em>interpret</em> a value. Look at <code>"12"</code>. To a person, that looks like a number. To Python, it's text until you explicitly convert it. Every value coming from <code>input()</code> is text, always, even if the student typed digits -- which is exactly why this comes up constantly once programs start asking users for numbers.
+</div>
+
+<h2>type() and Reading Its Output</h2>
+<p>You already have <code>type()</code> from earlier lessons -- 2.6 is about actually <em>doing something</em> with what it tells you. Run <code>type("12")</code> and Python answers <code>&lt;class 'str'&gt;</code>. That output format is always the same shape: <code>&lt;class '...'&gt;</code> with the type's name inside the quotes. Once you can read that output, the next question is what to do about it.</p>
+
+<h2>The Three Conversion Functions</h2>
+<p>Three functions change a value's type on purpose:</p>
+<ul>
+  <li><code>str(x)</code> -- converts <code>x</code> to text. <code>str(12)</code> becomes <code>"12"</code>.</li>
+  <li><code>int(x)</code> -- converts <code>x</code> to a whole number. <code>int("12")</code> becomes <code>12</code>.</li>
+  <li><code>float(x)</code> -- converts <code>x</code> to a decimal number. <code>float("12")</code> becomes <code>12.0</code>.</li>
+</ul>
+<p>Picking the right one depends entirely on what the value needs to <em>do</em> next. Going into a math calculation? You need <code>int()</code> or <code>float()</code>. Going into a <code>print()</code> alongside other text with <code>+</code>? You need <code>str()</code>.</p>
+
+<h2>Predicting Valid and Invalid Conversions</h2>
+<p>Not every conversion works. <code>int("12")</code> works because <code>"12"</code> is digits all the way through. <code>int("twelve")</code> fails -- Python can't turn the word "twelve" into a number, so it raises a <code>ValueError</code>. Before running a conversion, you can predict which outcome you'll get just by looking at the value: is every character actually a digit (and at most one decimal point, for a float)? If yes, the conversion is valid. If there's a letter, a stray symbol, or anything that isn't part of a number, it's invalid.</p>
+
+<h2>The Troubleshooting Routine</h2>
+<p>Type bugs are often <strong>silent</strong> -- the program runs without crashing, but does the wrong thing anyway. That's actually harder to catch than a crash, so type bugs get their own routine:</p>
+
+<div class="routine-step"><span class="num">1</span><strong>Read the message.</strong> If Python crashed, what does the error actually say? If it didn't crash, what did it print instead of what you expected?</div>
+<div class="routine-step"><span class="num">2</span><strong>Identify the values involved.</strong> Which variables are part of the broken line?</div>
+<div class="routine-step"><span class="num">3</span><strong>Check the types.</strong> Add a <code>print(type(...))</code> for each value in question. Don't guess -- check.</div>
+<div class="routine-step"><span class="num">4</span><strong>Test a conversion.</strong> Try wrapping the value in <code>str()</code>, <code>int()</code>, or <code>float()</code>, whichever matches what the value needs to become.</div>
+<div class="routine-step"><span class="num">5</span><strong>Revise based on the result.</strong> Did that fix it? If not, go back to step 3 -- there may be more than one value with the wrong type.</div>
+<div class="routine-step"><span class="num">6</span><strong>Ask a specific question if needed.</strong> Not "it's not working," but "I expected X, I got Y, here's what <code>type()</code> showed me."</div>
+
+<h3>Worked Example</h3>
+<p>Here's a real broken program. Read it before scrolling to the explanation.</p>
+<pre># rating is supposed to be a whole number
+rating = (input("Enter a rating between 1 and 5"))
+points = (rating) * 100
+print("You have " + (points) + " to start.")</pre>
+<p>Run this and type <code>3</code> when asked. It does <strong>not</strong> crash. It prints:</p>
+<pre>You have 333333333333333333333333333333... to start.</pre>
+<p>That's step 1 of the routine already telling you something: no error message, but clearly not what was intended. <code>input()</code> always returns a string, so <code>rating</code> is the string <code>"3"</code>, not the number <code>3</code>. <code>"3" * 100</code> is completely valid Python -- it means "repeat this string 100 times" -- which is why nothing crashes. The fix (step 4): convert <code>rating</code> to an integer right after reading it, with <code>int(rating)</code>, so the multiplication is real math instead of string repetition. The <code>print()</code> line then needs its own fix too, since <code>points</code> is now a number and can't be joined with <code>+</code> directly to text -- wrap it in <code>str(points)</code>.</p>
+
+<h2>Practice</h2>
+
+<div class="practice" id="p1">
+  <div class="practice-prompt">1. Python shows <code>&lt;class 'float'&gt;</code>. What type is this describing?</div>
+  <select id="p1-answer">
+    <option value="">Choose one...</option>
+    <option value="a">A whole number</option>
+    <option value="b">A decimal number</option>
+    <option value="c">Text</option>
+  </select>
+  <button class="check-btn" onclick="checkMC('p1','b')">Check</button>
+  <div class="feedback" id="p1-feedback"></div>
+</div>
+
+<div class="practice" id="p2">
+  <div class="practice-prompt">2. A program needs to add 5 to a number a player typed in. Which function converts that input for math?</div>
+  <select id="p2-answer">
+    <option value="">Choose one...</option>
+    <option value="a"><code>str()</code></option>
+    <option value="b"><code>int()</code></option>
+    <option value="c"><code>type()</code></option>
+  </select>
+  <button class="check-btn" onclick="checkMC('p2','b')">Check</button>
+  <div class="feedback" id="p2-feedback"></div>
+</div>
+
+<div class="practice" id="p3">
+  <div class="practice-prompt">3. Will <code>int("7")</code> succeed or fail?</div>
+  <select id="p3-answer">
+    <option value="">Choose one...</option>
+    <option value="a">Succeed -- "7" is all digits</option>
+    <option value="b">Fail -- it's text, not a number</option>
+  </select>
+  <button class="check-btn" onclick="checkMC('p3','a')">Check</button>
+  <div class="feedback" id="p3-feedback"></div>
+</div>
+
+<div class="practice" id="p4">
+  <div class="practice-prompt">4. Will <code>int("seven")</code> succeed or fail?</div>
+  <select id="p4-answer">
+    <option value="">Choose one...</option>
+    <option value="a">Succeed</option>
+    <option value="b">Fail -- "seven" isn't made of digits</option>
+  </select>
+  <button class="check-btn" onclick="checkMC('p4','b')">Check</button>
+  <div class="feedback" id="p4-feedback"></div>
+</div>
+
+<div class="practice" id="p5">
+  <div class="practice-prompt">5. Debug: this line crashes with <code>TypeError: can only concatenate str (not "int") to str</code>. Fix it by typing the corrected line.</div>
+  <pre style="margin-bottom:0.6rem;">score = 10
+print("Score: " + score)</pre>
+  <input type="text" id="p5-answer" style="width:100%;box-sizing:border-box;" placeholder='Type the corrected print() line'>
+  <button class="check-btn" onclick="checkText('p5', ['print(\"Score: \" + str(score))', 'print(\"Score: \"+str(score))'])">Check</button>
+  <div class="feedback" id="p5-feedback"></div>
+</div>
+
+<div class="practice" id="p6">
+  <div class="practice-prompt">6. A program stores a player's age as <code>age = "16"</code>, typed in from <code>input()</code>. It needs to check <code>age &gt;= 13</code>. What has to happen before that comparison will work correctly, and why?</div>
+  <textarea id="p6-answer" style="width:100%;min-height:3.5em;font-family:Georgia,serif;font-size:1rem;padding:0.5rem;box-sizing:border-box;border:1px solid #ccd3dd;border-radius:4px;"></textarea>
+  <br><button class="check-btn" onclick="saveOpenAnswer('p6')" style="margin-top:0.5rem;">Save Answer</button>
+  <div class="feedback" id="p6-feedback"></div>
+</div>
+
+<div id="save-status-global"></div>
+
+<script>
+/* ---------------- Practice checking ---------------- */
+function checkMC(id, correctValue) {
+  var sel = document.getElementById(id + '-answer');
+  var fb = document.getElementById(id + '-feedback');
+  var correct = sel.value === correctValue;
+  fb.textContent = correct ? 'Correct.' : 'Not quite -- look back at the section above and try again.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { item_id: id, correct: correct, response: sel.value }, false);
+}
+function checkText(id, acceptable) {
+  var val = document.getElementById(id + '-answer').value.trim();
+  var fb = document.getElementById(id + '-feedback');
+  var correct = acceptable.indexOf(val) !== -1;
+  fb.textContent = correct ? 'Correct.' : 'Not quite -- check the str() placement and try again.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { item_id: id, correct: correct, response: val }, false);
+}
+function saveOpenAnswer(id) {
+  var val = document.getElementById(id + '-answer').value;
+  var fb = document.getElementById(id + '-feedback');
+  fb.textContent = 'Saved.';
+  fb.className = 'feedback correct';
+  logEvent('drill_attempt', { item_id: id, correct: null, response: val }, false);
+}
+
+/* ---------------- Telemetry (local_foxcstelemetry, Option C) ---------------- */
+var CMID = "__CMID__";
+var ENDPOINT = '/local/foxcstelemetry/log.php';
+var sesskey = null;
+var globalStatus = document.getElementById('save-status-global');
+
+function bootstrap(cb) {
+  fetch(ENDPOINT + '?action=bootstrap&cmid=' + CMID, { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { sesskey = data.sesskey; cb(); })
+    .catch(function () { globalStatus.textContent = 'Could not reach the save endpoint.'; });
+}
+function localBackup(eventtype, payload, complete) {
+  try {
+    var key = 'foxcs_telemetry_backup_' + CMID;
+    var log = JSON.parse(localStorage.getItem(key) || '[]');
+    log.push({ eventtype: eventtype, payload: payload, complete: !!complete, ts: new Date().toISOString() });
+    if (log.length > 300) log = log.slice(log.length - 300);
+    localStorage.setItem(key, JSON.stringify(log));
+  } catch (e) {}
+}
+function logEvent(eventtype, payload, complete) {
+  localBackup(eventtype, payload, complete);
+  if (!sesskey) { bootstrap(function () { logEvent(eventtype, payload, complete); }); return; }
+  var body = new URLSearchParams();
+  body.set('action', 'log');
+  body.set('sesskey', sesskey);
+  body.set('cmid', CMID);
+  body.set('eventtype', eventtype);
+  body.set('payload', JSON.stringify(payload));
+  if (complete) body.set('complete', '1');
+  fetch(ENDPOINT, { method: 'POST', credentials: 'same-origin', body: body })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { globalStatus.textContent = 'Saved ' + new Date().toLocaleTimeString() + '.'; })
+    .catch(function () { globalStatus.textContent = 'Save failed, but your answer is backed up in this browser.'; });
+}
+function wireDraftAutosave(id) {
+  try {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var key = 'foxcs_draft_' + CMID + '_' + id;
+    var saved = localStorage.getItem(key);
+    if (saved) el.value = saved;
+    el.addEventListener('input', function () { try { localStorage.setItem(key, el.value); } catch (e) {} });
+  } catch (e) {}
+}
+['p5-answer', 'p6-answer'].forEach(wireDraftAutosave);
+
+bootstrap(function () { logEvent('viewed', { page: 'lesson_02_06_type_conversion/01_instruction' }, true); });
+setInterval(function () { if (!document.hidden) { logEvent('heartbeat', {}, false); } }, 30000);
+</script>
+
+</body>
+</html>

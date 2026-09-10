@@ -21,6 +21,19 @@
 //         this does not force an override, it acts the same as the student
 //         ticking Moodle's own manual-completion checkbox.
 //
+//         Added 2026-09-10: if eventtype is 'lesson_complete' and a manual
+//         grade_item exists with idnumber 'instruction-grade-cmid-<cmid>'
+//         (see create-instruction-grade-items.php), that student's grade is
+//         set to the item's full grademax immediately, in the same request --
+//         real-time, full-credit-on-genuine-completion, matching grade-
+//         point-scale.md's Instruction row. No partial credit for wrong
+//         answers; this only fires once a lesson's own JS has already
+//         decided every required interactive element was genuinely
+//         responded to (that logic lives in each lesson's own page, not
+//         here). If no matching grade_item exists (lesson not yet wired up,
+//         or not an Instruction page at all), this is a silent no-op --
+//         completion tracking above still fires regardless.
+//
 // GET  ?action=state&cmid=N
 //      -> {state: <payload object>|null}, the most recent 'progress_state'
 //         event this user logged for this cmid. Added 2026-09-10 so a
@@ -103,6 +116,16 @@ if ($markcomplete) {
         $result['completed'] = true;
     } else {
         $result['completionerror'] = 'completion not enabled or not set to manual tracking on this activity';
+    }
+}
+
+if ($markcomplete && $eventtype === 'lesson_complete') {
+    require_once($CFG->libdir . '/gradelib.php');
+    $idnumber = 'instruction-grade-cmid-' . $cmid;
+    $gradeitem = grade_item::fetch(['courseid' => $course->id, 'idnumber' => $idnumber]);
+    if ($gradeitem) {
+        $gradeitem->update_final_grade($USER->id, $gradeitem->grademax, 'foxcstelemetry');
+        $result['gradeawarded'] = $gradeitem->grademax;
     }
 }
 
