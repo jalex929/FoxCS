@@ -17,7 +17,7 @@ This is a baseline pass, not a deep audit: files touched this session (2026-08-3
 | design-system.md | | not yet audited | |
 | doc-health.md | 2026-08-31 | stable | this file |
 | feedback-collection.md | | not yet audited | |
-| grade-point-scale.md | 2026-09-10 | stable | new canonical per-activity-type point-total doc, settled 2026-09-10; see its own Open Retrofit Questions section for what's NOT yet reconciled against live Moodle grade values |
+| grade-point-scale.md | 2026-09-11 | stable | revised 2026-09-11: Project moved from per-lesson (25, in the 50-pt lesson total) to per-unit (20, required, on top); Unit 01 gets a simplified one-grade retrofit instead of full realignment — see the doc's own Unit 01 Retrofit section. XP-tier-to-grade formula for the Unit Project still needs Option A/B resolved before implementation. |
 | h5p-content-type-gotchas.md | | not yet audited | Source of Truth doc — see CLAUDE.md (8th doc, added 2026-09-02) — has no row in the original baseline pass despite being cited as authoritative since |
 | image-style-guide.md | | not yet audited | superseded, kept for reference |
 | instructional-image-guide.md | | not yet audited | |
