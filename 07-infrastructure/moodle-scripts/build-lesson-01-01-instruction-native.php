@@ -30,6 +30,7 @@
 // documented there (custom=1, retake=0, modattempts=1, review=0, displayleft=0,
 // displayleftif=0, grade=100, practice=0) -- copied deliberately, not re-derived, since
 // those were already verified against this instance's mod/lesson source this session.
+// UPDATED: grade changed from 100 to 5 per 02-authoring-system/grade-point-scale.md (Instruction).
 //
 // Run: sudo -u www-data php build-lesson-01-01-instruction-native.php
 
@@ -66,7 +67,7 @@ $moduleinfo->introeditor = [
     'itemid' => 0,
 ];
 
-$moduleinfo->grade = 100;
+$moduleinfo->grade = 5; // Instruction, per grade-point-scale.md
 $moduleinfo->custom = 1;
 $moduleinfo->retake = 0;
 $moduleinfo->modattempts = 1;

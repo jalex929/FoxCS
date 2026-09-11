@@ -5,8 +5,15 @@
 // 2026-08-29 "H5P pilot" entry for how that was confirmed to work). This is
 // the general-purpose version of create-h5p-pilot.php's one-off proof.
 //
-// Run: sudo -u www-data php create-h5p-activity.php <package.h5p> <unit-number> <name>
+// Run: sudo -u www-data php create-h5p-activity.php <package.h5p> <unit-number> <name> [grade]
 // Example: sudo -u www-data php create-h5p-activity.php /tmp/unit-01-check.h5p 1 "Unit 01 Check (Interactive)"
+//
+// [grade] is optional and defaults to 100 (this script is hardcoded to
+// foxcs-seminar3, which uses its own additive point scale per
+// decisions-log.md, not 02-authoring-system/grade-point-scale.md's
+// Instruction/Coding-Exercise/Mastery-Check/Project scale -- pass it
+// explicitly rather than relying on this default for anything that scale
+// governs.
 
 define('CLI_SCRIPT', true);
 require('/var/www/moodle/config.php');
@@ -15,11 +22,12 @@ require_once($CFG->dirroot . '/course/modlib.php');
 
 \core\cron::setup_user();
 
-[, $packagepath, $unitnum, $name] = $argv + [null, null, null, null];
+[, $packagepath, $unitnum, $name, $gradearg] = $argv + [null, null, null, null, null];
 if (!$packagepath || !file_exists($packagepath) || !is_numeric($unitnum) || !$name) {
-    fwrite(STDERR, "Usage: create-h5p-activity.php <package.h5p> <unit-number> <name>\n");
+    fwrite(STDERR, "Usage: create-h5p-activity.php <package.h5p> <unit-number> <name> [grade]\n");
     exit(1);
 }
+$grade = $gradearg !== null ? (float) $gradearg : 100;
 
 $sectionnum = ((int) $unitnum) + 1; // Section 1 = Unit 00, section 2 = Unit 01, etc.
 
@@ -47,7 +55,7 @@ $moduleinfo->visible = 1;
 $moduleinfo->name = $name;
 $moduleinfo->introeditor = ['text' => '', 'format' => FORMAT_HTML, 'itemid' => 0];
 $moduleinfo->packagefile = $draftitemid;
-$moduleinfo->grade = 100;
+$moduleinfo->grade = $grade;
 $moduleinfo->displayoptions = 0;
 $moduleinfo->enabletracking = 1;
 $moduleinfo->grademethod = 1;

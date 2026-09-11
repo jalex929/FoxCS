@@ -7,7 +7,8 @@
 // WHY comment above each print() line in the given starter program.
 //
 // Settings mirror cmid=215 (01.4 Coding Exercise) exactly: simple point grading
-// (grade=100), not a Moodle rubric -- the tiered XP structure lives in the intro
+// (originally grade=100, changed to 10 per 02-authoring-system/grade-point-scale.md --
+// Coding Exercise), not a Moodle rubric -- the tiered XP structure lives in the intro
 // text, same as every other lesson's tiered project. Only onlinetext + file
 // submission enabled; all feedback plugins disabled.
 //
@@ -85,7 +86,7 @@ $moduleinfo->duedate = 0;
 $moduleinfo->allowsubmissionsfromdate = 0;
 $moduleinfo->cutoffdate = 0;
 $moduleinfo->gradingduedate = 0;
-$moduleinfo->grade = 100;
+$moduleinfo->grade = 10; // Coding Exercise, per grade-point-scale.md
 $moduleinfo->requiresubmissionstatement = 0;
 $moduleinfo->teamsubmission = 0;
 $moduleinfo->requireallteammemberssubmit = 0;

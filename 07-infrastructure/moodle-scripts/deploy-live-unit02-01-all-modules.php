@@ -227,7 +227,7 @@ HTML;
     $moduleinfo->questionsperpage = 0;
     $moduleinfo->shuffleanswers = 1;
     $moduleinfo->navmethod = 'free';
-    $moduleinfo->grade = 100;
+    $moduleinfo->grade = 10; // Mastery Check, per grade-point-scale.md
 
     $result = create_module($moduleinfo);
     $quiz = $DB->get_record('quiz', ['id' => $result->instance], '*', MUST_EXIST);
@@ -304,7 +304,7 @@ HTML;
     $moduleinfo->allowsubmissionsfromdate = 0;
     $moduleinfo->cutoffdate = 0;
     $moduleinfo->gradingduedate = 0;
-    $moduleinfo->grade = 100;
+    $moduleinfo->grade = 25; // Project, per grade-point-scale.md
     $moduleinfo->requiresubmissionstatement = 0;
     $moduleinfo->teamsubmission = 0;
     $moduleinfo->requireallteammemberssubmit = 0;

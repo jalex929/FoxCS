@@ -101,7 +101,7 @@ $moduleinfo->introeditor = [
     'format' => FORMAT_HTML,
     'itemid' => 0,
 ];
-$moduleinfo->grade = 100;
+$moduleinfo->grade = 5; // Instruction, per grade-point-scale.md
 $moduleinfo->custom = 1;
 $moduleinfo->retake = 1;
 $moduleinfo->modattempts = 1;

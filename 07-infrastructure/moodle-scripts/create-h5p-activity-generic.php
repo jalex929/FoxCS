@@ -3,8 +3,14 @@
 // foxcs-seminar3) -- creates an H5P activity in ANY course from a
 // hand-built .h5p package, by course shortname + raw section number.
 //
-// Run: sudo -u www-data php create-h5p-activity-generic.php <course-shortname> <package.h5p> <sectionnum> "<name>"
+// Run: sudo -u www-data php create-h5p-activity-generic.php <course-shortname> <package.h5p> <sectionnum> "<name>" [grade]
 // Example: sudo -u www-data php create-h5p-activity-generic.php foxcs-python /tmp/h5p-build/book.h5p 1 "Unit 0: Getting Started"
+//
+// [grade] is optional and defaults to 100. This helper is used across
+// different courses with different point scales -- pass the correct value
+// explicitly (e.g. per 02-authoring-system/grade-point-scale.md's
+// Instruction/Coding-Exercise/Mastery-Check/Project values for Python)
+// rather than relying on this generic default.
 
 define('CLI_SCRIPT', true);
 require('/var/www/moodle/config.php');
@@ -13,11 +19,12 @@ require_once($CFG->dirroot . '/course/modlib.php');
 
 \core\cron::setup_user();
 
-[, $shortname, $packagepath, $sectionnum, $name] = $argv + [null, null, null, null, null];
+[, $shortname, $packagepath, $sectionnum, $name, $gradearg] = $argv + [null, null, null, null, null, null];
 if (!$shortname || !$packagepath || !file_exists($packagepath) || !is_numeric($sectionnum) || !$name) {
-    fwrite(STDERR, "Usage: create-h5p-activity-generic.php <course-shortname> <package.h5p> <sectionnum> \"<name>\"\n");
+    fwrite(STDERR, "Usage: create-h5p-activity-generic.php <course-shortname> <package.h5p> <sectionnum> \"<name>\" [grade]\n");
     exit(1);
 }
+$grade = $gradearg !== null ? (float) $gradearg : 100;
 
 $course = $DB->get_record('course', ['shortname' => $shortname], '*', MUST_EXIST);
 $section = $DB->get_record('course_sections', ['course' => $course->id, 'section' => (int) $sectionnum], '*', MUST_EXIST);
@@ -43,7 +50,7 @@ $moduleinfo->visible = 1;
 $moduleinfo->name = $name;
 $moduleinfo->introeditor = ['text' => '', 'format' => FORMAT_HTML, 'itemid' => 0];
 $moduleinfo->packagefile = $draftitemid;
-$moduleinfo->grade = 100;
+$moduleinfo->grade = $grade;
 $moduleinfo->displayoptions = 0;
 $moduleinfo->enabletracking = 1;
 $moduleinfo->grademethod = 1;

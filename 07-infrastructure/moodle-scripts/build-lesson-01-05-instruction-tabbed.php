@@ -100,7 +100,7 @@ $moduleinfo->introeditor = [
     'format' => FORMAT_HTML,
     'itemid' => 0,
 ];
-$moduleinfo->grade = 100;
+$moduleinfo->grade = 5; // Instruction, per grade-point-scale.md
 $moduleinfo->custom = 1;
 $moduleinfo->retake = 1; // unlimited attempts, per Jay's 2026-09-03 standing instruction (see decisions-log.md).
 $moduleinfo->modattempts = 1;

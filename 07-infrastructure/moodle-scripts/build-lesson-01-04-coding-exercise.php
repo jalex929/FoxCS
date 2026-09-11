@@ -8,7 +8,8 @@
 //
 // Settings mirror cmid=206 (01.3 Coding Exercise) EXACTLY, read directly from
 // mdl_assign/mdl_assign_plugin_config rather than guessed -- per the build
-// plan's own instruction. Notably: simple point grading (grade=100), NOT a
+// plan's own instruction. Notably: simple point grading (originally grade=100,
+// changed to 10 per 02-authoring-system/grade-point-scale.md -- Coding Exercise), NOT a
 // Moodle rubric -- 01.3's real precedent isn't rubric-based, so 01.4's tiered
 // XP structure (Required / Tier 1 +10 / Tier 2 +20) is documented in the
 // intro text for the student/teacher, same as every other lesson's tiered
@@ -86,7 +87,7 @@ $moduleinfo->duedate = 0;
 $moduleinfo->allowsubmissionsfromdate = 0;
 $moduleinfo->cutoffdate = 0;
 $moduleinfo->gradingduedate = 0;
-$moduleinfo->grade = 100;
+$moduleinfo->grade = 10; // Coding Exercise, per grade-point-scale.md
 $moduleinfo->requiresubmissionstatement = 0;
 $moduleinfo->teamsubmission = 0;
 $moduleinfo->requireallteammemberssubmit = 0;

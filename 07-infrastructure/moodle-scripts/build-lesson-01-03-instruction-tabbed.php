@@ -41,7 +41,7 @@ $moduleinfo->section = $sectionnum;
 $moduleinfo->visible = 1;
 $moduleinfo->name = '01.3 Writing Your First Program';
 $moduleinfo->introeditor = ['text' => '', 'format' => FORMAT_HTML, 'itemid' => 0];
-$moduleinfo->grade = 100;
+$moduleinfo->grade = 5; // Instruction, per grade-point-scale.md
 $moduleinfo->custom = 1;
 $moduleinfo->retake = 0;
 $moduleinfo->modattempts = 1;
