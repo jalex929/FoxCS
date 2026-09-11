@@ -9,8 +9,16 @@ JSON structure is rebuilt clean.
 import json, os, zipfile
 from h5p_book_builder import block_text, block_essay, block_multichoice, make_column
 
+SENTENCE_FRAME_PLACEHOLDER = (
+    "STOP: I know...\n"
+    "FIND: I'm solving for...\n"
+    "CONNECT: I'll use...\n"
+    "TRY: (show your work)\n"
+    "CHECK: ...so my answer makes sense because..."
+)
+
 def essay_with_keyword(task, sample, keyword):
-    block = block_essay(task, "Type your answer here. Work through all five questions in your response.", "Guided Practice")
+    block = block_essay(task, SENTENCE_FRAME_PLACEHOLDER, "Guided Practice")
     # Deliberately NOT setting solution.introduction/solution.sample here.
     # H5P.Essay's "Show sample solution" button is gated purely on
     # solution.sample being non-empty (confirmed in the compiled runtime:

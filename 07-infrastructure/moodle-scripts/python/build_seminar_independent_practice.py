@@ -5,8 +5,16 @@ package had the groupy-wrapper Essay bug). Content preserved from original.
 import json, os, zipfile
 from h5p_book_builder import block_text, block_essay, block_multichoice, make_column
 
+SENTENCE_FRAME_PLACEHOLDER = (
+    "STOP: I know...\n"
+    "FIND: I'm solving for...\n"
+    "CONNECT: I'll use...\n"
+    "TRY: (show your work)\n"
+    "CHECK: ...so my answer makes sense because..."
+)
+
 def essay_with_keyword(task, sample, keyword):
-    block = block_essay(task, "Type your answer here. Work through all five questions in your response.", "Independent Practice")
+    block = block_essay(task, SENTENCE_FRAME_PLACEHOLDER, "Independent Practice")
     # Deliberately NOT setting solution.introduction/solution.sample -- see
     # the matching comment in build_seminar_guided_practice.py. Populating it
     # shows a student-facing "Show sample solution" button with no way to
