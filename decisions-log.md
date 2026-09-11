@@ -1913,3 +1913,7 @@ Full detail in `02-authoring-system/grade-point-scale.md`, which is the canonica
 ## 2026-09-11 (continued) — Unit Project tier-to-grade resolved: direct lookup, Starter raised to 80%
 
 Resolves the XP-tier-to-grade open question from earlier today's grade-point-scale revision. Per Jay directly: use a direct tier→percentage lookup (Starter 80%, Skilled 100%, Legendary 102%, Mythic 104%) rather than deriving the base grade from a tier_XP/25 ratio — there are only 4 discrete tiers, so a continuous ratio was never necessary. Starter is intentionally raised to 80% (not the 60% a literal 15/25 ratio would give) — more generous credit for genuinely-completed-but-baseline project work. Legendary/Mythic's +2%/+4% bonus logic is unchanged. See `02-authoring-system/grade-point-scale.md`'s Unit Project section for the settled table/pseudocode.
+
+## 2026-09-11 (continued) — Unit Project bonus raised: +3%/+6%, not +2%/+4%
+
+Per Jay directly, after a short back-and-forth on whether +2%/+4% was enough to feel like a real incentive without over-inflating grades: raised Legendary's bonus from +2% to +3% and Mythic's from +4% to +6%. New rule: +3% per 10 XP earned over the Skilled baseline (25 XP), same shape as before, just a bigger step. Starter (80%) and Skilled (100%) are unaffected. See `02-authoring-system/grade-point-scale.md`'s Unit Project section for the settled table/pseudocode.

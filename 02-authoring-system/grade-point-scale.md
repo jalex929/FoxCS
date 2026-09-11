@@ -37,15 +37,15 @@ Per-lesson nominal total: 5 + 10 + 10 = **25**. A student who does exactly what'
 |---|---|---|
 | Starter | 15 | **80%** (16/20) — set directly, not derived from the XP ratio |
 | Skilled | 25 | **100%** (20/20) |
-| Legendary | 35 | **102%** (+2%, same "+1% per 5 XP over the Skilled baseline" rule as before) |
-| Mythic | 45 | **104%** (+4%) |
+| Legendary | 35 | **103%** (+3%, "+3% per 10 XP over the Skilled baseline" — raised 2026-09-11 from an earlier +2%/+4% pass, per Jay: enough to feel worth chasing without inflating the grade) |
+| Mythic | 45 | **106%** (+6%) |
 
 ```
 if tier == Starter:  grade_percent = 80
 elif tier == Skilled: grade_percent = 100
 else:  # Legendary or Mythic
   extra_xp = tier_XP - 25
-  grade_percent = 100 + floor(extra_xp / 5)
+  grade_percent = 100 + floor(extra_xp / 10) * 3
 ```
 
 Point totals stay small (no item inflated to 100), a student can exceed 100% through exceptional project work, but the overage stays modest — "a few points over 100%," matching the original intent.
