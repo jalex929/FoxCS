@@ -39,7 +39,6 @@ Consolidated from both source docs plus new questions raised during reconciliati
 - Which Python version and VS Code extensions are standard on school machines; whether the visible Run button is reliably configured out of the box.
 - Whether downloaded/submitted folders preserve directory structure through Google Classroom. Blocks the codename-swap script (`01-privacy-and-governance/codename-policy.md`'s "Tooling Needed" section) and the pilot-loop test (`05-grader/README.md`'s "Testing Needs" section) — both documented 2026-08-04, neither built/run yet.
 - Interactive-practice-HTML compatibility on real school devices/browsers (Chromebooks especially) — untested as of the Unit 01 build. See `05-grader/README.md`'s "Testing Needs."
-- Whether reflections are completed locally (in the `.py` file or a text file) or inside Moodle — moot while Moodle is paused; current MVP direction leans toward embedded directly in the submitted folder. Confirm before building the reflection-completion check.
 
 ## Codenames / Privacy
 

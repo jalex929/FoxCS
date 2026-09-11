@@ -26,10 +26,10 @@ See `decisions-log.md` for how this structure evolved and why. See `open-questio
 
 | Course | Folder | Status |
 |---|---|---|
-| FoxCS: Python ("Game Programming I") | `courses/python/` | Active — live on Moodle. Unit 01 Lesson 1 built across Instruction + Mastery Check; Practice and Project modules and Lessons 01.2–01.3 in progress. |
+| FoxCS: Python ("Game Programming I") | `courses/python/` | Active — live on Moodle. **Updated 2026-09-10 (was badly stale).** Unit 01 (Lessons 01.1–01.6) fully built across the current 5-module structure (see Purpose above). Unit 02 in progress: 02.0–02.5 live (Instruction, Coding Exercise, Mastery Check), 02.6 drafted in-repo not yet deployed. Grade-point scale finalized 2026-09-10, see `02-authoring-system/grade-point-scale.md`. See `courses/python/CLAUDE.md` and `worklog.md`'s most recent entries for exact current state — this table lags behind both. |
 | FoxCS: Game Programming II ("Game II") | `courses/game-programming-2/` | **Course-plan.md built 2026-08-17/18** (corrected here 2026-08-30 — this row was stale) — full Unit 01-29 checklist, 5-phase structure (Foundations → Unity 2D → Larger Systems → 2D-to-3D → Independent Dev/Capstone), Programmer/Artist cert-objective mapping, AP-testing pacing, full Game/UX + journal thread. No `content/` (lesson-by-lesson authored material) yet — that's the next real gap, not the course-plan itself. Student-chosen lane: JavaScript/HTML5 app dev, and/or Unity (students may focus on Unity only if they prefer — historically JS-first with Unity as time-permitting, that priority is reversing). |
 | FoxCS: Web Dev ("Web II") | `courses/web-dev/` | **Course-plan.md built 2026-08-17/18** (corrected here 2026-08-30 — this row was stale) — full Unit 01-21 checklist, certification-objective mapping, Mixed-Experience Web I/II pacing-lane proposal, full UX/Design-Thinking + journal thread. No `content/` yet. HTML/CSS/JavaScript, usability/human-centered-design focus; a PHP (or similar) backend is longer-range scope only — not to be surfaced to students until confirmed, see `courses/web-dev/CLAUDE.md`. |
-| FoxCS: Software Dev | `courses/software-dev/` | **Created 2026-08-30** — `CLAUDE.md` + first-draft `course-plan.md` (16 units, SD-01 to SD-16, Stage 4 Java Fundamentals + Stage 5 Software Development). Continuation course only, not a same-day parallel choice — starts after a student clears a Web Dev JavaScript prerequisite (exact threshold undefined). **No licensed Java curriculum source exists anywhere in this repo** — the biggest real gap of any FoxCS course; see `courses/software-dev/CLAUDE.md`'s Source Material section before authoring real lesson content. |
+| FoxCS: Software Dev | `courses/software-dev/` | **Created 2026-08-30** — `CLAUDE.md` + first-draft `course-plan.md` (16 units, SD-01 to SD-16, Stage 4 Java Fundamentals + Stage 5 Software Development). Continuation course only, not a same-day parallel choice — starts after a student clears a Web Dev JavaScript prerequisite (exact threshold undefined). **Java source-material gap resolved 2026-09-10** — `Java_INF-304_Student_Support_Files/` landed in `starter context/` 2026-08-31; see `courses/software-dev/CLAUDE.md`'s Source Material section (not yet cross-checked against the unit skeleton). |
 | FoxCS: Seminar III | `courses/seminar-iii/` | In progress (updated 2026-08-30) — uses its own **Lesson N** numbering, not weeks or Units (Seminar III-specific, see `decisions-log.md`'s 2026-08-30 entry; Python's Unit numbering is unaffected). Orientation content (formerly "Unit 00") is unnumbered, sits before Lesson 1. Lesson 1 is fully built out (12 Moodle activities incl. an interactive ACT Math baseline) and consolidated for cohesion; Lessons 2/4/8 have full content, Lessons 3/5/6/7 are missing pieces (see `worklog.md`'s 2026-08-29/30 entries for the exact gap list). **Not a CS/certification course** — ACT-anchored academic readiness (Math/Reading/English/Data) + academic/life skills + postsecondary planning (College Prep vs. Workforce Readiness pathways). Keep "ACT" framing light in student-facing language — over-labeling it turns off seniors. A lesson gets a letter suffix (e.g. "Lesson 3A"/"Lesson 3B") only when it combines academic-skills content with postsecondary content in the same week — not yet needed anywhere in Quarter 1, since postsecondary work there is light and not weekly. See `courses/seminar-iii/CLAUDE.md` for the real structural mismatches with the rest of FoxCS's model before authoring anything. |
 
 Whether "Unity" remains its own separate course/folder or is fully absorbed as a Game II lane isn't settled — see `open-questions.md`. Each course folder gets its own `CLAUDE.md`, `course-plan.md`, and `content/`. See `courses/python/CLAUDE.md` for the active course.
@@ -38,9 +38,9 @@ Whether "Unity" remains its own separate course/folder or is fully absorbed as a
 
 Phase: **Live Moodle build, one lesson at a time.** Moodle resumed the 2026-08-04 pause on **2026-08-28** (see `decisions-log.md`), ahead of the MVP loop being fully proven, at Jay's direction. There are (or recently were) **three separate Moodle instances** in play, none sharing a database: a local Windows install (`C:\Users\Jay Fox\server\moodle`, `Start Moodle.exe`/`Stop Moodle.exe`, version 5.3dev — a dev branch), the `foxcs-droplet` build/dev instance, and a previously-undecided production host. **Verified directly 2026-08-30 (`curl -sI https://foxcs.online`): `foxcs.online` currently resolves to the droplet with real, working Let's Encrypt SSL, serving live Moodle.** Whether Jay still intends a separate, distinct long-term production host beyond this droplet, or has settled on the droplet itself as production, isn't confirmed — flag rather than assume either way.
 
-**Ground-truth audit, 2026-08-30 — Python Lesson 01.1 is only half-built.** Verified live against the droplet's Moodle DB, not assumed: Instruction (H5P Interactive Book) and Mastery Check (Quiz, password-gated, 3-attempt averaged) are real and correct. **Practice (H5P BranchingScenario) does not exist anywhere on the instance — never built, design-only.** **Project (native Assignment with rubric) does not exist — zero rows in `mdl_assign`.** Old static file-resource links from the 2026-08-04 MVP/Classroom phase were hidden/removed 2026-08-30 to stop them competing with the new H5P activity. 01.2 and 01.3 have no Moodle content in any form yet. Don't assume "Lesson 1 exists" means all 4 modules exist — check `mdl_assign`/`mdl_h5p`/`mdl_quiz` directly before building on top of an assumption. This ground-truth-over-assumption lesson applies equally to Seminar III's parallel Lesson N build above — verify against the live course/`worklog.md`, don't assume this table's summary is current by the time you read it.
+**Superseded 2026-09-10 — the 2026-08-30 "Lesson 01.1 half-built" audit below is historical, not current.** Kept as a worked example of the ground-truth-over-assumption lesson it taught, not as current status: Python Unit 01 (Lessons 01.1–01.6) is now fully built across the current 5-module structure, and Unit 02 is well underway (see the Courses table above). **The lesson itself still stands and generalizes**: this file and even `courses/<course>/CLAUDE.md` files lag behind real Moodle state by days to weeks — always check `mdl_assign`/`mdl_h5p`/`mdl_quiz`/`mdl_lesson` directly, or at minimum `worklog.md`'s most recent entries, before assuming any lesson's build state from a summary table. Original 2026-08-30 audit text, for reference: Instruction and Mastery Check were real and correct; Practice (H5P BranchingScenario) and Project did not exist yet; 01.2/01.3 had no content. All of that is now resolved and superseded.
 
-The grading pipeline (`05-grader/`) and spreadsheet dashboard (`06-data-and-spreadsheets/`) are still placeholders — not yet started.
+**`05-grader/` has a real, tested school-side auto-grader** (`school-side/auto_grade.py`, stdlib-only structural checks, unit-tested with CI) — see `REPO_MAP.md` and `05-grader/README.md` for the two-tier school-side/home-side design. The AI-assisted home-side tier and `06-data-and-spreadsheets/`'s teacher dashboard are not yet built.
 
 **Submissions are on Moodle**, not Google Classroom: Project work via native `mod_assign` file upload, Mastery Check via native `mod_quiz`.
 
@@ -149,57 +149,7 @@ A lesson should deliberately span a range of DOK levels using *both* surfaces, n
 
 ## Folder Structure
 
-```
-FoxCS/
-  CLAUDE.md                                 This file
-  decisions-log.md                          Append-only record of what changed and why
-  open-questions.md                         Everything still unresolved
-  chat-log.md                               Running conversational TLDR — questions logged before/after Jay answers
-  Python_v2_Student_Workbook.pdf            GMetrix/Certiport source material (licensed — see licensing-boundaries.md)
-  Python v2 Support Files/                  GMetrix domain-organized .py support files (Domain 1-6)
-  logos/                                    Waypoint brand exploration — logo images + waypoint_theme_typography_style_guide_full.md (source for 02-authoring-system/theme-system.md's Natural/Synthwave palettes)
-  00-project-overview/
-    source-material/                        Original braindump + handoff docs, preserved as-is
-    h5p-authoring-and-automation.md         Can H5P content be generated programmatically? Yes — how.
-  01-privacy-and-governance/
-    codename-policy.md
-    data-boundaries.md
-    licensing-boundaries.md                 GMetrix content boundary — must never reach the commercial app
-  02-authoring-system/
-    lesson-schema.md                        Canonical per-lesson YAML record
-    authoring-workflow.md                   8-phase process, one lesson at a time
-    lesson-quality-standards.md
-    content-authoring-standards.md          DOK-level rubric, universal design rules, question/documentation standards — adapted from adaptive-python
-    moodle-lesson-ladder-setup.md           Click-by-click: building the Reinforce/Core/Extend ladder in Moodle's Lesson activity (paused, kept for reference)
-    moodle-quick-pilot-workflow.md          Fast, no-automation path to sample content into Moodle for a content-feel test (paused, kept for reference)
-    mvp-unit-folder-structure.md            Active MVP: self-contained unit folders, naming convention, self-navigated ladder, Classroom distribution
-    mastery-check-standards.md              How mastery checks get authored — adapted down from adaptive-python's schema
-    content-voice-and-tone.md               Adapted from adaptive-python's tone/error-message standards
-    objectives-and-skills-proficiency.md    Student-visible objectives, per-skill proficiency tracking, tip generation
-    feedback-collection.md                  Embedded platform/content feedback reflection
-    image-style-guide.md                    Superseded 2026-08-18, kept for reference — see instructional-image-guide.md
-    instructional-image-guide.md            Current illustration standard: semantic color system, template families incl. Micro Diagram
-    vscode-content-conventions.md           Save reminders, GMetrix naming, workbook-to-H5P recreation
-    shared-styles/                          foxcs-base.css, dark-mode toggle, foxcs-fonts.css + fonts/ (self-hosted), 4 theme files — see shared-styles/README.md
-    theme-system.md                         4 student-selectable themes (light/dark/natural/synthwave) — real palette + fonts, wired into the component library
-    theme-typography-specimen.html          Toggleable 4-theme typography/color specimen page
-    telemetry-and-analytics.md              Event-log schema for interaction tracking (theme, stepper, hints, Core/Reinforce/Extend routing)
-    adaptive-practice-model.md              MVP implementation of the Reinforce/Core/Extend ladder as small skill nodes in a practice page's own JS — design only as of 2026-08-11, not yet built into a real lesson
-    browser-python-execution.md             Real in-browser Python code execution ("Run & Check" items) — Pyodide recommended over a custom API — design only as of 2026-08-11, not built
-    authoring-flow-gaps-2026-08-11.md       Process/pipeline gap audit — not a content audit, a "how lessons get built and checked" audit
-    component-library/                      Browsable catalog of every interactive pattern, index.html
-  05-grader/                                Not yet built — see README
-  06-data-and-spreadsheets/                 Not yet built — see README (will gain a telemetry/ subfolder per telemetry-and-analytics.md)
-  templates/
-    lesson-template.md                      Practical fill-in version of the canonical schema
-    question-branching-template.csv         Provisional/secondary — see decisions-log
-    grading-rubric-template.md
-  courses/
-    python/
-      CLAUDE.md                             FoxCS: Python scope
-      course-plan.md                        Full 21-unit/lesson checklist (source: adaptive-python curriculum, called Modules there)
-      content/                              Lesson records go here, one file per lesson, per lesson-template.md
-```
+**See `REPO_MAP.md`'s Directory Index for the full, current folder structure — not duplicated here on purpose.** This section used to keep its own copy of the tree; it silently went stale for weeks (missing entire top-level folders like `07-infrastructure/`, 4 of 5 course folders, and mischaracterizing `05-grader/`/`06-data-and-spreadsheets/` as unbuilt) precisely because it lived in two places that nobody kept in sync. `REPO_MAP.md` is the single source of truth for "where does X live" going forward — update it, not this file, when a new top-level folder, tier-2 doc, or course is added.
 
 ## Source of Truth for Content Authoring
 
@@ -214,7 +164,7 @@ FoxCS/
 - `02-authoring-system/objectives-and-skills-proficiency.md`
 - `02-authoring-system/h5p-content-type-gotchas.md` — real H5P content-type bugs hit in production and the rule that prevents each; read before writing a new H5P block-builder helper
 
-All other docs must align to them. When in doubt, these win. See `02-authoring-system/doc-health.md` for review status on the rest of `02-authoring-system/`.
+That's 8 docs total. All other docs must align to them. When in doubt, these win. See `02-authoring-system/doc-health.md` for review status on the rest of `02-authoring-system/`.
 
 ## Open Questions
 

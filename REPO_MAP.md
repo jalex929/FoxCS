@@ -9,7 +9,7 @@
 When two docs give different guidance on the same thing, this is the order that wins, most authoritative first:
 
 1. **Jay, in the current conversation.** Always wins. Write his decision into the relevant doc(s) below before the session ends, so the next session doesn't have to be told again.
-2. **The 7 canonical `02-authoring-system/` docs**, listed in `CLAUDE.md`'s "Source of Truth for Content Authoring" section: `content-authoring-standards.md`, `lesson-quality-standards.md`, `lesson-schema.md`, `authoring-workflow.md`, `content-voice-and-tone.md`, `mastery-check-standards.md`, `objectives-and-skills-proficiency.md`. These govern *how content gets authored* across every course. **A course-specific doc that conflicts with one of these seven is the one that's wrong**, not the other way around — see the real worked example in "Known Tensions" below.
+2. **The 8 canonical `02-authoring-system/` docs**, listed in `CLAUDE.md`'s "Source of Truth for Content Authoring" section: `content-authoring-standards.md`, `lesson-quality-standards.md`, `lesson-schema.md`, `authoring-workflow.md`, `content-voice-and-tone.md`, `mastery-check-standards.md`, `objectives-and-skills-proficiency.md`, `h5p-content-type-gotchas.md`. These govern *how content gets authored* across every course. **A course-specific doc that conflicts with one of these eight is the one that's wrong**, not the other way around — see the real worked example in "Known Tensions" below.
 3. **`decisions-log.md`** — once something is decided (by Jay or resolved against #2), it's recorded here permanently. If a course-specific doc looks stale next to a `decisions-log.md` entry, the log wins; go fix the doc.
 4. **Course-specific docs** (`courses/<course>/course-plan.md`, `skills-map.md`, `*-workbook-map.md`, etc.) — the content-level detail (what this specific lesson covers, what order, what date). These should never contradict tier 2, but they sometimes do because nobody cross-checked at build time. **Cross-check tier 4 against tier 2 before building, don't just follow the course-specific doc.**
 5. **Everything else** (`00-project-overview/`, paused/historical docs marked as such, `open-questions.md`) — background and context, not standing instruction.
@@ -52,7 +52,7 @@ FoxCS/
     doc-health.md              Per-file staleness tracker for this folder specifically — check before trusting a "not yet audited" file
     content-authoring-standards.md, lesson-quality-standards.md, lesson-schema.md,
     authoring-workflow.md, content-voice-and-tone.md, mastery-check-standards.md,
-    objectives-and-skills-proficiency.md         The 7 canonical docs (tier 2)
+    objectives-and-skills-proficiency.md, h5p-content-type-gotchas.md         The 8 canonical docs (tier 2)
     instructional-image-guide.md   Current illustration standard (image-style-guide.md is superseded, kept for reference)
     telemetry-and-analytics.md, adaptive-practice-model.md, theme-system.md,
     vscode-content-conventions.md, xp-and-incentives.md, project-rubric-and-xp-tiers.md,

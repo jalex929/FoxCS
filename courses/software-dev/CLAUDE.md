@@ -18,7 +18,7 @@ Per the CPS-authenticated "Fox Game II/Web II Syllabus SY27" Google Doc Jay shar
 
 ## Source Material
 
-**Thinnest of any FoxCS course — flagged directly, not glossed over.** Unlike Python (GMetrix `Python_v2_Student_Workbook.pdf`) and Web Dev (LearnKey `JavaScript_INF-302_Student_Workbook.pdf` + `HTML5_Application_Development_Student_Workbook.pdf`, both with official exam-objective PDFs in `../../starter context/`), **no licensed Java workbook, support-file set, or exam-objective document exists anywhere in this repo.** `../../starter context/` was checked directly (2026-08-30) — confirmed absent, not just unlinked. Before authoring real Java lesson content (as opposed to this skeleton), Jay needs to either source an equivalent LearnKey/Certiport workbook for the Java exam or decide on a different curriculum source. This is a real procurement gap, not a documentation gap.
+**Resolved 2026-09-10 — the "no Java source material" gap below was real as of 2026-08-30 but is no longer current.** `../../starter context/Java_INF-304_Student_Support_Files/` landed 2026-08-31 (one day after the confirmed-absent check below) — a real Java student workbook plus Follow-Along Files and Project Files. `../../starter context/Software_Development_Student_Workbook.pdf` also landed the same day and is directly relevant to Stage 5, which the Certification Framing section below flags as having no confirmed certification mapping. Neither has been cross-checked against this course's `course-plan.md` unit breakdown yet — do that before assuming the skeleton's SD-01+ scope still matches the real source material. Original 2026-08-30 note, for history: unlike Python (GMetrix `Python_v2_Student_Workbook.pdf`) and Web Dev (LearnKey workbooks), no licensed Java workbook existed anywhere in the repo at that time.
 
 - The syllabus Google Doc itself ("Fox Game II/Web II Syllabus SY27") was read via browser earlier this session but never saved locally — recommend exporting it into `../../starter context/` so future sessions (and this fork's own claims above) can be checked against the primary source instead of session memory.
 - `../../starter context/Web_Development_Course_Map_Certification_Aligned.md` is directly relevant as the Stage 1-3 source `../web-dev/` already builds from — read it for continuity of tone/structure even though this course doesn't reuse its content directly.
@@ -38,7 +38,7 @@ Per the CPS-authenticated "Fox Game II/Web II Syllabus SY27" Google Doc Jay shar
 
 ## Open Questions
 
-- **No Java curriculum source exists.** Top priority before any real lesson content gets authored — see Source Material above.
+- ~~**No Java curriculum source exists.**~~ **Resolved 2026-09-10** — `Java_INF-304_Student_Support_Files/` landed in `../../starter context/` 2026-08-31; see Source Material above. Remaining task: cross-check it against this course's unit skeleton, not source new material.
 - **Exact prerequisite threshold** for leaving Web Dev and entering Software Dev is undefined (specific unit? certification pass? teacher sign-off?).
 - **Certiport IT Specialist – Java** is an assumed, unconfirmed certification target for the Java stage.
 - **Stage 5 ("Software Development") has no certification mapping at all** — is it meant to culminate in a capstone/portfolio instead of an exam, the way Game I's post-certification MakeCode Arcade work does? Not decided.

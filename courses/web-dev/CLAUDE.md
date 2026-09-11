@@ -13,6 +13,7 @@ Per `../../CLAUDE.md`'s Courses table: HTML/CSS/JavaScript, usability/human-cent
 - `../../starter context/Web_Development_Course_Map_Certification_Aligned.md` — pre-drafted, certification-aligned course map (1400+ lines), not yet digested into a `course-plan.md` for this course. Already covers computational thinking, UX/product thinking, user research, UI/interaction design, accessibility, testing, technical best practices, and a full certification-objective mapping. **Read this file before authoring anything** — a lot of the design thinking (adaptive project pathways, project-depth tiers, entry diagnostics) is already worked out there.
 - `../../starter context/JavaScript_INF-302_Student_Workbook.pdf` + `.../JavaScript_INF-302_Student_Support_Files/` and `../../starter context/HTML5_Application_Development_Student_Workbook.pdf` + `.../HTML5_Application_Development_Student_Support_Files/` — LearnKey/Certiport-aligned workbooks and starter files, same role Python's GMetrix workbook plays for Game I. Licensing boundary treatment (see `../../01-privacy-and-governance/licensing-boundaries.md`) should extend to this material the same way it applies to GMetrix content — not yet written for these specific sources.
 - `../../starter context/ITS OD 302 Javascript 0225.pdf` and `../../starter context/ITS OD 306 HTML App Develop 0225.pdf` — official exam objective documents for the two certifications.
+- `../../starter context/HTML_and_CSS_Student_Workbook.pdf` — landed 2026-08-31, not yet cross-referenced against `course-plan.md`'s unit checklist. Check this before authoring HTML/CSS unit content from scratch.
 
 ## Status
 
@@ -31,4 +32,3 @@ Per `../../CLAUDE.md`'s Courses table: HTML/CSS/JavaScript, usability/human-cent
 Course-specific — see `../../open-questions.md` for the full platform-wide list.
 
 - Reconciling the starter-context map's own "Web Development I / Web Development II" framing (one continuous course with an HTML/CSS acceleration diagnostic into Web II) against this course being FoxCS's only web-track course — is there a Web I feeding into this, or does Web II's "II" just mean "second-year track" independent of a FoxCS-authored Web I? Not resolved.
-- `course-plan.md` doesn't exist yet — everything above is scoping, not a real unit/lesson plan.

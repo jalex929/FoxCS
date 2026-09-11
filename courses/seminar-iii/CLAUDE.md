@@ -12,7 +12,7 @@ Fourth FoxCS course, alongside `../python/` (Game I), `../game-programming-2/` (
 
 ## Status
 
-Two full source/spec documents landed 2026-08-24. **No FoxCS-native content authored yet** — no `lesson-schema.md`-conformant lesson records, no printable worksheets, no fill-in-style Google Doc templates, no `content/` folder.
+**Corrected 2026-09-10 — the paragraph below was written 2026-08-24, right after the two source docs landed, and was never updated as real content got built; the dated sections further down this file (Week at a Glance, Live Content Audit and Fixes, Content Redesign) describe the real, current state and should be trusted over this paragraph.** Two full source/spec documents landed 2026-08-24 (below). Since then, real FoxCS-native content has been built: `content/lesson-1/` and `content/lesson-2/` exist (guided-practice, independent-practice), `printable-sheets/` has real Week-at-a-Glance files for Lessons 1, 2, 4, and part of 6, and `instructional-content/` covers Lessons 1–8. Lesson 1 is live on the real `foxcs-seminar3` Moodle course (12 activities including an interactive ACT Math baseline); Lessons 2/4/8 have full content; Lessons 3/5/6/7 are missing pieces — see the top-level `../../CLAUDE.md` Courses table and `../../worklog.md`'s most recent entries for exact current per-lesson state, since this changes often and this file isn't updated every session.
 
 ## How This Course Differs From FoxCS's Existing Model
 
