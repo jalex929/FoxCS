@@ -1909,3 +1909,7 @@ For the planned Moodle-to-Aspen grade-entry tooling: **Aspen gets exactly one gr
 - **Still blocking any live Unit 01 grade change, independent of this decision:** 5 of Unit 01's 6 Mastery Check quizzes have empty `mdl_quiz_grades` despite real `mdl_grade_grades` data — needs root-causing (Moodle reads grades from that cache) before anything live gets touched.
 
 Full detail in `02-authoring-system/grade-point-scale.md`, which is the canonical doc — this entry is the historical record of the decision, not the place to look for the current rule.
+
+## 2026-09-11 (continued) — Unit Project tier-to-grade resolved: direct lookup, Starter raised to 80%
+
+Resolves the XP-tier-to-grade open question from earlier today's grade-point-scale revision. Per Jay directly: use a direct tier→percentage lookup (Starter 80%, Skilled 100%, Legendary 102%, Mythic 104%) rather than deriving the base grade from a tier_XP/25 ratio — there are only 4 discrete tiers, so a continuous ratio was never necessary. Starter is intentionally raised to 80% (not the 60% a literal 15/25 ratio would give) — more generous credit for genuinely-completed-but-baseline project work. Legendary/Mythic's +2%/+4% bonus logic is unchanged. See `02-authoring-system/grade-point-scale.md`'s Unit Project section for the settled table/pseudocode.

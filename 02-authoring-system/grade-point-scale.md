@@ -29,27 +29,28 @@ Per-lesson nominal total: 5 + 10 + 10 = **25**. A student who does exactly what'
 
 **Per Jay directly (2026-09-11): move to one major, summative Project per unit, not one per lesson.** Coding Exercises stay at the lesson level (see table above) — Project is the one activity type that graduates to unit scope. The Project is **required, not optional** — Jay's framing is that it's core, practical skill-building ("feel comfortable coding from nothing"), not extra-credit busywork — even though its points land *on top of* the per-lesson totals rather than inside any single lesson's own 25.
 
-**Grade max: 20 points (provisional — Jay said "perhaps," not settled the way the 5/10/10 lesson values are).** This is smaller than the old per-lesson Project's 25, and that has a real, currently-unresolved technical consequence:
+**Grade max: 20 points (provisional — Jay said "perhaps," not settled the way the 5/10/10 lesson values are).**
 
-**Open engineering question — the XP-tier-to-grade formula below was built assuming Skilled XP (25) equals the grade max (25) one-to-one. It no longer does if the Unit Project's grade max is 20.** The tier assessment (Starter/Skilled/Legendary/Mythic → 15/25/35/45 XP, per `project-rubric-and-xp-tiers.md`) is unchanged, but the conversion into a Moodle grade needs a real decision before this is built:
-- Option A: rescale, e.g. `base_grade = min(tier_XP, 25) * (20/25)` — keeps the existing bonus-percent formula below working off the same 25-XP baseline, just scaled down to a 20-point max.
-- Option B: pick a new baseline XP value that maps to 20 directly (e.g. treat 20 XP as the new "Skilled = full marks" line) — changes what counts as the on-level bar, not just the arithmetic.
-- Don't guess between these — ask Jay before implementing the Unit Project's grading code.
+**Resolved 2026-09-11 — tier→grade is a direct lookup table, not a ratio of tier_XP to grade max.** There are only 4 discrete tiers (Starter/Skilled/Legendary/Mythic, per `project-rubric-and-xp-tiers.md`), so there's no need for continuous XP-to-points math for the base grade — the earlier "Option A vs Option B" rescale question this section used to pose doesn't actually apply once you stop trying to derive the percentage from a ratio. **Per Jay directly: Starter should land at 80%, not a strictly-proportional 60%** (60% is what a literal 15-XP/25-XP ratio would produce) — more generous credit for genuinely-completed-but-baseline project work. Skilled/Legendary/Mythic keep the same bonus logic as before (unaffected by the point-max change, since it's expressed in percentage terms):
 
-**The rest of the mechanism (unchanged in spirit from the per-lesson version, formula needs Option A/B above resolved before use):** point totals should stay small (no item inflated to 100), a student should be able to exceed 100% through exceptional project work, but the overage should be modest — "a few points over 100%," not 120-140%.
+| Tier | Tier XP | Project grade |
+|---|---|---|
+| Starter | 15 | **80%** (16/20) — set directly, not derived from the XP ratio |
+| Skilled | 25 | **100%** (20/20) |
+| Legendary | 35 | **102%** (+2%, same "+1% per 5 XP over the Skilled baseline" rule as before) |
+| Mythic | 45 | **104%** (+4%) |
 
 ```
-extra_xp = max(0, tier_XP - <baseline, TBD per Option A/B above>)
-bonus_percent = floor(extra_xp / 5)
+if tier == Starter:  grade_percent = 80
+elif tier == Skilled: grade_percent = 100
+else:  # Legendary or Mythic
+  extra_xp = tier_XP - 25
+  grade_percent = 100 + floor(extra_xp / 5)
 ```
 
-Worked example *if Option A (proportional rescale) is chosen*, baseline stays 25 XP:
-- Starter (15 XP): extra = 0 — Project grade: 15/25 × 20 = 12/20 = **60%**
-- Skilled (25 XP): extra = 0 — Project grade: 20/20 = **100%**
-- Legendary (35 XP): extra = 10 → **+2%** — Project grade: **102%**
-- Mythic (45 XP): extra = 20 → **+4%** — Project grade: **104%**
+Point totals stay small (no item inflated to 100), a student can exceed 100% through exceptional project work, but the overage stays modest — "a few points over 100%," matching the original intent.
 
-**Still not yet decided, real engineering question (carried over, unaffected by the per-lesson→per-unit move):** how the bonus percent actually lands in Moodle's gradebook — a grade override on the Project item itself, or a separate always-positive "Project Bonus" extra-credit item. Pick one when this is actually implemented, don't build both.
+**Still not yet decided, real engineering question (carried over, unaffected by the per-lesson→per-unit move or this resolution):** how the grade percent actually lands in Moodle's gradebook — a grade override on the Project item itself, or a separate always-positive "Project Bonus" extra-credit item. Pick one when this is actually implemented, don't build both.
 
 ## Known Tension This Doc Creates — Above-and-Beyond Bonus (Section 15)
 
