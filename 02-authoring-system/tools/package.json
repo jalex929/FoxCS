@@ -1,0 +1,10 @@
+{
+  "name": "foxcs-authoring-tools",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Node-based checker/verification scripts for FoxCS content authoring (see this folder's own .py/.php checkers for the static ones). Playwright here backs browser_verify_vocab_quiz_save.mjs's real-browser save-flow verification.",
+  "type": "module",
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

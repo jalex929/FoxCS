@@ -1,0 +1,227 @@
+<!-- Game of the Week, Lesson 2: Pass the Clap.
+     Real content built from game_of_the_week_calendar_2026-27.md's Week 2
+     row (Aug 31-Sept 4, Focus: "Turn-taking, pacing"). Titled "Lesson 2" not
+     "Week 2" per the same naming convention week_01_telephone.html set.
+
+     Delivery mechanism changed 2026-09-10, per Jay directly: Lesson 1 was
+     built as a Moodle H5P.InteractiveBook activity (see
+     07-infrastructure/moodle-scripts/python/build_gotw_week01_book.py). This
+     lesson instead uses the "new structure" now proven on the live
+     foxcs-python course (see 02.1 Instruction, cmid 238) -- a single
+     self-contained HTML file deployed as mod_resource, with reflection
+     save/completion wired through local_foxcstelemetry's log.php rather
+     than H5P or the original (now fully retired) client-side
+     showSaveFilePicker mechanism this folder's own _TEMPLATE_reference.html
+     used. This is both simpler to author (no H5P package plumbing) and a
+     better fit for the GOTW README's own original goal of one flexible
+     self-contained page -- it just needed a real server-side save mechanism
+     to exist first, which it now does (see telemetry-and-analytics.md's
+     "Live Implementation (Option C)" section).
+
+     Structure and glossary-term hover/click card copied directly from
+     week_01_telephone.html; Reflect section adapted from
+     _TEMPLATE_reference.html's reflect-block pattern, save mechanism
+     adapted from courses/python/content/unit_02_variables_and_data/
+     lesson_02_01_variables_and_memory/01_instruction.html's telemetry block.
+     __CMID__ is templated in by the deploy script's second phase, same
+     convention as every other mod_resource page in this repo. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Game of the Week — Lesson 2: Pass the Clap</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  h2 { font-family: Verdana, Arial, sans-serif; color: #2a3a52; margin-top: 2rem; }
+  .howto { background: #f4f6f9; border-left: 4px solid #1a5aa8; padding: 0.9rem 1.3rem; margin: 1rem 0; }
+  .explain { background: #c5c0e3; padding: 1rem 1.3rem; border-radius: 8px; margin: 1rem 0; }
+  .explain h3 { margin-top: 0; font-family: Verdana, Arial, sans-serif; color: #1a1a1a; font-size: 1.05rem; }
+  .vocab-term { font-weight: bold; color: #1a3a5c; }
+  .reflect-block { background: #fff; border: 1px solid #dde3ea; border-radius: 8px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .reflect-prompt { font-weight: bold; margin-bottom: 0.5rem; }
+  .starter { color: #555; font-size: 0.9rem; font-style: italic; margin-bottom: 0.4rem; }
+  textarea.answer-space { width: 100%; min-height: 3.5em; font-family: Georgia, serif; font-size: 1rem; padding: 0.5rem; box-sizing: border-box; border: 1px solid #ccd3dd; border-radius: 4px; }
+  .save-row { text-align: center; margin-top: 1.8rem; }
+  button.save-btn { font-family: Verdana, Arial, sans-serif; background: #9a5a00; color: white; border: none; padding: 0.7rem 1.6rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem; }
+  button.save-btn:hover { background: #7a4800; }
+  .save-status { font-size: 0.9rem; color: #2f7a2f; margin-top: 0.6rem; min-height: 1.2em; }
+  #complete-banner { display: none; background: #dff0d8; color: #2f5f2f; font-family: Verdana, Arial, sans-serif; font-size: 0.9rem; padding: 0.7rem 1rem; border-radius: 6px; margin-top: 1rem; text-align: center; }
+
+  /* Glossary term hover/click card — see component-library #13 */
+  .glossary-term { text-decoration: underline dotted #1a5aa8; text-decoration-thickness: 2px; text-underline-offset: 3px; color: #1a3a5c; font-weight: bold; cursor: help; }
+  .glossary-term:focus-visible { outline: 2px solid #1a5aa8; outline-offset: 2px; border-radius: 2px; }
+  .glossary-card { position: absolute; max-width: 260px; background: #1a5aa8; color: white; font-family: Verdana, Arial, sans-serif; font-size: 0.85rem; padding: 0.6rem 0.8rem; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.25); z-index: 50; display: none; line-height: 1.4; }
+  .glossary-card.visible { display: block; }
+  .glossary-card .glossary-card-term { display: block; font-weight: bold; margin-bottom: 0.25rem; }
+</style>
+</head>
+<body>
+
+<h1>Game of the Week — Lesson 2: Pass the Clap</h1>
+
+<h2>How to Play</h2>
+<div class="howto">
+  Stand in a circle. One person starts by turning to face the person next to them, making eye contact, and clapping together at the exact same moment, like passing a single clap along rather than two separate ones. That person immediately turns to the next person and passes it the same way, all the way around the circle. Only one clap should ever be moving at a time. If it stalls, or two people clap with two different neighbors at once, that is a break, so just start it again. Once a round feels smooth, try speeding it up, or let a player reverse the clap back the way it came instead of passing it forward.
+</div>
+
+<h2>What This Game Is Actually Doing</h2>
+<div class="explain">
+  <h3>Only one clap moves at a time</h3>
+  <p>Pass the Clap only works if exactly one clap is moving around the circle at a time. Every player has to wait their turn, receive the clap, and only then pass it on. That is <span class="glossary-term" data-term="turn-taking" tabindex="0" role="button" aria-haspopup="true">turn-taking</span>, one of the oldest structural decisions a designer can make. In Mario Party, only one player rolls the dice and moves at a time. Everyone else has to watch, wait, and plan their own next move, which feels completely different from a game where everyone acts at once.</p>
+  <p>The other thing Pass the Clap plays with is <span class="glossary-term" data-term="pacing" tabindex="0" role="button" aria-haspopup="true">pacing</span>, how fast or slow the action moves. A slow, careful round feels nothing like a fast one where the clap is flying around the circle, or one that suddenly reverses direction. Tetris does the same thing on purpose: blocks fall slowly at first, then speed up the longer you play. That is the exact same idea as speeding up the clap, using pace itself to raise the pressure.</p>
+</div>
+
+<h2>Reflect</h2>
+
+<div class="reflect-block">
+  <div class="reflect-prompt">1. What's the most interesting thing you noticed about keeping the clap's turn order and pace going smoothly around the circle?</div>
+  <textarea class="answer-space" id="q1"></textarea>
+</div>
+
+<div class="reflect-block">
+  <div class="reflect-prompt">2. Describe a different game where turn-taking really matters, one where only one player can act at a time.</div>
+  <div class="starter">Starter: "Turn-taking matters in ___ because ___."</div>
+  <textarea class="answer-space" id="q2"></textarea>
+</div>
+
+<div class="reflect-block">
+  <div class="reflect-prompt">3. Can you think of another game that changes its pacing over time, the way Pass the Clap can speed up or reverse direction? What's the connection?</div>
+  <div class="starter">Starter: "___ also changes its pacing because ___."</div>
+  <textarea class="answer-space" id="q3"></textarea>
+</div>
+
+<div class="save-row">
+  <button class="save-btn" onclick="saveReflection()">Save My Reflection</button>
+  <div class="save-status" id="saveStatus"></div>
+  <div id="complete-banner">&#10003; Saved. You're done for this week.</div>
+</div>
+
+<div class="glossary-card" id="glossary-card" role="tooltip">
+  <span class="glossary-card-term"></span>
+  <span class="glossary-card-def"></span>
+</div>
+
+<script>
+// ---- Glossary term hover/click card — see component-library #13 ----
+const glossaryDefs = {
+  'turn-taking': 'Structuring a game so only one player, or one action, happens at a time, in a set order. Everyone else has to wait for their turn.',
+  'pacing': 'How fast or slow the action of a game moves, and how a designer speeds it up, slows it down, or changes it on purpose to control the feeling of pressure or ease.'
+};
+let glossaryPinnedTerm = null;
+function glossaryShow(el, term) {
+  const card = document.getElementById('glossary-card');
+  card.querySelector('.glossary-card-term').textContent = term;
+  card.querySelector('.glossary-card-def').textContent = glossaryDefs[term.toLowerCase()] || '';
+  card.classList.add('visible');
+  const rect = el.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  let left = rect.left + window.scrollX;
+  const maxLeft = window.scrollX + document.documentElement.clientWidth - cardRect.width - 8;
+  if (left > maxLeft) left = Math.max(window.scrollX + 8, maxLeft);
+  let top = rect.bottom + window.scrollY + 6;
+  const viewportBottom = window.scrollY + window.innerHeight;
+  if (top + cardRect.height > viewportBottom) {
+    top = rect.top + window.scrollY - cardRect.height - 6;
+  }
+  card.style.left = left + 'px';
+  card.style.top = top + 'px';
+}
+function glossaryHide() { document.getElementById('glossary-card').classList.remove('visible'); }
+document.querySelectorAll('.glossary-term').forEach(el => {
+  const term = el.dataset.term;
+  el.addEventListener('mouseenter', () => { if (!glossaryPinnedTerm) glossaryShow(el, term); });
+  el.addEventListener('mouseleave', () => { if (!glossaryPinnedTerm) glossaryHide(); });
+  el.addEventListener('click', () => {
+    if (glossaryPinnedTerm === term) { glossaryPinnedTerm = null; glossaryHide(); }
+    else { glossaryPinnedTerm = term; glossaryShow(el, term); }
+  });
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+    else if (e.key === 'Escape' && glossaryPinnedTerm === term) { glossaryPinnedTerm = null; glossaryHide(); }
+  });
+});
+document.addEventListener('click', e => {
+  if (glossaryPinnedTerm && !e.target.closest('.glossary-term') && !e.target.closest('.glossary-card')) {
+    glossaryPinnedTerm = null;
+    glossaryHide();
+  }
+});
+
+/* ---------------- Telemetry (local_foxcstelemetry, Option C) ----------------
+   Same pattern as lesson_02_01/01_instruction.html: server save via log.php,
+   mirrored to localStorage as a best-effort backup, plus per-field draft
+   autosave so in-progress typing survives an accidental reload. */
+var CMID = "__CMID__"; // baked in by the deploy script's second phase
+var ENDPOINT = '/local/foxcstelemetry/log.php';
+var sesskey = null;
+var statusEl = document.getElementById('saveStatus');
+
+function bootstrap(cb) {
+  fetch(ENDPOINT + '?action=bootstrap&cmid=' + CMID, { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { sesskey = data.sesskey; cb(); })
+    .catch(function () { statusEl.textContent = 'Could not reach the save endpoint.'; });
+}
+
+function localBackup(eventtype, payload, complete) {
+  try {
+    var key = 'foxcs_telemetry_backup_' + CMID;
+    var log = JSON.parse(localStorage.getItem(key) || '[]');
+    log.push({ eventtype: eventtype, payload: payload, complete: !!complete, ts: new Date().toISOString() });
+    if (log.length > 300) log = log.slice(log.length - 300);
+    localStorage.setItem(key, JSON.stringify(log));
+  } catch (e) { /* best-effort only, never block the real save */ }
+}
+
+function logEvent(eventtype, payload, complete) {
+  localBackup(eventtype, payload, complete);
+  if (!sesskey) { bootstrap(function () { logEvent(eventtype, payload, complete); }); return; }
+  var body = new URLSearchParams();
+  body.set('action', 'log');
+  body.set('sesskey', sesskey);
+  body.set('cmid', CMID);
+  body.set('eventtype', eventtype);
+  body.set('payload', JSON.stringify(payload));
+  if (complete) body.set('complete', '1');
+  return fetch(ENDPOINT, { method: 'POST', credentials: 'same-origin', body: body })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      statusEl.textContent = 'Saved ' + new Date().toLocaleTimeString() + '.';
+      if (data.completed) document.getElementById('complete-banner').style.display = 'block';
+      return data;
+    })
+    .catch(function () { statusEl.textContent = 'Save failed, but your answer is also backed up in this browser. This will not block you from continuing.'; });
+}
+
+function wireDraftAutosave(id) {
+  try {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var key = 'foxcs_draft_' + CMID + '_' + id;
+    var saved = localStorage.getItem(key);
+    if (saved) el.value = saved;
+    el.addEventListener('input', function () {
+      try { localStorage.setItem(key, el.value); } catch (e) {}
+    });
+  } catch (e) { /* best-effort only */ }
+}
+['q1', 'q2', 'q3'].forEach(wireDraftAutosave);
+
+function saveReflection() {
+  var payload = {
+    game: 'pass_the_clap',
+    week: 2,
+    q1: document.getElementById('q1').value,
+    q2: document.getElementById('q2').value,
+    q3: document.getElementById('q3').value
+  };
+  logEvent('gotw_reflection', payload, true);
+}
+
+bootstrap(function () { logEvent('viewed', { page: 'gotw/week_02_pass_the_clap' }, false); });
+setInterval(function () { if (!document.hidden) { logEvent('heartbeat', {}, false); } }, 30000);
+</script>
+
+</body>
+</html>

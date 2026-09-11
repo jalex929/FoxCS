@@ -112,6 +112,7 @@ xp:
   project_tier_1: 10     # added 2026-08-06 — bonus tier on the project/application step's checklist, see mvp-unit-folder-structure.md's Tiered Project XP section
   project_tier_2: 20     # stacks on top of tier_1, not instead of it
   vocab_quiz: 10          # added 2026-08-06 — completing the drag-to-match vocab quiz (all terms correct required to save), see mvp-unit-folder-structure.md's Vocab Quiz section
+  quick_check_engagement: 5   # added 2026-09-08 — reading-comprehension quick-checks threaded through Learn content; first-try-correct vs. reattempt vs. skipped all factor in, see mvp-unit-folder-structure.md's Quick-Check Reading Engagement XP section. Calculation not yet built — value is a placeholder.
 
 feedback:
   template: feedback/lesson_01_01.md

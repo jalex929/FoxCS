@@ -1,0 +1,874 @@
+<!-- Sandbox prototype, 2026-09-08. Instruction module for 02.3 Floats, built
+     against skills-map.md's "02.3 Floats" section (5 skills:
+     identifies_float_type, distinguishes_int_vs_float,
+     recognizes_float_disguised_as_whole, uses_float_for_decimal_quantity,
+     predicts_mixed_numeric_result). Same structural pattern as 02.1/02.2 --
+     see ../lesson_02_02_integers/01_instruction.html. GMetrix tie-in: Domain
+     1 Lesson 2 Objective 1.1.3 (113-numbers.py). Video: "Python Integers vs
+     Floats - Visually Explained," per ../../../video-resources.md (length
+     not yet independently confirmed -- verify on YouTube before this goes
+     live in any real course). Deployed via
+     ../../../../../07-infrastructure/moodle-scripts/create-sandbox-unit02-03-floats-instruction.php. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>2.3 Floats: FoxCS: Python</title>
+<style>
+  body { font-family: Verdana, Arial, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; line-height: 1.55; }
+  h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  h2 { color: #2a3a52; margin-top: 2.2rem; }
+  h3 { color: #2a3a52; margin-top: 1.6rem; }
+  h4 { color: #2a3a52; margin-top: 1.3rem; font-size: 1rem; }
+  code { font-family: Consolas, monospace; background: #eef1f5; padding: 0.1rem 0.35rem; border-radius: 3px; }
+  pre { background: #eef1f5; padding: 0.7rem 1rem; border-radius: 6px; font-family: Consolas, monospace; overflow-x: auto; }
+  table.rules { border-collapse: collapse; margin: 0.8rem 0; width: 100%; }
+  table.rules th, table.rules td { border: 1px solid #dde3ea; padding: 0.4rem 0.7rem; text-align: left; font-size: 0.92rem; }
+  table.rules th { background: #f4f6f9; }
+
+  .micro-diagram { display: block; width: 100%; max-width: 460px; height: auto; margin: 1.4rem auto; }
+
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.game { background: #f4f2fb; border-color: #ded7f5; }
+  .concept-card.game .concept-card-label { color: #4a3aa7; }
+  .concept-card.usability { background: #e9f6f6; border-color: #bfe3e3; }
+  .concept-card.usability .concept-card-label { color: #0d6b6b; }
+
+  .quick-check { border: 1px solid #ccd3dd; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
+  .quick-check-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .quick-check-prompt { margin-bottom: 0.7rem; }
+  .quick-check select { font-family: Consolas, monospace; font-size: 0.95rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .quick-check button { background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 0.5rem; }
+  .quick-check button:hover { background: #12467f; }
+  .quick-check .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
+  .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+
+  .card-scene { perspective: 1400px; margin: 1rem 0; }
+  .card { position: relative; width: 100%; max-width: 420px; min-height: 160px; cursor: pointer; }
+  .card-inner { position: relative; width: 100%; height: 100%; min-height: 160px; transition: transform 0.5s cubic-bezier(0.4,0.2,0.2,1); transform-style: preserve-3d; }
+  .card.flipped .card-inner { transform: rotateY(180deg); }
+  .card-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 14px; padding: 1.3rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .card-front { background: #f4f6f9; border: 3px solid #1a5aa8; }
+  .card-back { background: #1a5aa8; color: white; text-align: left; align-items: flex-start; justify-content: center; transform: rotateY(180deg); }
+  .face-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: bold; opacity: 0.75; margin-bottom: 0.5rem; }
+  .card-front .face-label { color: #1a5aa8; }
+  .card-back .face-label { color: #eaf1fb; }
+  .term-text { font-size: 1.4rem; font-weight: bold; color: #1a3a5c; }
+  .def-text { font-size: 1rem; font-family: Georgia, serif; line-height: 1.5; }
+  .card-hint { color: #555; font-size: 0.82rem; margin-top: 0.5rem; }
+  .card-nav { display: flex; gap: 0.5rem; margin-top: 0.7rem; }
+  .card-nav button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.4rem 0.9rem; border-radius: 5px; cursor: pointer; font-size: 0.85rem; }
+  .card-nav button:hover { background: #12467f; }
+
+  .chip { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
+  .chip.spiral { background: #eef1f5; color: #4a5f7d; }
+  .chip.game { background: #f4f2fb; color: #4a3aa7; }
+  .chip.usability { background: #e9f6f6; color: #0d6b6b; }
+
+  .node-heading { margin-top: 2rem; padding-top: 0.6rem; border-top: 2px solid #dde3ea; }
+  .drill { border: 1px solid #d7dee8; border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .drill-type { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .drill[hidden] { display: none; }
+
+  .ide-demo { border-radius: 8px; overflow: hidden; margin: 0.8rem 0; background: #1e2430; }
+  .ide-toolbar { background: #161b24; padding: 0.35rem 0.9rem; font-family: Consolas, monospace; font-size: 0.8rem; color: #9fb3c8; }
+  .ide-code { color: #e6e9ef; font-family: Consolas, monospace; padding: 1rem; white-space: pre; font-size: 0.92rem; }
+  .scaffold-blank { font-family: Consolas, monospace; background: #33415c; color: #fff; border: 2px solid #5b9bd8; border-radius: 4px; padding: 0.1rem 0.4rem; width: 32ch; }
+  .rc-output { background: #14181f; color: #d7ffd7; font-family: Consolas, monospace; padding: 0.7rem 0.9rem; border-radius: 6px; margin-top: 0.6rem; white-space: pre-wrap; display: none; }
+
+  .code-choice-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 2px solid #d7dee8; border-radius: 8px; margin-bottom: 0.6rem; cursor: pointer; }
+  .code-choice-option:hover { border-color: #a9c2e0; }
+  .code-choice-option.selected { border-color: #1a5aa8; background: #eef4fb; }
+  .code-choice-option.correct { border-color: #2f8f4f; background: #e6f4ea; }
+  .code-choice-option.incorrect { border-color: #c0503a; background: #fbeae5; }
+  .code-choice-option input { margin-top: 0.5rem; }
+  .code-choice-option pre { margin: 0; background: transparent; padding: 0; flex: 1; }
+
+  .check-btn { background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 0.6rem; }
+  .check-btn:hover { background: #12467f; }
+  .feedback { margin-top: 0.7rem; font-weight: bold; min-height: 1.2em; }
+  .feedback.correct { color: #1a7f37; }
+  .feedback.incorrect { color: #b3261e; }
+
+  .hint-toggle { background: none; border: 1px solid #ccd3dd; color: #445; padding: 0.3rem 0.8rem; border-radius: 5px; cursor: pointer; font-size: 0.82rem; margin-top: 0.5rem; }
+  .hint-toggle:hover { background: #eef1f5; }
+  .hint-box { display: none; margin-top: 0.5rem; padding: 0.6rem 0.8rem; background: #fdf6e8; border-radius: 6px; font-size: 0.88rem; color: #7a4800; }
+
+  .review-note { padding: 0.7rem 1rem; background: #f4f6f9; border-radius: 6px; font-size: 0.9rem; color: #444; margin-top: 0.6rem; }
+
+  .video-card { border: 1px solid #d7dee8; border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1.4rem 0; background: #f9fafc; }
+  .video-card-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.7rem; }
+  .video-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .video-meta { font-size: 0.85rem; color: #445; margin-bottom: 0.7rem; }
+  .video-wrap { position: relative; width: 100%; padding-top: 56.25%; border-radius: 6px; overflow: hidden; background: #000; }
+  .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .headphones-note { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #7a4800; background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 6px; padding: 0.5rem 0.8rem; margin-top: 0.7rem; }
+  .headphones-note svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .video-backup-link { font-size: 0.82rem; margin-top: 0.6rem; }
+  .video-backup-link a { color: #1a5aa8; }
+
+  .progress-note { font-size: 0.85rem; color: #555; margin: 0.6rem 0 1.2rem; }
+  .resume-badge { padding: 0.6rem 0.9rem; background: #e6f4ea; border: 1px solid #b7e0c3; border-radius: 6px; color: #1a7f37; font-weight: bold; font-size: 0.88rem; margin: 0.6rem 0 1rem; }
+  #complete-banner { display: none; margin-top: 1.6rem; padding: 0.9rem 1.1rem; border-radius: 10px; background: #e6f4ea; border: 1px solid #b7e0c3; color: #1a7f37; font-weight: bold; }
+  #save-status-global { font-size: 0.78rem; color: #6a737b; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+
+<h1>2.3 Floats</h1>
+<div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:#12467f;background:#eaf2fb;border:1px solid #bcd6f0;border-radius:6px;padding:0.6rem 0.9rem;margin:0.8rem 0 1.2rem;font-weight:bold;">All 2.3 content is due by 09/10/2026 and cannot be submitted late after 09/28/2026.</div>
+<p>Game speed, elapsed time, prices, percentages, coordinates, measurements. These aren't whole numbers you count one at a time -- they need decimal precision. Python calls this kind of value a <strong>float</strong> (short for "floating-point number").</p>
+
+<div class="video-card">
+<div class="video-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>Watch First</div>
+<div class="video-meta"><strong>Python Integers vs Floats - Visually Explained</strong>, by Visually Explained.</div>
+<div class="video-wrap">
+<iframe src="https://www.youtube.com/embed/1lGXcaK6vqs" title="Python Integers vs Floats - Visually Explained" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<div class="headphones-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>Use your headphones at your station for this video.</div>
+<div class="video-backup-link">Video not loading? Watch it directly on YouTube: <a href="https://www.youtube.com/watch?v=1lGXcaK6vqs" target="_blank" rel="noopener">https://www.youtube.com/watch?v=1lGXcaK6vqs</a></div>
+</div>
+<p>This video compares integers and floats directly. The rest of this lesson covers what you're accountable for: recognizing a float, telling floats and integers apart (including the trickiest case), choosing a float on purpose, and predicting what happens when you mix the two in math.</p>
+
+<h2 id="learn">Learn</h2>
+
+<h3 id="learn-what">What Is a Float?</h3>
+<p>A float is a number with a decimal point. Anywhere a value needs precision finer than a whole number, it's a float.</p>
+<pre>game_speed = 1.5
+price = 4.99
+temperature = 98.6</pre>
+
+<svg class="micro-diagram" viewBox="0 0 700 280" role="img" aria-label="A box labeled game_speed with an arrow pointing into it, and the decimal value 1.5 sitting inside the box.">
+  <text x="350" y="55" text-anchor="middle" font-family="Consolas, monospace" font-size="36" font-weight="bold" fill="#17365f">game_speed</text>
+  <line x1="350" y1="72" x2="350" y2="105" stroke="#1457d9" stroke-width="3"/>
+  <polygon points="350,113 340,97 360,97" fill="#1457d9"/>
+  <rect x="230" y="115" width="240" height="130" rx="20" fill="#dce8f8" stroke="#3d73c7" stroke-width="3"/>
+  <text x="350" y="197" text-anchor="middle" font-family="Consolas, monospace" font-size="44" font-weight="bold" fill="#138a3d">1.5</text>
+</svg>
+
+<div class="concept-card game">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><line x1="12" y1="10" x2="12" y2="17"/><path d="M7 17h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>Game Connection</div>
+<p>Game speed multipliers, elapsed time, and coordinate positions are almost always floats. A character doesn't move at exactly 2 pixels per frame forever -- a "1.5x speed boost" powerup needs a decimal to actually mean anything.</p>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which of these is written as a float?</div>
+  <select id="qc1-select">
+    <option value="">Choose one...</option>
+    <option value="a">8</option>
+    <option value="b">8.5</option>
+    <option value="c">&quot;8.5&quot;</option>
+  </select>
+  <button onclick="qcCheck('qc1', 'b')">Check</button>
+  <div class="feedback" id="qc1-feedback"></div>
+</div>
+
+<h3 id="learn-trap">The Trickiest Case: A Float That Looks Whole</h3>
+<p>Here's the part of floats that catches people off guard:</p>
+<pre>average = 12.0</pre>
+<p><code>12.0</code> equals <code>12</code> mathematically. But in Python, the decimal point is what decides the type -- not the value. <code>12.0</code> is a float. <code>12</code> is an integer. Python treats them as two genuinely different kinds of value, even though they're mathematically equal.</p>
+
+<div class="concept-card usability">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>Usability Note</div>
+<p>This matters for how a value displays. A grade average of exactly <code>90</code> percent might come out of a calculation as <code>90.0</code> if any float was involved anywhere along the way -- worth knowing before you're confused by an extra <code>.0</code> showing up on screen where you didn't expect one.</p>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Is <code>20.0</code> an integer or a float?</div>
+  <select id="qc2-select">
+    <option value="">Choose one...</option>
+    <option value="a">Integer, since it has no fractional part</option>
+    <option value="b">Float, since it has a decimal point</option>
+  </select>
+  <button onclick="qcCheck('qc2', 'b')">Check</button>
+  <div class="feedback" id="qc2-feedback"></div>
+</div>
+
+<h3 id="learn-choosing">Choosing a Float on Purpose</h3>
+<p>Use a float whenever a value genuinely needs decimal precision: prices, percentages, measurements, ratios, anything between whole numbers.</p>
+<pre>price = 4.99
+completion_percent = 87.5</pre>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which of these needs a float?</div>
+  <select id="qc3-select">
+    <option value="">Choose one...</option>
+    <option value="a">number of players</option>
+    <option value="b">item price ($3.49)</option>
+    <option value="c">whether a level is unlocked</option>
+  </select>
+  <button onclick="qcCheck('qc3', 'b')">Check</button>
+  <div class="feedback" id="qc3-feedback"></div>
+</div>
+
+<h3 id="learn-mixed">Mixing Integers and Floats</h3>
+<p>When an integer and a float are combined in math, the result becomes a float. Python keeps the extra precision rather than throwing it away.</p>
+<pre>lives = 3
+bonus = 0.5
+print(lives + bonus)   # 3.5, not 3</pre>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">What does <code>print(5 + 2.0)</code> actually print?</div>
+  <select id="qc4-select">
+    <option value="">Choose one...</option>
+    <option value="a">7</option>
+    <option value="b">7.0</option>
+    <option value="c">It crashes</option>
+  </select>
+  <button onclick="qcCheck('qc4', 'b')">Check</button>
+  <div class="feedback" id="qc4-feedback"></div>
+</div>
+
+<h2 id="terms">Key Terms</h2>
+<p>Flip each card, then try the quick check below.</p>
+
+<div class="card-scene">
+  <div class="card" id="card" onclick="flipCard()">
+    <div class="card-inner" id="cardInner">
+      <div class="card-face card-front">
+        <div class="face-label">Term</div>
+        <div class="term-text" id="termText"></div>
+      </div>
+      <div class="card-face card-back">
+        <div class="face-label">Definition</div>
+        <div class="def-text" id="defText"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-hint">Click the card to flip it. (<span id="cardNum">1</span> of <span id="cardTotal"></span>)</div>
+<div class="card-nav">
+  <button onclick="prevCard()">&larr; Previous</button>
+  <button onclick="nextCard()">Next &rarr;</button>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">What does the word "float" refer to in "floating-point number"?</div>
+  <select id="qc5-select">
+    <option value="">Choose one...</option>
+    <option value="a">The decimal point can move to different positions depending on the number's size</option>
+    <option value="b">The number floats above zero and can never be negative</option>
+  </select>
+  <button onclick="qcCheck('qc5', 'a')">Check</button>
+  <div class="feedback" id="qc5-feedback"></div>
+</div>
+
+<h2 id="practice">Practice</h2>
+<p>Five short skill checks, one per skill. Work through them in order.</p>
+<div class="progress-note" id="progress-note">0 of 5 skill checks complete.</div>
+
+<!-- ======================= NODE 1: identifies_float_type ======================= -->
+<div class="node-heading"><strong>Skill Check 1 of 5</strong></div>
+<div class="resume-badge" id="n1-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
+<div class="drill" id="n1-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Game Speed: 1.5</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n1-core-blank" class="scaffold-blank" data-expected="game_speed = 1.5" placeholder="type your code here">
+print("Game Speed:", game_speed)</div>
+  </div>
+  <button class="check-btn" onclick="n1CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n1-hint')">Need a hint?</button>
+  <div class="hint-box" id="n1-hint">A float has a decimal point, with no quotation marks around it.</div>
+  <pre class="rc-output" id="n1-core-output"></pre>
+  <div class="feedback" id="n1-core-feedback"></div>
+</div>
+
+<div class="drill" id="n1-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which of these is a float?</p>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="a"><pre>7</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="b"><pre>7.5</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="c"><pre>"7.5"</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="d"><pre>True</pre></label>
+  <button class="check-btn" onclick="n1ReinforceCheck()">Check</button>
+  <div class="feedback" id="n1-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n1-reinforce-exhausted" hidden>A float has a decimal point and no quotation marks. 7 has no decimal point (integer), "7.5" has quotation marks (string), and True is a boolean. Continue to the next item below.</div>
+
+<div class="drill" id="n1-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>&lt;class 'float'&gt;</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">distance = 3.75
+<input type="text" id="n1-extend-blank" class="scaffold-blank" data-expected="print(type(distance))" placeholder="type your code here" style="width:36ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n1ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n1-extend-output"></pre>
+  <div class="feedback" id="n1-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 2: distinguishes_int_vs_float ======================= -->
+<div class="node-heading"><strong>Skill Check 2 of 5</strong></div>
+<div class="resume-badge" id="n2-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
+<div class="drill" id="n2-core">
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which of these is a float, not an integer?</p>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="a"><pre>12</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="b"><pre>12.0</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="c"><pre>"12"</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="d"><pre>True</pre></label>
+  <button class="check-btn" onclick="n2CoreCheck()">Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n2-hint')">Need a hint?</button>
+  <div class="hint-box" id="n2-hint">Look for the decimal point specifically -- not the quotation marks, and not the value itself.</div>
+  <div class="feedback" id="n2-core-feedback"></div>
+</div>
+
+<div class="drill" id="n2-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p><code>12.0</code> equals <code>12</code> mathematically. Is <code>12.0</code> still a float in Python?</p>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="a"><pre>Yes -- the decimal point makes it a float regardless of the value</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="b"><pre>No -- since it has no fractional part, it's really an integer</pre></label>
+  <button class="check-btn" onclick="n2ReinforceCheck()">Check</button>
+  <div class="feedback" id="n2-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n2-reinforce-exhausted" hidden>Python decides the type from how a value is written, not what it equals mathematically. 12.0 is always a float. Continue to the next item below.</div>
+
+<div class="drill" id="n2-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Average Score: 88.0</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n2-extend-blank" class="scaffold-blank" data-expected="average_score = 88.0" placeholder="type your code here">
+print("Average Score:", average_score)</div>
+  </div>
+  <button class="check-btn" onclick="n2ExtendCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n2-extend-hint')">Need a hint?</button>
+  <div class="hint-box" id="n2-extend-hint">This needs to be a float even though it's a whole number -- keep the decimal point.</div>
+  <pre class="rc-output" id="n2-extend-output"></pre>
+  <div class="feedback" id="n2-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 3: recognizes_float_disguised_as_whole ======================= -->
+<div class="node-heading"><strong>Skill Check 3 of 5</strong></div>
+<div class="resume-badge" id="n3-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
+<div class="drill" id="n3-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>&lt;class 'float'&gt;</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">height = 6.0
+<input type="text" id="n3-core-blank" class="scaffold-blank" data-expected="print(type(height))" placeholder="type your code here" style="width:36ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n3CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n3-hint')">Need a hint?</button>
+  <div class="hint-box" id="n3-hint">height still has a decimal point, even though its value is a whole number.</div>
+  <pre class="rc-output" id="n3-core-output"></pre>
+  <div class="feedback" id="n3-core-feedback"></div>
+</div>
+
+<div class="drill" id="n3-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>A variable holds <code>20.0</code>. Which best describes it?</p>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="a"><pre>Integer, since 20.0 has no fraction</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="b"><pre>Float, since it has a decimal point regardless of its value</pre></label>
+  <button class="check-btn" onclick="n3ReinforceCheck()">Check</button>
+  <div class="feedback" id="n3-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n3-reinforce-exhausted" hidden>The decimal point is what determines the type in Python, not whether the value happens to be a whole number. Continue to the next item below.</div>
+
+<div class="drill" id="n3-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>A thermostat's target is exactly 70 degrees, but the app stores every temperature as a float. Fill in the blank so the program prints exactly:</p>
+  <pre>Target: 70.0</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n3-extend-blank" class="scaffold-blank" data-expected="target = 70.0" placeholder="type your code here">
+print("Target:", target)</div>
+  </div>
+  <button class="check-btn" onclick="n3ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n3-extend-output"></pre>
+  <div class="feedback" id="n3-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 4: uses_float_for_decimal_quantity ======================= -->
+<div class="node-heading"><strong>Skill Check 4 of 5</strong></div>
+<div class="resume-badge" id="n4-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
+<div class="drill" id="n4-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Game Speed: 1.25</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n4-core-blank" class="scaffold-blank" data-expected="game_speed = 1.25" placeholder="type your code here">
+print("Game Speed:", game_speed)</div>
+  </div>
+  <button class="check-btn" onclick="n4CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n4-hint')">Need a hint?</button>
+  <div class="hint-box" id="n4-hint">This value needs decimal precision -- a float, not an integer.</div>
+  <pre class="rc-output" id="n4-core-output"></pre>
+  <div class="feedback" id="n4-core-feedback"></div>
+</div>
+
+<div class="drill" id="n4-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which of these should be stored as a float?</p>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="a"><pre>number of lives</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="b"><pre>price of an item ($4.99)</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="c"><pre>player name</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="d"><pre>paused state</pre></label>
+  <button class="check-btn" onclick="n4ReinforceCheck()">Check</button>
+  <div class="feedback" id="n4-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n4-reinforce-exhausted" hidden>Lives is an integer, name is a string, and paused state is a boolean. Only the price needs decimal precision. Continue to the next item below.</div>
+
+<div class="drill" id="n4-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p><code>price = 4.99</code> already exists. Fill in the blank so the program prints exactly:</p>
+  <pre>Total: 5.34</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">price = 4.99
+<input type="text" id="n4-extend-blank" class="scaffold-blank" data-expected="tax = 0.35" placeholder="type your code here">
+print("Total:", price + tax)</div>
+  </div>
+  <button class="check-btn" onclick="n4ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n4-extend-output"></pre>
+  <div class="feedback" id="n4-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 5: predicts_mixed_numeric_result ======================= -->
+<div class="node-heading"><strong>Skill Check 5 of 5</strong></div>
+<div class="resume-badge" id="n5-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
+<div class="drill" id="n5-core">
+  <div class="drill-type">Build the Code</div>
+  <p><code>lives = 3</code> and <code>bonus = 0.5</code> already exist. Fill in the blank so the program prints exactly:</p>
+  <pre>Total: 3.5</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">lives = 3
+bonus = 0.5
+<input type="text" id="n5-core-blank" class="scaffold-blank" data-expected="total = lives + bonus" placeholder="type your code here">
+print("Total:", total)</div>
+  </div>
+  <button class="check-btn" onclick="n5CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n5-hint')">Need a hint?</button>
+  <div class="hint-box" id="n5-hint">Add the integer and the float together. Mixing them produces a float.</div>
+  <pre class="rc-output" id="n5-core-output"></pre>
+  <div class="feedback" id="n5-core-feedback"></div>
+</div>
+
+<div class="drill" id="n5-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>What is the result of <code>5 + 2.0</code>?</p>
+  <label class="code-choice-option"><input type="radio" name="n5-reinforce" value="a"><pre>7</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n5-reinforce" value="b"><pre>7.0</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n5-reinforce" value="c"><pre>Error</pre></label>
+  <button class="check-btn" onclick="n5ReinforceCheck()">Check</button>
+  <div class="feedback" id="n5-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n5-reinforce-exhausted" hidden>Mixing an integer and a float in math never crashes -- the result becomes a float, keeping the extra precision. Continue to the next item below.</div>
+
+<div class="drill" id="n5-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p><code>base = 10</code> already exists. Fill in the blank so the program prints exactly:</p>
+  <pre>Adjusted: 7.5</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">base = 10
+<input type="text" id="n5-extend-blank" class="scaffold-blank" data-expected="adjusted = base * 0.75" placeholder="type your code here">
+print("Adjusted:", adjusted)</div>
+  </div>
+  <button class="check-btn" onclick="n5ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n5-extend-output"></pre>
+  <div class="feedback" id="n5-extend-feedback"></div>
+</div>
+
+<div id="complete-banner">&#10003; Practice complete. Your work has been saved.</div>
+<div id="save-status-global"></div>
+
+<script src="../../../../../02-authoring-system/skulpt-runtime/skulpt.min.js"></script>
+<script src="../../../../../02-authoring-system/skulpt-runtime/skulpt-stdlib.js"></script>
+<script src="/local/foxcstelemetry/foxcs-progress.js"></script>
+<script>
+var CMID = "__CMID__";
+var ENDPOINT = '/local/foxcstelemetry/log.php';
+var sesskey = null;
+var globalStatus = document.getElementById('save-status-global');
+
+function bootstrap(cb) {
+  fetch(ENDPOINT + '?action=bootstrap&cmid=' + CMID, { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { sesskey = data.sesskey; cb(); })
+    .catch(function () { globalStatus.textContent = 'Could not reach the save endpoint.'; });
+}
+function logEvent(eventtype, payload, complete) {
+  if (!sesskey) { bootstrap(function () { logEvent(eventtype, payload, complete); }); return; }
+  var body = new URLSearchParams();
+  body.set('action', 'log');
+  body.set('sesskey', sesskey);
+  body.set('cmid', CMID);
+  body.set('eventtype', eventtype);
+  body.set('payload', JSON.stringify(payload));
+  if (complete) body.set('complete', '1');
+  fetch(ENDPOINT, { method: 'POST', credentials: 'same-origin', body: body })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      globalStatus.textContent = 'Saved ' + new Date().toLocaleTimeString() + '.';
+      if (data.completed) document.getElementById('complete-banner').style.display = 'block';
+    })
+    .catch(function () { globalStatus.textContent = 'Save failed. This will not block you from continuing.'; });
+}
+bootstrap(function () { logEvent('viewed', { page: 'lesson_02_03/01_instruction' }, false); });
+setInterval(function () { if (!document.hidden) { logEvent('heartbeat', {}, false); } }, 30000);
+
+var progress = { nodesResolved: { n1: false, n2: false, n3: false, n4: false, n5: false } };
+function nodesResolvedCount() { return Object.values(progress.nodesResolved).filter(Boolean).length; }
+function updateProgressNote() { document.getElementById('progress-note').textContent = nodesResolvedCount() + ' of 5 skill checks complete.'; }
+function maybeComplete() {
+  var all = progress.nodesResolved.n1 && progress.nodesResolved.n2 && progress.nodesResolved.n3 && progress.nodesResolved.n4 && progress.nodesResolved.n5;
+  if (all) logEvent('lesson_complete', { skill_ids: ['identifies_float_type', 'distinguishes_int_vs_float', 'recognizes_float_disguised_as_whole', 'uses_float_for_decimal_quantity', 'predicts_mixed_numeric_result'] }, true);
+}
+/* ---------------- Resume: save/restore (added 2026-09-10) ----------------
+   Retrofit of the 02.1 reference implementation (see
+   ../lesson_02_01_variables_and_memory/01_instruction.html) -- this page has
+   no Learn-gate, so only per-node Practice resolution needs to survive a
+   closed tab. Every resolveNode() call now also calls saveProgress(), which
+   piggybacks on the existing logEvent()/localBackup() dual server+localStorage
+   write path (see ../../../../../07-infrastructure/local-plugins/
+   foxcstelemetry/foxcs-progress.js for the restore side). */
+var NODE_DRILL_IDS = {
+  n1: ['n1-core', 'n1-reinforce', 'n1-extend'],
+  n2: ['n2-core', 'n2-reinforce', 'n2-extend'],
+  n3: ['n3-core', 'n3-reinforce', 'n3-extend'],
+  n4: ['n4-core', 'n4-reinforce', 'n4-extend'],
+  n5: ['n5-core', 'n5-reinforce', 'n5-extend']
+};
+var NODE_REVIEW_NOTE_IDS = {
+  n1: ['n1-reinforce-exhausted'],
+  n2: ['n2-reinforce-exhausted'],
+  n3: ['n3-reinforce-exhausted'],
+  n4: ['n4-reinforce-exhausted'],
+  n5: ['n5-reinforce-exhausted']
+};
+function markNodeComplete(n) {
+  (NODE_DRILL_IDS[n] || []).forEach(function (id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+  (NODE_REVIEW_NOTE_IDS[n] || []).forEach(function (id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+  var badge = document.getElementById(n + '-resume-badge');
+  if (badge) badge.hidden = false;
+}
+function currentProgressState() { return { nodesResolved: progress.nodesResolved }; }
+function saveProgress() { logEvent('progress_state', currentProgressState(), false); }
+function applyProgressState(state) {
+  if (state.nodesResolved) {
+    Object.keys(state.nodesResolved).forEach(function (n) {
+      if (state.nodesResolved[n] && !progress.nodesResolved[n]) {
+        progress.nodesResolved[n] = true;
+        markNodeComplete(n);
+      }
+    });
+  }
+  updateProgressNote();
+  var status = document.getElementById('save-status-global');
+  if (status) status.textContent = 'Welcome back -- restored your progress from last time.';
+  maybeComplete();
+}
+FoxCSProgress.restore(ENDPOINT, CMID, applyProgressState);
+
+function resolveNode(n) {
+  if (progress.nodesResolved[n]) return;
+  progress.nodesResolved[n] = true;
+  updateProgressNote();
+  maybeComplete();
+  saveProgress();
+}
+
+function skRead(x) {
+  if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) { throw "File not found: '" + x + "'"; }
+  return Sk.builtinFiles["files"][x];
+}
+function runSkulpt(code, onDone) {
+  var captured = [];
+  Sk.configure({ output: function (t) { captured.push(t); }, read: skRead });
+  Sk.misceval.asyncToPromise(function () { return Sk.importMainWithBody("<stdin>", false, code, true); }).then(
+    function () { onDone(captured.join('').trim()); },
+    function (err) { captured.push(String(err)); onDone(captured.join('').trim()); }
+  );
+}
+function toggleHint(id) {
+  var box = document.getElementById(id);
+  var show = box.style.display !== 'block';
+  box.style.display = show ? 'block' : 'none';
+  if (show) logEvent('hint_reveal', { hint_id: id }, false);
+}
+
+/* ================= NODE 1: identifies_float_type ================= */
+var n1Attempt = { core: 0, reinforce: 0 };
+function n1CoreCheck() {
+  n1Attempt.core++;
+  var blank = document.getElementById('n1-core-blank').value;
+  var code = blank + '\nprint("Game Speed:", game_speed)';
+  var out = document.getElementById('n1-core-output'); var fb = document.getElementById('n1-core-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Game Speed: 1.5';
+    fb.textContent = correct ? 'Right. A decimal point, no quotes -- that\'s a float.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'identifies_float_type', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n1Attempt.core }, false);
+    if (correct) { logEvent('lane_transition', { skill_id: 'identifies_float_type', from: 'core', to: 'extend', reason: 'correct_advance' }, false); document.getElementById('n1-extend').hidden = false; }
+    else if (n1Attempt.core === 1) { logEvent('lane_transition', { skill_id: 'identifies_float_type', from: 'core', to: 'reinforce', reason: 'incorrect' }, false); document.getElementById('n1-reinforce').hidden = false; }
+  });
+}
+function n1ReinforceCheck() {
+  var picked = document.querySelector('input[name="n1-reinforce"]:checked'); var fb = document.getElementById('n1-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n1Attempt.reinforce++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { a: 'No decimal point -- this is an integer.', c: 'Quotation marks make this a string.', d: 'True is a boolean.' };
+  fb.textContent = correct ? 'Right. 7.5 has a decimal point and no quotes.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'identifies_float_type', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n1Attempt.reinforce }, false);
+  if (correct) { logEvent('lane_transition', { skill_id: 'identifies_float_type', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false); resolveNode('n1'); }
+  else if (n1Attempt.reinforce === 1) { document.getElementById('n1-reinforce-exhausted').hidden = false; logEvent('lane_transition', { skill_id: 'identifies_float_type', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false); resolveNode('n1'); }
+}
+var n1ExtendAttempt = 0;
+function n1ExtendCheck() {
+  n1ExtendAttempt++;
+  var blank = document.getElementById('n1-extend-blank').value;
+  var code = 'distance = 3.75\n' + blank;
+  var out = document.getElementById('n1-extend-output'); var fb = document.getElementById('n1-extend-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === "<class 'float'>";
+    fb.textContent = correct ? 'Right. type() confirms distance is a float.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'identifies_float_type', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n1ExtendAttempt }, false);
+    resolveNode('n1');
+  });
+}
+
+/* ================= NODE 2: distinguishes_int_vs_float ================= */
+var n2Attempt = { reinforce: 0 };
+function n2CoreCheck() {
+  var picked = document.querySelector('input[name="n2-core"]:checked'); var fb = document.getElementById('n2-core-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. 12.0 has a decimal point -- it\'s a float, even though it equals 12.' : 'Not quite. Look for the decimal point specifically.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'distinguishes_int_vs_float', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: 1 }, false);
+  if (correct) { logEvent('lane_transition', { skill_id: 'distinguishes_int_vs_float', from: 'core', to: 'extend', reason: 'correct_advance' }, false); document.getElementById('n2-extend').hidden = false; }
+  else { logEvent('lane_transition', { skill_id: 'distinguishes_int_vs_float', from: 'core', to: 'reinforce', reason: 'incorrect' }, false); document.getElementById('n2-reinforce').hidden = false; }
+}
+function n2ReinforceCheck() {
+  var picked = document.querySelector('input[name="n2-reinforce"]:checked'); var fb = document.getElementById('n2-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n2Attempt.reinforce++;
+  var correct = picked.value === 'a';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. The decimal point decides the type, not the value.' : 'Not quite. Think about how Python decides type -- from how something is written, not what it equals.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'distinguishes_int_vs_float', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n2Attempt.reinforce }, false);
+  if (correct) { logEvent('lane_transition', { skill_id: 'distinguishes_int_vs_float', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false); resolveNode('n2'); }
+  else if (n2Attempt.reinforce === 1) { document.getElementById('n2-reinforce-exhausted').hidden = false; logEvent('lane_transition', { skill_id: 'distinguishes_int_vs_float', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false); resolveNode('n2'); }
+}
+var n2ExtendAttempt = 0;
+function n2ExtendCheck() {
+  n2ExtendAttempt++;
+  var blank = document.getElementById('n2-extend-blank').value;
+  var code = blank + '\nprint("Average Score:", average_score)';
+  var out = document.getElementById('n2-extend-output'); var fb = document.getElementById('n2-extend-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Average Score: 88.0';
+    fb.textContent = correct ? 'Right. The decimal point stays, even on a whole-number value.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'distinguishes_int_vs_float', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n2ExtendAttempt }, false);
+    resolveNode('n2');
+  });
+}
+
+/* ================= NODE 3: recognizes_float_disguised_as_whole ================= */
+var n3Attempt = { core: 0, reinforce: 0 };
+function n3CoreCheck() {
+  n3Attempt.core++;
+  var blank = document.getElementById('n3-core-blank').value;
+  var code = 'height = 6.0\n' + blank;
+  var out = document.getElementById('n3-core-output'); var fb = document.getElementById('n3-core-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === "<class 'float'>";
+    fb.textContent = correct ? 'Right. height keeps its decimal point, so it stays a float.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'recognizes_float_disguised_as_whole', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n3Attempt.core }, false);
+    if (correct) { logEvent('lane_transition', { skill_id: 'recognizes_float_disguised_as_whole', from: 'core', to: 'extend', reason: 'correct_advance' }, false); document.getElementById('n3-extend').hidden = false; }
+    else if (n3Attempt.core === 1) { logEvent('lane_transition', { skill_id: 'recognizes_float_disguised_as_whole', from: 'core', to: 'reinforce', reason: 'incorrect' }, false); document.getElementById('n3-reinforce').hidden = false; }
+  });
+}
+function n3ReinforceCheck() {
+  var picked = document.querySelector('input[name="n3-reinforce"]:checked'); var fb = document.getElementById('n3-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n3Attempt.reinforce++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. The decimal point makes it a float, no matter what the value is.' : 'Not quite. Whether a value happens to be whole doesn\'t change its type.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'recognizes_float_disguised_as_whole', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n3Attempt.reinforce }, false);
+  if (correct) { logEvent('lane_transition', { skill_id: 'recognizes_float_disguised_as_whole', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false); resolveNode('n3'); }
+  else if (n3Attempt.reinforce === 1) { document.getElementById('n3-reinforce-exhausted').hidden = false; logEvent('lane_transition', { skill_id: 'recognizes_float_disguised_as_whole', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false); resolveNode('n3'); }
+}
+var n3ExtendAttempt = 0;
+function n3ExtendCheck() {
+  n3ExtendAttempt++;
+  var blank = document.getElementById('n3-extend-blank').value;
+  var code = blank + '\nprint("Target:", target)';
+  var out = document.getElementById('n3-extend-output'); var fb = document.getElementById('n3-extend-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Target: 70.0';
+    fb.textContent = correct ? 'Right. Even a "round" number like 70 stays a float once written with a decimal point.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'recognizes_float_disguised_as_whole', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n3ExtendAttempt }, false);
+    resolveNode('n3');
+  });
+}
+
+/* ================= NODE 4: uses_float_for_decimal_quantity ================= */
+var n4Attempt = { core: 0 };
+function n4CoreCheck() {
+  n4Attempt.core++;
+  var blank = document.getElementById('n4-core-blank').value;
+  var code = blank + '\nprint("Game Speed:", game_speed)';
+  var out = document.getElementById('n4-core-output'); var fb = document.getElementById('n4-core-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Game Speed: 1.25';
+    fb.textContent = correct ? 'Right.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'uses_float_for_decimal_quantity', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n4Attempt.core }, false);
+    if (correct) { logEvent('lane_transition', { skill_id: 'uses_float_for_decimal_quantity', from: 'core', to: 'extend', reason: 'correct_advance' }, false); document.getElementById('n4-extend').hidden = false; }
+    else if (n4Attempt.core === 1) { logEvent('lane_transition', { skill_id: 'uses_float_for_decimal_quantity', from: 'core', to: 'reinforce', reason: 'incorrect' }, false); document.getElementById('n4-reinforce').hidden = false; }
+  });
+}
+var n4ReinforceAttempt = 0;
+function n4ReinforceCheck() {
+  var picked = document.querySelector('input[name="n4-reinforce"]:checked'); var fb = document.getElementById('n4-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n4ReinforceAttempt++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { a: 'Lives is an integer -- a plain count.', c: 'A name is a string.', d: 'A paused state needs a boolean, coming in Lesson 2.5.' };
+  fb.textContent = correct ? 'Right. A price with cents needs decimal precision.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'uses_float_for_decimal_quantity', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n4ReinforceAttempt }, false);
+  if (correct) { logEvent('lane_transition', { skill_id: 'uses_float_for_decimal_quantity', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false); resolveNode('n4'); }
+  else if (n4ReinforceAttempt === 1) { document.getElementById('n4-reinforce-exhausted').hidden = false; logEvent('lane_transition', { skill_id: 'uses_float_for_decimal_quantity', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false); resolveNode('n4'); }
+}
+var n4ExtendAttempt = 0;
+function n4ExtendCheck() {
+  n4ExtendAttempt++;
+  var blank = document.getElementById('n4-extend-blank').value;
+  var code = 'price = 4.99\n' + blank + '\nprint("Total:", price + tax)';
+  var out = document.getElementById('n4-extend-output'); var fb = document.getElementById('n4-extend-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Total: 5.34';
+    fb.textContent = correct ? 'Right. Two floats added together, keeping full precision.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'uses_float_for_decimal_quantity', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n4ExtendAttempt }, false);
+    resolveNode('n4');
+  });
+}
+
+/* ================= NODE 5: predicts_mixed_numeric_result ================= */
+var n5Attempt = { core: 0, reinforce: 0 };
+function n5CoreCheck() {
+  n5Attempt.core++;
+  var blank = document.getElementById('n5-core-blank').value;
+  var code = 'lives = 3\nbonus = 0.5\n' + blank + '\nprint("Total:", total)';
+  var out = document.getElementById('n5-core-output'); var fb = document.getElementById('n5-core-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Total: 3.5';
+    fb.textContent = correct ? 'Right. Mixing an int and a float in math always produces a float.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'predicts_mixed_numeric_result', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n5Attempt.core }, false);
+    if (correct) { logEvent('lane_transition', { skill_id: 'predicts_mixed_numeric_result', from: 'core', to: 'extend', reason: 'correct_advance' }, false); document.getElementById('n5-extend').hidden = false; }
+    else if (n5Attempt.core === 1) { logEvent('lane_transition', { skill_id: 'predicts_mixed_numeric_result', from: 'core', to: 'reinforce', reason: 'incorrect' }, false); document.getElementById('n5-reinforce').hidden = false; }
+  });
+}
+function n5ReinforceCheck() {
+  var picked = document.querySelector('input[name="n5-reinforce"]:checked'); var fb = document.getElementById('n5-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n5Attempt.reinforce++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. Mixing int and float in math never crashes -- it produces a float.' : 'Not quite. This combination never crashes -- think about what type the result becomes.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'predicts_mixed_numeric_result', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n5Attempt.reinforce }, false);
+  if (correct) { logEvent('lane_transition', { skill_id: 'predicts_mixed_numeric_result', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false); resolveNode('n5'); }
+  else if (n5Attempt.reinforce === 1) { document.getElementById('n5-reinforce-exhausted').hidden = false; logEvent('lane_transition', { skill_id: 'predicts_mixed_numeric_result', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false); resolveNode('n5'); }
+}
+var n5ExtendAttempt = 0;
+function n5ExtendCheck() {
+  n5ExtendAttempt++;
+  var blank = document.getElementById('n5-extend-blank').value;
+  var code = 'base = 10\n' + blank + '\nprint("Adjusted:", adjusted)';
+  var out = document.getElementById('n5-extend-output'); var fb = document.getElementById('n5-extend-feedback');
+  out.style.display = 'block'; out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Adjusted: 7.5';
+    fb.textContent = correct ? 'Right. 10 * 0.75 = 7.5, a float since 0.75 is a float.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'predicts_mixed_numeric_result', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n5ExtendAttempt }, false);
+    resolveNode('n5');
+  });
+}
+
+/* ---------------- Flashcards ---------------- */
+var CARDS = [
+  { term: 'float', def: 'A number with a decimal point (short for "floating-point number"). Used for values that need precision finer than a whole number.' },
+  { term: '12.0 vs 12', def: '12.0 is a float and 12 is an integer, even though they are mathematically equal -- Python decides type from how a value is written.' },
+  { term: 'mixed arithmetic', def: 'Combining an integer and a float in math always produces a float, keeping the extra precision.' }
+];
+var cardIndex = 0;
+function renderCard() {
+  document.getElementById('card').classList.remove('flipped');
+  document.getElementById('termText').textContent = CARDS[cardIndex].term;
+  document.getElementById('defText').textContent = CARDS[cardIndex].def;
+  document.getElementById('cardNum').textContent = cardIndex + 1;
+  document.getElementById('cardTotal').textContent = CARDS.length;
+}
+function flipCard() { var flipped = document.getElementById('card').classList.toggle('flipped'); if (flipped) { logEvent('flashcard_flip', { term: CARDS[cardIndex].term }, false); } }
+function nextCard() { cardIndex = (cardIndex + 1) % CARDS.length; renderCard(); }
+function prevCard() { cardIndex = (cardIndex - 1 + CARDS.length) % CARDS.length; renderCard(); }
+renderCard();
+
+function qcCheck(id, expected) {
+  var picked = document.getElementById(id + '-select').value;
+  var fb = document.getElementById(id + '-feedback');
+  if (!picked) { fb.textContent = 'Choose an answer first.'; fb.className = 'feedback incorrect'; return; }
+  var correct = picked === expected;
+  fb.textContent = correct ? 'Right.' : 'Not quite. Take another look above.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('quick_check', { id: id, correct: correct }, false);
+}
+</script>
+</body>
+</html>

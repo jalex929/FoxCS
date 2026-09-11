@@ -132,6 +132,7 @@ def build_menu(current_folder, current_file):
     lines.append('  <nav class="unit-menu-panel">')
     lines.append('    <div class="unit-menu-section">')
     lines.append('      <div class="unit-menu-section-label">Unit 01: What Is Programming?</div>')
+    lines.append('      <a href="../vscode_setup/00_vscode_setup.html">VS Code Setup</a>')
     for folder, title, files in LESSONS:
         is_current_lesson = (folder == current_folder)
         open_attr = " open" if is_current_lesson else ""

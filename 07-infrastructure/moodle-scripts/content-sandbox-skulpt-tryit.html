@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Skulpt Try-It (Jay's own device test)</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; }
+  .note { background: #f4f6f9; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1.2rem; font-size: 0.95rem; }
+  .scaffold { background: #1e2430; color: #e6e9ef; border-radius: 8px; padding: 1rem 1.2rem; font-family: Consolas, monospace; font-size: 0.95rem; line-height: 1.7; white-space: pre; }
+  .scaffold input { font-family: Consolas, monospace; font-size: 0.95rem; background: #33415c; color: #fff; border: 2px solid #5b9bd8; border-radius: 4px; padding: 0.1rem 0.4rem; width: 32ch; }
+  button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.95rem; margin-top: 0.9rem; }
+  #timer { font-family: Verdana, Arial, sans-serif; font-size: 1rem; margin-top: 0.6rem; color: #555; }
+  #output { background: #161b24; color: #9fe3ab; border-radius: 8px; padding: 0.9rem 1.1rem; margin-top: 0.7rem; font-family: Consolas, monospace; white-space: pre-wrap; min-height: 1.5rem; display: none; }
+  .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; font-size: 0.9rem; display: none; }
+  .feedback.correct { background: #d7ecd7; color: #1a1a1a; display: block; }
+  .feedback.incorrect { background: #f4e3d0; color: #1a1a1a; display: block; }
+  h2 { border-top: 1px solid #dde3ea; padding-top: 1.5rem; margin-top: 2.5rem; font-size: 1.2rem; }
+  textarea#free-code { width: 100%; box-sizing: border-box; background: #1e2430; color: #e6e9ef; border: none; border-radius: 8px; padding: 1rem; font-family: Consolas, monospace; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<h1>Skulpt Try-It</h1>
+<div class="note">Two modes to try. The timer in each is real, not simulated — compare both to how the Pyodide version felt.</div>
+
+<h2>1. Scaffolded fill-in-the-blank (checked by real execution)</h2>
+<div class="note">Type a line of Python that creates a variable named <code>score</code>. Give it whatever value makes the program print <code>Player: Ava</code> then <code>Score: 10</code>.</div>
+<div class="scaffold">name = "Ava"
+<input type="text" id="blank" placeholder="type your code here">
+print("Player:", name)
+print("Score:", score)</div>
+
+<button id="run-btn" onclick="checkIt()">Check</button>
+<div id="timer"></div>
+<pre id="output"></pre>
+<div class="feedback" id="feedback"></div>
+
+<h2>2. Free typing, real output</h2>
+<textarea id="free-code" rows="5" spellcheck="false">for i in range(3):
+    print("Round", i + 1)
+print("Game over!")</textarea>
+<br>
+<button id="free-run-btn" onclick="freeRun()">Run</button>
+<div id="free-timer"></div>
+<pre id="free-output"></pre>
+
+<script src="skulpt.min.js"></script>
+<script src="skulpt-stdlib.js"></script>
+<script>
+function builtinRead(x) {
+  if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) {
+    throw "File not found: '" + x + "'";
+  }
+  return Sk.builtinFiles["files"][x];
+}
+function checkIt() {
+  const btn = document.getElementById('run-btn');
+  const timer = document.getElementById('timer');
+  const out = document.getElementById('output');
+  const fb = document.getElementById('feedback');
+  const blankValue = document.getElementById('blank').value;
+  const code = 'name = "Ava"\n' + blankValue + '\nprint("Player:", name)\nprint("Score:", score)';
+
+  out.style.display = 'block';
+  out.textContent = '';
+  fb.className = 'feedback';
+  const t0 = performance.now();
+
+  let captured = [];
+  Sk.configure({ output: (t) => captured.push(t), read: builtinRead });
+  Sk.misceval.asyncToPromise(function () {
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  }).then(
+    function () { finish(); },
+    function (err) { captured.push(String(err)); finish(); }
+  );
+
+  function finish() {
+    const ms = Math.round(performance.now() - t0);
+    timer.textContent = 'Checked in ' + ms + 'ms.';
+    const result = captured.join('').trim();
+    out.textContent = result || '(no output)';
+    const expected = 'Player: Ava\nScore: 10';
+    const isCorrect = result === expected;
+    fb.textContent = isCorrect
+      ? 'Right — the program actually ran and printed exactly what was expected.'
+      : 'Not quite — the assembled program did not produce the expected output. Check your line.';
+    fb.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+  }
+}
+
+function freeRun() {
+  const out = document.getElementById('free-output');
+  const timer = document.getElementById('free-timer');
+  out.style.display = 'block';
+  out.textContent = '';
+  const t0 = performance.now();
+  let captured = [];
+  Sk.configure({ output: (t) => captured.push(t), read: builtinRead });
+  Sk.misceval.asyncToPromise(function () {
+    return Sk.importMainWithBody("<stdin>", false, document.getElementById('free-code').value, true);
+  }).then(
+    function () { finishFree(); },
+    function (err) { captured.push(String(err)); finishFree(); }
+  );
+  function finishFree() {
+    const ms = Math.round(performance.now() - t0);
+    timer.textContent = 'Ran in ' + ms + 'ms.';
+    out.textContent = captured.join('').trim() || '(no output)';
+  }
+}
+</script>
+
+</body>
+</html>

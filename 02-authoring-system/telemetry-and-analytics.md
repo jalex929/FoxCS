@@ -28,6 +28,8 @@ One hidden JSON blob per page, written into a `<script type="application/json" i
     { "type": "stepper_speed_change", "at": "2026-08-08T14:06:15Z", "value": 0.5 },
     { "type": "stepper_play", "at": "2026-08-08T14:06:16Z" },
     { "type": "stepper_step", "at": "2026-08-08T14:06:40Z", "direction": "forward", "index": 3 },
+    { "type": "stepper_restart", "at": "2026-08-08T14:06:45Z" },
+    { "type": "stepper_predict", "at": "2026-08-08T14:06:50Z", "guessed_line": 3, "actual_line": 3, "correct": true },
     { "type": "hint_reveal", "at": "2026-08-08T14:07:02Z", "hint_id": "mc_q3_hint1" },
     { "type": "drill_attempt", "at": "2026-08-08T14:07:30Z", "skill_id": "print_output", "item_id": "core_02", "lane": "core", "correct": false, "attempt_number": 1 },
     { "type": "lane_transition", "at": "2026-08-08T14:07:31Z", "skill_id": "print_output", "from": "core", "to": "reinforce", "reason": "incorrect" },
@@ -48,11 +50,23 @@ Every page that has *any* tracked interaction gets this block; a page with nothi
 | `stepper_speed_change` | `value` (0.25–2.0) | Code stepper (component #14) — every change, not just the final value, so a "starts at 1x then slows down" pattern is visible |
 | `stepper_play` / `stepper_pause` | — | Code stepper |
 | `stepper_step` | `direction` (`forward`\|`back`), `index` | Code stepper |
+| `stepper_restart` | — | Code stepper (added 2026-09-10, closing the Controls gap in `courses/python/skills-map.md`'s Code Stepper spec) — logs a return to step 0 |
+| `stepper_predict` | `guessed_line`, `actual_line`, `correct` | Code stepper (added 2026-09-10) — Learning Progression Stage 3 ("predict the next highlighted line before pressing Step"); fires once per predict-then-reveal cycle, not per line viewed |
 | `hint_reveal` | `hint_id` | Any component with staged/revealable hints |
 | `drill_attempt` | `skill_id`, `item_id`, `lane` (`core`\|`reinforce`\|`extend`), `correct`, `attempt_number` | Any practice drill (block builder, drag-to-match, categorization, sequencing, etc.) |
 | `lane_transition` | `skill_id`, `from`, `to`, `reason` (`incorrect`\|`correct_advance`\|`correct_recovered`\|`lane_exhausted`) | The Reinforce/Core/Extend router (`objectives-and-skills-proficiency.md`) — logs every move, not just the endpoint, so the full path through the ladder is reconstructable. `lane_exhausted` (added 2026-08-11, see `adaptive-practice-model.md`) fires when a student is still wrong after using every item in a lane's small pool — the MVP's pools are deliberately tiny (1-2 items/lane), so running out is a real, loggable outcome, not an edge case to ignore. |
 
 Page-level fields (`opened_at`, `saves[]`) capture start/save timestamps directly — no separate event needed for those, since they're properties of the session itself rather than a discrete interaction.
+
+## Live Implementation (Option C, added 2026-09-04, report added 2026-09-08)
+
+This doc's Capture Mechanism/Pipeline sections below describe the original MVP design: telemetry as a JSON blob embedded in a student's saved file, extracted later during grading. That was superseded once Moodle resumed as the real backend (`local_foxcstelemetry`, `07-infrastructure/local-plugins/foxcstelemetry/` — see `adaptive-practice-model.md`'s 2026-08-31 status note and 02.1's own lesson file header for the fuller "Option C" reasoning). Custom lesson pages (tabbed HTML, not native Moodle Lesson/H5P) call `local/foxcstelemetry/log.php` directly from their own JS to log one row per interaction event (`userid`, `courseid`, `cmid`, `eventtype`, `payload`, `timecreated`) straight into `local_foxcstelemetry_log`, and to mark manual completion.
+
+**Time-on-task report:** `local/foxcstelemetry/report.php?courseid=N` (teacher/admin only, `moodle/site:viewreports` capability) shows, per student per activity, first/last event timestamp, time-on-task (last minus first), event count, and completion status — the direct answer to "so I can see this for each student." Still an approximation, not a stopwatch: a student who opens a page and leaves without triggering any other logged event reads as 0 seconds, since there's no periodic heartbeat event yet, only on-interaction/on-complete events. Good enough for "did they engage, roughly how long," flagged as a real limitation in the report's own header comment.
+
+## Telemetry as an XP Input (added 2026-09-08)
+
+Per Jay: telemetry isn't just for analytics and reporting — it should generally feed **XP calculation**, not only completion/reporting. The concrete first case is quick-checks (see `mvp-unit-folder-structure.md`'s new "Quick-Check Reading Engagement XP" section): whether a student got one right first try, needed a reattempt, or skipped it should factor into the lesson's XP, the same way Vocab Quiz attempt data already does. The principle is meant to generalize beyond quick-checks — any logged `local_foxcstelemetry_log` event (`drill_attempt`, `lane_transition`, `quick_check`, `flashcard_flip`, `hint_reveal`, etc.) is a legitimate XP input going forward, not just a reporting/analytics data point. **Not yet built:** the actual XP-from-telemetry calculation — this is the design decision and the data source, recorded so it's not lost, not a finished pipeline. Whoever builds it next should design one shared mechanism rather than a one-off per feature (quick-checks, hints, drill attempts shouldn't each get their own bespoke XP formula).
 
 ## What This Answers, Directly
 

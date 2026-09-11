@@ -109,10 +109,10 @@ Per Jay, a real design distinction to carry into future authoring, grounded in t
 That maps onto three distinct program shapes across FoxCS's own assessment types, not one shape reused everywhere:
 
 - **Mastery Check** — one cohesive program (or a small handful of closely-related questions inside one program). Already the built pattern — see "Mastery Checks" above.
-- **[Name TBD, tentatively "Unit Test" per Jay's own phrasing] — a short set of 4-7 small, genuinely independent programs**, mirroring the exam's own multi-file-lab structure. **Naming collision to resolve before this gets built**: `course-plan.md`'s Lesson 15.6 ("Introduction to Unit Testing," GMetrix Domain 5) already uses "Unit Testing" for the real CS concept (`assert`, `try`/`except`, etc.) — reusing that exact term for this different, assessment-format meaning would collide with real content students will hit later in the year. Needs a different name (e.g. "Skills Check," "Lab Set," "Multi-File Check") before it's built into any file-naming convention, teacher-materials key, or `lesson-schema.md` — not decided here, flagged in `open-questions.md`.
-- **Project** — one larger program (already the built pattern — see "Tiered Project XP" below).
+- **Coding Exercise** — a short set of small, genuinely independent programs, mirroring the exam's own multi-file-lab structure. **Naming resolved 2026-09-04**: this is the tier that was flagged 2026-08-20 as "[Name TBD, tentatively 'Unit Test']" pending a name that didn't collide with Lesson 15.6's real "Introduction to Unit Testing" CS content — it's since been built under the name "Coding Exercise" (see the `build-lesson-01-0X-coding-exercise.php` scripts and `CLAUDE.md`'s Purpose section), which doesn't collide with anything, so that naming question is closed. **Cardinality, settled 2026-09-04 per Jay:** a lesson can have multiple Coding Exercise modules (one per small independent program, same spirit as the exam's ~7-file lab), but only ever one Project. Ideally every lesson still gets its own Project, but a lesson with 5+ Coding Exercises already may reasonably skip a separate Project rather than force one — not a hard rule, a judgment call per lesson.
+- **Project** — one larger program (already the built pattern — see "Tiered Project XP" below). Genuinely separate content from Coding Exercise, not a rename of it — see `../decisions-log.md`'s 2026-09-04 module-structure entry.
 
-Not yet scoped: which units get this new tier, how many per course, exact file-naming convention for 4-7 small `.py` files in one folder (likely `NN_[tier]_01.py` through `NN_[tier]_07.py` or similar, TBD), and how — if at all — `05-grader/school-side/auto_grade.py`'s needs-review matching should recognize the new file group. Recorded here so it isn't lost before a real scoping pass, not something to build speculatively ahead of that pass.
+Not yet scoped: exact file-naming convention for however many small `.py` files a lesson's Coding Exercises need (likely `NN_codingexercise_01.py` through `NN_codingexercise_0N.py` or similar, TBD), and how — if at all — `05-grader/school-side/auto_grade.py`'s needs-review matching should recognize the file group. Recorded here so it isn't lost before a real scoping pass, not something to build speculatively ahead of that pass.
 
 ## Tiered Project XP
 
@@ -136,6 +136,14 @@ This is where flashcard-study effort actually earns XP — not the flashcards th
 - **Reflection answers are a capture target for the future grader, not yet built.** Jay wants `05-grader/` to eventually extract themes from these reflection answers and build a quick-reference of effective memory tricks students came up with, some of which he may want to share with the whole class. Not built — flagged here as a real future requirement, not a hypothetical one, so it isn't lost. See `05-grader/README.md`.
 
 See `courses/python/content/unit_01_what_is_programming/lesson_01_04_printing_output/04_vocab_quiz.html` for the reference implementation (5 terms, matching the same 5 flashcards in that lesson's `03_flashcards.html` — keep the term/definition pairs identical between a lesson's flashcards and its vocab quiz, don't let them drift).
+
+## Quick-Check Reading Engagement XP (added 2026-09-08)
+
+Per Jay, extending the same "attempt-logged, not just end-state" principle the Vocab Quiz section above already established: the inline reading-comprehension quick-checks threaded through a lesson's Learn section (see 02.1's `qc1`-`qc7` for the reference implementation) should also earn XP, not just exist as ungraded self-checks. **Whether a student got a quick-check right on the first try, needed a reattempt, or skipped it entirely should factor into XP earned for the lesson** — this is about rewarding genuine engagement with the reading, the same way Vocab Quiz rewards genuine flashcard study, not about penalizing a wrong first guess.
+
+- Every quick-check attempt is already logged via `local_foxcstelemetry` (`quick_check` event: `item_id`, `picked`, `correct`) as of 2026-09-08 — see `telemetry-and-analytics.md`'s Live Implementation section. Flashcard flips are logged too (`flashcard_flip`).
+- Extends `lesson-schema.md`'s `xp:` block with a `quick_check_engagement` value.
+- **Not yet built:** an actual XP calculation reading these events and awarding/displaying XP. Right now the events are logged but nothing computes XP from them — this section records the decision and the data source, not a finished feature. See `telemetry-and-analytics.md`'s new "Telemetry as an XP Input" note for the broader principle this extends to (not just quick-checks).
 
 ## Component Library
 

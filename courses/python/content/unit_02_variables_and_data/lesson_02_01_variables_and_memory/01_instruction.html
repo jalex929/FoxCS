@@ -1,0 +1,1317 @@
+<!-- Sandbox prototype, 2026-09-04, expanded to full-lesson scope per Jay's
+     mid-session direction. Reference implementation for Unit 02's pilot
+     lesson (02.1 Variables and Memory) under the 5-module structure settled
+     this same day (see ../../../../../decisions-log.md and
+     ../../../../../CLAUDE.md's Purpose section). Bundles Instruction + Key
+     Terms (flashcards/vocab quick-checks) + Practice (4 real adaptive skill
+     nodes, spiral review, Game Connection/UX items) into ONE self-contained
+     page with an expandable jump-to-section menu, per the new
+     Instruction-module shape -- not the old per-file, forced-linear pattern
+     Unit 01 used.
+
+     4 skill nodes chosen from Jay's 5 candidate topics (creating variables,
+     naming rules, reassignment, data types, printing with text): the first
+     4 get a real adaptive ladder; "data types" is deliberately kept as a
+     lighter ungraded guided-practice quick-check instead of a 5th full node,
+     per adaptive-practice-model.md's own "DOK-1 pure recall belongs in
+     guided practice, not a scored node" rule -- full data-type mastery is
+     Units 02.2-02.6's job per course-plan.md, not 02.1's. See
+     decisions-log.md's 2026-09-04 "Unit 02 pilot, full lesson" entry for the
+     complete reasoning.
+
+     Completion/telemetry goes through local_foxcstelemetry (Option C,
+     proven 2026-09-04) rather than the old save-in-place DOM-blob model in
+     telemetry-and-analytics.md, since that model assumed no live backend
+     and one now exists. Deployed via
+     ../../../../../07-infrastructure/moodle-scripts/create-sandbox-unit02-pilot-instruction.php. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>2.1 Variables and Memory: FoxCS: Python</title>
+<style>
+  body { font-family: Verdana, Arial, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; color: #1a1a1a; line-height: 1.55; }
+  h1 { color: #2a3a52; border-bottom: 3px solid #1a5aa8; padding-bottom: 0.4rem; }
+  h2 { color: #2a3a52; margin-top: 2.2rem; }
+  h3 { color: #2a3a52; margin-top: 1.6rem; }
+  h4 { color: #2a3a52; margin-top: 1.3rem; font-size: 1rem; }
+  code { font-family: Consolas, monospace; background: #eef1f5; padding: 0.1rem 0.35rem; border-radius: 3px; }
+  pre { background: #eef1f5; padding: 0.7rem 1rem; border-radius: 6px; font-family: Consolas, monospace; overflow-x: auto; }
+  table.rules { border-collapse: collapse; margin: 0.8rem 0; width: 100%; }
+  table.rules th, table.rules td { border: 1px solid #dde3ea; padding: 0.4rem 0.7rem; text-align: left; font-size: 0.92rem; }
+  table.rules th { background: #f4f6f9; }
+  .table-scroll { overflow-x: auto; margin: 0.8rem 0; }
+  .table-scroll table.naming-rules { margin: 0; min-width: 520px; table-layout: fixed; }
+  table.naming-rules th, table.naming-rules td { width: 33.333%; }
+  table.naming-rules td code { white-space: nowrap; }
+
+
+  .concept-card { border-radius: 12px; padding: 1rem 1.3rem; margin: 1.2rem 0; border: 1px solid; }
+  .concept-card-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; margin-bottom: 0.6rem; }
+  .concept-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .concept-card p { margin: 0.6rem 0 0; }
+  .concept-card p:first-of-type { margin-top: 0; }
+  .concept-card.game { background: #f4f2fb; border-color: #ded7f5; }
+  .concept-card.game .concept-card-label { color: #4a3aa7; }
+  .concept-card.usability { background: #e9f6f6; border-color: #bfe3e3; }
+  .concept-card.usability .concept-card-label { color: #0d6b6b; }
+
+  .quick-check { border: 1px solid #ccd3dd; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; }
+  .quick-check-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .quick-check-prompt { margin-bottom: 0.7rem; }
+  .quick-check select { font-family: Consolas, monospace; font-size: 0.95rem; padding: 0.3rem 0.5rem; border: 2px solid #ccd3dd; border-radius: 4px; }
+  .quick-check button { background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 0.5rem; }
+  .quick-check button:hover { background: #12467f; }
+  .quick-check .feedback { margin-top: 0.7rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; font-size: 0.9rem; }
+  .quick-check .feedback.correct { background: #d7ecd7; color: #1a4a1a; display: block; }
+  .quick-check .feedback.incorrect { background: #f4e3d0; color: #6a4a1a; display: block; }
+
+  .card-scene { perspective: 1400px; margin: 1rem 0; }
+  .card { position: relative; width: 100%; max-width: 420px; min-height: 160px; cursor: pointer; }
+  .card-inner { position: relative; width: 100%; height: 100%; min-height: 160px; transition: transform 0.5s cubic-bezier(0.4,0.2,0.2,1); transform-style: preserve-3d; }
+  .card.flipped .card-inner { transform: rotateY(180deg); }
+  .card-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 14px; padding: 1.3rem; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .card-front { background: #f4f6f9; border: 3px solid #1a5aa8; }
+  .card-back { background: #1a5aa8; color: white; text-align: left; align-items: flex-start; justify-content: center; transform: rotateY(180deg); }
+  .face-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: bold; opacity: 0.75; margin-bottom: 0.5rem; }
+  .card-front .face-label { color: #1a5aa8; }
+  .card-back .face-label { color: #eaf1fb; }
+  .term-text { font-size: 1.4rem; font-weight: bold; color: #1a3a5c; }
+  .def-text { font-size: 1rem; font-family: Georgia, serif; line-height: 1.5; }
+  .card-hint { color: #555; font-size: 0.82rem; margin-top: 0.5rem; }
+  .card-nav { display: flex; gap: 0.5rem; margin-top: 0.7rem; }
+  .card-nav button { font-family: Verdana, Arial, sans-serif; background: #1a5aa8; color: white; border: none; padding: 0.4rem 0.9rem; border-radius: 5px; cursor: pointer; font-size: 0.85rem; }
+  .card-nav button:hover { background: #12467f; }
+
+  .chip { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: bold; padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; }
+  .chip.spiral { background: #eef1f5; color: #4a5f7d; }
+  .chip.game { background: #f4f2fb; color: #4a3aa7; }
+  .chip.usability { background: #e9f6f6; color: #0d6b6b; }
+
+  .node-heading { margin-top: 2rem; padding-top: 0.6rem; border-top: 2px solid #dde3ea; }
+  .drill { border: 1px solid #d7dee8; border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .drill-type { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #1a5aa8; font-weight: bold; margin-bottom: 0.5rem; }
+  .drill[hidden] { display: none; }
+
+  .ide-demo { border-radius: 8px; overflow: hidden; margin: 0.8rem 0; background: #1e2430; }
+  .ide-toolbar { background: #161b24; padding: 0.35rem 0.9rem; font-family: Consolas, monospace; font-size: 0.8rem; color: #9fb3c8; }
+  .ide-code { color: #e6e9ef; font-family: Consolas, monospace; padding: 1rem; white-space: pre; font-size: 0.92rem; }
+  .scaffold-blank { font-family: Consolas, monospace; background: #33415c; color: #fff; border: 2px solid #5b9bd8; border-radius: 4px; padding: 0.1rem 0.4rem; width: 32ch; }
+  .rc-output { background: #14181f; color: #d7ffd7; font-family: Consolas, monospace; padding: 0.7rem 0.9rem; border-radius: 6px; margin-top: 0.6rem; white-space: pre-wrap; display: none; }
+
+  .code-choice-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 2px solid #d7dee8; border-radius: 8px; margin-bottom: 0.6rem; cursor: pointer; }
+  .code-choice-option:hover { border-color: #a9c2e0; }
+  .code-choice-option.selected { border-color: #1a5aa8; background: #eef4fb; }
+  .code-choice-option.correct { border-color: #2f8f4f; background: #e6f4ea; }
+  .code-choice-option.incorrect { border-color: #c0503a; background: #fbeae5; }
+  .code-choice-option input { margin-top: 0.5rem; }
+  .code-choice-option pre { margin: 0; background: transparent; padding: 0; flex: 1; }
+
+  .check-btn { background: #1a5aa8; color: white; border: none; padding: 0.5rem 1.1rem; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 0.6rem; }
+  .check-btn:hover { background: #12467f; }
+  .feedback { margin-top: 0.7rem; font-weight: bold; min-height: 1.2em; }
+  .feedback.correct { color: #1a7f37; }
+  .feedback.incorrect { color: #b3261e; }
+
+  .hint-toggle { background: none; border: 1px solid #ccd3dd; color: #445; padding: 0.3rem 0.8rem; border-radius: 5px; cursor: pointer; font-size: 0.82rem; margin-top: 0.5rem; }
+  .hint-toggle:hover { background: #eef1f5; }
+  .hint-box { display: none; margin-top: 0.5rem; padding: 0.6rem 0.8rem; background: #fdf6e8; border-radius: 6px; font-size: 0.88rem; color: #7a4800; }
+
+  .review-note { padding: 0.7rem 1rem; background: #f4f6f9; border-radius: 6px; font-size: 0.9rem; color: #444; margin-top: 0.6rem; }
+
+  .reflection textarea { width: 100%; box-sizing: border-box; font-family: Verdana, Arial, sans-serif; font-size: 0.92rem; padding: 0.6rem 0.8rem; border: 2px solid #ccd3dd; border-radius: 6px; min-height: 70px; }
+  .paste-note { font-size: 0.78rem; color: #888; font-style: italic; margin-top: 0.3rem; }
+  .reading-check { border: 2px solid #4a3aa7; border-radius: 6px; padding: 0.9rem 1.2rem; margin: 1.2rem 0; background: #f7f5fc; }
+  .reading-check-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #4a3aa7; font-weight: bold; margin-bottom: 0.5rem; }
+  .reading-check-prompt { margin-bottom: 0.7rem; }
+  .reading-check textarea { width: 100%; box-sizing: border-box; font-family: Verdana, Arial, sans-serif; font-size: 0.92rem; padding: 0.6rem 0.8rem; border: 2px solid #ccd3dd; border-radius: 6px; min-height: 60px; }
+  .reading-check .check-btn { margin-top: 0.5rem; }
+  .save-btn { background: #1a5aa8; color: white; border: none; padding: 0.4rem 1rem; border-radius: 5px; cursor: pointer; margin-top: 0.5rem; }
+  .save-btn:hover { background: #12467f; }
+  .save-status { font-size: 0.8rem; color: #2f7a2f; margin-left: 0.6rem; }
+
+  .video-card { border: 1px solid #d7dee8; border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1.4rem 0; background: #f9fafc; }
+  .video-card-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; letter-spacing: 0.07em; text-transform: uppercase; font-weight: bold; color: #1a5aa8; margin-bottom: 0.7rem; }
+  .video-card-label svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .video-meta { font-size: 0.85rem; color: #445; margin-bottom: 0.7rem; }
+  .video-wrap { position: relative; width: 100%; padding-top: 56.25%; border-radius: 6px; overflow: hidden; background: #000; }
+  .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .headphones-note { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #7a4800; background: #fdf6e8; border: 1px solid #f3e2b8; border-radius: 6px; padding: 0.5rem 0.8rem; margin-top: 0.7rem; }
+  .headphones-note svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .video-backup-link { font-size: 0.82rem; margin-top: 0.6rem; }
+  .video-backup-link a { color: #1a5aa8; }
+
+  .progress-note { font-size: 0.85rem; color: #555; margin: 0.6rem 0 1.2rem; }
+  .resume-badge { padding: 0.6rem 0.9rem; background: #e6f4ea; border: 1px solid #b7e0c3; border-radius: 6px; color: #1a7f37; font-weight: bold; font-size: 0.88rem; margin: 0.6rem 0 1rem; }
+  #complete-banner { display: none; margin-top: 1.6rem; padding: 0.9rem 1.1rem; border-radius: 10px; background: #e6f4ea; border: 1px solid #b7e0c3; color: #1a7f37; font-weight: bold; }
+  #save-status-global { font-size: 0.78rem; color: #6a737b; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+
+<h1>2.1 Variables and Memory</h1>
+<div style="display:flex;align-items:center;gap:0.6rem;font-size:0.85rem;color:#12467f;background:#eaf2fb;border:1px solid #bcd6f0;border-radius:6px;padding:0.6rem 0.9rem;margin:0.8rem 0 1.2rem;font-weight:bold;">All 2.1 content is due by 09/08/2026 and cannot be submitted late after 09/28/2026.</div>
+<p>Every game has to remember things while it runs: how much health the player has left, what their score is, how many lives remain. A <strong>variable</strong> is how a Python program remembers something.</p>
+
+<div class="video-card">
+<div class="video-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>Watch First</div>
+<div class="video-meta"><strong>Python Variables</strong> &ndash; Python Tutorial for Beginners with Examples, by Programming with Mosh. Length: 6:35.</div>
+<div class="video-wrap">
+<iframe src="https://www.youtube.com/embed/cQT33yu9pY8" title="Python Variables - Python Tutorial for Beginners with Examples | Mosh" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<div class="headphones-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>Use your headphones at your station for this video.</div>
+<div class="video-backup-link">Video not loading? Watch it directly on YouTube: <a href="https://www.youtube.com/watch?v=cQT33yu9pY8" target="_blank" rel="noopener">https://www.youtube.com/watch?v=cQT33yu9pY8</a></div>
+</div>
+<p>This video covers the same core idea (a variable as a named place your program stores a value) using its own examples. The rest of this lesson covers what you're actually accountable for here: Python's real naming rules, reassignment, and the two ways to print a variable with text.</p>
+
+<h2 id="learn">Learn</h2>
+
+<div id="learn-section-create">
+<h3 id="learn-create">Creating a Variable</h3>
+<p>You create a variable with an <strong>assignment statement</strong>: a name, an equals sign, and a value.</p>
+<pre>lives = 3</pre>
+<p>This line does not ask "is <code>lives</code> equal to 3?" It creates a variable named <code>lives</code> and stores the value <code>3</code> in it. Once a variable exists, you can print it, change it, or use it anywhere else in the program.</p>
+<pre>lives = 3
+print("Lives:", lives)</pre>
+<p>The variable name always goes on the left. The value it gets goes on the right. <code>3 = lives</code> is not valid Python, even though it might read the same way out loud.</p>
+<p>Text values need quotation marks around them. A number does not.</p>
+<pre>difficulty = "Normal"
+lives = 3</pre>
+
+<div class="concept-card game">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><line x1="12" y1="10" x2="12" y2="17"/><path d="M7 17h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1z"/></svg>Game Connection</div>
+<p>Every piece of information a game has to track while it runs (score, health, lives, position, inventory) is a variable. When a game "remembers" that a player picked up a key three rooms ago, that memory is just a variable that has not changed since it was set.</p>
+</div>
+
+<div class="concept-card usability">
+<div class="concept-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg>Usability Note</div>
+<p>A variable name is for you, the programmer. It is not automatically shown to anyone playing the game. If your code only ran <code>print(health)</code>, the player would just see a bare number like <code>100</code> with no idea what it means.</p>
+<p>Printing <code>print("Health:", health)</code> instead adds a label the player can actually understand. Choosing what to show, and how to label it, is a real design decision, not just a syntax detail.</p>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">What does <code>lives = 3</code> actually do?</div>
+  <select id="qc4-select">
+    <option value="">Choose one...</option>
+    <option value="a">Checks whether lives is equal to 3</option>
+    <option value="b">Creates a variable named lives and stores 3 in it</option>
+    <option value="c">Prints the number 3</option>
+  </select>
+  <button onclick="qcCheck('qc4', 'b')">Check</button>
+  <div class="feedback" id="qc4-feedback"></div>
+</div>
+
+<div class="reading-check" id="rc-create">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">In your own words, what does an assignment statement do? Use an example of your own, not <code>lives</code> or <code>score</code>.</div>
+  <textarea id="rc-create-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('create')">Continue</button>
+  <div class="feedback" id="rc-create-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-naming" hidden>
+<h3 id="learn-naming">Naming Your Variables</h3>
+<p>Python has real rules for what a variable name is allowed to be:</p>
+<div class="table-scroll">
+<table class="rules naming-rules">
+<tr><th>Rule</th><th>Valid</th><th>Invalid</th></tr>
+<tr><td>Must start with a letter or underscore, never a digit</td><td><code>score</code>, <code>_score</code></td><td><code>2score</code></td></tr>
+<tr><td>After that, only letters, digits, and underscores. No spaces.</td><td><code>player_score</code></td><td><code>player score</code></td></tr>
+<tr><td>Case-sensitive: <code>Score</code> and <code>score</code> are two different variables</td><td><code>score</code></td><td>&mdash;</td></tr>
+<tr><td>Cannot be one of Python's reserved words</td><td><code>total</code></td><td><code>class</code>, <code>print</code></td></tr>
+</table>
+</div>
+<p>When a name needs more than one word, join the words with underscores. This style is called <strong>snake_case</strong>, and it is the standard way Python code names things.</p>
+<pre>is_game_over = True</pre>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which of these breaks a Python naming rule?</div>
+  <select id="qc5-select">
+    <option value="">Choose one...</option>
+    <option value="a">player_2</option>
+    <option value="b">player two</option>
+    <option value="c">_player</option>
+  </select>
+  <button onclick="qcCheck('qc5', 'b')">Check</button>
+  <div class="feedback" id="qc5-feedback"></div>
+</div>
+
+<div class="reading-check" id="rc-naming">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">Describe two of Python's variable naming rules in your own words, and give one example name that would break at least one of them.</div>
+  <textarea id="rc-naming-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('naming')">Continue</button>
+  <div class="feedback" id="rc-naming-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-reassign" hidden>
+<h3 id="learn-reassign">Changing a Variable's Value</h3>
+<p>A variable is not locked to the value it started with. Assigning to the same name again replaces the old value. Python does not keep the old value anywhere once it is replaced.</p>
+<pre>lives = 3
+print("Lives:", lives)
+
+lives = 2
+print("Lives:", lives)</pre>
+<p>That prints <code>Lives: 3</code> and then <code>Lives: 2</code>. The second assignment did not create a second variable. It overwrote the first one.</p>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">After <code>lives = 3</code> and then <code>lives = 2</code>, how many variables named <code>lives</code> exist?</div>
+  <select id="qc6-select">
+    <option value="">Choose one...</option>
+    <option value="a">One</option>
+    <option value="b">Two</option>
+    <option value="c">It depends whether you print it</option>
+  </select>
+  <button onclick="qcCheck('qc6', 'a')">Check</button>
+  <div class="feedback" id="qc6-feedback"></div>
+</div>
+
+<div class="reading-check" id="rc-reassign">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">In your own words, explain what happens when you assign a new value to a variable that already exists. Does the old value stick around anywhere?</div>
+  <textarea id="rc-reassign-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('reassign')">Continue</button>
+  <div class="feedback" id="rc-reassign-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-print" hidden>
+<h3 id="learn-print">Printing Variables With Text</h3>
+<p>You can join a variable with other text in two ways: with commas inside <code>print()</code>, or with the <code>+</code> operator, called <strong>concatenation</strong>.</p>
+
+<p><strong>Commas Example (no conversion needed):</strong></p>
+<pre>player_name = "Rowan"
+print(player_name, "is standing in the armory")</pre>
+<p>That prints <code>Rowan is standing in the armory</code>. Python adds a space between each piece automatically, and converts non-text values to text for you.</p>
+
+<p><strong>Concatenation (+) example:</strong></p>
+<pre>player_name = "Rowan"
+print(player_name + " is standing in the armory")</pre>
+<p>Same result: <code>Rowan is standing in the armory</code>. But <code>+</code> does not add spaces for you (you have to type them, inside the quotation marks), and every piece has to already be text.</p>
+
+<h4>Type Conversion</h4>
+<p>When you mix data types with <code>+</code> &mdash; joining text with a number, for example &mdash; you get an error.</p>
+
+<p><strong>Example Error:</strong></p>
+<pre>score = 25
+print("Your score is " + score)</pre>
+
+<p><strong>Result:</strong></p>
+<pre>TypeError: can only concatenate str (not "int") to str</pre>
+
+<p><strong>Fixed Version:</strong></p>
+<pre>score = 25
+print("Your score is " + str(score))</pre>
+
+<p><strong>Why?</strong> Python can only concatenate strings, so you must convert numbers using <code>str()</code> before combining them with text. A comma never runs into this: <code>print("Your score is", score)</code> works with no conversion needed, since a comma converts each piece for you.</p>
+<p>Both methods are correct Python, and you will see both used in real code. A third method, called an <strong>f-string</strong>, is coming in a later lesson &mdash; once you are comfortable with commas and <code>+</code>, f-strings are usually the one professional Python code reaches for first.</p>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Why does <code>print("Score: " + score)</code> crash if <code>score</code> is a number?</div>
+  <select id="qc7-select">
+    <option value="">Choose one...</option>
+    <option value="a">+ can only join strings, and score isn't one yet</option>
+    <option value="b">print() cannot accept more than one thing</option>
+    <option value="c">The variable name needs to be capitalized</option>
+  </select>
+  <button onclick="qcCheck('qc7', 'a')">Check</button>
+  <div class="feedback" id="qc7-feedback"></div>
+</div>
+
+<div class="reading-check" id="rc-print">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">In your own words, explain why <code>print("Score: " + score)</code> crashes when <code>score</code> is a number, and how you'd fix it.</div>
+  <textarea id="rc-print-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('print')">Continue</button>
+  <div class="feedback" id="rc-print-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-types" hidden>
+<h3 id="learn-types">What Kind of Value?</h3>
+<p>A variable can hold different kinds of values. Here are the three you will see most in this unit:</p>
+<table class="rules">
+<tr><th>Kind</th><th>Example</th><th>Written as</th></tr>
+<tr><td>Integer (a whole number)</td><td><code>lives = 3</code></td><td>plain digits, no quotes</td></tr>
+<tr><td>String (text)</td><td><code>difficulty = "Normal"</code></td><td>wrapped in quotation marks</td></tr>
+<tr><td>Boolean (true or false)</td><td><code>is_game_over = True</code></td><td><code>True</code> or <code>False</code>, capitalized, no quotes</td></tr>
+</table>
+<p>Units 2.2 through 2.6 cover each of these in real depth. For now, just recognize that the quotes (or lack of them) are what tell Python which kind of value it is.</p>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which of these is a whole number (an integer)?</div>
+  <select id="qc3-select">
+    <option value="">Choose one...</option>
+    <option value="a">100</option>
+    <option value="b">&quot;100&quot;</option>
+    <option value="c">True</option>
+  </select>
+  <button onclick="qcCheck('qc3', 'a')">Check</button>
+  <div class="feedback" id="qc3-feedback"></div>
+</div>
+
+<div class="reading-check" id="rc-types">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">In your own words, explain how you can tell whether a value is a string, an integer, or a boolean just by looking at how it's written in code.</div>
+  <textarea id="rc-types-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('types')">Continue</button>
+  <div class="feedback" id="rc-types-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-terms" hidden>
+<h2 id="terms">Key Terms</h2>
+<p>Flip each card, then try the two quick checks below.</p>
+
+<div class="card-scene">
+  <div class="card" id="card" onclick="flipCard()">
+    <div class="card-inner" id="cardInner">
+      <div class="card-face card-front">
+        <div class="face-label">Term</div>
+        <div class="term-text" id="termText"></div>
+      </div>
+      <div class="card-face card-back">
+        <div class="face-label">Definition</div>
+        <div class="def-text" id="defText"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-hint">Click the card to flip it. (<span id="cardNum">1</span> of <span id="cardTotal"></span>)</div>
+<div class="card-nav">
+  <button onclick="prevCard()">&larr; Previous</button>
+  <button onclick="nextCard()">Next &rarr;</button>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">In <code>score = 0</code>, which part is the value?</div>
+  <select id="qc1-select">
+    <option value="">Choose one...</option>
+    <option value="score">score</option>
+    <option value="=">=</option>
+    <option value="0">0</option>
+  </select>
+  <button onclick="qcCheck('qc1', '0')">Check</button>
+  <div class="feedback" id="qc1-feedback"></div>
+</div>
+
+<div class="quick-check">
+  <div class="quick-check-label">Quick Check</div>
+  <div class="quick-check-prompt">Which word describes the <code>=</code> in a line like <code>lives = 3</code>?</div>
+  <select id="qc2-select">
+    <option value="">Choose one...</option>
+    <option value="comparison">comparison operator</option>
+    <option value="assignment">assignment operator</option>
+    <option value="print">print statement</option>
+  </select>
+  <button onclick="qcCheck('qc2', 'assignment')">Check</button>
+  <div class="feedback" id="qc2-feedback"></div>
+</div>
+
+<div class="reading-check" id="rc-terms">
+  <div class="reading-check-label">In Your Own Words</div>
+  <div class="reading-check-prompt">In your own words, explain the difference between a variable's name and its value, using an example of your own.</div>
+  <textarea id="rc-terms-response" placeholder="Type a real sentence or two..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here. You have to write this yourself before you can continue.</div>
+  <button class="check-btn" onclick="readingCheck('terms')">Continue</button>
+  <div class="feedback" id="rc-terms-feedback"></div>
+</div>
+</div>
+
+<div id="learn-section-practice" hidden>
+<h2 id="practice">Practice</h2>
+<p>18 items across four short skill checks, then a couple of review questions and two open-ended questions. Work through them in order. Each skill check adjusts to how you're doing on it.</p>
+<div class="progress-note" id="progress-note">0 of 4 skill checks complete.</div>
+
+<!-- ======================= NODE 1: creates_variable ======================= -->
+<div class="node-heading"><strong>Skill Check 1 of 4</strong></div>
+<div class="resume-badge" id="n1-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
+<div class="drill" id="n1-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Player: Rowan
+Health: 100</pre>
+  <p>The blank needs a line of code that creates a new variable named <code>health</code>, with the value the program's expected output requires.</p>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">player_name = "Rowan"
+<input type="text" id="n1-core-blank" class="scaffold-blank" data-expected="health = 100" placeholder="type your code here">
+print("Player:", player_name)
+print("Health:", health)</div>
+  </div>
+  <button class="check-btn" onclick="n1CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n1-hint')">Need a hint?</button>
+  <div class="hint-box" id="n1-hint">A variable is created with <code>name = value</code>. The variable name here needs to be exactly <code>health</code>, spelled and capitalized the same way it appears in the line below the blank.</div>
+  <pre class="rc-output" id="n1-core-output"></pre>
+  <div class="feedback" id="n1-core-feedback"></div>
+</div>
+
+<div class="drill" id="n1-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>A game needs a variable named <code>score</code> that starts at <code>0</code>. Which line actually creates it correctly?</p>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="a"><pre>score = 0</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="b"><pre>0 = score</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="c"><pre>score == 0</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n1-reinforce" value="d"><pre>score = "0"</pre></label>
+  <button class="check-btn" onclick="n1ReinforceCheck()">Check</button>
+  <div class="feedback" id="n1-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n1-reinforce-exhausted" hidden>A variable's name always goes on the left of the <code>=</code>, and its value goes on the right. Take another look at the example above, then continue to the next item below.</div>
+
+<div class="drill" id="n1-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Lives: 3
+Difficulty: Normal</pre>
+  <p>The blank needs a line of code that creates a new variable named <code>difficulty</code>, set so Python treats it as text, not a bare word.</p>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">lives = 3
+print("Lives:", lives)
+<input type="text" id="n1-extend-blank" class="scaffold-blank" data-expected='difficulty = "Normal"' placeholder="type your code here">
+print("Difficulty:", difficulty)</div>
+  </div>
+  <button class="check-btn" onclick="n1ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n1-extend-output"></pre>
+  <div class="feedback" id="n1-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 2: variable_naming_rules ======================= -->
+<div class="node-heading"><strong>Skill Check 2 of 4</strong></div>
+<div class="resume-badge" id="n2-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
+<div class="drill" id="n2-core">
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which of these is a valid Python variable name?</p>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="a"><pre>2score</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="b"><pre>player score</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="c"><pre>player_score</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-core" value="d"><pre>class</pre></label>
+  <button class="check-btn" onclick="n2CoreCheck()">Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n2-hint')">Need a hint?</button>
+  <div class="hint-box" id="n2-hint">Check each option against the naming rules table above, one rule at a time. Three of the four break a different rule.</div>
+  <div class="feedback" id="n2-core-feedback"></div>
+</div>
+
+<div class="drill" id="n2-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>A variable name is not allowed to start with a digit. Which of these breaks that one specific rule?</p>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="a"><pre>2lives</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="b"><pre>lives2</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="c"><pre>_lives</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n2-reinforce" value="d"><pre>lives_2</pre></label>
+  <button class="check-btn" onclick="n2ReinforceCheck()">Check</button>
+  <div class="feedback" id="n2-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n2-reinforce-exhausted" hidden>A digit is only allowed after the first character, never as the first character. <code>lives2</code>, <code>_lives</code>, and <code>lives_2</code> all start with a letter or underscore. Continue to the next item below.</div>
+
+<div class="drill" id="n2-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank so the program prints exactly:</p>
+  <pre>Game Over: True</pre>
+  <p>The blank needs a line of code that creates a new variable named <code>is_game_over</code>, using the snake_case naming style from above, set so Python treats it as a boolean.</p>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code"><input type="text" id="n2-extend-blank" class="scaffold-blank" data-expected="is_game_over = True" placeholder="type your code here">
+print("Game Over:", is_game_over)</div>
+  </div>
+  <button class="check-btn" onclick="n2ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n2-extend-output"></pre>
+  <div class="feedback" id="n2-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 3: reassigns_variable ======================= -->
+<div class="node-heading"><strong>Skill Check 3 of 4</strong></div>
+<div class="resume-badge" id="n3-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
+<div class="drill" id="n3-core">
+  <div class="drill-type">Build the Code</div>
+  <p>The player just lost a life. Fill in the blank so the program prints exactly:</p>
+  <pre>Lives: 3
+Lives: 2</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">lives = 3
+print("Lives:", lives)
+<input type="text" id="n3-core-blank" class="scaffold-blank" data-expected="lives = 2" placeholder="type your code here">
+print("Lives:", lives)</div>
+  </div>
+  <button class="check-btn" onclick="n3CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n3-hint')">Need a hint?</button>
+  <div class="hint-box" id="n3-hint">You do not need any special keyword to change a variable. Assign to the exact same name again, with the new value.</div>
+  <pre class="rc-output" id="n3-core-output"></pre>
+  <div class="feedback" id="n3-core-feedback"></div>
+</div>
+
+<div class="drill" id="n3-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>A variable named <code>x</code> currently holds the value <code>5</code>. Which line correctly changes it to hold <code>9</code> instead?</p>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="a"><pre>x = 9</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="b"><pre>x == 9</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="c"><pre>new x = 9</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n3-reinforce" value="d"><pre>x + 9</pre></label>
+  <button class="check-btn" onclick="n3ReinforceCheck()">Check</button>
+  <div class="feedback" id="n3-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n3-reinforce-exhausted" hidden>Changing a variable uses the exact same assignment syntax as creating one: <code>name = new_value</code>. No special keyword, no second declaration. Continue to the next item below.</div>
+
+<div class="drill" id="n3-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>The player scores again. Fill in the blank so the program prints exactly:</p>
+  <pre>Score: 0
+Score: 10
+Score: 25</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">score = 0
+print("Score:", score)
+score = 10
+print("Score:", score)
+<input type="text" id="n3-extend-blank" class="scaffold-blank" data-expected="score = 25" placeholder="type your code here">
+print("Score:", score)</div>
+  </div>
+  <button class="check-btn" onclick="n3ExtendCheck()">Run &amp; Check</button>
+  <pre class="rc-output" id="n3-extend-output"></pre>
+  <div class="feedback" id="n3-extend-feedback"></div>
+</div>
+
+<!-- ======================= NODE 4: prints_variable_with_text ======================= -->
+<div class="node-heading"><strong>Skill Check 4 of 4</strong></div>
+<div class="resume-badge" id="n4-resume-badge" hidden>&#10003; Already completed on a previous visit.</div>
+<div class="drill" id="n4-core">
+  <div class="drill-type">Build the Code</div>
+  <p>Fill in the blank with one <code>print()</code> call that prints exactly:</p>
+  <pre>Rowan is standing in the armory</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">player_name = "Rowan"
+room = "the armory"
+<input type="text" id="n4-core-blank" class="scaffold-blank" data-expected='print(player_name, "is standing in", room)' placeholder="type your code here" style="width:44ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n4CoreCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n4-hint')">Need a hint?</button>
+  <div class="hint-box" id="n4-hint">Separate each piece with a comma inside <code>print()</code>. Python adds the spaces for you. Pieces that are literal words need quotation marks. Variable names never do.</div>
+  <pre class="rc-output" id="n4-core-output"></pre>
+  <div class="feedback" id="n4-core-feedback"></div>
+</div>
+
+<div class="drill" id="n4-reinforce" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>A variable named <code>health</code> holds <code>100</code>. Which <code>print()</code> call correctly combines it with the label text <code>"Health:"</code>?</p>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="a"><pre>print("Health:" health)</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="b"><pre>print("Health:", health)</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="c"><pre>print(Health:, health)</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-reinforce" value="d"><pre>print("Health:, health")</pre></label>
+  <button class="check-btn" onclick="n4ReinforceCheck()">Check</button>
+  <div class="feedback" id="n4-reinforce-feedback"></div>
+</div>
+<div class="review-note" id="n4-reinforce-exhausted" hidden>Every separate piece inside <code>print()</code> needs a comma between it and the next piece, and literal text needs its own quotation marks. Continue to the next item below.</div>
+
+<div class="drill" id="n4-extend-predict" hidden>
+  <div class="chip spiral">Debugging Practice</div>
+  <div class="drill-type">Multiple Choice</div>
+  <p>This code has a real bug in it:</p>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">score = 25
+print("Your score is " + score)</div>
+  </div>
+  <p>What do you think will actually happen when this runs?</p>
+  <label class="code-choice-option"><input type="radio" name="n4-extend-predict" value="a"><pre>It prints: Your score is 25</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-extend-predict" value="b"><pre>It crashes with a TypeError</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-extend-predict" value="c"><pre>It prints: Your score is  (with nothing after it)</pre></label>
+  <button class="check-btn" onclick="n4PredictCheck()">Check My Prediction</button>
+  <div class="feedback" id="n4-extend-predict-feedback"></div>
+</div>
+
+<div class="drill" id="n4-extend" hidden>
+  <div class="drill-type">Build the Code</div>
+  <p>Now fix it. Fill in the blank with a corrected version of the line, using <code>+</code>, that prints exactly:</p>
+  <pre>Your score is 25</pre>
+  <div class="ide-demo">
+    <div class="ide-toolbar"><span>practice.py</span></div>
+    <div class="ide-code">score = 25
+<input type="text" id="n4-extend-blank" class="scaffold-blank" data-expected='print("Your score is " + str(score))' placeholder="type your code here" style="width:52ch;"></div>
+  </div>
+  <button class="check-btn" onclick="n4ExtendCheck()">Run &amp; Check</button>
+  <button class="hint-toggle" onclick="toggleHint('n4-extend-hint')">Need a hint?</button>
+  <div class="hint-box" id="n4-extend-hint">Python can only concatenate strings with <code>+</code>. <code>score</code> is a number, so wrap it in <code>str(...)</code> before joining it in.</div>
+  <pre class="rc-output" id="n4-extend-output"></pre>
+  <div class="feedback" id="n4-extend-feedback"></div>
+</div>
+
+<div class="drill" id="n4-contrast" hidden>
+  <div class="drill-type">Multiple Choice</div>
+  <p>A variable named <code>score</code> holds the number <code>25</code>. Which line will actually crash with a <code>TypeError</code> when it runs?</p>
+  <label class="code-choice-option"><input type="radio" name="n4-contrast" value="a"><pre>print("Score:", score)</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-contrast" value="b"><pre>print("Score: " + score)</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-contrast" value="c"><pre>print("Score: " + str(score))</pre></label>
+  <label class="code-choice-option"><input type="radio" name="n4-contrast" value="d"><pre>print("Score:", str(score))</pre></label>
+  <button class="check-btn" onclick="n4ContrastCheck()">Check</button>
+  <div class="feedback" id="n4-contrast-feedback"></div>
+</div>
+<div class="review-note" id="n4-contrast-note" hidden>Option b crashes because <code>+</code> cannot join text with a number directly &mdash; only <code>str(score)</code> makes it text first (option c). A comma never has this problem, since Python converts each piece automatically, whether or not you wrap it in <code>str(...)</code> yourself (options a and d both work).</div>
+
+<!-- ======================= Spiral review ======================= -->
+<div class="node-heading"><strong>Review</strong></div>
+<div class="drill" id="spiral-1" hidden>
+  <div class="chip spiral">Revisiting: Lesson 01.4</div>
+  <div class="drill-type">Multiple Choice</div>
+  <p>Which line of code will actually display <code>Score: 10</code> on the screen?</p>
+  <label class="code-choice-option"><input type="radio" name="spiral1" value="a"><pre>print("Score:", 10)</pre></label>
+  <label class="code-choice-option"><input type="radio" name="spiral1" value="b"><pre>printf("Score: 10")</pre></label>
+  <label class="code-choice-option"><input type="radio" name="spiral1" value="c"><pre>"Score: 10"</pre></label>
+  <label class="code-choice-option"><input type="radio" name="spiral1" value="d"><pre>print(Score: 10)</pre></label>
+  <button class="check-btn" onclick="spiralCheck(1)">Check</button>
+  <div class="feedback" id="spiral1-feedback"></div>
+</div>
+
+<div class="drill" id="spiral-2" hidden>
+  <div class="chip spiral">Revisiting: Lesson 01.6</div>
+  <div class="drill-type">Multiple Choice</div>
+  <p>This line has a mistake: <code>print("Score:" score)</code>. What's actually wrong with it?</p>
+  <label class="code-choice-option"><input type="radio" name="spiral2" value="a"><pre>A comma is missing between the two arguments.</pre></label>
+  <label class="code-choice-option"><input type="radio" name="spiral2" value="b"><pre>score needs quotation marks around it.</pre></label>
+  <label class="code-choice-option"><input type="radio" name="spiral2" value="c"><pre>print needs two sets of parentheses.</pre></label>
+  <label class="code-choice-option"><input type="radio" name="spiral2" value="d"><pre>Nothing is wrong with this line.</pre></label>
+  <button class="check-btn" onclick="spiralCheck(2)">Check</button>
+  <div class="feedback" id="spiral2-feedback"></div>
+</div>
+
+<!-- ======================= Game Connection / UX ======================= -->
+<div class="drill reflection" id="game-item" hidden>
+  <div class="chip game">Game Connection</div>
+  <p>A game keeps track of <code>health = 100</code> behind the scenes, but the player never sees the word <code>health</code> printed on screen. What does the game show the player instead, and why do you think it is shown that way instead of the raw variable name and number?</p>
+  <textarea id="game-response" placeholder="Type your answer here..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here.</div>
+  <br><button class="save-btn" onclick="saveReflection('game')">Save</button><span class="save-status" id="game-save-status"></span>
+</div>
+
+<div class="drill reflection" id="ux-item" hidden>
+  <div class="chip usability">Usability</div>
+  <p>Look back at the Usability Note near the top of this page. If your code only ran <code>print(health)</code> by itself, the player would just see <code>100</code>. Why might <code>print("Health:", health)</code> be a better choice for the player experience?</p>
+  <textarea id="ux-response" placeholder="Type your answer here..." onpaste="return false" ondrop="return false"></textarea>
+  <div class="paste-note">Typed answers only, pasting is turned off here.</div>
+  <br><button class="save-btn" onclick="saveReflection('ux')">Save</button><span class="save-status" id="ux-save-status"></span>
+</div>
+
+<div id="complete-banner">&#10003; Practice complete. Your work has been saved.</div>
+<div id="save-status-global"></div>
+</div>
+
+<script src="../../../../../02-authoring-system/skulpt-runtime/skulpt.min.js"></script>
+<script src="../../../../../02-authoring-system/skulpt-runtime/skulpt-stdlib.js"></script>
+<script src="/local/foxcstelemetry/foxcs-progress.js"></script>
+<script>
+/* ---------------- Telemetry (local_foxcstelemetry, Option C) ---------------- */
+var CMID = "__CMID__"; // baked in by the deploy script's second phase
+var ENDPOINT = '/local/foxcstelemetry/log.php';
+var sesskey = null;
+var globalStatus = document.getElementById('save-status-global');
+
+function bootstrap(cb) {
+  fetch(ENDPOINT + '?action=bootstrap&cmid=' + CMID, { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) { sesskey = data.sesskey; cb(); })
+    .catch(function () { globalStatus.textContent = 'Could not reach the save endpoint.'; });
+}
+
+/* Second save location, added 2026-09-09 per Jay: the server log is the
+   real record, but it depends on network + a live enrollment/cmid check
+   that has broken silently before (see worklog.md's 2026-09-09 cmid=238
+   entry). This mirrors every event into this browser's own localStorage
+   too, so a genuine typed answer isn't gone the moment one save path fails
+   -- it's inspectable/recoverable client-side even if the server call
+   never lands. Best-effort only: wrapped in try/catch since localStorage
+   can throw (private browsing, storage disabled, quota) and that must
+   never block the real save attempt below it. */
+function localBackup(eventtype, payload, complete) {
+  try {
+    var key = 'foxcs_telemetry_backup_' + CMID;
+    var log = JSON.parse(localStorage.getItem(key) || '[]');
+    log.push({ eventtype: eventtype, payload: payload, complete: !!complete, ts: new Date().toISOString() });
+    if (log.length > 300) log = log.slice(log.length - 300);
+    localStorage.setItem(key, JSON.stringify(log));
+  } catch (e) { /* best-effort only, never block the real save */ }
+}
+
+function logEvent(eventtype, payload, complete) {
+  localBackup(eventtype, payload, complete);
+  if (!sesskey) { bootstrap(function () { logEvent(eventtype, payload, complete); }); return; }
+  var body = new URLSearchParams();
+  body.set('action', 'log');
+  body.set('sesskey', sesskey);
+  body.set('cmid', CMID);
+  body.set('eventtype', eventtype);
+  body.set('payload', JSON.stringify(payload));
+  if (complete) body.set('complete', '1');
+  fetch(ENDPOINT, { method: 'POST', credentials: 'same-origin', body: body })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      globalStatus.textContent = 'Saved ' + new Date().toLocaleTimeString() + '.';
+      if (data.completed) document.getElementById('complete-banner').style.display = 'block';
+    })
+    .catch(function () { globalStatus.textContent = 'Save failed, but your answer is also backed up in this browser. This will not block you from continuing.'; });
+}
+
+/* Per-field draft autosave, added 2026-09-09: restores in-progress typing
+   after an accidental reload/tab-close, independent of the Continue/Save
+   click below each field. Same best-effort try/catch discipline as
+   localBackup above -- never allowed to block real page behavior. */
+function wireDraftAutosave(id) {
+  try {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var key = 'foxcs_draft_' + CMID + '_' + id;
+    var saved = localStorage.getItem(key);
+    if (saved) el.value = saved;
+    el.addEventListener('input', function () {
+      try { localStorage.setItem(key, el.value); } catch (e) {}
+    });
+  } catch (e) { /* best-effort only */ }
+}
+['rc-create-response', 'rc-naming-response', 'rc-reassign-response', 'rc-print-response', 'rc-types-response', 'rc-terms-response', 'game-response', 'ux-response'].forEach(wireDraftAutosave);
+
+bootstrap(function () { logEvent('viewed', { page: 'lesson_02_01/01_instruction' }, false); });
+/* Heartbeat every 30s while the tab is actually visible, so report.php's
+   time-on-task (last event minus first) reflects real time on the page,
+   not just the gap between two clicks. Added 2026-09-08. */
+setInterval(function () { if (!document.hidden) { logEvent('heartbeat', {}, false); } }, 30000);
+
+/* ---------------- Progress tracking / completion ---------------- */
+var progress = { nodesResolved: { n1: false, n2: false, n3: false, n4: false }, spiral1Done: false, spiral2Done: false };
+function nodesResolvedCount() {
+  return Object.values(progress.nodesResolved).filter(Boolean).length;
+}
+function updateProgressNote() {
+  document.getElementById('progress-note').textContent = nodesResolvedCount() + ' of 4 skill checks complete.';
+}
+function maybeComplete() {
+  var allNodes = progress.nodesResolved.n1 && progress.nodesResolved.n2 && progress.nodesResolved.n3 && progress.nodesResolved.n4;
+  if (allNodes && progress.spiral1Done && progress.spiral2Done) {
+    logEvent('lesson_complete', { skill_ids: ['creates_variable', 'variable_naming_rules', 'reassigns_variable', 'prints_variable_with_text'] }, true);
+  }
+}
+/* ---------------- Resume: save/restore (added 2026-09-10) ----------------
+   This page bundles Learn (gated section-by-section, see the reading-check
+   gate below) + Practice (4 adaptive skill nodes) into one long page with no
+   native Moodle save-state. Without this, a student who closed the tab
+   partway through had to redo every reading-check gate and every already-
+   resolved skill node from scratch on reopening. Every state-changing
+   interaction below (a reading check advancing, a node resolving, a spiral
+   item finishing) calls saveProgress(), which piggybacks on the existing
+   logEvent()/localBackup() dual server+localStorage write path (see
+   ../../../../../07-infrastructure/local-plugins/foxcstelemetry/
+   foxcs-progress.js for the restore side). */
+var NODE_DRILL_IDS = {
+  n1: ['n1-core', 'n1-reinforce', 'n1-extend'],
+  n2: ['n2-core', 'n2-reinforce', 'n2-extend'],
+  n3: ['n3-core', 'n3-reinforce', 'n3-extend'],
+  n4: ['n4-core', 'n4-reinforce', 'n4-extend-predict', 'n4-extend', 'n4-contrast']
+};
+var NODE_REVIEW_NOTE_IDS = {
+  n1: ['n1-reinforce-exhausted'],
+  n2: ['n2-reinforce-exhausted'],
+  n3: ['n3-reinforce-exhausted'],
+  n4: ['n4-reinforce-exhausted', 'n4-contrast-note']
+};
+function markNodeComplete(n) {
+  (NODE_DRILL_IDS[n] || []).forEach(function (id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+  (NODE_REVIEW_NOTE_IDS[n] || []).forEach(function (id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+  var badge = document.getElementById(n + '-resume-badge');
+  if (badge) badge.hidden = false;
+}
+function currentProgressState() {
+  return { learnIndex: learnFurthestIndex, nodesResolved: progress.nodesResolved, spiral1Done: progress.spiral1Done, spiral2Done: progress.spiral2Done };
+}
+function saveProgress() { logEvent('progress_state', currentProgressState(), false); }
+function applyProgressState(state) {
+  if (typeof state.learnIndex === 'number' && state.learnIndex >= 0) {
+    for (var i = 0; i <= state.learnIndex && i < READING_CHECK_ORDER.length; i++) {
+      var el = document.getElementById('learn-section-' + READING_CHECK_ORDER[i]);
+      if (el) el.hidden = false;
+    }
+    if (state.learnIndex >= READING_CHECK_ORDER.length - 1) {
+      var practiceEl = document.getElementById('learn-section-practice');
+      if (practiceEl) practiceEl.hidden = false;
+    }
+    learnFurthestIndex = Math.max(learnFurthestIndex, state.learnIndex);
+  }
+  if (state.nodesResolved) {
+    Object.keys(state.nodesResolved).forEach(function (n) {
+      if (state.nodesResolved[n] && !progress.nodesResolved[n]) {
+        progress.nodesResolved[n] = true;
+        markNodeComplete(n);
+      }
+    });
+  }
+  updateProgressNote();
+  if (nodesResolvedCount() === 4) {
+    document.getElementById('spiral-1').hidden = false;
+    document.getElementById('spiral-2').hidden = false;
+    document.getElementById('game-item').hidden = false;
+    document.getElementById('ux-item').hidden = false;
+  }
+  if (state.spiral1Done && !progress.spiral1Done) {
+    progress.spiral1Done = true;
+    document.getElementById('spiral-1').hidden = true;
+  }
+  if (state.spiral2Done && !progress.spiral2Done) {
+    progress.spiral2Done = true;
+    document.getElementById('spiral-2').hidden = true;
+  }
+  var status = document.getElementById('save-status-global');
+  if (status) status.textContent = 'Welcome back -- restored your progress from last time.';
+  maybeComplete();
+}
+FoxCSProgress.restore(ENDPOINT, CMID, applyProgressState);
+
+function resolveNode(n) {
+  if (progress.nodesResolved[n]) return;
+  progress.nodesResolved[n] = true;
+  updateProgressNote();
+  if (nodesResolvedCount() === 4) {
+    document.getElementById('spiral-1').hidden = false;
+    document.getElementById('spiral-2').hidden = false;
+    document.getElementById('game-item').hidden = false;
+    document.getElementById('ux-item').hidden = false;
+  }
+  maybeComplete();
+  saveProgress();
+}
+
+/* ---------------- Skulpt setup ---------------- */
+function skRead(x) {
+  if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) {
+    throw "File not found: '" + x + "'";
+  }
+  return Sk.builtinFiles["files"][x];
+}
+function runSkulpt(code, onDone) {
+  var captured = [];
+  Sk.configure({ output: function (t) { captured.push(t); }, read: skRead });
+  Sk.misceval.asyncToPromise(function () {
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  }).then(
+    function () { onDone(captured.join('').trim()); },
+    function (err) { captured.push(String(err)); onDone(captured.join('').trim()); }
+  );
+}
+function toggleHint(id) {
+  var box = document.getElementById(id);
+  var show = box.style.display !== 'block';
+  box.style.display = show ? 'block' : 'none';
+  if (show) logEvent('hint_reveal', { hint_id: id }, false);
+}
+
+/* ================= NODE 1: creates_variable ================= */
+var n1Attempt = { core: 0, reinforce: 0 };
+function n1CoreCheck() {
+  n1Attempt.core++;
+  var blank = document.getElementById('n1-core-blank').value;
+  var code = 'player_name = "Rowan"\n' + blank + '\nprint("Player:", player_name)\nprint("Health:", health)';
+  var out = document.getElementById('n1-core-output');
+  var fb = document.getElementById('n1-core-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Player: Rowan\nHealth: 100';
+    fb.textContent = correct ? 'Right. The program actually ran and printed exactly what was expected.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'creates_variable', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n1Attempt.core }, false);
+    if (correct) {
+      logEvent('lane_transition', { skill_id: 'creates_variable', from: 'core', to: 'extend', reason: 'correct_advance' }, false);
+      document.getElementById('n1-extend').hidden = false;
+    } else if (n1Attempt.core === 1) {
+      logEvent('lane_transition', { skill_id: 'creates_variable', from: 'core', to: 'reinforce', reason: 'incorrect' }, false);
+      document.getElementById('n1-reinforce').hidden = false;
+    }
+  });
+}
+function n1ReinforceCheck() {
+  var picked = document.querySelector('input[name="n1-reinforce"]:checked');
+  var fb = document.getElementById('n1-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n1Attempt.reinforce++;
+  var correct = picked.value === 'a';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { b: 'This is backwards. The variable name always goes on the left of the =.', c: '== compares two things. It does not create a variable.', d: 'This creates score, but sets it to the text "0" instead of the number 0.' };
+  fb.textContent = correct ? 'Right. The variable name goes on the left, and the value it receives goes on the right.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'creates_variable', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n1Attempt.reinforce }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'creates_variable', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
+    resolveNode('n1');
+  } else if (n1Attempt.reinforce === 1) {
+    document.getElementById('n1-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'creates_variable', from: 'reinforce', to: 'reinforce', reason: 'retry_after_explanation' }, false);
+    document.querySelectorAll('#n1-reinforce .code-choice-option').forEach(function (el) { el.classList.remove('correct', 'incorrect'); });
+    document.querySelectorAll('input[name="n1-reinforce"]').forEach(function (el) { el.checked = false; });
+  } else if (n1Attempt.reinforce === 2) {
+    document.getElementById('n1-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'creates_variable', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
+    resolveNode('n1');
+  }
+}
+var n1ExtendAttempt = 0;
+function n1ExtendCheck() {
+  n1ExtendAttempt++;
+  var blank = document.getElementById('n1-extend-blank').value;
+  var code = 'lives = 3\nprint("Lives:", lives)\n' + blank + '\nprint("Difficulty:", difficulty)';
+  var out = document.getElementById('n1-extend-output');
+  var fb = document.getElementById('n1-extend-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Lives: 3\nDifficulty: Normal';
+    fb.textContent = correct ? 'Right. Text values need quotation marks so Python treats them as text, not code.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'creates_variable', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n1ExtendAttempt }, false);
+    resolveNode('n1');
+  });
+}
+
+/* ================= NODE 2: variable_naming_rules ================= */
+var n2Attempt = { reinforce: 0 };
+function n2CoreCheck() {
+  var picked = document.querySelector('input[name="n2-core"]:checked');
+  var fb = document.getElementById('n2-core-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  var correct = picked.value === 'c';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { a: 'Names cannot start with a digit.', b: 'Names cannot contain spaces.', d: 'class is a reserved Python word.' };
+  fb.textContent = correct ? 'Right. player_score follows every naming rule.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'variable_naming_rules', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: 1 }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'variable_naming_rules', from: 'core', to: 'extend', reason: 'correct_advance' }, false);
+    document.getElementById('n2-extend').hidden = false;
+  } else {
+    logEvent('lane_transition', { skill_id: 'variable_naming_rules', from: 'core', to: 'reinforce', reason: 'incorrect' }, false);
+    document.getElementById('n2-reinforce').hidden = false;
+  }
+}
+function n2ReinforceCheck() {
+  var picked = document.querySelector('input[name="n2-reinforce"]:checked');
+  var fb = document.getElementById('n2-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n2Attempt.reinforce++;
+  var correct = picked.value === 'a';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. 2lives starts with a digit, which Python never allows.' : 'Not quite. Check which option starts with a digit specifically.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'variable_naming_rules', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n2Attempt.reinforce }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'variable_naming_rules', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
+    resolveNode('n2');
+  } else if (n2Attempt.reinforce === 1) {
+    document.getElementById('n2-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'variable_naming_rules', from: 'reinforce', to: 'reinforce', reason: 'retry_after_explanation' }, false);
+    document.querySelectorAll('#n2-reinforce .code-choice-option').forEach(function (el) { el.classList.remove('correct', 'incorrect'); });
+    document.querySelectorAll('input[name="n2-reinforce"]').forEach(function (el) { el.checked = false; });
+  } else if (n2Attempt.reinforce === 2) {
+    document.getElementById('n2-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'variable_naming_rules', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
+    resolveNode('n2');
+  }
+}
+var n2ExtendAttempt = 0;
+function n2ExtendCheck() {
+  n2ExtendAttempt++;
+  var blank = document.getElementById('n2-extend-blank').value;
+  var code = blank + '\nprint("Game Over:", is_game_over)';
+  var out = document.getElementById('n2-extend-output');
+  var fb = document.getElementById('n2-extend-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Game Over: True';
+    fb.textContent = correct ? 'Right. is_game_over follows snake_case, and True is written without quotes.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'variable_naming_rules', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n2ExtendAttempt }, false);
+    resolveNode('n2');
+  });
+}
+
+/* ================= NODE 3: reassigns_variable ================= */
+var n3Attempt = { core: 0, reinforce: 0 };
+function n3CoreCheck() {
+  n3Attempt.core++;
+  var blank = document.getElementById('n3-core-blank').value;
+  var code = 'lives = 3\nprint("Lives:", lives)\n' + blank + '\nprint("Lives:", lives)';
+  var out = document.getElementById('n3-core-output');
+  var fb = document.getElementById('n3-core-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Lives: 3\nLives: 2';
+    fb.textContent = correct ? 'Right. Assigning lives again replaces its old value with the new one.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'reassigns_variable', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n3Attempt.core }, false);
+    if (correct) {
+      logEvent('lane_transition', { skill_id: 'reassigns_variable', from: 'core', to: 'extend', reason: 'correct_advance' }, false);
+      document.getElementById('n3-extend').hidden = false;
+    } else if (n3Attempt.core === 1) {
+      logEvent('lane_transition', { skill_id: 'reassigns_variable', from: 'core', to: 'reinforce', reason: 'incorrect' }, false);
+      document.getElementById('n3-reinforce').hidden = false;
+    }
+  });
+}
+function n3ReinforceCheck() {
+  var picked = document.querySelector('input[name="n3-reinforce"]:checked');
+  var fb = document.getElementById('n3-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n3Attempt.reinforce++;
+  var correct = picked.value === 'a';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { b: '== checks whether two things are equal. It does not change anything.', c: 'Python has no new keyword. Assign to the existing name directly.', d: 'This calculates x + 9 but never stores the result anywhere.' };
+  fb.textContent = correct ? 'Right. Assigning to x again replaces its old value.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'reassigns_variable', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n3Attempt.reinforce }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'reassigns_variable', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
+    resolveNode('n3');
+  } else if (n3Attempt.reinforce === 1) {
+    document.getElementById('n3-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'reassigns_variable', from: 'reinforce', to: 'reinforce', reason: 'retry_after_explanation' }, false);
+    document.querySelectorAll('#n3-reinforce .code-choice-option').forEach(function (el) { el.classList.remove('correct', 'incorrect'); });
+    document.querySelectorAll('input[name="n3-reinforce"]').forEach(function (el) { el.checked = false; });
+  } else if (n3Attempt.reinforce === 2) {
+    document.getElementById('n3-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'reassigns_variable', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
+    resolveNode('n3');
+  }
+}
+var n3ExtendAttempt = 0;
+function n3ExtendCheck() {
+  n3ExtendAttempt++;
+  var blank = document.getElementById('n3-extend-blank').value;
+  var code = 'score = 0\nprint("Score:", score)\nscore = 10\nprint("Score:", score)\n' + blank + '\nprint("Score:", score)';
+  var out = document.getElementById('n3-extend-output');
+  var fb = document.getElementById('n3-extend-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Score: 0\nScore: 10\nScore: 25';
+    fb.textContent = correct ? 'Right. Each reassignment replaces the value that came before it.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'reassigns_variable', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n3ExtendAttempt }, false);
+    resolveNode('n3');
+  });
+}
+
+/* ================= NODE 4: prints_variable_with_text ================= */
+var n4Attempt = { core: 0 };
+function n4CoreCheck() {
+  n4Attempt.core++;
+  var blank = document.getElementById('n4-core-blank').value;
+  var code = 'player_name = "Rowan"\nroom = "the armory"\n' + blank;
+  var out = document.getElementById('n4-core-output');
+  var fb = document.getElementById('n4-core-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Rowan is standing in the armory';
+    fb.textContent = correct ? 'Right. The program actually ran and printed exactly what was expected.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'concatenates_with_commas', item_id: 'core_01', lane: 'core', correct: correct, attempt_number: n4Attempt.core }, false);
+    if (correct) {
+      logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'core', to: 'extend', reason: 'correct_advance' }, false);
+      document.getElementById('n4-extend-predict').hidden = false;
+    } else if (n4Attempt.core === 1) {
+      logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'core', to: 'reinforce', reason: 'incorrect' }, false);
+      document.getElementById('n4-reinforce').hidden = false;
+    }
+  });
+}
+var n4ReinforceAttempt = 0;
+function n4ReinforceCheck() {
+  var picked = document.querySelector('input[name="n4-reinforce"]:checked');
+  var fb = document.getElementById('n4-reinforce-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n4ReinforceAttempt++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  var why = { a: 'A comma is missing between the two pieces.', c: 'Health: needs quotation marks around it, since it is literal text.', d: 'health is inside the quotation marks here, so it prints as the word health, not the number it holds.' };
+  fb.textContent = correct ? 'Right. A comma separates the label text from the variable.' : 'Not quite. ' + (why[picked.value] || '');
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'concatenates_with_commas', item_id: 'reinforce_01', lane: 'reinforce', correct: correct, attempt_number: n4ReinforceAttempt }, false);
+  if (correct) {
+    logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'reinforce', to: 'core', reason: 'correct_recovered' }, false);
+    resolveNode('n4');
+  } else if (n4ReinforceAttempt === 1) {
+    document.getElementById('n4-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'reinforce', to: 'reinforce', reason: 'retry_after_explanation' }, false);
+    document.querySelectorAll('#n4-reinforce .code-choice-option').forEach(function (el) { el.classList.remove('correct', 'incorrect'); });
+    document.querySelectorAll('input[name="n4-reinforce"]').forEach(function (el) { el.checked = false; });
+  } else if (n4ReinforceAttempt === 2) {
+    document.getElementById('n4-reinforce-exhausted').hidden = false;
+    logEvent('lane_transition', { skill_id: 'prints_variable_with_text', from: 'reinforce', to: 'done', reason: 'lane_exhausted' }, false);
+    resolveNode('n4');
+  }
+}
+var n4PredictAttempt = 0;
+function n4PredictCheck() {
+  var picked = document.querySelector('input[name="n4-extend-predict"]:checked');
+  var fb = document.getElementById('n4-extend-predict-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n4PredictAttempt++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. score is a number, and + refuses to join text with a number directly. Python raises a TypeError: can only concatenate str (not "int") to str.' : 'Not quite. Try it below and see what actually happens, then come back to this if you want.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'concatenates_with_plus', item_id: 'predict_01', lane: 'extend', correct: correct, attempt_number: n4PredictAttempt }, false);
+  document.getElementById('n4-extend').hidden = false;
+}
+var n4ExtendAttempt = 0;
+function n4ExtendCheck() {
+  n4ExtendAttempt++;
+  var blank = document.getElementById('n4-extend-blank').value;
+  var code = 'score = 25\n' + blank;
+  var out = document.getElementById('n4-extend-output');
+  var fb = document.getElementById('n4-extend-feedback');
+  out.style.display = 'block';
+  out.textContent = 'Running...';
+  runSkulpt(code, function (result) {
+    out.textContent = result || '(no output)';
+    var correct = result === 'Your score is 25';
+    fb.textContent = correct ? 'Right. str(score) turns the number into text so + can join it in.' : 'Not quite. Compare the output above against the expected output.';
+    fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+    logEvent('drill_attempt', { skill_id: 'concatenates_with_plus', item_id: 'extend_01', lane: 'extend', correct: correct, attempt_number: n4ExtendAttempt }, false);
+    document.getElementById('n4-contrast').hidden = false;
+    resolveNode('n4');
+  });
+}
+var n4ContrastAttempt = 0;
+function n4ContrastCheck() {
+  var picked = document.querySelector('input[name="n4-contrast"]:checked');
+  var fb = document.getElementById('n4-contrast-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  n4ContrastAttempt++;
+  var correct = picked.value === 'b';
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right. + cannot join text and a number directly.' : 'Not quite. Think about which option combines + with a bare number, not wrapped in str(...).';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: 'concatenates_with_plus', item_id: 'contrast_01', lane: 'extend', correct: correct, attempt_number: n4ContrastAttempt }, false);
+  document.getElementById('n4-contrast-note').hidden = false;
+}
+
+/* ---------------- Spiral review ---------------- */
+var spiralAnswers = { 1: { correct: 'a', skill: 'uses_print' }, 2: { correct: 'a', skill: 'diagnoses_syntax_error' } };
+var spiralAttempts = { 1: 0, 2: 0 };
+function spiralCheck(n) {
+  var picked = document.querySelector('input[name="spiral' + n + '"]:checked');
+  var fb = document.getElementById('spiral' + n + '-feedback');
+  if (!picked) { fb.textContent = 'Choose one of the options first.'; fb.className = 'feedback incorrect'; return; }
+  spiralAttempts[n]++;
+  var correct = picked.value === spiralAnswers[n].correct;
+  picked.closest('.code-choice-option').classList.add(correct ? 'correct' : 'incorrect');
+  fb.textContent = correct ? 'Right.' : 'Not quite. Try comparing each option to the rule this checks.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('drill_attempt', { skill_id: spiralAnswers[n].skill, item_id: 'spiral_' + n, lane: 'spiral', correct: correct, attempt_number: spiralAttempts[n] }, false);
+  if (n === 1) progress.spiral1Done = true; else progress.spiral2Done = true;
+  maybeComplete();
+  saveProgress();
+}
+
+/* ---------------- Reflection (Game Connection / UX) ---------------- */
+function saveReflection(which) {
+  var text = document.getElementById(which + '-response').value.trim();
+  var statusEl = document.getElementById(which + '-save-status');
+  if (!text) { statusEl.textContent = 'Write a response before saving.'; return; }
+  logEvent('reflection_saved', { item_id: which, wordcount: text.split(/\s+/).filter(Boolean).length, text: text }, false);
+  statusEl.textContent = 'Saved.';
+}
+
+/* ---------------- Flashcards ---------------- */
+var CARDS = [
+  { term: 'variable', def: 'A named place in a program\'s memory that stores a value. A variable is how a program remembers something while it runs.' },
+  { term: 'assignment operator', def: 'The = sign, used to store a value in a variable. It does not mean "equal to" the way it does in math.' },
+  { term: 'value', def: 'The actual piece of data stored in a variable, like 100, "Rowan", or True.' }
+];
+var cardIndex = 0;
+function renderCard() {
+  document.getElementById('card').classList.remove('flipped');
+  document.getElementById('termText').textContent = CARDS[cardIndex].term;
+  document.getElementById('defText').textContent = CARDS[cardIndex].def;
+  document.getElementById('cardNum').textContent = cardIndex + 1;
+  document.getElementById('cardTotal').textContent = CARDS.length;
+}
+function flipCard() {
+  var flipped = document.getElementById('card').classList.toggle('flipped');
+  if (flipped) { logEvent('flashcard_flip', { term: CARDS[cardIndex].term }, false); }
+}
+function nextCard() { cardIndex = (cardIndex + 1) % CARDS.length; renderCard(); }
+function prevCard() { cardIndex = (cardIndex - 1 + CARDS.length) % CARDS.length; renderCard(); }
+renderCard();
+
+/* ---------------- Reading-comprehension quick checks (ungraded, but logged so engagement is visible in report.php) ---------------- */
+function qcCheck(id, expected) {
+  var picked = document.getElementById(id + '-select').value;
+  var fb = document.getElementById(id + '-feedback');
+  if (!picked) { fb.textContent = 'Choose an answer first.'; fb.className = 'feedback incorrect'; return; }
+  var correct = picked === expected;
+  fb.textContent = correct ? 'Right.' : 'Not quite. Take another look above.';
+  fb.className = 'feedback ' + (correct ? 'correct' : 'incorrect');
+  logEvent('quick_check', { item_id: id, picked: picked, correct: correct }, false);
+}
+
+/* ---------------- Reading-check gate (added 2026-09-09) ----------------
+   Learn section content is revealed one concept at a time. Each concept's
+   multiple-choice quick-check gives instant right/wrong feedback (unchanged,
+   not a completion gate); the typed reading-check right after it IS the
+   gate -- a low bar (must type a real answer, not a blank/one-word non-
+   attempt), not a correctness check, since grading free-text correctness in
+   real time isn't reliable. Genuine understanding still gets reviewed
+   downstream the same way reflections already are (see CLAUDE.md's Two-
+   Surface Delivery Model: "graded reflection, checked for genuine
+   completion, not just presence"). Paste is disabled on these fields so an
+   answer has to actually be typed. */
+var READING_CHECK_ORDER = ['create', 'naming', 'reassign', 'print', 'types', 'terms'];
+var READING_CHECK_MIN_CHARS = 15;
+var learnFurthestIndex = -1; // furthest reading-check-gated Learn section reached; restored/saved for resume
+
+function readingCheck(key) {
+  var ta = document.getElementById('rc-' + key + '-response');
+  var fb = document.getElementById('rc-' + key + '-feedback');
+  var text = ta.value.trim();
+  if (text.replace(/\s/g, '').length < READING_CHECK_MIN_CHARS) {
+    fb.textContent = 'Write a real sentence in your own words before continuing.';
+    fb.className = 'feedback incorrect';
+    return;
+  }
+  fb.textContent = 'Thanks -- continuing.';
+  fb.className = 'feedback correct';
+  logEvent('reading_check', { section: key, length: text.length }, false);
+
+  var idx = READING_CHECK_ORDER.indexOf(key);
+  learnFurthestIndex = Math.max(learnFurthestIndex, idx);
+  var nextKey = READING_CHECK_ORDER[idx + 1];
+  var nextEl = nextKey ? document.getElementById('learn-section-' + nextKey) : document.getElementById('learn-section-practice');
+  if (nextEl) {
+    nextEl.hidden = false;
+    nextEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  saveProgress();
+}
+</script>
+
+</body>
+</html>

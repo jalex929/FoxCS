@@ -1,7 +1,4 @@
 # 1.4.6 Application: Writing print() Statements
-# Renamed from 06_practice.py 2026-08-11 per Jay: "practice" now means the
-# saved, immediate-feedback drills in 05_practice.html; this file is where
-# that skill gets applied by actually writing real code, not more practice.
 # Write your answer under each numbered prompt. Run the file often to check
 # your output as you go. Save when you're done. No renaming needed.
 
