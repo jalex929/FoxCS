@@ -12,6 +12,7 @@ This is a baseline pass, not a deep audit: files touched this session (2026-08-3
 | authoring-workflow.md | 2026-08-31 | stable | Phase 7 AI-validation line added this session |
 | browser-python-execution.md | | not yet audited | |
 | certiport-gmetrix-account-setup.md | | not yet audited | added to this folder since the last full pass; no row existed |
+| coding-exercise-standards.md | 2026-09-14 | stable | new doc: 50% runs / 50% correct rubric split, and the standing rule that no Coding Exercise goes live without a per-lesson rubric file |
 | content-authoring-standards.md | | not yet audited | Source of Truth doc — see CLAUDE.md |
 | content-voice-and-tone.md | | not yet audited | Source of Truth doc — see CLAUDE.md |
 | design-system.md | | not yet audited | |
