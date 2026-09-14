@@ -1917,3 +1917,16 @@ Resolves the XP-tier-to-grade open question from earlier today's grade-point-sca
 ## 2026-09-11 (continued) — Unit Project bonus raised: +3%/+6%, not +2%/+4%
 
 Per Jay directly, after a short back-and-forth on whether +2%/+4% was enough to feel like a real incentive without over-inflating grades: raised Legendary's bonus from +2% to +3% and Mythic's from +4% to +6%. New rule: +3% per 10 XP earned over the Skilled baseline (25 XP), same shape as before, just a bigger step. Starter (80%) and Skilled (100%) are unaffected. See `02-authoring-system/grade-point-scale.md`'s Unit Project section for the settled table/pseudocode.
+
+## 2026-09-13 — Unit 01 Mastery Check essay grading: 80% floor + 5-tier scale, ELL accommodation
+
+Per Jay directly, prompted by reviewing a real "No credit" response (g8-comet, 01.1 Q2) that restated the question rather than answering it: **many FoxCS students are English Language Learners who may not yet be able to fully articulate an answer in Unit 01, even when they're genuinely engaged and attempting the work.** A harsh 0% for a real, on-topic attempt doesn't reflect that reality.
+
+**New rule, scoped to Unit 01 mastery checks only** (not a change to the main `grade-point-scale.md` model, which still governs the module's overall point value — this changes how a response's QUALITY maps to a percentage within that module):
+
+- **Floor of 80% for any genuine attempt** — a response that engages with the actual question (even if it just restates the prompt, or is incomplete/unclear) does not score below 80%. This is not "everyone gets 80% regardless" — a response that is truly blank, off-topic, or not a real attempt is not covered by this floor.
+- **Discrete 5-tier scale: 80 / 85 / 90 / 95 / 100.** Not a continuous range — five fixed quality bands from "attempted, restates the question or minimal engagement" (80) up to "fully meets the KEY's full-credit criteria, clearly" (100).
+- **Every response gets feedback, at every tier** — already true of the drafted work, unchanged.
+- **Remediation scaffolding required for lower tiers.** A response that mainly restates the question (the 80-tier case) should get concrete sentence starters/frames in its feedback to help the student build toward a real answer next time — not just "try again," actual scaffolding language specific to that question.
+
+This requires re-scoring the already-drafted 244 Unit 01 essay responses (`05-grader/staging/unit-01-mastery-check-essay-grades-2026-09-11.md`) against this new scale — the original full/partial/no-credit draft is superseded, not additive. See that file's next revision for the applied result.
