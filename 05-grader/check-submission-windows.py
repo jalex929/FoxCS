@@ -10,6 +10,16 @@ Per Jay directly (2026-09-14): no password/time-lock on the quiz itself
 by a gate), but every graded attempt's timestamp gets checked against the
 real schedule so an out-of-window attempt is visible during grading.
 
+**Standing policy, per Jay directly (2026-09-14): this check runs BEFORE any
+content-quality grading, going forward, not just as a report.** A submission
+finished outside the window (beyond the grace period below) gets NO CREDIT,
+full stop -- this overrides even the Unit 01 ELL 80%-floor accommodation
+(`mastery-check-standards.md`'s matching standing rule). Window compliance
+is a procedural gate checked first; content quality is only graded for
+submissions that pass it. A 5-minute grace period is allowed past the
+period's official end time (a student finishing right as the bell rings
+should not be penalized) -- see GRACE_MINUTES below.
+
 Currently scoped to Game I (Python), whose students are only ever 1st or
 8th period. Extend WINDOWS/PERIODS_BY_COURSE if this needs to cover a
 course with other periods.
@@ -27,10 +37,14 @@ Both are private/local files, never committed to this repo.
 import json
 import csv
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 TZ = ZoneInfo("America/Chicago")
+
+# Grace period past the period's official end time. A student who finishes
+# right as the bell rings should not be penalized -- per Jay directly.
+GRACE_MINUTES = 5
 
 # Real bell schedule, Von Steuben, SY2025-2026. Friday is shorter and has a
 # Div block; Monday-Thursday is the standard 51-min-period day.
@@ -47,6 +61,8 @@ WINDOWS = {
 
 
 def in_window(dt, period):
+    """Report only -- does not apply the grace period. Use gets_credit() to
+    decide whether a submission should actually be graded."""
     if dt.weekday() not in (0, 1, 2, 3, 4):
         return False, "weekend"
     sched = WINDOWS["fri"] if dt.weekday() == 4 else WINDOWS["mon_thu"]
@@ -56,6 +72,27 @@ def in_window(dt, period):
     start = dt.replace(hour=int(start_s[:2]), minute=int(start_s[3:]), second=0, microsecond=0)
     end = dt.replace(hour=int(end_s[:2]), minute=int(end_s[3:]), second=59, microsecond=0)
     return (start <= dt <= end), None
+
+
+def gets_credit(dt, period):
+    """The actual grading gate: applies GRACE_MINUTES past the period's end.
+    Returns (True, None) if the submission should be graded normally, or
+    (False, reason) if it must get NO CREDIT regardless of content quality --
+    this overrides even the Unit 01 ELL 80%-floor accommodation."""
+    if dt.weekday() not in (0, 1, 2, 3, 4):
+        return False, "weekend -- no credit"
+    sched = WINDOWS["fri"] if dt.weekday() == 4 else WINDOWS["mon_thu"]
+    if period not in sched:
+        return None, f"no known window for period '{period}'"
+    start_s, end_s = sched[period]
+    start = dt.replace(hour=int(start_s[:2]), minute=int(start_s[3:]), second=0, microsecond=0)
+    end = dt.replace(hour=int(end_s[:2]), minute=int(end_s[3:]), second=59, microsecond=0) \
+        + timedelta(minutes=GRACE_MINUTES)
+    if dt < start:
+        return False, f"submitted before period start ({start.strftime('%I:%M %p')}) -- no credit"
+    if dt > end:
+        return False, f"submitted after grace cutoff ({end.strftime('%I:%M %p')}, {GRACE_MINUTES}min grace past period end) -- no credit"
+    return True, None
 
 
 def load_codename_periods(roster_csv_path, course_filter="Game I"):
@@ -85,7 +122,7 @@ def main():
             unknown += 1
             continue
         dt = datetime.fromtimestamp(int(a["timefinish"]), tz=TZ)
-        ok, reason = in_window(dt, period)
+        ok, reason = gets_credit(dt, period)
         if ok:
             in_count += 1
         else:
