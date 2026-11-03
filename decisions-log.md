@@ -1948,3 +1948,19 @@ Per Jay directly, prompted by the real gap found while grading Unit 01's Coding 
 **New pre-publish requirement:** added as item 6 to `CLAUDE.md`'s "Publishing Live Content — Pre-Publish Checklist" — no Coding Exercise goes live without a rubric file.
 
 **Not applied retroactively without direction:** the 2026-09-14 grading pass clearing Unit 01's Coding Exercise backlog was done (or already in progress) before this doc existed, using self-derived per-lesson criteria. It doesn't need to be redone under this framework unless Jay says otherwise. Unit 01's 4 Coding Exercises still lack a real rubric file even after this decision — author one for each using this framework as a real follow-up task, separate from clearing the grading backlog.
+
+
+## 2026-11-03 -- Public portfolio = separate sanitized showcase repo with fresh history, not a cleanup of this repo
+
+Per Jay: FoxCS is going to be featured in job interviews, but the public version must carry no Certiport/GMetrix content and no codenames. Decided (following an outside review Jay shared, adapted to this repo):
+
+- **This repo stays the private operational workspace.** Nothing in it was deleted or rewritten for portfolio purposes.
+- **The public version is `portfolio-showcase/`, exported with `00-project-overview/portfolio-prep/export_showcase.sh` into a new repo with fresh history.** Copying into a new repo with history intact wouldn't help: past commits would still contain the licensed files and passwords.
+- **Codenames become `STUDENT-0001`-style synthetic IDs in the showcase, and "codename" becomes "pseudonymous student ID".** The real `PY1-A-...` format isn't published.
+- **The showcase's grader is a sanitized copy of `05-grader/school-side/auto_grade.py`** (identifiers and comments rewritten, logic identical), tested against new, fully synthetic fixtures. The real fixture (`PY1-A-DELTA04_...`) contains real lesson pages with embedded quiz passwords, so it was not reused.
+- **A leak scanner (`portfolio-showcase/tools/check_showcase_clean.py`) runs in the showcase's CI and fails on** vendor names/exam codes, the real pseudonym format, the word "codename", district emails/name, the live domain, IPs, hardcoded passwords, tokens, and any unexpected binary file.
+- **RAG: documented, deliberately not built** (`00-project-overview/portfolio-prep/rag-integration-notes.md`, public version `portfolio-showcase/docs/rag-roadmap.md`). If ever built, start with option A (retrieval-linked feedback), deterministic skill-ID retrieval first, as a separate lab. Licensed and assessment content never enter a retrieval corpus.
+- **The bonus-points Known Tension stays open** (Jay's call). The showcase documents the bonus path as "not active," and its eval harness rejects any output that applies a bonus.
+- **Status labels in public docs are deliberately conservative:** AI-assisted review is described as a teacher-operated workflow, not an unattended service. Compliance isn't claimed (SOPPA review still pending, per `codename-policy.md`).
+
+**Flagged as urgent, needs Jay (not decidable or doable from a session):** FoxCS is currently public. Recommended: make it private now, and rotate every quiz/test-account password that's been in source. A history rewrite is only needed if FoxCS itself is ever made public again.

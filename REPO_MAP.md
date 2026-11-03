@@ -40,6 +40,7 @@ FoxCS/
                                 Assets and reference material, not authoring docs
 
   00-project-overview/         Original braindump + handoff docs (tier 5, historical context)
+    portfolio-prep/            2026-11-03: public-portfolio plan, exposure audit (FoxCS is public, read it), RAG integration notes, export_showcase.sh
     source-material/           braindump.md, the original curriculum-authoring-grading handoff doc
     h5p-authoring-and-automation.md   Can H5P be generated programmatically — yes, how
 
@@ -74,6 +75,8 @@ FoxCS/
     droplet-setup.md, moodle-vm-setup.md, moodle-course-shells.md, h5p-content-type-guide.md
     onboarding-new-students.md
     moodle-scripts/            PHP/Python deploy scripts. Root-level = one-off per-lesson builds (build-lesson-01-04-*.php pattern). moodle-scripts/python/ = reusable builders (h5p_book_builder.py, create-h5p-instruction.php, create_lesson1_mastery_check_quiz.php) plus more one-offs. No naming convention beyond "descriptive" — grep for the cmid or lesson name if unsure whether a script already exists before writing a new one.
+
+  portfolio-showcase/          Sanitized PUBLIC showcase (synthetic data only, no vendor content, no real pseudonyms). Becomes its own repo via portfolio-prep/export_showcase.sh. Never copy files in without running its tools/check_showcase_clean.py
 
   templates/                   lesson-template.md (fill-in schema), grading-rubric-template.md (unfilled), question-branching-template.csv
 

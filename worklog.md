@@ -1084,3 +1084,21 @@ Jay asked to move Restart to the right of (or below) the step controls and deemp
 - `backup_moodle.sh` run immediately before the deploy.
 
 **Not done:** same rebuild for cmid=211 (1.6 Independent Practice), 256 (Lesson 2 Independent Practice), 257 (Lesson 2 Guided Practice) -- pattern is now proven, not yet replicated. The stale "Lesson 1 Grade" completion-credit override (cmid=191, grade_item id=88) also not touched -- see decisions-log.md's matching entry for why it's now disconnected from the bug that originally justified it.
+
+
+## 2026-11-03 -- Portfolio showcase built (in-repo staging), exposure audit, RAG notes
+
+No live Moodle changes. Repo-only work on branch `claude/foxcs-portfolio-prep-r9udyq`.
+
+**New: `portfolio-showcase/`** (self-contained, becomes its own repo via the export script):
+- `grader/auto_grade.py` + `grader/tests/test_auto_grade.py`: sanitized copies, 39 tests passing. Fixtures regenerated synthetically by `tools/make_fixtures.py` (STUDENT-0001 reproduces the old DELTA04 persona's exact asserted values; STUDENT-0002 shows a misnamed file and an empty practice attempt). `examples/demo-output/` holds a real run's CSVs.
+- `evals/`: 1 synthetic assignment, 6 adversarial cases (valid alternative, right output wrong logic, partial, missing, prompt injection, wrong assignment), hand-authored reference outputs, `score_output.py` (11 deterministic checks modeled on `feedback-and-grading-spec.md` sections 20, 21, 23), `run_evals.py`, 13 tests including one deliberately broken output per check. No model calls yet. Baseline runs are the next step.
+- `tools/check_showcase_clean.py` + 3 tests: leak scanner. Sanity-checked against this repo's `05-grader/`: 45 findings, as expected.
+- `.github/workflows/tests.yml`: scanner, all 3 suites, demo run, eval run. This workflow only activates once exported (it sits under `portfolio-showcase/.github/`, not this repo's `.github/`).
+- `docs/`: architecture, grading-pipeline (capability status table + the six "how does it really work" answers), testing, ai-reliability-and-boundaries, privacy-and-data, engineering-process, rag-roadmap.
+
+**New: `00-project-overview/portfolio-prep/`:** README (checklist + Jay's to-do list), `security-and-licensing-audit-2026-11-03.md`, `rag-integration-notes.md`, `export_showcase.sh` (verified: exports to a fresh 1-commit repo, 51 files, scanner and tests pass).
+
+**Small real fix in `05-grader/school-side/auto_grade.py`:** the end-of-run "N file(s) were fuzzy-matched" count left out `flashcards_naming_issue`, so it under-reported. Added. This is a console message only, with no effect on the CSVs. The existing 39 tests still pass.
+
+**Not done (needs Jay):** FoxCS visibility to private, password rotation, creating the `foxcs-showcase` GitHub repo, screenshots, license choice.

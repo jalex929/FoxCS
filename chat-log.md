@@ -14,6 +14,16 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-11-03 -- Portfolio prep: sanitized public showcase, exposure audit, RAG notes
+
+**Context from Jay:** preparing FoxCS for job interviews (AI engineering roles). Shared a ChatGPT portfolio-readiness review with 7 recommendations plus a long section on how RAG could fit FoxCS. Asked for: a cleaned-up copy, potentially a new repo, with **no Certiport/GMetrix content and no codenames**; some of the review's cleanup changes made; and the RAG notes documented here for later.
+
+**Found right away (reported to Jay, not acted on):** `jalex929/FoxCS` is **public** (unauthenticated GitHub API returns it). Licensed workbooks/support files, live Mastery Check quiz passwords, a test-account password, and answer keys are all publicly readable. See `00-project-overview/portfolio-prep/security-and-licensing-audit-2026-11-03.md`.
+
+**Done this session:** `portfolio-showcase/` (sanitized grader + synthetic fixtures, eval harness, leak scanner, CI, 7 docs), `export_showcase.sh` (fresh-history export), the audit, `rag-integration-notes.md`. See `decisions-log.md` and `worklog.md`'s matching entries.
+
+**Open, waiting on Jay (session tools can't do these):** make FoxCS private; rotate quiz/test-account passwords; create the empty `foxcs-showcase` GitHub repo and run the export; About-panel text, screenshots, license choice. All listed in `00-project-overview/portfolio-prep/README.md`.
+
 ## 2026-09-08 (session, backfilled) — Interactivity policy set, then executed on Seminar III Lesson 2; one student account fixed
 
 **Context from Jay:** While reviewing recent work, flagged that Seminar III Lesson 2's Check listed multiple-choice answers as static text instead of letting students actually select one. Investigation traced this to the whole `printable-sheets/` HTML→PDF pipeline (no way to interact, only ever deployed as a flat PDF resource).
