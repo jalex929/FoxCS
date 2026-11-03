@@ -1992,3 +1992,20 @@ Per Jay: passwords handed out in person "was not sustainable," and the build sho
 **Known gap, flagged not built:** make-ups in a different period would be zeroed by the bell-schedule backstop, which has no excused-attempts list yet.
 
 **Same day, per Jay:** the Moodle test-account login password stays the same (not rotated), despite appearing in the public repo. It's a test student account. Don't re-raise it as a to-do.
+
+## 2026-11-03 -- Mastery Check gate direction: daily class code (supersedes "no passwords" from earlier the same day)
+
+Per Jay: "Not that it leaked. It just was not scalable to have self paced and be manually giving passwords to students. I like a daily class code instead of a password... having the code match the day... if they use yesterday's code today they will not be able to take the exam. This should be the direction we go." Earlier entries today framed the motivation partly as the public-repo exposure. **That framing was wrong: the reason is scalability.** Corrected in the docs.
+
+**Decided:**
+- **One code per course per day,** posted once per class. It's computed as HMAC-SHA256(server secret, course | Chicago date), 6 digits.
+- **The last digit is the day number mod 10,** so a code can never equal any of the previous 9 days' codes. "Yesterday's code fails" is guaranteed, not probabilistic, and tested directly.
+- **The day boundary is midnight Chicago time.** Digits only, which avoids Chromebook case and O/0 mistakes.
+- **The secret lives only on the droplet** (`/etc/foxcs/class-code.secret`, root:www-data 640). Scripts refuse a world-readable or short secret, and never log codes.
+- **Cron** `rotate-daily-class-code.php` runs every 10 minutes. It sets every Mastery Check's quiz password to today's code if stale, so a missed run self-heals. With `--notify`, it sends editing teachers a Moodle notification with the code once a day.
+- **The automated rotation relies on the nightly 3 AM backup**, not a manual backup per run, because it changes one field on a schedule. The one-time setup still follows the backup-first rule. Flag if Jay wants otherwise.
+- **`class-code.php --days=N`** prints codes for sub plans (no DB needed).
+- **The school network and prerequisite gates stay.** A shared code is worth little without being at school, in period, with the lesson done.
+- **Mid-attempt safety:** Moodle asks for the password at attempt start only, so a date change never kicks out a working student.
+
+Built and unit-tested (111 checks), not applied live.

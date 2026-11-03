@@ -46,7 +46,7 @@ Deliberately listed by folder, not file, while the repo is still public. To get 
 | `02-authoring-system/tools/` | A Moodle test-account password plus a quiz password |
 | Git history | A deleted passwords template CSV |
 
-**Updates 2026-11-03, per Jay:** (a) Quiz passwords are being replaced entirely by automatic gates (`07-infrastructure/moodle-scripts/mastery-check-access/`), so they don't need rotating once that's applied. (b) **The Moodle test-account login password stays the same, by Jay's decision.** It's a test student account, so the exposure is a student-view login, not admin. Don't re-flag it as a to-do.
+**Updates 2026-11-03, per Jay:** (a) Static quiz passwords are being replaced by a daily class code that rotates automatically, plus automatic gates (`07-infrastructure/moodle-scripts/mastery-check-access/`). The old passwords stop mattering once that's applied. Jay's reason for the change was scalability with self-paced work, not the exposure. The exposure is a side benefit. (b) **The Moodle test-account login password stays the same, by Jay's decision.** It's a test student account, so the exposure is a student-view login, not admin. Don't re-flag it as a to-do.
 
 **Original recommendation (kept for the record):** rotate every live quiz password and the test-account password. Then move them out of source and into the droplet's environment or Moodle itself, so scripts read them at run time.
 

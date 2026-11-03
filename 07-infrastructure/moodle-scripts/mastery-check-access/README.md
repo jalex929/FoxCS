@@ -1,106 +1,139 @@
-# Mastery Check Access: automatic gates, no passwords
+# Mastery Check Access: a daily class code plus automatic gates
 
-**Added 2026-11-03, per Jay.** Handing out Mastery Check passwords in person "was not sustainable," and passwords committed to this public repo were exposed anyway. The goal is a gate that is strong and enforces itself, designed for classroom facilitation. **Status: built and unit-tested here, not yet applied to any course.** Applying it is a live Moodle change, so it runs from a session on the droplet, following CLAUDE.md's backup-first rule.
+**Added 2026-11-03, per Jay.** With self-paced work, handing Mastery Check passwords to students one at a time as they asked "was not sustainable." The direction Jay chose is a **daily class code**: one code per course per day, posted once in class, which only works on the day it is for. Yesterday's code fails today. Around it sit gates that enforce themselves. **Status: built and unit-tested here, not yet applied to any course.** Applying it is a live Moodle change, so it runs from a session on the droplet, following CLAUDE.md's backup-first rule.
 
 ## The design, and why each piece is there
 
-| Gate | Moodle feature | What it does in class | Who has to act |
+| Gate | How | What it does in class | Who has to act |
 |---|---|---|---|
-| **School network** | Quiz "Require network address" (`quiz.subnet`) | Attempts work from school computers and Wi-Fi, and are refused from home | Nobody. Works the same on a sub day |
-| **Lesson prerequisites** | Activity-completion availability, shown to students | Quiz shows "Not available unless: *2.3 Floats: Instruction* is marked complete" until it is | Nobody. The student sees exactly what to do next |
-| **No password** | Password field cleared, "ask your teacher" lines removed from the intro | No line at your desk. Leaked passwords become meaningless | Nobody |
+| **Daily class code** | Quiz password set to today's code by a scheduled job | Proves the student is in class today. Self-paced students take the check whatever day they're ready, using that day's code | You (or the sub) post one code per class. Nothing per student |
+| **School network** | Quiz "Require network address" (`quiz.subnet`) | Refuses attempts from home | Nobody |
+| **Lesson prerequisites** | Activity-completion availability, shown to students | Quiz says "Not available unless: *2.3 Floats: Instruction* is marked complete" | Nobody. Students see what's left |
 | **Class-period backstop** (already exists) | `05-grader/check-submission-windows.py` | An attempt finished outside the student's period gets no credit | Runs at grading time |
 | **3 attempts, averaged** (already exists) | Quiz settings | Rewards preparation over guessing | Nobody |
 
-What this deliberately avoids:
+### How the daily code works
 
-- **Teacher-approval buttons.** Any gate that needs you to click brings back the bottleneck and blocks the class when you are out.
-- **Safe Exam Browser.** It needs a client app on student devices. It was tried and turned off sitewide on 2026-09-01 because it never worked on the student machines.
+- **The code is computed, not chosen.** `code = HMAC-SHA256(secret, course | Chicago date)`, reduced to 6 digits. The secret lives only on the droplet (`/etc/foxcs/class-code.secret`), never in this repo. The scheduled job, your morning message, and a printed week of codes for sub plans all compute the same value, so nothing has to be stored or synced.
+- **Yesterday's code fails today, guaranteed.** The last digit is the day number, mod 10. A code can never equal any code from the previous 9 days, regardless of the random part. The day changes at **midnight Chicago time**, not UTC.
+- **Digits only.** That avoids capital-letter and O-versus-0 mistakes on Chromebooks.
+- **Different per course.** A Python code doesn't open a Seminar III check.
+- **Mid-attempt is safe.** Moodle asks for the code when an attempt starts, so a student already working isn't kicked out when the date changes.
+- **Never logged.** Scripts print "(today's class code)", never the digits, except `class-code.php` and your Moodle notification, which exist to show it.
 
 Honest limits:
 
-- **The prerequisite gate is a pacing nudge, not an integrity control.** Instruction pages use manual completion, which the telemetry plugin marks when the lesson is finished. A student can also click "Mark as done" themselves. The network gate and the bell-schedule backstop carry integrity.
-- **The network gate cannot be lifted per student.** Moodle quiz overrides cover dates, time limits, attempts, and password, not the network rule. For a student who genuinely needs to test off-site (for example, homebound), see Exceptions below.
-- **District proxies.** If many schools share one outbound address, the network gate is "any school in the district," not "this building." `find-school-network.php` shows what the logs actually contain. Confirm with school IT if you can.
+- **The code can be shared.** A student could text today's code to a friend. That friend still needs to be at school (network gate), during their own period (backstop), with the lesson done (prerequisites). So a shared code is worth very little.
+- **The prerequisite gate is a pacing nudge, not an integrity control.** Instruction uses manual completion, so a student can click "Mark as done" themselves.
+- **The network gate can't be lifted per student.** Moodle overrides cover dates, time limits, attempts, and password, not the network rule. See Exceptions.
+- **District proxies.** If many schools share one outbound address, the network gate means "any school in the district." `find-school-network.php` shows what the logs actually contain.
+
+Deliberately avoided:
+
+- **Per-student passwords and teacher-approval flows.** They scale with the number of students, which is the problem being solved.
+- **Safe Exam Browser.** It needs a client install and was turned off sitewide on 2026-09-01.
 
 ## The scripts
 
 | Script | Writes? | Purpose |
 |---|---|---|
-| `mca_lib.php` | No | All the decision logic, pure PHP. Unit-tested here with no Moodle |
-| `find-school-network.php` | No | Suggests the school's address blocks from Moodle's own logs, and prints the address Moodle last saw for your account (`--whoami`) |
-| `apply-mastery-check-access.php` | Only with `--apply` | Plans and applies the gates for every "... Mastery Check" quiz in a course. Dry run by default. Refuses to write without a fresh backup. Writes a rollback snapshot first. Re-running is a no-op |
-| `mastery-check-readiness.php` | No | CSV for the teacher dashboard: per student per Mastery Check, locked or ready, which prerequisites are missing, attempts used, average, off-network attempts |
-| `tests/test_mca_lib.php` | No | 75 checks. CI runs it on every change to this folder |
+| `mca_lib.php` | No | All the decision logic, pure PHP, unit-tested here with no Moodle |
+| `class-code.php` | No | Prints today's code, or `--days=10` for sub plans. Needs only the secret, no database |
+| `rotate-daily-class-code.php` | Yes, one field | **Cron, every 10 minutes.** Sets each Mastery Check's password to today's code if it isn't already. With `--notify`, sends editing teachers a Moodle notification with the code once a day |
+| `find-school-network.php` | No | Suggests the school's address blocks from Moodle logs, and shows your own address for test mode |
+| `apply-mastery-check-access.php` | Only with `--apply` | One-time setup per course: prerequisites, network rule, today's code, and the intro line. Dry run by default, backup-gated, rollback snapshot, idempotent |
+| `mastery-check-readiness.php` | No | CSV for the dashboard: locked or ready, missing prerequisites, attempts, averages, off-network attempts |
+| `tests/test_mca_lib.php` | No | 111 checks. CI runs them on every change to this folder |
 
-Safety built into `apply`:
+## Setup on the droplet
 
-- It refuses to set a prerequisite whose completion tracking is off, because that would lock every student out permanently.
-- It keeps every availability condition already on the quiz.
-- It rejects malformed or overly broad network entries, such as a single-number prefix that would allow millions of addresses.
-- It never prints old passwords. The rollback file that stores them is written `chmod 600`.
+### 0. Install a copy cron can read
 
-## Staging (same as other scripts here)
-
-`www-data` cannot read `/home/jay` (mode 750), so copy the folder first:
+`www-data` can't read `/home/jay` (mode 750):
 
 ```bash
-mkdir -p /tmp/foxcs-deploy-stage && cp -r ~/FoxCS/07-infrastructure/moodle-scripts/mastery-check-access /tmp/foxcs-deploy-stage/
-cd /tmp/foxcs-deploy-stage/mastery-check-access
+sudo mkdir -p /opt/foxcs && sudo cp -r ~/FoxCS/07-infrastructure/moodle-scripts/mastery-check-access /opt/foxcs/
+sudo chown -R root:www-data /opt/foxcs && sudo chmod -R o-rwx /opt/foxcs
+cd /opt/foxcs/mastery-check-access
 ```
 
-All commands below run as `sudo -u www-data php ...` from there.
+Re-copy after pulling changes to this folder.
 
-## Step 1: find the school network (read-only, any time)
+### 1. Create the secret (once, ever)
+
+```bash
+sudo mkdir -p /etc/foxcs
+openssl rand -base64 48 | sudo tee /etc/foxcs/class-code.secret > /dev/null
+sudo chown root:www-data /etc/foxcs/class-code.secret && sudo chmod 640 /etc/foxcs/class-code.secret
+```
+
+Changing the secret changes every future code. Include it in your off-droplet backups if you ever set those up. The scripts refuse a secret file that everyone can read.
+
+### 2. Find the school network (read-only)
 
 ```bash
 sudo -u www-data php find-school-network.php --course=foxcs-python --days=30 --whoami=jay
 ```
 
-It prints suggested `--subnets=...` and your own current address for test mode.
+### 3. Test from home, in the sandbox (`sandbox-adaptive-demo`)
 
-## Step 2: test both directions from home, in the sandbox
-
-The network rule applies to you too, so test mode adds your home address. Use the sandbox course (`sandbox-adaptive-demo`), never the live course. `/home/jay/moodle-backups/backup_moodle.sh` must run first.
+Run `/home/jay/moodle-backups/backup_moodle.sh` first. Then:
 
 ```bash
-# Allowed case: school + your home address. Expect the quiz to open for the test student from home.
+sudo -u www-data php class-code.php --course=sandbox-adaptive-demo        # today's sandbox code
+
+# Allowed case: school + your home address
 sudo -u www-data php apply-mastery-check-access.php --course=sandbox-adaptive-demo \
-    --subnets=SCHOOL_BLOCKS --test-ip=YOUR_HOME_IP --check-ip=YOUR_HOME_IP            # read the plan
+    --subnets=SCHOOL_BLOCKS --test-ip=YOUR_HOME_IP --check-ip=YOUR_HOME_IP                 # read the plan
 sudo -u www-data php apply-mastery-check-access.php --course=sandbox-adaptive-demo \
     --subnets=SCHOOL_BLOCKS --test-ip=YOUR_HOME_IP --apply --i-ran-the-backup
-
-# Blocked case: school only. Expect "only accessible from certain locations" from home.
-sudo -u www-data php apply-mastery-check-access.php --course=sandbox-adaptive-demo \
-    --subnets=SCHOOL_BLOCKS --apply --i-ran-the-backup
 ```
 
-Check both as the `foxcstest` student, not as admin, since that is what students see. Also confirm the prerequisite message appears before the Instruction is complete and clears after. If the sandbox quiz's prerequisites aren't detected (its module names differ from the live pattern), the plan says so. Add `--no-prereqs` to test the network gate on its own.
+As the `foxcstest` student, from home, check each of these:
 
-To undo: `--rollback=/tmp/foxcs-mca-rollback-....json` (the path is printed on apply).
+1. The quiz shows "enter today's class code" and the prerequisite message.
+2. Today's code works.
+3. A wrong code fails.
+4. **Yesterday's code fails.** Get it with `class-code.php --course=sandbox-adaptive-demo --from=YESTERDAY_DATE`.
 
-## Step 3: live
+Then check the blocked case: re-run apply with `--subnets=SCHOOL_BLOCKS` only, and confirm that "only accessible from certain locations" appears from home.
 
-Pick a moment with no class in session (students are often live). Run the backup first, read the dry run, then:
+To check the date rollover without waiting for midnight, run `rotate-daily-class-code.php --courses=sandbox-adaptive-demo --dry-run`. Undo anything with `--rollback=/tmp/foxcs-mca-rollback-....json` (the path is printed on apply).
+
+If the sandbox quiz's prerequisites aren't detected (module names differ from the live pattern), the plan says so. Add `--no-prereqs` to test the other gates on their own.
+
+### 4. Turn on the daily rotation
 
 ```bash
-sudo -u www-data php apply-mastery-check-access.php --course=foxcs-python --subnets=SCHOOL_BLOCKS
+echo '*/10 * * * * www-data php /opt/foxcs/mastery-check-access/rotate-daily-class-code.php --courses=foxcs-python --notify >> /var/log/foxcs-class-code.log 2>&1' \
+  | sudo tee /etc/cron.d/foxcs-class-code
+sudo touch /var/log/foxcs-class-code.log && sudo chown www-data /var/log/foxcs-class-code.log
+```
+
+Add more courses comma-separated as they adopt it. `--notify` sends you the code once a day as a Moodle notification. It reaches the Moodle app and, depending on your notification settings, your email.
+
+### 5. Live
+
+Pick a time with no class in session. Back up first, then:
+
+```bash
+sudo -u www-data php apply-mastery-check-access.php --course=foxcs-python --subnets=SCHOOL_BLOCKS                    # read
 sudo -u www-data php apply-mastery-check-access.php --course=foxcs-python --subnets=SCHOOL_BLOCKS --apply --i-ran-the-backup
-sudo -u www-data php apply-mastery-check-access.php --course=foxcs-python --subnets=SCHOOL_BLOCKS   # expect "already up to date"
+sudo -u www-data php apply-mastery-check-access.php --course=foxcs-python --subnets=SCHOOL_BLOCKS                    # expect "already up to date"
 ```
 
-Then make one in-class check from a student account. Generate the readiness CSV for the dashboard:
+## Daily routine
 
-```bash
-sudo -u www-data php mastery-check-readiness.php --course=foxcs-python > /tmp/mc-readiness.csv
-```
+- **You:** post the code (it's in your morning notification, or run `class-code.php`). One line on the board.
+- **Sub days:** put `class-code.php --days=10` output in your sub folder.
+- **Readiness for pacing:** `mastery-check-readiness.php --course=foxcs-python > /tmp/mc-readiness.csv`
 
-## Exceptions, planned ahead rather than handled on demand
+## Exceptions, planned ahead
 
-- **Extra time, extra attempt, alternate dates:** native quiz user or group overrides (Quiz, Overrides). These work alongside the gates.
-- **Make-up in a different period:** the network gate allows it, but the bell-schedule backstop would give no credit. **Known gap:** `check-submission-windows.py` has no exceptions list yet. Add an excused-attempts file before relying on this for make-ups.
-- **Genuinely off-site student:** the network rule cannot be lifted per student. Duplicate that Mastery Check as a hidden copy restricted to that student (availability by user profile or group), with no network rule.
+- **Extra time, extra attempt, alternate dates:** native quiz user or group overrides (Quiz, Overrides).
+- **Make-up in a different period:** the code and the network gate both allow it, but the bell-schedule backstop would give no credit. **Known gap:** `check-submission-windows.py` has no excused-attempts list yet.
+- **Genuinely off-site student:** a hidden copy of that Mastery Check restricted to that student, with no network rule.
 
 ## New Mastery Checks
 
-Build scripts should create new Mastery Checks with no password. Run `apply-mastery-check-access.php --only-cmid=NEW_CMID` after building, so each new quiz gets the same gates.
+Build them with any password. Run `apply-mastery-check-access.php --only-cmid=NEW_CMID` once, and the cron job keeps the code current from then on.

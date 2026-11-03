@@ -28,7 +28,7 @@ The showcase content itself lives at the repo root in `portfolio-showcase/`, so 
 
 ## What Jay needs to do (things no session tool can do)
 
-1. ~~Rotate passwords~~ **Resolved differently, 2026-11-03:** quiz passwords go away entirely once the automatic Mastery Check gates are applied (`07-infrastructure/moodle-scripts/mastery-check-access/`). The test-account login password stays the same, by Jay's decision.
+1. ~~Rotate passwords~~ **Resolved differently, 2026-11-03:** static quiz passwords are replaced by an automatically rotating daily class code once the Mastery Check gates are applied (`07-infrastructure/moodle-scripts/mastery-check-access/`). The test-account login password stays the same, by Jay's decision.
 2. **When FoxCS no longer needs to be public, make it private** (GitHub, Settings, General, Danger Zone, Change visibility). Until then, see the audit's "While FoxCS is still public" list for the answer-key and licensed-file decisions.
 3. ~~Create the showcase repo~~ **Done 2026-11-03:** `https://github.com/jalex929/foxcs-showcase`, **public** (Jay's choice). First push is `c848e52`, on top of Jay's own initial commit. For later updates, edit `portfolio-showcase/` here, run its scanner and tests, then copy the changes into the showcase repo and push. Don't re-run `export_showcase.sh` against the existing repo (it refuses non-empty targets on purpose).
 4. **Set the GitHub About panel** on the new repo:

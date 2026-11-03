@@ -1,6 +1,7 @@
 <?php
-// apply-mastery-check-access.php -- replaces Mastery Check passwords with
-// automatic gates: lesson prerequisites + school network. DRY RUN by default.
+// apply-mastery-check-access.php -- one-time setup of the automatic Mastery
+// Check gates: lesson prerequisites + school network + daily class code.
+// DRY RUN by default.
 //
 // For every quiz named "... Mastery Check" in the course:
 //   - prerequisites: requires that lesson's Instruction (and Coding Exercise,
@@ -8,8 +9,11 @@
 //     Refuses any prerequisite with completion tracking off, since that would
 //     lock everyone out.
 //   - network: sets "Require network address" to --subnets (plus --test-ip).
-//   - password: cleared, and "ask your teacher for the password" sentences
-//     removed from the intro. (--keep-password to skip.)
+//   - class code: password set to today's class code, and the intro's old
+//     "ask your teacher for the password" sentences replaced with one line
+//     saying to enter today's class code, posted in class. From then on
+//     rotate-daily-class-code.php (cron) keeps the code current.
+//     (--no-class-code to leave the password and intro alone.)
 // Existing availability conditions are kept. Re-running is a no-op.
 //
 // Safety:
@@ -33,7 +37,8 @@ require_once(__DIR__ . '/mca_lib.php');
 
 [$options] = cli_get_params([
     'course' => '', 'subnets' => '', 'test-ip' => '', 'check-ip' => '', 'only-cmid' => 0,
-    'no-prereqs' => false, 'no-network' => false, 'keep-password' => false,
+    'no-prereqs' => false, 'no-network' => false, 'no-class-code' => false,
+    'secret-file' => '/etc/foxcs/class-code.secret',
     'apply' => false, 'i-ran-the-backup' => false,
     'backup-log' => '/home/jay/moodle-backups/backup.log',
     'snapshot-dir' => '/tmp', 'rollback' => '', 'help' => false,
@@ -82,6 +87,14 @@ if (!$options['no-network']) {
 }
 
 $course = $DB->get_record('course', ['shortname' => $options['course']], '*', MUST_EXIST);
+$code = null;
+if (!$options['no-class-code']) {
+    try {
+        $code = mca_daily_code(mca_load_secret($options['secret-file']), $course->shortname, mca_school_date(time()));
+    } catch (RuntimeException $e) {
+        cli_error($e->getMessage() . "\n(Use --no-class-code to set up the other gates without it.)");
+    }
+}
 if (!$options['no-prereqs'] && !$course->enablecompletion) {
     cli_error("Completion tracking is off for {$course->shortname}; prerequisites could never be met. Enable it or pass --no-prereqs.");
 }
@@ -104,7 +117,8 @@ foreach ($modinfo->sections as $sectionnum => $cmids) {
         [$prereqs, $problems] = $options['no-prereqs'] ? [[], []] : mca_find_prerequisites($section_cms, $scm['id']);
         $plan = mca_plan((array)$quiz, [
             'subnets' => $subnets,
-            'remove_password' => !$options['keep-password'],
+            'password' => $code,
+            'class_code_intro' => $code !== null,
             'prereq_cmids' => $prereqs,
             'availability' => $cm->availability,
         ]);
@@ -120,9 +134,11 @@ if (!$plans) {
 $changes = 0;
 foreach ($plans as $p) {
     echo "\n== {$p['quiz']->name} (cmid {$p['cm']->id})\n";
-    echo "   Students will see: " . mca_describe_for_student($p['names'], $subnets ?: ($p['quiz']->subnet ?: null)) . "\n";
+    echo "   Students will see: " . mca_describe_for_student($p['names'], $subnets ?: ($p['quiz']->subnet ?: null), $code !== null) . "\n";
     foreach ($p['plan']['quiz'] as $field => [$old, $new]) {
-        $shown = $field === 'password' ? ['(set)', '(none)'] : [$old === '' ? '(empty)' : $old, $new === '' ? '(empty)' : $new];
+        // Never print codes or old passwords: terminal history and session logs are not secret.
+        $shown = $field === 'password' ? [$old === '' ? '(none)' : '(old password)', "(today's class code)"]
+                                       : [$old === '' ? '(empty)' : $old, $new === '' ? '(empty)' : $new];
         echo "   {$field}: {$shown[0]}  ->  {$shown[1]}\n";
         $changes++;
     }

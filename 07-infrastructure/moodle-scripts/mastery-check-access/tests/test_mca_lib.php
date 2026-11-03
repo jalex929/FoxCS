@@ -140,24 +140,122 @@ check('intro: does not eat "passwords" substring words badly', mca_strip_passwor
 
 // ------------------------------------------------ planning
 $quiz = ['id' => 14, 'name' => '02.3 Mastery Check', 'password' => 'Kiwi63#', 'subnet' => '', 'intro' => '<p>4 questions. Ask your teacher for the password.</p>'];
-$plan = mca_plan($quiz, ['subnets' => '10.20.30.0/24', 'remove_password' => true, 'prereq_cmids' => [20, 21], 'availability' => null]);
+$plan = mca_plan($quiz, ['subnets' => '10.20.30.0/24', 'password' => '482913', 'class_code_intro' => true, 'prereq_cmids' => [20, 21], 'availability' => null]);
 check('plan: subnet set', $plan['quiz']['subnet'], ['', '10.20.30.0/24']);
-check('plan: password cleared', $plan['quiz']['password'], ['Kiwi63#', '']);
-check('plan: intro rewritten', $plan['quiz']['intro'][1], '<p>4 questions.</p>');
+check('plan: password becomes today\'s code', $plan['quiz']['password'], ['Kiwi63#', '482913']);
+check('plan: intro rewritten for class code', $plan['quiz']['intro'][1], '<p>4 questions.</p><p>' . MCA_CODE_SENTENCE . '</p>');
 check('plan: availability added', $plan['availability'][0], null);
-$applied = ['id' => 14, 'name' => '02.3 Mastery Check', 'password' => '', 'subnet' => '10.20.30.0/24', 'intro' => '<p>4 questions.</p>'];
-$again = mca_plan($applied, ['subnets' => '10.20.30.0/24', 'remove_password' => true, 'prereq_cmids' => [20, 21], 'availability' => $plan['availability'][1]]);
+$applied = ['id' => 14, 'name' => '02.3 Mastery Check', 'password' => '482913', 'subnet' => '10.20.30.0/24', 'intro' => $plan['quiz']['intro'][1]];
+$again = mca_plan($applied, ['subnets' => '10.20.30.0/24', 'password' => '482913', 'class_code_intro' => true, 'prereq_cmids' => [20, 21], 'availability' => $plan['availability'][1]]);
 check('plan: re-running is a no-op', $again, ['quiz' => [], 'availability' => null]);
-$keep = mca_plan($quiz, ['subnets' => null, 'remove_password' => false, 'prereq_cmids' => [], 'availability' => null]);
+$keep = mca_plan($quiz, ['subnets' => null, 'password' => null, 'class_code_intro' => false, 'prereq_cmids' => [], 'availability' => null]);
 check('plan: nothing requested, nothing changes', $keep, ['quiz' => [], 'availability' => null]);
 
 // ------------------------------------------------ student-facing description and backup gate
 check('describe: both gates', mca_describe_for_student(['02.3 Instruction'], '10.0.0.0/8'), 'Unlocks after you complete: 02.3 Instruction. Can only be taken at school.');
 check('describe: no gate', mca_describe_for_student([], null), 'Open to everyone (no gate).');
+check('describe: with class code', mca_describe_for_student([], '10.0.0.0/8', true), "Needs today's class code, posted in class. Can only be taken at school.");
 check('backup: recent', mca_backup_is_recent(1000, 1500), true);
 check('backup: stale', mca_backup_is_recent(1000, 1000 + 3601), false);
 check('backup: missing log', mca_backup_is_recent(null, 1500), false);
 check('backup: future mtime is suspicious', mca_backup_is_recent(2000, 1500), false);
+
+// ------------------------------------------------ daily class code
+$secret = str_repeat('k', 40);
+$today = mca_daily_code($secret, 'foxcs-python', '2026-11-03');
+check('code: six digits', (bool)preg_match('/^\d{6}$/', $today), true);
+check('code: deterministic', mca_daily_code($secret, 'foxcs-python', '2026-11-03'), $today);
+check('code: course name is case-insensitive', mca_daily_code($secret, 'FOXCS-PYTHON', '2026-11-03'), $today);
+check("code: yesterday's code is different", mca_daily_code($secret, 'foxcs-python', '2026-11-02') !== $today, true);
+check('code: tomorrow differs', mca_daily_code($secret, 'foxcs-python', '2026-11-04') !== $today, true);
+check('code: other course differs', mca_daily_code($secret, 'foxcs-seminar3', '2026-11-03') !== $today, true);
+check('code: other secret differs', mca_daily_code(str_repeat('j', 40), 'foxcs-python', '2026-11-03') !== $today, true);
+$year = array_column(mca_code_calendar($secret, 'foxcs-python', '2026-08-01', 366), 'code');
+$clash = 0;
+foreach ($year as $i => $code) {
+    for ($back = 1; $back <= 9 && $i - $back >= 0; $back++) {
+        $clash += $code === $year[$i - $back] ? 1 : 0;
+    }
+}
+check('code: never matches any of the previous 9 days, all year', $clash, 0);
+foreach (['a', 'b', 'c', 'd', 'e'] as $sfx) {
+    $s2 = str_repeat($sfx, 40);
+    $prev = null;
+    $bad = 0;
+    foreach (mca_code_calendar($s2, 'foxcs-python', '2026-08-01', 366) as $row) {
+        $bad += $row['code'] === $prev ? 1 : 0;
+        $prev = $row['code'];
+    }
+    check("code: consecutive days always differ (secret {$sfx})", $bad, 0);
+}
+// Secret loading
+$dir = sys_get_temp_dir() . '/mca_test_' . getmypid();
+@mkdir($dir);
+file_put_contents("{$dir}/ok", str_repeat('s', 64) . "\n");
+chmod("{$dir}/ok", 0640);
+check('secret: loads and trims', mca_load_secret("{$dir}/ok"), str_repeat('s', 64));
+foreach ([
+    'missing file' => ["{$dir}/nope", null, null],
+    'world-readable' => ["{$dir}/open", str_repeat('s', 64), 0644],
+    'too short' => ["{$dir}/short", 'abc', 0640],
+] as $label => [$path, $content, $mode]) {
+    if ($content !== null) {
+        file_put_contents($path, $content);
+        chmod($path, $mode);
+    }
+    $threw = false;
+    try { mca_load_secret($path); } catch (RuntimeException $e) { $threw = true; }
+    check("secret: refuses {$label}", $threw, true);
+}
+array_map('unlink', glob("{$dir}/*"));
+rmdir($dir);
+
+// The guarantee itself: the last digit advances by exactly 1 each day (mod 10),
+// so two codes less than 10 days apart can never be equal.
+$prevdigit = null;
+$steps_ok = true;
+foreach (mca_code_calendar($secret, 'foxcs-python', '2026-12-25', 20) as $row) {
+    $d = (int)substr($row['code'], -1);
+    if ($prevdigit !== null && $d !== ($prevdigit + 1) % 10) {
+        $steps_ok = false;
+    }
+    $prevdigit = $d;
+}
+check('code: day digit steps by one each day (incl. year boundary)', $steps_ok, true);
+$threw = false;
+try { mca_daily_code($secret, 'c', '2026-01-01', 1); } catch (InvalidArgumentException $e) { $threw = true; }
+check('code: one-digit codes refused', $threw, true);
+$threw = false;
+try { mca_daily_code('short', 'foxcs-python', '2026-11-03'); } catch (InvalidArgumentException $e) { $threw = true; }
+check('code: short secret refused', $threw, true);
+$threw = false;
+try { mca_daily_code($secret, 'foxcs-python', '11/03/2026'); } catch (InvalidArgumentException $e) { $threw = true; }
+check('code: malformed date refused', $threw, true);
+check('code: leading zeros kept', strlen(mca_daily_code($secret, 'c', '2026-01-01', 6)), 6);
+
+// The day boundary is midnight in Chicago, not UTC: 03:00 UTC on Nov 4 is still Nov 3 at school.
+check('school date: evening UTC rollover stays Chicago date', mca_school_date(strtotime('2026-11-04T03:00:00Z')), '2026-11-03');
+check('school date: after Chicago midnight', mca_school_date(strtotime('2026-11-04T06:30:00Z')), '2026-11-04');
+check('school date: across DST change (Nov 1 2026)', mca_school_date(strtotime('2026-11-01T05:30:00Z')), '2026-11-01');
+
+$cal = mca_code_calendar($secret, 'foxcs-python', '2026-11-06', 3);
+check('calendar: dates and weekdays for sub plans', array_map(fn($r) => $r['date'] . ' ' . $r['weekday'], $cal),
+    ['2026-11-06 Friday', '2026-11-07 Saturday', '2026-11-08 Sunday']);
+check('calendar: codes match daily_code', $cal[0]['code'], mca_daily_code($secret, 'foxcs-python', '2026-11-06'));
+
+check('rotation: only stale quizzes updated', mca_rotation_targets(
+    [['id' => 1, 'password' => $today], ['id' => 2, 'password' => 'old'], ['id' => 3, 'password' => '']], $today), [2, 3]);
+check('rotation: nothing to do', mca_rotation_targets([['id' => 1, 'password' => $today]], $today), []);
+check("rotation: yesterday's code is replaced", mca_rotation_targets(
+    [['id' => 9, 'password' => mca_daily_code($secret, 'foxcs-python', '2026-11-02')]], $today), [9]);
+
+check('notify: first run of the day', mca_should_notify('2026-11-02', '2026-11-03'), true);
+check('notify: already sent today', mca_should_notify('2026-11-03', '2026-11-03'), false);
+check('notify: never sent', mca_should_notify(null, '2026-11-03'), true);
+
+$intro = mca_intro_for_class_code('<p>4 questions. Ask your teacher for the password.</p>');
+check('intro: code sentence replaces password line', $intro, '<p>4 questions.</p><p>' . MCA_CODE_SENTENCE . '</p>');
+check('intro: class-code rewrite is idempotent', mca_intro_for_class_code($intro), $intro);
 
 echo $failures ? "\n{$failures} of {$count} checks FAILED\n" : "OK: {$count} checks passed\n";
 exit($failures ? 1 : 0);
