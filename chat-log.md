@@ -22,7 +22,9 @@ Newest entries at the top, grouped by day.
 
 **Done this session:** `portfolio-showcase/` (sanitized grader + synthetic fixtures, eval harness, leak scanner, CI, 7 docs), `export_showcase.sh` (fresh-history export), the audit, `rag-integration-notes.md`. See `decisions-log.md` and `worklog.md`'s matching entries.
 
-**Open, waiting on Jay (session tools can't do these):** make FoxCS private; rotate quiz/test-account passwords; create the empty `foxcs-showcase` GitHub repo and run the export; About-panel text, screenshots, license choice. All listed in `00-project-overview/portfolio-prep/README.md`.
+**Jay, mid-session:** "Let's build in more tests for this too. And at some point I will not have to keep FoxCS public." -> Added 57 more showcase tests (112 total) plus a FoxCS-side CI workflow. Reframed the audit: FoxCS **stays public for now**, so password rotation becomes the first priority, and going private is a later step.
+
+**Open, waiting on Jay (session tools can't do these):** rotate passwords first; make FoxCS private once it no longer needs to be public; decide on answer keys and licensed files while it's public; rotate quiz/test-account passwords; create the empty `foxcs-showcase` GitHub repo and run the export; About-panel text, screenshots, license choice. All listed in `00-project-overview/portfolio-prep/README.md`.
 
 ## 2026-09-08 (session, backfilled) — Interactivity policy set, then executed on Seminar III Lesson 2; one student account fixed
 

@@ -6,9 +6,18 @@
 
 **`jalex929/FoxCS` is a public repository right now** (confirmed 2026-11-03: the unauthenticated GitHub API returns it). That matters well beyond portfolio prep. Everything below can be read today by anyone, students included, and this repo's own `CLAUDE.md` ("Protecting Assessment Content") assumes students will never see assessment content.
 
-**Recommended first action, Jay only (no tool in this session can do it):** GitHub, FoxCS repo, Settings, General, Danger Zone, **Change visibility to Private**. That one step closes the current exposure for every category below. A history rewrite is then only needed if the repo will ever be made public again. If it stays private, a rewrite isn't needed.
+**Update, same day, per Jay:** FoxCS needs to stay public for now, and can go private "at some point." So the plan has two phases:
 
-Making it private does not undo past exposure (forks, clones, caches, and anything already indexed). That's why the passwords in item 2 still need rotating either way.
+**While FoxCS is still public (mitigations that work without changing visibility):**
+
+1. **Rotate every live quiz password and the Moodle test-account password** (item 2). This is the highest-value step: those passwords protect live assessments today, and rotating them makes the copies in source and git history worthless. Do it before the next Mastery Check opens.
+2. **Stop committing new secrets.** Have new build scripts read quiz passwords from a git-ignored config file or environment variable on the droplet, not a literal in the script. A session can make this change on request. It's a scripts-only change.
+3. **Decide about answer keys** (item 3). Options: (a) accept the risk until private, (b) move `teacher-materials/` and `*_KEY.md` files to a private location (they stay in git history, but are no longer one click away), or (c) rely on the Mastery Check password plus the 3-attempt average to limit the damage. Jay's call.
+4. **Decide about licensed files** (item 1). Same trade-off: deleting them from the current tip makes them much less discoverable, but they stay in history. Only Jay can weigh that against whatever currently depends on them being in the repo.
+
+**When it can go private:** GitHub, FoxCS repo, Settings, General, Danger Zone, **Change visibility to Private**. That closes the remaining exposure for every category below. A history rewrite is only needed if FoxCS is ever made public again after that.
+
+Neither phase undoes past exposure (forks, clones, caches, anything already indexed), which is why rotation (step 1) comes first.
 
 ## Findings
 
@@ -61,7 +70,7 @@ The docs are careful (good), but say so precisely in interviews: pseudonymous us
 - Built `portfolio-showcase/`: a sanitized, self-contained public version with synthetic data only. It shares no files with the categories above.
 - Added `portfolio-showcase/tools/check_showcase_clean.py`, which fails CI if any category above shows up in the showcase. Run against this repo's `05-grader/` as a sanity check, it flags 45 findings (as expected).
 - Added `export_showcase.sh`, which creates the new repo with **fresh history**, so nothing above can be recovered from the showcase's git log.
-- **Not done (needs Jay):** changing FoxCS visibility, rotating passwords, any history rewrite, and any deletion from this repo. None of these were attempted.
+- **Not done (needs Jay):** changing FoxCS visibility (it stays public for now, per Jay), rotating passwords, any history rewrite, and any deletion from this repo. None of these were attempted.
 
 ## If FoxCS must ever become public again
 

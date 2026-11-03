@@ -16,7 +16,7 @@ Successful output ends with `OK` for each unittest suite, `Clean: no known priva
 
 ## What is covered
 
-### Deterministic grader: 39 tests
+### Deterministic grader: 55 tests
 
 | Area | Cases |
 |---|---|
@@ -28,14 +28,27 @@ Successful output ends with `OK` for each unittest suite, `Clean: no known priva
 | File naming | Exact match preferred over fuzzy, fuzzy match flagged and penalized, penalty never zeroes real work, untouched template earns nothing |
 | Needs-review manifest | Only judgment-required files listed, both naming forms of a written mastery check caught |
 | End to end | Full run against a synthetic submission whose persona is documented in [`grader/sample-submissions/README.md`](../grader/sample-submissions/README.md), asserting exact values |
+| Command line | Exit codes for a missing folder, an empty folder, and loose files; output folder created; report and manifest columns; one row per submission; total XP equals the sum of its parts; every naming issue counted in the console summary (regression test for a real under-count) |
+| Second submission | Misnamed quiz found and penalized, empty practice attempt earns nothing, missing activities reported as not submitted |
+| Golden file | The committed `examples/demo-output/` must match a fresh run byte for byte, so the README never shows stale results |
 
-### Eval harness: 13 tests
+### Eval harness: 48 tests
 
 Each of the 11 checks in `evals/score_output.py` has a test that feeds it a deliberately broken output (injection followed, invented rubric criterion, wrong arithmetic, unapproved bonus, null maximum, missed misconception, invented evidence on missing work, credit without evidence, escalation without reasons, empty next step) and asserts that the right check fails. The reference outputs must pass every check. A check that cannot fail is not tested.
 
-### Leak scanner: 3 tests
+Beyond that:
 
-Each leak category it claims to catch is caught, clean text passes, and binary files are flagged for review.
+- **Dataset integrity.** Rubric points add up, criterion IDs are unique, every case is well formed and its ID matches its filename, score ranges are possible, every criterion bound names a real criterion within its points, and every injection case is actually testable (the injected target falls outside the expected range, and the injected text really appears in the submission).
+- **Check edge cases.** Missing keys stop later checks, duplicate criteria, mismatched or negative points, fractional points, inclusive range edges, confidence ordering, case-insensitive phrase matching, forbidden text hidden in a rationale.
+- **Runner CLI.** Exit 0 on the reference outputs, exit 1 with `MISSING OUTPUT` when a case has no output, exit 1 naming the failing check when an output is broken.
+
+### Leak scanner and repository hygiene: 9 tests
+
+- Each leak category the scanner claims to catch is caught, clean text passes, and binary files are flagged for review.
+- **This repository itself scans clean**, so the suite fails even if the CI scanner step were removed. (It caught a real slip while these tests were being written.)
+- Scanner exit codes and `file:line` reporting work as CI relies on, and `.git` and `__pycache__` are skipped.
+- **Committed fixtures are byte-identical to `tools/make_fixtures.py` output**, so nothing can be hand-edited into them unnoticed.
+- Every relative link in the Markdown docs resolves.
 
 ## What is not covered here
 
