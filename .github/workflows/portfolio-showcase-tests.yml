@@ -32,10 +32,10 @@ jobs:
         run: python tools/check_showcase_clean.py
       - name: Grader tests
         run: python -m unittest discover -s grader/tests -v
-      - name: On-submission grader at 100% line and branch coverage
+      - name: On-submission grader and release check at 100% line and branch coverage
         run: |
           python -m pip install --quiet coverage==7.6.1
-          python -m coverage run --branch --include=grader/on_submission.py -m unittest discover -s grader/tests
+          python -m coverage run --branch --include=grader/on_submission.py,grader/release_check.py -m unittest discover -s grader/tests
           python -m coverage report -m --fail-under=100
       - name: Eval harness tests
         run: python -m unittest discover -s evals/tests -v
@@ -58,3 +58,18 @@ jobs:
           cd "$RUNNER_TEMP/foxcs-showcase"
           test "$(git rev-list --count HEAD)" -eq 1
           test -z "$(git ls-files | grep -iE '\.pdf$|starter context|teacher-materials' || true)"
+
+  mutation:
+    # Same gate as the showcase repo: no unexplained surviving mutants.
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: portfolio-showcase
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Mutation testing
+        run: python tools/mutation_test.py --jobs 4

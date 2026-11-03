@@ -1,5 +1,22 @@
 # Grader
 
+## Before every bulk grade push: run the release check (added 2026-11-03)
+
+Per Jay: grading is approved in bulk. He reads the notes/rationale, checks the criteria are right and the grading trends look strong, then approves the whole push without re-checking every grade. So each result has to be checked mechanically first:
+
+```bash
+python portfolio-showcase/grader/release_check.py --outputs <batch>/outputs --rubrics <batch>/rubrics \
+    --submissions <batch>/submissions [--drafts <on-submission drafts.jsonl>] --out-dir <batch>
+```
+
+- **Requires structured results:** one JSON per submission in `feedback-and-grading-spec.md` Section 20's format, plus `submission_id`, `student_id` (codename), and `assignment_id`. Grading sessions should write these to `<batch>/outputs/` rather than only narrative feedback.
+- **Blocked results (exit 1):** wrong or missing rubric criteria, bad arithmetic, an unapproved bonus, credit without evidence, evidence quoting code that isn't in the submission, or a grade contradicting the program run. Fix these before any push.
+- **Needs review:** the rationale disagrees with the score, praise doesn't fit the score, the grader asked for review, or identical feedback appears on different scores. Read these individually.
+- **Spot check:** read the 3 listed results in full every batch. Agreement on these is the evidence that bulk approval is safe.
+- **Then bulk-approve** whatever `release_manifest.csv` marks ready (plus the reviewed items).
+
+The tool lives in `portfolio-showcase/grader/` so the public showcase and this workflow share one tested copy (100% line and branch coverage, mutation-tested). See `portfolio-showcase/docs/release-check.md`.
+
 ## Architecture, decided 2026-08-18: two tiers, two machines
 
 Jay's teacher machine (school) has cmd/PowerShell and Python, but **no Claude Code, no ChatGPT, no Claude products** — Copilot only, and Jay wants to avoid relying on it. Jay's home machine has Claude Code. The grading design splits along exactly that line, and it turns out to split cleanly along a line the content already has:

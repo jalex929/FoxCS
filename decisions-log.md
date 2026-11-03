@@ -2011,3 +2011,18 @@ Per Jay: "Not that it leaked. It just was not scalable to have self paced and be
 Built and unit-tested (111 checks), not applied live.
 
 **Same day, per Jay:** the daily class code is "an important shift in a good direction" and should be ready to implement in FoxCS on return to work. Jay asked to merge into `main` on both repos. foxcs-showcase PR #1 (the class-code write-up) was merged. FoxCS PR #1 (portfolio prep, on-submission grading, class code) was merged into `main` once CI passed. **Still not applied to live Moodle.** The Return-to-work checklist in `07-infrastructure/moodle-scripts/mastery-check-access/README.md` is the pickup point.
+
+## 2026-11-03 -- Bulk grade approval is the real practice; a release check and mutation testing back it
+
+Per Jay: he approves AI-assisted grades in bulk. He reads the notes/rationale, checks the criteria are right and the trends look strong, then pushes the batch without re-checking every grade. **Docs that said "the teacher reviews every result" were wrong and are corrected** (showcase docs, the case study diagram and text).
+
+**Decided:**
+- **`release_check.py` runs before every bulk push.** It is a hard gate (exit 1 on anything blocked).
+  - **Blocked:** rubric mismatch, arithmetic, an unapproved bonus, credit without evidence, evidence quoting code not in the submission, or a grade contradicting the on-submission program run.
+  - **Needs review:** the score and rationale disagree, praise doesn't fit the score, the grader escalated, or the same feedback appears on different scores.
+  - **Spot check:** 3 ready results per batch (seeded from the batch, spread across low, middle and high scores) are read in full. That is what keeps "the rationale aligns, so the grade is right" honest.
+- **Workflow change:** grading sessions write one Section 20 JSON per submission (plus submission_id/student_id/assignment_id) to `<batch>/outputs/`, so the check can run. Documented in `05-grader/README.md`.
+- **One copy of the tool:** it lives in `portfolio-showcase/grader/` and FoxCS calls it by path, so the tested public copy and the working copy can't drift.
+- **Mutation testing (`tools/mutation_test.py`, stdlib)** is a CI gate on on_submission, release_check and score_output: no unexplained survivors, with equivalents listed with reasons in `tools/mutation_equivalents.json`.
+  - **First runs at 100% coverage:** 88.7% / 83.0% / 90.5%. **Now:** 100% / 100% / 100%. Six documented equivalents.
+  - **It found:** untested behavior (e.g. a 1-point credit without evidence would have passed), removable dead code, and a key-collision bug in the tester itself.

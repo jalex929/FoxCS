@@ -1118,3 +1118,11 @@ No live Moodle changes. Repo-only work on branch `claude/foxcs-portfolio-prep-r9
 - Tests: 111 checks. A mutation (day digit removed) is caught by the direct step-by-one test.
 
 **Pick up here (class code rollout):** `07-infrastructure/moodle-scripts/mastery-check-access/README.md` -> "Return-to-work checklist". New `setup-droplet.sh` handles server setup (install to `/opt/foxcs`, secret at `/etc/foxcs/class-code.secret` root:www-data 640, never overwritten, optional cron). It defaults to a dry run and is tested end to end by `tests/test_setup_droplet.sh` (run with sudo in CI). Nothing has run on the droplet yet. foxcs-showcase `main` now has `docs/assessment-access-design.md`.
+
+**Release check + mutation testing (2026-11-03, later).**
+- **New in `portfolio-showcase/`:** `grader/release_check.py` with 68 tests at 100% line+branch coverage, and `docs/release-check.md`.
+- **Also new:** `tools/mutation_test.py`, `tools/mutation_equivalents.json`, and `tools/tests/test_mutation_test.py` (15 tests) with a sample module + strong/weak suites in `tools/tests/mutation_sample/`.
+- **Changed:** `on_submission.py` (removed redundant `text=True` and `sort_keys`), `test_on_submission.py` (46 tests), and `evals/tests/test_check_edge_cases.py` (gap tests).
+- **Showcase totals:** 247 tests. Mutation testing runs in about 80s locally at `--jobs 6`.
+- **CI:** both the showcase `tests.yml` and FoxCS `portfolio-showcase-tests.yml` gained a `mutation` job, and the coverage gate now covers release_check too.
+- **Docs and FoxCS side:** showcase docs corrected for bulk approval. `05-grader/README.md` now documents the release check as the step before every bulk push.
