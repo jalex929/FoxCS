@@ -1990,3 +1990,5 @@ Per Jay: passwords handed out in person "was not sustainable," and the build sho
 **Built, not applied:** `07-infrastructure/moodle-scripts/mastery-check-access/` (pure `mca_lib.php` + 75-check PHP test + CI workflow; three droplet CLI scripts, dry-run default, backup-gated, rollback snapshot, idempotent). Canonical doc (`mastery-check-standards.md`), CLAUDE.md Purpose, and REPO_MAP Known Tensions are updated.
 
 **Known gap, flagged not built:** make-ups in a different period would be zeroed by the bell-schedule backstop, which has no excused-attempts list yet.
+
+**Same day, per Jay:** the Moodle test-account login password stays the same (not rotated), despite appearing in the public repo. It's a test student account. Don't re-raise it as a to-do.
