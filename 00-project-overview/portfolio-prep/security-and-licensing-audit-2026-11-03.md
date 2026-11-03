@@ -63,9 +63,9 @@ Deliberately listed by folder, not file, while the repo is still public. To get 
 
 Server IP addresses in `decisions-log.md` and `worklog.md`, the live domain, absolute server paths, DB table names, the backup location, and the cron schedule. Each is low risk alone. Together they're a map of the live student system.
 
-### 6. Student-data handling claims (interview risk, not a leak)
+### 6. Student-data handling claims (accuracy, not a leak)
 
-The docs are careful (good), but say so precisely in interviews: pseudonymous usernames reduce risk but are not anonymity. Real submissions have gone to an AI tool during grading passes. `codename-policy.md` already flags that SOPPA compliance hasn't been confirmed with the district privacy officer. Don't describe the system as "compliant" until that's done.
+The docs are careful (good), and any description of the system should stay that precise: pseudonymous usernames reduce risk but are not anonymity. Real submissions have gone to an AI tool during grading passes. `codename-policy.md` already flags that SOPPA compliance hasn't been confirmed with the district privacy officer. Don't describe the system as "compliant" until that's done.
 
 ## What was done this session
 

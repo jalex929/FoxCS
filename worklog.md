@@ -1126,3 +1126,11 @@ No live Moodle changes. Repo-only work on branch `claude/foxcs-portfolio-prep-r9
 - **Showcase totals:** 247 tests. Mutation testing runs in about 80s locally at `--jobs 6`.
 - **CI:** both the showcase `tests.yml` and FoxCS `portfolio-showcase-tests.yml` gained a `mutation` job, and the coverage gate now covers release_check too.
 - **Docs and FoxCS side:** showcase docs corrected for bulk approval. `05-grader/README.md` now documents the release check as the step before every bulk push.
+
+**Showcase review-readiness pass (2026-11-03, later).**
+- **Model runner:** `evals/run_model.py` grades the eval cases with Claude (`claude-opus-5-5`, effort high, strict JSON-schema structured output, `fallbacks: "default"`, cacheable system prompt; the case expectations are never sent). It records usage and cost and measures score spread across `--repeats`. 27 tests with a fake client. Prompt snapshots live in `evals/tests/snapshots/` (`tools/update_prompt_snapshots.py`). 100% coverage and mutation score. Not yet run against the real API: that needs Jay's key.
+- **Release-check demo:** `examples/release-check/` (`tools/make_release_example.py`, golden-tested): 8 results, 1 blocked, 4 review, 3 ready.
+- **Lint:** `ruff.toml` (E/W/F/I/B/UP/SIM/RUF; fixtures excluded), clean, in CI.
+- **Docs:** `docs/decisions.md` (8 decisions), a README "Start here" tour, and test counts updated (275 total).
+- **Mutation testing found a flaky test:** the release check's seed test used a 6-result batch, so a random draw could match by chance. Fixed with a 30-result batch plus a precondition, and an explicit `if` instead of `or`.
+- **Per Jay:** no interview-prep material in either repo. Removed the "Interview framing notes" section from `00-project-overview/portfolio-prep/README.md` and reworded two audit lines.
