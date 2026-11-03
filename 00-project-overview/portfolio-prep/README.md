@@ -30,7 +30,7 @@ The showcase content itself lives at the repo root in `portfolio-showcase/`, so 
 
 1. **Rotate passwords** for live Mastery Check quizzes and the Moodle test account. They've been publicly readable, and FoxCS is staying public for now, so this is the most important item here.
 2. **When FoxCS no longer needs to be public, make it private** (GitHub, Settings, General, Danger Zone, Change visibility). Until then, see the audit's "While FoxCS is still public" list for the answer-key and licensed-file decisions.
-3. **Create the showcase repo:** an empty GitHub repo named `foxcs-showcase` (no README or license). Sessions can't create GitHub repos, but once it exists a session can attach it, run `export_showcase.sh`, and push it. Just ask.
+3. ~~Create the showcase repo~~ **Done 2026-11-03:** `https://github.com/jalex929/foxcs-showcase`, **public** (Jay's choice). First push is `c848e52`, on top of Jay's own initial commit. For later updates, edit `portfolio-showcase/` here, run its scanner and tests, then copy the changes into the showcase repo and push. Don't re-run `export_showcase.sh` against the existing repo (it refuses non-empty targets on purpose).
 4. **Set the GitHub About panel** on the new repo:
    - Description: `Live Moodle learning platform with a hybrid assessment pipeline: deterministic grading, AI-assisted feedback, teacher approval gate, and an eval harness for AI grading outputs.`
    - Website: `https://www.jayfox.design` (or the case-study page once it exists)
