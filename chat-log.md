@@ -14,6 +14,32 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-11-03 -- Portfolio prep: sanitized public showcase, exposure audit, RAG notes
+
+**Context from Jay:** preparing FoxCS for job interviews (AI engineering roles). Shared a ChatGPT portfolio-readiness review with 7 recommendations plus a long section on how RAG could fit FoxCS. Asked for: a cleaned-up copy, potentially a new repo, with **no Certiport/GMetrix content and no codenames**; some of the review's cleanup changes made; and the RAG notes documented here for later.
+
+**Found right away (reported to Jay, not acted on):** `jalex929/FoxCS` is **public** (unauthenticated GitHub API returns it). Licensed workbooks/support files, live Mastery Check quiz passwords, a test-account password, and answer keys are all publicly readable. See `00-project-overview/portfolio-prep/security-and-licensing-audit-2026-11-03.md`.
+
+**Done this session:** `portfolio-showcase/` (sanitized grader + synthetic fixtures, eval harness, leak scanner, CI, 7 docs), `export_showcase.sh` (fresh-history export), the audit, `rag-integration-notes.md`. See `decisions-log.md` and `worklog.md`'s matching entries.
+
+**Jay, mid-session:** "Let's build in more tests for this too. And at some point I will not have to keep FoxCS public." -> Added 57 more showcase tests (112 total) plus a FoxCS-side CI workflow. Reframed the audit: FoxCS **stays public for now**, so password rotation becomes the first priority, and going private is a later step.
+
+**Jay:** "I want to speak to auto grading on submission so I want to add that in too with 100% test coverage for that part of the tool." -> Built `portfolio-showcase/grader/on_submission.py` (implemented, not deployed), 100% line and branch coverage enforced in CI.
+
+**Jay:** "Do I need to manually make the showcase repo or can you?" -> Answered: sessions can't create GitHub repos (that tool is off-limits here). Jay creates an empty `foxcs-showcase` repo, then a session can attach it (`add_repo`, push access), run the export, and push.
+
+**Jay created `jalex929/foxcs-showcase`**, then asked to attach it and make "the repo" private. -> Attached. Sessions can't change visibility. Checked: both FoxCS and foxcs-showcase were actually public. Held the push and asked. **Jay: "I'd rather it stay public."** -> Pushed the showcase (`c848e52`) to public `foxcs-showcase`.
+
+**Jay:** wants an alternative to quiz passwords: a request-access button he approves, or the password sent by Moodle message. Then clarified: "I am looking to make something strong not necessarily be married to having to manually give them to students as they ask me in person. This was not sustainable." -> Flagged the conflict with the 2026-09-14 rule (Mastery Checks are not password- or time-gated, so substitute days never block the class). Proposed automatic, no-manual gates instead: quiz "Require network address" (school IP range), completion prerequisites, per-period group open/close (or a custom bell-schedule availability plugin), and no shared password at all. **Jay:** "I want to build this based on what would be a strong direction to move for classroom facilitation." Then: "this is ok conceptually but I can't test it on my local network with that concept." -> Built it with a test mode: the allowed network is a parameter, and `--test-ip` adds his home address in the sandbox course. That tests both directions (allowed, then blocked) from home. See `07-infrastructure/moodle-scripts/mastery-check-access/README.md`.
+
+**Jay:** "Should we remove the password gate for this or is it stronger to show password protection?" -> Recommended removing a static password, and offered a daily class code as the version that works. **Jay:** "Not that it leaked. It just was not scalable to have self paced and be manually giving passwords to students. I like a daily class code instead of a password... having the code match the day... if they use yesterday's code today they will not be able to take the exam. This should be the direction we go." -> Built it (see `decisions-log.md`). Corrected the docs that framed the motivation as a leak.
+
+**Jay:** "add the class code write-up to the showcase" -> `docs/assessment-access-design.md` in `foxcs-showcase` (PR #1 there). **Jay:** "I do also want to implement the daily class code into the FoxCS original for when I return to work... an important shift in a good direction." -> Added `setup-droplet.sh` (one-time server setup, tested in CI) and a Return-to-work checklist at the top of the mastery-check-access README. **Jay:** "Go ahead and merge any changes into main on both repos, particularly the foxcs-showcase repo." -> Merged foxcs-showcase PR #1 (squash, `3d4addc`). FoxCS PR #1 merged after CI on the final commit.
+
+**Jay:** "Let's keep the login password the same." -> Recorded as a decision: the Moodle test-account login password stays as is. No longer a to-do.
+
+**Open, waiting on Jay (session tools can't do these):** run the Mastery Check gates sandbox test from a droplet session (replaces quiz-password rotation); make FoxCS private once it no longer needs to be public; decide on answer keys and licensed files while it's public; About-panel text, screenshots, license choice on `foxcs-showcase`. All listed in `00-project-overview/portfolio-prep/README.md`. All listed in `00-project-overview/portfolio-prep/README.md`.
+
 ## 2026-09-08 (session, backfilled) — Interactivity policy set, then executed on Seminar III Lesson 2; one student account fixed
 
 **Context from Jay:** While reviewing recent work, flagged that Seminar III Lesson 2's Check listed multiple-choice answers as static text instead of letting students actually select one. Investigation traced this to the whole `printable-sheets/` HTML→PDF pipeline (no way to interact, only ever deployed as a flat PDF resource).

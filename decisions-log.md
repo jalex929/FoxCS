@@ -1948,3 +1948,66 @@ Per Jay directly, prompted by the real gap found while grading Unit 01's Coding 
 **New pre-publish requirement:** added as item 6 to `CLAUDE.md`'s "Publishing Live Content — Pre-Publish Checklist" — no Coding Exercise goes live without a rubric file.
 
 **Not applied retroactively without direction:** the 2026-09-14 grading pass clearing Unit 01's Coding Exercise backlog was done (or already in progress) before this doc existed, using self-derived per-lesson criteria. It doesn't need to be redone under this framework unless Jay says otherwise. Unit 01's 4 Coding Exercises still lack a real rubric file even after this decision — author one for each using this framework as a real follow-up task, separate from clearing the grading backlog.
+
+
+## 2026-11-03 -- Public portfolio = separate sanitized showcase repo with fresh history, not a cleanup of this repo
+
+Per Jay: FoxCS is going to be featured in job interviews, but the public version must carry no Certiport/GMetrix content and no codenames. Decided (following an outside review Jay shared, adapted to this repo):
+
+- **This repo stays the private operational workspace.** Nothing in it was deleted or rewritten for portfolio purposes.
+- **The public version is `portfolio-showcase/`, exported with `00-project-overview/portfolio-prep/export_showcase.sh` into a new repo with fresh history.** Copying into a new repo with history intact wouldn't help: past commits would still contain the licensed files and passwords.
+- **Codenames become `STUDENT-0001`-style synthetic IDs in the showcase, and "codename" becomes "pseudonymous student ID".** The real `PY1-A-...` format isn't published.
+- **The showcase's grader is a sanitized copy of `05-grader/school-side/auto_grade.py`** (identifiers and comments rewritten, logic identical), tested against new, fully synthetic fixtures. The real fixture (`PY1-A-DELTA04_...`) contains real lesson pages with embedded quiz passwords, so it was not reused.
+- **A leak scanner (`portfolio-showcase/tools/check_showcase_clean.py`) runs in the showcase's CI and fails on** vendor names/exam codes, the real pseudonym format, the word "codename", district emails/name, the live domain, IPs, hardcoded passwords, tokens, and any unexpected binary file.
+- **RAG: documented, deliberately not built** (`00-project-overview/portfolio-prep/rag-integration-notes.md`, public version `portfolio-showcase/docs/rag-roadmap.md`). If ever built, start with option A (retrieval-linked feedback), deterministic skill-ID retrieval first, as a separate lab. Licensed and assessment content never enter a retrieval corpus.
+- **The bonus-points Known Tension stays open** (Jay's call). The showcase documents the bonus path as "not active," and its eval harness rejects any output that applies a bonus.
+- **Status labels in public docs are deliberately conservative:** AI-assisted review is described as a teacher-operated workflow, not an unattended service. Compliance isn't claimed (SOPPA review still pending, per `codename-policy.md`).
+
+**Flagged as urgent, needs Jay (not decidable or doable from a session):** FoxCS is currently public. Recommended: make it private now, and rotate every quiz/test-account password that's been in source. A history rewrite is only needed if FoxCS itself is ever made public again.
+
+**Same day, amended per Jay:** FoxCS has to stay public for now ("at some point I will not have to keep FoxCS public"). So the audit's first priority is now **rotating the exposed quiz/test-account passwords**, not changing visibility. Going private is a later step. Answer keys and licensed files stay as-is pending Jay's call (options are listed in the audit). Also per Jay: more tests. The showcase now has 112 tests, and a FoxCS-side workflow (`.github/workflows/portfolio-showcase-tests.yml`) runs them and test-exports the showcase on every change, so drift is caught before export.
+
+**Same day, per Jay: on-submission auto-grading added to the showcase, at 100% coverage.** `portfolio-showcase/grader/on_submission.py` grades a single Coding Exercise upload using `02-authoring-system/coding-exercise-standards.md`'s 50% runs / 50% correct split and its three bands. Design calls made:
+- **`runs_with_issues` is always held for review.** The standard gives partial credit "depending on how close," which is judgment, so the deterministic score is a draft suggestion only. `flawless` and `does_not_run` are not held, since they're facts.
+- **Timeouts, invalid files, and missing exercise specs get no score**, matching the feedback spec's rule against scoring with a missing rubric configuration.
+- **Idempotent** by submission ID + SHA-256 of the contents (duplicate deliveries aren't re-run, resubmissions are regraded).
+- **Process limits are documented as not a security sandbox.** Going live needs a container (no network, non-root, read-only filesystem) plus a Moodle observer on `\mod_assign\event\assessable_submitted`. Neither is built. Status everywhere is "implemented, not deployed."
+- **Coverage gate:** `coverage --branch --fail-under=100` on `on_submission.py` in both the showcase CI and FoxCS's showcase workflow. The only exclusion is the `__main__` guard. It uses the `coverage` package in CI only. The module itself stays stdlib-only.
+- The exercise used (`coins_to_points`) is original, not the GMetrix 1.2.1 file that 02.6's real rubric uses.
+
+## 2026-11-03 -- Mastery Check gating: automatic gates only, never manual ones
+
+Per Jay: passwords handed out in person "was not sustainable," and the build should be "something strong," designed "based on what would be a strong direction to move for classroom facilitation." The first proposals (request-and-approve button, per-student password by Moodle message) were set aside because they keep the teacher in the loop. That is the exact sub-day problem the 2026-09-14 "no gates" rule was written to avoid.
+
+**Decided:** the line is *who has to act*. Gates that enforce themselves are fine; gates that need the teacher are not.
+- **School network:** native quiz "Require network address." The range comes from Moodle's own logs (`find-school-network.php`), not a guess.
+- **Lesson prerequisites:** native completion availability, shown to students. Honest limit: Instruction uses manual completion, so a student can self-mark it. This is a pacing nudge, not integrity.
+- **No passwords:** cleared on every Mastery Check, intros rewritten. This also makes the publicly exposed passwords meaningless, which replaces "rotate the passwords" as the fix.
+- **Backstop unchanged:** `check-submission-windows.py` and the 3-attempt average.
+- **Rejected:** SEB (client install, failed 2026-09-01), teacher-approval flows, per-student passwords.
+- **Testability, raised by Jay ("can't test it on my local network"):** the network is a parameter, and `--test-ip` adds his home address in `sandbox-adaptive-demo`, so both the allowed and blocked cases are testable from home before going live.
+
+**Built, not applied:** `07-infrastructure/moodle-scripts/mastery-check-access/` (pure `mca_lib.php` + 75-check PHP test + CI workflow; three droplet CLI scripts, dry-run default, backup-gated, rollback snapshot, idempotent). Canonical doc (`mastery-check-standards.md`), CLAUDE.md Purpose, and REPO_MAP Known Tensions are updated.
+
+**Known gap, flagged not built:** make-ups in a different period would be zeroed by the bell-schedule backstop, which has no excused-attempts list yet.
+
+**Same day, per Jay:** the Moodle test-account login password stays the same (not rotated), despite appearing in the public repo. It's a test student account. Don't re-raise it as a to-do.
+
+## 2026-11-03 -- Mastery Check gate direction: daily class code (supersedes "no passwords" from earlier the same day)
+
+Per Jay: "Not that it leaked. It just was not scalable to have self paced and be manually giving passwords to students. I like a daily class code instead of a password... having the code match the day... if they use yesterday's code today they will not be able to take the exam. This should be the direction we go." Earlier entries today framed the motivation partly as the public-repo exposure. **That framing was wrong: the reason is scalability.** Corrected in the docs.
+
+**Decided:**
+- **One code per course per day,** posted once per class. It's computed as HMAC-SHA256(server secret, course | Chicago date), 6 digits.
+- **The last digit is the day number mod 10,** so a code can never equal any of the previous 9 days' codes. "Yesterday's code fails" is guaranteed, not probabilistic, and tested directly.
+- **The day boundary is midnight Chicago time.** Digits only, which avoids Chromebook case and O/0 mistakes.
+- **The secret lives only on the droplet** (`/etc/foxcs/class-code.secret`, root:www-data 640). Scripts refuse a world-readable or short secret, and never log codes.
+- **Cron** `rotate-daily-class-code.php` runs every 10 minutes. It sets every Mastery Check's quiz password to today's code if stale, so a missed run self-heals. With `--notify`, it sends editing teachers a Moodle notification with the code once a day.
+- **The automated rotation relies on the nightly 3 AM backup**, not a manual backup per run, because it changes one field on a schedule. The one-time setup still follows the backup-first rule. Flag if Jay wants otherwise.
+- **`class-code.php --days=N`** prints codes for sub plans (no DB needed).
+- **The school network and prerequisite gates stay.** A shared code is worth little without being at school, in period, with the lesson done.
+- **Mid-attempt safety:** Moodle asks for the password at attempt start only, so a date change never kicks out a working student.
+
+Built and unit-tested (111 checks), not applied live.
+
+**Same day, per Jay:** the daily class code is "an important shift in a good direction" and should be ready to implement in FoxCS on return to work. Jay asked to merge into `main` on both repos. foxcs-showcase PR #1 (the class-code write-up) was merged. FoxCS PR #1 (portfolio prep, on-submission grading, class code) was merged into `main` once CI passed. **Still not applied to live Moodle.** The Return-to-work checklist in `07-infrastructure/moodle-scripts/mastery-check-access/README.md` is the pickup point.

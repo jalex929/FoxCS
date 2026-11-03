@@ -423,7 +423,7 @@ def main():
 
     naming_issue_count = sum(
         1 for row in report_rows
-        for key in ("vocab_quiz_naming_issue", "practice_naming_issue", "mastery_check_naming_issue", "feedback_naming_issue")
+        for key in ("vocab_quiz_naming_issue", "practice_naming_issue", "mastery_check_naming_issue", "feedback_naming_issue", "flashcards_naming_issue")
         if row.get(key)
     )
 

@@ -1,0 +1,30 @@
+name: Mastery Check access tests
+
+# Unit tests for the pure decision logic behind the automatic Mastery Check
+# gates (07-infrastructure/moodle-scripts/mastery-check-access/mca_lib.php).
+# No Moodle install and no live database: the Moodle-facing scripts are only
+# syntax-checked here.
+
+on:
+  push:
+    paths:
+      - '07-infrastructure/moodle-scripts/mastery-check-access/**'
+      - '.github/workflows/mastery-check-access-tests.yml'
+  pull_request:
+    paths:
+      - '07-infrastructure/moodle-scripts/mastery-check-access/**'
+      - '.github/workflows/mastery-check-access-tests.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unit tests
+        run: php 07-infrastructure/moodle-scripts/mastery-check-access/tests/test_mca_lib.php
+      - name: Syntax check every script
+        run: |
+          for f in 07-infrastructure/moodle-scripts/mastery-check-access/*.php; do php -l "$f"; done
+          bash -n 07-infrastructure/moodle-scripts/mastery-check-access/setup-droplet.sh
+      - name: Server setup script, end to end in a temp directory
+        run: sudo bash 07-infrastructure/moodle-scripts/mastery-check-access/tests/test_setup_droplet.sh

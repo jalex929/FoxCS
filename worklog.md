@@ -1084,3 +1084,37 @@ Jay asked to move Restart to the right of (or below) the step controls and deemp
 - `backup_moodle.sh` run immediately before the deploy.
 
 **Not done:** same rebuild for cmid=211 (1.6 Independent Practice), 256 (Lesson 2 Independent Practice), 257 (Lesson 2 Guided Practice) -- pattern is now proven, not yet replicated. The stale "Lesson 1 Grade" completion-credit override (cmid=191, grade_item id=88) also not touched -- see decisions-log.md's matching entry for why it's now disconnected from the bug that originally justified it.
+
+
+## 2026-11-03 -- Portfolio showcase built (in-repo staging), exposure audit, RAG notes
+
+No live Moodle changes. Repo-only work on branch `claude/foxcs-portfolio-prep-r9udyq`.
+
+**New: `portfolio-showcase/`** (self-contained, becomes its own repo via the export script):
+- `grader/auto_grade.py` + `grader/tests/test_auto_grade.py`: sanitized copies, 39 tests passing. Fixtures regenerated synthetically by `tools/make_fixtures.py` (STUDENT-0001 reproduces the old DELTA04 persona's exact asserted values; STUDENT-0002 shows a misnamed file and an empty practice attempt). `examples/demo-output/` holds a real run's CSVs.
+- `evals/`: 1 synthetic assignment, 6 adversarial cases (valid alternative, right output wrong logic, partial, missing, prompt injection, wrong assignment), hand-authored reference outputs, `score_output.py` (11 deterministic checks modeled on `feedback-and-grading-spec.md` sections 20, 21, 23), `run_evals.py`, 13 tests including one deliberately broken output per check. No model calls yet. Baseline runs are the next step.
+- `tools/check_showcase_clean.py` + 3 tests: leak scanner. Sanity-checked against this repo's `05-grader/`: 45 findings, as expected.
+- `.github/workflows/tests.yml`: scanner, all 3 suites, demo run, eval run. This workflow only activates once exported (it sits under `portfolio-showcase/.github/`, not this repo's `.github/`).
+- `docs/`: architecture, grading-pipeline (capability status table + the six "how does it really work" answers), testing, ai-reliability-and-boundaries, privacy-and-data, engineering-process, rag-roadmap.
+
+**New: `00-project-overview/portfolio-prep/`:** README (checklist + Jay's to-do list), `security-and-licensing-audit-2026-11-03.md`, `rag-integration-notes.md`, `export_showcase.sh` (verified: exports to a fresh 1-commit repo, 51 files, scanner and tests pass).
+
+**Small real fix in `05-grader/school-side/auto_grade.py`:** the end-of-run "N file(s) were fuzzy-matched" count left out `flashcards_naming_issue`, so it under-reported. Added. This is a console message only, with no effect on the CSVs. The existing 39 tests still pass.
+
+**Not done (needs Jay):** FoxCS visibility to private, password rotation, creating the `foxcs-showcase` GitHub repo, screenshots, license choice.
+
+**Later same session, per Jay ("build in more tests"):** showcase tests went from 55 to 112. Grader 55 (+16 in `grader/tests/test_cli.py`: CLI exit codes, report/manifest shape, STUDENT-0002 assertions, the naming-count regression, and a golden-file check against `examples/demo-output/`). Evals 48 (+35 in `test_dataset_integrity.py` and `test_check_edge_cases.py`: dataset integrity, per-check edge cases, runner CLI exit codes). Tools 9 (+6 in `test_repo_hygiene.py`: the repo scans clean, scanner CLI, byte-identical fixture regeneration, doc links resolve). Mutation spot-checks confirmed the golden-file and fixture tests fail on drift. The hygiene test caught a real slip in a new test file on its first run (a blocked term). New FoxCS workflow `.github/workflows/portfolio-showcase-tests.yml` runs all of it, plus `export_showcase.sh`, and asserts that the exported repo has exactly one commit and no PDFs or teacher materials.
+
+**Later still, same session: on-submission grader.** New in `portfolio-showcase/`: `grader/on_submission.py`, `grader/exercises/coins_to_points.json`, 10 student-style fixture programs in `grader/tests/on_submission_fixtures/`, and `grader/tests/test_on_submission.py` (42 tests, real subprocess runs). Plus `examples/on-submission/` (3 events + committed results, golden-tested) and `docs/on-submission-grading.md`. Coverage on `on_submission.py`: 100% line and branch (263 statements, 101 branches). Four injected mutations were each caught. The leak scanner now skips `.coverage`/`htmlcov/`, since CI runs coverage before the hygiene test. Showcase total: 154 tests (grader 97, evals 48, tools 9). Not connected to live Moodle, and nothing deployed.
+
+**Showcase published:** `jalex929/foxcs-showcase` (public, per Jay), commit `c848e52`, 75 files, no PDFs or teacher materials. Scanner clean, 154 tests and the 100% coverage gate passed locally before the push. Its own GitHub Actions run was triggered on push.
+
+**Mastery Check access gates (built, not applied live).** New `07-infrastructure/moodle-scripts/mastery-check-access/`: `mca_lib.php` (pure: subnet parsing/matching mirroring Moodle's IPv4 forms, school-block suggestion from logs, prerequisite detection by lesson code + "Instruction"/"Coding Exercise" names, availability-tree merge, intro password-line removal, idempotent planning, backup-freshness check), `tests/test_mca_lib.php` (75 checks passing locally on PHP 8.3), `find-school-network.php` (read-only), `apply-mastery-check-access.php` (dry run by default, `--apply` requires backup.log under 1h old or `--i-ran-the-backup`, writes a chmod-600 rollback snapshot, single DB transaction, `rebuild_course_cache`), `mastery-check-readiness.php` (read-only CSV), README with the sandbox test-from-home procedure. New workflow `.github/workflows/mastery-check-access-tests.yml`. **Never run against a real Moodle** (this cloud session has no droplet access): the Moodle-facing scripts are syntax-checked only. First real run should be dry runs against `sandbox-adaptive-demo`.
+
+**Daily class code added to `07-infrastructure/moodle-scripts/mastery-check-access/` (not applied live).**
+- `mca_lib.php` gained `mca_school_date`, `mca_daily_code` (HMAC + day digit), `mca_code_calendar`, `mca_rotation_targets`, `mca_should_notify`, `mca_intro_for_class_code`, and `mca_load_secret` (refuses world-readable or short secrets). `mca_plan` now takes `password`/`class_code_intro` instead of `remove_password`.
+- New `rotate-daily-class-code.php` (cron, idempotent, transactional, `--notify` once/day via the Moodle message API with state in `$CFG->dataroot/foxcs/class-code-state.json`, `--dry-run`) and `class-code.php` (sub-plan calendar, verified locally with a throwaway secret).
+- `apply-mastery-check-access.php` now sets today's code plus the intro line (`--no-class-code` to skip), never printing codes or old passwords. README rewritten with secret setup, `/opt/foxcs` install, cron line, and the home-test checklist, including "yesterday's code fails".
+- Tests: 111 checks. A mutation (day digit removed) is caught by the direct step-by-one test.
+
+**Pick up here (class code rollout):** `07-infrastructure/moodle-scripts/mastery-check-access/README.md` -> "Return-to-work checklist". New `setup-droplet.sh` handles server setup (install to `/opt/foxcs`, secret at `/etc/foxcs/class-code.secret` root:www-data 640, never overwritten, optional cron). It defaults to a dry run and is tested end to end by `tests/test_setup_droplet.sh` (run with sudo in CI). Nothing has run on the droplet yet. foxcs-showcase `main` now has `docs/assessment-access-design.md`.
