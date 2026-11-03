@@ -1,4 +1,11 @@
-# Deterministic grader
+# Deterministic graders
+
+Two graders live here:
+
+- **`on_submission.py`** grades one Coding Exercise the moment it is uploaded. See [`../docs/on-submission-grading.md`](../docs/on-submission-grading.md).
+- **`auto_grade.py`** grades a week of lesson activity in one batch, described below.
+
+## Weekly batch grader
 
 `auto_grade.py` is the deterministic tier of the FoxCS assessment pipeline. Standard-library Python only: no installs, no network, no AI. It reads facts that interactive lesson pages record about themselves and never judges quality.
 

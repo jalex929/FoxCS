@@ -20,16 +20,17 @@ The showcase content itself lives at the repo root in `portfolio-showcase/`, so 
 | 2 | Portfolio-focused root README | Done: `portfolio-showcase/README.md` |
 | 3 | Architecture diagram | Done: Mermaid diagrams in the README and `docs/architecture.md` (render natively on GitHub). Screenshots of the live platform still needed, see below |
 | 4 | End-to-end demonstration with synthetic data | Done: two synthetic submissions, committed grader output in `examples/demo-output/` |
-| 5 | Testing and validation evidence | Done: `docs/testing.md`, a CI workflow, 112 tests across 3 suites, plus a FoxCS-side workflow that runs them and test-exports the showcase, documented gaps |
+| 5 | Testing and validation evidence | Done: `docs/testing.md`, a CI workflow, 154 tests across 3 suites, plus a FoxCS-side workflow that runs them and test-exports the showcase, documented gaps |
 | 6 | AI reliability and boundaries | Done: `docs/ai-reliability-and-boundaries.md` and `docs/grading-pipeline.md` (capability status table, the six "how does it actually work" questions) |
 | 7 | Small LLM evaluation suite | Structure done: 6 adversarial cases, 11 deterministic checks, reference judgments, tests. **Next: baseline model runs** |
+| + | On-submission auto-grading (added per Jay, to speak to in interviews) | Done in the showcase: `grader/on_submission.py`, 100% line and branch coverage enforced in CI, `docs/on-submission-grading.md`. **Not connected to live Moodle.** Going live needs a container sandbox plus a Moodle event observer, see that doc's Planned Moodle integration section |
 | - | RAG | Documented only, deliberately not built (`rag-integration-notes.md`, public version in `docs/rag-roadmap.md`) |
 
 ## What Jay needs to do (things no session tool can do)
 
 1. **Rotate passwords** for live Mastery Check quizzes and the Moodle test account. They've been publicly readable, and FoxCS is staying public for now, so this is the most important item here.
 2. **When FoxCS no longer needs to be public, make it private** (GitHub, Settings, General, Danger Zone, Change visibility). Until then, see the audit's "While FoxCS is still public" list for the answer-key and licensed-file decisions.
-3. **Create the showcase repo:** an empty GitHub repo named `foxcs-showcase` (no README or license), then run `bash 00-project-overview/portfolio-prep/export_showcase.sh` and follow the printed push steps. A session could push it afterwards if the new repo is added to its scope.
+3. **Create the showcase repo:** an empty GitHub repo named `foxcs-showcase` (no README or license). Sessions can't create GitHub repos, but once it exists a session can attach it, run `export_showcase.sh`, and push it. Just ask.
 4. **Set the GitHub About panel** on the new repo:
    - Description: `Live Moodle learning platform with a hybrid assessment pipeline: deterministic grading, AI-assisted feedback, teacher approval gate, and an eval harness for AI grading outputs.`
    - Website: `https://www.jayfox.design` (or the case-study page once it exists)
@@ -54,4 +55,5 @@ The showcase content itself lives at the repo root in `portfolio-showcase/`, so 
 - The authority hierarchy and Known Tensions list is the strongest "working with coding agents" story. Use the per-lesson Mastery Check reversal as the concrete example.
 - Be precise about AI-assisted review: it's a teacher-operated workflow, not an unattended service. The status table exists so nobody overclaims.
 - Don't claim SOPPA/district compliance. Say the separation design supports it and that the district review is pending.
+- On-submission grading: say "implemented and fully tested, not yet deployed." Its honest gap (process limits are not a security sandbox, so it goes in a container before going live) is a strong talking point, not a weakness.
 - The eval harness is the probabilistic-evaluation story. Its honest next step (baseline runs, variance across repeated runs) is itself a good talking point.

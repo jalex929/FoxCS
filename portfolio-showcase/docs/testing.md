@@ -5,7 +5,11 @@ Every suite here runs with a standard Python install (3.10+), no dependencies. C
 ## How to run
 
 ```bash
-python -m unittest discover -s grader/tests -v    # deterministic grader
+python -m unittest discover -s grader/tests -v    # both deterministic graders
+
+# 100% line and branch coverage gate for on-submission grading (needs: pip install coverage)
+python -m coverage run --branch --include=grader/on_submission.py -m unittest discover -s grader/tests
+python -m coverage report -m --fail-under=100
 python -m unittest discover -s evals/tests -v     # eval harness
 python -m unittest discover -s tools/tests -v     # leak scanner
 python tools/check_showcase_clean.py              # leak scan of this repo
@@ -16,7 +20,24 @@ Successful output ends with `OK` for each unittest suite, `Clean: no known priva
 
 ## What is covered
 
-### Deterministic grader: 55 tests
+### On-submission grader: 42 tests, 100% line and branch coverage
+
+CI fails if any line or branch of `grader/on_submission.py` goes untested. The only exclusion is the `if __name__ == "__main__":` line, and the command line behind it is tested by calling `main()` directly. Most tests run real programs through the real subprocess path rather than mocks.
+
+| Area | Cases |
+|---|---|
+| Scoring bands | Flawless, valid alternative solution, runs but wrong, partially correct (scaled credit), syntax error, runtime error; criteria always sum to the total and never exceed it |
+| Safety | Every result is a draft pending approval; instructions written to "the autograder" change nothing; infinite loop times out and is held unscored; memory limit stops runaway allocation; child runs isolated with a minimal environment; path outside the submissions folder refused; a grader exception is held, not raised |
+| Duplicates | Duplicate delivery returns the stored result without re-running; a resubmission with new contents is graded again |
+| Held for review | Unknown assignment, no file, two files, wrong extension, missing, empty, oversized, non-UTF-8 |
+| Input validation | Every rejection path for events and exercise specs, defaults, duplicate assignment IDs |
+| Helpers and storage | Output truncation, byte decoding, error summaries, latest-record-wins storage |
+| Command line | Success, invalid event, malformed and missing event files |
+| Golden files | Committed example results in `examples/on-submission/` match fresh runs |
+
+**Mutation check.** Four bugs were injected one at a time (crashes scored as half credit, the path check removed, duplicate detection broken, the grader's environment leaked to the child). Each was caught by a failing test.
+
+### Weekly batch grader: 55 tests
 
 | Area | Cases |
 |---|---|
@@ -57,7 +78,8 @@ Honest gaps, so nobody has to guess:
 - **No baseline model runs yet.** The eval harness validates outputs, but this repository does not yet include outputs from an actual model run. That is the next step for `evals/`.
 - **The eval checks are deterministic.** They catch structural and rule violations (arithmetic, rubric coverage, escalation, forbidden claims). They do not judge whether feedback is genuinely helpful. That needs educator review or a carefully validated model-graded rubric, and is planned.
 - **Platform tests live in the private workspace.** The live platform has its own CI: content checkers with their own test suites, a PHP harness for the practice-ladder wiring checker, and a headless-browser test proving a student's typed answer survives save on a real lesson page. Those depend on licensed course content and are not reproduced here.
-- **No load or concurrency testing.** Class sizes have not required it.
+- **No load or concurrency testing.** Class sizes have not required it. The on-submission store is a single append-only file, which suits one worker. Several concurrent workers would need a real queue or database.
+- **On-submission isolation is not tested against hostile code**, because it is not designed to stop it. That is the container's job in production. See [on-submission-grading.md](on-submission-grading.md).
 - **Six eval cases is a starting set**, chosen for coverage of distinct failure modes rather than statistical power.
 
 ## Why this shape

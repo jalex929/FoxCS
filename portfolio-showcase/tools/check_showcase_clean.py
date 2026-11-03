@@ -46,14 +46,15 @@ RULES = [
 
 TEXT_SUFFIXES = {".py", ".md", ".json", ".html", ".csv", ".txt", ".yml", ".yaml", ".sh", ".toml", ".cfg", ".js", ".mjs"}
 TEXT_NAMES = {".gitignore", ".gitattributes", "LICENSE"}
-SKIP_DIRS = {".git", "__pycache__", "node_modules", ".venv"}
+SKIP_DIRS = {".git", "__pycache__", "node_modules", ".venv", "htmlcov"}
+SKIP_FILES = {".coverage"}  # local test artifacts, gitignored
 
 
 def scan(root: Path) -> list[tuple[Path, int, str, str]]:
     findings = []
     self_path = Path(__file__).resolve()
     for path in sorted(root.rglob("*")):
-        if any(part in SKIP_DIRS for part in path.parts) or not path.is_file():
+        if any(part in SKIP_DIRS for part in path.parts) or path.name in SKIP_FILES or not path.is_file():
             continue
         if path.resolve() == self_path:
             continue  # this file necessarily contains the patterns

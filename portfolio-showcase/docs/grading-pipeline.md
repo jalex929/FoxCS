@@ -17,7 +17,8 @@
 | Native quiz and assignment submission | Deployed | Mastery checks auto-scored by Moodle's quiz engine |
 | Instruction completion credit from telemetry | Deployed | Awarded in real time when the lesson-complete event fires |
 | Procedural gates before quality grading | Deployed | Example: attempts finished outside the student's class period are flagged before any content grading |
-| Deterministic grader (`grader/`) | Implemented | Tested against synthetic and generated submissions. Built for the folder-based delivery format; the live course now records most of the same facts through Moodle and the telemetry plugin |
+| On-submission grading of Coding Exercises (`grader/on_submission.py`) | Implemented, not deployed | Runs the student's code in an isolated process at upload, scores 50% runs / 50% correct, returns a draft. 100% line and branch coverage in CI. Needs a container sandbox and the Moodle hook before going live. See [on-submission-grading.md](on-submission-grading.md) |
+| Weekly batch grader (`grader/auto_grade.py`) | Implemented | Tested against synthetic and generated submissions. Built for the folder-based delivery format; the live course now records most of the same facts through Moodle and the telemetry plugin |
 | AI-assisted review of code and written work | Deployed, teacher-operated | Run in a local AI coding session with the rubric and feedback spec as context. Not an API service |
 | Required rubric file before any coding exercise is published | Deployed | Added after a batch of exercises went live without one |
 | Structured output and score validation rules | Specified | Defined in the feedback spec and followed by the reviewer. Programmatic enforcement exists in `evals/` but is not yet wired into the live path |

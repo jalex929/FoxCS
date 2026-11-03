@@ -59,6 +59,9 @@ flowchart TB
 
 ### Deterministic tier
 
+**On submission.** `grader/on_submission.py` grades a Coding Exercise when it is uploaded: it validates the file, runs it once per test case in an isolated, time- and memory-limited Python process, and scores it with the rubric standard (50% runs, 50% correct). Clear results (flawless, or a hard error) come back as drafts within seconds. Partial results, timeouts, and anything invalid are held for review. Implemented and fully tested, not yet wired to Moodle. See [on-submission-grading.md](on-submission-grading.md).
+
+**Weekly batch.** 
 `grader/auto_grade.py` runs with nothing but a standard Python install, on purpose: the teacher machine it was designed for has no package installs and no AI tools. It reads facts lesson pages already recorded about themselves and produces two CSVs:
 
 - `auto_grade_report.csv`: per student and lesson, saved or not, attempt counts, first-try correctness, mastery check timing, XP earned, and naming-convention issues.

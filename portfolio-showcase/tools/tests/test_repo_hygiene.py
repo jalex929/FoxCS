@@ -61,9 +61,10 @@ class TestScannerCli(unittest.TestCase):
 
     def test_skips_git_and_pycache(self):
         with tempfile.TemporaryDirectory() as tmp:
-            for d in (".git", "__pycache__"):
+            for d in (".git", "__pycache__", "htmlcov"):
                 Path(tmp, d).mkdir()
                 Path(tmp, d, "blob.bin").write_bytes(b"\x00\x01")
+            Path(tmp, ".coverage").write_bytes(b"\x00sqlite")
             result = self.run_cli(tmp)
         self.assertEqual(result.returncode, 0, result.stdout)
 
