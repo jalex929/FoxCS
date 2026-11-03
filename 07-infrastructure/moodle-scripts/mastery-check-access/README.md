@@ -2,6 +2,18 @@
 
 **Added 2026-11-03, per Jay.** With self-paced work, handing Mastery Check passwords to students one at a time as they asked "was not sustainable." The direction Jay chose is a **daily class code**: one code per course per day, posted once in class, which only works on the day it is for. Yesterday's code fails today. Around it sit gates that enforce themselves. **Status: built and unit-tested here, not yet applied to any course.** Applying it is a live Moodle change, so it runs from a session on the droplet, following CLAUDE.md's backup-first rule.
 
+## Return-to-work checklist
+
+Do these in order from a session on the droplet. Every write step has a dry run first. Nothing touches a real course until step 5.
+
+1. `cd ~/FoxCS && git pull` (this folder lands on `main` with the merged PR).
+2. **Server setup:** `sudo bash 07-infrastructure/moodle-scripts/mastery-check-access/setup-droplet.sh`, read it, then add `--apply`. This installs the scripts and creates the secret. It leaves cron off.
+3. **Find the school network:** step 2 below.
+4. **Sandbox test from home:** step 3 below. Check all four cases, including that yesterday's code fails.
+5. **Turn on the daily rotation:** `sudo bash .../setup-droplet.sh --apply --enable-cron --courses=foxcs-python`.
+6. **Go live in Python:** step 5 below, with no class in session, backup first.
+7. **Tell Learners:** one line on the board the first day ("Mastery Checks now use today's class code, posted here each day"). Put `class-code.php --days=10` in the sub folder.
+
 ## The design, and why each piece is there
 
 | Gate | How | What it does in class | Who has to act |
@@ -43,9 +55,12 @@ Deliberately avoided:
 | `find-school-network.php` | No | Suggests the school's address blocks from Moodle logs, and shows your own address for test mode |
 | `apply-mastery-check-access.php` | Only with `--apply` | One-time setup per course: prerequisites, network rule, today's code, and the intro line. Dry run by default, backup-gated, rollback snapshot, idempotent |
 | `mastery-check-readiness.php` | No | CSV for the dashboard: locked or ready, missing prerequisites, attempts, averages, off-network attempts |
-| `tests/test_mca_lib.php` | No | 111 checks. CI runs them on every change to this folder |
+| `setup-droplet.sh` | Only with `--apply` | One-time server setup: install to `/opt/foxcs`, create the secret, optionally install cron |
+| `tests/test_mca_lib.php`, `tests/test_setup_droplet.sh` | No | 111 logic checks plus an end-to-end setup test. CI runs both on every change to this folder |
 
 ## Setup on the droplet
+
+Steps 0, 1 and 4 are what `setup-droplet.sh` does for you (dry run by default, `--apply` to write, `--enable-cron` for step 4). It never overwrites an existing secret, is safe to re-run, and is tested end to end in CI. The manual commands are kept below for reference.
 
 ### 0. Install a copy cron can read
 

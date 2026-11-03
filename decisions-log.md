@@ -2009,3 +2009,5 @@ Per Jay: "Not that it leaked. It just was not scalable to have self paced and be
 - **Mid-attempt safety:** Moodle asks for the password at attempt start only, so a date change never kicks out a working student.
 
 Built and unit-tested (111 checks), not applied live.
+
+**Same day, per Jay:** the daily class code is "an important shift in a good direction" and should be ready to implement in FoxCS on return to work. Jay asked to merge into `main` on both repos. foxcs-showcase PR #1 (the class-code write-up) was merged. FoxCS PR #1 (portfolio prep, on-submission grading, class code) was merged into `main` once CI passed. **Still not applied to live Moodle.** The Return-to-work checklist in `07-infrastructure/moodle-scripts/mastery-check-access/README.md` is the pickup point.

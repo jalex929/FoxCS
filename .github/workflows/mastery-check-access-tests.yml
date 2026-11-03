@@ -23,4 +23,8 @@ jobs:
       - name: Unit tests
         run: php 07-infrastructure/moodle-scripts/mastery-check-access/tests/test_mca_lib.php
       - name: Syntax check every script
-        run: for f in 07-infrastructure/moodle-scripts/mastery-check-access/*.php; do php -l "$f"; done
+        run: |
+          for f in 07-infrastructure/moodle-scripts/mastery-check-access/*.php; do php -l "$f"; done
+          bash -n 07-infrastructure/moodle-scripts/mastery-check-access/setup-droplet.sh
+      - name: Server setup script, end to end in a temp directory
+        run: sudo bash 07-infrastructure/moodle-scripts/mastery-check-access/tests/test_setup_droplet.sh
