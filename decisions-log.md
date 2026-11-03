@@ -1974,3 +1974,19 @@ Per Jay: FoxCS is going to be featured in job interviews, but the public version
 - **Process limits are documented as not a security sandbox.** Going live needs a container (no network, non-root, read-only filesystem) plus a Moodle observer on `\mod_assign\event\assessable_submitted`. Neither is built. Status everywhere is "implemented, not deployed."
 - **Coverage gate:** `coverage --branch --fail-under=100` on `on_submission.py` in both the showcase CI and FoxCS's showcase workflow. The only exclusion is the `__main__` guard. It uses the `coverage` package in CI only. The module itself stays stdlib-only.
 - The exercise used (`coins_to_points`) is original, not the GMetrix 1.2.1 file that 02.6's real rubric uses.
+
+## 2026-11-03 -- Mastery Check gating: automatic gates only, never manual ones
+
+Per Jay: passwords handed out in person "was not sustainable," and the build should be "something strong," designed "based on what would be a strong direction to move for classroom facilitation." The first proposals (request-and-approve button, per-student password by Moodle message) were set aside because they keep the teacher in the loop. That is the exact sub-day problem the 2026-09-14 "no gates" rule was written to avoid.
+
+**Decided:** the line is *who has to act*. Gates that enforce themselves are fine; gates that need the teacher are not.
+- **School network:** native quiz "Require network address." The range comes from Moodle's own logs (`find-school-network.php`), not a guess.
+- **Lesson prerequisites:** native completion availability, shown to students. Honest limit: Instruction uses manual completion, so a student can self-mark it. This is a pacing nudge, not integrity.
+- **No passwords:** cleared on every Mastery Check, intros rewritten. This also makes the publicly exposed passwords meaningless, which replaces "rotate the passwords" as the fix.
+- **Backstop unchanged:** `check-submission-windows.py` and the 3-attempt average.
+- **Rejected:** SEB (client install, failed 2026-09-01), teacher-approval flows, per-student passwords.
+- **Testability, raised by Jay ("can't test it on my local network"):** the network is a parameter, and `--test-ip` adds his home address in `sandbox-adaptive-demo`, so both the allowed and blocked cases are testable from home before going live.
+
+**Built, not applied:** `07-infrastructure/moodle-scripts/mastery-check-access/` (pure `mca_lib.php` + 75-check PHP test + CI workflow; three droplet CLI scripts, dry-run default, backup-gated, rollback snapshot, idempotent). Canonical doc (`mastery-check-standards.md`), CLAUDE.md Purpose, and REPO_MAP Known Tensions are updated.
+
+**Known gap, flagged not built:** make-ups in a different period would be zeroed by the bell-schedule backstop, which has no excused-attempts list yet.

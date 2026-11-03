@@ -24,6 +24,8 @@ This section is a living list. When a session finds two docs disagreeing, or cat
 
 - **2026-09-10 — `05-grader/feedback-and-grading-spec.md` Section 15 ("Above-and-Beyond Bonus," +1/+2 teacher-approved points) vs. the new `02-authoring-system/grade-point-scale.md` (extra project XP converts automatically to a small % bonus, 5 XP = +1%, capped by the Mythic tier ceiling at +4%).** Both are "reward exceeding project expectations" mechanisms and would double-count the same signal if both fired on the same submission. `project-rubric-and-xp-tiers.md` already flagged (2026-08-30) that Section 15's older stacking model was being superseded by the tier system and was never updated — this is the same unresolved gap, now sharper since `grade-point-scale.md` gives it a concrete formula to reconcile against. **Not resolved — resolve before `05-grader/` actually grades a real Project submission**, since right now it would apply its own +1/+2 on top of whatever the XP-to-percent bonus already added.
 
+- **2026-11-03: CLAUDE.md's Purpose section ("password-gated Moodle Quiz") and live quiz configuration (passwords set on 01.x/02.x Mastery Checks) vs. `mastery-check-standards.md`'s 2026-09-14 rule ("Mastery Checks are not password- or time-gated").** The canonical doc and the live config had silently disagreed since 09-14. Nobody confirmed whether the live passwords were ever removed, and a cloud session can't check the droplet DB. **Resolved in direction 2026-11-03 (Jay):** automatic gates only (school network + prerequisites), never manual ones. CLAUDE.md and `mastery-check-standards.md` are now updated to say so. **Still open until applied live:** run `07-infrastructure/moodle-scripts/mastery-check-access/` (sandbox test first). Until then, live quizzes may still carry the old, publicly exposed passwords.
+
 ## Directory Index
 
 ```
@@ -74,6 +76,7 @@ FoxCS/
   07-infrastructure/           The live droplet, Moodle setup, deploy scripts
     droplet-setup.md, moodle-vm-setup.md, moodle-course-shells.md, h5p-content-type-guide.md
     onboarding-new-students.md
+    moodle-scripts/mastery-check-access/   2026-11-03: automatic Mastery Check gates (school network + prerequisites, no passwords), readiness CSV, unit-tested pure logic. Read its README before running
     moodle-scripts/            PHP/Python deploy scripts. Root-level = one-off per-lesson builds (build-lesson-01-04-*.php pattern). moodle-scripts/python/ = reusable builders (h5p_book_builder.py, create-h5p-instruction.php, create_lesson1_mastery_check_quiz.php) plus more one-offs. No naming convention beyond "descriptive" — grep for the cmid or lesson name if unsure whether a script already exists before writing a new one.
 
   portfolio-showcase/          Sanitized PUBLIC showcase (synthetic data only, no vendor content, no real pseudonyms). Becomes its own repo via portfolio-prep/export_showcase.sh. Never copy files in without running its tools/check_showcase_clean.py
