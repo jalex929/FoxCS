@@ -62,3 +62,13 @@ What happens when this runs?
 ## Grading Notes
 
 All 4 items are auto-graded natively by Moodle (shortanswer exact/normalized match, multichoice). No manual grading pass needed. Grade set to 10 points per `feedback_lesson_point_scale.md`'s standing scale. Password: `Papaya82%`. Live cmid/quizid: see `worklog.md`'s matching 2026-09-09 entry once deployed. Not yet reviewed by Jay.
+
+## Scoring and regrades
+
+Added 2026-11-04 so every Mastery Check key states the same expectations.
+
+- **Every item is an expected answer, scored by Moodle.** Short-answer items accept the listed answers. Multiple-choice items have one correct option. The scores are averaged across the 3 allowed attempts.
+- **Regrade by hand when Moodle missed a harmless spelling.** An answer is correct if it means exactly the accepted answer: extra spaces inside parentheses, the other quote style, or a trailing space. Add any spelling you regrade for to the item's accepted answers in the working copy, so it's only regraded once.
+- **Never regrade toward a misconception.** A different value, type or casing is wrong even if it's close (`"10"` for `10`, `true` for `True`). Those are exactly what the item tests.
+- **Feedback:** each wrong answer gets the item's **Targets** skill named back to the student, plus one line on the specific mix-up.
+- **The class code:** this check uses the same class-code gate as every Mastery Check (`02-authoring-system/mastery-check-standards.md`).

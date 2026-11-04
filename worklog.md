@@ -1175,3 +1175,13 @@ No live Moodle changes. Repo-only work on branch `claude/foxcs-portfolio-prep-r9
   - the Units 01-02 polish in the copy (`.py` only, Skulpt in Unit 01, Checkpoint item 6 wording);
   - the viewer guide.
 
+**Mastery Check rubrics; sandbox CI fix (2026-11-04, latest).**
+- **Unit 01 Mastery Check keys rewritten from the live build scripts.** The old narrative keys described questions students no longer see. Each live quiz is the integrity acknowledgment plus one random task from a pool (10 essays for 01.1, 01.2, 01.4-01.6; 6 auto-scored `print()` tasks for 01.3). Every task now has:
+  - **Full credit needs** (checklist, expected answers marked);
+  - what drops a tier, and misconceptions to watch for;
+  - a sentence starter on the Sept 13 80-100 scale.
+- **Unit 02 keys** gained a standard "Scoring and regrades" section.
+- **Found:** 01.6 pool task 3 (`Print(Continue`) says "two mistakes" but has three. 01.3's accepted answers miss harmless spacing variants. Both go on the polish list.
+- **Sandbox CI fix:** CI's Python lives under `/opt/hostedtoolcache`, so the probe saw `/opt` and failed the real-sandbox tests. The probe now allows a host folder that holds only the path to a bound Python prefix; binding a whole host folder is still caught.
+- **Per Jay:** no grading of real student work right now. Rubrics and tooling exist to make the sample course a model of the system.
+
