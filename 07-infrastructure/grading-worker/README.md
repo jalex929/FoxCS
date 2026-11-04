@@ -8,6 +8,7 @@ The whole loop costs nothing beyond the Claude subscription. The AI step uses Cl
 
 1. **Event listener (Moodle).** `07-infrastructure/local-plugins/foxcsgradequeue/` observes `\mod_assign\event\assessable_submitted`. For an allowlisted Coding Exercise it copies the submitted file to `/srv/foxcs-queue/files/moodle-sub-<id>/` and atomically drops an event JSON into `/srv/foxcs-queue/incoming/`. It never grades and never blocks a submission: if the queue is down, the submission still goes through.
 2. **Worker (`portfolio-showcase/grader/review_worker.py`, run by `foxcs-review-worker.service`).** It checks the queue every 30 seconds and runs each event through `on_submission.py`:
+   - Every program runs in the bubblewrap sandbox (see "Before this goes live", step 1).
    - `flawless` and `does_not_run` are settled by the program run. They become drafts with no AI call.
    - `runs_with_issues` needs judgment. The worker sends the code, the exercise rubric, and the run results (as trusted facts) to `claude -p` with the same system prompt and strict output schema the eval harness measures.
    - Anything the deterministic grader holds goes straight to Jay.
@@ -29,7 +30,17 @@ Subscription usage counts against the plan's normal limits, shared with interact
 
 ## Before this goes live
 
-1. **Sandbox the student-code runs.** This is the same blocker `on_submission.py` already has, and here it matters more: the worker holds the subscription token. Student programs must run as a **different Unix user** (or in a container) with no network, a read-only filesystem except a scratch folder, and no read access to `/etc/foxcs/`, `/var/lib/foxcs-grader/`, or the worker's process environment. A program running as the worker's own user could read the token.
+1. **Sandbox (built, on by default).** The worker holds the subscription token, so every student program runs in a bubblewrap sandbox (`portfolio-showcase/grader/sandbox.py`). The sandbox has:
+   - no network;
+   - its own process list, so the worker's environment and token are invisible;
+   - a read-only filesystem with only `/usr` and the one submitted file, plus an empty `/tmp`;
+   - no view of other students' files, `/etc`, `/home`, `/var`, or `/etc/foxcs/`.
+
+   Install it with `sudo apt install bubblewrap`. On start, the worker runs a probe program inside the sandbox and refuses to start (exit 3) if any of those properties fails. Check it by hand first:
+   ```bash
+   sudo -u foxcs-grader python3 -c "import sys; sys.path.insert(0, '/opt/foxcs/portfolio-showcase/grader'); import on_submission as o; print(o.build_sandbox('bwrap')[1] or 'sandbox OK')"
+   ```
+   If it reports `setting up uid map: Permission denied`, Ubuntu's AppArmor is blocking unprivileged user namespaces. Allow them for bwrap with an AppArmor profile (preferred), or system-wide with `kernel.apparmor_restrict_unprivileged_userns=0` in `/etc/sysctl.d/`. The second loosens a hardening setting for the whole droplet.
 2. **Back up first** (`/home/jay/moodle-backups/backup_moodle.sh`), per CLAUDE.md, before installing the plugin.
 3. **Install the plugin.** Copy `local-plugins/foxcsgradequeue/` to `<moodle>/local/foxcsgradequeue/`, run `admin/cli/upgrade.php`, then set *Site administration > Plugins > Local plugins > FoxCS grading queue*: queue folder `/srv/foxcs-queue`, and the ID numbers of the Coding Exercises that have an exercise spec. Each one's ID number goes in its assignment settings.
 4. **Create the queue and users.**
@@ -52,9 +63,10 @@ Subscription usage counts against the plan's normal limits, shared with interact
 
 ## Tests
 
+- Sandbox: `portfolio-showcase/grader/tests/test_on_submission_sandbox.py`. A hostile program that is also a correct answer tries to read a secret planted next to it, read the grader's environment, reach the network, and overwrite its own file. Inside the sandbox it finds nothing and still gets full marks. The same program run without the sandbox finds the secret, which proves the sandbox is doing the blocking. Every fixture gets the same grade with and without it.
 - Worker: `portfolio-showcase/grader/tests/test_review_worker.py`. It runs the real deterministic grader with a fake AI backend, including a handoff into the release check that shows a contradicting or invented-evidence review gets blocked.
 - `claude -p` backend and the subscription preflight: `portfolio-showcase/evals/tests/test_run_model.py`, with a fake CLI.
 - Plugin logic: `php 07-infrastructure/local-plugins/foxcsgradequeue/tests/test_queue_lib.php`.
 - A CI contract test feeds an event written by the PHP plugin code into the Python worker's parser, so the two sides can't drift apart.
 
-All of these run in CI with no Moodle, no subscription, and no network. None of it has been exercised against the live site or a real `claude -p` call yet. The first real check is step 6 above.
+All of these run in CI with no Moodle, no subscription, and no network. The sandbox tests run inside a real bubblewrap sandbox there, and fail rather than skip if it is missing. None of it has been exercised against the live site or a real `claude -p` call yet. The first real check is step 6 above.

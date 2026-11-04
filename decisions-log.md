@@ -2042,3 +2042,24 @@ Per Jay: "We will use the Claude code non-interactive mode with event listeners 
 
 **Open, for Jay:** confirm that unattended, scheduled use of a `claude setup-token` subscription token on the droplet fits the current plan terms. Usage counts against the plan's normal limits, shared with interactive use.
 
+## 2026-11-04 (later) -- Student code runs in a bubblewrap sandbox, on by default
+
+Per Jay: "yes start with the sandbox, then the exercise specs".
+
+**Decided:**
+- **Bubblewrap instead of a separate Unix user or a container.** It needs no root, no sudo rules and no container runtime: each run gets fresh namespaces. That means:
+  - **no network**;
+  - **its own process list**, so the worker's environment, where the subscription token lives, is invisible;
+  - **a read-only root** with only `/usr` and the one submitted file, plus an empty writable `/tmp` as the working folder;
+  - `--clearenv`, `--cap-drop ALL`, `--new-session`, and `--die-with-parent`.
+
+  This supersedes the earlier "different Unix user" go-live requirement (2026-11-04, above). It's a stronger boundary: a separate user would still see the network and world-readable files.
+- **Self-test before trusting it:**
+  - `on_submission.sandbox_self_test()` runs a probe inside the sandbox and names every property that fails.
+  - The worker defaults to `--sandbox bwrap` and refuses to start (exit 3) on any failure. The systemd unit won't restart on 3.
+  - `--sandbox none` exists for trusted test files and prints a warning.
+- **The service also gets `TasksMax=128` and `MemoryMax=1G`**, so a fork bomb or memory hog hits a cap before it can hurt the droplet.
+- **No grade changes:** every fixture gets the same band, score, and per-test results with or without the sandbox. This is pinned by a test.
+
+**Open, droplet-side:** Ubuntu 24.04's AppArmor may block unprivileged user namespaces. The self-test reports it if so. Preferred fix: an AppArmor profile for bwrap, rather than the system-wide sysctl.
+

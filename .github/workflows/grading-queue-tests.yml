@@ -10,11 +10,13 @@ on:
     paths:
       - '07-infrastructure/local-plugins/foxcsgradequeue/**'
       - 'portfolio-showcase/grader/on_submission.py'
+      - 'portfolio-showcase/grader/sandbox.py'
       - '.github/workflows/grading-queue-tests.yml'
   pull_request:
     paths:
       - '07-infrastructure/local-plugins/foxcsgradequeue/**'
       - 'portfolio-showcase/grader/on_submission.py'
+      - 'portfolio-showcase/grader/sandbox.py'
       - '.github/workflows/grading-queue-tests.yml'
 
 jobs:

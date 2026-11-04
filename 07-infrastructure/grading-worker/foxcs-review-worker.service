@@ -21,9 +21,14 @@ ExecStart=/usr/bin/python3 grader/review_worker.py \
     --watch 30
 Restart=on-failure
 RestartSec=60
-# Exit 2 means Claude Code is not on a subscription. Restarting would not fix
-# that, and must never turn into billed API calls, so stay stopped.
-RestartPreventExitStatus=2
+# Exit 2: Claude Code is not on a subscription. Exit 3: the student-code
+# sandbox failed its self-test. Restarting fixes neither, and neither must
+# ever turn into billed API calls or unsandboxed student code, so stay stopped.
+RestartPreventExitStatus=2 3
+# Caps for the whole service, student programs included: a fork bomb or a
+# memory hog hits these before it can hurt the server.
+TasksMax=128
+MemoryMax=1G
 
 NoNewPrivileges=yes
 ProtectSystem=strict

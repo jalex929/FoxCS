@@ -14,6 +14,14 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-11-04 (later) -- Sandbox done; next asks from Jay
+
+**Jay:** "yes start with the sandbox, then the exercise specs". The sandbox is done (see `decisions-log.md`).
+
+**Then, mid-turn:** "I also want to make sure the content is mapped well so a viewer can understand what the program is, what it does, and how I leveraged my experiences and domain knowledge to make this happen (example: combining instructional knowledge and learning best practices etc in this project)". Also: "I also want to ultimately remove any of the compromises we had to make due to sub coverage and things not working. So I think we should really polish up these 3 live units based on what's available".
+
+**Still queued:** exercise specs for the real Coding Exercises.
+
 ## 2026-11-04 -- AI grading on the subscription, not the API
 
 **Jay asked:** "Is there any way to do this for free without paying?" Then: "We will use the Claude code non-interactive mode with event listeners and things like I mentioned in the build for FoxCS. Let's make sure we get that squared away so it's free (only uses my subscription)".

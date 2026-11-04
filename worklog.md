@@ -1143,3 +1143,17 @@ No live Moodle changes. Repo-only work on branch `claude/foxcs-portfolio-prep-r9
 - **CI:** the coverage gate and the mutation job now include review_worker in both workflows.
 - **Pick up here (go-live):** `07-infrastructure/grading-worker/README.md` -> "Before this goes live". The first step is the sandbox (a separate user for student code). The first real `claude -p` call is step 6 there; it also confirms the CLI's JSON result shape, which so far is only pinned by a fake.
 
+**Student-code sandbox (2026-11-04, later). Built and tested, not installed live.**
+- **New `portfolio-showcase/grader/sandbox.py`:** bubblewrap wrapper plus a probe and a probe checker.
+- **`on_submission.py` changes:** `run_program(..., sandbox=)`, `make_runner`, `sandbox_self_test`, `build_sandbox`, and `--sandbox none|bwrap` (exit 3 if the self-test fails).
+- **`review_worker.py`:** defaults to `--sandbox bwrap` and checks it before anything else.
+- **The self-test caught two real gaps on its first run:**
+  - the sandbox root was writable, now fixed with `--remount-ro /`;
+  - the probe checked fixed paths, so with no sandbox at all it missed that it could write. It now checks its own folder.
+- **New `test_on_submission_sandbox.py`:** 23 tests, plus the hostile fixture `escape_attempt.py`.
+- **Mutation testing:** new target `sandbox` at 100% of 30. The on_submission target now also runs the sandbox tests: 100% of 186, with 2 new documented equivalents.
+- **Leak scanner:** now allows the RFC 5737 documentation IP ranges, which the probe uses, with tests.
+- **CI:** both workflows install bubblewrap, lift Ubuntu 24.04's AppArmor userns restriction on the runner, and set `FOXCS_REQUIRE_SANDBOX=1`.
+- **Systemd unit:** now `RestartPreventExitStatus=2 3`, `TasksMax=128`, `MemoryMax=1G`.
+- **Showcase totals:** 346 tests.
+
