@@ -1,6 +1,6 @@
 # RAG Integration Notes: How Retrieval Could Fit Into FoxCS Later
 
-**Added 2026-11-03.** Status: **notes for later, nothing built, not scheduled.** These capture outside portfolio-review guidance (from a ChatGPT review Jay shared) on how Retrieval-Augmented Generation could be added to FoxCS, mapped onto what already exists in this repo so a future session doesn't have to re-derive it. The public, sanitized version of this plan is `portfolio-showcase/docs/rag-roadmap.md`. This file is the internal one: it names real FoxCS docs, data, and constraints the public version can't.
+**Added 2026-11-03.** Status: **notes for later, nothing built, not scheduled.** These capture outside review guidance (from a ChatGPT review Jay shared) on how Retrieval-Augmented Generation could be added to FoxCS, mapped onto what already exists in this repo so a future session doesn't have to re-derive it. The public, sanitized version of this plan is `portfolio-showcase/docs/rag-roadmap.md`. This file is the internal one: it names real FoxCS docs, data, and constraints the public version can't.
 
 **The standing position, per the same review:** don't add RAG to impress anyone. Add it only if it solves a specific FoxCS problem, and evaluate it against the current approach before it touches the live grader. A documented negative result (e.g. "skill-ID lookup beats vector search for tightly scoped exercises") is a legitimate outcome.
 
@@ -89,7 +89,7 @@ Retrieval quality and generation quality need separate evaluation. A model can r
 - **Assessment content never enters the corpus.** No `mastery_check_KEY.md`, no `teacher-materials/`, no quiz banks. Enforce this at the filter step, in code. A prompt telling the model not to reveal answers is not a security boundary, and this is the same principle as `CLAUDE.md`'s "Protecting Assessment Content" rule.
 - **Retrieved documents are untrusted.** They must not be able to override system instructions, grading rules, or permissions. This matters most if student-authored text could ever enter the corpus (e.g. option B or a shared memory-trick bank from the vocab-quiz reflection theme extraction in `05-grader/README.md`).
 
-## 7. Portfolio value, if built
+## 7. What it would exercise, if built
 
 | Skill | Evidence |
 |---|---|

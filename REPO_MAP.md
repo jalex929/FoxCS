@@ -42,7 +42,7 @@ FoxCS/
                                 Assets and reference material, not authoring docs
 
   00-project-overview/         Original braindump + handoff docs (tier 5, historical context)
-    portfolio-prep/            2026-11-03: public-portfolio plan, exposure audit (FoxCS is public, read it), RAG integration notes, export_showcase.sh
+    portfolio-prep/            2026-11-03: public showcase plan, exposure audit (FoxCS is public, read it), RAG integration notes, export_showcase.sh
     source-material/           braindump.md, the original curriculum-authoring-grading handoff doc
     h5p-authoring-and-automation.md   Can H5P be generated programmatically — yes, how
 

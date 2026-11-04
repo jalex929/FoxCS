@@ -30,9 +30,9 @@ Newest entries at the top, grouped by day.
 
 **Flagged to Jay, not resolved:** (1) confirm subscription terms allow unattended server use via `claude setup-token`; (2) usage counts against plan limits; (3) the worker holds the token, so student code must run as a separate user before go-live; (4) the first real `claude -p` call hasn't happened yet.
 
-## 2026-11-03 -- Portfolio prep: sanitized public showcase, exposure audit, RAG notes
+## 2026-11-03 -- Public showcase: sanitized copy, exposure audit, RAG notes
 
-**Context from Jay:** preparing FoxCS for job interviews (AI engineering roles). Shared a ChatGPT portfolio-readiness review with 7 recommendations plus a long section on how RAG could fit FoxCS. Asked for: a cleaned-up copy, potentially a new repo, with **no Certiport/GMetrix content and no codenames**; some of the review's cleanup changes made; and the RAG notes documented here for later.
+**Context from Jay:** wants a public version of FoxCS that anyone can read without exposing student data, assessments, or licensed content. Shared an outside review with 7 recommendations plus a long section on how RAG could fit FoxCS. Asked for: a cleaned-up copy, potentially a new repo, with **no Certiport/GMetrix content and no codenames**; some of the review's cleanup changes made; and the RAG notes documented here for later.
 
 **Found right away (reported to Jay, not acted on):** `jalex929/FoxCS` is **public** (unauthenticated GitHub API returns it). Licensed workbooks/support files, live Mastery Check quiz passwords, a test-account password, and answer keys are all publicly readable. See `00-project-overview/portfolio-prep/security-and-licensing-audit-2026-11-03.md`.
 
@@ -52,7 +52,7 @@ Newest entries at the top, grouped by day.
 
 **Jay:** "add the class code write-up to the showcase" -> `docs/assessment-access-design.md` in `foxcs-showcase` (PR #1 there). **Jay:** "I do also want to implement the daily class code into the FoxCS original for when I return to work... an important shift in a good direction." -> Added `setup-droplet.sh` (one-time server setup, tested in CI) and a Return-to-work checklist at the top of the mastery-check-access README. **Jay:** "Go ahead and merge any changes into main on both repos, particularly the foxcs-showcase repo." -> Merged foxcs-showcase PR #1 (squash, `3d4addc`). FoxCS PR #1 merged after CI on the final commit.
 
-**Jay:** "add the on-submission grading write-up to my portfolio case study" -> No case study existed (checked Drive, repos, artifacts). Jay: "it doesn't exist yet" -> Drafted "FoxCS Case Study: Grading Code the Moment It's Submitted" as a Claude Doc (https://claude.ai/artifact/G79VzLcSqm9xbbbVEXQ6A8).
+**Jay:** asked to add the on-submission grading write-up to the case study. -> No case study existed (checked Drive, repos, artifacts). Jay: "it doesn't exist yet" -> Drafted "FoxCS Case Study: Grading Code the Moment It's Submitted" as a Claude Doc (https://claude.ai/artifact/G79VzLcSqm9xbbbVEXQ6A8).
 
 **Jay:** "make sure there is some amount of testing that can check the responses and feedback are correct... I often only review the notes/rationale and do not manually review every grade... I approve the bulk grade push." -> Built `portfolio-showcase/grader/release_check.py`. Corrected every doc that claimed each result is individually reviewed. **Jay, mid-task:** "Is there mutation testing being done here? If not let's add it" -> Answered: only ad hoc hand-injected bugs. Built `tools/mutation_test.py` (stdlib) and brought all three grading modules to a 100% mutation score.
 

@@ -1950,11 +1950,11 @@ Per Jay directly, prompted by the real gap found while grading Unit 01's Coding 
 **Not applied retroactively without direction:** the 2026-09-14 grading pass clearing Unit 01's Coding Exercise backlog was done (or already in progress) before this doc existed, using self-derived per-lesson criteria. It doesn't need to be redone under this framework unless Jay says otherwise. Unit 01's 4 Coding Exercises still lack a real rubric file even after this decision — author one for each using this framework as a real follow-up task, separate from clearing the grading backlog.
 
 
-## 2026-11-03 -- Public portfolio = separate sanitized showcase repo with fresh history, not a cleanup of this repo
+## 2026-11-03 -- Public version = separate sanitized showcase repo with fresh history, not a cleanup of this repo
 
-Per Jay: FoxCS is going to be featured in job interviews, but the public version must carry no Certiport/GMetrix content and no codenames. Decided (following an outside review Jay shared, adapted to this repo):
+Per Jay: FoxCS gets a public version, and it must carry no Certiport/GMetrix content and no codenames. Decided (following an outside review Jay shared, adapted to this repo):
 
-- **This repo stays the private operational workspace.** Nothing in it was deleted or rewritten for portfolio purposes.
+- **This repo stays the private operational workspace.** Nothing in it was deleted or rewritten for the public version.
 - **The public version is `portfolio-showcase/`, exported with `00-project-overview/portfolio-prep/export_showcase.sh` into a new repo with fresh history.** Copying into a new repo with history intact wouldn't help: past commits would still contain the licensed files and passwords.
 - **Codenames become `STUDENT-0001`-style synthetic IDs in the showcase, and "codename" becomes "pseudonymous student ID".** The real `PY1-A-...` format isn't published.
 - **The showcase's grader is a sanitized copy of `05-grader/school-side/auto_grade.py`** (identifiers and comments rewritten, logic identical), tested against new, fully synthetic fixtures. The real fixture (`PY1-A-DELTA04_...`) contains real lesson pages with embedded quiz passwords, so it was not reused.
@@ -2010,7 +2010,7 @@ Per Jay: "Not that it leaked. It just was not scalable to have self paced and be
 
 Built and unit-tested (111 checks), not applied live.
 
-**Same day, per Jay:** the daily class code is "an important shift in a good direction" and should be ready to implement in FoxCS on return to work. Jay asked to merge into `main` on both repos. foxcs-showcase PR #1 (the class-code write-up) was merged. FoxCS PR #1 (portfolio prep, on-submission grading, class code) was merged into `main` once CI passed. **Still not applied to live Moodle.** The Return-to-work checklist in `07-infrastructure/moodle-scripts/mastery-check-access/README.md` is the pickup point.
+**Same day, per Jay:** the daily class code is "an important shift in a good direction" and should be ready to implement in FoxCS on return to work. Jay asked to merge into `main` on both repos. foxcs-showcase PR #1 (the class-code write-up) was merged. FoxCS PR #1 (public showcase, on-submission grading, class code) was merged into `main` once CI passed. **Still not applied to live Moodle.** The Return-to-work checklist in `07-infrastructure/moodle-scripts/mastery-check-access/README.md` is the pickup point.
 
 ## 2026-11-03 -- Bulk grade approval is the real practice; a release check and mutation testing back it
 

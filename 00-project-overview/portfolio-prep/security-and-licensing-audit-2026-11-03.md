@@ -4,7 +4,7 @@
 
 ## Headline
 
-**`jalex929/FoxCS` is a public repository right now** (confirmed 2026-11-03: the unauthenticated GitHub API returns it). That matters well beyond portfolio prep. Everything below can be read today by anyone, students included, and this repo's own `CLAUDE.md` ("Protecting Assessment Content") assumes students will never see assessment content.
+**`jalex929/FoxCS` is a public repository right now** (confirmed 2026-11-03: the unauthenticated GitHub API returns it). That matters well beyond the showcase. Everything below can be read today by anyone, students included, and this repo's own `CLAUDE.md` ("Protecting Assessment Content") assumes students will never see assessment content.
 
 **Update, same day, per Jay:** FoxCS needs to stay public for now, and can go private "at some point." So the plan has two phases:
 
