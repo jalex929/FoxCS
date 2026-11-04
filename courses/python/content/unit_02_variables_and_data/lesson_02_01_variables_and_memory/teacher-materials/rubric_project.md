@@ -29,3 +29,15 @@ Internal rubric for the Project module's submitted `.py` file. Written per the 2
 - **Full credit:** all Required items checked, code runs, reassignment is visible in the output.
 - **Partial credit:** Required items mostly present but one is missing or broken (e.g. reassignment creates a new variable instead of overwriting, per `CODE-VAR-01`) — award credit for what's genuinely demonstrated, note the gap in feedback.
 - **No credit / insufficient evidence:** fewer than 4 real variables, no labels on any printed output, or the file does not run at all.
+
+## Tier mapping (current project scale)
+
+From Jay's `courses/python/teacher-materials/sources/Unit_2_Project_Grading_Scale_2026-10-16.pdf`. The extension requirements come from the criteria above; mapping them to 103% and 106% was proposed there. Apply one tier, and don't add the older XP bonuses on top.
+
+| Tier | Grade | Evidence |
+|---|---|---|
+| Starter | 80% | Meaningful baseline evidence with a remaining gap. Record the exact missing criterion. Not a way around a posted insufficient-evidence rule |
+| Skilled | 100% | All required evidence met. Optional additions aren't needed for full credit |
+| Legendary | 103% | Skilled plus at least two more distinct state variables and a specific comment explaining a naming choice |
+| Mythic | 106% | Legendary plus a second variable reassigned at a separate event and a genuine two- or three-sentence comment on how the labels help a player |
+

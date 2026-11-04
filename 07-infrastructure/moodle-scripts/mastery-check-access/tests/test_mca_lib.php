@@ -257,5 +257,23 @@ $intro = mca_intro_for_class_code('<p>4 questions. Ask your teacher for the pass
 check('intro: code sentence replaces password line', $intro, '<p>4 questions.</p><p>' . MCA_CODE_SENTENCE . '</p>');
 check('intro: class-code rewrite is idempotent', mca_intro_for_class_code($intro), $intro);
 
+// ------------------------------------------------ demo code (sample courses only)
+check('demo: working copy allowed', mca_fixed_code_allowed('foxcs-python-dev'), true);
+check('demo: sandbox allowed', mca_fixed_code_allowed('foxcs-sandbox'), true);
+check('demo: live course refused', mca_fixed_code_allowed('foxcs-python'), false);
+check('demo: -dev must be the suffix', mca_fixed_code_allowed('foxcs-dev-python'), false);
+check('demo: code is six digits', preg_match('/^\d{6}$/', MCA_DEMO_CODE), 1);
+$demo = mca_intro_for_class_code('<p>4 questions. Ask your teacher for the password.</p>', true);
+check('demo: intro shows the code after the class-code line', $demo,
+    '<p>4 questions.</p><p>' . MCA_CODE_SENTENCE . '</p><p>' . MCA_DEMO_NOTE . '</p>');
+check('demo: note names the code', strpos(MCA_DEMO_NOTE, MCA_DEMO_CODE) !== false, true);
+check('demo: note survives the password-sentence filter', mca_strip_password_sentences(MCA_DEMO_NOTE), MCA_DEMO_NOTE);
+check('demo: idempotent', mca_intro_for_class_code($demo, true), $demo);
+check('demo: switching back to live removes the note', mca_intro_for_class_code($demo), '<p>4 questions.</p><p>' . MCA_CODE_SENTENCE . '</p>');
+$p = mca_plan(['id' => 1, 'name' => 'x', 'password' => '', 'subnet' => '', 'intro' => '<p>Go.</p>'],
+    ['subnets' => null, 'password' => MCA_DEMO_CODE, 'class_code_intro' => true, 'demo' => true]);
+check('demo: plan sets the demo code and intro', [$p['quiz']['password'][1], $p['quiz']['intro'][1]],
+    [MCA_DEMO_CODE, '<p>Go.</p><p>' . MCA_CODE_SENTENCE . '</p><p>' . MCA_DEMO_NOTE . '</p>']);
+
 echo $failures ? "\n{$failures} of {$count} checks FAILED\n" : "OK: {$count} checks passed\n";
 exit($failures ? 1 : 0);

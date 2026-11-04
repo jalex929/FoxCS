@@ -1,0 +1,43 @@
+# FoxCS on-submission grading worker. Install with the steps in README.md.
+# NOT ENABLED YET: see "Before this goes live" in README.md.
+
+[Unit]
+Description=FoxCS grading worker (deterministic checks, AI review on the Claude subscription)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=foxcs-grader
+Group=foxcs-queue
+WorkingDirectory=/opt/foxcs/portfolio-showcase
+# CLAUDE_CODE_OAUTH_TOKEN=... from `claude setup-token` (a subscription token, not an API key). Mode 600, owned by root.
+EnvironmentFile=/etc/foxcs/claude-subscription.env
+ExecStart=/usr/bin/python3 grader/review_worker.py \
+    --queue /srv/foxcs-queue \
+    --exercises /opt/foxcs/portfolio-showcase/grader/exercises \
+    --rubrics /opt/foxcs/portfolio-showcase/grader/rubrics \
+    --submissions-root /srv/foxcs-queue/files \
+    --watch 30
+Restart=on-failure
+RestartSec=60
+# Exit 2: Claude Code is not on a subscription. Exit 3: the student-code
+# sandbox failed its self-test. Restarting fixes neither, and neither must
+# ever turn into billed API calls or unsandboxed student code, so stay stopped.
+RestartPreventExitStatus=2 3
+# Caps for the whole service, student programs included: a fork bomb or a
+# memory hog hits these before it can hurt the server.
+TasksMax=128
+MemoryMax=1G
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/srv/foxcs-queue
+# Claude Code keeps its own state under the service user's config folder.
+Environment=CLAUDE_CONFIG_DIR=/var/lib/foxcs-grader/claude
+StateDirectory=foxcs-grader
+
+[Install]
+WantedBy=multi-user.target

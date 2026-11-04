@@ -1126,3 +1126,62 @@ No live Moodle changes. Repo-only work on branch `claude/foxcs-portfolio-prep-r9
 - **Showcase totals:** 247 tests. Mutation testing runs in about 80s locally at `--jobs 6`.
 - **CI:** both the showcase `tests.yml` and FoxCS `portfolio-showcase-tests.yml` gained a `mutation` job, and the coverage gate now covers release_check too.
 - **Docs and FoxCS side:** showcase docs corrected for bulk approval. `05-grader/README.md` now documents the release check as the step before every bulk push.
+
+**Showcase review-readiness pass (2026-11-03, later).**
+- **Model runner:** `evals/run_model.py` grades the eval cases with Claude (`claude-opus-5-5`, effort high, strict JSON-schema structured output, `fallbacks: "default"`, cacheable system prompt; the case expectations are never sent). It records usage and cost and measures score spread across `--repeats`. 27 tests with a fake client. Prompt snapshots live in `evals/tests/snapshots/` (`tools/update_prompt_snapshots.py`). 100% coverage and mutation score. Not yet run against the real API: that needs Jay's key.
+- **Release-check demo:** `examples/release-check/` (`tools/make_release_example.py`, golden-tested): 8 results, 1 blocked, 4 review, 3 ready.
+- **Lint:** `ruff.toml` (E/W/F/I/B/UP/SIM/RUF; fixtures excluded), clean, in CI.
+- **Docs:** `docs/decisions.md` (8 decisions), a README "Start here" tour, and test counts updated (275 total).
+- **Mutation testing found a flaky test:** the release check's seed test used a 6-result batch, so a random draw could match by chance. Fixed with a 30-result batch plus a precondition, and an explicit `if` instead of `or`.
+- **Per Jay:** removed a notes section from `00-project-overview/portfolio-prep/README.md` and reworded two audit lines.
+
+**Subscription-backed AI grading + event listener (2026-11-04). Built and tested, nothing installed live.**
+- **`portfolio-showcase/evals/run_model.py`:** now has two backends, `ClaudeCodeBackend` (`claude -p`, default) and `ApiBackend`, plus a subscription preflight. A `<program_runs>` trusted-facts block (spec text + exit codes only, never student output) and one new system-prompt rule; the snapshot was updated. 48 tests, 100% line+branch, mutation 100% of 128 (one new documented equivalent).
+- **New `portfolio-showcase/grader/review_worker.py`:** the queue worker (`incoming/ processing/ done/ failed/ drafts.jsonl review/outputs review/submissions`), `--watch`, crash recovery, and re-review on requeue. New `grader/rubrics/lesson_02_06_coins_to_points.json`. 24 tests, 100% line+branch, mutation 100% of 78 (first run 93.7%: 4 required-arg mutants caught by a new test, and one redundant `parents=True` removed).
+- **New `07-infrastructure/local-plugins/foxcsgradequeue/`:** the Moodle event observer. Pure logic is in `queue_lib.php`: 42 checks, which caught a real `$`-before-newline regex bug, fixed with `/D`. `tests/contract_test.sh` checks the PHP-written event against the Python parser. New CI: `.github/workflows/grading-queue-tests.yml`.
+- **New `07-infrastructure/grading-worker/`:** `README.md` (flow, why it stays free, go-live steps) and `foxcs-review-worker.service`.
+- **CI:** the coverage gate and the mutation job now include review_worker in both workflows.
+- **Pick up here (go-live):** `07-infrastructure/grading-worker/README.md` -> "Before this goes live". The first step is the sandbox (a separate user for student code). The first real `claude -p` call is step 6 there; it also confirms the CLI's JSON result shape, which so far is only pinned by a fake.
+
+**Student-code sandbox (2026-11-04, later). Built and tested, not installed live.**
+- **New `portfolio-showcase/grader/sandbox.py`:** bubblewrap wrapper plus a probe and a probe checker.
+- **`on_submission.py` changes:** `run_program(..., sandbox=)`, `make_runner`, `sandbox_self_test`, `build_sandbox`, and `--sandbox none|bwrap` (exit 3 if the self-test fails).
+- **`review_worker.py`:** defaults to `--sandbox bwrap` and checks it before anything else.
+- **The self-test caught two real gaps on its first run:**
+  - the sandbox root was writable, now fixed with `--remount-ro /`;
+  - the probe checked fixed paths, so with no sandbox at all it missed that it could write. It now checks its own folder.
+- **New `test_on_submission_sandbox.py`:** 23 tests, plus the hostile fixture `escape_attempt.py`.
+- **Mutation testing:** new target `sandbox` at 100% of 30. The on_submission target now also runs the sandbox tests: 100% of 186, with 2 new documented equivalents.
+- **Leak scanner:** now allows the RFC 5737 documentation IP ranges, which the probe uses, with tests.
+- **CI:** both workflows install bubblewrap, lift Ubuntu 24.04's AppArmor userns restriction on the runner, and set `FOXCS_REQUIRE_SANDBOX=1`.
+- **Systemd unit:** now `RestartPreventExitStatus=2 3`, `TasksMax=128`, `MemoryMax=1G`.
+- **Showcase totals:** 346 tests.
+
+**Rubric coverage, "why" comment guidance, sample-course class code (2026-11-04, later).**
+- **New tooling:** `courses/python/submittables.json` and `02-authoring-system/tools/check_rubric_coverage.py` (14 tests), running in `authoring-checks-tests.yml`. All 32 items pass (6 exempt with reasons).
+- **New guidance:** `05-grader/comment-reasoning-rubric.md`.
+- **Rubrics written:**
+  - `teacher-materials/unit_01_what_is_programming/lesson_01_0{3..6}_coding_exercise_rubric.md`;
+  - `content/unit_02_.../lesson_02_0{2..5}_*/teacher-materials/coding_exercise_rubric.md`;
+  - the Checkpoint's `teacher-materials/coding_exercise_rubric.md`;
+  - `teacher-materials/unit_02_variables_and_data/{lesson_02_07_coding_exercise_rubric,unit_02_project_rubric}.md`;
+  - 02.6 and 02.1-project additions.
+- **Jay's PDFs** are kept in `courses/python/teacher-materials/sources/`.
+- **`mca_lib.php`:** `MCA_DEMO_CODE`, `MCA_DEMO_NOTE`, `mca_fixed_code_allowed`, and a `demo` option on `mca_intro_for_class_code`/`mca_plan`. `apply-mastery-check-access.php --demo-code`; `rotate-daily-class-code.php` skips sample courses. 122 checks.
+- **Case study (Claude Doc):** new subsection on working within CPS's student-PII rules with codename logins.
+- **Still to do:**
+  - commit 02.7 and any other droplet-only content;
+  - grader spec additions (`minOutputLines`, `reviewCriteria`) and exercise specs;
+  - the Units 01-02 polish in the copy (`.py` only, Skulpt in Unit 01, Checkpoint item 6 wording);
+  - the viewer guide.
+
+**Mastery Check rubrics; sandbox CI fix (2026-11-04, latest).**
+- **Unit 01 Mastery Check keys rewritten from the live build scripts.** The old narrative keys described questions students no longer see. Each live quiz is the integrity acknowledgment plus one random task from a pool (10 essays for 01.1, 01.2, 01.4-01.6; 6 auto-scored `print()` tasks for 01.3). Every task now has:
+  - **Full credit needs** (checklist, expected answers marked);
+  - what drops a tier, and misconceptions to watch for;
+  - a sentence starter on the Sept 13 80-100 scale.
+- **Unit 02 keys** gained a standard "Scoring and regrades" section.
+- **Found:** 01.6 pool task 3 (`Print(Continue`) says "two mistakes" but has three. 01.3's accepted answers miss harmless spacing variants. Both go on the polish list.
+- **Sandbox CI fix:** CI's Python lives under `/opt/hostedtoolcache`, so the probe saw `/opt` and failed the real-sandbox tests. The probe now allows a host folder that holds only the path to a bound Python prefix; binding a whole host folder is still caught.
+- **Per Jay:** no grading of real student work right now. Rubrics and tooling exist to make the sample course a model of the system.
+

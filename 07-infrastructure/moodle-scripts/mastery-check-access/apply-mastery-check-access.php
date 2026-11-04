@@ -14,6 +14,10 @@
 //     saying to enter today's class code, posted in class. From then on
 //     rotate-daily-class-code.php (cron) keeps the code current.
 //     (--no-class-code to leave the password and intro alone.)
+//   - --demo-code (sample / working-copy courses only): every Mastery Check
+//     gets the fixed code 123456 instead, and its intro shows the code with a
+//     note that the real course changes it daily. Refused on a live course;
+//     rotate-daily-class-code.php skips these courses.
 // Existing availability conditions are kept. Re-running is a no-op.
 //
 // Safety:
@@ -37,7 +41,7 @@ require_once(__DIR__ . '/mca_lib.php');
 
 [$options] = cli_get_params([
     'course' => '', 'subnets' => '', 'test-ip' => '', 'check-ip' => '', 'only-cmid' => 0,
-    'no-prereqs' => false, 'no-network' => false, 'no-class-code' => false,
+    'no-prereqs' => false, 'no-network' => false, 'no-class-code' => false, 'demo-code' => false,
     'secret-file' => '/etc/foxcs/class-code.secret',
     'apply' => false, 'i-ran-the-backup' => false,
     'backup-log' => '/home/jay/moodle-backups/backup.log',
@@ -88,7 +92,12 @@ if (!$options['no-network']) {
 
 $course = $DB->get_record('course', ['shortname' => $options['course']], '*', MUST_EXIST);
 $code = null;
-if (!$options['no-class-code']) {
+if ($options['demo-code']) {
+    if (!mca_fixed_code_allowed($course->shortname)) {
+        cli_error("--demo-code publishes a fixed code, so it only runs on a working copy or sandbox (shortname ending -dev or containing sandbox), never {$course->shortname}.");
+    }
+    $code = MCA_DEMO_CODE;
+} elseif (!$options['no-class-code']) {
     try {
         $code = mca_daily_code(mca_load_secret($options['secret-file']), $course->shortname, mca_school_date(time()));
     } catch (RuntimeException $e) {
@@ -119,6 +128,7 @@ foreach ($modinfo->sections as $sectionnum => $cmids) {
             'subnets' => $subnets,
             'password' => $code,
             'class_code_intro' => $code !== null,
+            'demo' => (bool) $options['demo-code'],
             'prereq_cmids' => $prereqs,
             'availability' => $cm->availability,
         ]);

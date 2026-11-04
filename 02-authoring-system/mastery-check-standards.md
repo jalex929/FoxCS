@@ -36,6 +36,8 @@
 - **Not allowed: anything that scales with the number of students.** No per-student passwords handed out on request, no request-and-approve flows, and no Safe Exam Browser (it needs a client app, and was turned off sitewide 2026-09-01).
 - **Every Mastery Check gets the same gates**, set up once by `07-infrastructure/moodle-scripts/mastery-check-access/apply-mastery-check-access.php`. After that, `rotate-daily-class-code.php` keeps the code current.
 - **The intro says to enter today's class code, posted in class**, never "ask your teacher for the password." This is consistent with the intro rule below (lesson + question count only).
+- **Every Mastery Check carries the same expectation, with no exceptions** (per Jay, 2026-11-04). A new Mastery Check's build script writes the class-code line (`MCA_CODE_SENTENCE` in `mca_lib.php`) into its intro from the start, and `apply-mastery-check-access.php --only-cmid` brings it under the daily rotation.
+- **Sample course only:** the working copy uses the fixed code `123456`, shown on each Mastery Check with a note that the real course changes it daily (`--demo-code`, refused on a live course).
 - **Status:** built and unit-tested 2026-11-03, not yet applied to any course. Test in `sandbox-adaptive-demo` from home first (test mode), per that folder's README.
 
 ## Standing rule: submission-window check runs before content grading, and overrides the ELL floor

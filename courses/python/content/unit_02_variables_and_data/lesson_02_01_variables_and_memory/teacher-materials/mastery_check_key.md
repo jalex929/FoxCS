@@ -57,3 +57,13 @@ This line is supposed to print `Total: 12`, using `+`, but it crashes. Write the
 ## Grading Notes
 
 All 4 items are auto-graded by Moodle's native question engine (shortanswer exact/normalized match, multichoice). No manual grading pass is needed for this Mastery Check specifically, unlike lessons that lean on essay questions. If a student's shortanswer response is a near-miss (extra whitespace, a trailing period), Moodle's normalized matching should already accept it; if a real pattern of near-misses shows up in practice, add the variant to the accepted-answers list in the quiz's question bank rather than manually re-grading each occurrence.
+
+## Scoring and regrades
+
+Added 2026-11-04 so every Mastery Check key states the same expectations.
+
+- **Every item is an expected answer, scored by Moodle.** Short-answer items accept the listed answers. Multiple-choice items have one correct option. The scores are averaged across the 3 allowed attempts.
+- **Regrade by hand when Moodle missed a harmless spelling.** An answer is correct if it means exactly the accepted answer: extra spaces inside parentheses, the other quote style, or a trailing space. Give it full credit plus a one-line style note (clean Python has no extra spaces). Add any spelling you regrade for to the item's accepted answers in the working copy, so it's only regraded once.
+- **Never regrade toward a misconception.** A different value, type or casing is wrong even if it's close (`"10"` for `10`, `true` for `True`). Those are exactly what the item tests.
+- **Feedback:** each wrong answer gets the item's **Targets** skill named back to the student, plus one line on the specific mix-up.
+- **The class code:** this check uses the same class-code gate as every Mastery Check (`02-authoring-system/mastery-check-standards.md`).

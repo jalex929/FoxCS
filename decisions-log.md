@@ -1950,11 +1950,11 @@ Per Jay directly, prompted by the real gap found while grading Unit 01's Coding 
 **Not applied retroactively without direction:** the 2026-09-14 grading pass clearing Unit 01's Coding Exercise backlog was done (or already in progress) before this doc existed, using self-derived per-lesson criteria. It doesn't need to be redone under this framework unless Jay says otherwise. Unit 01's 4 Coding Exercises still lack a real rubric file even after this decision — author one for each using this framework as a real follow-up task, separate from clearing the grading backlog.
 
 
-## 2026-11-03 -- Public portfolio = separate sanitized showcase repo with fresh history, not a cleanup of this repo
+## 2026-11-03 -- Public version = separate sanitized showcase repo with fresh history, not a cleanup of this repo
 
-Per Jay: FoxCS is going to be featured in job interviews, but the public version must carry no Certiport/GMetrix content and no codenames. Decided (following an outside review Jay shared, adapted to this repo):
+Per Jay: FoxCS gets a public version, and it must carry no Certiport/GMetrix content and no codenames. Decided (following an outside review Jay shared, adapted to this repo):
 
-- **This repo stays the private operational workspace.** Nothing in it was deleted or rewritten for portfolio purposes.
+- **This repo stays the private operational workspace.** Nothing in it was deleted or rewritten for the public version.
 - **The public version is `portfolio-showcase/`, exported with `00-project-overview/portfolio-prep/export_showcase.sh` into a new repo with fresh history.** Copying into a new repo with history intact wouldn't help: past commits would still contain the licensed files and passwords.
 - **Codenames become `STUDENT-0001`-style synthetic IDs in the showcase, and "codename" becomes "pseudonymous student ID".** The real `PY1-A-...` format isn't published.
 - **The showcase's grader is a sanitized copy of `05-grader/school-side/auto_grade.py`** (identifiers and comments rewritten, logic identical), tested against new, fully synthetic fixtures. The real fixture (`PY1-A-DELTA04_...`) contains real lesson pages with embedded quiz passwords, so it was not reused.
@@ -2010,7 +2010,7 @@ Per Jay: "Not that it leaked. It just was not scalable to have self paced and be
 
 Built and unit-tested (111 checks), not applied live.
 
-**Same day, per Jay:** the daily class code is "an important shift in a good direction" and should be ready to implement in FoxCS on return to work. Jay asked to merge into `main` on both repos. foxcs-showcase PR #1 (the class-code write-up) was merged. FoxCS PR #1 (portfolio prep, on-submission grading, class code) was merged into `main` once CI passed. **Still not applied to live Moodle.** The Return-to-work checklist in `07-infrastructure/moodle-scripts/mastery-check-access/README.md` is the pickup point.
+**Same day, per Jay:** the daily class code is "an important shift in a good direction" and should be ready to implement in FoxCS on return to work. Jay asked to merge into `main` on both repos. foxcs-showcase PR #1 (the class-code write-up) was merged. FoxCS PR #1 (public showcase, on-submission grading, class code) was merged into `main` once CI passed. **Still not applied to live Moodle.** The Return-to-work checklist in `07-infrastructure/moodle-scripts/mastery-check-access/README.md` is the pickup point.
 
 ## 2026-11-03 -- Bulk grade approval is the real practice; a release check and mutation testing back it
 
@@ -2026,3 +2026,84 @@ Per Jay: he approves AI-assisted grades in bulk. He reads the notes/rationale, c
 - **Mutation testing (`tools/mutation_test.py`, stdlib)** is a CI gate on on_submission, release_check and score_output: no unexplained survivors, with equivalents listed with reasons in `tools/mutation_equivalents.json`.
   - **First runs at 100% coverage:** 88.7% / 83.0% / 90.5%. **Now:** 100% / 100% / 100%. Six documented equivalents.
   - **It found:** untested behavior (e.g. a 1-point credit without evidence would have passed), removable dead code, and a key-collision bug in the tester itself.
+
+## 2026-11-04 -- AI grading runs on Jay's Claude subscription, not the paid API
+
+Per Jay: "We will use the Claude code non-interactive mode with event listeners and things like I mentioned in the build for FoxCS. Let's make sure we get that squared away so it's free (only uses my subscription)".
+
+**Decided:**
+- **Default AI backend is Claude Code in non-interactive mode (`claude -p`)**, signed in to Jay's Claude account. The API backend stays in `evals/run_model.py` for comparison runs, by explicit `--backend api` only.
+- **Hard preflight, no model call:** `claude auth status --json` must report `authMethod` `claude.ai` (a `/login` session) or `oauth_token` (from `claude setup-token`), with no `apiKeySource`. Otherwise the run or the worker refuses to start (exit 2). The systemd unit won't restart on exit 2.
+- **API-key variables are stripped** from the `claude` child process (`ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`). Claude Code prefers an API key over the subscription when both are present, so a stray key would quietly bill.
+- **Never `--bare`:** it skips OAuth and requires an API key. Isolation comes from `--safe-mode` (no CLAUDE.md, hooks, plugins, skills, MCP; auth still works), `--tools ""`, `--strict-mcp-config`, `--no-session-persistence`, and an empty temp folder per call. The submission goes on stdin, not argv.
+- **Event-driven flow:** a Moodle observer plugin (`local_foxcsgradequeue`, on `\mod_assign\event\assessable_submitted`, allowlisted Coding Exercises only) writes a queue event, and `review_worker.py` grades it with `on_submission.py`. Only `runs_with_issues` goes to Claude, with the run results as trusted facts. Results land where `release_check.py` reads them. Nothing is released without Jay's batch approval.
+- **No automatic retries**, matching the existing reliability rule: failed reviews go to `failed/` with a reason.
+- **New go-live requirement:** student code must run as a different Unix user from the worker, because the worker holds the subscription token. This adds to the existing container-sandbox blocker.
+
+**Open, for Jay:** confirm that unattended, scheduled use of a `claude setup-token` subscription token on the droplet fits the current plan terms. Usage counts against the plan's normal limits, shared with interactive use.
+
+## 2026-11-04 (later) -- Student code runs in a bubblewrap sandbox, on by default
+
+Per Jay: "yes start with the sandbox, then the exercise specs".
+
+**Decided:**
+- **Bubblewrap instead of a separate Unix user or a container.** It needs no root, no sudo rules and no container runtime: each run gets fresh namespaces. That means:
+  - **no network**;
+  - **its own process list**, so the worker's environment, where the subscription token lives, is invisible;
+  - **a read-only root** with only `/usr` and the one submitted file, plus an empty writable `/tmp` as the working folder;
+  - `--clearenv`, `--cap-drop ALL`, `--new-session`, and `--die-with-parent`.
+
+  This supersedes the earlier "different Unix user" go-live requirement (2026-11-04, above). It's a stronger boundary: a separate user would still see the network and world-readable files.
+- **Self-test before trusting it:**
+  - `on_submission.sandbox_self_test()` runs a probe inside the sandbox and names every property that fails.
+  - The worker defaults to `--sandbox bwrap` and refuses to start (exit 3) on any failure. The systemd unit won't restart on 3.
+  - `--sandbox none` exists for trusted test files and prints a warning.
+- **The service also gets `TasksMax=128` and `MemoryMax=1G`**, so a fork bomb or memory hog hits a cap before it can hurt the droplet.
+- **No grade changes:** every fixture gets the same band, score, and per-test results with or without the sandbox. This is pinned by a test.
+
+**Open, droplet-side:** Ubuntu 24.04's AppArmor may block unprivileged user namespaces. The self-test reports it if so. Preferred fix: an AppArmor profile for bwrap, rather than the system-wide sysctl.
+
+## 2026-11-04 (later still) -- A working copy of the Python course; polish Units 01-02 there
+
+Per Jay: "Lets duplicate the Python course to have a working version that doesn't impact student grades." Then: "We can update the course page for the new iteration to make sure it only accepts .py files for submissions and that they can do exercises right in the code editor in the platform for some things. I think this should be introduced earlier (in Unit 1) to make it more interactive." Unit 03 is on hold ("We can hold off on unit 3 that's ok").
+
+**Decided:**
+- **`foxcs-python-dev`:** a hidden copy made by `07-infrastructure/moodle-scripts/course-copy/duplicate-course.php`.
+  - **Carries no user data:** users, enrolments, grades, submissions, attempts, completion and logs are all forced off, and the script verifies the result.
+  - **Copied pages are re-pointed at the copy.** Deploy scripts stamp each page's live `cmid` into its HTML, so a plain copy would log progress and completion, and award Instruction grades, on the live course. The script rewrites those IDs and links after restore, and stops if live and copy modules don't pair up exactly.
+  - **Not run yet:** it needs a droplet session, backup first.
+- **The polish pass happens in the copy**, then is promoted to `foxcs-python` through the normal publish checklist.
+- **Every Coding Exercise accepts `.py` file upload only.** Unit 01's four (01.3-01.6) still accept pasted text or any file type, per their build scripts, against CLAUDE.md's standard. Unless the 2026-09-09 settings fix already changed this live, it is one of the compromises to remove.
+- **In-platform coding starts in Unit 01.** It uses Skulpt, already adopted 2026-09-04 and running in Unit 02's Instruction pages.
+
+**Open:** what was built on the droplet during the absence (Sept 15-Nov 2 has no commits). A droplet session should commit anything uncommitted before the copy is made, so the repo matches what gets copied.
+
+## 2026-11-04 (later still) -- A rubric for everything students submit; how "why" comments are judged; one class-code rule for every Mastery Check
+
+Per Jay: "We need to make sure every assignment and thing that students can submit for feedback has a rubric." Also: "Let's come up with more guidance then for how to assess to what extent students are correct when giving the why in their comment," then "for coding exercises, it may be more like expecting a certain answer and marking it that way." And: "Make sure also that every mastery check has the same daily code expectation. We can maybe even put the code in as 123456 for this prototype/portfolio version with a note that it would change daily," listed on the page in the sample course so visitors can enter it.
+
+**Decided:**
+- **`courses/python/submittables.json`** lists every submittable item (32), each with its rubric or an `exempt` reason. `02-authoring-system/tools/check_rubric_coverage.py` fails CI if a live item's rubric is missing, empty, thin (fewer than 2 criteria), or has a TODO/TBD.
+  - Exempt: the per-lesson Feedback skill self-ratings (not graded, not work submitted for feedback).
+  - CLAUDE.md pre-publish item 6 now covers every submittable item, not just Coding Exercises.
+- **New rubrics:**
+  - Coding Exercises 01.3-01.6 (50/50 runs/correct; no key existed).
+  - 02.2-02.5 and 2.7, transcribed from Jay's Sept 28 key (`courses/python/teacher-materials/sources/`).
+  - The Unit 02 Checkpoint.
+  - The Unit 02 Personal Profile Generator project (proposed, from Jay's Oct 16 scale; not confirmed as assigned).
+- **Points added from Jay's documents:** 02.6's rubric gained the Sept 28 key's points, and 02.1's Project rubric gained the 80/100/103/106 tier mapping.
+- **Expected answers vs. reasoning.** Most Coding Exercise questions have an expected answer and are marked right or wrong against the key, accepting close paraphrases and any English. Only open "explain why" comments (01.5, the 01.4 bonus) use the leveled scale in `05-grader/comment-reasoning-rubric.md`.
+  - That scale has four levels: accurate reason / vague or partly off / restates the code / missing or wrong.
+  - Two tests decide the level: the deletion test and the swap test.
+  - It maps to the correct half of the grade.
+- **Every Mastery Check carries the same class-code expectation** (`mastery-check-standards.md`).
+  - **The sample course** (`foxcs-python-dev`) uses `apply-mastery-check-access.php --demo-code`. That sets the fixed code `123456` and shows it in each intro with a note that the real course changes it daily.
+  - **Two guards keep it out of the live course:** `--demo-code` is refused unless the shortname ends `-dev` or contains `sandbox`, and the daily rotation skips those courses.
+
+**Known Tension (for Jay):** `coding-exercise-standards.md` (Sept 14) splits every Coding Exercise 50% runs / 50% correct. Jay's Sept 28 Unit 2 key splits points by task (e.g. 2.2: 3/4/3). The transcribed rubrics keep the Sept 28 points as written. Which one wins going forward is Jay's call.
+
+**Learned from Jay's Sept 28 key:**
+- About 70% of Unit 2 zeros were submission-gate failures: unshared CodeHS links, wrong exercise, untouched starter.
+- That is the strongest evidence for the `.py`-only plus in-platform editor change.
+- 02.6 and a 02.7 ("Reading Code with Variables", `score_tracker_debug.py`) went live during the absence; 02.7 has no repo copy.
+

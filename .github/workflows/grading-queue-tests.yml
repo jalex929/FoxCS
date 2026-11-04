@@ -1,0 +1,35 @@
+name: Grading queue tests
+
+# The Moodle event listener (local_foxcsgradequeue) and its handoff to the
+# Python grading worker. No Moodle install: the plugin's pure logic is unit
+# tested, the Moodle-facing files are syntax-checked, and a contract test
+# feeds a PHP-written event into the Python side.
+
+on:
+  push:
+    paths:
+      - '07-infrastructure/local-plugins/foxcsgradequeue/**'
+      - 'portfolio-showcase/grader/on_submission.py'
+      - 'portfolio-showcase/grader/sandbox.py'
+      - '.github/workflows/grading-queue-tests.yml'
+  pull_request:
+    paths:
+      - '07-infrastructure/local-plugins/foxcsgradequeue/**'
+      - 'portfolio-showcase/grader/on_submission.py'
+      - 'portfolio-showcase/grader/sandbox.py'
+      - '.github/workflows/grading-queue-tests.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: php 07-infrastructure/local-plugins/foxcsgradequeue/tests/test_queue_lib.php
+      - name: Syntax check every plugin file
+        run: find 07-infrastructure/local-plugins/foxcsgradequeue -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: PHP event to Python worker contract
+        run: bash 07-infrastructure/local-plugins/foxcsgradequeue/tests/contract_test.sh

@@ -21,6 +21,7 @@ require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/course/modlib.php');
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 require_once($CFG->libdir . '/questionlib.php');
+require_once(__DIR__ . '/lib/answer_variants.php');
 
 use mod_quiz\quiz_settings;
 
@@ -146,19 +147,16 @@ foreach ($tasks as $i => $target) {
     $form->penalty = 0.3333333;
     $form->usecase = 1; // case-sensitive: exact output text matters
 
-    $variants = [
-        "print(\"{$target}\")",
-        "print('{$target}')",
-        "print (\"{$target}\")",
-        "print ('{$target}')",
-    ];
+    // Every quote style and optional spacing that is still valid Python is
+    // correct (lib/answer_variants.php, each one tested by running it); the
+    // spaced forms get a clean-Python style tip as feedback. Per Jay, 2026-11-04.
     $form->answer = [];
     $form->fraction = [];
     $form->feedback = [];
-    foreach ($variants as $v) {
-        $form->answer[] = $v;
+    foreach (foxcs_print_variants($target) as $v) {
+        $form->answer[] = $v['answer'];
         $form->fraction[] = 1.0;
-        $form->feedback[] = ['text' => '', 'format' => FORMAT_HTML];
+        $form->feedback[] = ['text' => '<p>' . s($v['feedback']) . '</p>', 'format' => FORMAT_HTML];
     }
 
     $saved = $qtype->save_question($question, $form);

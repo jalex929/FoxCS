@@ -14,9 +14,47 @@ Newest entries at the top, grouped by day.
 
 ---
 
-## 2026-11-03 -- Portfolio prep: sanitized public showcase, exposure audit, RAG notes
+## 2026-11-04 (latest) -- Rubrics for everything, "why" comments, sample-course class code, case study
 
-**Context from Jay:** preparing FoxCS for job interviews (AI engineering roles). Shared a ChatGPT portfolio-readiness review with 7 recommendations plus a long section on how RAG could fit FoxCS. Asked for: a cleaned-up copy, potentially a new repo, with **no Certiport/GMetrix content and no codenames**; some of the review's cleanup changes made; and the RAG notes documented here for later.
+**Jay:**
+- **Case study:** note that FoxCS had to work within CPS's strict rules on student PII on unapproved platforms, so students couldn't sign in with their email; hence the codename-and-password logins. Done, as a new subsection in the case study Doc.
+- **"Why" comments:** guidance for judging how correct a student's why-comment is. Then: Coding Exercises are usually "expecting a certain answer and marking it that way." Done: `05-grader/comment-reasoning-rubric.md`, with expected-answer marking as the default and the leveled scale only for open reasoning.
+- **Rubrics:** every submittable item has a rubric. Done, and enforced in CI. Jay shared the two rubric PDFs he gave the sub; they're kept in `teacher-materials/sources/` and transcribed.
+- **Class code:** every Mastery Check has the same daily-code expectation. The sample course uses `123456`, listed on the page with a note that the real one changes daily. Done (`--demo-code`).
+
+**Open for Jay:** Sept 14 50/50 standard vs. Sept 28 per-task points (REPO_MAP Known Tensions); whether the Personal Profile Generator was actually assigned.
+
+## 2026-11-04 (later still) -- Working copy of the course; Units 01-02 polish; in-platform coding in Unit 01
+
+**Jay:** hold off on Unit 03. Duplicate the Python course "to have a working version that doesn't impact student grades." In the new iteration, Coding Exercises accept `.py` files only, and some exercises happen "right in the code editor in the platform," introduced in Unit 01. Also: no wording anywhere in the logs suggesting the repo was being edited for interviews or job applications. Done: reworded the four places that said so.
+
+**Done:** `course-copy/duplicate-course.php` (+ tested `copy_lib.php`).
+
+**Next, in order:**
+1. Grader spec additions (`minOutputLines`, `reviewCriteria`), so judgment-heavy exercises never score "flawless" from output alone.
+2. Exercise specs for 01.3-01.6 and 02.2-02.6.
+3. The Units 01-02 compromise inventory and fixes, made in the copy.
+4. Skulpt in-page coding added to Unit 01.
+
+## 2026-11-04 (later) -- Sandbox done; next asks from Jay
+
+**Jay:** "yes start with the sandbox, then the exercise specs". The sandbox is done (see `decisions-log.md`).
+
+**Then, mid-turn:** "I also want to make sure the content is mapped well so a viewer can understand what the program is, what it does, and how I leveraged my experiences and domain knowledge to make this happen (example: combining instructional knowledge and learning best practices etc in this project)". Also: "I also want to ultimately remove any of the compromises we had to make due to sub coverage and things not working. So I think we should really polish up these 3 live units based on what's available".
+
+**Still queued:** exercise specs for the real Coding Exercises.
+
+## 2026-11-04 -- AI grading on the subscription, not the API
+
+**Jay asked:** "Is there any way to do this for free without paying?" Then: "We will use the Claude code non-interactive mode with event listeners and things like I mentioned in the build for FoxCS. Let's make sure we get that squared away so it's free (only uses my subscription)".
+
+**Done:** `claude -p` backend as the default in `run_model.py`, with a preflight that refuses anything but a subscription login. Also the queue worker (`review_worker.py`), the Moodle event listener plugin (`local_foxcsgradequeue`), and the systemd unit plus go-live steps in `07-infrastructure/grading-worker/`. All tested in CI; nothing installed on the droplet. See `decisions-log.md` 2026-11-04.
+
+**Flagged to Jay, not resolved:** (1) confirm subscription terms allow unattended server use via `claude setup-token`; (2) usage counts against plan limits; (3) the worker holds the token, so student code must run as a separate user before go-live; (4) the first real `claude -p` call hasn't happened yet.
+
+## 2026-11-03 -- Public showcase: sanitized copy, exposure audit, RAG notes
+
+**Context from Jay:** wants a public version of FoxCS that anyone can read without exposing student data, assessments, or licensed content. Shared an outside review with 7 recommendations plus a long section on how RAG could fit FoxCS. Asked for: a cleaned-up copy, potentially a new repo, with **no Certiport/GMetrix content and no codenames**; some of the review's cleanup changes made; and the RAG notes documented here for later.
 
 **Found right away (reported to Jay, not acted on):** `jalex929/FoxCS` is **public** (unauthenticated GitHub API returns it). Licensed workbooks/support files, live Mastery Check quiz passwords, a test-account password, and answer keys are all publicly readable. See `00-project-overview/portfolio-prep/security-and-licensing-audit-2026-11-03.md`.
 
@@ -36,7 +74,7 @@ Newest entries at the top, grouped by day.
 
 **Jay:** "add the class code write-up to the showcase" -> `docs/assessment-access-design.md` in `foxcs-showcase` (PR #1 there). **Jay:** "I do also want to implement the daily class code into the FoxCS original for when I return to work... an important shift in a good direction." -> Added `setup-droplet.sh` (one-time server setup, tested in CI) and a Return-to-work checklist at the top of the mastery-check-access README. **Jay:** "Go ahead and merge any changes into main on both repos, particularly the foxcs-showcase repo." -> Merged foxcs-showcase PR #1 (squash, `3d4addc`). FoxCS PR #1 merged after CI on the final commit.
 
-**Jay:** "add the on-submission grading write-up to my portfolio case study" -> No case study existed (checked Drive, repos, artifacts). Jay: "it doesn't exist yet" -> Drafted "FoxCS Case Study: Grading Code the Moment It's Submitted" as a Claude Doc (https://claude.ai/artifact/G79VzLcSqm9xbbbVEXQ6A8).
+**Jay:** asked to add the on-submission grading write-up to the case study. -> No case study existed (checked Drive, repos, artifacts). Jay: "it doesn't exist yet" -> Drafted "FoxCS Case Study: Grading Code the Moment It's Submitted" as a Claude Doc (https://claude.ai/artifact/G79VzLcSqm9xbbbVEXQ6A8).
 
 **Jay:** "make sure there is some amount of testing that can check the responses and feedback are correct... I often only review the notes/rationale and do not manually review every grade... I approve the bulk grade push." -> Built `portfolio-showcase/grader/release_check.py`. Corrected every doc that claimed each result is individually reviewed. **Jay, mid-task:** "Is there mutation testing being done here? If not let's add it" -> Answered: only ad hoc hand-injected bugs. Built `tools/mutation_test.py` (stdlib) and brought all three grading modules to a 100% mutation score.
 

@@ -17,6 +17,10 @@ python portfolio-showcase/grader/release_check.py --outputs <batch>/outputs --ru
 
 The tool lives in `portfolio-showcase/grader/` so the public showcase and this workflow share one tested copy (100% line and branch coverage, mutation-tested). See `portfolio-showcase/docs/release-check.md`.
 
+## On-submission grading with AI review on the subscription (added 2026-11-04, not live yet)
+
+Moodle submission event -> `local_foxcsgradequeue` writes a queue event -> `portfolio-showcase/grader/review_worker.py` grades it with `on_submission.py`, and sends only `runs_with_issues` to Claude Code (`claude -p`) on Jay's subscription -> results land where the release check above reads them -> bulk approval. The worker refuses to run unless Claude Code is signed in to a subscription, so it never bills the API. Setup and go-live blockers: `07-infrastructure/grading-worker/README.md`.
+
 ## Architecture, decided 2026-08-18: two tiers, two machines
 
 Jay's teacher machine (school) has cmd/PowerShell and Python, but **no Claude Code, no ChatGPT, no Claude products** — Copilot only, and Jay wants to avoid relying on it. Jay's home machine has Claude Code. The grading design splits along exactly that line, and it turns out to split cleanly along a line the content already has:
