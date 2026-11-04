@@ -21,18 +21,26 @@ on:
   push:
     paths:
       - '02-authoring-system/tools/**'
+      - '02-authoring-system/shared-components/**'
       - 'courses/python/content/**'
       - 'courses/python/teacher-materials/**'
       - 'courses/python/submittables.json'
       - '05-grader/*.md'
+      - 'courses/python/question-checks/**'
+      - '07-infrastructure/moodle-scripts/build-lesson-*-mastery-check.php'
+      - '07-infrastructure/moodle-scripts/lib/**'
       - '.github/workflows/authoring-checks-tests.yml'
   pull_request:
     paths:
       - '02-authoring-system/tools/**'
+      - '02-authoring-system/shared-components/**'
       - 'courses/python/content/**'
       - 'courses/python/teacher-materials/**'
       - 'courses/python/submittables.json'
       - '05-grader/*.md'
+      - 'courses/python/question-checks/**'
+      - '07-infrastructure/moodle-scripts/build-lesson-*-mastery-check.php'
+      - '07-infrastructure/moodle-scripts/lib/**'
 
 jobs:
   python-checkers:
@@ -46,6 +54,15 @@ jobs:
         run: python -m unittest discover -s 02-authoring-system/tools/tests -p "test_*.py" -v
       - name: Every live submittable item has a rubric
         run: python 02-authoring-system/tools/check_rubric_coverage.py courses/python/submittables.json
+      - name: Every checkable question's answer is what Python actually does
+        run: python 02-authoring-system/tools/check_question_bank.py courses/python/question-checks/unit_01.json
+
+  answer-variants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Accepted print() answers (spacing-tolerant) each run and print the target
+        run: php 07-infrastructure/moodle-scripts/lib/tests/test_answer_variants.php
 
   php-ladder-checker:
     runs-on: ubuntu-latest
@@ -69,3 +86,8 @@ jobs:
       - name: Verify Lesson 01.4 vocab quiz save flow in a real browser
         working-directory: 02-authoring-system/tools
         run: node browser_verify_vocab_quiz_save.mjs
+      - name: Code workspace logic (clean-code tips, output check, download names)
+        run: node --test 02-authoring-system/tools/tests/test_code_workspace.mjs
+      - name: Code workspace in a real browser (Run, Check, Download .py, with real Skulpt)
+        working-directory: 02-authoring-system/tools
+        run: node browser_verify_code_workspace.mjs

@@ -21,6 +21,7 @@ Unit 01 written answers use Jay's Sept 13 scale (`decisions-log.md`, 2026-09-13)
 
 - **Grade the idea, not the English.** Spelling, grammar and word choice never cost a tier (`05-grader/comment-reasoning-rubric.md`, "What not to grade").
 - **Expected answers are right or wrong.** Where a task has one (an output, a mistake's name, a term), mark it against the key and accept close paraphrases.
+- **Extra spaces never cost credit.** A fix or a `print()` statement with extra spaces (`print( "Hi" )`, `print ("Hi")`) that is still valid Python is correct. Add one style note instead: clean Python writes `print("Hi")`, with no extra spaces. Per Jay, 2026-11-04.
 - **Every response gets feedback.** An 80-85% response gets a sentence starter specific to its task, never just "try again".
 
 ## Item 1

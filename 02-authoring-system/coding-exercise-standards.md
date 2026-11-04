@@ -19,3 +19,7 @@ A lesson's own `coding_exercise_rubric.md` should spell out, concretely, what "c
 ## Applies retroactively to Unit 01's backlog, going forward
 
 The four already-live Unit 01 Coding Exercises (01.3-01.6) still don't have a rubric file — author one for each, using this framework, even though they're already built and live. The 2026-09-14 grading pass that cleared their submission backlog was done before this doc existed, using self-derived criteria per lesson; it doesn't need to be redone under this framework unless Jay says otherwise, but any lesson still in progress at the time this landed should use it.
+
+## Spacing and clean-code notes (added 2026-11-04, per Jay)
+
+Code that is valid Python is never marked wrong for extra spaces (`print( "Hi" )`, `x  =  5`). Spacing isn't what any exercise tests. Give full credit, then add one short note on writing Python cleanly: no space before `(`, none just inside parentheses, one space around `=`. Moodle short-answer items get this automatically from `07-infrastructure/moodle-scripts/lib/answer_variants.php`: every valid spacing is accepted, and the spaced forms carry the style tip as feedback. Hand and AI review follow the same rule.

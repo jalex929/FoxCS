@@ -52,7 +52,7 @@ $tasks = [
     // 1-4: ported verbatim from 08_mastery_check.py / the teacher KEY.
     '<p>Fix this line so it displays "New Record!", and name the mistake:</p><pre>print("New Record!</pre>',
     '<p>Fix this line so it displays "Paused", and name the mistake:</p><pre>print(Paused)</pre>',
-    '<p>This line has two mistakes at once. Fix both, and name each one. It should display: Continue</p><pre>Print(Continue</pre>',
+    '<p>This line has three mistakes at once. Fix all three, and name each one. It should display: Continue</p><pre>Print(Continue</pre>',
     '<p>Explain, in your own words, how you can tell the difference between a mistake that causes a SyntaxError and one that causes a NameError. What is Python actually confused about in each case?</p>',
     // 5-10: new, written to cover facets the original 4 don't touch.
     '<p>Fix this line so it displays "Game Saved", and name the mistake:</p><pre>print(Game Saved)</pre>',

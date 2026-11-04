@@ -1,0 +1,197 @@
+{
+  "_about": "Machine-checkable facts for every Mastery Check task whose answer Python can verify. 02-authoring-system/tools/check_question_bank.py runs each one: the code really prints the expected output, a broken line really fails with the named error, the fix really works, the task text in the build script matches, the wording's claims (\"three mistakes\", \"displays: X\") are true, and the teacher key states the same answer. Per Jay, 2026-11-04.",
+  "scripts": [
+    "07-infrastructure/moodle-scripts/build-lesson-01-02-mastery-check.php",
+    "07-infrastructure/moodle-scripts/build-lesson-01-04-mastery-check.php",
+    "07-infrastructure/moodle-scripts/build-lesson-01-05-mastery-check.php",
+    "07-infrastructure/moodle-scripts/build-lesson-01-06-mastery-check.php"
+  ],
+  "items": [
+    {
+      "id": "01.04-task-1",
+      "kind": "predict_output",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-04-mastery-check.php",
+        "index": 1
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_04_mastery_check_KEY.md",
+      "code": "print(\"Welcome back!\")\nprint(\"You have 3 lives remaining.\")",
+      "expected_output": "Welcome back!\nYou have 3 lives remaining.\n"
+    },
+    {
+      "id": "01.04-task-2",
+      "kind": "fix_line",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-04-mastery-check.php",
+        "index": 2
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_04_mastery_check_KEY.md",
+      "expected_output": "Inventory Full\n",
+      "broken": "print(\"Inventory Full)",
+      "fixed": "print(\"Inventory Full\")",
+      "mistakes": [
+        "missing closing quotation mark"
+      ],
+      "broken_error": "SyntaxError"
+    },
+    {
+      "id": "01.04-task-3",
+      "kind": "fix_line",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-04-mastery-check.php",
+        "index": 3
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_04_mastery_check_KEY.md",
+      "expected_output": "Quest Complete\n",
+      "broken": "print \"Quest Complete\"",
+      "fixed": "print(\"Quest Complete\")",
+      "mistakes": [
+        "missing parentheses"
+      ],
+      "broken_error": "SyntaxError"
+    },
+    {
+      "id": "01.04-task-7",
+      "kind": "predict_output",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-04-mastery-check.php",
+        "index": 7
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_04_mastery_check_KEY.md",
+      "code": "print(\"Starting game...\")\nprint(\"Player joined.\")\nprint(\"Score: 0\")",
+      "expected_output": "Starting game...\nPlayer joined.\nScore: 0\n"
+    },
+    {
+      "id": "01.04-task-10",
+      "kind": "fix_line",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-04-mastery-check.php",
+        "index": 10
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_04_mastery_check_KEY.md",
+      "expected_output": "Level Complete!\n",
+      "broken": "PRINT(\"Level Complete!\")",
+      "fixed": "print(\"Level Complete!\")",
+      "mistakes": [
+        "wrong capitalization"
+      ],
+      "broken_error": "NameError"
+    },
+    {
+      "id": "01.05-task-1",
+      "kind": "predict_output",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-05-mastery-check.php",
+        "index": 1
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_05_mastery_check_KEY.md",
+      "code": "# Show the player's current level\nprint(\"Level 5\")\n# print(\"Level 6 - not unlocked yet\")\nprint(\"Keep going!\")",
+      "expected_output": "Level 5\nKeep going!\n"
+    },
+    {
+      "id": "01.05-task-4",
+      "kind": "predict_output",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-05-mastery-check.php",
+        "index": 4
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_05_mastery_check_KEY.md",
+      "code": "print(\"Wave 1 incoming\")\n# print(\"Wave 1 - test spawn rate x2\")\nprint(\"Defend the base!\")\n# Reward the player after surviving\nprint(\"Wave cleared. +50 XP\")",
+      "expected_output": "Wave 1 incoming\nDefend the base!\nWave cleared. +50 XP\n"
+    },
+    {
+      "id": "01.05-task-9",
+      "kind": "predict_output",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-05-mastery-check.php",
+        "index": 9
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_05_mastery_check_KEY.md",
+      "code": "# print(\"Boss defeated!\")\nprint(\"Boss defeated!\")\n# End of battle",
+      "expected_output": "Boss defeated!\n"
+    },
+    {
+      "id": "01.06-task-1",
+      "kind": "fix_line",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-06-mastery-check.php",
+        "index": 1
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_06_mastery_check_KEY.md",
+      "expected_output": "New Record!\n",
+      "broken": "print(\"New Record!",
+      "fixed": "print(\"New Record!\")",
+      "mistakes": [
+        "missing closing quotation mark"
+      ],
+      "broken_error": "SyntaxError"
+    },
+    {
+      "id": "01.06-task-2",
+      "kind": "fix_line",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-06-mastery-check.php",
+        "index": 2
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_06_mastery_check_KEY.md",
+      "expected_output": "Paused\n",
+      "broken": "print(Paused)",
+      "fixed": "print(\"Paused\")",
+      "mistakes": [
+        "missing quotation marks"
+      ],
+      "broken_error": "NameError"
+    },
+    {
+      "id": "01.06-task-3",
+      "kind": "fix_line",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-06-mastery-check.php",
+        "index": 3
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_06_mastery_check_KEY.md",
+      "expected_output": "Continue\n",
+      "broken": "Print(Continue",
+      "fixed": "print(\"Continue\")",
+      "mistakes": [
+        "wrong capitalization",
+        "missing quotation marks",
+        "missing closing parenthesis"
+      ],
+      "broken_error": "SyntaxError"
+    },
+    {
+      "id": "01.06-task-5",
+      "kind": "fix_line",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-06-mastery-check.php",
+        "index": 5
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_06_mastery_check_KEY.md",
+      "expected_output": "Game Saved\n",
+      "broken": "print(Game Saved)",
+      "fixed": "print(\"Game Saved\")",
+      "mistakes": [
+        "missing quotation marks"
+      ],
+      "broken_error": "SyntaxError"
+    },
+    {
+      "id": "01.06-task-9",
+      "kind": "fix_line",
+      "source": {
+        "script": "07-infrastructure/moodle-scripts/build-lesson-01-06-mastery-check.php",
+        "index": 9
+      },
+      "key": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_06_mastery_check_KEY.md",
+      "expected_output": "Try Again\n",
+      "broken": "print(Try Again",
+      "fixed": "print(\"Try Again\")",
+      "mistakes": [
+        "missing quotation marks",
+        "missing closing parenthesis"
+      ],
+      "broken_error": "SyntaxError"
+    }
+  ]
+}
