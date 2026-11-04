@@ -14,6 +14,16 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-11-04 (latest) -- Rubrics for everything, "why" comments, sample-course class code, case study
+
+**Jay:**
+- **Case study:** note that FoxCS had to work within CPS's strict rules on student PII on unapproved platforms, so students couldn't sign in with their email; hence the codename-and-password logins. Done, as a new subsection in the case study Doc.
+- **"Why" comments:** guidance for judging how correct a student's why-comment is. Then: Coding Exercises are usually "expecting a certain answer and marking it that way." Done: `05-grader/comment-reasoning-rubric.md`, with expected-answer marking as the default and the leveled scale only for open reasoning.
+- **Rubrics:** every submittable item has a rubric. Done, and enforced in CI. Jay shared the two rubric PDFs he gave the sub; they're kept in `teacher-materials/sources/` and transcribed.
+- **Class code:** every Mastery Check has the same daily-code expectation. The sample course uses `123456`, listed on the page with a note that the real one changes daily. Done (`--demo-code`).
+
+**Open for Jay:** Sept 14 50/50 standard vs. Sept 28 per-task points (REPO_MAP Known Tensions); whether the Personal Profile Generator was actually assigned.
+
 ## 2026-11-04 (later still) -- Working copy of the course; Units 01-02 polish; in-platform coding in Unit 01
 
 **Jay:** hold off on Unit 03. Duplicate the Python course "to have a working version that doesn't impact student grades." In the new iteration, Coding Exercises accept `.py` files only, and some exercises happen "right in the code editor in the platform," introduced in Unit 01. Also: no wording anywhere in the logs suggesting the repo was being edited for interviews or job applications. Done: reworded the four places that said so.

@@ -2078,3 +2078,32 @@ Per Jay: "Lets duplicate the Python course to have a working version that doesn'
 
 **Open:** what was built on the droplet during the absence (Sept 15-Nov 2 has no commits). A droplet session should commit anything uncommitted before the copy is made, so the repo matches what gets copied.
 
+## 2026-11-04 (later still) -- A rubric for everything students submit; how "why" comments are judged; one class-code rule for every Mastery Check
+
+Per Jay: "We need to make sure every assignment and thing that students can submit for feedback has a rubric." Also: "Let's come up with more guidance then for how to assess to what extent students are correct when giving the why in their comment," then "for coding exercises, it may be more like expecting a certain answer and marking it that way." And: "Make sure also that every mastery check has the same daily code expectation. We can maybe even put the code in as 123456 for this prototype/portfolio version with a note that it would change daily," listed on the page in the sample course so visitors can enter it.
+
+**Decided:**
+- **`courses/python/submittables.json`** lists every submittable item (32), each with its rubric or an `exempt` reason. `02-authoring-system/tools/check_rubric_coverage.py` fails CI if a live item's rubric is missing, empty, thin (fewer than 2 criteria), or has a TODO/TBD.
+  - Exempt: the per-lesson Feedback skill self-ratings (not graded, not work submitted for feedback).
+  - CLAUDE.md pre-publish item 6 now covers every submittable item, not just Coding Exercises.
+- **New rubrics:**
+  - Coding Exercises 01.3-01.6 (50/50 runs/correct; no key existed).
+  - 02.2-02.5 and 2.7, transcribed from Jay's Sept 28 key (`courses/python/teacher-materials/sources/`).
+  - The Unit 02 Checkpoint.
+  - The Unit 02 Personal Profile Generator project (proposed, from Jay's Oct 16 scale; not confirmed as assigned).
+- **Points added from Jay's documents:** 02.6's rubric gained the Sept 28 key's points, and 02.1's Project rubric gained the 80/100/103/106 tier mapping.
+- **Expected answers vs. reasoning.** Most Coding Exercise questions have an expected answer and are marked right or wrong against the key, accepting close paraphrases and any English. Only open "explain why" comments (01.5, the 01.4 bonus) use the leveled scale in `05-grader/comment-reasoning-rubric.md`.
+  - That scale has four levels: accurate reason / vague or partly off / restates the code / missing or wrong.
+  - Two tests decide the level: the deletion test and the swap test.
+  - It maps to the correct half of the grade.
+- **Every Mastery Check carries the same class-code expectation** (`mastery-check-standards.md`).
+  - **The sample course** (`foxcs-python-dev`) uses `apply-mastery-check-access.php --demo-code`. That sets the fixed code `123456` and shows it in each intro with a note that the real course changes it daily.
+  - **Two guards keep it out of the live course:** `--demo-code` is refused unless the shortname ends `-dev` or contains `sandbox`, and the daily rotation skips those courses.
+
+**Known Tension (for Jay):** `coding-exercise-standards.md` (Sept 14) splits every Coding Exercise 50% runs / 50% correct. Jay's Sept 28 Unit 2 key splits points by task (e.g. 2.2: 3/4/3). The transcribed rubrics keep the Sept 28 points as written. Which one wins going forward is Jay's call.
+
+**Learned from Jay's Sept 28 key:**
+- About 70% of Unit 2 zeros were submission-gate failures: unshared CodeHS links, wrong exercise, untouched starter.
+- That is the strongest evidence for the `.py`-only plus in-platform editor change.
+- 02.6 and a 02.7 ("Reading Code with Variables", `score_tracker_debug.py`) went live during the absence; 02.7 has no repo copy.
+

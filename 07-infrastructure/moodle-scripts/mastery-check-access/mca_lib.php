@@ -379,13 +379,24 @@ function mca_should_notify(?string $last_notified_date, string $today): bool {
 
 const MCA_CODE_SENTENCE = "Enter today's class code. It is posted in class.";
 
+// Sample / working-copy courses only: a fixed, published code so anyone
+// trying the course can get in. The live course never uses it.
+const MCA_DEMO_CODE = '123456';
+const MCA_DEMO_NOTE = "Sample course: the class code is <strong>123456</strong>. In the real course, the code changes every day and is posted in class.";
+
+/** True for courses that may use the published demo code: working copies and sandboxes, never a live course. */
+function mca_fixed_code_allowed(string $shortname): bool {
+    return (bool) preg_match('/(?:-dev$|sandbox)/', $shortname);
+}
+
 /**
  * Rewrites a quiz intro for the class-code gate: drops old "ask your teacher
  * for the password" sentences and adds one standard sentence. Idempotent.
  */
-function mca_intro_for_class_code(string $intro): string {
-    $out = mca_strip_password_sentences(str_replace('<p>' . MCA_CODE_SENTENCE . '</p>', '', $intro));
-    return trim($out . '<p>' . MCA_CODE_SENTENCE . '</p>');
+function mca_intro_for_class_code(string $intro, bool $demo = false): string {
+    $out = str_replace(['<p>' . MCA_CODE_SENTENCE . '</p>', '<p>' . MCA_DEMO_NOTE . '</p>'], '', $intro);
+    $out = mca_strip_password_sentences($out);
+    return trim($out . '<p>' . MCA_CODE_SENTENCE . '</p>' . ($demo ? '<p>' . MCA_DEMO_NOTE . '</p>' : ''));
 }
 
 // ------------------------------------------------------------------ planning
@@ -396,7 +407,7 @@ function mca_intro_for_class_code(string $intro): string {
  *
  * @param array $quiz ['id','name','password','subnet','intro']
  * @param array $opts ['subnets' => string|null, 'password' => ?string (today's code, or null to leave),
- *                     'class_code_intro' => bool, 'prereq_cmids' => int[]|null, 'availability' => ?string]
+ *                     'class_code_intro' => bool, 'demo' => bool (show the published demo code), 'prereq_cmids' => int[]|null, 'availability' => ?string]
  * @return array ['quiz' => [field => [old, new]], 'availability' => [old, new]|null]
  */
 function mca_plan(array $quiz, array $opts): array {
@@ -408,7 +419,7 @@ function mca_plan(array $quiz, array $opts): array {
         $plan['quiz']['password'] = [$quiz['password'], $opts['password']];
     }
     if (!empty($opts['class_code_intro'])) {
-        $intro = mca_intro_for_class_code($quiz['intro']);
+        $intro = mca_intro_for_class_code($quiz['intro'], !empty($opts['demo']));
         if ($intro !== $quiz['intro']) {
             $plan['quiz']['intro'] = [$quiz['intro'], $intro];
         }

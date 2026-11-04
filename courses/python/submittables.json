@@ -1,0 +1,229 @@
+{
+  "_about": "Every item a FoxCS Python student can submit for feedback, and its rubric. Per Jay (2026-11-04): every assignment and thing students can submit for feedback has a rubric. 02-authoring-system/tools/check_rubric_coverage.py fails CI if a live item's rubric is missing, empty, has no criteria, or still has a TODO. Add an entry here when you build a new submittable item (CLAUDE.md pre-publish checklist item 6). An item that genuinely needs no rubric is listed with an 'exempt' reason instead.",
+  "items": [
+    {
+      "id": "01.1-mastery-check",
+      "name": "01.1 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_01_mastery_check_KEY.md"
+    },
+    {
+      "id": "01.2-mastery-check",
+      "name": "01.2 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_02_mastery_check_KEY.md"
+    },
+    {
+      "id": "01.3-mastery-check",
+      "name": "01.3 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_03_mastery_check_KEY.md"
+    },
+    {
+      "id": "01.4-mastery-check",
+      "name": "01.4 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_04_mastery_check_KEY.md"
+    },
+    {
+      "id": "01.5-mastery-check",
+      "name": "01.5 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_05_mastery_check_KEY.md"
+    },
+    {
+      "id": "01.6-mastery-check",
+      "name": "01.6 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_06_mastery_check_KEY.md"
+    },
+    {
+      "id": "01.3-coding-exercise",
+      "name": "01.3 Coding Exercise",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_03_coding_exercise_rubric.md"
+    },
+    {
+      "id": "01.4-coding-exercise",
+      "name": "01.4 Coding Exercise",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_04_coding_exercise_rubric.md"
+    },
+    {
+      "id": "01.5-coding-exercise",
+      "name": "01.5 Coding Exercise",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_05_coding_exercise_rubric.md"
+    },
+    {
+      "id": "01.6-coding-exercise",
+      "name": "01.6 Coding Exercise",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_01_what_is_programming/lesson_01_06_coding_exercise_rubric.md"
+    },
+    {
+      "id": "unit-01-project",
+      "name": "Unit 01 Project: Interactive Greeting",
+      "type": "project",
+      "live": true,
+      "rubric": "courses/python/content/unit_01_what_is_programming/project/unit_01_project_rubric.md"
+    },
+    {
+      "id": "unit-01-reflection",
+      "name": "Unit 01 Reflection",
+      "type": "reflection",
+      "live": true,
+      "rubric": "05-grader/reflection-rubric-general.md"
+    },
+    {
+      "id": "01.1-feedback",
+      "name": "01.1 Feedback",
+      "type": "self_assessment",
+      "live": false,
+      "exempt": "Skill self-ratings (Need Help / Still Practicing / Strong). Not graded and not submitted for feedback on the work itself."
+    },
+    {
+      "id": "01.2-feedback",
+      "name": "01.2 Feedback",
+      "type": "self_assessment",
+      "live": false,
+      "exempt": "Skill self-ratings (Need Help / Still Practicing / Strong). Not graded and not submitted for feedback on the work itself."
+    },
+    {
+      "id": "01.3-feedback",
+      "name": "01.3 Feedback",
+      "type": "self_assessment",
+      "live": false,
+      "exempt": "Skill self-ratings (Need Help / Still Practicing / Strong). Not graded and not submitted for feedback on the work itself."
+    },
+    {
+      "id": "01.4-feedback",
+      "name": "01.4 Feedback",
+      "type": "self_assessment",
+      "live": true,
+      "exempt": "Skill self-ratings (Need Help / Still Practicing / Strong). Not graded and not submitted for feedback on the work itself."
+    },
+    {
+      "id": "01.5-feedback",
+      "name": "01.5 Feedback",
+      "type": "self_assessment",
+      "live": true,
+      "exempt": "Skill self-ratings (Need Help / Still Practicing / Strong). Not graded and not submitted for feedback on the work itself."
+    },
+    {
+      "id": "01.6-feedback",
+      "name": "01.6 Feedback",
+      "type": "self_assessment",
+      "live": true,
+      "exempt": "Skill self-ratings (Need Help / Still Practicing / Strong). Not graded and not submitted for feedback on the work itself."
+    },
+    {
+      "id": "02.1-mastery-check",
+      "name": "02.1 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_01_variables_and_memory/teacher-materials/mastery_check_key.md"
+    },
+    {
+      "id": "02.1-project",
+      "name": "02.1 Project: Character Status Tracker",
+      "type": "project",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_01_variables_and_memory/teacher-materials/rubric_project.md"
+    },
+    {
+      "id": "02.2-mastery-check",
+      "name": "02.2 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_02_integers/teacher-materials/mastery_check_key.md"
+    },
+    {
+      "id": "02.2-coding-exercise",
+      "name": "02.2 Coding Exercise",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_02_integers/teacher-materials/coding_exercise_rubric.md"
+    },
+    {
+      "id": "02.3-mastery-check",
+      "name": "02.3 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_03_floats/teacher-materials/mastery_check_key.md"
+    },
+    {
+      "id": "02.3-coding-exercise",
+      "name": "02.3 Coding Exercise",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_03_floats/teacher-materials/coding_exercise_rubric.md"
+    },
+    {
+      "id": "02.4-mastery-check",
+      "name": "02.4 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_04_strings/teacher-materials/mastery_check_key.md"
+    },
+    {
+      "id": "02.4-coding-exercise",
+      "name": "02.4 Coding Exercise",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_04_strings/teacher-materials/coding_exercise_rubric.md"
+    },
+    {
+      "id": "02.5-mastery-check",
+      "name": "02.5 Mastery Check",
+      "type": "mastery_check",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_05_booleans/teacher-materials/mastery_check_key.md"
+    },
+    {
+      "id": "02.5-coding-exercise",
+      "name": "02.5 Coding Exercise",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_05_booleans/teacher-materials/coding_exercise_rubric.md"
+    },
+    {
+      "id": "unit-02-checkpoint",
+      "name": "Unit 02 Checkpoint: Mixed Data Types",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/checkpoint_mixed_data_types/teacher-materials/coding_exercise_rubric.md"
+    },
+    {
+      "id": "02.6-coding-exercise",
+      "name": "02.6 Coding Exercise",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/content/unit_02_variables_and_data/lesson_02_06_type_conversion/teacher-materials/coding_exercise_rubric.md"
+    },
+    {
+      "id": "02.7-coding-exercise",
+      "name": "2.7 Coding Exercise: Reading Code with Variables",
+      "type": "coding_exercise",
+      "live": true,
+      "rubric": "courses/python/teacher-materials/unit_02_variables_and_data/lesson_02_07_coding_exercise_rubric.md"
+    },
+    {
+      "id": "unit-02-project",
+      "name": "Unit 02 Project: Personal Profile Generator (proposed)",
+      "type": "project",
+      "live": false,
+      "rubric": "courses/python/teacher-materials/unit_02_variables_and_data/unit_02_project_rubric.md"
+    }
+  ]
+}

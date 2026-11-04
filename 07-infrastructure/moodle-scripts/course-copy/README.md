@@ -38,6 +38,6 @@ Then enrol the test student account in the copy, and work there.
 
 ## Things to know about the copy
 
-- **Mastery Check passwords** come across as they are. The daily class-code rotation only touches the courses it's pointed at. In the copy, set them yourself or run `apply-mastery-check-access.php --course=foxcs-python-dev`.
+- **Mastery Check codes:** run `apply-mastery-check-access.php --course=foxcs-python-dev --demo-code --no-network --apply` after the copy. Every Mastery Check then takes the published sample code `123456`, and its intro shows that code with a note that the real course changes it daily. See `../mastery-check-access/README.md`, "The sample course".
 - **Activity ID numbers come across too**, so if the grading queue plugin allowlists a Coding Exercise, test submissions in the copy are queued as well. That's useful for testing the worker. Their submission IDs can't collide with live ones, and nothing is ever released without approval.
 - **Promoting changes back to the live course** is a separate, deliberate step: the same deploy scripts, pointed at `foxcs-python`, after the publish checklist in CLAUDE.md. The copy is never synced back automatically.

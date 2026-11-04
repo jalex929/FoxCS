@@ -152,3 +152,18 @@ sudo -u www-data php apply-mastery-check-access.php --course=foxcs-python --subn
 ## New Mastery Checks
 
 Build them with any password. Run `apply-mastery-check-access.php --only-cmid=NEW_CMID` once, and the cron job keeps the code current from then on.
+
+## The sample course (working copy)
+
+The working copy (`foxcs-python-dev`, see `../course-copy/`) uses a fixed, published code instead, so anyone trying the course can get in:
+
+```bash
+sudo -u www-data php apply-mastery-check-access.php --course=foxcs-python-dev --demo-code --no-network          # read the plan
+sudo -u www-data php apply-mastery-check-access.php --course=foxcs-python-dev --demo-code --no-network --apply
+```
+
+Every Mastery Check then has the same class-code gate and intro line as the live course, plus a note showing the code: "Sample course: the class code is **123456**. In the real course, the code changes every day and is posted in class."
+
+- **`--demo-code` is refused on a live course.** It only runs where the shortname ends in `-dev` or contains `sandbox`.
+- **`rotate-daily-class-code.php` skips those courses**, so the daily job can't overwrite `123456`.
+- **`--no-network`** keeps visitors from outside school from being blocked. Leave it off if the sample course should test the network gate too.

@@ -1157,3 +1157,21 @@ No live Moodle changes. Repo-only work on branch `claude/foxcs-portfolio-prep-r9
 - **Systemd unit:** now `RestartPreventExitStatus=2 3`, `TasksMax=128`, `MemoryMax=1G`.
 - **Showcase totals:** 346 tests.
 
+**Rubric coverage, "why" comment guidance, sample-course class code (2026-11-04, later).**
+- **New tooling:** `courses/python/submittables.json` and `02-authoring-system/tools/check_rubric_coverage.py` (14 tests), running in `authoring-checks-tests.yml`. All 32 items pass (6 exempt with reasons).
+- **New guidance:** `05-grader/comment-reasoning-rubric.md`.
+- **Rubrics written:**
+  - `teacher-materials/unit_01_what_is_programming/lesson_01_0{3..6}_coding_exercise_rubric.md`;
+  - `content/unit_02_.../lesson_02_0{2..5}_*/teacher-materials/coding_exercise_rubric.md`;
+  - the Checkpoint's `teacher-materials/coding_exercise_rubric.md`;
+  - `teacher-materials/unit_02_variables_and_data/{lesson_02_07_coding_exercise_rubric,unit_02_project_rubric}.md`;
+  - 02.6 and 02.1-project additions.
+- **Jay's PDFs** are kept in `courses/python/teacher-materials/sources/`.
+- **`mca_lib.php`:** `MCA_DEMO_CODE`, `MCA_DEMO_NOTE`, `mca_fixed_code_allowed`, and a `demo` option on `mca_intro_for_class_code`/`mca_plan`. `apply-mastery-check-access.php --demo-code`; `rotate-daily-class-code.php` skips sample courses. 122 checks.
+- **Case study (Claude Doc):** new subsection on working within CPS's student-PII rules with codename logins.
+- **Still to do:**
+  - commit 02.7 and any other droplet-only content;
+  - grader spec additions (`minOutputLines`, `reviewCriteria`) and exercise specs;
+  - the Units 01-02 polish in the copy (`.py` only, Skulpt in Unit 01, Checkpoint item 6 wording);
+  - the viewer guide.
+

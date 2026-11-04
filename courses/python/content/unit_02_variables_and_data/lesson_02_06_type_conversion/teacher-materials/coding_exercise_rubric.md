@@ -33,9 +33,17 @@ print("You have " + str(points) + " to start.")
 - [ ] **No leftover debugging artifacts** -- stray `print(type(...))` calls or diagnostic comments added while fixing the bug should be cleaned up before submission (not a hard fail on their own, but flag if present).
 - [ ] **Filename matches the save-as convention** (`GMETRIX-121-conversion-completed.py`) -- flag, don't fail solely on this, but note it for the file-naming pattern check across the unit.
 
-## Grade value
+## Points (10)
 
-Not yet set live (this lesson hasn't been deployed to Moodle yet -- see `../lesson_02_06_type_conversion.md`'s Next Steps). Per `feedback_lesson_point_scale.md`'s standing scale, this is a practice/application-tier item (2-5 pts), not a quiz/assessment (10 pts) -- closer to the Unit 02 Checkpoint's `grade=5` than a Mastery Check's `grade=10`. Confirm the exact live grade value against 02.2-02.5's own Coding Exercise `grade` field at deploy time rather than assuming 5 -- those weren't independently confirmed while writing this rubric.
+From Jay's Sept 28 key (`courses/python/teacher-materials/sources/KEY_Unit_2_Coding_Exercise_Rubrics_2026-09-28.pdf`), built from the live Moodle assignment:
+
+| Criterion | Points | What to check |
+|---|---|---|
+| Input converted to a real number | 4 | `rating = int(input(...))` (or `float()`), so `rating * 100` is real arithmetic, not string repetition |
+| Final `print()` fixed | 3 | Works with `points` as a number: `str(points)`, an f-string, or a comma-separated print. No `TypeError` |
+| Tested with 2+ inputs | 3 | Ran at least twice with different valid numbers (for example 1 and 5) and confirmed real math both times |
+
+The submission gate in the 2.2 to 2.5 rubrics applies here too.
 
 ## Not covered by this checklist
 

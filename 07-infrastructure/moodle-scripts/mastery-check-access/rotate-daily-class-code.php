@@ -56,6 +56,10 @@ foreach (array_filter(array_map('trim', explode(',', $options['courses']))) as $
         echo "{$stamp} {$shortname}: no such course, skipped\n";
         continue;
     }
+    if (mca_fixed_code_allowed($shortname)) {
+        echo "{$stamp} {$shortname}: sample course with the published demo code, skipped\n";
+        continue;
+    }
     $code = mca_daily_code($secret, $shortname, $today);
 
     $quizzes = [];
