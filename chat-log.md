@@ -14,6 +14,18 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-11-04 (later still) -- Working copy of the course; Units 01-02 polish; in-platform coding in Unit 01
+
+**Jay:** hold off on Unit 03. Duplicate the Python course "to have a working version that doesn't impact student grades." In the new iteration, Coding Exercises accept `.py` files only, and some exercises happen "right in the code editor in the platform," introduced in Unit 01. Also: no wording anywhere in the logs suggesting the repo was being edited for interviews or job applications. Done: reworded the four places that said so.
+
+**Done:** `course-copy/duplicate-course.php` (+ tested `copy_lib.php`).
+
+**Next, in order:**
+1. Grader spec additions (`minOutputLines`, `reviewCriteria`), so judgment-heavy exercises never score "flawless" from output alone.
+2. Exercise specs for 01.3-01.6 and 02.2-02.6.
+3. The Units 01-02 compromise inventory and fixes, made in the copy.
+4. Skulpt in-page coding added to Unit 01.
+
 ## 2026-11-04 (later) -- Sandbox done; next asks from Jay
 
 **Jay:** "yes start with the sandbox, then the exercise specs". The sandbox is done (see `decisions-log.md`).

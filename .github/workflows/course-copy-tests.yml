@@ -1,0 +1,25 @@
+name: Course copy tests
+
+# The pure logic behind 07-infrastructure/moodle-scripts/course-copy/
+# (pairing live and copied modules, rewriting page IDs). No Moodle install:
+# the Moodle-facing script is only syntax-checked.
+
+on:
+  push:
+    paths:
+      - '07-infrastructure/moodle-scripts/course-copy/**'
+      - '.github/workflows/course-copy-tests.yml'
+  pull_request:
+    paths:
+      - '07-infrastructure/moodle-scripts/course-copy/**'
+      - '.github/workflows/course-copy-tests.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unit tests
+        run: php 07-infrastructure/moodle-scripts/course-copy/tests/test_copy_lib.php
+      - name: Syntax check
+        run: for f in 07-infrastructure/moodle-scripts/course-copy/*.php; do php -l "$f"; done

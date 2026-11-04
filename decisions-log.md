@@ -2063,3 +2063,18 @@ Per Jay: "yes start with the sandbox, then the exercise specs".
 
 **Open, droplet-side:** Ubuntu 24.04's AppArmor may block unprivileged user namespaces. The self-test reports it if so. Preferred fix: an AppArmor profile for bwrap, rather than the system-wide sysctl.
 
+## 2026-11-04 (later still) -- A working copy of the Python course; polish Units 01-02 there
+
+Per Jay: "Lets duplicate the Python course to have a working version that doesn't impact student grades." Then: "We can update the course page for the new iteration to make sure it only accepts .py files for submissions and that they can do exercises right in the code editor in the platform for some things. I think this should be introduced earlier (in Unit 1) to make it more interactive." Unit 03 is on hold ("We can hold off on unit 3 that's ok").
+
+**Decided:**
+- **`foxcs-python-dev`:** a hidden copy made by `07-infrastructure/moodle-scripts/course-copy/duplicate-course.php`.
+  - **Carries no user data:** users, enrolments, grades, submissions, attempts, completion and logs are all forced off, and the script verifies the result.
+  - **Copied pages are re-pointed at the copy.** Deploy scripts stamp each page's live `cmid` into its HTML, so a plain copy would log progress and completion, and award Instruction grades, on the live course. The script rewrites those IDs and links after restore, and stops if live and copy modules don't pair up exactly.
+  - **Not run yet:** it needs a droplet session, backup first.
+- **The polish pass happens in the copy**, then is promoted to `foxcs-python` through the normal publish checklist.
+- **Every Coding Exercise accepts `.py` file upload only.** Unit 01's four (01.3-01.6) still accept pasted text or any file type, per their build scripts, against CLAUDE.md's standard. Unless the 2026-09-09 settings fix already changed this live, it is one of the compromises to remove.
+- **In-platform coding starts in Unit 01.** It uses Skulpt, already adopted 2026-09-04 and running in Unit 02's Instruction pages.
+
+**Open:** what was built on the droplet during the absence (Sept 15-Nov 2 has no commits). A droplet session should commit anything uncommitted before the copy is made, so the repo matches what gets copied.
+
