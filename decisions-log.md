@@ -2026,3 +2026,19 @@ Per Jay: he approves AI-assisted grades in bulk. He reads the notes/rationale, c
 - **Mutation testing (`tools/mutation_test.py`, stdlib)** is a CI gate on on_submission, release_check and score_output: no unexplained survivors, with equivalents listed with reasons in `tools/mutation_equivalents.json`.
   - **First runs at 100% coverage:** 88.7% / 83.0% / 90.5%. **Now:** 100% / 100% / 100%. Six documented equivalents.
   - **It found:** untested behavior (e.g. a 1-point credit without evidence would have passed), removable dead code, and a key-collision bug in the tester itself.
+
+## 2026-11-04 -- AI grading runs on Jay's Claude subscription, not the paid API
+
+Per Jay: "We will use the Claude code non-interactive mode with event listeners and things like I mentioned in the build for FoxCS. Let's make sure we get that squared away so it's free (only uses my subscription)".
+
+**Decided:**
+- **Default AI backend is Claude Code in non-interactive mode (`claude -p`)**, signed in to Jay's Claude account. The API backend stays in `evals/run_model.py` for comparison runs, by explicit `--backend api` only.
+- **Hard preflight, no model call:** `claude auth status --json` must report `authMethod` `claude.ai` (a `/login` session) or `oauth_token` (from `claude setup-token`), with no `apiKeySource`. Otherwise the run or the worker refuses to start (exit 2). The systemd unit won't restart on exit 2.
+- **API-key variables are stripped** from the `claude` child process (`ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`). Claude Code prefers an API key over the subscription when both are present, so a stray key would quietly bill.
+- **Never `--bare`:** it skips OAuth and requires an API key. Isolation comes from `--safe-mode` (no CLAUDE.md, hooks, plugins, skills, MCP; auth still works), `--tools ""`, `--strict-mcp-config`, `--no-session-persistence`, and an empty temp folder per call. The submission goes on stdin, not argv.
+- **Event-driven flow:** a Moodle observer plugin (`local_foxcsgradequeue`, on `\mod_assign\event\assessable_submitted`, allowlisted Coding Exercises only) writes a queue event, and `review_worker.py` grades it with `on_submission.py`. Only `runs_with_issues` goes to Claude, with the run results as trusted facts. Results land where `release_check.py` reads them. Nothing is released without Jay's batch approval.
+- **No automatic retries**, matching the existing reliability rule: failed reviews go to `failed/` with a reason.
+- **New go-live requirement:** student code must run as a different Unix user from the worker, because the worker holds the subscription token. This adds to the existing container-sandbox blocker.
+
+**Open, for Jay:** confirm that unattended, scheduled use of a `claude setup-token` subscription token on the droplet fits the current plan terms. Usage counts against the plan's normal limits, shared with interactive use.
+

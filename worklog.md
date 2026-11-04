@@ -1134,3 +1134,12 @@ No live Moodle changes. Repo-only work on branch `claude/foxcs-portfolio-prep-r9
 - **Docs:** `docs/decisions.md` (8 decisions), a README "Start here" tour, and test counts updated (275 total).
 - **Mutation testing found a flaky test:** the release check's seed test used a 6-result batch, so a random draw could match by chance. Fixed with a 30-result batch plus a precondition, and an explicit `if` instead of `or`.
 - **Per Jay:** no interview-prep material in either repo. Removed the "Interview framing notes" section from `00-project-overview/portfolio-prep/README.md` and reworded two audit lines.
+
+**Subscription-backed AI grading + event listener (2026-11-04). Built and tested, nothing installed live.**
+- **`portfolio-showcase/evals/run_model.py`:** now has two backends, `ClaudeCodeBackend` (`claude -p`, default) and `ApiBackend`, plus a subscription preflight. A `<program_runs>` trusted-facts block (spec text + exit codes only, never student output) and one new system-prompt rule; the snapshot was updated. 48 tests, 100% line+branch, mutation 100% of 128 (one new documented equivalent).
+- **New `portfolio-showcase/grader/review_worker.py`:** the queue worker (`incoming/ processing/ done/ failed/ drafts.jsonl review/outputs review/submissions`), `--watch`, crash recovery, and re-review on requeue. New `grader/rubrics/lesson_02_06_coins_to_points.json`. 24 tests, 100% line+branch, mutation 100% of 78 (first run 93.7%: 4 required-arg mutants caught by a new test, and one redundant `parents=True` removed).
+- **New `07-infrastructure/local-plugins/foxcsgradequeue/`:** the Moodle event observer. Pure logic is in `queue_lib.php`: 42 checks, which caught a real `$`-before-newline regex bug, fixed with `/D`. `tests/contract_test.sh` checks the PHP-written event against the Python parser. New CI: `.github/workflows/grading-queue-tests.yml`.
+- **New `07-infrastructure/grading-worker/`:** `README.md` (flow, why it stays free, go-live steps) and `foxcs-review-worker.service`.
+- **CI:** the coverage gate and the mutation job now include review_worker in both workflows.
+- **Pick up here (go-live):** `07-infrastructure/grading-worker/README.md` -> "Before this goes live". The first step is the sandbox (a separate user for student code). The first real `claude -p` call is step 6 there; it also confirms the CLI's JSON result shape, which so far is only pinned by a fake.
+

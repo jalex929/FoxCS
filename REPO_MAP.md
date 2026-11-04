@@ -77,6 +77,8 @@ FoxCS/
     droplet-setup.md, moodle-vm-setup.md, moodle-course-shells.md, h5p-content-type-guide.md
     onboarding-new-students.md
     moodle-scripts/mastery-check-access/   2026-11-03: automatic Mastery Check gates (school network + prerequisites, no passwords), readiness CSV, unit-tested pure logic. Read its README before running
+    local-plugins/foxcsgradequeue/   2026-11-04: Moodle event listener for Coding Exercise submissions -> grading queue. Unit-tested pure logic + PHP-to-Python contract test. Not installed live
+    grading-worker/            2026-11-04: systemd unit + go-live steps for portfolio-showcase/grader/review_worker.py (AI review on Jay's Claude subscription via `claude -p`, never the paid API). Read its README before installing
     moodle-scripts/            PHP/Python deploy scripts. Root-level = one-off per-lesson builds (build-lesson-01-04-*.php pattern). moodle-scripts/python/ = reusable builders (h5p_book_builder.py, create-h5p-instruction.php, create_lesson1_mastery_check_quiz.php) plus more one-offs. No naming convention beyond "descriptive" — grep for the cmid or lesson name if unsure whether a script already exists before writing a new one.
 
   portfolio-showcase/          Sanitized PUBLIC showcase (synthetic data only, no vendor content, no real pseudonyms). Becomes its own repo via portfolio-prep/export_showcase.sh. Never copy files in without running its tools/check_showcase_clean.py

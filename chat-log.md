@@ -14,6 +14,14 @@ Newest entries at the top, grouped by day.
 
 ---
 
+## 2026-11-04 -- AI grading on the subscription, not the API
+
+**Jay asked:** "Is there any way to do this for free without paying?" Then: "We will use the Claude code non-interactive mode with event listeners and things like I mentioned in the build for FoxCS. Let's make sure we get that squared away so it's free (only uses my subscription)".
+
+**Done:** `claude -p` backend as the default in `run_model.py`, with a preflight that refuses anything but a subscription login. Also the queue worker (`review_worker.py`), the Moodle event listener plugin (`local_foxcsgradequeue`), and the systemd unit plus go-live steps in `07-infrastructure/grading-worker/`. All tested in CI; nothing installed on the droplet. See `decisions-log.md` 2026-11-04.
+
+**Flagged to Jay, not resolved:** (1) confirm subscription terms allow unattended server use via `claude setup-token`; (2) usage counts against plan limits; (3) the worker holds the token, so student code must run as a separate user before go-live; (4) the first real `claude -p` call hasn't happened yet.
+
 ## 2026-11-03 -- Portfolio prep: sanitized public showcase, exposure audit, RAG notes
 
 **Context from Jay:** preparing FoxCS for job interviews (AI engineering roles). Shared a ChatGPT portfolio-readiness review with 7 recommendations plus a long section on how RAG could fit FoxCS. Asked for: a cleaned-up copy, potentially a new repo, with **no Certiport/GMetrix content and no codenames**; some of the review's cleanup changes made; and the RAG notes documented here for later.
